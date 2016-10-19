@@ -1,0 +1,20 @@
+.animation-fade.ng-hide-remove{
+    animation: 1s fadeIn;
+
+}
+.animation-fade.ng-hide-add{
+    /*animation: 0.5s fadeOut;*/
+}
+
+/*rotate animation*/
+@keyframes rotate{
+    0%{
+        opacity:0.0;
+        transform: rotate3d(0,1,0,120deg);
+    }
+
+    100%{
+        opacity:1;
+        transform: rotate3d(0,1,0,0deg);
+    }
+}

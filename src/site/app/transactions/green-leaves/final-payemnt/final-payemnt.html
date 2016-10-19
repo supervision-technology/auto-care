@@ -1,0 +1,564 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <div class="col-xs-4 background-light">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 51px);padding-top: 5px;">
+            <div class="col-xs-12">
+                <table style="padding-right: 5px;">
+                    <col style="width: 50%"/>
+                    <col style="width: 50%"/>
+                    <col/>
+                    <thead class="background-dark">
+                        <tr>
+                            <th>
+                                <input style="margin-top: 5px" class="form-control text-right" type="text" placeholder="year">
+                            </th>
+                            <th>
+                                <input style="margin-top: 5px" class="form-control text-right" type="text" placeholder="month">
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-12">
+                <table>
+                    <col style="width: 40%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 15%;"/>
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>DESCRIPTION</th>
+                            <th class="text-right">DEBIT</th>
+                            <th class="text-right">CREDIT</th>
+                            <th class="text-right">&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 210px);">
+                <table>
+                    <col style="width: 40%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 15%;"/>
+                    <col />
+
+                    <tbody>
+                        <tr>
+                            <td >B/F</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td><a class="btn btn-primary" ng-click="showBfAndCoins();"><span class="glyphicon glyphicon-paste"></span></a></td>
+                        </tr>
+                        <tr>
+                            <td >Settlement</td>
+                            <td class="text-right">-</td>
+                            <td class="text-right">-</td>
+                            <td><a class="btn btn-primary" ng-click="showBfAndCoins();"><span class="glyphicon glyphicon-paste"></span></a></td>
+                        </tr>
+                        <tr>
+                            <td >GL Value</td>
+                            <td class="text-right">3000.00</td>
+                            <td class="text-right">-</td>
+                            <td><a class="btn btn-primary" ng-click="showGLValues();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">A /Payment</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >500.00</td>
+                            <td><a class="btn btn-primary" ng-click="showOther();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">L/Installment</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td ><a class="btn btn-primary" ng-click="showOther();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                        <tr>
+                            <td >Fertilizer(P)</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td ><a class="btn btn-primary" ng-click="showOther();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                        <tr>
+                            <td >Fertilizer(C)</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td ><a class="btn btn-primary" ng-click="showOther();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                        <tr>
+                            <td >Tea</td>
+                            <td  class="text-right">-</td>
+                            <td  class="text-right">300.00</td>
+                            <td ><a class="btn btn-primary" ng-click="showOther();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Savings</td>
+                            <td  class="text-right">-</td>
+                            <td  class="text-right">300.00</td>
+                            <td><a class="btn btn-primary" ng-click="showOther();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                        <tr>
+                            <td>Welfare</td>
+                            <td  class="text-right">-</td>
+                            <td  class="text-right">300.00</td>
+                            <td><a class="btn btn-primary" ng-click="showOther();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                        <tr>
+                            <td >Other</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td ><a class="btn btn-primary" ng-click="showOther();"><span class="glyphicon glyphicon-paste"></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-xs-12">
+                <table>
+                    <col style="width: 40%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 15%;"/>
+                    <col />
+
+                    <tbody>
+                        <tr class="text-bold">
+                            <td>Total</td>
+                            <td class="text-right">3000.00</td>
+                            <td class="text-right">2900.00</td>
+                            <td></td>
+                        </tr>
+                        <tr class="text-bold">
+                            <td>Balance</td>
+                            <td class="text-right">100.00</td>
+                            <td class="text-right">-</td>   
+                            <td></td>
+                        </tr>
+                        <tr class="text-bold">
+                            <td>C/F</td>
+                            <td class="text-right">100.00</td>
+                            <td class="text-right">-</td>   
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-8 background-dark" ng-show="otherValues">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 51px);padding-top: 10px;">
+            <div class="col-xs-12" style="flex: 0 0 auto; height:35px;">
+                <table>
+                    <col style="width: 10%">
+                    <col style="width: 40%">
+                    <col style="width: 50%">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>ROUTE</th>
+                            <th class="text-right">Amount</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 80px);">
+                <table class="table-hover">
+                    <col style="width: 10%">
+                    <col style="width: 40%">
+                    <col style="width: 50%">
+                    <col/>
+                    <tbody>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route 01</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12">
+                <table style="padding-right: 5px;">
+                    <col style="width: 70%"/>
+                    <col style="width: 20%"/>
+                    <thead class="background-dark">
+                        <tr class="background-light">
+                            <th>Total</th>
+                            <th class="text-right">15500.00</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-8 background-dark" ng-show="showGreenLeaveValues">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 51px);padding-top: 10px;">
+            <div class="col-xs-12" style="flex: 0 0 auto; height:35px;">
+                <table>
+                    <col style="width: 10%">
+                    <col style="width: 30%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Route</th>
+                            <th class="text-right">N/Leaf</th>
+                            <th class="text-right">S/Leaf</th>
+                            <th class="text-right">Total Leaves</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 80px);">
+                <table class="table-hover">
+                    <col style="width: 10%">
+                    <col style="width: 30%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <col/>
+                    <tbody>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                        <tr>
+                            <td><span class="label label-default">00001</span></td>
+                            <td>Route Name 01</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">500.00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12">
+                <table style="padding-right: 5px;">
+                    <col style="width: 40%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <thead class="background-dark">
+                        <tr class="background-light">
+                            <th>Total</th>
+                            <th class="text-right">500</th>
+                            <th class="text-right">300</th>
+                            <th class="text-right">800</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-8 background-dark" ng-show="showBfAndCoinValues">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 51px);padding-top: 10px;">
+            <div class="col-xs-12">
+                <table>
+                    <col style="width: 40%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>DESCRIPTION</th>
+                            <th class="text-right">DEBIT</th>
+                            <th class="text-right">CREDIT</th>
+                            <th class="text-right">&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 210px);">
+                <table>
+                    <col style="width: 40%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col />
+
+                    <tbody>
+                        <tr>
+                            <td >B/F</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td >Settlement</td>
+                            <td class="text-right">200.00</td>
+                            <td class="text-right">-</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td >GL Value</td>
+                            <td class="text-right">3000.00</td>
+                            <td class="text-right">-</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">A /Payment</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >500.00</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%">L/Installment</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td ></td>
+                        </tr>
+                        <tr>
+                            <td >Fertilizer(P)</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td ></td>
+                        </tr>
+                        <tr>
+                            <td >Fertilizer(C)</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td ></td>
+                        </tr>
+                        <tr>
+                            <td>Tea</td>
+                            <td  class="text-right">-</td>
+                            <td  class="text-right">300.00</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Savings</td>
+                            <td  class="text-right">-</td>
+                            <td  class="text-right">300.00</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Other</td>
+                            <td class="text-right" >-</td>
+                            <td class="text-right" >300.00</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-xs-12">
+                <table>
+                    <col style="width: 40%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col />
+
+                    <tbody>
+                        <tr class="text-bold">
+                            <td>Total</td>
+                            <td class="text-right">3200.00</td>
+                            <td class="text-right">2900.00</td>
+                            <td></td>
+                        </tr>
+                        <tr class="text-bold">
+                            <td>Balance</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">-</td>   
+                            <td></td>
+                        </tr>
+                        <tr class="text-bold">
+                            <td>C/F</td>
+                            <td class="text-right">300.00</td>
+                            <td class="text-right">-</td>   
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-warning"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-danger"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-plus"></i></a>
+</div>

@@ -1,0 +1,14 @@
+@import "mixins/variables.scss";
+
+.background-ultra-dark{
+    background-color: $bg-ultra-dark-color;
+    color: $light-font-color;
+}
+
+.background-dark{
+    background-color: $bg-dark-color;
+}
+
+.background-light{
+    background-color: $bg-light-color;
+}

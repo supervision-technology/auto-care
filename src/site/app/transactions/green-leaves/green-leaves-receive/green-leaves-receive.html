@@ -1,0 +1,135 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body ">
+    <div class="col-xs-4 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+
+            <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+                <input type="text" class="search-input" placeholder="search" ng-model="search.name">
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ROUTES</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+            <div class="col-xs-12 smart-scroll-y" style="flex: 1 1 auto;">
+                <table class="table-hover table-primary">
+                    <tbody>
+                        <tr ng-repeat="route in routes|filter:search" ng-class="{'selected':$index == selectedRow}" ng-click="setClickedRow($index,route)">
+                            <td><span class="label label-primary">{{$index + 1}}</span>&nbsp;&nbsp;&nbsp;{{route.name}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-8 background-light">
+        <div class="background-dark" style="padding: 5px 10px 0px 10px;border-radius: 5px;margin-top: 10px;margin-right: 5px">        
+            <div class="row">
+                <div class="col-xs-3" style="float: right">
+                    <div class="form-group">
+                        <input ng-model="date" smart-input="date" class="form-control" placeholder="select transaction date">
+                    </div>
+                </div>
+                <div class="col-xs-3" style="float: right">
+                    <div class="form-group">
+                        <input ng-model="transaction" smart-input="integer" class="form-control" placeholder="select transaction number">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <table>
+                    <col style="width: 50%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <col style="width: 12%">
+                    <thead class="background-dark">
+                        <tr>
+                            <th>
+                                <label>CLIENT INFORMATION</label>
+                                <input type="text" class="form-control" ng-model="rowData.client" uib-typeahead="client as client.name for client in getClients($viewValue)| limitTo:10" ng-disabled="ui.mode !== 'NEW'">
+                            </th>
+                            <th class="text-right">
+                                <label>NORMAL</label>
+                                <input type="text" class="form-control text-right" ng-model="rowData.normalLeavesQuantity" ng-disabled="ui.mode !== 'NEW'">
+                            </th>
+                            <th class="text-right">
+                                <label>SUPER</label>
+                                <form ng-submit="insertTable(rowData)">
+                                    <input type="text" class="form-control text-right" ng-model="rowData.superLeavesQuantity" ng-disabled="ui.mode !== 'NEW'">
+                                </form>
+                            </th>
+                            <th class="text-center">
+                                <a class="btn btn-default" ng-click="insertTable(rowData)"><span class="glyphicon glyphicon-plus"></span></a>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="padding-right: 5px; height: calc(100vh - 315px);">
+                    <table class="table-hover">
+                        <col style="width: 50%">
+                        <col style="width: 20%">
+                        <col style="width: 20%">
+                        <col style="width: 12%">
+                        <tbody>
+                            <tr ng-repeat="rowData in getRowData(null)">
+                                <td><div class="label label-default">{{rowData.client.indexNo}}</div> {{rowData.client.name}}</td>
+                                <td class="text-right">{{rowData.normalLeavesQuantity}}</td>
+                                <td class="text-right">{{rowData.superLeavesQuantity}}</td>
+                                <td>
+                                    <a class="btn btn-default" ng-click="editSelectdRow(rowData, $index);"><span class="glyphicon glyphicon-edit"></span></a><a class="btn btn-danger"  ng-click="deleteSelectedRow($index);"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <table style="padding-right: 10px;">
+                    <col style="width: 50%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <col style="width: 10%">
+                    <thead class="background-dark">
+                        <tr>
+                            <th>TOTAL QUANTITY</th>
+                            <th class="text-right">{{getNormalLeavesQuantityTotal()}}</th>
+                            <th class="text-right">{{getSuperLeavesQuantity()}}</th>
+                            <th class="text-right">&nbsp;</th>
+                        </tr>
+                        <tr>
+                            <th>FACTORY QUANTITY</th>
+                            <th class="text-right">6.50</th>
+                            <th class="text-right">6.50</th>
+                            <th class="text-right">&nbsp;</th>
+                        </tr>
+                        <tr>
+                            <th>DIFFERENCE QUANTITY</th>
+                            <th class="text-right">6.50</th>
+                            <th class="text-right">6.50</th>
+                            <th class="text-right">&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+        <div class="fab-container">
+            <a class="fab fab-danger" ng-show="ui.mode === 'SELECTED'"><i class="glyphicon glyphicon-edit"></i></a>
+            <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'"  ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+            <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'"  ng-click="ui.finish();"><i class="glyphicon glyphicon-ok"></i></a>
+        </div>
+</div>
+
+
+<!--<div class="index-content-footer">
+    content footer
+</div>-->
