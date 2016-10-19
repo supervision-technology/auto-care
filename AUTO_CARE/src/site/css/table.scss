@@ -6,7 +6,7 @@ table{
     border-collapse: separate;
     margin-bottom: 0px;
     table-layout: fixed;
-    
+
     //smart scroll
     padding-right: 5px;
 }
@@ -191,4 +191,11 @@ tr.ng-enter{
 }
 tr.ng-leave{
     animation: 0.5s bounceOut;
+}
+
+.extra-row {
+    animation: 0.5s zoomIn;
+    background-color: #5093E1 !important;
+    color: #ffffff;
+    width: 500px;;
 }
