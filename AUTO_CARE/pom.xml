@@ -7,11 +7,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.mac.gl</groupId>
-    <artifactId>green-leaves</artifactId>
+    <artifactId>care-point</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>GreenLeaves</name>
+    <name>CarePoint</name>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
