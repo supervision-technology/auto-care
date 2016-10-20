@@ -181,7 +181,7 @@ tbody tr .btn-danger{
 }
 
 .selected {
-    background-color:#5093E1 !important;
+    background-color:$primary-color !important;
     color:white;
 }
 
@@ -193,9 +193,18 @@ tr.ng-leave{
     animation: 0.5s bounceOut;
 }
 
-.extra-row {
+.select-primary-row{
     animation: 0.5s zoomIn;
-    background-color: #5093E1 !important;
-    color: #ffffff;
-    width: 500px;;
+    background-color: $primary-color !important;
+    color: $light-font-color;
+}
+.select-success-row{
+    animation: 0.5s zoomIn;
+    color: $light-font-color;
+    background-color: $success-color !important;
+}
+
+tbody tr input{
+    color: $dark-font-color;
+    background-color: $light-font-color;
 }

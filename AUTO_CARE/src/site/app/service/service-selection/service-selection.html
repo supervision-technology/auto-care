@@ -5,7 +5,7 @@
 
     <div class="col-xs-2 background-dark">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
-            <div class="col-xs-12" style="flex: 0 0 auto;">
+            <div class="col-xs-12" style="flex: 0 0 auto;font-size: 13px;">
                 <table>
                     <thead>
                         <tr>
@@ -16,68 +16,16 @@
             </div>
             <div class="col-xs-12 smart-scroll-y" style="flex: 1 1 auto;height: calc(100% - 200px);">
                 <table class="table-hover table-primary text-bold">
-                    <col style="width: 40%"/>
-                    <col style="width: 60%"/>
-                    <tbody>
-                        <tr>
+                    <col style="width: 100%"/>
+                    <tbody ng-repeat="vehicle in vehicle">
+                        <tr ng-click="vehicleSelectionDetail($index)" ng-class="{'selected':$index == selectedRow}">
                             <td>
-                                <img src="/img/01.png" alt=""/>   
+                                <img src="{{vehicle.image}}"/> {{vehicle.number}}  
                             </td>
-                            <td class="text-left">WCD 3000</td>
                         </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/02.png" alt=""/>
-                            </td>
-                            <td class="text-left">WCD 8925</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/03.png" alt=""/>
-                            </td>
-                            <td class="text-left">TD 7425</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/04.png" alt=""/>
-                            </td>
-                            <td class="text-left">TD 7425</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/05.png" alt=""/>
-                            </td>
-                            <td class="text-left">WCD 3000</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/01.png" alt=""/>   
-                            </td>
-                            <td class="text-left">WCD 3000</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/02.png" alt=""/>
-                            </td>
-                            <td class="text-left">WCD 8925</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/03.png" alt=""/>
-                            </td>
-                            <td class="text-left">TD 7425</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/04.png" alt=""/>
-                            </td>
-                            <td class="text-left">TD 7425</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <img src="/img/05.png" alt=""/>
-                            </td>
-                            <td class="text-left">WCD 3000</td>
+                        <tr class="select-primary-row animation-fade" ng-show="activePositionVehicle == $index">
+                            <td><span class="glyphicon glyphicon-user"></span> {{vehicle.customerName}} <br>
+                                <span class="glyphicon glyphicon-earphone"></span> {{vehicle.contactNumber}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -98,15 +46,15 @@
     </div>
 
     <div class="col-xs-6 background-light">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 51px);">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
             <div class="col-xs-12"  style="margin-top: 10px;height: 400px;">
                 <uib-tabset>
                     <uib-tab heading="PACKAGE" index="0">
                         <div class="col-xs-12">
                             <table>
                                 <col style="width: 60%;"/>
-                                <col style="width: 30%;"/>
-                                <col style="width: 10%;"/>
+                                <col style="width: 25%;"/>
+                                <col style="width: 15%;"/>
                                 <col />
                                 <thead>
                                     <tr>
@@ -116,18 +64,33 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 300px);">
+                        <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 150px);">
                             <table class="table-hover table-primary">
                                 <col style="width: 60%;"/>
-                                <col style="width: 30%;"/>
-                                <col style="width: 10%;"/>
+                                <col style="width: 25%;"/>
+                                <col style="width: 15%;"/>
                                 <tbody ng-repeat="package in package">
                                     <tr>
-                                        <td ng-click="toggleDetail($index)">{{package.name}}</td>
-                                        <td class="text-right" ng-click="toggleDetail($index)">{{package.price}}</td>
+                                        <td ng-click="packageSelectionDetail($index)">{{package.name}}</td>
+                                        <td class="text-right" ng-click="packageSelectionDetail($index)">{{package.price}}</td>
                                         <td><a class="btn btn-danger"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
                                     </tr>
-                                    <tr class="extra-row animation-fade" ng-show="activePosition == $index"><td>{{package.discription}}</td></tr>
+                                    <tr class="select-success-row animation-fade" ng-show="packagePositionVehicle == $index">
+                                        <td colspan="3">
+                                            <div>
+                                                <table>
+                                                    <col style="width: 10%;"/>
+                                                    <col style="width: 90%;"/>
+                                                    <tbody>
+                                                        <tr class="select-success-row animation-fade"  ng-repeat="items in package.discription.items">
+                                                            <td>{{items.indexNo}}</td>
+                                                            <td>{{items.name}}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -135,12 +98,12 @@
                     <uib-tab heading="SERVICE" index="1">
                         <div class="col-xs-12">
                             <div class="col-xs-8">
-                                <input type="text" class="search-input" placeholder="search">
+                                <input type="text" class="search-input" placeholder="search" ng-model="search">
                             </div>
                             <table>
                                 <col style="width: 60%;"/>
-                                <col style="width: 30%;"/>
-                                <col style="width: 10%;"/>
+                                <col style="width: 25%;"/>
+                                <col style="width: 15%;"/>
                                 <col />
                                 <thead>
                                     <tr>
@@ -150,18 +113,19 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 300px);">
+                        <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 213px);">
                             <table class="table-hover table-primary">
                                 <col style="width: 60%;"/>
-                                <col style="width: 30%;"/>
-                                <col style="width: 10%;"/>
-                                <tbody ng-repeat="service in service">
+                                <col style="width: 25%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody ng-repeat="service in service|filter:search">
                                     <tr>
-                                        <td ng-click="toggleDetail($index)">{{service.name}}</td>
-                                        <td class="text-right" ng-click="toggleDetail($index)">{{service.price}}</td>
+                                        <td ng-click="serviceSelectionDetail($index)">{{service.name}}</td>
+                                        <td class="text-right" ng-click="serviceSelectionDetail($index)">{{service.price}}</td>
                                         <td><a class="btn btn-danger"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
                                     </tr>
-                                    <tr class="extra-row animation-fade" ng-show="activePosition == $index"><td>{{service.discription}}</td></tr>
+                                    <tr class="select-success-row animation-fade" ng-show="servicePositionVehicle == $index">
+                                        <td colspan="3">{{service.discription}}</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -169,41 +133,41 @@
                     <uib-tab heading="ITEM" index="2">
                         <div class="col-xs-12">
                             <div class="col-xs-8">
-                                <input type="text" class="search-input" placeholder="search">
+                                <input type="text" class="search-input" placeholder="search" ng-model="search">
                             </div>
                             <table>
-                                <col style="width: 30%;"/>
-                                <col style="width: 20%;"/>
-                                <col style="width: 20%;"/>
-                                <col style="width: 20%;"/>
-                                <col style="width: 10%;"/>
+                                <col style="width: 40%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 15%;"/>
                                 <col />
                                 <thead>
                                     <tr>
                                         <th>NAME</th>
-                                        <th class="text-right">UNIT PRICE</th>
+                                        <th class="text-right">U.PRICE</th>
                                         <th class="text-right">QTY</th>
                                         <th class="text-right">AMOUNT</th>
                                     </tr>
                                 </thead>
                             </table>
                         </div>
-                        <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 300px);">
+                        <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 213px);">
                             <table class="table-hover table-primary">
-                                <col style="width: 30%;"/>
-                                <col style="width: 20%;"/>
-                                <col style="width: 20%;"/>
-                                <col style="width: 20%;"/>
-                                <col style="width: 10%;"/>
-                                <tbody ng-repeat="items in items">
+                                <col style="width: 40%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody ng-repeat="items in items|filter:search">
                                     <tr>
-                                        <td ng-click="toggleDetail($index)">{{items.name}}</td>
-                                        <td class="text-right" ng-click="toggleDetail($index)">{{items.price}}</td>
-                                        <td><input type="text"></td>
-                                        <td class="text-right" ng-click="toggleDetail($index)">{{items.price}}</td>
+                                        <td ng-click="itemSelectionDetail($index)">{{items.name}}</td>
+                                        <td class="text-right" ng-click="itemSelectionDetail($index)">{{items.price}}</td>
+                                        <td class="text-right"><input type="text" style="width: 60px"></td>
+                                        <td class="text-right" ng-click="itemSelectionDetail($index)">{{items.price}}</td>
                                         <td><a class="btn btn-danger"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
                                     </tr>
-                                    <tr class="extra-row animation-fade" ng-show="activePosition == $index"><td>{{items.discription}}</td></tr>
+                                    <tr class="select-success-row animation-fade" ng-show="itemActivePosition == $index"><td  colspan="5">{{items.discription}}</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -215,11 +179,11 @@
 
     <div class="col-xs-4 background-dark">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="height: 60px;">
                 <table>
-                    <col style="width: 60%;"/>
-                    <col style="width: 30%;"/>
-                    <col style="width: 10%;"/>
+                    <col style="width: 50%;"/>
+                    <col style="width: 35%;"/>
+                    <col style="width: 15%;"/>
                     <col />
                     <thead>
                         <tr>
@@ -229,11 +193,11 @@
                     </thead>
                 </table>
             </div>
-            <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 300px);">
+            <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 150px);">
                 <table>
-                    <col style="width: 60%;"/>
-                    <col style="width: 30%;"/>
-                    <col style="width: 10%;"/>
+                    <col style="width: 50%;"/>
+                    <col style="width: 35%;"/>
+                    <col style="width: 15%;"/>
                     <tbody>
                         <tr>
                             <td>Fully Body Wash</td>
@@ -246,7 +210,7 @@
                             <td><a class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
                         <tr>
-                            <td>Super Service Package</td>
+                            <td>Package 01</td>
                             <td class="text-right">10000.00</td>
                             <td><a class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
                         </tr>
@@ -256,8 +220,8 @@
             <div class="col-xs-12">
                 <table>
                     <col style="width: 50%;"/>
-                    <col style="width: 38%;"/>
-                    <col style="width: 12%;"/>
+                    <col style="width: 35%;"/>
+                    <col style="width: 15%;"/>
                     <tbody>
                         <tr class="text-bold">
                             <td>TOTAL</td>
@@ -267,84 +231,55 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-xs-12" style="margin-bottom: 10px;margin-top: 10px;">
+            <div class="col-xs-12" style="margin-bottom: 10px;margin-top: 10px;height: 35px;">
                 <table>
                     <thead>
                         <tr>
-                            <th>SERVICE HISTORT</th>
+                            <th>SERVICE HISTORY</th>
                         </tr>
                     </thead>
                 </table>
             </div>
-            <div class="col-xs-12">
+            <div class="col-xs-12" style="height: 60px;">
                 <table>
-                    <col style="width: 60%;"/>
                     <col style="width: 30%;"/>
-                    <col style="width: 10%;"/>
-                    <col />
+                    <col style="width: 40%;"/>
+                    <col style="width: 30%;"/>
                     <thead>
                         <tr>
-                            <th>INVOICE NUMBER</th>
-                            <th class="text-right">DATE</th>
+                            <th>I/NUMBER</th>
+                            <th>DATE</th>
+                            <th>AMOUNT</th>
                         </tr>
                     </thead>
                 </table>
             </div>
-            <div class="col-xs-12 smart-scroll-y" style="height: calc(100% - 324px);">
-                <table>
-                    <col style="width: 60%;"/>
+            <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 200px);">
+                <table class="table-hover table-primary">
                     <col style="width: 30%;"/>
-                    <col style="width: 10%;"/>
-                    <tbody>
+                    <col style="width: 40%;"/>
+                    <col style="width: 30%;"/>
+                    <tbody ng-repeat="history in history">
                         <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                            <td ng-click="historySelectionDetail($index)">{{history.invoiceNumber}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index)">{{history.date}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index)">{{history.amount}}</td>
                         </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
-                        </tr>
-                        <tr>
-                            <td>0111222</td>
-                            <td class="text-right">2016-10-09</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-zoom-in"></span></a></td>
+                        <tr class="animation-fade" ng-show="historyActivePosition == $index">
+                            <td colspan="3">
+                                <div>
+                                    <table>
+                                        <tbody>
+                                            <tr class="select-success-row animation-fade"  ng-repeat="items in history.discription.items">
+                                                <td>{{items.name}}</td>
+                                                <td>{{items.unitprice}}</td>
+                                                <td>{{items.qty}}</td>
+                                                <td>{{items.amount}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
