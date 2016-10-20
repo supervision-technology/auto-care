@@ -19,6 +19,9 @@
                             templateUrl: "app/system/home/home.html",
                             controller: "homeController"
                         })
+                        .when("/login", {
+                            templateUrl: "app/system/login/login.html",
+                        })
                         //daily-check-list
                         .when("/service/daily-check-list", {
                             templateUrl: "app/service/daily-check-list/daily-check-list.html",
