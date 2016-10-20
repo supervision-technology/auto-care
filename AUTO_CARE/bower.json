@@ -15,7 +15,7 @@
     "angular-chart.js": "^1.0.2",
     "angular-sanitize": "^1.5.8",
     "angular-ui-notification": "latest",
-    "angular-drag-and-drop-lists": "latest"
+    "angular-drag-and-drop-lists": "^1.4.0"
     
   }
 }

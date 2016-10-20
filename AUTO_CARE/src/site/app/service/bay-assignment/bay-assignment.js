@@ -1,6 +1,6 @@
 (function () {
 //module
-    angular.module("bayAssignmentModule", []);
+    angular.module("bayAssignmentModule", ['dndLists']);
     //controller
     angular.module("bayAssignmentModule")
             .controller("bayAssignmentController", function ($scope) {
