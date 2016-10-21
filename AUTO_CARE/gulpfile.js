@@ -46,7 +46,7 @@ gulp.task('build-js', function () {
         "bower_components/angular-bootstrap/ui-bootstrap.min.js",
         "bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
         "bower_components/angular-ui-notification/dist/angular-ui-notification.min.js",
-        "bower_components/ng-sortable/dist/ng-sortable.min.js"
+        "bower_components/angular-drag-and-drop-lists/angular-drag-and-drop-lists.min.js"
     ])
             .pipe(debug())
             .pipe(concat('vendor.js'))

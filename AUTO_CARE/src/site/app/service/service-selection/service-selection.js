@@ -4,6 +4,7 @@
     //controller
     angular.module("serviceSelectionModule")
             .controller("serviceSelectionController", function ($scope) {
+                $scope.selectionsFunction = true;
                 $scope.vehicle = [
                     {
                         image: "/img/01.png",
@@ -73,7 +74,7 @@
                                 {
                                     indexNo: "006",
                                     name: "A/C Repair",
-                                },
+                                }
                             ]
                         }
                     },
@@ -255,6 +256,56 @@
                 $scope.historySelectionDetail = function ($index) {
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.historyActivePosition = $scope.historyActivePosition == $index ? -1 : $index;
+                };
+
+                $scope.selections = [
+                    {
+                        name: "package 01",
+                        qty: 1,
+                        amount: "6000.00",
+                        discription: {
+                            items: [
+                                {
+                                    indexNo: "001",
+                                    name: "Body Wash & Vacuum",
+                                },
+                                {
+                                    indexNo: "002",
+                                    name: "Undercarriage Wash",
+                                },
+                                {
+                                    indexNo: "003",
+                                    name: "Oil Change",
+                                },
+                                {
+                                    indexNo: "004",
+                                    name: "Waxing",
+                                },
+                                {
+                                    indexNo: "005",
+                                    name: "Interior Claning & Engine Repaire",
+                                },
+                                {
+                                    indexNo: "006",
+                                    name: "A/C Repair",
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        name: "Interior Detailing",
+                        qty: 1,
+                        amount: "7000.00"
+                    },
+                    {
+                        name: "Oil Filters",
+                        qty: 2,
+                        amount: "28000.00"
+                    }
+                ];
+                $scope.selectionsSelectionDetail = function ($index) {
+                    $scope.isVisible = $scope.isVisible == 0 ? true : false;
+                    $scope.selectionsActivePosition = $scope.selectionsActivePosition == $index ? -1 : $index;
                 };
             });
 }());
