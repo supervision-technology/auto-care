@@ -9,7 +9,8 @@
         "serviceSelectionModule",
         "bayAssignmentModule",
         "requestItemModule",
-        "finalCheckListModule"
+        "finalCheckListModule",
+        "supervisorSelectionModule"
     ]);
 
     //route config
@@ -58,6 +59,11 @@
                         .when("/service/final-check-list", {
                             templateUrl: "app/service/final-check-list/final-check-list.html",
                             controller: "finalCheckListController"
+                        })
+                        //supervisor-selection
+                        .when("/service/supervisor-selection", {
+                            templateUrl: "app/service/supervisor-selection/supervisor-selection.html",
+                            controller: "supervisorSelectionController"
                         })
                         .otherwise({
                             redirectTo: "/"
