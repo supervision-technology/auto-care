@@ -1,9 +1,9 @@
 (function () {
 //module
-    angular.module("serviceSelectionModule", ['ui.bootstrap']);
+    angular.module("supervisorSelectionModule", ['ui.bootstrap']);
     //controller
-    angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope) {
+    angular.module("supervisorSelectionModule")
+            .controller("supervisorSelectionController", function ($scope) {
                 $scope.selectionsFunction = true;
                 $scope.vehicle = [
                     {
@@ -11,36 +11,12 @@
                         number: "WC 3351",
                         customerName: "Kavish Manjitha",
                         contactNumber: "0714303339"
-                    },
-                    {
-                        image: "/img/02.png",
-                        number: "MM 4488",
-                        customerName: "Kasun Chamara",
-                        contactNumber: "0714303339"
-                    },
-                    {
-                        image: "/img/03.png",
-                        number: "OP 7895",
-                        customerName: "Nidura Prageeth",
-                        contactNumber: "0714303339"
-                    },
-                    {
-                        image: "/img/04.png",
-                        number: "QT 8956",
-                        customerName: "Mohan",
-                        contactNumber: "0714303339"
-                    },
-                    {
-                        image: "/img/05.png",
-                        number: "UG 7256",
-                        customerName: "Mohan",
-                        contactNumber: "0714303339"
                     }
                 ];
 
                 $scope.selectedRow = null;
                 $scope.vehicleSelectionDetail = function ($index) {
-                    $scope.selectedRow = $index;
+                    $scope.selectedRow = 0;
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.activePositionVehicle = $scope.activePositionVehicle == $index ? -1 : $index;
                 };
@@ -98,7 +74,7 @@
                                 {
                                     indexNo: "004",
                                     name: "Waxing"
-                                },
+                                }
                             ]
                         }
                     },
@@ -133,7 +109,7 @@
                                 },
                                 {
                                     indexNo: "007",
-                                    name: "Engine Tuning & Scanning"
+                                    name: "Engine Tuning & Scanning",
                                 },
                                 {
                                     indexNo: "008",

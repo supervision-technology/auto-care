@@ -3,7 +3,7 @@
     angular.module("bayAssignmentModule", ['dndLists']);
     //controller
     angular.module("bayAssignmentModule")
-            .controller("bayAssignmentController", function ($scope) {
+            .controller("bayAssignmentController", function ($scope, $timeout) {
                 $scope.models = {
                     selected: null,
                     lists: {
@@ -33,20 +33,35 @@
                     }
                 };
 
-                // Generate initial model
-                for (var i = 1; i <= 1; ++i) {
-//                    $scope.models.lists.A.push({label: "Item A" + i});
-                    $scope.models.lists.CLEANING.push({vehicle_no: "FR-835" + i, image: '/img/01.png'});
-                    $scope.models.lists.SERVICE.push({vehicle_no: "RE-847" + i, image: '/img/02.png'});
-                    $scope.models.lists.WHEEL_ALIGNMENT.push({vehicle_no: "IJ-832" + i, image: '/img/02.png'});
-                    $scope.models.lists.VAXING.push({vehicle_no: "TT-375" + i, image: '/img/03.png'});
-                    $scope.models.lists.ENGINE_REPAIRING.push({vehicle_no: "PO-832" + i, image: '/img/04.png'});
-                    $scope.models.lists.INTERIOR_CLEANING.push({vehicle_no: "SRI-00" + i, image: '/img/05.png'});
-                }
+//                // Generate initial model
+//                for (var i = 1; i <= 1; ++i) {
+////                    $scope.models.lists.A.push({label: "Item A" + i});
+//                    $scope.models.lists.CLEANING.push({vehicle_no: "FR-835" + i, image: '/img/01.png'});
+//                    $scope.models.lists.SERVICE.push({vehicle_no: "RE-847" + i, image: '/img/02.png'});
+//                    $scope.models.lists.WHEEL_ALIGNMENT.push({vehicle_no: "IJ-832" + i, image: '/img/02.png'});
+//                    $scope.models.lists.VAXING.push({vehicle_no: "TT-375" + i, image: '/img/03.png'});
+//                    $scope.models.lists.ENGINE_REPAIRING.push({vehicle_no: "PO-832" + i, image: '/img/04.png'});
+//                    $scope.models.lists.INTERIOR_CLEANING.push({vehicle_no: "SRI-00" + i, image: '/img/05.png'});
+//                }
 
                 // Model to JSON for demo purpose
                 $scope.$watch('models', function (model) {
                     $scope.modelAsJson = angular.toJson(model, true);
                 }, true);
+
+                $scope.counter = 60;
+                $scope.onTimeout = function () {
+                    $scope.counter--;
+                    mytimeout = $timeout($scope.onTimeout, 1000);
+                    if ($scope.counter === 0) {
+                        $timeout.cancel(mytimeout);
+                    }
+                };
+
+                var mytimeout = $timeout($scope.onTimeout, 1000);
+                $scope.stop = function () {
+                    $timeout.cancel(mytimeout);
+                };
+
             });
 }());

@@ -198,6 +198,11 @@ tr.ng-leave{
     background-color: $primary-color !important;
     color: $light-font-color;
 }
+.select-primary-row-table-header{
+    background-color: $primary-color !important;
+    color: $light-font-color !important;
+}
+
 .select-success-row{
     animation: 0.5s zoomIn;
     color: $light-font-color;

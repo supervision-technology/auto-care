@@ -7,15 +7,17 @@
 
             <div class="col-xs-12 smart-scroll-y" style="flex: 1 1 auto;padding-top: 10px">
                 <div class="drag-drop">
-                        <div ng-if="listName === 'WAITING'" ng-repeat="(listName, list) in models.lists " class="col-md-12" style="height: 250px">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">{{listName}} BAY</h3>
-                                </div>
-                                <div class="panel-body" ng-include="'app/service/bay-assignment/simple.html'"></div>
+                    <div ng-if="listName === 'WAITING'" ng-repeat="(listName, list) in models.lists " class="col-md-12" style="height: 250px">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">{{listName}} BAY
+                                    <small>{{list.length}}</small>
+                                </h3>
                             </div>
+                            <div class="panel-body" ng-include="'app/service/bay-assignment/simple.html'"></div>
                         </div>
                     </div>
+                </div>
 
                 <div view-source="simple" class="background-light"></div>
             </div>
@@ -24,10 +26,10 @@
     <div class="col-xs-9 background-light">
         <div class="background-light" style="padding: 5px 10px 0px 10px;border-radius: 5px;margin-top: 10px;margin-right: 5px;display: flex; flex-flow: column; height: calc(100vh - 52px);">        
 
-<!--                <div class="col-sm-3 background-dark panel panel-primary" style="height: 250px ; margin: 3%;">
-                    <div class="panel-heading" style="margin-left: -15px;margin-right: -15px;">Washing Bay</div>
-                    <div class="panel-body"></div>
-                </div>-->
+            <!--                <div class="col-sm-3 background-dark panel panel-primary" style="height: 250px ; margin: 3%;">
+                                <div class="panel-heading" style="margin-left: -15px;margin-right: -15px;">Washing Bay</div>
+                                <div class="panel-body"></div>
+                            </div>-->
 
             <div class="row">
                 <div class="col-md-12 smart-scroll-y" style="flex: 1 1 auto;">
@@ -35,7 +37,10 @@
                         <div ng-if="listName != 'WAITING'" ng-repeat="(listName, list) in models.lists " class="col-md-4" style="height: 250px">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">{{listName}} BAY</h3>
+                                    <h3 class="panel-title">{{listName}} BAY
+                                        <i class="pull-right" ng-if="list.length > 0">{{counter}}.sec</i>
+                                        <small>{{list.length}}</small>
+                                    </h3>
                                 </div>
                                 <div class="panel-body" ng-include="'app/service/bay-assignment/simple.html'"></div>
                             </div>
@@ -46,16 +51,16 @@
 
                 </div>
 
-<!--                <div class="col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Generated Model</h3>
-                        </div>
-                        <div class="panel-body">
-                            <pre class="code">{{modelAsJson}}</pre>
-                        </div>
-                    </div>
-                </div>-->
+                <!--                <div class="col-md-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Generated Model</h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <pre class="code">{{modelAsJson}}</pre>
+                                        </div>
+                                    </div>
+                                </div>-->
 
             </div>
         </div>
