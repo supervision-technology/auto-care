@@ -7,7 +7,9 @@
         "vehicleEntranceModule",
         "employeeAssignmentModule",
         "serviceSelectionModule",
-        "bayAssignmentModule"
+        "bayAssignmentModule",
+        "requestItemModule",
+        "finalCheckListModule"
     ]);
 
     //route config
@@ -46,6 +48,16 @@
                         .when("/service/bay-assignment", {
                             templateUrl: "app/service/bay-assignment/bay-assignment.html",
                             controller: "bayAssignmentController"
+                        })
+                        //request-item
+                        .when("/service/request-item", {
+                            templateUrl: "app/service/request-item/request-item.html",
+                            controller: "requestItemController"
+                        })
+                        //final-check-list
+                        .when("/service/final-check-list", {
+                            templateUrl: "app/service/final-check-list/final-check-list.html",
+                            controller: "finalCheckListController"
                         })
                         .otherwise({
                             redirectTo: "/"
