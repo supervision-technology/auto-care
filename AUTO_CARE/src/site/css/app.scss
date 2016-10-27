@@ -18,30 +18,42 @@ body{
     flex-flow: column;
     white-space: nowrap;
     overflow-x: hidden;
-
     width: 250px;
     transition: .25s ease-in-out;
 
     .brand{
-        padding: 16px;
+        padding: 16px 0 16px 16px;
         height: 64px;
         align-content: center;
         flex: 0 1 auto;
+        overflow:hidden;
 
         .brand-image{
+            position: absolute;
+            display: inline-block;
+
             background-image: url(../img/leaf.png);
             height: 32px;
             width:32px;
             float: left;
+
+            opacity: 1;
+            transition: .25s ease-in-out;
         }
 
         .brand-text{
+            position: absolute;
+            display: inline-block;
+
             color: #E0E0E0;
-            float: left;
             line-height: 32px;
             margin-left: 8px;
             font-weight: 700;
             font-size: 18px;
+            float: left;
+
+            opacity: 1;
+            transition: .25s ease-in-out;
         }
     }
 
@@ -52,15 +64,24 @@ body{
             display: inline;
             width: 48px;
             height: 48px;
+            /*transform: rotate(0deg);*/
+            
+            transition: .25s ease-in-out;
         }
         .name{
             display: inline;
             margin-left: 16px;
+
+            opacity: 1;
+            transition: .25s ease-in-out;
         }
+            transition: .25s ease-in-out;
     }
 
     .search{
         margin: 8px 16px 8px 16px;
+        opacity: 1;
+        transition: .25s ease-in-out;
 
         input[type='text']{
             background-color: lighten($bg-ultra-dark-color,20%);
@@ -74,12 +95,53 @@ body{
 }
 
 .side-bar-hidden{
-    width: 0px !important;
+    width: 48px !important;
+
+    .brand{
+        .brand-image{
+            /*display: none;*/
+            opacity: 0;
+        }
+        .brand-text{
+            /*display: none;*/
+            opacity: 0;
+        }
+    }
+
+    .user{
+        padding: 0;
+        margin: 6px;
+
+        .avatar{
+            width: 36px;
+            height: 36px;
+            text-align: center;
+            /*transform: rotate(360deg);*/
+        }
+
+        .name{
+            opacity: 0;
+            /*display: none;*/
+        }
+    }
+
+    .search{
+        opacity: 0;
+        /*display: none;*/
+    }
+
+    .index-sidebar-navigation{
+        opacity: 0;
+        /*display: none;*/
+    }
 }
 
 .index-sidebar-navigation{
     flex: 1 1 auto;
     color: #E0E0E0;
+    
+    opacity: 1;
+    transition: 0.25s ease-in-out;
 }
 
 .index-sidebar-navigation ul{
@@ -96,7 +158,6 @@ body{
 .index-sidebar-navigation li a{
     display: block;
     padding-left: 32px;
-
     text-decoration: none;
     color: #E0E0E0;
 }

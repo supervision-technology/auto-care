@@ -1,6 +1,6 @@
 <div class="index-content-body" >
     <div class="col-xs-4">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
             <div class="col-xs-12" style="flex: 0 0 auto; height: 70px;margin-top: 50px;margin-bottom: 50px;">
                 <table>
                     <thead>
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-8 background-dark" style="height: calc(100vh - 52px);">
+    <div class="col-xs-8 background-dark" style="height: calc(100vh);">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
             <div class="col-xs-12" style="margin-top: 10px;height: 40px;">
                 <table>
@@ -90,6 +90,7 @@
                             <td class="text-left">6000 KM</td>
                         </tr>
                         <tr ng-class="{'select-danger-row':difarance >= oilUsage}">
+<!--                        <tr ng-class="{'select-danger-row':difarance >= oilUsage,'select-success-row':difarance < oilUsage}">-->
                             <td>OIL USAGE STATUS</td>
                             <td class="text-left">{{difarance}} KM</td>
                             <td class="text-left">{{oilStatus}} KM</td>
@@ -139,7 +140,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="select-primary-row animation-fade"  ng-repeat="items in history.discription.items">
+                                            <tr class="select-primary-row"  ng-repeat="items in history.discription.items">
                                                 <td>{{items.name}}</td>
                                                 <td class="text-right">{{items.unitprice}}</td>
                                                 <td class="text-right">{{items.qty}}</td>

@@ -1,11 +1,9 @@
 @import "mixins/variables.scss";
 
 .hamburger{
-    display: inline-block;
-    position:absolute;
-    margin:auto;
-    float:left;
-    margin-left:10px;
+    float:right;
+    margin :5px 5px 0 0;
+    
     
     div{
         width: 40px;
@@ -22,8 +20,8 @@
             width: 100%;
             left: 0;
             opacity: 1;
-            transition: .6s ease-in-out;
-            background-color: $dark-font-color;
+            transition: .6s ease-in-out;         
+            background-color: $light-font-color;
         }
 
         span:nth-child(1) {
