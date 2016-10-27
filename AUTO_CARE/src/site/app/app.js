@@ -13,7 +13,8 @@
         //stock
         "requestItemModule",
         //front office
-        "dashBoardModule"
+        "dashBoardModule",
+        "summaryModule"
     ]);
 
     //route config
@@ -72,6 +73,15 @@
                         .when("/front-office/service-dashboard", {
                             templateUrl: "app/front-office/service-dashboard/service-dashboard.html",
                             controller: "dashBoardController"
+                        })
+                        //front-office
+                        .when("/front-office/invoice", {
+                            templateUrl: "app/front-office/invoice/invoice.html"
+//                            controller: ""
+                        })
+                        .when("/front-office/summary", {
+                            templateUrl: "app/front-office/summary/summary.html",
+                            controller: "SummaryController"
                         })
                         .otherwise({
                             redirectTo: "/"
