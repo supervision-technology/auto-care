@@ -10,7 +10,8 @@
         "bayAssignmentModule",
         "requestItemModule",
         "finalCheckListModule",
-        "supervisorSelectionModule"
+        "supervisorSelectionModule",
+        "summaryModule"
     ]);
 
     //route config
@@ -64,6 +65,15 @@
                         .when("/service/supervisor-selection", {
                             templateUrl: "app/service/supervisor-selection/supervisor-selection.html",
                             controller: "supervisorSelectionController"
+                        })
+                        //front-office
+                        .when("/front-office/invoice", {
+                            templateUrl: "app/front-office/invoice/invoice.html"
+//                            controller: ""
+                        })
+                        .when("/front-office/summary", {
+                            templateUrl: "app/front-office/summary/summary.html",
+                            controller: "SummaryController"
                         })
                         .otherwise({
                             redirectTo: "/"
