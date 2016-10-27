@@ -98,7 +98,7 @@
                                 {
                                     indexNo: "004",
                                     name: "Waxing"
-                                },
+                                }
                             ]
                         }
                     },

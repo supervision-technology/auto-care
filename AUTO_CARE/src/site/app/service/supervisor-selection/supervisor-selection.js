@@ -11,12 +11,36 @@
                         number: "WC 3351",
                         customerName: "Kavish Manjitha",
                         contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/02.png",
+                        number: "MM 4488",
+                        customerName: "Kasun Chamara",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/04.png",
+                        number: "QT 8956",
+                        customerName: "Mohan",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/05.png",
+                        number: "UG 7256",
+                        customerName: "Mohan",
+                        contactNumber: "0714303339"
                     }
                 ];
 
                 $scope.selectedRow = null;
                 $scope.vehicleSelectionDetail = function ($index) {
-                    $scope.selectedRow = 0;
+                    $scope.selectedRow = $index;
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.activePositionVehicle = $scope.activePositionVehicle == $index ? -1 : $index;
                 };

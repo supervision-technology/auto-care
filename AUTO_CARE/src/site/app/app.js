@@ -23,7 +23,7 @@
                             controller: "homeController"
                         })
                         .when("/login", {
-                            templateUrl: "app/system/login/login.html",
+                            templateUrl: "app/system/login/login.html"
                         })
                         //daily-check-list
                         .when("/service/daily-check-list", {

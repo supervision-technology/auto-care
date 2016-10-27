@@ -1,45 +1,55 @@
-<div class="index-content-body">
-    <div class="col-xs-4 background-dark" style="height: calc(100vh - 22px);"></div>
-    <div class="col-xs-4 background-dark">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 22px);">
+<div class="index-content-body" >
+    <div class="col-xs-4">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
             <div class="col-xs-12" style="flex: 0 0 auto; height: 70px;margin-top: 50px;margin-bottom: 50px;">
                 <table>
                     <thead>
                         <tr>
-                            <th class="text-center">VEHICLE ENTRANCE</th>
+                            <th class="text-left ">VEHICLE ENTRANCE</th>
                         </tr>
                     </thead>
                 </table>
-                <input type="text" class="search-input" placeholder="search">
+                <div class="col-xs-12">
+                    <input type="text" class="search-input" ng-model="vehicle.number" uib-typeahead="vehicle as (vehicle.number) for vehicle in getVehicles($viewValue)|filter:$viewValue|limitTo:10"  typeahead-on-select="getVehicleSelections($model);">
+                </div>
             </div>
-            <div class="col-xs-12 smart-scroll-y" style="flex: 1 1 auto;">
-                <table class="control-table">
-                    <col style="width: 35%"/>
-                    <col style="width: 65%"/>
-                    <col />
-                    <tbody>
-                        <tr>
-                            <td>
-                                <label for="name" class="control-label text-left">NAME</label>
-                            </td>
-                            <td>
-                                <input class="form-control text-right" id="name" type="text">  
-                            </td>
+            <div class="col-xs-12" style="flex: 1 1 auto;">
+                <table class="animation-fade">
+                    <col style="width: 40%"/>
+                    <col style="width: 50%"/> 
+                    <col style="width: 12%"/>
+                    <tbody class="background-dark">
+                        <tr class="background-light">
+                            <td colspan="2">CUSTOMER DETAILS</td>
                         </tr>
                         <tr>
-                            <td>
-                                <label for="contact" class="control-label text-left">CONTACT</label>
-                            </td>
-                            <td>
-                                <input class="form-control text-right" id="contact" type="number">
-                            </td>
+                            <td>NAME</td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="vehicleDetail.name"  ng-disabled="checkVehicle" style="margin-top: 5px;"></td>
                         </tr>
                         <tr>
+                            <td>CONTACT</td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="vehicleDetail.contact" ng-disabled="checkVehicle" style="margin-top: 5px;"></td>
+                        </tr>
+                        <tr>
+                            <td>PRICE CATEGORY</td>
+                            <td colspan="2">
+                                <select class="form-control text-center" ng-model="vehicleDetail.type" ng-disabled="checkVehicle" style="margin-top: 5px;">
+                                    <option>BB</option>
+                                    <option>CC</option>
+                                    <option>DD</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="background-light">
+                            <td colspan="2">RUNNING KM DETAILS</td>
+                        </tr>
+                        <tr>
+                            <td>NEW RUNNING KM</td>
                             <td>
-                                <label for="chequeno" class="control-label text-left">s/c no</label>
+                                <input type="text" class="form-control text-right" ng-model="newKmRunningCount" style="margin-top: 5px;"><a ></a>
                             </td>
                             <td>
-                                <input class="form-control text-right" id="chequeno" type="text">
+                                <a class="btn btn-primary" ng-click="getNewKmRunningCount(newKmRunningCount);"><span class="glyphicon glyphicon-plus"></span></a>
                             </td>
                         </tr>
                     </tbody>
@@ -47,6 +57,106 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-4 background-dark" style="height: calc(100vh - 22px);">
+    <div class="col-xs-8 background-dark" style="height: calc(100vh - 52px);">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            <div class="col-xs-12" style="margin-top: 10px;height: 40px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SERVICE HISTORY</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-12" style="height: calc(100vh - 485px);">
+                <table>
+                    <col style="width: 40%"/>
+                    <col style="width: 30%"/>
+                    <col style="width: 30%"/>
+                    <tbody ng-repeat="selections in selections">
+                        <tr>
+                            <td>LAST SERVICE DETAILS</td>
+                            <td class="text-left">Date - 2016-06-16</td>
+                            <td class="text-left">Duration - 04 Months ago</td>
+                        </tr>
+                        <tr>
+                            <td>RUNNING KM DETAILS</td>
+                            <td class="text-left">LAST CHECK - {{vehicleDetail.runningKm}} KM</td>
+                            <td class="text-left">NOW CHECK - {{newKmRunningCount}} KM</td>
+                        </tr>
+                        <tr>
+                            <td>LAST USE OIL</td>
+                            <td class="text-left">Hex Oil</td>
+                            <td class="text-left">6000 KM</td>
+                        </tr>
+                        <tr ng-class="{'select-danger-row':difarance >= oilUsage}">
+                            <td>OIL USAGE STATUS</td>
+                            <td class="text-left">{{difarance}} KM</td>
+                            <td class="text-left">{{oilStatus}} KM</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12" style="height: 40px;">
+                <table>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <thead>
+                        <tr>
+                            <th>INDB</th>
+                            <th class="text-right">DATE</th>
+                            <th class="text-right">AMOUNT</th>
+                            <th class="text-right">DEURATION</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 300px);">
+                <table class="table-hover table-primary">
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
+                    <tbody ng-repeat="history in history">
+                        <tr>
+                            <td ng-click="historySelectionDetail($index)">{{history.invoiceNumber}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index)">{{history.date}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index)">{{history.amount}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index)">{{$index +1}} Months ago</td>
+                        </tr>
+                        <tr class="select-primary-row animation-fade" ng-show="historyActivePosition == $index">
+                            <td colspan="4">
+                                <div>
+                                    <table>
+                                        <thead>
+                                            <tr class="select-primary-row-table-header">
+                                                <th>Name</th>
+                                                <th class="text-right">Unit Price</th>
+                                                <th class="text-right">QTY</th>
+                                                <th class="text-right">Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="select-primary-row animation-fade"  ng-repeat="items in history.discription.items">
+                                                <td>{{items.name}}</td>
+                                                <td class="text-right">{{items.unitprice}}</td>
+                                                <td class="text-right">{{items.qty}}</td>
+                                                <td class="text-right">{{items.amount}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-success"  ng-click="newVehicle();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-plus"></i></a>
 </div>

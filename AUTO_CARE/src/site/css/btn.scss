@@ -44,6 +44,15 @@
     background-color: $danger-color;
     border-color: $danger-color-border;
 }
+.btn-white{
+    background-color: $light-font-color;
+    border-color: $light-font-color;
+}
+
+.btn-white:hover{
+    background-color: $light-font-color;
+    border-color: $light-font-color;
+}
 
 .btn-default:hover{
     background-color: $default-color-dark;

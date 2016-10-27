@@ -2,20 +2,50 @@
 </div>
 
 <div class="index-content-body ">
-    <div class="col-xs-6 background-light">
+
+    <div class="col-xs-2 background-dark">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
-            <table class="text-bold">
-                <tbody ng-repeat="vehicle in vehicle">
-                    <tr>
-                        <td>
-                            <img src="{{vehicle.image}}"/>  
-                        </td>
-                        <td>{{vehicle.number}}</td>
-                        <td>{{vehicle.customerName}}</td>
-                        <td>{{vehicle.contactNumber}}</td>
-                    </tr> 
-                </tbody>
-            </table>
+            <div class="col-xs-12" style="flex: 0 0 auto;font-size: 13px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>SELECT VEHICLE</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-12 smart-scroll-y" style="flex: 1 1 auto;height: calc(100% - 200px);">
+                <table class="table-primary text-bold">
+                    <tbody ng-repeat="vehicle in vehicle">
+                        <tr ng-click="vehicleSelectionDetail($index)" ng-class="{'selected':$index == selectedRow}">
+                            <td>
+                                <img src="{{vehicle.image}}"/>  
+                            </td>
+                            <td>{{vehicle.number}}</td>
+                        </tr> 
+                        <tr class="select-success-row animation-fade" ng-show="activePositionVehicle == $index">
+                            <td colspan="2"><span class="glyphicon glyphicon-user"></span> {{vehicle.customerName}} <br>
+                                <span class="glyphicon glyphicon-earphone"></span> {{vehicle.contactNumber}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-xs-12">
+                <table>
+                    <col style="width: 40%"/>
+                    <col style="width: 60%"/>
+                    <tbody>
+                        <tr class="text-bold">
+                            <td>TOTAL</td>
+                            <td class="text-left">8</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-5 background-light">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
             <div class="col-xs-12"  style="margin-top: 10px;height: 400px;">
                 <uib-tabset>
                     <uib-tab heading="PACKAGE" index="0">
@@ -146,20 +176,21 @@
         </div>
     </div>
 
-    <div class="col-xs-6 background-dark">
+    <div class="col-xs-5 background-dark">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
             <div class="col-xs-12" style="height: 60px;">
                 <table>
-                    <col style="width: 50%;"/>
+                    <col style="width: 45%;"/>
                     <col style="width: 15%;"/>
                     <col style="width: 35%;"/>
-                    <col style="width: 15%;"/>
+                    <col style="width: 20%;"/>
                     <col />
                     <thead>
                         <tr>
                             <th>SELECTIONS</th>
                             <th class="text-right">QTY</th>
                             <th class="text-right">AMOUNT</th>
+                            <th class="text-right">&nbsp;</th>
                         </tr>
                     </thead>
                 </table>
@@ -185,11 +216,15 @@
                                 <div>
                                     <table>
                                         <col style="width: 10%;"/>
-                                        <col style="width: 90%;"/>
+                                        <col style="width: 80%;"/>
+                                        <col style="width: 10%;"/>
                                         <tbody>
                                             <tr class="select-primary-row animation-fade"  ng-repeat="items in selections.discription.items">
                                                 <td>{{items.indexNo}}</td>
                                                 <td>{{items.name}}</td>
+                                                <td>
+                                                    <a class="btn btn-white btn-lg"><span class="glyphicon glyphicon-record"></span></a>
+                                                </td>
                                             </tr>
                                         </tbody>
                                     </table>
