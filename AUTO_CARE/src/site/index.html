@@ -12,31 +12,31 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
     </head>
     <body ng-app="appModule" style="margin-top: 50px">
-            <nav class="navbar navbar-inverse navbar-fixed-top" style="border-radius: 0px;">
-                <div class="container-fluid">
-                    <div class="navbar-header" style="margin-top: 5px;">
-                        <img src="img/logo.png"/>
-                    </div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="#/service/daily-check-list">Daily Check List</a></li>
-                        <li><a href="#/service/employee-assignment">Employee Assignment</a></li>
-                        <li><a href="#/service/vehicle-entrance">Vehicle Entrance</a></li> 
-                        <li><a href="#/service/service-selection">Service Selection</a></li> 
-                        <li> <a href="#/service/bay-assignment">Bay Assignment</a></li> 
-                        <li> <a href="#/service/request-item">Request Item</a></li> 
-                        <li> <a href="#/service/final-check-list">Final Check List</a></li>
-                         <li> <a href="#/service/supervisor-selection">Supervisor Selection</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#/login"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
-                    </ul>
+        <nav class="navbar navbar-inverse navbar-fixed-top" style="border-radius: 0px;">
+            <div class="container-fluid">
+                <div class="navbar-header" style="margin-top: 5px;">
+                    <img src="img/logo.png"/>
                 </div>
-            </nav>
-    <div ng-view>
-        <!--CONTENT OF THE APP-->
-    </div>
-    <!--js dependencies-->
-    <!-- inject:js -->
-    <!-- endinject -->
-</body>
+                <ul class="nav navbar-nav">
+                    <li><a href="#/service/daily-check-list">Daily Check List</a></li>
+                    <li><a href="#/service/employee-assignment">Employee Assignment</a></li>
+                    <li><a href="#/service/vehicle-entrance">Vehicle Entrance</a></li> 
+                    <li><a href="#/service/service-selection">Service Selection</a></li> 
+                    <li> <a href="#/service/bay-assignment">Bay Assignment</a></li> 
+                    <li> <a href="#/service/request-item">Request Item</a></li> 
+                    <li> <a href="#/service/final-check-list">Final Check List</a></li>
+                    <li> <a href="#/service/supervisor-selection">Supervisor Selection</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#/login"><span class="glyphicon glyphicon-user"></span> Sign Out</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div ng-view>
+            <!--CONTENT OF THE APP-->
+        </div>
+        <!--js dependencies-->
+        <!-- inject:js -->
+        <!-- endinject -->
+    </body>
 </html>

@@ -193,8 +193,11 @@ tr.ng-leave{
     animation: 0.5s bounceOut;
 }
 
+.select-danger-row{
+    background-color: $danger-color !important;
+    color: $light-font-color;
+}
 .select-primary-row{
-    animation: 0.5s zoomIn;
     background-color: $primary-color !important;
     color: $light-font-color;
 }
@@ -204,7 +207,6 @@ tr.ng-leave{
 }
 
 .select-success-row{
-    animation: 0.5s zoomIn;
     color: $light-font-color;
     background-color: $success-color !important;
 }
