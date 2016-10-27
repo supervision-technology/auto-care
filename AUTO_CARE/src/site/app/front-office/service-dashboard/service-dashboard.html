@@ -1,0 +1,70 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body ">
+
+    <div class="col-xs-3 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            <div class="col-xs-12" style="flex: 0 0 auto;font-size: 13px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <td class="background-light">
+                                <span class="glyphicon glyphicon-minus text-primary"></span> <br>New 
+                            </td>
+                            <td class="background-light">
+                                <span class="glyphicon glyphicon-minus text-warning"></span> Pending 
+                            </td>
+                            <td class="background-light">
+                                <span class="glyphicon glyphicon-minus text-success"></span> Finished 
+                            </td>
+                            <td class="background-light">
+                                <span class="glyphicon glyphicon-minus"></span> Complete
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="col-xs-12 smart-scroll-y" style="flex: 1 1 auto;height: calc(100% - 200px);">
+                <table class="table-hover table-primary text-bold">
+                    <col style="width: 100%"/>
+                    <tbody ng-repeat="vehicle in vehicle">
+                        <tr ng-click="vehicleSelectionDetail($index)" ng-class="{'selected':$index == selectedRow}" style="height: 60px">
+                            <td>
+                                <img src="{{vehicle.image}}"/> {{vehicle.number}}
+                            </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-9">
+        <div class="col-md-12" style="flex: 1 1 auto;padding-top: 10px">
+            <div class="drag-drop">
+                <div ng-if="list.length > 0" ng-repeat="(listName, list) in models.lists " class="col-md-4" style="height: 150px">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">{{listName}} BAY
+                            </h3>
+                        </div>
+                        <ul dnd-list="list">
+                            <div class="panel">
+
+                                <li ng-repeat="item in list" class="smart-scroll-y" >
+                                    <div class="col-xs-1">
+                                        {{$index + 1}}
+                                    </div>
+                                    <div class="col-xs-10">
+                                        It takes <i class="text-primary text-bold">{{item.duration}}</i> to go <br>
+                                        from <i class="text-bold">{{item.inTime}}</i> to <i class="text-bold">{{item.outTime}}  </i>
+                                    </div>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
