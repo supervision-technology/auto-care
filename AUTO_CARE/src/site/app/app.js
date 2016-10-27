@@ -8,9 +8,12 @@
         "employeeAssignmentModule",
         "serviceSelectionModule",
         "bayAssignmentModule",
-        "requestItemModule",
         "finalCheckListModule",
-        "supervisorSelectionModule"
+        "supervisorSelectionModule",
+        //stock
+        "requestItemModule",
+        //front office
+        "dashBoardModule"
     ]);
 
     //route config
@@ -51,8 +54,8 @@
                             controller: "bayAssignmentController"
                         })
                         //request-item
-                        .when("/service/request-item", {
-                            templateUrl: "app/service/request-item/request-item.html",
+                        .when("/stock/request-item", {
+                            templateUrl: "app/stock/request-item/request-item.html",
                             controller: "requestItemController"
                         })
                         //final-check-list
@@ -64,6 +67,11 @@
                         .when("/service/supervisor-selection", {
                             templateUrl: "app/service/supervisor-selection/supervisor-selection.html",
                             controller: "supervisorSelectionController"
+                        })
+                        //dash-Board
+                        .when("/front-office/service-dashboard", {
+                            templateUrl: "app/front-office/service-dashboard/service-dashboard.html",
+                            controller: "dashBoardController"
                         })
                         .otherwise({
                             redirectTo: "/"

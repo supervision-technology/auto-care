@@ -1,9 +1,9 @@
 (function () {
 //module
-    angular.module("requestItemModule", []);
+    angular.module("requestItemModule", ["ngAnimate", "ui-notification"]);
     //controller
     angular.module("requestItemModule")
-            .controller("requestItemController", function ($scope) {
+            .controller("requestItemController", function ($scope, Notification) {
 
                 $scope.selectionsFunction = true;
                 $scope.vehicle = [
@@ -69,15 +69,40 @@
                         check: false
                     }
                 ];
+                $scope.issueItems = [];
                 $scope.barcodeText = "";
+                $scope.viewNotify = false;
+
                 $scope.doBarcode = function () {
                     for (var i = 0; i < $scope.requestItems.length; i++) {
-
                         if ($scope.requestItems[i].indexNo == $scope.barcodeText) {
-                            $scope.requestItems[i].check = true;
+                            $scope.doRemoveFromRequest(i, $scope.requestItems[i]);
+                            $scope.barcodeText = "";
+                            $scope.viewNotify = false;
                             break;
+                        } else {
+                            $scope.viewNotify = true;
                         }
                     }
+                    if (viewNotify) {
+                        Notification.error('Not Found Item.');
+                        
+                    }
+                };
+
+                $scope.doRemoveFromRequest = function (index, item) {
+                    console.log(index);
+                    console.log(item.name);
+                    $scope.issueItems.push(item);
+                    $scope.requestItems.splice(index, 1);
+
+                };
+                $scope.doRemoveFromIssue = function (index, item) {
+                    console.log(index);
+                    console.log(item.name);
+                    $scope.requestItems.push(item);
+                    $scope.issueItems.splice(index, 1);
+
                 };
             });
 }());
