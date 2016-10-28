@@ -1,73 +1,53 @@
-<div class="index-content-header">
+<div class="tile-list background-dark">
+    <div class="tile-list-title">
+        <h4>VEHICLE</h4>
+    </div>
+    <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
+        <div class="tile tile-128" ng-repeat="vehicle in vehicle" ngDraggable>
+            <span>
+                <img src="{{vehicle.image}}"/>  
+
+                <label>
+                    {{vehicle.number}}
+                </label>
+            </span>
+        </div>
+    </div>
 </div>
 
-<div class="index-content-body ">
-    <div class="col-xs-3 background-dark">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
-
-            <div class="col-xs-12 smart-scroll-y" style="flex: 1 1 auto;padding-top: 10px">
-                <div class="drag-drop">
-                    <div ng-if="listName === 'WAITING'" ng-repeat="(listName, list) in models.lists " class="col-md-12" style="height: 250px">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">{{listName}} BAY
-                                    <small>{{list.length}}</small>
-                                </h3>
-                            </div>
-                            <div class="panel-body" ng-include="'app/service/bay-assignment/simple.html'"></div>
-                        </div>
-                    </div>
+<div class="index-content-body">
+    <div style="float: left; width: calc(100% - 133px);">
+        <div class="background-light full-height grid">
+            <div class="grid-tile" grid="{{grid1}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 01</h4>
                 </div>
-
-                <div view-source="simple" class="background-light"></div>
             </div>
+            <div class="grid-tile" grid="{{grid2}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 02</h4>
+                </div>
+            </div>
+            <div class="grid-tile" grid="{{grid3}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 03</h4>
+                </div>
+            </div>
+            <div class="grid-tile" grid="{{grid4}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 04</h4>
+                </div>
+            </div>
+            <div class="grid-tile" grid="{{grid5}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 05</h4>
+                </div>
+            </div>
+<!--            <div class="grid-tile" grid="{{grid6}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 06</h4>
+                </div>
+            </div>-->
         </div>
     </div>
-    <div class="col-xs-9 background-light">
-        <div class="background-light" style="padding: 5px 10px 0px 10px;border-radius: 5px;margin-top: 10px;margin-right: 5px;display: flex; flex-flow: column; height: calc(100vh - 52px);">        
-
-            <!--                <div class="col-sm-3 background-dark panel panel-primary" style="height: 250px ; margin: 3%;">
-                                <div class="panel-heading" style="margin-left: -15px;margin-right: -15px;">Washing Bay</div>
-                                <div class="panel-body"></div>
-                            </div>-->
-
-            <div class="row">
-                <div class="col-md-12 smart-scroll-y" style="flex: 1 1 auto;">
-                    <div class="drag-drop">
-                        <div ng-if="listName != 'WAITING'" ng-repeat="(listName, list) in models.lists " class="col-md-4" style="height: 250px">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">{{listName}} BAY
-                                        <i class="pull-right" ng-if="list.length > 0">{{counter}}.sec</i>
-                                        <small>{{list.length}}</small>
-                                    </h3>
-                                </div>
-                                <div class="panel-body" ng-include="'app/service/bay-assignment/simple.html'"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div view-source="simple" class="background-light"></div>
-
-                </div>
-
-                <!--                <div class="col-md-4">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            <h3 class="panel-title">Generated Model</h3>
-                                        </div>
-                                        <div class="panel-body">
-                                            <pre class="code">{{modelAsJson}}</pre>
-                                        </div>
-                                    </div>
-                                </div>-->
-
-            </div>
-        </div>
-        <div class="fab-container">
-            <a class="fab fab-danger" ng-show="true"><i class="glyphicon glyphicon-edit"></i></a>
-            <a class="fab fab-lg fab-primary" ng-show="true"  ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-            <a class="fab fab-lg fab-primary" ng-show="true"  ng-click="ui.finish();"><i class="glyphicon glyphicon-ok"></i></a>
-        </div>
-    </div>
-
+</div>
