@@ -230,7 +230,6 @@
                 ];
 
                 $scope.serviceSelectionDetail = function ($index) {
-                    $scope.selectedRow = $index;
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.servicePositionVehicle = $scope.servicePositionVehicle == $index ? -1 : $index;
                 };
