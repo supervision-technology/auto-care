@@ -90,7 +90,7 @@
 
     angular.module("appModule")
             .controller("appController", function ($scope, $timeout) {
-                $scope.hamburgerOpen = false;
+                $scope.hamburgerOpen = true;
 
                 $scope.toggleHamburger = function () {
                     $scope.hamburgerOpen = !$scope.hamburgerOpen;

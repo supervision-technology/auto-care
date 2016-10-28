@@ -25,6 +25,48 @@
                         contactNumber: "0714303339"
                     },
                     {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
                         image: "/img/04.png",
                         number: "QT 8956",
                         customerName: "Mohan",

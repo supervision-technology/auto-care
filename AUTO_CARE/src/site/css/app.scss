@@ -18,8 +18,10 @@ body{
     flex-flow: column;
     white-space: nowrap;
     overflow-x: hidden;
-    width: 250px;
+    width: 300px;
     transition: .25s ease-in-out;
+    position: absolute;
+    z-index: 10;
 
     .brand{
         padding: 16px 0 16px 16px;
@@ -27,6 +29,7 @@ body{
         align-content: center;
         flex: 0 1 auto;
         overflow:hidden;
+
 
         .brand-image{
             position: absolute;
@@ -47,7 +50,7 @@ body{
 
             color: #E0E0E0;
             line-height: 32px;
-            margin-left: 8px;
+            margin-left: 60px;
             font-weight: 700;
             font-size: 18px;
             float: left;
@@ -65,7 +68,7 @@ body{
             width: 48px;
             height: 48px;
             /*transform: rotate(0deg);*/
-            
+
             transition: .25s ease-in-out;
         }
         .name{
@@ -75,7 +78,7 @@ body{
             opacity: 1;
             transition: .25s ease-in-out;
         }
-            transition: .25s ease-in-out;
+        transition: .25s ease-in-out;
     }
 
     .search{
@@ -139,7 +142,7 @@ body{
 .index-sidebar-navigation{
     flex: 1 1 auto;
     color: #E0E0E0;
-    
+
     opacity: 1;
     transition: 0.25s ease-in-out;
 }
@@ -184,6 +187,7 @@ body{
     height: 100vh;
     display: flex;
     flex-flow: column;
+    margin-left: 48px;
 }
 
 .index-header{

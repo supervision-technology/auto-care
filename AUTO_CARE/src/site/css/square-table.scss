@@ -1,0 +1,26 @@
+@import "mixins/variables.scss";
+
+table.square-table{
+    width:100%;
+
+    thead{
+        font-weight: 500;
+    }
+
+    tbody{
+    }
+
+    tr{
+        line-height: 64px;
+        border-bottom: $bg-dark-color-border solid 1px;
+    }
+
+    th{
+        padding: 0 15px 0 15px;
+        text-transform: uppercase;
+    }
+
+    td{
+        padding: 0 15px 0 15px;
+    }
+}
