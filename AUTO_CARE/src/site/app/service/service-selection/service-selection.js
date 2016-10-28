@@ -353,5 +353,16 @@
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.selectionsActivePosition = $scope.selectionsActivePosition == $index ? -1 : $index;
                 };
+
+                $scope.qty = 1;
+                $scope.spinnerMinus = function (qty) {
+                    if ($scope.qty > 1) {
+                        $scope.qty -= 1;
+                    }
+                };
+
+                $scope.spinnerPlus = function (qty) {
+                    $scope.qty += 1;
+                };
             });
 }());

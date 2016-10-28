@@ -118,16 +118,16 @@
                             </div>
 
                             <table class="square-table background-dark">
-                                <col style="width: 40%;"/>
+                                <col style="width: 30%;"/>
                                 <col style="width: 15%;"/>
+                                <col style="width: 30%;"/>
                                 <col style="width: 15%;"/>
-                                <col style="width: 15%;"/>
-                                <col style="width: 15%;"/>
+                                <col style="width: 10%;"/>
                                 <thead>
                                     <tr>
                                         <th>NAME</th>
                                         <th class="text-right">U.PRICE</th>
-                                        <th class="text-right">QTY</th>
+                                        <th class="text-center">QTY</th>
                                         <th class="text-right">AMOUNT</th>
                                         <th>&nbsp;</th>
                                     </tr>
@@ -136,16 +136,22 @@
                             <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
                                 <div ng-repeat="items in items|filter:search">
                                     <table class="square-table">
-                                        <col style="width: 40%;"/>
+                                        <col style="width: 30%;"/>
                                         <col style="width: 15%;"/>
+                                        <col style="width: 30%;"/>
                                         <col style="width: 15%;"/>
-                                        <col style="width: 15%;"/>
-                                        <col style="width: 15%;"/>
+                                        <col style="width: 10%;"/>
                                         <tbody>
-                                            <tr class="background-light">
-                                                <td ng-click="itemSelectionDetail($index)">{{items.name}}</td>
+                                            <tr class="background-light" ng-class="{'selected-row':$index == itemSelectedRow}">
+                                                <td ng-click="itemSelectionDetail($index)" class="text-bold"><label class="label label-default">{{$index}}</label> &nbsp;&nbsp;{{items.name}}</td>
                                                 <td class="text-right" ng-click="itemSelectionDetail($index)">{{items.price}}</td>
-                                                <td class="text-right"><input type="text" style="width: 60px"></td>
+                                                <td class="text-right">
+                                                    <div class="spinner background-dark">
+                                                        <a class="btn btn-primary spinner-buttons spinner-minus-button" ng-click="spinnerMinus(qty)"><span class="glyphicon glyphicon-minus"></span></a>
+                                                        <input type="text" class="spinner-input" ng-model="qty"  ng-readonly="true">
+                                                        <a class="btn btn-primary spinner-buttons spinner-plus-button" ng-click="spinnerPlus(qty)"><span class="glyphicon glyphicon-plus"></span></a>
+                                                    </div>
+                                                </td>
                                                 <td class="text-right" ng-click="itemSelectionDetail($index)">{{items.price}}</td>
                                                 <td><a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
                                             </tr>
@@ -168,7 +174,7 @@
             </div>
         </div>
 
-         <div class="col-xs-4 background-dark">
+        <div class="col-xs-4 background-dark">
             <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
                 <div class="col-xs-12" style="height: 60px;">
                     <table class="table-rounded">

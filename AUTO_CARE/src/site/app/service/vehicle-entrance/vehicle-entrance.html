@@ -90,7 +90,6 @@
                             <td class="text-left">6000 KM</td>
                         </tr>
                         <tr ng-class="{'select-danger-row':difarance >= oilUsage}">
-<!--                        <tr ng-class="{'select-danger-row':difarance >= oilUsage,'select-success-row':difarance < oilUsage}">-->
                             <td>OIL USAGE STATUS</td>
                             <td class="text-left">{{difarance}} KM</td>
                             <td class="text-left">{{oilStatus}} KM</td>
@@ -130,9 +129,9 @@
                         <tr class="select-primary-row animation-fade" ng-show="historyActivePosition == $index">
                             <td colspan="4">
                                 <div>
-                                    <table>
+                                    <table class="table-rounded">
                                         <thead>
-                                            <tr class="select-primary-row-table-header">
+                                            <tr>
                                                 <th>Name</th>
                                                 <th class="text-right">Unit Price</th>
                                                 <th class="text-right">QTY</th>

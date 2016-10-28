@@ -80,9 +80,7 @@
                     }
                 ];
 
-                $scope.selectedRow = null;
                 $scope.vehicleSelectionDetail = function ($index) {
-                    $scope.selectedRow = $index;
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.activePositionVehicle = $scope.activePositionVehicle == $index ? -1 : $index;
                 };
@@ -191,7 +189,6 @@
                 ];
 
                 $scope.packageSelectionDetail = function ($index) {
-                    $scope.selectedRow = $index;
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.packagePositionVehicle = $scope.packagePositionVehicle == $index ? -1 : $index;
                 };
@@ -352,6 +349,18 @@
                 $scope.selectionsSelectionDetail = function ($index) {
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.selectionsActivePosition = $scope.selectionsActivePosition == $index ? -1 : $index;
+                };
+
+
+                $scope.qty = 1;
+                $scope.spinnerMinus = function (qty) {
+                    if ($scope.qty > 1) {
+                        $scope.qty -= 1;
+                    }
+                };
+
+                $scope.spinnerPlus = function (qty) {
+                    $scope.qty += 1;
                 };
             });
 }());
