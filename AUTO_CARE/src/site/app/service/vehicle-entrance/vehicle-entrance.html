@@ -1,4 +1,4 @@
-<div class="index-content-body" >
+<div class="index-content-body">
     <div class="col-xs-4">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
             <div class="col-xs-12" style="flex: 0 0 auto; height: 70px;margin-top: 50px;margin-bottom: 50px;">
@@ -10,11 +10,11 @@
                     </thead>
                 </table>
                 <div class="col-xs-12">
-                    <input type="text" class="search-input" ng-model="vehicle.number" uib-typeahead="vehicle as (vehicle.number) for vehicle in getVehicles($viewValue)|filter:$viewValue|limitTo:10"  typeahead-on-select="getVehicleSelections($model);">
+                    <input type="text" placeholder="vehicle no" class="search-input" ng-model="vehicle.number" uib-typeahead="vehicle as (vehicle.number) for vehicle in getVehicles($viewValue)|filter:$viewValue|limitTo:10"  typeahead-on-select="getVehicleSelections($model);">
                 </div>
             </div>
             <div class="col-xs-12" style="flex: 1 1 auto;">
-                <table class="animation-fade">
+                <table class="table-rounded animation-fade">
                     <col style="width: 40%"/>
                     <col style="width: 50%"/> 
                     <col style="width: 12%"/>
@@ -68,8 +68,8 @@
                     </thead>
                 </table>
             </div>
-            <div class="col-xs-12" style="height: calc(100vh - 485px);">
-                <table>
+            <div class="col-xs-12" style="height: calc(100vh - 420px);">
+                <table class="table-rounded">
                     <col style="width: 40%"/>
                     <col style="width: 30%"/>
                     <col style="width: 30%"/>
@@ -90,7 +90,6 @@
                             <td class="text-left">6000 KM</td>
                         </tr>
                         <tr ng-class="{'select-danger-row':difarance >= oilUsage}">
-<!--                        <tr ng-class="{'select-danger-row':difarance >= oilUsage,'select-success-row':difarance < oilUsage}">-->
                             <td>OIL USAGE STATUS</td>
                             <td class="text-left">{{difarance}} KM</td>
                             <td class="text-left">{{oilStatus}} KM</td>
@@ -99,7 +98,7 @@
                 </table>
             </div>
             <div class="col-xs-12" style="height: 40px;">
-                <table>
+                <table  class="table-rounded">
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
@@ -115,7 +114,7 @@
                 </table>
             </div>
             <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 300px);">
-                <table class="table-hover table-primary">
+                <table class="table-rounded table-primary">
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
@@ -130,9 +129,9 @@
                         <tr class="select-primary-row animation-fade" ng-show="historyActivePosition == $index">
                             <td colspan="4">
                                 <div>
-                                    <table>
+                                    <table class="table-rounded">
                                         <thead>
-                                            <tr class="select-primary-row-table-header">
+                                            <tr>
                                                 <th>Name</th>
                                                 <th class="text-right">Unit Price</th>
                                                 <th class="text-right">QTY</th>

@@ -25,6 +25,48 @@
                         contactNumber: "0714303339"
                     },
                     {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
+                        image: "/img/03.png",
+                        number: "OP 7895",
+                        customerName: "Nidura Prageeth",
+                        contactNumber: "0714303339"
+                    },
+                    {
                         image: "/img/04.png",
                         number: "QT 8956",
                         customerName: "Mohan",
@@ -38,9 +80,7 @@
                     }
                 ];
 
-                $scope.selectedRow = null;
                 $scope.vehicleSelectionDetail = function ($index) {
-                    $scope.selectedRow = $index;
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.activePositionVehicle = $scope.activePositionVehicle == $index ? -1 : $index;
                 };
@@ -133,7 +173,7 @@
                                 },
                                 {
                                     indexNo: "007",
-                                    name: "Engine Tuning & Scanning",
+                                    name: "Engine Tuning & Scanning"
                                 },
                                 {
                                     indexNo: "008",
@@ -142,7 +182,7 @@
                                 {
                                     indexNo: "009",
                                     name: "Tyre & Battery Service"
-                                },
+                                }
                             ]
                         }
                     }
@@ -157,32 +197,32 @@
                     {
                         name: "Interior Detailing",
                         price: 10000.00,
-                        discription: "Removal of seats,Cleaning of seats,Drying of seats,Vacuum cleaning,Cleaning of floor boards,Cleaning of dashboard,Cleaning of hood"
+                        discription: "-"
                     },
                     {
                         name: "LUBRICATION",
                         price: 13000.00,
-                        discription: "We top up engine oil, transmission fluid, brake fluid, clutch & power steering fluid up to optimal capacity or completely change it using high performance brand lubricants. ."
+                        discription: "-"
                     },
                     {
                         name: "VACUUM FLOOR / SEATS & TRUNK",
                         price: 13000.00,
-                        discription: "We vacuum the cabin interior, seats and trunk to ensure removal of dust and particle accumulation"
+                        discription: "-"
                     },
                     {
                         name: "TYRE & DASH DRESSING",
                         price: 13000.00,
-                        discription: "We restore the true colour and natural gloss to the dashboard and leaves tyres looking new."
+                        discription: "-"
                     },
                     {
                         name: "EXTERIOR WAXING",
                         price: 13000.00,
-                        discription: "We apply a hard wax with a clear coat that produces a high-gloss finish to new or old car paint. The wax also acts as a protective layer that helps maintain the paint and protect it for longer."
+                        discription: "-"
                     },
                     {
                         name: "VISUAL SAFETY CHECK",
                         price: 13000.00,
-                        discription: "A detailed feedback form is issued after every full lubrication service."
+                        discription: "-"
                     }
                 ];
 
@@ -262,6 +302,7 @@
                     {
                         name: "package 01",
                         qty: 1,
+                        type: "P",
                         amount: "6000.00",
                         discription: {
                             items: [
@@ -293,12 +334,14 @@
                         }
                     },
                     {
+                        type: "I",
                         name: "Interior Detailing",
                         qty: 1,
                         amount: "7000.00"
                     },
                     {
                         name: "Oil Filters",
+                        type: "I",
                         qty: 2,
                         amount: "28000.00"
                     }
@@ -306,6 +349,18 @@
                 $scope.selectionsSelectionDetail = function ($index) {
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.selectionsActivePosition = $scope.selectionsActivePosition == $index ? -1 : $index;
+                };
+
+
+                $scope.qty = 1;
+                $scope.spinnerMinus = function (qty) {
+                    if ($scope.qty > 1) {
+                        $scope.qty -= 1;
+                    }
+                };
+
+                $scope.spinnerPlus = function (qty) {
+                    $scope.qty += 1;
                 };
             });
 }());

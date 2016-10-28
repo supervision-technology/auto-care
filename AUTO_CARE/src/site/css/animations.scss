@@ -1,3 +1,5 @@
+@import "mixins/variables.scss";
+
 .animation-fade.ng-hide-remove{
     animation: 1s fadeIn;
 
@@ -20,7 +22,7 @@
 }
 
 .animation-v-grow{
-        overflow: hidden;
+    overflow: hidden;
     /*    display: block;
         
         height: 100px;
