@@ -6,7 +6,7 @@
             .controller("requestItemController", function ($scope, Notification) {
 
                 $scope.selectionsFunction = true;
-                $scope.vehicle = [
+                $scope.vehicles = [
                     {
                         bayName: "Cleaning Bay",
                         count: "2",
@@ -41,7 +41,7 @@
                         image: "/img/02.png",
                         name: "Akila Sasanka",
                         number: "HG 0233"
-                    },
+                    }
                 ];
                 $scope.selectedRow = null;
                 $scope.vehicleSelectionDetail = function ($index) {
@@ -69,7 +69,7 @@
                         check: false
                     }
                 ];
-                $scope.issueItems = [];
+                $scope.selectItems = [];
                 $scope.barcodeText = "";
                 $scope.viewNotify = false;
 
@@ -93,15 +93,15 @@
                 $scope.doRemoveFromRequest = function (index, item) {
                     console.log(index);
                     console.log(item.name);
-                    $scope.issueItems.push(item);
+                    $scope.selectItems.push(item);
                     $scope.requestItems.splice(index, 1);
 
                 };
-                $scope.doRemoveFromIssue = function (index, item) {
+                $scope.doRemoveFromSelect = function (index, item) {
                     console.log(index);
                     console.log(item.name);
                     $scope.requestItems.push(item);
-                    $scope.issueItems.splice(index, 1);
+                    $scope.selectItems.splice(index, 1);
 
                 };
             });
