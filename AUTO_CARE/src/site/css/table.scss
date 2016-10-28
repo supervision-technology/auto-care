@@ -184,11 +184,6 @@ tbody tr .btn-danger{
     }
 }
 
-.selected {
-    background-color:$success-color !important;
-    color:white;
-}
-
 /*animation*/
 tr.ng-enter{
     animation: 0.5s bounceIn;
@@ -203,8 +198,8 @@ tr.ng-leave{
 }
 
 .select-primary-row{
-    background-color: $primary-color !important;
-    color: $light-font-color;
+    background-color: $bg-light-color !important;
+    color: $dark-font-color;
 }
 
 .select-primary-row-table-header{
@@ -220,8 +215,4 @@ tr.ng-leave{
 tbody tr input{
     color: $dark-font-color;
     background-color: $light-font-color;
-}
-
-.tiles-tr{
-    height: 80px;
 }

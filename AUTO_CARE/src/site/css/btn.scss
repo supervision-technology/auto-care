@@ -44,15 +44,6 @@
     background-color: $danger-color;
     border-color: $danger-color-border;
 }
-.btn-white{
-    background-color: $light-font-color;
-    border-color: $light-font-color;
-}
-
-.btn-white:hover{
-    background-color: $light-font-color;
-    border-color: $light-font-color;
-}
 
 .btn-default:hover{
     background-color: $default-color-dark;
@@ -116,25 +107,4 @@
 .btn-danger:active,btn-danger:visited,btn-danger:focus{
     background-color: $danger-color-extra-dark !important;
     border-color: $danger-color-extra-dark-border !important;
-}
-
-.button-{
-    background-color: $success-color !important;
-    color: $light-font-color;
-    border: none;
-    width: 50px;
-}
-.button-success{
-    border-radius: 5px;
-    background-color: $success-color !important;
-    color: $light-font-color;
-    border: none;
-    width: 50px;
-}
-.button-danger{
-    border-radius: 5px;
-    background-color: $danger-color !important;
-    color: $light-font-color;
-    border: none;
-    width: 80px;
 }

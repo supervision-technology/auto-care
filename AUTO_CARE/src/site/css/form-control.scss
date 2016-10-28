@@ -3,11 +3,12 @@
 .search-input{
     width: 100%;
     border-radius: 16px;
-    min-height: 32px;
+    min-height: 40px;
     border: $control-border-color 1px solid;
-    margin: 24px 0 8px 0;
+    margin: 8px 0 8px 0;
     outline: none;
     padding: 0px 16px 0 16px;
+    font-size: 15px;
 }
 
 .form-control{
