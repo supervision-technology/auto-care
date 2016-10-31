@@ -1,62 +1,65 @@
-<div class="index-content-body ">
-    <div class="col-xs-3 background-dark">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
-
-            <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
-                <input type="text" class="search-input" placeholder="search" ng-model="search.name">
-
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Employee</th>
-                        </tr>
-                    </thead>
-                </table>
-            </div>
-
-            <div class="col-md-12 smart-scroll-y" style="flex: 1 1 auto;">
-                <div class="drag-drop">
-                    <div ng-if="listName == 'WAITING'" ng-repeat="(listName, list) in models.lists " class="col-md-12" style="height: 250px">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title">{{listName}} BAY</h3>
-                            </div>
-                            <div class="panel-body" ng-include="'app/service/employee-assignment/simple.html'"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div view-source="simple" class="background-light"></div>
-
-            </div>
-        </div>
+<div class="tile-list background-dark">
+    <div class="tile-list-title">
+        <h4>EMPLOYEE</h4>
     </div>
-    <div class="col-xs-9 background-light">
-        <div class="background-light" style="padding: 5px 10px 0px 10px;border-radius: 5px;margin-top: 10px;margin-right: 5px">        
-            <div class="row">
-
-                <div class="col-md-12 smart-scroll-y" style="flex: 1 1 auto;">
-                    <div class="drag-drop">
-                        <div ng-if="listName != 'WAITING'" ng-repeat="(listName, list) in models.lists " class="col-md-4" style="height: 250px">
-                            <div class="panel panel-primary">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">{{listName}} BAY</h3>
+    <div class="smart-scroll-y" style="height: calc(100vh - 40px);width: 280px">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td style="padding: 0px;">
+                        <div class="panel" ng-repeat="employee in employee" draggable="true" style="margin-bottom: 0px; border-bottom: 1px solid #cccccc; border-radius: 0px" >
+                            <div class="panel-body" style="height: 70px">
+                                <img src="{{employee.image}}" style="width: 40px; height: 40px; border-radius: 50px"/>  
+                                <div style="margin-left: 67px; margin-top: -40px;">
+                                    <label>
+                                        {{employee.name}}
+                                    </label><br>
+                                    <label style="font-size: 12px">
+                                        {{employee.role}}
+                                    </label>
                                 </div>
-                                <div class="panel-body" ng-include="'app/service/employee-assignment/simple.html'"></div>
                             </div>
                         </div>
-                    </div>
-
-                    <div view-source="simple" class="background-light"></div>
-
-                </div>
-
-            </div>
-        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
-<div class="fab-container">
-    <a class="fab fab-danger" ng-show="true"><i class="glyphicon glyphicon-edit"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="true"  ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="true"  ng-click="ui.finish();"><i class="glyphicon glyphicon-ok"></i></a>
+
+<div class="index-content-body">
+    <div style="float: left; width: calc(100% - 282px);">
+        <div class="background-light full-height grid">
+            <div class="grid-tile" grid="{{grid1}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 01</h4>
+                </div>
+            </div>
+            <div class="grid-tile" grid="{{grid2}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 02</h4>
+                </div>
+            </div>
+            <div class="grid-tile" grid="{{grid3}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 03</h4>
+                </div>
+            </div>
+            <div class="grid-tile" grid="{{grid4}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 04</h4>
+                </div>
+            </div>
+            <div class="grid-tile" grid="{{grid5}}">
+                <div class="grid-tile-title">
+                    <h4>BAY 05</h4>
+                </div>
+            </div>
+            <!--            <div class="grid-tile" grid="{{grid6}}">
+                            <div class="grid-tile-title">
+                                <h4>BAY 06</h4>
+                            </div>
+                        </div>-->
+        </div>
+    </div>
 </div>
