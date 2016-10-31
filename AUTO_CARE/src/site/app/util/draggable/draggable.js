@@ -4,30 +4,67 @@
  * and open the template in the editor.
  */
 angular.module("appModule")
-        .directive("ngDraggable", function (draggableService, $compile) {
+        .directive("dragTarget", function (draggableService) {
             return {
                 restrict: 'A',
-                link: draggableService.draggable,
-                compile: draggableService.compile
+                scope: {
+                    dragFunction: "&drag",
+                    dragModel: "=dragModel"
+                },
+                link: draggableService.dragTarget
+            };
+        });
+
+angular.module("appModule")
+        .directive("dropTarget", function (draggableService) {
+            return {
+                restrict: 'A',
+                scope: {
+                    dropFunction: "&drop"
+                },
+                link: draggableService.dropTarget
             };
         });
 
 
 angular.module("appModule")
-        .service("draggableService", function ($compile) {
-            this.draggable = function (scope, element, attrs) {
-                
+        .service("draggableService", function () {
+            var currentDragModel;
+
+            this.dragTarget = function (scope, element, attrs) {
+                element.attr("draggable", "true");
+
+                var dragFunction = scope.dragFunction();
+                var dragModel = scope.dragModel;
+
+                if (dragFunction ? !angular.isFunction(dragFunction) : true) {
+                    dragStart = function (e, m) {
+                        console.log("DRAG");
+                    };
+                }
+                if (!dragModel) {
+                    dragModel = null;
+                }
+
+                //drag start
                 element.bind("dragstart", function (e) {
-                    console.log("drag start");
+                    currentDragModel = dragModel;
+                    dragFunction(element, currentDragModel);
                 });
-                
             };
-            
-            this.compile=function(element){
-                //enable draggable
-                element.removeAttr("draggable");
-                element.attr("draggable", true);
-                $compile(element);
+
+            this.dropTarget = function (scope, element, attrs) {
+                var dropFunction = scope.dropFunction();
+                if (dropFunction ? !angular.isFunction(dropFunction) : true) {
+                    dragStart = function (e, m) {
+                        console.log("DROP");
+                    };
+                }
+
+                //drag leave
+                element.bind("dragleave", function () {
+                    dropFunction(element, currentDragModel);
+                });
             };
         });
 

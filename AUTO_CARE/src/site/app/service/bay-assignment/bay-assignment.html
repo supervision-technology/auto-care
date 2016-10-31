@@ -3,7 +3,7 @@
         <h4>VEHICLE</h4>
     </div>
     <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" ng-repeat="vehicle in vehicle" ngDraggable>
+        <div class="tile tile-128" ng-repeat="vehicle in vehicle" drag-target drag="dragStart" drag-model="vehicle">
             <span>
                 <img src="{{vehicle.image}}"/>  
 
@@ -18,7 +18,7 @@
 <div class="index-content-body">
     <div style="float: left; width: calc(100% - 133px);">
         <div class="background-light full-height grid">
-            <div class="grid-tile" grid="{{grid1}}">
+            <div class="grid-tile" grid="{{grid1}}" drop-target drop="dragLeave">
                 <div class="grid-tile-title">
                     <h4>BAY 01</h4>
                 </div>
@@ -43,11 +43,11 @@
                     <h4>BAY 05</h4>
                 </div>
             </div>
-<!--            <div class="grid-tile" grid="{{grid6}}">
-                <div class="grid-tile-title">
-                    <h4>BAY 06</h4>
-                </div>
-            </div>-->
+            <!--            <div class="grid-tile" grid="{{grid6}}">
+                            <div class="grid-tile-title">
+                                <h4>BAY 06</h4>
+                            </div>
+                        </div>-->
         </div>
     </div>
 </div>
