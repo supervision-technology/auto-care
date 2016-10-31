@@ -1,16 +1,211 @@
-<div class="tile-list background-dark">
-    <div class="tile-list-title">
-        <h4>VEHICLE</h4>
-    </div>
-    <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" ng-repeat="vehicle in vehicles">
-            <span>
-                <img src="{{vehicle.image}}"/>  
 
-                <label>
-                    {{vehicle.number}}
-                </label>
-            </span>
+<div class="index-content-body">
+    <div style="float: left; width: calc(100%);">
+        <div class="col-xs-12 background-light">
+            <div class="row full-height" style="display: flex; flex-flow: column;">
+                <div>
+                    <uib-tabset>
+                        <uib-tab heading="PACKAGE" index="0">
+                            <div class="tile-list background-dark">
+                                <div class="tile-list-title">
+                                    <h4>VEHICLE</h4>
+                                </div>
+                                <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 80px);">
+                                    <div class="tile tile-128" ng-repeat="vehicle in vehicles">
+                                        <span>
+                                            <img src="{{vehicle.image}}"/>  
+
+                                            <label>
+                                                {{vehicle.number}}
+                                            </label>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="float: left; width: calc(100% - 133px);">
+
+
+                                <div class="col-xs-12 nopadding visible-lg">
+                                    <div class="panel panel-default" style="border-radius: 0px">
+                                        <div class="panel-body" style="height: 100px">
+                                            <div class="col-xs-3">
+                                                <div class="col-xs-10">
+                                                    <span class="h4 text-primary">Waiting Bay</span><br>
+                                                    It is <span class="text-primary">28.Min 05.sec </span>to go from <b>07.30am</b> to <b>7.50am</b>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <i class="glyphicon glyphicon-chevron-right"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <div class="col-xs-10">
+                                                    <span class="h4 text-primary">Washing Bay</span><br>
+                                                    It is <span class="text-primary">28.Min 05.sec </span>to go from <b>07.30am</b> to <b>7.50am</b>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <i class="glyphicon glyphicon-chevron-right"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <div class="col-xs-10">
+                                                    <span class="h4 text-primary">Cleaning Bay</span><br>
+                                                    It is <span class="text-primary">28.Min 05.sec </span>to go from <b>07.30am</b> to <b>7.50am</b>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <i class="glyphicon glyphicon-chevron-right"></i>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <div class="col-xs-10">
+                                                    <span class="h4 text-primary">Waxing Bay</span><br>
+                                                    It is <span class="text-primary">28.Min 05.sec </span>to go from <b>07.30am</b> to <b>7.50am</b>
+                                                </div>
+                                                <div class="col-xs-2">
+                                                    <i class="glyphicon glyphicon-chevron-right"></i>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="DAILY" index="1">
+                            <div class="col-xs-4 nopadding">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Vehicles</div>
+                                    <div class="panel-body">
+                                        <div class="col-xs-3 badge">
+                                            All
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="col-sm-12"><uib-progressbar class="progress-striped active" max="16" value="16" type="success"><i>16</i></uib-progressbar></div>
+                                        </div>
+                                        <div class="col-xs-3 badge">
+                                            New
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="col-sm-12"><uib-progressbar class="progress-striped active" max="16" value="2" type="info"><i>2</i></uib-progressbar></div>
+                                        </div>
+                                        <div class="col-xs-3 badge">
+                                            Pending
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="col-sm-12"><uib-progressbar class="progress-striped active" max="16" value="8" type="warning"><i>8</i></uib-progressbar></div>
+                                        </div>
+                                        <div class="col-xs-3 badge">
+                                            Finish
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="col-sm-12"><uib-progressbar class="progress-striped active" max="16" value="3" type="primary"><i>3</i></uib-progressbar></div>
+                                        </div>
+                                        <div class="col-xs-3 badge">
+                                            Complete
+                                        </div>
+                                        <div class="col-xs-9">
+                                            <div class="col-sm-12"><uib-progressbar class="progress-striped active" max="16" value="3" type="danger"><i>3</i></uib-progressbar></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 nopadding">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">INCOME VEHICLES <span class="pull-right text-primary">10</span></div>
+                                    <div class="panel-body">
+                                        <canvas id="doughnut" class="chart chart-doughnut"
+                                                chart-data="data" chart-labels="labels">
+                                        </canvas> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 nopadding">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Bay Performance</div>
+                                    <div class="panel-body" style="height: 230px">
+                                        <canvas id="line" class="chart chart-line" chart-data="data3"
+                                                chart-labels="label3" chart-series="serie3" chart-options="options"
+                                                chart-dataset-override="datasetOverride" chart-click="onClick">
+                                        </canvas> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 nopadding">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Complete Vehicle</div>
+                                    <div class="panel-body">
+                                        <canvas id="base" class="chart-horizontal-bar"
+                                                chart-data="data1" chart-labels="labels1" >
+                                        </canvas> 
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                        <uib-tab heading="MONTHLY" index="2">
+                            <div class="col-xs-4 nopadding">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Bay Performance</div>
+                                    <div class="panel-body" style="">
+                                        <canvas id="line" class="chart chart-line" chart-data="data3"
+                                                chart-labels="label3" chart-series="serie3" chart-options="options"
+                                                chart-dataset-override="datasetOverride" chart-click="onClick">
+                                        </canvas> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 nopadding">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Complete Vehicle</div>
+                                    <div class="panel-body">
+                                        <canvas id="base" class="chart-horizontal-bar"
+                                                chart-data="data1" chart-labels="labels1" >
+                                        </canvas> 
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 nopadding">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">Bay Performance</div>
+                                    <div class="panel-body smart-scroll-y">
+                                        <div class="">
+                                            <table class="table table-default table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Type</th>
+                                                        <th>Count</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>CAR</td>
+                                                        <td>2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>VAN</td>
+                                                        <td>4</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>CAR</td>
+                                                        <td>2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>VAN</td>
+                                                        <td>4</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
         </div>
     </div>
 </div>

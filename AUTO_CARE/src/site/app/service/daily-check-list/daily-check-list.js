@@ -4,47 +4,79 @@
     //controller
     angular.module("dailyCheckListModule")
             .controller("dailyCheckListController", function ($scope) {
-                $scope.machine = [
+                
+                $scope.filterBy ="1";
+                $scope.check_list_group = [
                     {
-                        image: "/img/06.png",
-                        indexNo: "001",
+                        indexNo: "1",
                         name: "Car Wash Machines HPI1400",
-                        discription: "",
-                        status: "0714303339"
+                        active: true,
+                        sortOrder: "1"
                     },
                     {
-                        image: "/img/06.png",
-                        indexNo: "002",
-                        name: "Car Wash Machines HPI1400",
-                        discription: "",
-                        status: "0714303339"
+                        indexNo: "2",
+                        name: "Car Wash Machines P4000",
+                        active: true,
+                        sortOrder: "2"
                     },
                     {
-                        image: "/img/06.png",
-                        indexNo: "003",
-                        name: "Car Wash Machines HPI1400",
-                        discription: "",
-                        status: "0714303339"
+                        indexNo: "3",
+                        name: "Car Wash Machines IUO001",
+                        active: true,
+                        sortOrder: "3"
                     },
                     {
-                        image: "/img/06.png",
-                        indexNo: "004",
-                        name: "Car Wash Machines HPI1400",
-                        discription: "",
-                        status: "0714303339"
+                        indexNo: "4",
+                        name: "Car Wash Machines 01",
+                        active: true,
+                        sortOrder: "4"
                     },
                     {
-                        image: "/img/06.png",
-                        indexNo: "005",
-                        name: "Car Wash Machines HPI1400",
-                        discription: "",
-                        status: "0714303339"
+                        indexNo: "5",
+                        name: "Car Wash Machines 2322",
+                        active: true,
+                        sortOrder: "5"
                     }
                 ];
+                $scope.check_list_item = [
+                    {
+                        indexNo: "10",
+                        group: "1",
+                        description: "this is the description",
+                        sortOrder: "1"
 
-                $scope.machineSelectionDetail = function ($index) {
-                    $scope.isVisible = $scope.isVisible == 0 ? true : false;
-                    $scope.machineActivePositionVehicle = $scope.machineActivePositionVehicle == $index ? -1 : $index;
+                    },
+                    {
+                        indexNo: "20",
+                        group: "1",
+                        description: "this is the description",
+                        sortOrder: "2"
+
+                    },
+                    {
+                        indexNo: "30",
+                        group: "2",
+                        description: "this is the description",
+                        sortOrder: "3"
+
+                    },
+                    {
+                        indexNo: "30",
+                        group: "3",
+                        description: "this is the description",
+                        sortOrder: "3"
+
+                    },
+                    {
+                        indexNo: "40",
+                        group: "2",
+                        description: "this is the description",
+                        sortOrder: "4"
+
+                    }
+                ];
+                $scope.doFilter=function (groupNo){
+                    $scope.filterBy =groupNo;
                 };
             });
 }());

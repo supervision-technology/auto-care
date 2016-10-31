@@ -1,15 +1,86 @@
 <div class="index-content-body">
     <div class="col-xs-4 background-dark">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
-
+        <div class="row background-light">
+            <div class="col-xs-12">
+                <h4 class="text-primary">CHECKED GROUP LIST</h4>
+            </div>
+        </div>
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 40px);">
+            <table class="square-table background-dark" style="width: 99%">
+                <col style="width: 30%;"/>
+                <col style="width: 60%;"/>
+                <col style="width: 10%;"/>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>NAME</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
+                <div class="background-light-dark" ng-repeat="check in check_list_group">
+                    <table class="square-table">
+                        <col style="width: 30%;"/>
+                        <col style="width: 60%;"/>
+                        <col style="width: 10%;"/>
+                        <tbody>
+                            <tr class="background-light-dark">
+                                <td>{{check.indexNo}}</td>
+                                <td>{{check.name}}</td>
+                                <td><a class="btn btn-danger" ng-click="doFilter(check.indexNo)"><span class="glyphicon glyphicon-play"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="placeholder nopadding" style="height: calc(100vh - 105px);" ng-hide="8">
+                    <h1>NO CHECKED GROUP TO DISPLAY :(</h1>
+                </div>
+            </div>
         </div>
     </div>
     <div class="col-xs-8 background-light">
-        <div class="row full-height" style="display: flex; flex-flow: column;">
-
+        <div class="row background-light">
+            <div class="col-xs-12">
+                <h4 class="text-primary">CHECK LIST ITEMS</h4>
+            </div>
+        </div>
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 40px);">
+            <table class="square-table background-dark">
+                <col style="width: 30%;"/>
+                <col style="width: 60%;"/>
+                <col style="width: 10%;"/>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>NAME</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
+                <div class="background-light-dark" ng-repeat="check in check_list_item|filter:filterBy">
+                    <table class="square-table">
+                        <col style="width: 30%;"/>
+                        <col style="width: 60%;"/>
+                        <col style="width: 10%;"/>
+                        <tbody>
+                            <tr class="background-light-dark">
+                                <td>{{check.indexNo}}</td>
+                                <td>{{check.description}}</td>
+                                <td><a class="btn btn-danger"><span class="glyphicon glyphicon-ok"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="placeholder nopadding" style="height: calc(100vh - 105px);" ng-hide="9">
+                    <h1>NO CHECKED GROUP TO DISPLAY :(</h1>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 <div class="fab-container">
-    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
