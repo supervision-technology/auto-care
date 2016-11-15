@@ -41,7 +41,7 @@ public class SubCategoryService {
 
     public MSubCategory saveSubCategory(MSubCategory subCategory) {
         
-        MSubCategory findByObect = findByNameAndCategoryIndexNo(subCategory.getName(),subCategory.getCategory().getIndexNo());
+        MSubCategory findByObect = findByNameAndCategoryIndexNo(subCategory.getName(),subCategory.getIndexNo());
         if (findByObect!=null) {
             throw new DuplicateEntityException("Sub Category already exist !!!");
         }
