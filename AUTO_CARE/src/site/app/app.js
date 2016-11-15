@@ -74,6 +74,10 @@
                             templateUrl: "app/front-office/service-dashboard/service-dashboard.html",
                             controller: "dashBoardController"
                         })
+                        .when("/front-office/service-das0hboard", {
+                            templatek : "app/front-office/service-dashboard/service-dashboard.html",
+                            controller: "dashBoardController"
+                        })
                         //front-office
                         .when("/front-office/invoice", {
                             templateUrl: "app/front-office/invoice/invoice.html",

@@ -45,9 +45,4 @@ public class CategoryController {
         return indexNo;
     }
 
-    @RequestMapping(value = "/get-category", method = RequestMethod.POST)
-    public List<MCategory> deleteCategory(@RequestBody MItemDepartment itemDepartment) {
-        return categoryService.findByItemDepartment(itemDepartment);
-    }
-
 }

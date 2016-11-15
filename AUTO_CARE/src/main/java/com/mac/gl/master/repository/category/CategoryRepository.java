@@ -16,8 +16,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CategoryRepository extends JpaRepository<MCategory, Integer> {
 
-    public List<MCategory> findByName(String name);
-
-    public List<MCategory> findByDepartment(MItemDepartment itemDepartment);
-
 }
