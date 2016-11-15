@@ -14,7 +14,7 @@
         "requestItemModule",
         //front office
         "dashBoardModule",
-        "invoiceModule"
+        "invoiceModule",
     ]);
 
     //route config
@@ -75,13 +75,19 @@
                             controller: "dashBoardController"
                         })
                         .when("/front-office/service-das0hboard", {
-                            templatek : "app/front-office/service-dashboard/service-dashboard.html",
+                            templatek: "app/front-office/service-dashboard/service-dashboard.html",
                             controller: "dashBoardController"
                         })
                         //front-office
                         .when("/front-office/invoice", {
                             templateUrl: "app/front-office/invoice/invoice.html",
                             controller: "invoiceController"
+                        })
+
+                        //master
+                        .when("/master/item", {
+                            templateUrl: "app/master/item/item.html",
+                            controller: "itemController"
                         })
                         .otherwise({
                             redirectTo: "/"
