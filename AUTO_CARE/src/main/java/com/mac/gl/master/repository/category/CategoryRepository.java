@@ -6,8 +6,6 @@
 package com.mac.gl.master.repository.category;
 
 import com.mac.gl.master.model.category.MCategory;
-import com.mac.gl.master.model.itemdepartment.MItemDepartment;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

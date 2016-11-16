@@ -15,7 +15,19 @@
         //front office
         "dashBoardModule",
         "invoiceModule",
+        "subCategoryModule",
+        "categoryModule",
+        "itemDepartmentModule",
+        "brandModule"
+
     ]);
+    
+    //constants
+    angular.module("appModule")
+            .constant("systemConfig", {
+                apiUrl: "http://localhost:8080"
+            });
+
 
     //route config
     angular.module("appModule")
@@ -89,6 +101,23 @@
                             templateUrl: "app/master/item/item.html",
                             controller: "itemController"
                         })
+                        .when("/master/sub-category", {
+                            templateUrl: "app/master/sub-category/sub-category.html",
+                            controller: "subCategoryController"
+                        })
+                        .when("/master/category", {
+                            templateUrl: "app/master/category/category.html",
+                            controller: "categoryController"
+                        })
+                        .when("/master/item-department", {
+                            templateUrl: "app/master/item-department/item-department.html",
+                            controller: "itemDepartmentController"
+                        })
+                        .when("/master/brand", {
+                            templateUrl: "app/master/brand/brand.html",
+                            controller: "brandController"
+                        })
+
                         .otherwise({
                             redirectTo: "/"
                         });

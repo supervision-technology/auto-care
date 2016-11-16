@@ -1,12 +1,12 @@
 (function () {
-    angular.module("subCategoryModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui-notification']);
+    angular.module("brandModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui-notification']);
     //http factory
-    angular.module("subCategoryModule")
-            .factory("subCategoryFactory", function ($http, systemConfig) {
+    angular.module("brandModule")
+            .factory("brandFactory", function ($http, systemConfig) {
                 var factory = {};
                 //load sub category
-                factory.loadSubCategory = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-category";
+                factory.loadBrand = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/brand";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -17,8 +17,8 @@
                 };
 
                 //save sub category
-                factory.saveSubCategory = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-category/save-subCategory";
+                factory.saveBrand = function (summary, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/brand/save-brand";
                     $http.post(url, summary)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -31,8 +31,8 @@
                 };
 
                 //delete funtion
-                factory.deleteSubCategory = function (indexNo, callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-category/delete-subCategory/" + indexNo;
+                factory.deleteBrand = function (indexNo, callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/brand/delete-brand/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -45,8 +45,8 @@
             });
 
     //Controller
-    angular.module("subCategoryModule")
-            .controller("subCategoryController", function ($scope, subCategoryFactory, Notification,$timeout) {
+    angular.module("brandModule")
+            .controller("brandController", function ($scope, brandFactory, Notification,$timeout) {
 
                 //data models 
                 $scope.model = {};
@@ -60,13 +60,13 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
-                $scope.model.subCategory = [];
+                $scope.model.brand = [];
 
 
                 //----------- data models ------------------
                 //reset model
                 $scope.model.reset = function () {
-                    $scope.model.subCategory = {
+                    $scope.model.brand = {
                         "indexNo": null,
                         "name": null
                     };
@@ -74,36 +74,37 @@
 
                 //----------validate funtion-------------
 
-//                $scope.validateInput = function () {
-//                    if ($scope.model.subCategory.category !== null) {
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
+                $scope.validateInput = function () {
+                    if ($scope.model.brand.name !== null) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
 
 
                 //----------http funtion----------------
 
-                $scope.http.deleteSubCategory = function (IndexNo, index) {
-                    subCategoryFactory.deleteSubCategory(IndexNo, function () {
+                $scope.http.deleteBrand = function (IndexNo, index) {
+                    brandFactory.deleteBrand(IndexNo, function () {
                         Notification.success("delete success");
-                        $scope.model.subCategoryList.splice(index, 1);
+                        $scope.model.brandList.splice(index, 1);
                     });
                 };
 
 
 
                 //save function 
-                $scope.http.saveSubCategory = function () {
-                    var detail = $scope.model.subCategory;
+                $scope.http.saveBrand = function () {
+                    var detail = $scope.model.brand;
                     var detailJSON = JSON.stringify(detail);
                     console.log(detailJSON);
 
 
-                    subCategoryFactory.saveSubCategory(
+                    brandFactory.saveBrand(
                             detailJSON,
                             function (data) {                              
-                                $scope.model.subCategoryList.push(data);
+                                $scope.model.brandList.push(data);
                                 Notification.success("Successfully Added");
                                 $scope.model.reset();
                                 
@@ -120,7 +121,11 @@
                 //----------------ui funtion--------------
                 //save function 
                 $scope.ui.save = function () {
-                        $scope.http.saveSubCategory();
+                    if ($scope.validateInput()) {
+                        $scope.http.saveBrand();
+                    } else {
+                        Notification.error("Please Input Details");
+                    }
                 };
 
 
@@ -135,8 +140,8 @@
                 //edit function 
                 $scope.ui.edit = function (subCategory, index) {
                     $scope.ui.mode = "EDIT";
-                    $scope.model.subCategory = subCategory;
-                    $scope.model.subCategoryList.splice(index, 1);
+                    $scope.model.brand = subCategory;
+                    $scope.model.brandList.splice(index, 1);
                 };
 
 
@@ -145,13 +150,11 @@
                     $scope.ui.mode = "IDEAL";
                     //rest model data
                     $scope.model.reset();
-                    //load category
-                    subCategoryFactory.loadSubCategory(function (data) {
-                        $scope.model.categoryList = data;
-                    });
-                    //lord subCategory
-                    subCategoryFactory.loadSubCategory(function (data) {
-                        $scope.model.subCategoryList = data;
+
+                    
+                    //lord brand
+                    brandFactory.loadBrand(function (data) {
+                        $scope.model.brandList = data;
                     });
                 };
                 
