@@ -3,6 +3,9 @@
   <persistence-unit name="com.mac.gl_care-point_jar_1.0-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>com.mac.gl.master.model.MBay</class>
+    <class>com.mac.gl.master.model.MSubItem</class>
+    <class>com.mac.gl.master.model.TItemCheckResult</class>
+    <class>com.mac.gl.master.model.TSubItemCheckResult</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

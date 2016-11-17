@@ -19,7 +19,8 @@
         "subCategoryModule",
         "categoryModule",
         "itemDepartmentModule",
-        "brandModule"
+        "brandModule",
+        "bayModule"
 
     ]);
     
@@ -118,7 +119,10 @@
                             templateUrl: "app/master/brand/brand.html",
                             controller: "brandController"
                         })
-
+                        .when("/master/bay", {
+                            templateUrl: "app/master/bay/bay.html",
+                            controller: "bayController"
+                        })
                         .otherwise({
                             redirectTo: "/"
                         });
