@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.model;
+package com.mac.gl.master.model.item;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,19 +16,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
  * @author Don
  */
 @Entity
-@Table(name = "t_item_check_result")
-public class TItemCheckResult implements Serializable {
+@Table(name = "t_sub_item_check_result")
+public class TSubItemCheckResult implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,52 +35,45 @@ public class TItemCheckResult implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
+    @Column(name = "checked")
+    private Boolean checked;
+
     @Column(name = "transaction")
     private Integer transaction;
-
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "checked")
-    private boolean checked;
 
+    @Size(min = 1, max = 50)
+    @Column(name = "reason")
+    private String reason;
     @Basic(optional = false)
-    @NotNull
+
+    @Column(name = "comfirmation")
+    private boolean comfirmation;
+    @Basic(optional = false)
+
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
 
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "check_stage")
-    private int checkStage;
-
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "wating_checked")
-    private int watingChecked;
+    @Column(name = "time")
+    private String time;
 
     @Column(name = "branch")
     private Integer branch;
 
-    @JoinColumn(name = "item")
+    @JoinColumn(name = "sub_item")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MItem item;
+    private MSubItem subItem;
 
-    public TItemCheckResult() {
+    public TSubItemCheckResult() {
     }
 
-    public TItemCheckResult(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public TItemCheckResult(Integer transaction, boolean checked, Date date, int checkStage, int watingChecked, Integer branch, MItem item) {
-        this.transaction = transaction;
+    public TSubItemCheckResult(Boolean checked, Integer transaction, Integer branch, MSubItem subItem) {
         this.checked = checked;
-        this.date = date;
-        this.checkStage = checkStage;
-        this.watingChecked = watingChecked;
+        this.transaction = transaction;
         this.branch = branch;
-        this.item = item;
+        this.subItem = subItem;
     }
 
     public Integer getIndexNo() {
@@ -92,6 +84,14 @@ public class TItemCheckResult implements Serializable {
         this.indexNo = indexNo;
     }
 
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
+    }
+
     public Integer getTransaction() {
         return transaction;
     }
@@ -100,12 +100,20 @@ public class TItemCheckResult implements Serializable {
         this.transaction = transaction;
     }
 
-    public boolean getChecked() {
-        return checked;
+    public String getReason() {
+        return reason;
     }
 
-    public void setChecked(boolean checked) {
-        this.checked = checked;
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
+    public boolean getComfirmation() {
+        return comfirmation;
+    }
+
+    public void setComfirmation(boolean comfirmation) {
+        this.comfirmation = comfirmation;
     }
 
     public Date getDate() {
@@ -116,14 +124,6 @@ public class TItemCheckResult implements Serializable {
         this.date = date;
     }
 
-    public int getCheckStage() {
-        return checkStage;
-    }
-
-    public void setCheckStage(int checkStage) {
-        this.checkStage = checkStage;
-    }
-
     public Integer getBranch() {
         return branch;
     }
@@ -132,20 +132,20 @@ public class TItemCheckResult implements Serializable {
         this.branch = branch;
     }
 
-    public MItem getItem() {
-        return item;
+    public MSubItem getSubItem() {
+        return subItem;
     }
 
-    public void setItem(MItem item) {
-        this.item = item;
+    public void setSubItem(MSubItem subItem) {
+        this.subItem = subItem;
     }
 
-    public int getWatingChecked() {
-        return watingChecked;
+    public String getTime() {
+        return time;
     }
 
-    public void setWatingChecked(int watingChecked) {
-        this.watingChecked = watingChecked;
+    public void setTime(String time) {
+        this.time = time;
     }
 
 }

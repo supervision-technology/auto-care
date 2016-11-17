@@ -5,12 +5,12 @@
  */
 package com.mac.gl.master.service;
 
-import com.mac.gl.master.model.MItem;
-import com.mac.gl.master.model.TItemCheckResult;
-import com.mac.gl.master.model.TSubItemCheckResult;
-import com.mac.gl.master.repository.ItemRepository;
-import com.mac.gl.master.repository.TItemCheckResultRepository;
-import com.mac.gl.master.repository.TSubItemCheckResultRepository;
+import com.mac.gl.master.model.item.MItem;
+import com.mac.gl.master.model.item.TItemCheckResult;
+import com.mac.gl.master.model.item.TSubItemCheckResult;
+import com.mac.gl.master.repository.checklist.TItemCheckResultRepository;
+import com.mac.gl.master.repository.checklist.TSubItemCheckResultRepository;
+import com.mac.gl.master.repository.item.ItemRepository;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

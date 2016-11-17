@@ -72,7 +72,7 @@
                         <col style="width: 10%;"/>
                         <col style="width: 10%;"/>
                         <col style="width: 10%;"/>
-                        <tbody class="animation-fade" ng-repeat="subItem in model.subItems">
+                        <tbody class="animation-fade" ng-repeat="subItem in model.subItems|orderBy:'indexNo'">
                             <tr ng-class="{'select-primary-row':subItem.comfirmation === true,'select-danger-row':subItem.comfirmation === false && subItem.checked === true}">
                                 <td>{{subItem.indexNo}}</td>
                                 <td>{{subItem.subItem.subName}}</td>

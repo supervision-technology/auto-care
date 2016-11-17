@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.controller;
+package com.mac.gl.master.controller.checklist;
 
-import com.mac.gl.master.model.TItemCheckResult;
+import com.mac.gl.master.model.item.TItemCheckResult;
 import com.mac.gl.master.service.TItemCheckResultService;
 import java.util.Date;
 import java.util.List;

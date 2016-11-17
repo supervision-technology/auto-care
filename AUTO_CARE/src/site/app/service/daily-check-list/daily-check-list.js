@@ -88,16 +88,6 @@
                                 console.log(data);
                             }
                     );
-
-//                    dailyCheckListFactory.getChekedSubItems(
-//                            detailJSON,
-//                            function (data) {
-//                                $scope.model.items[0].checkStage = data;
-//                            },
-//                            function (data) {
-//                                console.log(data);
-//                            }
-//                    );
                 };
 
                 $scope.historySelectionDetail = function ($index) {

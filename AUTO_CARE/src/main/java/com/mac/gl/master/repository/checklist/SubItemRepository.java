@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.repository;
+package com.mac.gl.master.repository.checklist;
 
-import com.mac.gl.master.model.MItem;
+import com.mac.gl.master.model.item.MSubItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Don
  */
-public interface ItemRepository extends JpaRepository<MItem, Integer> {
+public interface SubItemRepository extends JpaRepository<MSubItem, Integer> {
 
 }

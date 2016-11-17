@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.model;
+package com.mac.gl.master.model.item;
 
+import com.mac.gl.master.model.item.MItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
