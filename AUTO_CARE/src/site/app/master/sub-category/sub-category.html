@@ -35,7 +35,7 @@
                 <col style="width: 45%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="subCategory in model.subCategoryList|filter :model.search.name">
+                    <tr ng-repeat="subCategory in model.subCategoryList|filter :{name:model.search.name}">
                         <td>{{subCategory.indexNo}}</td>
                         <td>{{subCategory.name}}</td>
                     

@@ -30,8 +30,25 @@ public class CategoryService {
         return categoryRepository.findAll();
     }
 
+    private MCategory findByName(String name) {
+        List<MCategory> categoryList = categoryRepository.findByName(name);
+        if (categoryList.isEmpty()) {
+            return null;
+        }
+        return categoryList.get(0);
+    }
+
     public MCategory saveCategory(MCategory category) {
-        return categoryRepository.save(category);
+        MCategory findByName = findByName(category.getName());
+        if (findByName==null) {
+            return categoryRepository.save(category);
+        }else{
+            if (findByName.getIndexNo().equals(category.getIndexNo())) {
+                return category;
+            }
+            throw new DuplicateEntityException("Duplicate Name");
+        }
+        
     }
 
     public void deleteCategory(Integer indexNo) {
