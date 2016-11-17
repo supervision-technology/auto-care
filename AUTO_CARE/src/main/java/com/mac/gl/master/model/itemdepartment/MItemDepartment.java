@@ -29,7 +29,7 @@ public class MItemDepartment implements Serializable{
     @Column(name = "index_no")
     private Integer indexNo;
     
-     @Basic(optional = false)
+    @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "name")

@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/master/category")
+@RequestMapping("/api/care-point/master/category")
 public class CategoryController {
 
     @Autowired
@@ -43,11 +43,6 @@ public class CategoryController {
     public Integer deleteCategory(@PathVariable Integer indexNo) {
         categoryService.deleteCategory(indexNo);
         return indexNo;
-    }
-
-    @RequestMapping(value = "/get-category", method = RequestMethod.POST)
-    public List<MCategory> deleteCategory(@RequestBody MItemDepartment itemDepartment) {
-        return categoryService.findByItemDepartment(itemDepartment);
     }
 
 }

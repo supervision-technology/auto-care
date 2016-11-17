@@ -15,9 +15,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author kalum
  */
 public interface SubCategoryRepository extends JpaRepository<MSubCategory, Integer> {
-
-    public List<MSubCategory> findByCategory(MCategory category);
-  
-    public List<MSubCategory> findByNameAndCategoryIndexNo(String name,Integer categoryId );
-
 }

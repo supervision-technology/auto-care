@@ -21,30 +21,32 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author kalum
  */
+
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/master/sub-category")
+@RequestMapping("/api/care-point/master/sub-category")
 public class SubCategoryController {
 
     @Autowired
     private SubCategoryService subCategoryService;
+    
+    //find all
+    @RequestMapping(method = RequestMethod.GET)
+    public List<MSubCategory> findAllCategory() {
+        return subCategoryService.findAllSubCategory();
+    }
 
     //Save subCategory
     @RequestMapping(value = "/save-subCategory", method = RequestMethod.POST)
     public MSubCategory saveSubCategory(@RequestBody MSubCategory subCategory) {
         return subCategoryService.saveSubCategory(subCategory);
     }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<MSubCategory> findAllCategory() {
-        return subCategoryService.findAllSubCategory();
-    }
-
+    //delete subCategory
     @RequestMapping(value = "/delete-sub-category/{indexNo}", method = RequestMethod.DELETE)
     public void deleteSubCategory(@PathVariable Integer indexNo) {
         subCategoryService.deleteSubCategory(indexNo);
     }
-
+    //find by category
     @RequestMapping(value = "/get-sub-category", method = RequestMethod.POST)
     public List<MSubCategory> findByCategory(@RequestBody MCategory category) {
         return subCategoryService.findByCategory(category);

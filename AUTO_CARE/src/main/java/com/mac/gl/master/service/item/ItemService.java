@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.service.category;
+package com.mac.gl.master.service.item;
 
-import com.mac.gl.master.model.category.MCategory;
-import com.mac.gl.master.model.itemdepartment.MItemDepartment;
-import com.mac.gl.master.repository.category.CategoryRepository;
+import com.mac.gl.master.model.item.MItem;
+import com.mac.gl.master.repository.item.ItemRepository;
 import com.mac.gl.system.exception.DuplicateEntityException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +16,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Nidura Prageeth
+ * @author Don
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class CategoryService {
+public class ItemService {
 
     @Autowired
-    private CategoryRepository categoryRepository;
+    private ItemRepository itemRepository;
 
-    public List<MCategory> findAllCategory() {
-        return categoryRepository.findAll();
+    public List<MItem> getAllItem() {
+        return itemRepository.findAll();
     }
 
-    public MCategory saveCategory(MCategory category) {
-        return categoryRepository.save(category);
+    public MItem saveItem(MItem item) {
+        return itemRepository.save(item);
     }
 
-    public void deleteCategory(Integer indexNo) {
-        categoryRepository.delete(indexNo);
+    public void deleteItem(Integer indexNo) {
+        itemRepository.delete(indexNo);
     }
 }

@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.repository.itemdepartment;
+package com.mac.gl.master.repository;
 
-import com.mac.gl.master.model.itemdepartment.MItemDepartment;
-import java.util.List;
+import com.mac.gl.master.model.MSubItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author KAZA
+ * @author Don
  */
-public interface ItemDepartmentRepository extends JpaRepository<MItemDepartment, Integer> {
+public interface SubItemRepository extends JpaRepository<MSubItem, Integer> {
 
 }

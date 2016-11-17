@@ -29,22 +29,8 @@ public class SubCategoryService {
     public List<MSubCategory> findAllSubCategory() {
         return subCategoryRepository.findAll();
     }
-    
-    private MSubCategory findByNameAndCategoryIndexNo(String category, Integer categoryId){
-        List<MSubCategory>subCategoryList = subCategoryRepository.findByNameAndCategoryIndexNo(category, categoryId);
-        if (subCategoryList.isEmpty()) {
-            return null;
-        }
-
-        return subCategoryList.get(0);
-    }
 
     public MSubCategory saveSubCategory(MSubCategory subCategory) {
-        
-        MSubCategory findByObect = findByNameAndCategoryIndexNo(subCategory.getName(),subCategory.getCategory().getIndexNo());
-        if (findByObect!=null) {
-            throw new DuplicateEntityException("Sub Category already exist !!!");
-        }
         return subCategoryRepository.save(subCategory);
     }
 
@@ -53,7 +39,6 @@ public class SubCategoryService {
     }
 
     public List<MSubCategory> findByCategory(MCategory category) {
-        return subCategoryRepository.findByCategory(category);
+        return null;
     }
-
 }

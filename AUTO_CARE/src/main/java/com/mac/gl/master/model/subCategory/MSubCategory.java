@@ -5,17 +5,13 @@
  */
 package com.mac.gl.master.model.subCategory;
 
-import com.mac.gl.master.model.category.MCategory;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -33,11 +29,6 @@ public class MSubCategory implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @NotNull
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "category")
-    private MCategory category;
-
     @Basic(optional = false)
     @NotNull
     @Column(name = "name")
@@ -50,9 +41,8 @@ public class MSubCategory implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public MSubCategory(Integer indexNo, MCategory category, String name) {
+    public MSubCategory(Integer indexNo, String name) {
         this.indexNo = indexNo;
-        this.category = category;
         this.name = name;
     }
 
@@ -62,14 +52,6 @@ public class MSubCategory implements Serializable {
 
     public void setIndexNo(Integer indexNo) {
         this.indexNo = indexNo;
-    }
-
-    public MCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(MCategory category) {
-        this.category = category;
     }
 
     public String getName() {

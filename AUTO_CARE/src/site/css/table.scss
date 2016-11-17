@@ -193,12 +193,12 @@ tr.ng-leave{
 }
 
 .select-danger-row{
-    background-color: $danger-color !important;
+    background-color: lighten($danger-color, 20%) !important;
     color: $light-font-color;
 }
 
 .select-primary-row{
-    background-color: $bg-light-color !important;
+    background-color: lighten($primary-color, 20%) !important;
     color: $dark-font-color;
 }
 

@@ -2,6 +2,7 @@
     //index module
     angular.module("appModule", [
         "ngRoute",
+        "ui.bootstrap",
         "homeModule",
         "dailyCheckListModule",
         "vehicleEntranceModule",
@@ -14,8 +15,20 @@
         "requestItemModule",
         //front office
         "dashBoardModule",
-        "invoiceModule"
+        "invoiceModule",
+        "subCategoryModule",
+        "categoryModule",
+        "itemDepartmentModule",
+        "brandModule"
+
     ]);
+    
+    //constants
+    angular.module("appModule")
+            .constant("systemConfig", {
+                apiUrl: "http://localhost:8080"
+            });
+
 
     //route config
     angular.module("appModule")
@@ -74,14 +87,47 @@
                             templateUrl: "app/front-office/service-dashboard/service-dashboard.html",
                             controller: "dashBoardController"
                         })
+                        .when("/front-office/service-das0hboard", {
+                            templatek: "app/front-office/service-dashboard/service-dashboard.html",
+                            controller: "dashBoardController"
+                        })
                         //front-office
                         .when("/front-office/invoice", {
                             templateUrl: "app/front-office/invoice/invoice.html",
                             controller: "invoiceController"
                         })
+
+                        //master
+                        .when("/master/item", {
+                            templateUrl: "app/master/item/item.html",
+                            controller: "itemController"
+                        })
+                        .when("/master/sub-category", {
+                            templateUrl: "app/master/sub-category/sub-category.html",
+                            controller: "subCategoryController"
+                        })
+                        .when("/master/category", {
+                            templateUrl: "app/master/category/category.html",
+                            controller: "categoryController"
+                        })
+                        .when("/master/item-department", {
+                            templateUrl: "app/master/item-department/item-department.html",
+                            controller: "itemDepartmentController"
+                        })
+                        .when("/master/brand", {
+                            templateUrl: "app/master/brand/brand.html",
+                            controller: "brandController"
+                        })
+
                         .otherwise({
                             redirectTo: "/"
                         });
+            });
+
+    //constants
+    angular.module("appModule")
+            .constant("systemConfig", {
+                apiUrl: "http://localhost:8080"
             });
 
     angular.module("appModule")
