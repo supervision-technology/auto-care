@@ -1,16 +1,124 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-        <div>TODO write content</div>
-    </body>
-</html>
+<div class="index-content-body ">
+    <div class="col-xs-4 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
+            <div class="col-xs-12" style="flex: 0 0 auto; height: 95px;">
+                <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 40px);">
+                    <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
+                        <div class="background-light-dark">
+                            <table class="square-table">
+                                <col style="width: 40%;"/>
+                                <col style="width: 60%;"/>
+                                <tbody>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">Bay Name</label></td>
+                                        <td><input id="name" type="text" class="form-control" ng-model="model.bay.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" ></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">X</label></td>
+                                        <td><input id="x" type="text" class="form-control" ng-model="model.bay.x" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">Y</label></td>
+                                        <td><input id="y" type="text" class="form-control" ng-model="model.bay.y" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">W</label></td>
+                                        <td><input id="w" type="text" class="form-control" ng-model="model.bay.w" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">H</label></td>
+                                        <td><input id="h" type="text" class="form-control" ng-model="model.bay.h" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">Max Vehicle</label></td>
+                                        <td><input id="maxVehicle" type="text" class="form-control" ng-model="model.bay.maxVehicle" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">Max Employee</label></td>
+                                        <td><input id="maxEmployee" type="text" class="form-control" ng-model="model.bay.maxEmployee" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">Assign Employee</label></td>
+                                        <td><input id="assignEmployee" type="text" class="form-control" ng-model="model.bay.assignEmployee" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" ></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">Assign Vehicle</label></td>
+                                        <td><input id="assignVehicle" type="text" class="form-control" ng-model="model.bay.assignVehicle" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">Type</label></td>
+                                        <td><input id="type" type="text" class="form-control" ng-model="model.bay.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                    </tr>
+                                    <tr class="background-light-dark">
+                                        <td><label class="control-label">Color</label></td>
+                                        <td>
+                                            <!--<input colorpicker ng-model="hexPicker.color" type="text" class="form-control">-->
+                                            <!--<input colorpicker="rgba" type="text" ng-model="colors.back1Color" class="form-control" ng-model="model.bay.color" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />-->
+                                            <input id="color" type="text" class="form-control" ng-model="model.bay.color" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                                            <!--<input id="name" type="text" class="form-control" ng-model="model.bay.color" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">-->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-8 background-light">
+        <div class="row col-xs-12">
+            <input type="text" class="search-input" ng-model="search" placeholder="search">
+        </div>
+        <div class="col-lg-12">
+
+            <table class="square-table">
+                <col style="width: 10%"/>
+                <col style="width: 30%"/>
+                <col style="width: 20%"/>
+                <col style="width: 20%"/>
+                <col style="width: 20%"/>
+
+                <thead class="background-light-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Bay Name</th>
+                        <th>Color</th>
+                        <th>Size (x,y,w,h)</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="smart-scroll-y" style="height: calc(100vh - 315px);">
+                <table class="square-table">
+                    <col style="width: 10%"/>
+                    <col style="width: 30%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 20%"/>
+                    <tbody>
+                        <tr class="smart-scroll-y" ng-repeat="bay in model.bayList|filter:{name:search}|orderBy:'indexNo'">
+                            <td><span class="label label-default">{{bay.indexNo}}</span></td>
+                            <td>{{bay.name}}</td>
+                            <td>
+                                <label style="background-color: {{bay.color}}; width: 30px">&nbsp;</label>
+                            </td>
+                            <td>{{bay.x}}-{{bay.y}}-{{bay.w}}-{{bay.h}}</td>
+                            <td class="text-right">
+                                <a class="btn btn-primary" ng-click="ui.edit(bay, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                <a class="btn btn-danger" ng-click="http.deleteBay(bay.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>
