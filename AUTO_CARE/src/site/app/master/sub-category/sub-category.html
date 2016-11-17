@@ -15,7 +15,7 @@
     </div>
     <div class="col-xs-8 background-dark">
         <div class="row col-xs-5">
-            <input type="text" class="search-input" ng-model="{model.search.name=$viewValue}" placeholder="search">
+            <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
         </div>
         <table class="table-rounded">
             <col style="width: 45%">
@@ -35,7 +35,7 @@
                 <col style="width: 45%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="subCategory in model.subCategoryList|filter :{model.search.name=$viewValue}">
+                    <tr ng-repeat="subCategory in model.subCategoryList|filter :model.search.name">
                         <td>{{subCategory.indexNo}}</td>
                         <td>{{subCategory.name}}</td>
                     
