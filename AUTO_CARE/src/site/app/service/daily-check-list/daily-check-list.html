@@ -19,22 +19,21 @@
                 </thead>
             </table>
             <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
-                <div class="background-light-dark" ng-repeat="check in check_list_group">
+                <div class="background-light-dark">
                     <table class="square-table">
                         <col style="width: 30%;"/>
-                        <col style="width: 60%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 20%;"/>
                         <col style="width: 10%;"/>
                         <tbody>
-                            <tr class="background-light-dark">
-                                <td>{{check.indexNo}}</td>
-                                <td>{{check.name}}</td>
-                                <td><a class="btn btn-danger" ng-click="doFilter(check.indexNo)"><span class="glyphicon glyphicon-play"></span></a></td>
+                            <tr ng-repeat="items in model.items">
+                                <td>{{items.item.indexNo}}</td>
+                                <td>{{items.item.name}}</td>
+                                <td>{{items.checkStage}} /{{items.watingChecked}}</td>
+                                <td><a class="btn btn-primary" ng-click="http.getSubItems(items);"><span class="glyphicon glyphicon-play"></span></a></td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="placeholder nopadding" style="height: calc(100vh - 105px);" ng-hide="8">
-                    <h1>NO CHECKED GROUP TO DISPLAY :(</h1>
                 </div>
             </div>
         </div>
@@ -47,34 +46,49 @@
         </div>
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 40px);">
             <table class="square-table background-dark">
-                <col style="width: 30%;"/>
-                <col style="width: 60%;"/>
+                <col style="width: 10%;"/>
+                <col style="width: 20%;"/>
+                <col style="width: 40%;"/>
+                <col style="width: 10%;"/>
+                <col style="width: 10%;"/>
                 <col style="width: 10%;"/>
                 <thead>
                     <tr>
                         <th>#</th>
                         <th>NAME</th>
+                        <th>REASON</th>
+                        <th>TIME</th>
+                        <th>&nbsp;</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
             </table>
             <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
-                <div class="background-light-dark" ng-repeat="check in check_list_item|filter:filterBy">
+                <div class="background-light-dark">
                     <table class="square-table">
-                        <col style="width: 30%;"/>
-                        <col style="width: 60%;"/>
                         <col style="width: 10%;"/>
-                        <tbody>
-                            <tr class="background-light-dark">
-                                <td>{{check.indexNo}}</td>
-                                <td>{{check.description}}</td>
-                                <td><a class="btn btn-danger"><span class="glyphicon glyphicon-ok"></span></a></td>
+                        <col style="width: 20%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 10%;"/>
+                        <tbody class="animation-fade" ng-repeat="subItem in model.subItems">
+                            <tr ng-class="{'select-primary-row':subItem.comfirmation === true,'select-danger-row':subItem.comfirmation === false && subItem.checked === true}">
+                                <td>{{subItem.indexNo}}</td>
+                                <td>{{subItem.subItem.subName}}</td>
+                                <td>{{subItem.reason}}</td>
+                                <td>{{subItem.time}}</td>
+                                <td><a class="btn btn-primary" ng-click="ui.confirmation(subItem, 'true', $index);"><span class="glyphicon glyphicon-ok"></span></a></td>
+                                <td><a class="btn btn-primary" ng-click="historySelectionDetail($index)"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            </tr>
+                            <tr class="animation-fade" ng-show="historyActivePosition == $index">
+                                <td colspan="5">
+                                    <input type="text" class="form-control text-right" ng-model="subItem.reason">
+                                </td>
+                                <td><a class="btn btn-primary" ng-click="ui.confirmation(subItem, 'false', $index);"><span class="glyphicon glyphicon-ok"></span></a></td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="placeholder nopadding" style="height: calc(100vh - 105px);" ng-hide="9">
-                    <h1>NO CHECKED GROUP TO DISPLAY :(</h1>
                 </div>
             </div>
         </div>

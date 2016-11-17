@@ -2,6 +2,7 @@
     //index module
     angular.module("appModule", [
         "ngRoute",
+        "ui.bootstrap",
         "homeModule",
         "dailyCheckListModule",
         "vehicleEntranceModule",
@@ -121,6 +122,12 @@
                         .otherwise({
                             redirectTo: "/"
                         });
+            });
+
+    //constants
+    angular.module("appModule")
+            .constant("systemConfig", {
+                apiUrl: "http://localhost:8080"
             });
 
     angular.module("appModule")
