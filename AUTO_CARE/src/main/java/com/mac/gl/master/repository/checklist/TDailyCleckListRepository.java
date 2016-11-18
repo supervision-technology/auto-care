@@ -5,7 +5,8 @@
  */
 package com.mac.gl.master.repository.checklist;
 
-import com.mac.gl.master.model.item.TItemCheckResult;
+import com.mac.gl.master.model.checklist.TDailyCleckList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,8 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Don
  */
-public interface TItemCheckResultRepository extends JpaRepository<TItemCheckResult, Integer> {
+public interface TDailyCleckListRepository extends JpaRepository<TDailyCleckList, Integer> {
 
-    public List<TItemCheckResult> findByBranch(Integer branch);
-
+    public List<TDailyCleckList> findByBranchAndDate(Integer branch, Date date);
 }

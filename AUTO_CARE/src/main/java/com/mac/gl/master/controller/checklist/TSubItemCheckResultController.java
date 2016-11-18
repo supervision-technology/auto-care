@@ -5,13 +5,15 @@
  */
 package com.mac.gl.master.controller.checklist;
 
-import com.mac.gl.master.model.item.TItemCheckResult;
-import com.mac.gl.master.model.item.TSubItemCheckResult;
-import com.mac.gl.master.service.TItemCheckResultService;
-import com.mac.gl.master.service.TSubItemCheckResultService;
+import com.mac.gl.master.model.checklist.TDailyCleckList;
+import com.mac.gl.master.model.checklist.TSubItemCheckResult;
+import com.mac.gl.master.model.item.MItem;
+import com.mac.gl.master.service.checklist.TSubItemCheckResultService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,28 +30,25 @@ public class TSubItemCheckResultController {
 
     private final Integer TRANSACTION = 1;
     private final Integer BRANCH = 1;
+    private final Date DATE = new Date();
 
     @Autowired
     private TSubItemCheckResultService subItemCheckResultService;
 
     @RequestMapping(value = "/get-sub-item-check-list", method = RequestMethod.POST)
-    public List<TSubItemCheckResult> findALlSubItemCheckList(@RequestBody TItemCheckResult itemCheckResult) {
-        return subItemCheckResultService.findByBranchAndItem(BRANCH, itemCheckResult.getItem());
+    public List<TSubItemCheckResult> findALlSubItemCheckList(@RequestBody MItem item) {
+        return subItemCheckResultService.findByItem(item, DATE);
     }
 
-    @RequestMapping(value = "/incert-sub-item-check-list", method = RequestMethod.GET)
-    public List<TSubItemCheckResult> incertCheckSubItemList() {
-        return subItemCheckResultService.insertSubItemList(TRANSACTION, BRANCH);
+    @RequestMapping(value = "/incert-sub-item-check-list/{date}", method = RequestMethod.POST)
+    public List<TSubItemCheckResult> incertCheckSubItemList(@PathVariable String date) {
+        System.out.println("gfhddfghfghfgh");
+        TDailyCleckList dailyCleckList = new TDailyCleckList(new Date(), BRANCH, TRANSACTION, false);
+        return subItemCheckResultService.insertSubItemList(TRANSACTION, BRANCH, DATE, dailyCleckList);
     }
 
     @RequestMapping(value = "/update-confirmation", method = RequestMethod.POST)
-    public TSubItemCheckResult updateConfirmation(@RequestBody TSubItemCheckResult subItemCheckResult) {
-        System.out.println(subItemCheckResult.getSubItem().getItem().getIndexNo());
+    public Integer updateConfirmation(@RequestBody TSubItemCheckResult subItemCheckResult) {
         return subItemCheckResultService.updateConfirmation(subItemCheckResult);
-    }
-
-    @RequestMapping(value = "/get-cheked-sub-items", method = RequestMethod.POST)
-    public Integer getSubItems(@RequestBody TItemCheckResult itemCheckResult) {
-        return subItemCheckResultService.getChekedItemSupplier(BRANCH, itemCheckResult.getItem(), true);
     }
 }

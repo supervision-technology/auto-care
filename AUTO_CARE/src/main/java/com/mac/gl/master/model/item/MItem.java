@@ -209,5 +209,4 @@ public class MItem implements Serializable {
     public void setBranch(Integer branch) {
         this.branch = branch;
     }
-
 }

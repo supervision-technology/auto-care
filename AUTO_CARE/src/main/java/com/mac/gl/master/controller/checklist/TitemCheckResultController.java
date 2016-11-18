@@ -5,8 +5,8 @@
  */
 package com.mac.gl.master.controller.checklist;
 
-import com.mac.gl.master.model.item.TItemCheckResult;
-import com.mac.gl.master.service.TItemCheckResultService;
+import com.mac.gl.master.model.item.Items;
+import com.mac.gl.master.service.checklist.TSubItemCheckResultService;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,24 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/care-point/item-check-list")
+@RequestMapping("/api/care-point/master/all-items")
 public class TitemCheckResultController {
 
-    private final Integer TRANSACTION = 1;
-    private final Date DATE = new Date();
-    private final Integer BRANCH = 1;
-
     @Autowired
-    private TItemCheckResultService itemCheckResultService;
+    private TSubItemCheckResultService subItemCheckResultService;
+
+    private final Date DATE = new Date();
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<TItemCheckResult> findALLTItemCheckResult() {
-        return itemCheckResultService.findByBranch(BRANCH);
+    public List<Items> findALLTItemCheckResult() {
+        return subItemCheckResultService.getALlItems(DATE);
     }
-
-    @RequestMapping(value = "/insert-item-check-list", method = RequestMethod.GET)
-    public List<TItemCheckResult> incertCheckItemList() {
-        return itemCheckResultService.insertItems(TRANSACTION, DATE, BRANCH);
-    }
-
 }

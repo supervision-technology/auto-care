@@ -5,7 +5,6 @@
  */
 package com.mac.gl.master.model.item;
 
-import com.mac.gl.master.model.item.MItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -33,20 +32,23 @@ public class MSubItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
+    
     @Column(name = "branch")
     private Integer branch;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "sub_name")
     private String subName;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "short_order")
     private int shortOrder;
+    
     @Basic(optional = false)
     @NotNull
-
     @Column(name = "active")
     private boolean active;
 

@@ -5,7 +5,9 @@
  */
 package com.mac.gl.master.repository.checklist;
 
+import com.mac.gl.master.model.item.MItem;
 import com.mac.gl.master.model.item.MSubItem;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,4 +16,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface SubItemRepository extends JpaRepository<MSubItem, Integer> {
 
+    public List<MSubItem> findByBranchAndItem(Integer branch, MItem item);
 }
