@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/care-point/master/item")
-public class itemController {
+public class ItemController {
 
     @Autowired
     private ItemService itemService;
@@ -35,7 +35,6 @@ public class itemController {
 
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
     public MItem saveItem(@RequestBody MItem item) {
-        item.setBranch(1);
         return itemService.saveItem(item);
     }
 
