@@ -13,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -21,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Supervision
  */
 @Entity
-@Table(name = "m_bay", catalog = "care_point", schema = "")
+@Table(name = "m_bay")
 @XmlRootElement
 public class Bay implements Serializable {
 
@@ -31,28 +32,48 @@ public class Bay implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    @Size(max = 25)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
     @Column(name = "name")
     private String name;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "max_vehicle")
-    private Integer maxVehicle;
+    private int maxVehicle;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "max_employee")
-    private Integer maxEmployee;
+    private int maxEmployee;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "x")
-    private Integer x;
+    private int x;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "y")
-    private Integer y;
+    private int y;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "w")
-    private Integer w;
+    private int w;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "h")
-    private Integer h;
-    @Size(max = 25)
+    private int h;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "assign_employee")
-    private Boolean assignEmployee;
+    private boolean assignEmployee;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "assign_vehicle")
-    private Boolean assignVehicle;
+    private boolean assignVehicle;
     @Size(max = 25)
     @Column(name = "color")
     private String color;
@@ -62,6 +83,20 @@ public class Bay implements Serializable {
 
     public Bay(Integer indexNo) {
         this.indexNo = indexNo;
+    }
+
+    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle) {
+        this.indexNo = indexNo;
+        this.name = name;
+        this.maxVehicle = maxVehicle;
+        this.maxEmployee = maxEmployee;
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.type = type;
+        this.assignEmployee = assignEmployee;
+        this.assignVehicle = assignVehicle;
     }
 
     public Integer getIndexNo() {
@@ -80,51 +115,51 @@ public class Bay implements Serializable {
         this.name = name;
     }
 
-    public Integer getMaxVehicle() {
+    public int getMaxVehicle() {
         return maxVehicle;
     }
 
-    public void setMaxVehicle(Integer maxVehicle) {
+    public void setMaxVehicle(int maxVehicle) {
         this.maxVehicle = maxVehicle;
     }
 
-    public Integer getMaxEmployee() {
+    public int getMaxEmployee() {
         return maxEmployee;
     }
 
-    public void setMaxEmployee(Integer maxEmployee) {
+    public void setMaxEmployee(int maxEmployee) {
         this.maxEmployee = maxEmployee;
     }
 
-    public Integer getX() {
+    public int getX() {
         return x;
     }
 
-    public void setX(Integer x) {
+    public void setX(int x) {
         this.x = x;
     }
 
-    public Integer getY() {
+    public int getY() {
         return y;
     }
 
-    public void setY(Integer y) {
+    public void setY(int y) {
         this.y = y;
     }
 
-    public Integer getW() {
+    public int getW() {
         return w;
     }
 
-    public void setW(Integer w) {
+    public void setW(int w) {
         this.w = w;
     }
 
-    public Integer getH() {
+    public int getH() {
         return h;
     }
 
-    public void setH(Integer h) {
+    public void setH(int h) {
         this.h = h;
     }
 
@@ -136,19 +171,19 @@ public class Bay implements Serializable {
         this.type = type;
     }
 
-    public Boolean getAssignEmployee() {
+    public boolean getAssignEmployee() {
         return assignEmployee;
     }
 
-    public void setAssignEmployee(Boolean assignEmployee) {
+    public void setAssignEmployee(boolean assignEmployee) {
         this.assignEmployee = assignEmployee;
     }
 
-    public Boolean getAssignVehicle() {
+    public boolean getAssignVehicle() {
         return assignVehicle;
     }
 
-    public void setAssignVehicle(Boolean assignVehicle) {
+    public void setAssignVehicle(boolean assignVehicle) {
         this.assignVehicle = assignVehicle;
     }
 
@@ -168,8 +203,21 @@ public class Bay implements Serializable {
     }
 
     @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Bay)) {
+            return false;
+        }
+        Bay other = (Bay) object;
+        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public String toString() {
-        return "com.mac.gl.master.model.MBay[ indexNo=" + indexNo + " ]";
+        return "com.mac.gl.master.model.bay.Bay[ indexNo=" + indexNo + " ]";
     }
     
 }

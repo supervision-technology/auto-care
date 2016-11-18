@@ -10,6 +10,10 @@
     <class>com.mac.gl.master.model.vehicleType.VehicleType</class>
     <class>com.mac.gl.master.model.client.Client</class>
     <class>com.mac.gl.master.model.vehicle.Vehicle</class>
+    <class>com.mac.gl.master.model.jobCard.JobCard</class>
+    <class>com.mac.gl.master.model.vehicleAssignment.VehicleAssignment</class>
+    <class>com.mac.gl.master.controller.vehicleAssignment.TVehicleAssignment</class>
+    <class>com.mac.gl.master.model.bay.Bay</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

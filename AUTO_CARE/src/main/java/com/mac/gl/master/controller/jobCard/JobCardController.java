@@ -3,44 +3,43 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.controller.itemdepartment;
+package com.mac.gl.master.controller.jobCard;
 
-import com.mac.gl.master.model.itemdepartment.MItemDepartment;
-import com.mac.gl.master.service.itemDepartment.ItemDepartmentService;
+import com.mac.gl.master.model.jobCard.JobCard;
+import com.mac.gl.master.service.jobCard.JobCardService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
- * @author KAZA
+ * @author Supervision
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/master/item-departments")
-public class ItemDepartmentController {
-
+@RequestMapping("/api/green-leaves/transaction/job-card")
+public class JobCardController {
     @Autowired
-    private ItemDepartmentService departmentService;
+    private JobCardService jobCardService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<MItemDepartment> findAll() {
-        return departmentService.findAll();
+    public List<JobCard> findAll() {
+        return jobCardService.findAll();
     }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
-    public MItemDepartment insertItemDepartment(@RequestBody MItemDepartment departmentModel) {
-        return departmentService.saveItemDepartment(departmentModel);
+    public JobCard insertDetail(@RequestBody JobCard jobCard) {
+        return jobCardService.saveItemDepartment(jobCard);
     }
 
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
-    public Integer deleteItemDepartment(@PathVariable Integer indexNo) {
-        departmentService.deleteItemDepartment(indexNo);
+    public Integer deleteDetail(@PathVariable Integer indexNo) {
+        jobCardService.deleteItemDepartment(indexNo);
 
         return indexNo;
     }
