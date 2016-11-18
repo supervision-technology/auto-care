@@ -24,7 +24,8 @@
         "priceCategoryModule",
         "vehicleTypeModule",
         "clientModule",
-        "vehicleModule"
+        "vehicleModule",
+        "jobCardModule"
         
 
     ]);
@@ -143,6 +144,10 @@
                         .when("/master/vehicle", {
                             templateUrl: "app/master/vehicle/vehicle.html",
                             controller: "vehicleController"
+                        })
+                        .when("/front-office/job-card", {
+                            templateUrl: "app/front-office/job-card/job-card.html",
+                            controller: "jobCardController"
                         })
                         .otherwise({
                             redirectTo: "/"
