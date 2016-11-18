@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.model.item;
+package com.mac.gl.master.model.checklist;
 
+import com.mac.gl.master.model.item.MSubItem;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,8 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -35,45 +34,37 @@ public class TSubItemCheckResult implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @Column(name = "checked")
-    private Boolean checked;
-
-    @Column(name = "transaction")
-    private Integer transaction;
     @Basic(optional = false)
+    @NotNull
+    @Column(name = "checked")
+    private boolean checked;
 
-    @Size(min = 1, max = 50)
+    @Size(max = 50)
     @Column(name = "reason")
     private String reason;
-    @Basic(optional = false)
 
     @Column(name = "comfirmation")
-    private boolean comfirmation;
-    @Basic(optional = false)
+    private Boolean comfirmation;
 
-    @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
-
-    @Basic(optional = false)
+    @Size(max = 25)
     @Column(name = "time")
     private String time;
-
-    @Column(name = "branch")
-    private Integer branch;
 
     @JoinColumn(name = "sub_item")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private MSubItem subItem;
 
+    @JoinColumn(name = "daily_check_list")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private TDailyCleckList dailyCheckList;
+
     public TSubItemCheckResult() {
     }
 
-    public TSubItemCheckResult(Boolean checked, Integer transaction, Integer branch, MSubItem subItem) {
+    public TSubItemCheckResult(boolean checked, MSubItem subItem, TDailyCleckList dailyCheckList) {
         this.checked = checked;
-        this.transaction = transaction;
-        this.branch = branch;
         this.subItem = subItem;
+        this.dailyCheckList = dailyCheckList;
     }
 
     public Integer getIndexNo() {
@@ -84,20 +75,12 @@ public class TSubItemCheckResult implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public Boolean getChecked() {
+    public boolean getChecked() {
         return checked;
     }
 
-    public void setChecked(Boolean checked) {
+    public void setChecked(boolean checked) {
         this.checked = checked;
-    }
-
-    public Integer getTransaction() {
-        return transaction;
-    }
-
-    public void setTransaction(Integer transaction) {
-        this.transaction = transaction;
     }
 
     public String getReason() {
@@ -108,36 +91,12 @@ public class TSubItemCheckResult implements Serializable {
         this.reason = reason;
     }
 
-    public boolean getComfirmation() {
+    public Boolean getComfirmation() {
         return comfirmation;
     }
 
-    public void setComfirmation(boolean comfirmation) {
+    public void setComfirmation(Boolean comfirmation) {
         this.comfirmation = comfirmation;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Integer getBranch() {
-        return branch;
-    }
-
-    public void setBranch(Integer branch) {
-        this.branch = branch;
-    }
-
-    public MSubItem getSubItem() {
-        return subItem;
-    }
-
-    public void setSubItem(MSubItem subItem) {
-        this.subItem = subItem;
     }
 
     public String getTime() {
@@ -148,4 +107,19 @@ public class TSubItemCheckResult implements Serializable {
         this.time = time;
     }
 
+    public MSubItem getSubItem() {
+        return subItem;
+    }
+
+    public void setSubItem(MSubItem subItem) {
+        this.subItem = subItem;
+    }
+
+    public TDailyCleckList getDailyCheckList() {
+        return dailyCheckList;
+    }
+
+    public void setDailyCheckList(TDailyCleckList dailyCheckList) {
+        this.dailyCheckList = dailyCheckList;
+    }
 }

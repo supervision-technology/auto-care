@@ -86,6 +86,7 @@ public class JobCard implements Serializable {
     public JobCard(Integer indexNo) {
         this.indexNo = indexNo;
     }
+
     public Integer getIndexNo() {
         return indexNo;
     }

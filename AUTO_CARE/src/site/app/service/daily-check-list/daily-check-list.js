@@ -8,7 +8,7 @@
 
                 //load items
                 factory.loadItem = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/item-check-list";
+                    var url = systemConfig.apiUrl + "/api/care-point/master/all-items";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -44,9 +44,9 @@
                             });
                 };
 
-                factory.getChekedSubItems = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/sub-item-check-list/get-cheked-sub-items";
-                    $http.post(url, summary)
+                factory.incertDailyCheckList = function (summary, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/sub-item-check-list/incert-sub-item-check-list/" + summary;
+                    $http.post(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
@@ -56,13 +56,12 @@
                                 }
                             });
                 };
-
                 return factory;
 
             });
 
     angular.module("dailyCheckListModule")
-            .controller("dailyCheckListController", function ($scope, dailyCheckListFactory, $filter) {
+            .controller("dailyCheckListController", function ($scope, dailyCheckListFactory, $filter, Notification) {
 
                 //data models 
                 $scope.model = {};
@@ -76,8 +75,10 @@
                 $scope.model.subItems = [];
                 $scope.model.items = [];
 
+                $scope.selectTableIndex;
                 //<-----------------http funtiion------------------->
-                $scope.http.getSubItems = function (item) {
+                $scope.http.getSubItems = function (item, $index) {
+                    $scope.selectTableIndex = $index;
                     var detailJSON = JSON.stringify(item);
                     dailyCheckListFactory.getSubItems(
                             detailJSON,
@@ -86,6 +87,7 @@
                             },
                             function (data) {
                                 console.log(data);
+                                Notification.error(data.message);
                             }
                     );
                 };
@@ -98,26 +100,70 @@
                 $scope.ui.confirmation = function (subItem, text, index) {
                     subItem.comfirmation = text;
                     subItem.checked = true;
-                    subItem.date = $filter('date')(new Date(), 'yyyy-MM-dd');
-                    subItem.time = $filter('date')(new Date(), 'HH:mm:ss');
-                    var detailJSON = JSON.stringify(subItem);
-                    console.log(subItem);
-                    dailyCheckListFactory.updateConirmation(
-                            detailJSON,
+                    //false
+                    if ("false" === subItem.comfirmation) {
+                        if (subItem.reason === null) {
+                            Notification.error("please enter reson");
+                        } else {
+                            subItem.time = $filter('date')(new Date(), 'HH:mm:ss');
+                            var detailJSON = JSON.stringify(subItem);
+                            dailyCheckListFactory.updateConirmation(
+                                    detailJSON,
+                                    function (data) {
+                                        $scope.model.subItems.splice(index, 1);
+                                        $scope.model.subItems.push(subItem);
+                                        $scope.model.items[$scope.selectTableIndex].chekedItem = data;
+                                        $scope.selectedRow1 = subItem;
+                                        $scope.historyActivePosition = -1;
+                                    },
+                                    function (data) {
+                                        console.log(data);
+                                    }
+                            );
+                        }
+                    } else {
+                        //true
+                        subItem.reason = null;
+                        subItem.time = $filter('date')(new Date(), 'HH:mm:ss');
+                        var detailJSON = JSON.stringify(subItem);
+                        dailyCheckListFactory.updateConirmation(
+                                detailJSON,
+                                function (data) {
+                                    console.log(subItem);
+                                    $scope.model.subItems.splice(index, 1);
+                                    $scope.model.subItems.push(subItem);
+                                    $scope.model.items[$scope.selectTableIndex].chekedItem = data;
+                                    $scope.selectedRow2 = subItem;
+                                },
+                                function (data) {
+                                    console.log(data);
+                                }
+                        );
+                    }
+                };
+                
+//                $scope.ui.getItems = function (date) {
+//                    console.log(date);
+//                };
+
+                $scope.ui.incertDailyCheckList = function (date) {
+                    dailyCheckListFactory.incertDailyCheckList(
+                            date,
                             function (data) {
-                                $scope.model.subItems.splice(index, 1);
-                                $scope.model.subItems.push(data);
+                                Notification.error("sucsss");
                             },
                             function (data) {
-                                console.log(data);
+                                Notification.error(data.message);
                             }
                     );
                 };
 
                 $scope.ui.init = function () {
+                    $scope.model.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                     dailyCheckListFactory.loadItem(function (data) {
                         $scope.model.items = data;
                     });
+
                 };
                 $scope.ui.init();
 
