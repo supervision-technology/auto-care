@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -36,6 +37,7 @@ public class MItem implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
+    @NotNull
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
@@ -52,14 +54,17 @@ public class MItem implements Serializable {
     @Column(name = "unit")
     private String unit;
 
+    @NotNull
     @Basic(optional = false)
     @Column(name = "sales_price")
     private BigDecimal salePrice;
 
+    @NotNull
     @Basic(optional = false)
     @Column(name = "cost_price")
     private BigDecimal costPrice;
 
+    @NotNull
     @Basic(optional = false)
     @Column(name = "type")
     private String type;
@@ -80,6 +85,7 @@ public class MItem implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private MSubCategory subCategory;
 
+    @NotNull
     @Column(name = "branch")
     private Integer branch;
 
