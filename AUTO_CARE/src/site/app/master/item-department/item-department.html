@@ -5,7 +5,7 @@
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
             <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
                 <label>Item Department Name :</label>
-                <input type="text" class="form-control" ng-model="model.department.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" ng-keypress="ui.keyEvent($event)">
+                <input  type="text" id="itemText" class="form-control" ng-model="model.department.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" ng-keypress="ui.keyEvent($event)">
             </div>
         </div>
     </div>

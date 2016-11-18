@@ -7,6 +7,7 @@ package com.mac.gl.master.repository.brand;
 
 import com.mac.gl.master.model.brand.MBrand;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author kalum
  */
 public interface BrandRepository extends JpaRepository<MBrand, Serializable>{
+
+    public List<MBrand> findByName(String name);
     
 }

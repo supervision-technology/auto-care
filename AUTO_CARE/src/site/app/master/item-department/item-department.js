@@ -79,7 +79,7 @@
             });
     //controller
     angular.module("itemDepartmentModule")
-            .controller("itemDepartmentController", function ($scope, $log, itemDepartmentFactory, Notification) {
+            .controller("itemDepartmentController", function ($scope, $log, itemDepartmentFactory, Notification, $timeout) {
                 $scope.totalItems = 64;
                 $scope.currentPage = 4;
 
@@ -111,12 +111,20 @@
                 $scope.model.departmentList = [];
 
                 
-                //new function
+                
+                
+                $scope.ui.focus = function () {
+                    $timeout(function () {
+                        document.querySelectorAll("#itemText")[0].focus();
+                    }, 10);
+                };
+                
+                //new function   
                 $scope.ui.new = function () {
                     $scope.ui.mode = "NEW";
-
-
+                    $scope.ui.focus();    
                 };
+                
                 $scope.ui.keyEvent = function (event) {
                     if (event.keyCode===13) {
                         $scope.ui.save();
@@ -126,11 +134,13 @@
 
                 //edit function
                 $scope.ui.edit = function (department) {
+                    $scope.ui.focus();
                     $scope.ui.mode = "EDIT";
                     $scope.model.department = department;
                     for (var i = 0; i < $scope.model.departmentList.length; i++) {
                         if ($scope.model.departmentList[i].indexNo === $scope.model.department.indexNo) {
                             $scope.model.departmentList.splice(i, 1);
+                            
                         }
                     }
 

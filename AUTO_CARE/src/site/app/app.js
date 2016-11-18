@@ -20,7 +20,12 @@
         "categoryModule",
         "itemDepartmentModule",
         "brandModule",
-        "bayModule"
+        "bayModule",
+        "priceCategoryModule",
+        "vehicleTypeModule",
+        "clientModule",
+        "vehicleModule"
+        
 
     ]);
     
@@ -122,6 +127,22 @@
                         .when("/master/bay", {
                             templateUrl: "app/master/bay/bay.html",
                             controller: "bayController"
+                        })
+                        .when("/master/price-category", {
+                            templateUrl: "app/master/price-category/price-category.html",
+                            controller: "priceCategoryController"
+                        })
+                        .when("/master/vehicle-type", {
+                            templateUrl: "app/master/vehicle-type/vehicle-type.html",
+                            controller: "vehicleTypeController"
+                        })
+                        .when("/master/client", {
+                            templateUrl: "app/master/client/client.html",
+                            controller: "clientController"
+                        })
+                        .when("/master/vehicle", {
+                            templateUrl: "app/master/vehicle/vehicle.html",
+                            controller: "vehicleController"
                         })
                         .otherwise({
                             redirectTo: "/"

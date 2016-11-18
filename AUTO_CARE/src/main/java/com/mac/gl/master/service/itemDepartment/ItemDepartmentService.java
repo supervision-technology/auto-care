@@ -7,6 +7,7 @@ package com.mac.gl.master.service.itemDepartment;
 
 import com.mac.gl.master.repository.itemdepartment.ItemDepartmentRepository;
 import com.mac.gl.master.model.itemdepartment.MItemDepartment;
+import com.mac.gl.system.exception.DuplicateEntityException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,24 @@ public class ItemDepartmentService {
         return departmentRepository.findAll();
     }
 
+    private MItemDepartment findByName(String name) {
+        List<MItemDepartment> itemList = departmentRepository.findByName(name);
+        if (itemList.isEmpty()) {
+            return null;
+        }
+        return itemList.get(0);
+    }
+
     public MItemDepartment saveItemDepartment(MItemDepartment departmentModal) {
-        return departmentRepository.save(departmentModal);
+        MItemDepartment findByName = findByName(departmentModal.getName());
+        if (findByName == null) {
+            return departmentRepository.save(departmentModal);
+        } else {
+            if (findByName.getIndexNo().equals(departmentModal.getIndexNo())) {
+                return departmentModal;
+            }
+            throw new DuplicateEntityException("Duplicate name");
+        }
     }
 
     public void deleteItemDepartment(Integer indexNo) {

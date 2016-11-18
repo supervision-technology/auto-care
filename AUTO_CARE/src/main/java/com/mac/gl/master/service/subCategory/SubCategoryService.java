@@ -30,8 +30,25 @@ public class SubCategoryService {
         return subCategoryRepository.findAll();
     }
 
+    public MSubCategory findByname(String name) {
+        List<MSubCategory> subCategoryList = subCategoryRepository.findByName(name);
+        
+        if (subCategoryList.isEmpty()) {
+            return null;
+        }
+        return subCategoryList.get(0);
+    }
+
     public MSubCategory saveSubCategory(MSubCategory subCategory) {
-        return subCategoryRepository.save(subCategory);
+        MSubCategory findName = findByname(subCategory.getName());
+        if (findName==null) {
+            return subCategoryRepository.save(subCategory);
+        } else {
+            if (findName.getIndexNo().equals(subCategory.getIndexNo())) {
+                return subCategory;
+            }
+            throw new DuplicateEntityException("Duplicate name");
+        }
     }
 
     public void deleteSubCategory(Integer indexNo) {
