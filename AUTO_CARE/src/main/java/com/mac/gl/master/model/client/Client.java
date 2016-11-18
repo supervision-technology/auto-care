@@ -80,6 +80,9 @@ public class Client implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
+    
+    @Column(name = "nic")
+    private String nic;
 
     public Client() {
     }
@@ -163,30 +166,11 @@ public class Client implements Serializable {
         this.type = type;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (indexNo != null ? indexNo.hashCode() : 0);
-        return hash;
+    public String getNic() {
+        return nic;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Client)) {
-            return false;
-        }
-        Client other = (Client) object;
-        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
-            return false;
-        }
-        return true;
+    public void setNic(String nic) {
+        this.nic = nic;
     }
-
-    @Override
-    public String toString() {
-        return "com.mac.gl.master.model.client.Client[ indexNo=" + indexNo + " ]";
-    }
-
-    
 }
