@@ -67,19 +67,17 @@ public class Client implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
-    
+
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
     @Column(name = "nic")
     private String nic;
 
     public Client() {
     }
 
-    public Client(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type) {
+    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String nic) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -88,6 +86,7 @@ public class Client implements Serializable {
         this.mobile = mobile;
         this.branch = branch;
         this.type = type;
+        this.nic = nic;
     }
 
     public Integer getIndexNo() {
@@ -166,5 +165,5 @@ public class Client implements Serializable {
     public String toString() {
         return "Client{" + "indexNo=" + indexNo + ", name=" + name + ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", addressLine3=" + addressLine3 + ", mobile=" + mobile + ", branch=" + branch + ", type=" + type + ", nic=" + nic + '}';
     }
-    
+
 }

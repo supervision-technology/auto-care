@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/master/price-category")
+@RequestMapping("/api/care-point/master/priceCategory")
 public class PriceCategoryController {
     
      @Autowired
@@ -39,9 +39,10 @@ public class PriceCategoryController {
     }
 
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
-    public Integer delete(@PathVariable Integer indexNo) {
-        priceCategoryService.deleteDetail(indexNo);
+    public Integer deletepriceCategory(@PathVariable Integer indexNo) {
+         return priceCategoryService.deleteDetail(indexNo);
 
-        return indexNo;
+        
+         
     }
 }

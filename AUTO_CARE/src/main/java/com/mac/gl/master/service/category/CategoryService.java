@@ -6,7 +6,6 @@
 package com.mac.gl.master.service.category;
 
 import com.mac.gl.master.model.category.MCategory;
-import com.mac.gl.master.model.itemdepartment.MItemDepartment;
 import com.mac.gl.master.repository.category.CategoryRepository;
 import com.mac.gl.system.exception.DuplicateEntityException;
 import java.util.List;
