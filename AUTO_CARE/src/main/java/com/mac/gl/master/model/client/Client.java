@@ -81,14 +81,16 @@ public class Client implements Serializable {
     @Column(name = "type")
     private String type;
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
+    @Column(name = "nic")
+    private String nic;
+    
     public Client() {
     }
 
-    public Client(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type) {
+    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String nic) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -97,6 +99,7 @@ public class Client implements Serializable {
         this.mobile = mobile;
         this.branch = branch;
         this.type = type;
+        this.nic = nic;
     }
 
     public Integer getIndexNo() {
@@ -163,30 +166,12 @@ public class Client implements Serializable {
         this.type = type;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (indexNo != null ? indexNo.hashCode() : 0);
-        return hash;
+    public String getNic() {
+        return nic;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Client)) {
-            return false;
-        }
-        Client other = (Client) object;
-        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
-            return false;
-        }
-        return true;
+    public void setNic(String nic) {
+        this.nic = nic;
     }
-
-    @Override
-    public String toString() {
-        return "com.mac.gl.master.model.client.Client[ indexNo=" + indexNo + " ]";
-    }
-
-    
+  
 }

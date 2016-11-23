@@ -129,6 +129,7 @@
                 //<-----------------ui funtiion--------------------->
                 //save function
                 $scope.ui.save = function () {
+                    console.log($scope.http.saveCategory());
                     if ($scope.validateInput()) {
                         $scope.http.saveCategory();
                     } else {
