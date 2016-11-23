@@ -7,14 +7,16 @@
                 var factory = {};
 
                 //load items
-                factory.loadItem = function (callback) {
+                factory.loadItem = function (callback, errorCallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/all-items";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-
+                                if (errorCallback) {
+                                    errorCallback(data);
+                                }
                             });
                 };
 
@@ -141,7 +143,7 @@
                         );
                     }
                 };
-                
+
 //                $scope.ui.getItems = function (date) {
 //                    console.log(date);
 //                };
@@ -151,6 +153,9 @@
                             date,
                             function (data) {
                                 Notification.error("sucsss");
+                                dailyCheckListFactory.loadItem(function (data) {
+                                    $scope.model.items = data;
+                                });
                             },
                             function (data) {
                                 Notification.error(data.message);
@@ -160,10 +165,13 @@
 
                 $scope.ui.init = function () {
                     $scope.model.date = $filter('date')(new Date(), 'yyyy-MM-dd');
-                    dailyCheckListFactory.loadItem(function (data) {
-                        $scope.model.items = data;
-                    });
-
+                    dailyCheckListFactory.loadItem(
+                            function (data) {
+                                $scope.model.items = data;
+                            },
+                            function (data) {
+                               Notification.error(data.message);
+                            });
                 };
                 $scope.ui.init();
 

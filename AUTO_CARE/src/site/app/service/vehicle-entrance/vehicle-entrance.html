@@ -72,7 +72,7 @@
                     <col style="width: 40%"/>
                     <col style="width: 30%"/>
                     <col style="width: 30%"/>
-                    <tbody ng-repeat="selections in selections">
+                    <tbody>
                         <tr>
                             <td>LAST SERVICE DETAILS</td>
                             <td class="text-left">Date - 2016-06-16</td>
@@ -98,15 +98,13 @@
             </div>
             <div class="col-xs-12" style="height: 40px;">
                 <table  class="table-rounded">
-                    <col style="width: 25%;"/>
-                    <col style="width: 25%;"/>
+                    <col style="width: 50%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
                     <thead>
                         <tr>
                             <th>INDB</th>
                             <th class="text-right">DATE</th>
-                            <th class="text-right">AMOUNT</th>
                             <th class="text-right">DEURATION</th>
                         </tr>
                     </thead>
@@ -114,18 +112,16 @@
             </div>
             <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 300px);">
                 <table class="table-rounded table-primary">
+                    <col style="width: 50%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
-                    <col style="width: 25%;"/>
-                    <col style="width: 25%;"/>
-                    <tbody ng-repeat="history in history">
+                    <tbody ng-repeat="joCard in model.joCard">
                         <tr>
-                            <td ng-click="historySelectionDetail($index)">{{history.invoiceNumber}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index)">{{history.date}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index)">{{history.amount}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index)">{{$index + 1}} Months ago</td>
+                            <td ng-click="historySelectionDetail($index,joCard)">{{joCard.indexNo}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index,joCard)">{{joCard.date}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index,joCard)">{{ui.getDefarancedate(joCard.date)}} Months ago</td>
                         </tr>
-                        <tr class="select-primary-row animation-fade" ng-show="historyActivePosition == $index">
+                        <tr class="white-row" ng-show="historyActivePosition == $index">
                             <td colspan="4">
                                 <div>
                                     <table class="table-rounded">
@@ -138,11 +134,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="select-primary-row"  ng-repeat="items in history.discription.items">
-                                                <td>{{items.name}}</td>
-                                                <td class="text-right">{{items.unitprice}}</td>
-                                                <td class="text-right">{{items.qty}}</td>
-                                                <td class="text-right">{{items.amount}}</td>
+                                            <tr class="white-row"  ng-repeat="items in model.itemdetail">
+                                                <td>{{items.item.name}}</td>
+                                                <td class="text-right">{{items.price}}</td>
+                                                <td class="text-right">{{items.quantity}}</td>
+                                                <td class="text-right">{{items.quantity * items.price}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -156,5 +152,5 @@
     </div>
 </div>
 <div class="fab-container">
-    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-click="primaryMessage()"><i class="glyphicon glyphicon-plus"></i></a>
 </div>

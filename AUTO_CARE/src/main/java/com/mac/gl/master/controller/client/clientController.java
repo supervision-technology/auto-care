@@ -22,9 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/master/client")
+@RequestMapping("/api/care-point/master/client")
 public class clientController {
-    
      
     @Autowired
     private ClientService clientService;
@@ -36,6 +35,9 @@ public class clientController {
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public Client insertDetail(@RequestBody Client client) {
+        client.setType("new");
+        client.setBranch(1);
+        System.out.println(client);
         return clientService.saveDetail(client);
     }
 

@@ -18,6 +18,7 @@ import com.mac.gl.system.exception.DuplicateEntityException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.dom4j.Branch;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -45,7 +46,6 @@ public class TSubItemCheckResultService {
     public List<TSubItemCheckResult> insertSubItemList(Integer transaction, Integer branch, Date date, TDailyCleckList dailyCheckList) {
         List<TDailyCleckList> lits = dailyCleckListRepository.findByBranchAndDate(branch, date);
         if (lits.isEmpty()) {
-            //TODO code application logic here 
             System.out.println("emplty");
             List<MSubItem> subItems = subItemRepository.findAll();
             TDailyCleckList dailyCheckList1 = dailyCleckListRepository.save(dailyCheckList);
@@ -53,7 +53,6 @@ public class TSubItemCheckResultService {
                 subItemCheckResultRepository.save(new TSubItemCheckResult(false, subItems.get(i), dailyCheckList1));
             }
         } else {
-            // TODO code application logic here 
             throw new DuplicateEntityException("this date is allrady");
         }
 
@@ -70,14 +69,19 @@ public class TSubItemCheckResultService {
         return checkedItemSizeGetList.size();
     }
 
-    public List<Items> getALlItems(Date date) {
-        List<MItem> itemList = itemRepository.findAll();
-        List<Items> sendItemList = new ArrayList<Items>();
-        for (int i = 0; i < itemList.size(); i++) {
-            List<TSubItemCheckResult> sizeGetList = subItemCheckResultRepository.findBySubItemItemAndDailyCheckListDate(itemList.get(i), date);
-            List<TSubItemCheckResult> checkedItemSizeGetList = subItemCheckResultRepository.findBySubItemItemAndChecked(itemList.get(i), true);
-            sendItemList.add(new Items(itemList.get(i), sizeGetList.size(), checkedItemSizeGetList.size()));
+    public List<Items> getALlItems(Date date, Integer branch) {
+        List<TDailyCleckList> dailyCheckList = dailyCleckListRepository.findByBranchAndDate(branch, date);
+        if (dailyCheckList.isEmpty()) {
+            throw new DuplicateEntityException("please enter daily check list");
+        } else {
+            List<MItem> itemList = itemRepository.findAll();
+            List<Items> sendItemList = new ArrayList<Items>();
+            for (int i = 0; i < itemList.size(); i++) {
+                List<TSubItemCheckResult> sizeGetList = subItemCheckResultRepository.findBySubItemItemAndDailyCheckListDate(itemList.get(i), date);
+                List<TSubItemCheckResult> checkedItemSizeGetList = subItemCheckResultRepository.findBySubItemItemAndChecked(itemList.get(i), true);
+                sendItemList.add(new Items(itemList.get(i), sizeGetList.size(), checkedItemSizeGetList.size()));
+            }
+            return sendItemList;
         }
-        return sendItemList;
     }
 }

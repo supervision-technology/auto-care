@@ -201,6 +201,10 @@ tr.ng-leave{
     background-color: lighten($primary-color, 20%) !important;
     color: $dark-font-color;
 }
+.white-row{
+    background-color: $bg-light-color !important;
+    color: $dark-font-color;
+}
 
 .select-primary-row-table-header{
     background-color: $primary-color !important;
@@ -215,4 +219,8 @@ tr.ng-leave{
 tbody tr input{
     color: $dark-font-color;
     background-color: $light-font-color;
+}
+.selected {
+    background-color:#5093E1 !important;
+    color:white;
 }

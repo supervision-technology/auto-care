@@ -25,11 +25,11 @@
         "vehicleTypeModule",
         "clientModule",
         "vehicleModule",
-        "jobCardModule"
-        
+        "jobCardModule",
+        "customerSearchModule"
 
     ]);
-    
+
     //constants
     angular.module("appModule")
             .constant("systemConfig", {
@@ -148,6 +148,10 @@
                         .when("/front-office/job-card", {
                             templateUrl: "app/front-office/job-card/job-card.html",
                             controller: "jobCardController"
+                        })
+                        .when("/customer-search/customer-search", {
+                            templateUrl: "app/service/vehicle-entrance/customer-search.html",
+                            controller: "customerSearchController"
                         })
                         .otherwise({
                             redirectTo: "/"
