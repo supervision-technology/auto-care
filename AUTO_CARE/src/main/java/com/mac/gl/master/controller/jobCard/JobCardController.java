@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.controller.vehicle;
+package com.mac.gl.master.controller.jobCard;
 
-import com.mac.gl.master.model.vehicle.Vehicle;
-import com.mac.gl.master.service.vehicle.VehicleService;
+import com.mac.gl.master.model.jobCard.JobCard;
+import com.mac.gl.master.service.jobCard.JobCardService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,25 +22,25 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/care-point/master/vehicle")
-public class VehicleController {
-
+@RequestMapping("/api/green-leaves/transaction/job-card")
+public class JobCardController {
     @Autowired
-    private VehicleService vehicleService;
+    private JobCardService jobCardService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Vehicle> findAll() {
-        return vehicleService.findAll();
+    public List<JobCard> findAll() {
+        return jobCardService.findAll();
     }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
-    public Vehicle insertPriceCategory(@RequestBody Vehicle vehicle) {
-        return vehicleService.saveDetail(vehicle);
+    public JobCard insertDetail(@RequestBody JobCard jobCard) {
+        return jobCardService.saveItemDepartment(jobCard);
     }
 
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
-    public Integer delete(@PathVariable Integer indexNo) {
-        vehicleService.deleteDetail(indexNo);
+    public Integer deleteDetail(@PathVariable Integer indexNo) {
+        jobCardService.deleteItemDepartment(indexNo);
+
         return indexNo;
     }
 }

@@ -3,13 +3,15 @@
         <h4>VEHICLE</h4>
     </div>
     <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" ng-repeat="vehicle in vehicle" drag-target drag="dragStart" drag-model="vehicle">
-            <span>
-                <img src="{{vehicle.image}}"/>  
+        <div class="tile tile-128" ng-repeat="job in model.jobList" drag-target drag="dragStart" drag-model="job" ng-click="ui.selectedJob(job)">
+            <span style="margin-top: -20px;margin-left: -30px;">
+                <h3> {{job.vehicle.vehicleNo}} </h3>
+                {{job.client.name}}
+<!--                <img src="{{vehicle.image}}"/>  
 
                 <label>
                     {{vehicle.number}}
-                </label>
+                </label>-->
             </span>
         </div>
     </div>
@@ -18,36 +20,31 @@
 <div class="index-content-body">
     <div style="float: left; width: calc(100% - 133px);">
         <div class="background-light full-height grid">
-            <div class="grid-tile" grid="{{grid1}}" drop-target drop="dragLeave" ng-mouseenter="ui.setBay(grid1.indexNo)">
+            <div class="grid-tile" grid="{{bay}}" drop-target drop="dragLeave" ng-repeat="bay in model.bayList" ng-click="ui.selectedBay(bay)">
                 <div class="grid-tile-title">
-                    <h4>BAY 01</h4>
+                    <h4>{{bay.name}}</h4>
                 </div>
             </div>
-            <div class="grid-tile" grid="{{grid2}}" ng-mouseenter="ui.setBay(grid2.indexNo)">
+<!--            <div class="grid-tile" grid="{{grid2}}" >
                 <div class="grid-tile-title">
                     <h4>BAY 02</h4>
                 </div>
             </div>
-            <div class="grid-tile" grid="{{grid3}}" ng-mouseenter="ui.setBay(grid3.indexNo)" >
+            <div class="grid-tile" grid="{{grid3}}" >
                 <div class="grid-tile-title">
                     <h4>BAY 03</h4>
                 </div>
             </div>
-            <div class="grid-tile" grid="{{grid4}}" ng-mouseenter="ui.setBay(grid4.indexNo)" >
+            <div class="grid-tile" grid="{{grid4}}">
                 <div class="grid-tile-title">
                     <h4>BAY 04</h4>
                 </div>
             </div>
-            <div class="grid-tile" grid="{{grid5}}" ng-mouseenter="ui.setBay(grid5.indexNo)" >
+            <div class="grid-tile" grid="{{grid5}}"  >
                 <div class="grid-tile-title">
                     <h4>BAY 05</h4>
                 </div>
-            </div>
-            <!--            <div class="grid-tile" grid="{{grid6}}">
-                            <div class="grid-tile-title">
-                                <h4>BAY 06</h4>
-                            </div>
-                        </div>-->
+            </div>-->
         </div>
     </div>
 </div>

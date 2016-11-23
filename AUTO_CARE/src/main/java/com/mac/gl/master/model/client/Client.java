@@ -5,25 +5,17 @@
  */
 package com.mac.gl.master.model.client;
 
-import com.mac.gl.master.model.vehicle.Vehicle;
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,47 +31,48 @@ public class Client implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "address_line1")
     private String addressLine1;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "address_line2")
     private String addressLine2;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "address_line3")
     private String addressLine3;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "mobile")
     private String mobile;
-   
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "branch")
     private int branch;
-    
+
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
+    
 
     @Basic(optional = false)
     @NotNull
@@ -174,4 +167,5 @@ public class Client implements Serializable {
         this.nic = nic;
     }
   
+
 }

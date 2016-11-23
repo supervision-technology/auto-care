@@ -40,48 +40,49 @@ public class Vehicle implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-   
+
     @Size(max = 25)
     @Column(name = "vehicle_no")
     private String vehicleNo;
+    
     @Column(name = "year")
     private Integer year;
-   
+
     @Size(max = 50)
     @Column(name = "engine_no")
     private String engineNo;
     @Size(max = 50)
     @Column(name = "chasis_no")
     private String chasisNo;
-   
+
     @Column(name = "insurance_expiry_date")
     @Temporal(TemporalType.DATE)
     private Date insuranceExpiryDate;
-    
+
     @Column(name = "revenue_expiry_date")
     @Temporal(TemporalType.DATE)
     private Date revenueExpiryDate;
-   
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "last_milage")
     private int lastMilage;
-    
+
     @Column(name = "next_milage")
     private Integer nextMilage;
-   
+
     @Size(max = 25)
     @Column(name = "colour")
     private String colour;
-    
+
     @JoinColumn(name = "client", referencedColumnName = "index_no")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Client client;
-    
+
     @JoinColumn(name = "vehicle_type", referencedColumnName = "index_no")
     @ManyToOne(fetch = FetchType.EAGER)
     private VehicleType vehicleType;
-    
+
     @JoinColumn(name = "price_category", referencedColumnName = "index_no")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private PriceCategory priceCategory;
@@ -226,5 +227,5 @@ public class Vehicle implements Serializable {
     public String toString() {
         return "com.mac.gl.master.model.vehicle.Vehicle[ indexNo=" + indexNo + " ]";
     }
-    
+
 }
