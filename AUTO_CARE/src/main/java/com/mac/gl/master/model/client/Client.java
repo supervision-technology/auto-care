@@ -15,7 +15,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -23,7 +22,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "m_client")
-@XmlRootElement
 public class Client implements Serializable {
 
     @Id
@@ -39,19 +37,17 @@ public class Client implements Serializable {
     private String name;
 
     @Basic(optional = false)
-    @NotNull
+
     @Size(min = 1, max = 100)
     @Column(name = "address_line1")
     private String addressLine1;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "address_line2")
     private String addressLine2;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "address_line3")
     private String addressLine3;
@@ -68,19 +64,20 @@ public class Client implements Serializable {
     private int branch;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
+    @Column(name = "nic")
+    private String nic;
+
     public Client() {
     }
 
-    public Client(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type) {
+    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String nic) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -89,6 +86,7 @@ public class Client implements Serializable {
         this.mobile = mobile;
         this.branch = branch;
         this.type = type;
+        this.nic = nic;
     }
 
     public Integer getIndexNo() {
@@ -155,29 +153,17 @@ public class Client implements Serializable {
         this.type = type;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (indexNo != null ? indexNo.hashCode() : 0);
-        return hash;
+    public String getNic() {
+        return nic;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Client)) {
-            return false;
-        }
-        Client other = (Client) object;
-        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
-            return false;
-        }
-        return true;
+    public void setNic(String nic) {
+        this.nic = nic;
     }
 
     @Override
     public String toString() {
-        return "com.mac.gl.master.model.client.Client[ indexNo=" + indexNo + " ]";
+        return "Client{" + "indexNo=" + indexNo + ", name=" + name + ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", addressLine3=" + addressLine3 + ", mobile=" + mobile + ", branch=" + branch + ", type=" + type + ", nic=" + nic + '}';
     }
 
 }

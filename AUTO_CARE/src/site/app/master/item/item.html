@@ -9,55 +9,56 @@
                     <table class="table-rounded  control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
-                        <tbody>                   
-                            <tr>
-                                <td><label class="control-label">Name</label></td>
-                                <td><input class="form-control" ng-model="model.item.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="name as (item.name) for item in model.itemList |filter:$viewValue|limitTo:10"></td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Barcode</label></td>
-                                <td><input class="form-control" ng-model="model.item.barcode" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="type as (type.name) for type in model.typeList |filter:$viewValue|limitTo:10"></td>
-                            </tr>
-                            <tr>
-
-                                <td><label class="control-label">Print Description</label></td>
-                                <td><input focus class="form-control" ng-model="model.item.printDecription" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Unit</label></td>
-                                <td><input class="form-control" ng-model="model.item.unit" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" ></td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Sale Price</label></td>
-                                <td><input class="form-control" ng-model="model.item.salePrice" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Cost Price</label></td>
-                                <td><input class="form-control text-right" ng-model="model.item.costPrice" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
-                            </tr>
+                        <tbody>
                             <tr>
                                 <td><label class="control-label">Type</label></td>
-                                <td><select class="form-control" ng-model="model.item.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
-                                        <option value="STOCK">STOCK</option>
+                                <td><select class="form-control" ng-model="model.item.type">
+                                        <option value="STOCK" selected>STOCK</option>
                                         <option value="NON-STOCK">NON-STOCK</option>
                                         <option value="SERVICE">SERVICE</option>
                                     </select>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Department</label></td>
-                                <td><input class="form-control" ng-model="model.item.department" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="department as (department.name) for department in model.itemDepartmentList |filter:$viewValue|limitTo:10"></td>
+                                <td><label class="control-label">Name</label></td>
+                                <td><input  class="form-control" ng-model="model.item.name" ></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Brand</label></td>
-                                <td><input class="form-control" ng-model="model.item.brand" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="owner as (model.vehicle.ownerName) for owner in model.vehicle.ownerName |filter:$viewValue|limitTo:10"></td>
+                                <td><label class="control-label">Barcode</label></td>
+                                <td><input class="form-control" ng-model="model.item.barcode" ></td>
+                            </tr>
+                            <tr>
+
+                                <td><label class="control-label">Print Description</label></td>
+                                <td><input class="form-control" ng-model="model.item.printDescription"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Unit</label></td>
+                                <td><input class="form-control" ng-model="model.item.unit" ></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Sale Price</label></td>
+                                <td><input class="form-control text-right" ng-model="model.item.salePrice" ></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Cost Price</label></td>
+                                <td><input class="form-control text-right" ng-model="model.item.costPrice"></td>
+                            </tr>
+
+                            <tr>
+                                <td><label class="control-label">Department</label></td>
+                                <td><input class="form-control" ng-model="model.item.itemDepartment"  uib-typeahead="itemDepartment as (itemDepartment.name) for itemDepartment in model.itemDepartmentList |filter:$viewValue|limitTo:10"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Category</label></td>
-                                <td><input class="form-control" ng-model="model.item.category" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="category as (category.name) for category in model.categoryList |filter:$viewValue|limitTo:10"></td>
+                                <td><input class="form-control" ng-model="model.item.category" uib-typeahead="category as (category.name) for category in model.categoryList |filter:$viewValue|limitTo:10"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Sub Category</label></td>
-                                <td><input class="form-control" ng-model="model.item.subCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="subCategory as (subcategory.name) for subcategory in model.subCategoryList |filter:$viewValue|limitTo:10"></td>
+                                <td><input class="form-control" ng-model="model.item.subCategory" uib-typeahead="subCategory as (subCategory.name) for subCategory in model.subCategoryList |filter:$viewValue|limitTo:10"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Brand</label></td>
+                                <td><input class="form-control" ng-model="model.item.brand" uib-typeahead="brand as (brand.name) for brand in model.brandList |filter:$viewValue|limitTo:10"></td>
                             </tr>
 
                         </tbody>
@@ -70,19 +71,39 @@
                         <tbody>                   
                             <tr>
                                 <td><label class="control-label">Name</label></td>
-                                <td><input class="form-control" id="employee" ng-model="model.item.units.name"></td>
+                                <td><input class="form-control" ng-model="tempUnit.name"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Sale Price</label></td>
-                                <td><input class="form-control" id="employee" ng-model="model.item.units.salePrice"></td>
+                                <td><input class="form-control" ng-model="tempUnit.salePrice"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Cost Price</label></td>
-                                <td><input class="form-control" id="employee" ng-model="model.item.units.costPrice"></td>
+                                <td><input class="form-control" ng-model="tempUnit.costPrice"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">qty</label></td>
-                                <td><input class="form-control" id="employee" ng-model="model.item.units.qty"></td>
+                                <td><input class="form-control" ng-model="tempUnit.qty"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </uib-tab>
+                <uib-tab heading="PACKAGE" index="3" ng-click="ui.setTabPane(2)">
+                    <table class="table-rounded  control-table">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>                   
+                            <tr>
+                                <td><label class="control-label">Name</label></td>
+                                <td><input class="form-control" ng-model="model.package.packages.name" uib-typeahead="name as (name.name) for name in model.packageList |filter:$viewValue|limitTo:7" typeahead-on-select="onSelect($model)"></td>
+                            </tr>
+                             <tr>
+                                <td><label class="control-label">Price</label></td>
+                                <td><input class="form-control" ng-model="model.package.packages.salePrice"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Item</label></td>
+                                <td><input class="form-control" ng-model="model.package.item" uib-typeahead="item as (item.name) for item in model.itemList |filter:$viewValue|limitTo:7"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -90,11 +111,58 @@
             </uib-tabset>
         </div>
     </div>
-
-    <div class="col-xs-8 background-dark">
+    <div class="col-xs-8 background-dark" ng-show="ui.tableShow === 1">
         <div class="row col-xs-5">
             <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
         </div>
+        <table class="table-rounded">
+            <col style="width: 25%">
+            <col style="width: 25%">
+            <col style="width: 20%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <thead class="background-dark">
+                <tr>
+                    <th>
+                        <label>Name </label>
+                    </th>
+                    <th>
+                        <label>Barode</label>
+                    </th>
+                    <th>
+                        <label>Sale Price</label>
+                    </th> 
+                    <th>
+                        <label>Cost Price</label>
+                    </th> 
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 200px);">
+            <table class="table-rounded animation-fade">
+                <col style="width: 25%">
+                <col style="width: 25%">
+                <col style="width: 20%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <tbody>
+                    <tr ng-repeat="item in model.itemList| filter : model.search.name | orderBy : 'indexNo'" class="background-light">
+                        <td>{{item.name}}</td>
+                        <td>{{item.barcode}}</td>
+                        <td>{{item.salePrice}}</td>
+                        <td>{{item.costPrice}}</td>
+                        <td class="text-right" style="padding-left: 5px;">
+                            <a class="btn btn-primary" ng-click="ui.editItem(item, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deleteItem(item.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-8 background-dark" ng-show="ui.tableShow === 2">
         <table class="table-rounded">
             <col style="width: 25%">
             <col style="width: 25%">
@@ -119,7 +187,7 @@
                 </tr>
             </thead>
         </table>
-        <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
+        <div class="smart-scroll-y" style="height: calc(100vh - 150px);">
             <table class="table-rounded animation-fade">
                 <col style="width: 25%">
                 <col style="width: 25%">
@@ -127,7 +195,7 @@
                 <col style="width: 15%">
                 <col style="width: 15%">
                 <tbody>
-                    <tr ng-repeat="unit in model.unitList| filter : model.search.name" class="background-light">
+                    <tr ng-repeat="unit in model.item.unitList" class="background-light">
                         <td>{{unit.name}}</td>
                         <td>{{unit.salePrice}}</td>
                         <td>{{unit.costPrice}}</td>
@@ -142,9 +210,50 @@
             </table>
         </div>
     </div>
+    <div class="col-xs-8 background-dark" ng-show="ui.tableShow === 3">
+        <table class="table-rounded">
+            <col style="width: 25%">
+            <col style="width: 25%">
+            <col style="width: 20%">
+            <thead class="background-dark">
+                <tr>
+                    <th>
+                        <label>Item Name</label>
+                    </th>
+                    <th>
+                        <label>Price</label>
+                    </th>
+                    <th>
+                        <label>&nbsp;</label>
+                    </th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 150px);">
+            <table class="table-rounded animation-fade">
+                <col style="width: 25%">
+                <col style="width: 25%">
+                <col style="width: 20%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <tbody>
+                    <tr ng-repeat="package in model.packageItemList" class="background-light">
+                        <td>{{package.packages.name}}</td>
+                        <td>{{package.item.costPrice}}</td>
+                        <td class="text-right" style="padding-left: 5px;">
+                            <a class="btn btn-primary" ng-click="ui.edit(package, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deletePackageItem(package.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <div class="fab-container">
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW2'" ng-click="ui.add();"><i class="glyphicon glyphicon-ok"></i></a>
+    <!--<a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'SAVE'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'ADD'" ng-click="ui.addUnit();"><i class="glyphicon glyphicon-ok"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'PACKAGE'" ng-click="ui.savePackage();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>

@@ -7,12 +7,15 @@ package com.mac.gl.master.repository.itemUnit;
 
 import com.mac.gl.master.model.itemUnit.MItemUnit;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Nidura Prageeth
  */
-public interface ItemUnitRepository extends JpaRepository<MItemUnit, Serializable>{
-    
+public interface ItemUnitRepository extends JpaRepository<MItemUnit, Serializable> {
+
+    public List<MItemUnit> findByItemIndexNo(Integer indexNo);
+
 }

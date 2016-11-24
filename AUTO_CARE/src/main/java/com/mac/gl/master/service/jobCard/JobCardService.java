@@ -6,6 +6,7 @@
 package com.mac.gl.master.service.jobCard;
 
 import com.mac.gl.master.model.jobCard.JobCard;
+import com.mac.gl.master.model.vehicle.Vehicle;
 import com.mac.gl.master.repository.jobCard.JobCardRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,9 @@ public class JobCardService {
 
     public void deleteItemDepartment(Integer indexNo) {
         jobCardRepository.delete(indexNo);
+    }
+
+    public List<JobCard> findByVehicle(Vehicle vehicle) {
+        return jobCardRepository.findTop5ByVehicle(vehicle);
     }
 }

@@ -6,6 +6,7 @@
 package com.mac.gl.master.repository.client;
 
 import com.mac.gl.master.model.client.Client;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Supervision
  */
 public interface ClientRepository extends JpaRepository<Client, Integer>{
-    
+
+    public List<Client> findByNic(String nic);
+ 
 }

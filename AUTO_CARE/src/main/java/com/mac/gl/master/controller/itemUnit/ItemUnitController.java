@@ -1,5 +1,6 @@
 package com.mac.gl.master.controller.itemUnit;
 
+import com.mac.gl.master.model.item.MItem;
 import com.mac.gl.master.model.itemUnit.MItemUnit;
 import com.mac.gl.master.service.itemUnit.ItemUnitService;
 import java.util.List;
@@ -9,8 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 
 /**
  *
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/care-point/master/item-unit")
 public class ItemUnitController {
-    
+
     @Autowired
     private ItemUnitService itemUnitService;
 
@@ -39,5 +40,10 @@ public class ItemUnitController {
         itemUnitService.deleteItemUnits(indexNo);
         return indexNo;
     }
-    
+
+    @RequestMapping(value = "/item", method = RequestMethod.POST)
+    public List<MItemUnit> findByItem(@RequestBody MItem item) {
+        return itemUnitService.findByItem(item.getIndexNo());
+    }
+
 }

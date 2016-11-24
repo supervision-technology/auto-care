@@ -28,9 +28,10 @@ public class TitemCheckResultController {
     private TSubItemCheckResultService subItemCheckResultService;
 
     private final Date DATE = new Date();
+    private final Integer BRANCH = 1;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Items> findALLTItemCheckResult() {
-        return subItemCheckResultService.getALlItems(DATE);
+        return subItemCheckResultService.getALlItems(DATE, BRANCH);
     }
 }

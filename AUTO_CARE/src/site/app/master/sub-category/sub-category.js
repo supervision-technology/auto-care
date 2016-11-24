@@ -32,7 +32,7 @@
 
                 //delete funtion
                 factory.deleteSubCategory = function (indexNo, callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-category/delete-subCategory/" + indexNo;
+                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-category/delete-sub-category/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -46,7 +46,7 @@
 
     //Controller
     angular.module("subCategoryModule")
-            .controller("subCategoryController", function ($scope, subCategoryFactory, Notification,$timeout) {
+            .controller("subCategoryController", function ($scope, subCategoryFactory, Notification, $timeout) {
 
                 //data models 
                 $scope.model = {};
@@ -102,11 +102,11 @@
 
                     subCategoryFactory.saveSubCategory(
                             detailJSON,
-                            function (data) {                              
+                            function (data) {
                                 $scope.model.subCategoryList.push(data);
                                 Notification.success("Successfully Added");
                                 $scope.model.reset();
-                                
+
                             },
                             function (data) {
                                 Notification.error(data.message);
@@ -120,7 +120,7 @@
                 //----------------ui funtion--------------
                 //save function 
                 $scope.ui.save = function () {
-                        $scope.http.saveSubCategory();
+                    $scope.http.saveSubCategory();
                 };
 
 
@@ -154,7 +154,7 @@
                         $scope.model.subCategoryList = data;
                     });
                 };
-                
+
                 $scope.ui.init();
             });
 }());

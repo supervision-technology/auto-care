@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/master/vehicle")
+@RequestMapping("/api/care-point/master/vehicle")
 public class VehicleController {
 
     @Autowired

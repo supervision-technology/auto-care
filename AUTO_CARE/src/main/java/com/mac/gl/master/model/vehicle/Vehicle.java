@@ -44,6 +44,7 @@ public class Vehicle implements Serializable {
     @Size(max = 25)
     @Column(name = "vehicle_no")
     private String vehicleNo;
+    
     @Column(name = "year")
     private Integer year;
 

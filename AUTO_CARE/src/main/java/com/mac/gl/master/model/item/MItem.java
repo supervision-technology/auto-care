@@ -7,11 +7,15 @@ package com.mac.gl.master.model.item;
 
 import com.mac.gl.master.model.brand.MBrand;
 import com.mac.gl.master.model.category.MCategory;
+import com.mac.gl.master.model.itemUnit.MItemUnit;
 import com.mac.gl.master.model.subCategory.MSubCategory;
 import com.mac.gl.master.model.itemdepartment.MItemDepartment;
+import com.mac.gl.master.model.packageItem.MPackageItem;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,8 +24,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -54,17 +60,14 @@ public class MItem implements Serializable {
     @Column(name = "unit")
     private String unit;
 
-    @NotNull
     @Basic(optional = false)
     @Column(name = "sales_price")
     private BigDecimal salePrice;
 
-    @NotNull
     @Basic(optional = false)
     @Column(name = "cost_price")
     private BigDecimal costPrice;
 
-    @NotNull
     @Basic(optional = false)
     @Column(name = "type")
     private String type;
@@ -89,6 +92,9 @@ public class MItem implements Serializable {
     @Column(name = "branch")
     private Integer branch;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item", fetch = FetchType.EAGER)
+    private List<MItemUnit> unitList;
+
     public MItem() {
     }
 
@@ -96,7 +102,7 @@ public class MItem implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salePrice, BigDecimal costPrice, String type, MItemDepartment itemDepartment, MBrand brand, MCategory category, MSubCategory subCategory, Integer branch) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salePrice, BigDecimal costPrice, String type, MItemDepartment itemDepartment, MBrand brand, MCategory category, MSubCategory subCategory, Integer branch, List<MItemUnit> unitList) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -110,6 +116,7 @@ public class MItem implements Serializable {
         this.category = category;
         this.subCategory = subCategory;
         this.branch = branch;
+        this.unitList = unitList;
     }
 
     public Integer getIndexNo() {
@@ -214,5 +221,19 @@ public class MItem implements Serializable {
 
     public void setBranch(Integer branch) {
         this.branch = branch;
+    }
+
+    @XmlTransient
+    public List<MItemUnit> getUnitList() {
+        return unitList;
+    }
+
+    public void setUnitList(List<MItemUnit> unitList) {
+        this.unitList = unitList;
+    }
+
+    @Override
+    public String toString() {
+        return "MItem{" + "indexNo=" + indexNo + ", name=" + name + ", barcode=" + barcode + ", printDescription=" + printDescription + ", unit=" + unit + ", salePrice=" + salePrice + ", costPrice=" + costPrice + ", type=" + type + ", itemDepartment=" + itemDepartment + ", brand=" + brand + ", category=" + category + ", subCategory=" + subCategory + ", branch=" + branch + ", unitList=" + unitList + '}';
     }
 }
