@@ -34,7 +34,7 @@ public class ItemDepartmentController {
     }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
-    public MItemDepartment insertItemDeoartment(@RequestBody MItemDepartment departmentModel) {
+    public MItemDepartment insertItemDepartment(@RequestBody MItemDepartment departmentModel) {
         return departmentService.saveItemDepartment(departmentModel);
     }
 

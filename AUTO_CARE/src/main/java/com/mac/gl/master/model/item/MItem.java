@@ -236,7 +236,4 @@ public class MItem implements Serializable {
     public String toString() {
         return "MItem{" + "indexNo=" + indexNo + ", name=" + name + ", barcode=" + barcode + ", printDescription=" + printDescription + ", unit=" + unit + ", salePrice=" + salePrice + ", costPrice=" + costPrice + ", type=" + type + ", itemDepartment=" + itemDepartment + ", brand=" + brand + ", category=" + category + ", subCategory=" + subCategory + ", branch=" + branch + ", unitList=" + unitList + '}';
     }
-
-    
-
 }

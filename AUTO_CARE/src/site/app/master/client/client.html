@@ -1,7 +1,80 @@
-client
-<div>TODO</div>
-<div>ui</div>
-<div>get all done</div>
-<div>/api/green-leaves/master/client(get All)</div>
-<div>/api/green-leaves/master/client/insert-detail(Save)</div>
-<div>/api/green-leaves/master/client/delete-detail/{1}(delete)</div>
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body ">
+    <div class="col-xs-4 background-light">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+                <label>NIC:</label>
+                <input class="form-control" id="nicText" ng-model="model.client.nic" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> 
+                <label>Client Name:</label>
+                <input class="form-control" id="clientText" ng-model="model.client.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> 
+                <label>Mobile :</label>
+                <input class="form-control" id="mobileText" ng-model="model.client.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <label>Type :</label>
+                <input class="form-control" id="typeText" ng-model="model.client.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <label>address :</label>
+                <input class="form-control" id="address1Text" ng-model="model.client.addressLine1" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <input class="form-control" id="address2Text" ng-model="model.client.addressLine2" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <input class="form-control" id="address3Text" ng-model="model.client.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-8 background-dark">
+        <div class="row col-xs-5">
+            <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
+        </div>
+        <table class="table-rounded">
+            <col style="width: 10%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 35%">
+            <col style="width: 10%">
+            <thead class="background-dark">
+                <tr>
+                    <th> <label>#</label> </th>
+                    <th> <label>Name</label> </th>
+                    <th> <label>NIC</label> </th>
+                    <th> <label>Mobile</label> </th>
+                    <th> <label>Address</label> </th> 
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+            <table class="table-rounded">
+                <col style="width: 10%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 35%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="client in model.clientList| filter:model.search.name | orderBy:'indexNo'">
+                        <td>{{client.indexNo}}</td>
+                        <td>{{client.name}}</td>
+                        <td>{{client.nic}}</td>
+                        <td>{{client.mobile}}</td>
+                        <td>{{client.addressLine1}}, {{client.addressLine2}}, {{client.addressLine3}}.</td>
+                        <td class="text-right" style="padding-left: 5px;">
+                            <a class="btn btn-primary" ng-click="ui.edit(client, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deleteClient(client.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-12 background-light" style="position: fixed;bottom: 1px;margin-left: -10px">
+            <ul uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"
+                class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>
+<!--<div class="index-content-footer">
+    content footer
+</div>-->

@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.repository.checklist;
+package com.mac.gl.master.repository.jobCard;
 
-import com.mac.gl.master.model.item.TItemCheckResult;
+import com.mac.gl.master.model.jobCard.JobCard;
+import com.mac.gl.master.model.jobCard.TJobItem;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,8 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Don
  */
-public interface TItemCheckResultRepository extends JpaRepository<TItemCheckResult, Integer> {
+public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
 
-    public List<TItemCheckResult> findByBranch(Integer branch);
-
+    public List<TJobItem> findByJobCard(JobCard jobCard);
 }

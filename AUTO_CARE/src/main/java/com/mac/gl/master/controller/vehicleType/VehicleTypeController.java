@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/master/vehicle-type")
+@RequestMapping("/api/care-point/master/vehicle-type")
 public class VehicleTypeController {
     @Autowired
     private VehicleTypeService vehicleTypeService;

@@ -10,7 +10,7 @@
                     </thead>
                 </table>
                 <div class="col-xs-12">
-                    <input type="text" placeholder="vehicle no" class="search-input" ng-model="vehicle.number" uib-typeahead="vehicle as (vehicle.number) for vehicle in getVehicles($viewValue)|filter:$viewValue|limitTo:10"  typeahead-on-select="getVehicleSelections($model);">
+                    <input type="text" placeholder="vehicle no" class="search-input" ng-model="model.vehicle.number" uib-typeahead="vehicle as (vehicle.vehicleNo) for vehicle in model.vehicle|filter:$viewValue|limitTo:10" typeahead-on-select="ui.getVehicleSelections($model);">
                 </div>
             </div>
             <div class="col-xs-12" style="flex: 1 1 auto;">
@@ -20,25 +20,24 @@
                     <col style="width: 12%"/>
                     <tbody class="background-dark">
                         <tr class="background-light">
-                            <td colspan="2">CUSTOMER DETAILS</td>
-                        </tr>
-                        <tr>
-                            <td>NAME</td>
-                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="vehicleDetail.name"  ng-disabled="checkVehicle" style="margin-top: 5px;"></td>
+                            <td>CUSTOMER DETAILS</td>
+                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a></td>
                         </tr>
                         <tr>
                             <td>CONTACT</td>
-                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="vehicleDetail.contact" ng-disabled="checkVehicle" style="margin-top: 5px;"></td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.mobile" ng-readonly="true" style="margin-top: 5px;"></td>
+                        </tr>
+                        <tr>
+                            <td>NIC NUMBER</td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.nic" ng-readonly="true" style="margin-top: 5px;"></td>
+                        </tr>
+                        <tr>
+                            <td>NAME</td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.name" ng-readonly="true" style="margin-top: 5px;"></td>
                         </tr>
                         <tr>
                             <td>PRICE CATEGORY</td>
-                            <td colspan="2">
-                                <select class="form-control text-center" ng-model="vehicleDetail.type" ng-disabled="checkVehicle" style="margin-top: 5px;">
-                                    <option>BB</option>
-                                    <option>CC</option>
-                                    <option>DD</option>
-                                </select>
-                            </td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.priceCategory.name" ng-readonly="true" style="margin-top: 5px;"></td>
                         </tr>
                         <tr class="background-light">
                             <td colspan="2">RUNNING KM DETAILS</td>
@@ -73,7 +72,7 @@
                     <col style="width: 40%"/>
                     <col style="width: 30%"/>
                     <col style="width: 30%"/>
-                    <tbody ng-repeat="selections in selections">
+                    <tbody>
                         <tr>
                             <td>LAST SERVICE DETAILS</td>
                             <td class="text-left">Date - 2016-06-16</td>
@@ -99,15 +98,13 @@
             </div>
             <div class="col-xs-12" style="height: 40px;">
                 <table  class="table-rounded">
-                    <col style="width: 25%;"/>
-                    <col style="width: 25%;"/>
+                    <col style="width: 50%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
                     <thead>
                         <tr>
                             <th>INDB</th>
                             <th class="text-right">DATE</th>
-                            <th class="text-right">AMOUNT</th>
                             <th class="text-right">DEURATION</th>
                         </tr>
                     </thead>
@@ -115,18 +112,16 @@
             </div>
             <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 300px);">
                 <table class="table-rounded table-primary">
+                    <col style="width: 50%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
-                    <col style="width: 25%;"/>
-                    <col style="width: 25%;"/>
-                    <tbody ng-repeat="history in history">
+                    <tbody ng-repeat="joCard in model.joCard">
                         <tr>
-                            <td ng-click="historySelectionDetail($index)">{{history.invoiceNumber}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index)">{{history.date}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index)">{{history.amount}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index)">{{$index +1}} Months ago</td>
+                            <td ng-click="historySelectionDetail($index,joCard)">{{joCard.indexNo}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index,joCard)">{{joCard.date}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index,joCard)">{{ui.getDefarancedate(joCard.date)}} Months ago</td>
                         </tr>
-                        <tr class="select-primary-row animation-fade" ng-show="historyActivePosition == $index">
+                        <tr class="white-row" ng-show="historyActivePosition == $index">
                             <td colspan="4">
                                 <div>
                                     <table class="table-rounded">
@@ -139,11 +134,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="select-primary-row"  ng-repeat="items in history.discription.items">
-                                                <td>{{items.name}}</td>
-                                                <td class="text-right">{{items.unitprice}}</td>
-                                                <td class="text-right">{{items.qty}}</td>
-                                                <td class="text-right">{{items.amount}}</td>
+                                            <tr class="white-row"  ng-repeat="items in model.itemdetail">
+                                                <td>{{items.item.name}}</td>
+                                                <td class="text-right">{{items.price}}</td>
+                                                <td class="text-right">{{items.quantity}}</td>
+                                                <td class="text-right">{{items.quantity * items.price}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -157,6 +152,5 @@
     </div>
 </div>
 <div class="fab-container">
-    <a class="fab fab-lg fab-success"  ng-click="newVehicle();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-click="primaryMessage()"><i class="glyphicon glyphicon-plus"></i></a>
 </div>

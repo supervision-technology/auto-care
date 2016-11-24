@@ -5,8 +5,9 @@
  */
 package com.mac.gl.master.repository.checklist;
 
+import com.mac.gl.master.model.checklist.TSubItemCheckResult;
 import com.mac.gl.master.model.item.MItem;
-import com.mac.gl.master.model.item.TSubItemCheckResult;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,7 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface TSubItemCheckResultRepository extends JpaRepository<TSubItemCheckResult, Integer> {
 
-    public List<TSubItemCheckResult> findByBranchAndSubItemItem(Integer branch, MItem item);
+    public List<TSubItemCheckResult> findBySubItemItemAndDailyCheckListDate(MItem item, Date date);
 
-    public List<TSubItemCheckResult> findByBranchAndSubItemItemAndChecked(Integer branch, MItem item, Boolean cheked);
+    public List<TSubItemCheckResult> findBySubItemItemAndChecked(MItem item, Boolean cheked);
 }

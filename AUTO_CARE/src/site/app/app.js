@@ -25,10 +25,11 @@
         "vehicleTypeModule",
         "clientModule",
         "vehicleModule",
-        "itemModule"
-
+        "itemModule",
+        "jobCardModule",
+        "customerSearchModule"
     ]);
-    
+
     //constants
     angular.module("appModule")
             .constant("systemConfig", {
@@ -143,6 +144,14 @@
                         .when("/master/vehicle", {
                             templateUrl: "app/master/vehicle/vehicle.html",
                             controller: "vehicleController"
+                        })
+                        .when("/front-office/job-card", {
+                            templateUrl: "app/front-office/job-card/job-card.html",
+                            controller: "jobCardController"
+                        })
+                        .when("/customer-search/customer-search", {
+                            templateUrl: "app/service/vehicle-entrance/customer-search.html",
+                            controller: "customerSearchController"
                         })
                         .otherwise({
                             redirectTo: "/"

@@ -22,9 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/master/client")
+@RequestMapping("/api/care-point/master/client")
 public class clientController {
-    
      
     @Autowired
     private ClientService clientService;
@@ -34,12 +33,15 @@ public class clientController {
         return clientService.findAll();
     }
 
-    @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
+    @RequestMapping(value = "/insert-client", method = RequestMethod.POST)
     public Client insertDetail(@RequestBody Client client) {
+        client.setType("new");
+        client.setBranch(1);
+        System.out.println(client);
         return clientService.saveDetail(client);
     }
 
-    @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete-client/{indexNo}", method = RequestMethod.DELETE)
     public Integer deleteDetail(@PathVariable Integer indexNo) {
         clientService.deleteDetail(indexNo);
         return indexNo;

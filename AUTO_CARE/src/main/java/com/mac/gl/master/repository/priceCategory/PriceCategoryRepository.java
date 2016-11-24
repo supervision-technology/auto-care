@@ -6,6 +6,7 @@
 package com.mac.gl.master.repository.priceCategory;
 
 import com.mac.gl.master.model.priceCategory.PriceCategory;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,6 +14,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Supervision
  */
 public interface PriceCategoryRepository  extends JpaRepository<PriceCategory, Integer>  {
+
+    public List<PriceCategory> findByPrice();
     
     
 }
