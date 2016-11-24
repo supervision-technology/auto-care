@@ -37,45 +37,48 @@ public class JobCard implements Serializable {
     @NotNull
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Column(name = "number")
     private Integer number;
-    
+
     @Column(name = "branch")
     private Integer branch;
-   
+
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
+
     @Column(name = "transaction")
     private Integer transaction;
-    
+
     @Column(name = "price_category")
     private Integer priceCategory;
-    
+
     @Column(name = "in_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date inTime;
-    
+
     @Column(name = "out_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date outTime;
-    
+
     @Column(name = "in_mileage")
     private Integer inMileage;
-    
+
     @Column(name = "next_mileage")
     private Integer nextMileage;
-    
+
     @Size(max = 25)
     @Column(name = "status")
     private String status;
     
+    @Column(name = "bay")
+     private Integer bay;
+
     @JoinColumn(name = "client", referencedColumnName = "index_no")
     @ManyToOne(fetch = FetchType.EAGER)
     private Client client;
-    
+
     @JoinColumn(name = "vehicle", referencedColumnName = "index_no")
     @ManyToOne(fetch = FetchType.EAGER)
     private Vehicle vehicle;
@@ -191,6 +194,16 @@ public class JobCard implements Serializable {
         this.vehicle = vehicle;
     }
 
+    public Integer getBay() {
+        return bay;
+    }
+
+    public void setBay(Integer bay) {
+        this.bay = bay;
+    }
+
+    
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -213,8 +226,8 @@ public class JobCard implements Serializable {
 
     @Override
     public String toString() {
-        return "com.mac.gl.master.model.jobCard.JobCard[ indexNo=" + indexNo + " ]";
+        return "JobCard{" + "indexNo=" + indexNo + ", number=" + number + ", branch=" + branch + ", date=" + date + ", transaction=" + transaction + ", priceCategory=" + priceCategory + ", inTime=" + inTime + ", outTime=" + outTime + ", inMileage=" + inMileage + ", nextMileage=" + nextMileage + ", status=" + status + ", bay=" + bay + ", client=" + client + ", vehicle=" + vehicle + '}';
     }
 
-    
+   
 }

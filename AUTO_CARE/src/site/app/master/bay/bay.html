@@ -86,7 +86,7 @@
                         <th>#</th>
                         <th>Bay Name</th>
                         <th>Color</th>
-                        <th>Size (x,y,w,h)</th>
+                        <th>Size</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -105,7 +105,7 @@
                             <td>
                                 <label style="background-color: {{bay.color}}; width: 30px">&nbsp;</label>
                             </td>
-                            <td>{{bay.x}}-{{bay.y}}-{{bay.w}}-{{bay.h}}</td>
+                            <td>X:{{bay.x}} Y:{{bay.y}} W:{{bay.w}} H:{{bay.h}}</td>
                             <td class="text-right">
                                 <a class="btn btn-primary" ng-click="ui.edit(bay, $index)"><span class="glyphicon glyphicon-edit"></span></a>
                                 <a class="btn btn-danger" ng-click="http.deleteBay(bay.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>

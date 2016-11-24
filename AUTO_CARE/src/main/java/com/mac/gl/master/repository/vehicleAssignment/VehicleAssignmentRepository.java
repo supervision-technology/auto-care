@@ -6,7 +6,6 @@
 package com.mac.gl.master.repository.vehicleAssignment;
 
 import com.mac.gl.master.model.vehicleAssignment.TVehicleAssignment;
-import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,6 +15,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface VehicleAssignmentRepository extends JpaRepository<TVehicleAssignment, Integer>{
 
-    public List<TVehicleAssignment> findByBranchAndDate(Integer branch, Date date);
+    public List<TVehicleAssignment> findByBranchAndJobCardStatusNot(Integer branch,String status );
     
+    public List<TVehicleAssignment> findTop1ByJobCardIndexNoOrderByInTimeDesc(Integer jobCardIndexNo);    
+
+//    public List<TVehicleAssignment> findByJobCardStatusNotIn(String status);
 }

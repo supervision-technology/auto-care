@@ -5,8 +5,8 @@
  */
 package com.mac.gl.master.controller.bay;
 
-import com.mac.gl.master.service.bay.BayService;
 import com.mac.gl.master.model.bay.Bay;
+import com.mac.gl.master.service.bay.BayService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,21 +24,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/care-point/master/bay")
 public class BayController {
-    
-     @Autowired
+
+    @Autowired
     private BayService bayService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Bay> findAll() {
         return bayService.findAll();
     }
+
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public Bay insertBay(@RequestBody Bay bay) {
         return bayService.saveBay(bay);
     }
-     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
+
+    @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
     public Integer deleteBay(@PathVariable Integer indexNo) {
-         System.out.println(indexNo+" index No to delete");
+        System.out.println(indexNo + " index No to delete");
         bayService.deleteBay(indexNo);
         return indexNo;
     }
