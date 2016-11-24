@@ -6,7 +6,10 @@
 package com.mac.gl.master.controller.jobCard;
 
 import com.mac.gl.master.model.jobCard.JobCard;
+import com.mac.gl.master.model.jobCard.TJobItem;
+import com.mac.gl.master.model.vehicle.Vehicle;
 import com.mac.gl.master.service.jobCard.JobCardService;
+import com.mac.gl.master.service.jobCard.JobItemService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,14 +25,29 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/transaction/job-card")
+@RequestMapping("/api/care-point/transaction/job-card")
 public class JobCardController {
+
     @Autowired
     private JobCardService jobCardService;
+
+    @Autowired
+    private JobItemService jobItemService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<JobCard> findAll() {
         return jobCardService.findAll();
+    }
+
+    @RequestMapping(value = "/find-job-history", method = RequestMethod.POST)
+    public List<JobCard> findByJobHistory(@RequestBody Vehicle vehicle) {
+        return jobCardService.findByVehicle(vehicle);
+    }
+
+    @RequestMapping(value = "/find-job-item-history", method = RequestMethod.POST)
+    public List<TJobItem> findByJobItemHistory(@RequestBody JobCard jobCard) {
+        System.out.println("++++++++++++++++++++++++++++++");
+        return jobItemService.findAll(jobCard);
     }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)

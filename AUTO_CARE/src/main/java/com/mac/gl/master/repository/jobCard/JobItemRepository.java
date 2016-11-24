@@ -6,16 +6,15 @@
 package com.mac.gl.master.repository.jobCard;
 
 import com.mac.gl.master.model.jobCard.JobCard;
-import com.mac.gl.master.model.vehicle.Vehicle;
+import com.mac.gl.master.model.jobCard.TJobItem;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author Supervision
+ * @author Don
  */
-public interface JobCardRepository extends JpaRepository<JobCard, Integer>{
+public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
 
-    public List<JobCard> findTop5ByVehicle(Vehicle vehicle);
-    
+    public List<TJobItem> findByJobCard(JobCard jobCard);
 }

@@ -23,7 +23,7 @@ import javax.validation.constraints.NotNull;
  * @author Don
  */
 @Entity
-@Table(name = "t_daily_cleck_list")
+@Table(name = "t_daily_check_list")
 public class TDailyCleckList implements Serializable {
 
     @Id

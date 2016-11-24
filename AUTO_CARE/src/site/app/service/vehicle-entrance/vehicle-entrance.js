@@ -16,9 +16,9 @@
                             });
                 };
 
-                factory.getHistoryJob = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/sub-item-check-list/incert-sub-item-check-list/" + summary;
-                    $http.post(url)
+                factory.getJobHistory = function (summary, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/find-job-history";
+                    $http.post(url, summary)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
@@ -28,12 +28,38 @@
                                 }
                             });
                 };
-               
+
+                factory.getJobItemHistory = function (summary, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/find-job-item-history";
+                    $http.post(url, summary)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorCallback) {
+                                    errorCallback(data);
+                                }
+                            });
+                };
+
+                factory.newJobCart = function (summary, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/insert-detail";
+                    $http.post(url, summary)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorCallback) {
+                                    errorCallback(data);
+                                }
+                            });
+                };
+
                 return factory;
             });
     //controller
     angular.module("vehicleEntranceModule")
-            .controller("vehicleEntranceController", function ($scope, vehicleEntranceFactory, Notification) {
+            .controller("vehicleEntranceController", function ($scope, vehicleEntranceFactory, $modal) {
                 //data models 
                 $scope.model = {};
 
@@ -51,14 +77,26 @@
                 $scope.ui.getVehicleSelections = function (model) {
                     $scope.model.vehicle.client = model.client;
                     $scope.model.vehicle.priceCategory = model.priceCategory;
+
+                    var detailJSON = JSON.stringify(model);
+                    vehicleEntranceFactory.getJobHistory(
+                            detailJSON,
+                            function (data) {
+                                $scope.model.joCard = data;
+                                console.log($scope.model.joCard[0].date);
+                            },
+                            function (data) {
+                                console.log(data);
+                            }
+                    );
                 };
 
-//                $scope.vehicle = [
-//                    {number: "VH 3125", name: "Kavish Manjitha", contact: "0756904935", runningKm: 20000, type: "BB"},
-//                    {number: "RI 7894", name: "Kasun Chamara", contact: "0756904935", runningKm: 30000, type: "CC"},
-//                    {number: "UI 7456", name: "Channa Jayamuni", contact: "0756904935", runningKm: 140000, type: "CV"},
-//                    {number: "OP 5675", name: "Nidura Prageeth", contact: "0756904935", runningKm: 4000, type: "BB"}
-//                ];
+                $scope.ui.getDefarancedate = function (date) {
+                    var d1 = new Date(date);
+                    var cur = new Date();
+                    var defarance = (cur.getFullYear() * 12 + cur.getMonth()) - (d1.getFullYear() * 12 + d1.getMonth());
+                    return defarance;
+                };
 //
 //                $scope.oilUsage = 6000;
 //                $scope.difarance = 0;
@@ -73,128 +111,39 @@
 //                    }
 //                };
 //
-//                $scope.getVehicles = function (hint) {
-//                    return $scope.vehicle;
-//                };
-//
 
-//
-//                $scope.checkVehicle = true;
-//                $scope.newVehicle = function () {
-//                    if ($scope.checkVehicle) {
-//                        $scope.checkVehicle = false;
-//                    } else {
-//                        $scope.checkVehicle = true;
-//                    }
-//                };
-//
-//                $scope.history = [
-//                    {
-//                        invoiceNumber: "0005",
-//                        amount: 25000.00,
-//                        date: "2016-02-05",
-//                        discription: {
-//                            items: [
-//                                {
-//                                    name: "Pac 01",
-//                                    unitprice: 15000.00,
-//                                    qty: 1,
-//                                    amount: 15000.00
-//                                },
-//                                {
-//                                    name: "O.Filters",
-//                                    unitprice: 7000.00,
-//                                    qty: 1,
-//                                    amount: 7000.00
-//                                },
-//                                {
-//                                    name: "Carpet",
-//                                    unitprice: 1700.00,
-//                                    qty: 2,
-//                                    amount: 3000.00
-//                                }
-//                            ]
-//                        }
-//                    },
-//                    {
-//                        invoiceNumber: "006",
-//                        amount: 15000.00,
-//                        date: "2016-02-05",
-//                        discription: {
-//                            items: [
-//                                {
-//                                    name: "Pac 01",
-//                                    unitprice: 15000.00,
-//                                    qty: 1,
-//                                    amount: 15000.00
-//                                }
-//                            ]
-//                        }
-//                    },
-//                    {
-//                        invoiceNumber: "006",
-//                        amount: 15000.00,
-//                        date: "2016-02-05",
-//                        discription: {
-//                            items: [
-//                                {
-//                                    name: "Pac 01",
-//                                    unitprice: 15000.00,
-//                                    qty: 1,
-//                                    amount: 15000.00
-//                                }
-//                            ]
-//                        }
-//                    },
-//                    {
-//                        invoiceNumber: "006",
-//                        amount: 15000.00,
-//                        date: "2016-02-05",
-//                        discription: {
-//                            items: [
-//                                {
-//                                    name: "Pac 01",
-//                                    unitprice: 15000.00,
-//                                    qty: 1,
-//                                    amount: 15000.00
-//                                }
-//                            ]
-//                        }
-//                    }
-//                ];
-//                $scope.historySelectionDetail = function ($index) {
-//                    $scope.isVisible = $scope.isVisible == 0 ? true : false;
-//                    $scope.historyActivePosition = $scope.historyActivePosition == $index ? -1 : $index;
-//                };
-//
-//                $scope.selections = [
-//                    {
-//                        name: "package 01",
-//                        qty: 1,
-//                        amount: "6000.00",
-//                        discription: {
-//                            items: [
-//                                {
-//                                    indexNo: "001",
-//                                    name: "Body Wash & Vacuum"
-//                                },
-//                                {
-//                                    indexNo: "002",
-//                                    name: "Undercarriage Wash"
-//                                }
-//                            ]
-//                        }
-//                    }
-//                ];
-//                $scope.selectionsSelectionDetail = function ($index) {
-//                    $scope.isVisible = $scope.isVisible == 0 ? true : false;
-//                    $scope.selectionsActivePosition = $scope.selectionsActivePosition == $index ? -1 : $index;
-//                };
+                $scope.historySelectionDetail = function ($index, jobCard) {
+                    $scope.isVisible = $scope.isVisible == 0 ? true : false;
+                    $scope.historyActivePosition = $scope.historyActivePosition == $index ? -1 : $index;
+
+                    var detailJSON = JSON.stringify(jobCard);
+                    vehicleEntranceFactory.getJobItemHistory(
+                            detailJSON,
+                            function (data) {
+                                $scope.model.itemdetail = data;
+                            },
+                            function (data) {
+                                console.log(data);
+                            }
+                    );
+                };
+
+                $scope.getJobItemHistory = function (jobCard) {
+                    var detailJSON = JSON.stringify(jobCard);
+                    vehicleEntranceFactory.getJobItemHistory(
+                            detailJSON,
+                            function (data) {
+                                $scope.model.itemdetail = data;
+                            },
+                            function (data) {
+                                console.log(data);
+                            }
+                    );
+                };
 
                 $scope.ui.init = function () {
                     vehicleEntranceFactory.loadVehicle(function (data) {
                         $scope.model.vehicle = data;
-                        console.log($scope.model.vehicle);
                     });
                 };
                 $scope.ui.init();

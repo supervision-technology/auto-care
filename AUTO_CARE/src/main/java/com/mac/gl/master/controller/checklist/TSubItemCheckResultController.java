@@ -42,7 +42,6 @@ public class TSubItemCheckResultController {
 
     @RequestMapping(value = "/incert-sub-item-check-list/{date}", method = RequestMethod.POST)
     public List<TSubItemCheckResult> incertCheckSubItemList(@PathVariable String date) {
-        System.out.println("gfhddfghfghfgh");
         TDailyCleckList dailyCleckList = new TDailyCleckList(new Date(), BRANCH, TRANSACTION, false);
         return subItemCheckResultService.insertSubItemList(TRANSACTION, BRANCH, DATE, dailyCleckList);
     }
