@@ -24,8 +24,8 @@
         "priceCategoryModule",
         "vehicleTypeModule",
         "clientModule",
-        "vehicleModule"
-        
+        "vehicleModule",
+        "itemModule"
 
     ]);
     

@@ -17,4 +17,6 @@ public interface ItemRepository extends JpaRepository<MItem, Integer> {
 
     public List<MItem> findByName(String name);
 
+    public List<MItem> findByType(String type);
+
 }

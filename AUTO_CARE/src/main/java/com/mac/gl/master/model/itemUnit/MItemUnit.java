@@ -5,6 +5,7 @@
  */
 package com.mac.gl.master.model.itemUnit;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mac.gl.master.model.item.MItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -33,10 +34,11 @@ public class MItemUnit implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @NotNull
+    
     @Basic(optional = false)
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item")
+    @JsonIgnore
     private MItem item;
 
     @NotNull
@@ -66,10 +68,13 @@ public class MItemUnit implements Serializable {
         this.indexNo = indexNo;
     }
 
-    
-    @Override
-    public String toString() {
-        return "ItemUnit{" + "indexNo=" + indexNo + ", item=" + item + ", name=" + name + ", qty=" + qty + ", salePrice=" + salePrice + ", costPrice=" + costPrice + '}';
+    public MItemUnit(Integer indexNo, MItem item, String name, double qty, double salePrice, double costPrice) {
+        this.indexNo = indexNo;
+        this.item = item;
+        this.name = name;
+        this.qty = qty;
+        this.salePrice = salePrice;
+        this.costPrice = costPrice;
     }
 
     public Integer getIndexNo() {
@@ -120,4 +125,10 @@ public class MItemUnit implements Serializable {
         this.costPrice = costPrice;
     }
 
+    @Override
+    public String toString() {
+        return "MItemUnit{" + "indexNo=" + indexNo + ", item=" + item + ", name=" + name + ", qty=" + qty + ", salePrice=" + salePrice + ", costPrice=" + costPrice + '}';
+    }
+
+    
 }
