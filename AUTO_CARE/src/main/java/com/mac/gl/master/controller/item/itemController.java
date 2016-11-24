@@ -33,6 +33,11 @@ public class ItemController {
         return itemService.getAllItem();
     }
 
+    @RequestMapping(value = "/all-packages", method = RequestMethod.GET)
+    public List<MItem> getAllItemByType() {
+        return itemService.getAllItemByType();
+    }
+
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
     public MItem saveItem(@RequestBody MItem item) {
         return itemService.saveItem(item);
