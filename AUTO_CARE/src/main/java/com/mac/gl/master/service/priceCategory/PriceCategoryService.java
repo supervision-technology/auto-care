@@ -29,8 +29,8 @@ public class PriceCategoryService {
         return priceCategoryRepository.findAll();
     }
 
-    private PriceCategory findByPriceCategory(String priceCategory) {
-        List<PriceCategory> categoryList = priceCategoryRepository.findByPrice();
+    private PriceCategory findByPriceCategory(String name) {
+        List<PriceCategory> categoryList = priceCategoryRepository.findByName(name);
         if (categoryList.isEmpty()) {
             return null;
         }

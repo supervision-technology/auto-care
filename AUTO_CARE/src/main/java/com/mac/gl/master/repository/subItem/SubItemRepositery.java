@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.gl.master.repository.client;
+package com.mac.gl.master.repository.subItem;
 
-import com.mac.gl.master.model.client.Client;
-import java.util.List;
+import com.mac.gl.master.model.item.MSubItem;
+import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author Supervision
+ * @author kalum
  */
-public interface ClientRepository extends JpaRepository<Client, Integer>{
-
-    public List<Client> findByNic(String nic);
- 
+public interface SubItemRepositery extends JpaRepository<MSubItem, Serializable>{
+    
 }

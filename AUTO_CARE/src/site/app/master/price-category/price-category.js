@@ -27,7 +27,7 @@
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-                                callback(data);
+                                errorCallback(data);
                             });
                 };
 
@@ -36,7 +36,7 @@
                     var url = systemConfig.apiUrl + "/api/care-point/master/priceCategory/delete-detail/" + indexNo;
 
                     $http.delete(url)
-                            .save(function (data, status, headers) {
+                            .success(function (data, status, headers) {
                                 callback(data);
                             })
                             .error(function (data, status, headers) {

@@ -21,7 +21,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "m_brand")
-public class MBrand implements Serializable{
+public class MBrand implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,5 +57,5 @@ public class MBrand implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
-    
+
 }

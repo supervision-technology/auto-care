@@ -1,0 +1,59 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <div class="col-xs-4 background-light">
+        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+
+            <div class="col-xs-12" style="margin-top: 25px;">
+                <label>Item </label>
+                <input id="itemText" type="text" class="form-control" ng-model="model.subItem.item" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Sub Item </label>
+                <input id="subItemText" type="text" class="form-control" ng-model="model.subItem.Name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-xs-8 background-dark">
+        <div class="row col-xs-5">
+            <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
+        </div>
+        <table class="table-rounded">
+            <col style="width: 45%">
+            <col style="width: 45%">
+            <col style="width: 10%">
+            <thead class="background-dark">
+                <tr>
+                    <th>Sub Item</th>
+                    <th>Item</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+            <table class="table-rounded">
+                <col style="width: 45%">
+                <col style="width: 45%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="subItem in model.subItemList|filter :{name:model.search.name}">
+                        <td>{{subItem.name}}</td>
+                        <td>{{subItem.item}}</td>
+
+                        <td class="text-right" style="padding-left: 5px;">
+                            <a class="btn btn-primary" ng-click="ui.edit(subItem, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deleteSubItem(subItem.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

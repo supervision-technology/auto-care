@@ -1,12 +1,12 @@
 (function () {
-    angular.module("subCategoryModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui-notification']);
+    angular.module("subItemModule", ['ngAnimate', 'ngSanitize', 'ui.bootstrap', 'ui-notification']);
     //http factory
-    angular.module("subCategoryModule")
-            .factory("subCategoryFactory", function ($http, systemConfig) {
+    angular.module("subItemModule")
+            .factory("subItemFactory", function ($http, systemConfig) {
                 var factory = {};
                 //load sub category
-                factory.loadSubCategory = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-category";
+                factory.loadSubItem = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-item";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -17,8 +17,8 @@
                 };
 
                 //save sub category
-                factory.saveSubCategory = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-category/save-subCategory";
+                factory.saveSubItem = function (summary, callback, errorCallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-item/save-subItem";
                     $http.post(url, summary)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -31,8 +31,8 @@
                 };
 
                 //delete funtion
-                factory.deleteSubCategory = function (indexNo, callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-category/delete-sub-category/" + indexNo;
+                factory.deleteSubItem = function (indexNo, callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/sub-tem/delete-subItem/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -45,8 +45,8 @@
             });
 
     //Controller
-    angular.module("subCategoryModule")
-            .controller("subCategoryController", function ($scope, subCategoryFactory, Notification, $timeout) {
+    angular.module("subItemModule")
+            .controller("subItemController", function ($scope, subItemFactory, Notification, $timeout) {
 
                 //data models 
                 $scope.model = {};
@@ -60,50 +60,48 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
-                $scope.model.subCategory = [];
+                $scope.model.subItem = [];
 
 
                 //----------- data models ------------------
                 //reset model
                 $scope.model.reset = function () {
-                    $scope.model.subCategory = {
-                        "indexNo": null,
-                        "name": null
-                    };
+                    $scope.model.subItem = {};
+
                 };
 
                 //----------validate funtion-------------
 
-//                $scope.validateInput = function () {
-//                    if ($scope.model.subCategory.category !== null) {
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
-
+                $scope.validateInput = function () {
+                    if ($scope.model.subItem.subName !== null) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
 
                 //----------http funtion----------------
 
-                $scope.http.deleteSubCategory = function (IndexNo, index) {
-                    subCategoryFactory.deleteSubCategory(IndexNo, function () {
+                $scope.http.deleteSubItem = function (IndexNo, index) {
+                    subItemFactory.deleteSubItem(IndexNo, function () {
                         Notification.success("delete success");
-                        $scope.model.subCategoryList.splice(index, 1);
+                        $scope.model.subItemList.splice(index, 1);
                     });
                 };
 
 
 
                 //save function 
-                $scope.http.saveSubCategory = function () {
-                    var detail = $scope.model.subCategory;
+                $scope.http.saveSubItem = function () {
+                    var detail = $scope.model.subItem;
                     var detailJSON = JSON.stringify(detail);
                     console.log(detailJSON);
 
 
-                    subCategoryFactory.saveSubCategory(
+                    subItemFactory.saveSubItem(
                             detailJSON,
                             function (data) {
-                                $scope.model.subCategoryList.push(data);
+                                $scope.model.subItemList.push(data);
                                 Notification.success("Successfully Added");
                                 $scope.model.reset();
 
@@ -120,7 +118,7 @@
                 //----------------ui funtion--------------
                 //save function 
                 $scope.ui.save = function () {
-                    $scope.http.saveSubCategory();
+                    $scope.http.saveSubItem();
                 };
 
 
@@ -135,8 +133,8 @@
                 //edit function 
                 $scope.ui.edit = function (subCategory, index) {
                     $scope.ui.mode = "EDIT";
-                    $scope.model.subCategory = subCategory;
-                    $scope.model.subCategoryList.splice(index, 1);
+                    $scope.model.subItem = subCategory;
+                    $scope.model.subItemList.splice(index, 1);
                 };
 
 
@@ -145,14 +143,11 @@
                     $scope.ui.mode = "IDEAL";
                     //rest model data
                     $scope.model.reset();
-                    //load category
-                    subCategoryFactory.loadSubCategory(function (data) {
-                        $scope.model.categoryList = data;
+                    //load SubItem
+                    subItemFactory.loadSubItem(function (data) {
+                        $scope.model.subItemList = data;
                     });
-                    //lord subCategory
-                    subCategoryFactory.loadSubCategory(function (data) {
-                        $scope.model.subCategoryList = data;
-                    });
+                   
                 };
 
                 $scope.ui.init();

@@ -25,7 +25,8 @@
         "vehicleTypeModule",
         "clientModule",
         "vehicleModule",
-        "jobCardModule"
+        "jobCardModule",
+        "subItemModule"
         
 
     ]);
@@ -144,6 +145,10 @@
                         .when("/master/vehicle", {
                             templateUrl: "app/master/vehicle/vehicle.html",
                             controller: "vehicleController"
+                        })
+                        .when("/master/sub-item", {
+                            templateUrl: "app/master/sub-item/sub-item.html",
+                            controller: "subItemController"
                         })
                         .when("/front-office/job-card", {
                             templateUrl: "app/front-office/job-card/job-card.html",

@@ -5,6 +5,7 @@
  */
 package com.mac.gl.master.model.item;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mac.gl.master.model.brand.MBrand;
 import com.mac.gl.master.model.category.MCategory;
 import com.mac.gl.master.model.subCategory.MSubCategory;
@@ -83,6 +84,7 @@ public class MItem implements Serializable {
 
     @JoinColumn(name = "sub_category")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JsonIgnore
     private MSubCategory subCategory;
 
     @NotNull
@@ -214,5 +216,5 @@ public class MItem implements Serializable {
 
     public void setBranch(Integer branch) {
         this.branch = branch;
-    }
+    } 
 }

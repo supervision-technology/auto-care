@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PriceCategoryRepository  extends JpaRepository<PriceCategory, Integer>  {
 
-    public List<PriceCategory> findByPrice();
+    public List<PriceCategory> findByName(String name);
     
     
 }
