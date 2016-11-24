@@ -9,7 +9,7 @@
 
                 //load Item Department
                 factory.loadItemDepartment = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/green-leaves/master/item-departments";
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item-departments";
 
                     $http.get(url)
                             .success(function (data, status, headers) {
@@ -19,39 +19,9 @@
 
                             });
                 };
-
-                //load recent weigh
-                factory.loadSummary = function (number, callback) {
-                    var url = systemConfig.apiUrl + "" + number;
-                    $http.get(url)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-
-                            });
-                };
-
-                //update or save summary
-                factory.saveSummary = function (summary, callback) {
-                    var url = systemConfig.apiUrl + "/api/green-leaves/green-leaves-weigh/save-summary";
-                    $http.post(url, summary)
-                            .success(function (data, status, headers) {
-                                console.log('==========');
-                                console.log(data);
-                                console.log(status);
-                                console.log(headers);
-                                console.log('==========');
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-
-                            });
-                };
-
                 //insert department
                 factory.insertDepartment = function (detail, callback, errorcallback) {
-                    var url = systemConfig.apiUrl + "/api/green-leaves/master/item-departments/insert-detail";
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item-departments/insert-detail";
                     $http.post(url, detail)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -65,7 +35,7 @@
 
                 //delete 
                 factory.deleteDepartmemt = function (indexNo, callback) {
-                    var url = systemConfig.apiUrl + "/api/green-leaves/master/item-departments/delete-detail/" + indexNo;
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item-departments/delete-detail/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -110,25 +80,25 @@
 
                 $scope.model.departmentList = [];
 
-                
-                
-                
+
+
+
                 $scope.ui.focus = function () {
                     $timeout(function () {
                         document.querySelectorAll("#itemText")[0].focus();
                     }, 10);
                 };
-                
+
                 //new function   
                 $scope.ui.new = function () {
                     $scope.ui.mode = "NEW";
-                    $scope.ui.focus();    
+                    $scope.ui.focus();
                 };
-                
+
                 $scope.ui.keyEvent = function (event) {
-                    if (event.keyCode===13) {
+                    if (event.keyCode === 13) {
                         $scope.ui.save();
-                                
+
                     }
                 };
 
@@ -140,7 +110,7 @@
                     for (var i = 0; i < $scope.model.departmentList.length; i++) {
                         if ($scope.model.departmentList[i].indexNo === $scope.model.department.indexNo) {
                             $scope.model.departmentList.splice(i, 1);
-                            
+
                         }
                     }
 
@@ -150,8 +120,7 @@
                 $scope.ui.save = function () {
                     if ($scope.model.department) {
                         $scope.http.insertItemDepartment();
-                    }
-                    else{
+                    } else {
                         Notification.error('No Item Department Name to Save ');
                     }
 
@@ -174,34 +143,25 @@
                 $scope.http.insertItemDepartment = function () {
                     var detail = $scope.model.department;
                     var detailJSON = JSON.stringify(detail);
+                    console.log(detailJSON);
                     //save detail dirrectly
                     itemDepartmentFactory.insertDepartment(
                             detailJSON,
                             function (data) {
-                                if (data !== "") {
-                                    for (var i = 0; i < $scope.model.departmentList.length; i++) {
-                                        if ($scope.model.departmentList[i].indexNo === data.indexNo) {
-                                            $scope.model.departmentList.splice(i, 1);
-                                            break;
-                                        }
-                                    }
-                                    Notification.success('success !');
-                                    $scope.model.departmentList.push(data);
-                                    $scope.model.department = {};
-                                } else {
-                                    Notification.error('Already Exists !');
-                                }
+                                Notification.success('success !');
+                                $scope.model.departmentList.push(data);
+                                $scope.model.department = {};
+
                             }
                     , function (data) {
                         Notification.error(data.message);
-                        
+
                     }
-                            );
+                    );
                 };
                 $scope.http.deleteDepartment = function (indexNo) {
                     if (indexNo) {
                         itemDepartmentFactory.deleteDepartmemt(indexNo, function () {
-                            console.log('delete success');
                             for (var i = 0; i < $scope.model.departmentList.length; i++) {
                                 if ($scope.model.departmentList[i].indexNo === indexNo) {
                                     $scope.model.departmentList.splice(i, 1);

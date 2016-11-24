@@ -149,6 +149,10 @@
                             templateUrl: "app/front-office/job-card/job-card.html",
                             controller: "jobCardController"
                         })
+                        .when("/master/sub-item", {
+                            templateUrl: "app/master/sub-item/sub-item.html",
+                            controller: "subItemController"
+                        })
                         .when("/customer-search/customer-search", {
                             templateUrl: "app/service/vehicle-entrance/customer-search.html",
                             controller: "customerSearchController"
