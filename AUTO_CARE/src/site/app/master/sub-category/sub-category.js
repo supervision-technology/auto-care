@@ -31,14 +31,16 @@
                 };
 
                 //delete funtion
-                factory.deleteSubCategory = function (indexNo, callback) {
+                factory.deleteSubCategory = function (indexNo, callback, errorCallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/sub-category/delete-sub-category/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-
+                                if (errorCallback) {
+                                    errorCallback(data);
+                                }
                             });
                 };
                 return factory;
@@ -85,9 +87,13 @@
                 //----------http funtion----------------
 
                 $scope.http.deleteSubCategory = function (IndexNo, index) {
-                    subCategoryFactory.deleteSubCategory(IndexNo, function () {
-                        Notification.success("delete success");
+                    subCategoryFactory.deleteSubCategory(IndexNo
+                    , function () {
+                        Notification.success(IndexNo + " - "+"Sub-Category Save Successfully");
                         $scope.model.subCategoryList.splice(index, 1);
+                    }
+                    , function (data) {
+                        Notification.error(data)
                     });
                 };
 
@@ -104,7 +110,7 @@
                             detailJSON,
                             function (data) {
                                 $scope.model.subCategoryList.push(data);
-                                Notification.success("Successfully Added");
+                                Notification.success(data.indexNo + " - "+"Sub-Category Save Successfully");
                                 $scope.model.reset();
 
                             },

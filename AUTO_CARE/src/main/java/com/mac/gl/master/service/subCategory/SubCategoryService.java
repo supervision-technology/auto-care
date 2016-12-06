@@ -32,7 +32,7 @@ public class SubCategoryService {
 
     public MSubCategory findByname(String name) {
         List<MSubCategory> subCategoryList = subCategoryRepository.findByName(name);
-        
+
         if (subCategoryList.isEmpty()) {
             return null;
         }
@@ -41,7 +41,7 @@ public class SubCategoryService {
 
     public MSubCategory saveSubCategory(MSubCategory subCategory) {
         MSubCategory findName = findByname(subCategory.getName());
-        if (findName==null) {
+        if (findName == null) {
             return subCategoryRepository.save(subCategory);
         } else {
             if (findName.getIndexNo().equals(subCategory.getIndexNo())) {
@@ -52,7 +52,11 @@ public class SubCategoryService {
     }
 
     public void deleteSubCategory(Integer indexNo) {
-        subCategoryRepository.delete(indexNo);
+        try {
+            subCategoryRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this sub category because there are details in other transaction");
+        }
     }
 
     public List<MSubCategory> findByCategory(MCategory category) {

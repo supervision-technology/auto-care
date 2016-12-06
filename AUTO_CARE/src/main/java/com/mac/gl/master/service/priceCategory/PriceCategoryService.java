@@ -54,7 +54,7 @@ public class PriceCategoryService {
             priceCategoryRepository.delete(indexNo);
 
         } catch (Exception e) {
-            throw new DuplicateEntityException("Refrence");
+            throw new DuplicateEntityException("Cannot delete this price category because there are details in other transaction");
         }
         return indexNo;
     }

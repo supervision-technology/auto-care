@@ -50,7 +50,11 @@ public class BrandService {
     }
 
     public void deleteBrand(Integer indexNo) {
-        brandRepository.delete(indexNo);
+        try {    
+            brandRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this brand because there are details in other transaction");
+        }
     }
 
 }

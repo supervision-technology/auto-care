@@ -27,7 +27,8 @@
         "vehicleModule",
         "itemModule",
         "jobCardModule",
-        "customerSearchModule"
+        "customerSearchModule",
+        "subItemModule"
     ]);
 
     //constants
@@ -152,6 +153,10 @@
                         .when("/customer-search/customer-search", {
                             templateUrl: "app/service/vehicle-entrance/customer-search.html",
                             controller: "customerSearchController"
+                        })
+                        .when("/master/sub_item", {
+                            templateUrl: "app/master/sub-item/sub-item.html",
+                            controller: "subItemController"
                         })
                         .otherwise({
                             redirectTo: "/"

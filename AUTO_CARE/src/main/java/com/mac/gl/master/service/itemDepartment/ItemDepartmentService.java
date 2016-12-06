@@ -50,6 +50,10 @@ public class ItemDepartmentService {
     }
 
     public void deleteItemDepartment(Integer indexNo) {
-        departmentRepository.delete(indexNo);
+        try {
+            departmentRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this Item-Department because there are details in other transaction");
+        }
     }
 }

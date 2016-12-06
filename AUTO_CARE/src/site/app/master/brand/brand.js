@@ -31,14 +31,16 @@
                 };
 
                 //delete funtion
-                factory.deleteBrand = function (indexNo, callback) {
+                factory.deleteBrand = function (indexNo, callback, errorCallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/brand/delete-brand/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-
+                                if (errorCallback) {
+                                    errorCallback(data);
+                                }
                             });
                 };
                 return factory;
@@ -75,7 +77,7 @@
                 //----------validate funtion-------------
 
                 $scope.validateInput = function () {
-                    if ($scope.model.brand.name !== null) {
+                    if ($scope.model.brand.name) {
                         return true;
                     } else {
                         return false;
@@ -86,9 +88,13 @@
                 //----------http funtion----------------
 
                 $scope.http.deleteBrand = function (IndexNo, index) {
-                    brandFactory.deleteBrand(IndexNo, function () {
-                        Notification.success("delete success");
+                    brandFactory.deleteBrand(IndexNo
+                    , function () {
+                        Notification.success( IndexNo + " - " +"Brand Delete Successfully");
                         $scope.model.brandList.splice(index, 1);
+                    }
+                    , function (data){
+                        Notification.error(data);
                     });
                 };
 
@@ -105,7 +111,7 @@
                             detailJSON,
                             function (data) {                              
                                 $scope.model.brandList.push(data);
-                                Notification.success("Successfully Added");
+                                Notification.success(data.indexNo + " - " +"Brand Save Successfully");
                                 $scope.model.reset();
                                 
                             },
@@ -126,6 +132,7 @@
                     } else {
                         Notification.error("Please Input Details");
                     }
+                    $scope.ui.focus();
                 };
                 $scope.ui.focus = function () {
                     $timeout(function () {

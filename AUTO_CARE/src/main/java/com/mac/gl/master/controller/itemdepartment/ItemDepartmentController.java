@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/care-point/master/item-departments")
+@RequestMapping("/api/green-leaves/master/item-departments")
 public class ItemDepartmentController {
 
     @Autowired

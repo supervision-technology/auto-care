@@ -79,7 +79,7 @@
                 $scope.model.reset = function () {
                     $scope.model.priceCategory = {
                         "indexNo": null,
-                        "name": null,
+                        "name": null
                     };
                 };
 
@@ -101,10 +101,10 @@
                     priceCategoryFactory.savePriceCategory(
                             detailJSON,
                             function (data) {
-                                Notification.success("success");
+                                Notification.success(data.indexNo + " - "+"Price Category Save Successfully");
                                 $scope.model.priceCategoryList.push(data);
                                 $scope.model.reset();
-                                $scope.ui.focus();
+                               
                             },
                             function (data) {
                                 Notification.error(data.message);
@@ -118,7 +118,7 @@
                             indexNo,
                             function () {
                                 $scope.model.priceCategoryList.splice(index, 1);
-                                Notification.success("delete success");
+                                Notification.error(indexNo + " - "+"Price Category delete Successfully");
                             },
                             function (data) {
                                 Notification.error(data.message);
@@ -132,8 +132,9 @@
                     if ($scope.validateInput()) {
                         $scope.http.savePriceCategory();
                     } else {
-                        Notification.error("please input category name");
+                        Notification.error("please input price category to save");
                     }
+                     $scope.ui.focus();
                 };
 
                 //focus

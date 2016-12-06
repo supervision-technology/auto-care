@@ -34,14 +34,16 @@
                 }
 
                 //delete
-                factory.deleteClientFactory = function (indexNo, callback) {
+                factory.deleteClientFactory = function (indexNo, callback, errorCallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/client/delete-client/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-
+                                if (errorCallback) {
+                                    errorCallback(data);
+                                }
                             });
                 };
 
@@ -112,7 +114,7 @@
                             detailJSON,
                             function (data) {
                                 $scope.model.clientList.push(data);
-                                Notification.success("Successfull Added..!!!")
+                                Notification.success(data.indexNo + " - "+"Client Save Successfully")
                                 $scope.model.reset();
                             },
                             function (data) {
@@ -124,9 +126,13 @@
                 };
 
                 $scope.http.deleteClient = function (indexNo, index) {
-                    clientFactory.deleteClientFactory(indexNo, function () {
+                    clientFactory.deleteClientFactory(indexNo
+                    , function () {
                         $scope.model.clientList.splice(index, 1);
-                        Notification.success("delete success");
+                        Notification.success(indexNo + " - "+"Client Delete Successfully");
+                    }
+                    , function (data){
+                        Notification.error(data);
                     });
                 };
 

@@ -19,7 +19,7 @@
                             });
                 };
 
-                
+
                 //save or update
                 factory.saveCategory = function (category, callback, errorCallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/category/save-category";
@@ -38,14 +38,16 @@
                 };
 
                 //delete
-                factory.deleteCategory = function (indexNo, callback) {
+                factory.deleteCategory = function (indexNo, callback, errorCallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/category/delete-category/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-
+                                if (errorCallback) {
+                                    errorCallback(data);
+                                }
                             });
                 };
 
@@ -83,10 +85,7 @@
                 //------------------ model functions ---------------------------
                 //reset model
                 $scope.model.reset = function () {
-                    $scope.model.category = {
-                        "indexNo": null,
-                        "name": null,
-                    };
+                    $scope.model.category = {};
                 };
 
                 //------------------ validation functions ------------------------------
@@ -107,10 +106,9 @@
                     categoryFactory.saveCategory(
                             detailJSON,
                             function (data) {
-                                Notification.success("success");
+                                Notification.success(data.indexNo + " - "+"Category Save Successfully");
                                 $scope.model.categorys.push(data);
                                 $scope.model.reset();
-                                $scope.ui.focus();
                             },
                             function (data) {
                                 Notification.error(data.message);
@@ -119,22 +117,25 @@
                 };
 
                 $scope.http.deleteCategory = function (indexNo, index) {
-                    
-                    categoryFactory.deleteCategory(indexNo, function () {
+                    categoryFactory.deleteCategory(indexNo
+                    , function () {
                         $scope.model.categorys.splice(index, 1);
-                        Notification.success("delete success");
+                        Notification.error(indexNo + " - "+"Category Delete Successfully");
+                    }
+                    , function (data) {
+                        Notification.error(data);
                     });
                 };
 
                 //<-----------------ui funtiion--------------------->
                 //save function
                 $scope.ui.save = function () {
-                    console.log($scope.http.saveCategory());
                     if ($scope.validateInput()) {
                         $scope.http.saveCategory();
                     } else {
                         Notification.error("please input category name");
                     }
+                    $scope.ui.focus();
                 };
 
                 //focus

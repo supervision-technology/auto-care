@@ -37,8 +37,8 @@
                         <td><span class="label label-default">{{department.indexNo|fixedLength:5}}</span></td>
                         <td>{{department.name}}</td>
                         <td class="text-right">
-                            <a class="btn btn-primary" ng-click="ui.edit(department)"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a class="btn btn-danger" ng-click="http.deleteDepartment(department.indexNo)"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a class="btn btn-primary" ng-click="ui.edit(department,$index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deleteDepartment(department.indexNo,$index)"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
 
