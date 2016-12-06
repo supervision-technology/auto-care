@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface JobCardRepository extends JpaRepository<JobCard, Integer>{
 
+    public List<JobCard> findByBay(Integer indexNo);
     public List<JobCard> findTop5ByVehicle(Vehicle vehicle);
     
 }

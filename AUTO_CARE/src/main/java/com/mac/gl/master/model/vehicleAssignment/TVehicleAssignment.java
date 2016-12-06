@@ -20,8 +20,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -40,12 +38,10 @@ public class TVehicleAssignment implements Serializable {
     
     @Basic(optional = false)
     @Column(name = "in_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date inTime;
+    private String inTime;
     
     @Column(name = "out_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date outTime;
+    private String outTime;
     
     @Basic(optional = false)
     @Column(name = "branch")
@@ -70,7 +66,7 @@ public class TVehicleAssignment implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public TVehicleAssignment(Integer indexNo, Date inTime) {
+    public TVehicleAssignment(Integer indexNo, String inTime) {
         this.indexNo = indexNo;
         this.inTime = inTime;
     }
@@ -83,19 +79,19 @@ public class TVehicleAssignment implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public Date getInTime() {
+    public String getInTime() {
         return inTime;
     }
 
-    public void setInTime(Date inTime) {
+    public void setInTime(String inTime) {
         this.inTime = inTime;
     }
 
-    public Date getOutTime() {
+    public String getOutTime() {
         return outTime;
     }
 
-    public void setOutTime(Date outTime) {
+    public void setOutTime(String outTime) {
         this.outTime = outTime;
     }
 

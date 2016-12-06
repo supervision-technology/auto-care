@@ -1,17 +1,18 @@
 <div class="tile-list background-dark">
-    <div class="tile-list-title">
+    <div class="tile-list-title" style="width: 128px">
         <h4>VEHICLE</h4>
     </div>
-    <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" ng-repeat="job in model.jobList" drag-target drag="dragStart" drag-model="job" ng-click="ui.selectedJob(job)">
-            <span style="margin-top: -20px;margin-left: -30px;">
-                <h3> {{job.vehicle.vehicleNo}} </h3>
-                {{job.client.name}}
-<!--                <img src="{{vehicle.image}}"/>  
+    <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);"  style="width: 128px"
+         drop-target drop="dragLeave" drop-model="bay" drop-flavour="vehicle" >
+        <div class="tile tile-128" ng-repeat="job in model.jobList|filter:{bay:null}" 
+             drag-target drag="dragStart" drag-model="job" drag-flavour="vehicle"
+              >
+            <span>
+                <img src="../../../img/01.png"/>  
 
                 <label>
-                    {{vehicle.number}}
-                </label>-->
+                    {{job.vehicle.vehicleNo}}
+                </label>
             </span>
         </div>
     </div>
@@ -20,31 +21,20 @@
 <div class="index-content-body">
     <div style="float: left; width: calc(100% - 133px);">
         <div class="background-light full-height grid">
-            <div class="grid-tile" grid="{{bay}}" drop-target drop="dragLeave" ng-repeat="bay in model.bayList" ng-click="ui.selectedBay(bay)">
-                <div class="grid-tile-title">
-                    <h4>{{bay.name}}</h4>
+            <div class="grid-tile" grid="{{bay}}" drop-target drop="dragLeave" drop-model="bay" drop-flavour="vehicle" ng-repeat="bay in model.bayList">
+                <div class="grid-tile-title" >
+                    <label class="h4" >{{bay.name}} </label> 
+                    <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
+                </div>
+                <div ng-repeat="job in model.jobList|filter:{bay:bay.indexNo}" drag-target drag="dragStart" drag-model="job" drag-flavour="vehicle">
+                    
+                <a  >
+                    {{job.vehicle.vehicleNo}}
+                    {{job.vehicle.indexNo}}
+                    <img src="../../../img/05.png"/>
+                </a>
                 </div>
             </div>
-<!--            <div class="grid-tile" grid="{{grid2}}" >
-                <div class="grid-tile-title">
-                    <h4>BAY 02</h4>
-                </div>
-            </div>
-            <div class="grid-tile" grid="{{grid3}}" >
-                <div class="grid-tile-title">
-                    <h4>BAY 03</h4>
-                </div>
-            </div>
-            <div class="grid-tile" grid="{{grid4}}">
-                <div class="grid-tile-title">
-                    <h4>BAY 04</h4>
-                </div>
-            </div>
-            <div class="grid-tile" grid="{{grid5}}"  >
-                <div class="grid-tile-title">
-                    <h4>BAY 05</h4>
-                </div>
-            </div>-->
         </div>
     </div>
 </div>

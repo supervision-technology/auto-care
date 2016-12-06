@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mac.gl.master.model.vehicleAssignment.TVehicleAssignment;
 import org.springframework.web.bind.annotation.PathVariable;
 
-
 /**
  *
  * @author Supervision
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/green-leaves/transaction/vehicle-assignment")
+@RequestMapping("/api/care-point/transaction/vehicle-assignment")
 public class TVehicleAssignmentController {
 
     @Autowired
@@ -33,10 +32,11 @@ public class TVehicleAssignmentController {
     public List<TVehicleAssignment> findAll() {
         return vehicleAssignmentService.findAll();
     }
-    @RequestMapping(value = "/findBy-branch-date",method = RequestMethod.GET)
-    public List<TVehicleAssignment> findByBranchAndDate() {
-        return vehicleAssignmentService.findAll();
-    }
+
+//    @RequestMapping(value = "/indBy-status", method = RequestMethod.GET)
+//    public List<TVehicleAssignment> findAllByType() {
+//        return vehicleAssignmentService.findAllByType();
+//    }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public TVehicleAssignment insertDetail(@RequestBody TVehicleAssignment vehicleAssignment) {
@@ -48,5 +48,5 @@ public class TVehicleAssignmentController {
         vehicleAssignmentService.deleteDetail(indexNo);
         return indexNo;
     }
-    
+
 }
