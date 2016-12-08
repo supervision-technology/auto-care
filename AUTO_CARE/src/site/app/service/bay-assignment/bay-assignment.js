@@ -92,7 +92,9 @@
                 $scope.dragLeave = function (bay, job) {
                     $scope.check = false;
                     console.log(bay);
+                    console.log("bay");
                     console.log(job);
+                    console.log("job");
                     
                     for (var i = 0; i < $scope.model.jobList.length; i++) {
                         if ($scope.model.jobList[i].bay === bay.indexNo) {
@@ -105,8 +107,9 @@
                         $scope.model.jobAssignment.bay = bay;
                         $scope.model.jobAssignment.bay.timeout = 5;
                         $scope.onTimeout($scope.model.jobAssignment.bay);
+    
                     }else{
-                        Notification.error('Already exsist to '+bay.name);
+                        Notification.error('Already exsist !');
                     }
 //                    
                 };
@@ -125,7 +128,7 @@
 
                 $scope.http.insertDetail = function () {
                     $scope.model.jobAssignment.inTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-                    $scope.model.jobAssignment.outTime = '';
+                    $scope.model.jobAssignment.outTime = null;
                     $scope.model.jobAssignment.branch = 1;
                     $scope.model.jobAssignment.date = new Date();
                     var detail = $scope.model.jobAssignment;

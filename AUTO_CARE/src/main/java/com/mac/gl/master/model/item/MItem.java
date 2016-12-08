@@ -7,15 +7,11 @@ package com.mac.gl.master.model.item;
 
 import com.mac.gl.master.model.brand.MBrand;
 import com.mac.gl.master.model.category.MCategory;
-import com.mac.gl.master.model.itemUnit.MItemUnit;
 import com.mac.gl.master.model.subCategory.MSubCategory;
 import com.mac.gl.master.model.itemdepartment.MItemDepartment;
-import com.mac.gl.master.model.packageItem.MPackageItem;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,10 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -42,58 +35,39 @@ public class MItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-
-    @NotNull
+    
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-
-    @Basic(optional = false)
+    
     @Column(name = "barcode")
     private String barcode;
-
-    @Basic(optional = false)
     @Column(name = "print_description")
     private String printDescription;
-
-    @Basic(optional = false)
     @Column(name = "unit")
     private String unit;
-
     @Basic(optional = false)
     @Column(name = "sales_price")
-    private BigDecimal salePrice;
-
-    @Basic(optional = false)
+    private BigDecimal salesPrice;
     @Column(name = "cost_price")
     private BigDecimal costPrice;
-
     @Basic(optional = false)
     @Column(name = "type")
     private String type;
-
-    @JoinColumn(name = "department")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MItemDepartment itemDepartment;
-
-    @JoinColumn(name = "brand")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MBrand brand;
-
-    @JoinColumn(name = "category")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MCategory category;
-
-    @JoinColumn(name = "sub_category")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MSubCategory subCategory;
-
-    @NotNull
     @Column(name = "branch")
     private Integer branch;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "item", fetch = FetchType.EAGER)
-    private List<MItemUnit> unitList;
+    @JoinColumn(name = "department", referencedColumnName = "index_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private MItemDepartment department;
+    @JoinColumn(name = "category", referencedColumnName = "index_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private MCategory category;
+    @JoinColumn(name = "brand", referencedColumnName = "index_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private MBrand brand;
+    @JoinColumn(name = "sub_category", referencedColumnName = "index_no")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private MSubCategory subCategory;
 
     public MItem() {
     }
@@ -102,22 +76,23 @@ public class MItem implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salePrice, BigDecimal costPrice, String type, MItemDepartment itemDepartment, MBrand brand, MCategory category, MSubCategory subCategory, Integer branch, List<MItemUnit> unitList) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salePrice, BigDecimal costPrice, String type, Integer branch, MItemDepartment department, MCategory category, MBrand brand, MSubCategory subCategory) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
         this.printDescription = printDescription;
         this.unit = unit;
-        this.salePrice = salePrice;
+        this.salesPrice = salePrice;
         this.costPrice = costPrice;
         this.type = type;
-        this.itemDepartment = itemDepartment;
-        this.brand = brand;
-        this.category = category;
-        this.subCategory = subCategory;
         this.branch = branch;
-        this.unitList = unitList;
+        this.department = department;
+        this.category = category;
+        this.brand = brand;
+        this.subCategory = subCategory;
     }
+
+    
 
     public Integer getIndexNo() {
         return indexNo;
@@ -159,12 +134,12 @@ public class MItem implements Serializable {
         this.unit = unit;
     }
 
-    public BigDecimal getSalePrice() {
-        return salePrice;
+    public BigDecimal getSalesPrice() {
+        return salesPrice;
     }
 
-    public void setSalePrice(BigDecimal salePrice) {
-        this.salePrice = salePrice;
+    public void setSalesPrice(BigDecimal salesPrice) {
+        this.salesPrice = salesPrice;
     }
 
     public BigDecimal getCostPrice() {
@@ -183,20 +158,20 @@ public class MItem implements Serializable {
         this.type = type;
     }
 
-    public MItemDepartment getItemDepartment() {
-        return itemDepartment;
+    public Integer getBranch() {
+        return branch;
     }
 
-    public void setItemDepartment(MItemDepartment itemDepartment) {
-        this.itemDepartment = itemDepartment;
+    public void setBranch(Integer branch) {
+        this.branch = branch;
     }
 
-    public MBrand getBrand() {
-        return brand;
+    public MItemDepartment getDepartment() {
+        return department;
     }
 
-    public void setBrand(MBrand brand) {
-        this.brand = brand;
+    public void setDepartment(MItemDepartment department) {
+        this.department = department;
     }
 
     public MCategory getCategory() {
@@ -207,6 +182,14 @@ public class MItem implements Serializable {
         this.category = category;
     }
 
+    public MBrand getBrand() {
+        return brand;
+    }
+
+    public void setBrand(MBrand brand) {
+        this.brand = brand;
+    }
+
     public MSubCategory getSubCategory() {
         return subCategory;
     }
@@ -215,25 +198,28 @@ public class MItem implements Serializable {
         this.subCategory = subCategory;
     }
 
-    public Integer getBranch() {
-        return branch;
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (indexNo != null ? indexNo.hashCode() : 0);
+        return hash;
     }
 
-    public void setBranch(Integer branch) {
-        this.branch = branch;
-    }
-
-    @XmlTransient
-    public List<MItemUnit> getUnitList() {
-        return unitList;
-    }
-
-    public void setUnitList(List<MItemUnit> unitList) {
-        this.unitList = unitList;
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof MItem)) {
+            return false;
+        }
+        MItem other = (MItem) object;
+        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "MItem{" + "indexNo=" + indexNo + ", name=" + name + ", barcode=" + barcode + ", printDescription=" + printDescription + ", unit=" + unit + ", salePrice=" + salePrice + ", costPrice=" + costPrice + ", type=" + type + ", itemDepartment=" + itemDepartment + ", brand=" + brand + ", category=" + category + ", subCategory=" + subCategory + ", branch=" + branch + ", unitList=" + unitList + '}';
-    }
+        return "MItem[ indexNo=" + indexNo + " ]";
+    }   
 }

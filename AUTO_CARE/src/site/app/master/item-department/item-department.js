@@ -9,7 +9,7 @@
 
                 //load Item Department
                 factory.loadItemDepartment = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/green-leaves/master/item-departments";
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item-departments";
 
                     $http.get(url)
                             .success(function (data, status, headers) {
@@ -37,11 +37,6 @@
                     var url = systemConfig.apiUrl + "/api/green-leaves/green-leaves-weigh/save-summary";
                     $http.post(url, summary)
                             .success(function (data, status, headers) {
-                                console.log('==========');
-                                console.log(data);
-                                console.log(status);
-                                console.log(headers);
-                                console.log('==========');
                                 callback(data);
                             })
                             .error(function (data, status, headers) {

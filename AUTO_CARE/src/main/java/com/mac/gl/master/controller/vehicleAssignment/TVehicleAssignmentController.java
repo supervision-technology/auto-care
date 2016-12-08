@@ -33,11 +33,6 @@ public class TVehicleAssignmentController {
         return vehicleAssignmentService.findAll();
     }
 
-//    @RequestMapping(value = "/indBy-status", method = RequestMethod.GET)
-//    public List<TVehicleAssignment> findAllByType() {
-//        return vehicleAssignmentService.findAllByType();
-//    }
-
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public TVehicleAssignment insertDetail(@RequestBody TVehicleAssignment vehicleAssignment) {
         return vehicleAssignmentService.saveDetail(vehicleAssignment);

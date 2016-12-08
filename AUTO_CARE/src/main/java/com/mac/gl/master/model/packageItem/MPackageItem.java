@@ -5,7 +5,8 @@
  */
 package com.mac.gl.master.model.packageItem;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mac.gl.master.model.item.MItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -18,7 +19,6 @@ import javax.persistence.Table;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 /**
  *
@@ -26,27 +26,34 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "r_package_item")
-public class MPackageItem implements Serializable {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class MPackageItem implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-
-    @NotNull
-    @Basic(optional = false)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "item")
+    
+    @JoinColumn(name = "package", referencedColumnName = "index_no")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private MItem packages;
+    
+    @JoinColumn(name = "item", referencedColumnName = "index_no")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private MItem item;
 
-    @NotNull
-    @Basic(optional = false)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "package")
-    private MItem packages;
-
     public MPackageItem() {
+    }
+
+    public MPackageItem(Integer indexNo) {
+        this.indexNo = indexNo;
+    }
+
+    public MPackageItem(Integer indexNo, MItem packages, MItem item) {
+        this.indexNo = indexNo;
+        this.packages = packages;
+        this.item = item;
     }
 
     public Integer getIndexNo() {
@@ -57,6 +64,14 @@ public class MPackageItem implements Serializable {
         this.indexNo = indexNo;
     }
 
+    public MItem getPackages() {
+        return packages;
+    }
+
+    public void setPackages(MItem packages) {
+        this.packages = packages;
+    }
+
     public MItem getItem() {
         return item;
     }
@@ -65,17 +80,5 @@ public class MPackageItem implements Serializable {
         this.item = item;
     }
 
-    public MItem getPackages() {
-        return packages;
-    }
-
-    public void setPackages(MItem packags) {
-        this.packages = packags;
-    }
-
-    @Override
-    public String toString() {
-        return "MPackageItem{" + "indexNo=" + indexNo + ", item=" + item + ", packages=" + packages + '}';
-    }
-
+    
 }

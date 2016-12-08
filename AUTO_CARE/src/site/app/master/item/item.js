@@ -56,6 +56,18 @@
 
                             });
                 };
+                //load sub category
+                factory.loadItemUnit = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item-unit";
+
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
 
                 //load brand
                 factory.loadBrand = function (callback) {
@@ -72,7 +84,7 @@
 
                 //load packages
                 factory.loadPackages = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/item/all-packages";
+                    var url = systemConfig.apiUrl + "/api/care-point/master/package-item";
 
                     $http.get(url)
                             .success(function (data, status, headers) {
@@ -83,22 +95,9 @@
                             });
                 };
 
-                //find item units
-                factory.findByItem = function (summary, callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/item-unit/item";
-
-                    $http.post(url, summary)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-
-                            });
-                };
-
 
                 //save item
-                factory.saveItem = function (summary, callback) {
+                factory.saveItem = function (summary, callback, errorcallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/item/save-item";
 
                     $http.post(url, summary)
@@ -106,7 +105,24 @@
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
+                            });
 
+                };
+                //save unit
+                factory.saveUnit = function (summary, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item-unit/save-unit";
+
+                    $http.post(url, summary)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
                             });
 
                 };
@@ -120,20 +136,49 @@
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-                                errorcallback(data);
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
                             });
-
                 };
 
                 //delete unit
-                factory.deleteUnit = function (indexNo, callback) {
+                factory.deleteUnit = function (indexNo, callback,errorcallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/item-unit/delete-unit/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
+                            });
+                };
+                //delete item
+                factory.deleteItem = function (indexNo, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item/delete-item/" + indexNo;
+                    $http.delete(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
+                            });
+                };
+                //delete package
+                factory.deletePackage = function (indexNo, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/package-item/delete-package/" + indexNo;
+                    $http.delete(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
                             });
                 };
 
@@ -142,12 +187,13 @@
 
 
     angular.module("itemModule")
-            .controller("itemController", function ($scope, itemFactory, Notification) {
+            .controller("itemController", function ($scope, itemFactory, Notification, $timeout) {
                 //data models 
                 $scope.model = {};
 
                 //ui models
                 $scope.ui = {};
+                $scope.ui.disable = null;
 
                 //http models
                 $scope.http = {};
@@ -155,7 +201,7 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
                 $scope.ui.tableShow = 0;
-                
+
                 $scope.model.packageItemList = [];
 
 
@@ -167,22 +213,22 @@
                     "barcode": null,
                     "printDescription": null,
                     "unit": null,
-                    "salePrice": null,
+                    "salesPrice": null,
                     "costPrice": null,
                     "type": null,
                     "itemDepartment": null,
                     "brand": null,
                     "category": null,
                     "subCategory": null,
-                    "branch": null,
-                    unitList: []
+                    "branch": null
                 };
 
 
                 $scope.tempUnit = {
                     indexNo: null,
+                    item: null,
                     name: null,
-                    salePrice: null,
+                    salesPrice: null,
                     costPrice: null,
                     qty: null
 
@@ -195,6 +241,21 @@
                     packages: {}
                 };
 
+                $scope.ui.keyEventItem = function (event) {
+                    if (event.keyCode === 13) {
+                        $scope.ui.save();
+                    }
+                };
+                $scope.ui.keyEventUnit = function (event) {
+                    if (event.keyCode === 13) {
+                        $scope.ui.addUnit();
+                    }
+                };
+                $scope.ui.keyEventPackage = function (event) {
+                    if (event.keyCode === 13) {
+                        $scope.ui.savePackage();
+                    }
+                };
 
                 //----------http funtion--------
                 //save item
@@ -207,71 +268,206 @@
                     itemFactory.saveItem(
                             detailJSON,
                             function (data) {
-                                Notification.success("successfully Added");
+                                Notification.success(data.indexNo + " " + data.name + " Successfully Added");
                                 $scope.model.itemList.push(data);
+                                $scope.model.item = {};
                             },
                             function (data) {
-                                Notification.error(data.message);
+                                Notification.error(data);
                             }
                     );
                 };
 
 //                save package
                 $scope.http.savePackage = function () {
-                    $scope.model.package.packages.branch = 1;
-                    $scope.model.package.packages.type = "PACKAGE";
                     var detail = $scope.model.package;
                     var detailJSON = JSON.stringify(detail);
-
+                    console.log(detail);
                     itemFactory.savePackage(
                             detailJSON,
                             function (data) {
-                                Notification.success("successfully Added");
+                                Notification.success(data.indexNo + " successfully Added");
                                 $scope.model.packageItemList.push(data);
+                                $scope.model.package = {};
                             },
                             function (data) {
-                                Notification.error(data.message);
+                                Notification.error(data);
                             }
                     );
                 };
 
-                //find item 
-                $scope.http.findByItem = function (item) {
-                    var details = item;
-                    var detailJSON = JSON.stringify(details);
+//                save unit
+                $scope.http.saveUnit = function () {
+                    var detail = $scope.tempUnit;
+                    var detailJSON = JSON.stringify(detail);
 
-                    itemFactory.findByItem(
+                    itemFactory.saveUnit(
                             detailJSON,
                             function (data) {
-                                $scope.model.item.unitList = data;
-                            });
-                };
+                                Notification.success(data.indexNo + " Successfully Added");
+                                $scope.model.unitList.push(data);
+                                $scope.tempUnit.costPrice = null;
+                                $scope.tempUnit.indexNo = null;
+                                $scope.tempUnit.name = null;
+                                $scope.tempUnit.qty = null;
+                                $scope.tempUnit.salesPrice = null;
+//                              $scope.tempUnit.item = {};
 
+                            },
+                            function (data) {
+                                Notification.error(data);
+                            }
+                    );
+                };
+                //delete Item
+                $scope.http.deleteItem = function (IndexNo, index) {
+                    console.log(IndexNo);
+                    itemFactory.deleteItem(IndexNo
+                            , function (data) {
+                                Notification.error(IndexNo + " delete success");
+                                $scope.model.itemList.splice(index, 1);
+                            }, function (data) {
+                        Notification.error(data);
+                    });
+                };
+                //delete package
+                $scope.http.deletePackage = function (IndexNo, index) {
+                    itemFactory.deletePackage(IndexNo
+                            , function (data) {
+                                Notification.error(IndexNo + " delete success");
+                                $scope.model.packageItemList.splice(index, 1);
+                            }, function (data) {
+                        Notification.error(data);
+                    });
+                };
                 //delete unit
                 $scope.http.deleteUnit = function (IndexNo, index) {
-                    itemFactory.deleteUnit(IndexNo, function () {
-                        Notification.success("delete success");
-//                        $scope.model.item.unitList.splice(index, 1);
+                    itemFactory.deleteUnit(IndexNo
+                            , function (data) {
+                                Notification.error(IndexNo + " delete success");
+                                $scope.model.unitList.splice(index, 1);
+                            }
+                    , function (data) {
+                        Notification.error(data);
                     });
                 };
 
 
                 //----------validation----------
                 $scope.ui.validateUnits = function () {
-                    if ($scope.tempUnit.name !== null) {
+                    if ($scope.tempUnit.name
+                            && $scope.tempUnit.costPrice
+                            && $scope.tempUnit.salesPrice
+                            && $scope.tempUnit.item.indexNo
+                            && $scope.tempUnit.qty
+                            ) {
                         return true;
                     } else {
                         return false;
                     }
                 };
+                $scope.validateItem = function () {
+                    if ($scope.model.item.name
+                            && $scope.model.item.salesPrice
+                            && $scope.model.item.type
+                            ) {
+                        return true;
+                    }
+                    return false;
+                };
+                $scope.validatePackage = function () {
+                    if ($scope.model.package.packages.indexNo
+                            && $scope.model.package.item.indexNo
+                            ) {
+                        return true;
+                    }
+                    return false;
+                };
 
                 //----------ui funtion-----------
-                //focus
-//                $scope.ui.focus = function () {
-//                    $timeout(function () {
-//                        document.querySelectorAll("#route")[0].focus();
-//                    }, 10);
-//                };
+//                focus
+                $scope.ui.focusItem = function () {
+                    $timeout(function () {
+                        document.querySelectorAll("#type")[0].focus();
+                    }, 10);
+                };
+//                focus
+                $scope.ui.focusUnit = function () {
+                    $timeout(function () {
+                        document.querySelectorAll("#unitItem")[0].focus();
+                    }, 10);
+                };
+//                focus
+                $scope.ui.focusPackage = function () {
+                    $timeout(function () {
+                        document.querySelectorAll("#packageItem")[0].focus();
+                    }, 10);
+                };
+
+                //save item
+                $scope.ui.save = function () {
+                    if ($scope.ui.disable === 'item') {//enable textfield
+                        if ($scope.validateItem()) {
+                            $scope.http.saveItem();
+                        } else {
+                            Notification.error('input Detail to Save');
+                        }
+                    } else {
+                        $scope.ui.disable = 'item';
+                    }
+                    $scope.ui.focusItem();
+                };
+
+                //save package
+                $scope.ui.savePackage = function () {
+                    if ($scope.ui.disable === 'package') {//enable textfield
+                        if ($scope.validatePackage) {
+                            $scope.http.savePackage();
+                        } else {
+                            Notification.error('input Detail to Save');
+                        }
+                    } else {
+                        $scope.ui.disable = 'package';
+                    }
+                    $scope.ui.focusPackage();
+                };
+
+
+                $scope.ui.addUnit = function () {//enable textfield
+                    if ($scope.ui.disable === 'unit') {
+                        if ($scope.ui.validateUnits()) {
+                            $scope.http.saveUnit();
+                        } else {
+                            Notification.error("input Detail to Save");
+                        }
+                    } else {
+                        $scope.ui.disable = 'unit';
+                    }
+                    $scope.ui.focusUnit();
+                };
+
+                //edit
+                $scope.ui.editItem = function (item, index) {
+                    $scope.model.item = item;
+                    $scope.model.itemList.splice(index, 1);
+                    $scope.ui.focusItem();
+                    $scope.ui.disable = "item";
+                };
+                //edit
+                $scope.ui.editUnit = function (unit, index) {
+                    $scope.tempUnit = unit;
+                    $scope.model.unitList.splice(index, 1);
+                    $scope.ui.focusUnit();
+                    $scope.ui.disable = "unit";
+                };
+                //edit
+                $scope.ui.editPackage = function (package, index) {
+                    $scope.model.package = package;
+                    $scope.model.packageItemList.splice(index, 1);
+                    $scope.ui.focusPackage();
+                    $scope.ui.disable = "package";
+                };
+
 
                 $scope.ui.setTabPane = function (int) {
                     if (int === 0) {
@@ -288,53 +484,21 @@
                     }
                 };
 
-
-
-
-                //new function
-//                $scope.ui.new = function () {
-//                    $scope.ui.mode = "NEW";
-//                };
-
-                //save item
-                $scope.ui.save = function () {
-                    $scope.http.saveItem();
-                };
-
-                //save package
-                $scope.ui.savePackage = function () {
-                    $scope.http.savePackage();
-                };
-
-                $scope.ui.addUnit = function () {
-//                    $scope.tempUnit.item = null;
-                    if ($scope.model.item.type !== null && $scope.model.item.name !== null && $scope.ui.validateUnits()) {
-                        $scope.model.item.unitList.push($scope.tempUnit);
-                        $scope.tempUnit = {};
-                    } else {
-                        Notification.error("Please enter product and unit detail");
-                    }
-                };
-
-                //edit
-                $scope.ui.edit = function (details, index) {
-//                    $scope.model.item = details;
-//                    $scope.model.item.unitList.splice(index, 1);
-//                    $scope.model.resetUnit();
-                };
-
-
                 $scope.ui.init = function () {
                     //set ideal mode
-//                    $scope.ui.mode = "IDEAL";
                     $scope.ui.mode = "SAVE";
                     $scope.ui.tableShow = 1;
+                    $scope.model.package = {};
 
                     //load item
                     itemFactory.loadItem(function (data) {
                         $scope.model.itemList = data;
                     });
-                    //load item departmet
+                    //load item unit
+                    itemFactory.loadItemUnit(function (data) {
+                        $scope.model.unitList = data;
+                    });
+                    //load item 
                     itemFactory.loadItemDepartment(function (data) {
                         $scope.model.itemDepartmentList = data;
                     });
@@ -352,7 +516,7 @@
                     });
                     //load packages
                     itemFactory.loadPackages(function (data) {
-                        $scope.model.packageList = data;
+                        $scope.model.packageItemList = data;
                     });
 
                 };

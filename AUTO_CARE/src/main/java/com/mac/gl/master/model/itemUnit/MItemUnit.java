@@ -5,9 +5,9 @@
  */
 package com.mac.gl.master.model.itemUnit;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mac.gl.master.model.item.MItem;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,39 +27,27 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "m_item_units")
 public class MItemUnit implements Serializable {
-
+  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-
-    
-    @Basic(optional = false)
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "item")
-    @JsonIgnore
-    private MItem item;
-
-    @NotNull
     @Basic(optional = false)
     @Column(name = "name")
     private String name;
-
-    @NotNull
     @Basic(optional = false)
     @Column(name = "qty")
-    private double qty;
-
-    @NotNull
+    private BigDecimal qty;
     @Basic(optional = false)
     @Column(name = "sales_price")
-    private double salePrice;
-
-    @NotNull
+    private BigDecimal salesPrice;
     @Basic(optional = false)
     @Column(name = "cost_price")
-    private double costPrice;
+    private BigDecimal costPrice;
+    @JoinColumn(name = "item", referencedColumnName = "index_no")
+    @ManyToOne(optional = false)
+    private MItem item;
 
     public MItemUnit() {
     }
@@ -68,12 +56,11 @@ public class MItemUnit implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public MItemUnit(Integer indexNo, MItem item, String name, double qty, double salePrice, double costPrice) {
+    public MItemUnit(Integer indexNo, String name, BigDecimal qty, BigDecimal salesPrice, BigDecimal costPrice) {
         this.indexNo = indexNo;
-        this.item = item;
         this.name = name;
         this.qty = qty;
-        this.salePrice = salePrice;
+        this.salesPrice = salesPrice;
         this.costPrice = costPrice;
     }
 
@@ -85,14 +72,6 @@ public class MItemUnit implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public MItem getItem() {
-        return item;
-    }
-
-    public void setItem(MItem item) {
-        this.item = item;
-    }
-
     public String getName() {
         return name;
     }
@@ -101,34 +80,62 @@ public class MItemUnit implements Serializable {
         this.name = name;
     }
 
-    public double getQty() {
+    public BigDecimal getQty() {
         return qty;
     }
 
-    public void setQty(double qty) {
+    public void setQty(BigDecimal qty) {
         this.qty = qty;
     }
 
-    public double getSalePrice() {
-        return salePrice;
+    public BigDecimal getSalesPrice() {
+        return salesPrice;
     }
 
-    public void setSalePrice(double salePrice) {
-        this.salePrice = salePrice;
+    public void setSalesPrice(BigDecimal salesPrice) {
+        this.salesPrice = salesPrice;
     }
 
-    public double getCostPrice() {
+    public BigDecimal getCostPrice() {
         return costPrice;
     }
 
-    public void setCostPrice(double costPrice) {
+    public void setCostPrice(BigDecimal costPrice) {
         this.costPrice = costPrice;
+    }
+
+    public MItem getItem() {
+        return item;
+    }
+
+    public void setItem(MItem item) {
+        this.item = item;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (indexNo != null ? indexNo.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof MItemUnit)) {
+            return false;
+        }
+        MItemUnit other = (MItemUnit) object;
+        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
+            return false;
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "MItemUnit{" + "indexNo=" + indexNo + ", item=" + item + ", name=" + name + ", qty=" + qty + ", salePrice=" + salePrice + ", costPrice=" + costPrice + '}';
+        return "MItemUnits[ indexNo=" + indexNo + " ]";
     }
-
+    
     
 }

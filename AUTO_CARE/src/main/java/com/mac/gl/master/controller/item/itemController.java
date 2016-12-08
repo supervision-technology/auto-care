@@ -35,7 +35,7 @@ public class ItemController {
 
     @RequestMapping(value = "/all-packages", method = RequestMethod.GET)
     public List<MItem> getAllItemByType() {
-        return itemService.getAllItemByType();
+        return itemService.findByType();
     }
 
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
@@ -44,8 +44,10 @@ public class ItemController {
     }
 
     @RequestMapping(value = "/delete-item/{indexNo}", method = RequestMethod.DELETE)
-    public Integer deletItem(@PathVariable Integer indexNo) {
+    public void deletItem(@PathVariable Integer indexNo) {
+        System.out.println(indexNo);
+        System.out.println(indexNo);
+        System.out.println("#############");
         itemService.deleteItem(indexNo);
-        return indexNo;
     }
 }

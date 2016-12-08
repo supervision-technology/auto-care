@@ -29,35 +29,38 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
-    @Autowired
-    private ItemUnitRepository itemUnitRepository;
-
-    @Autowired
-    private PackageItemRepository packageItemRepository;
-
     private String type = "PACKAGE";
 
     public List<MItem> getAllItem() {
         return itemRepository.findAll();
     }
 
-    public List<MItem> getAllItemByType() {
+    public List<MItem> findByName(String name) {
+        return itemRepository.findByName(name);
+    }
+
+    public List<MItem> findByType() {
         return itemRepository.findByType(type);
     }
 
     public MItem saveItem(MItem item) {
-        MItem saveItem = itemRepository.save(item);
-
-        for (MItemUnit mItemUnit : item.getUnitList()) {
-            mItemUnit.setItem(saveItem);
-            itemUnitRepository.save(mItemUnit);
+        List<MItem> findByName = findByName(item.getName());
+        if (findByName.isEmpty()) {
+            return itemRepository.save(item);
         }
-
-        return saveItem;
+        else if (findByName.get(0).getIndexNo().equals(item.getIndexNo())) {
+            System.out.println("duplicate");
+            return itemRepository.save(item);
+        }
+        throw new DuplicateEntityException("This Item is Already Exists !");
     }
 
     public void deleteItem(Integer indexNo) {
+        try {
         itemRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw  new RuntimeException("Cannot delete this Item because there are details in other transaction");
+        }
     }
 
 }

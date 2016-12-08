@@ -31,18 +31,14 @@ public class PackageItemController {
 
     @Autowired
     private PackageItemService packageItemService;
-    
-    @Autowired
-    private ItemService itemService;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public List<MPackageItem> findAll() {
+        return packageItemService.findAll();
+    }
 
     @RequestMapping(value = "/save-package", method = RequestMethod.POST)
     public MPackageItem savePackage(@RequestBody MPackageItem packageItem) {
-        System.out.println(packageItem.getPackages());
-        packageItem.getPackages().setUnitList(new ArrayList<>());
-        MItem packages = itemService.saveItem(packageItem.getPackages());
-        packageItem.setPackages(packages);
-//        System.out.println(packageItem); 
         return packageItemService.savePackage(packageItem);
     }
 

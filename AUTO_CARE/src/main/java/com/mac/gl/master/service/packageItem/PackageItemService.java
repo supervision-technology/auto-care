@@ -20,17 +20,36 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class PackageItemService {
-    
+
     @Autowired
     private PackageItemRepository packageItemRepository;
 
-
     public MPackageItem savePackage(MPackageItem packageItem) {
-        return packageItemRepository.save(packageItem);
+        MPackageItem item = findByItemIndexNoAndPackagesIndexNo(packageItem.getItem().getIndexNo(), packageItem.getPackages().getIndexNo());
+        if (item == null) {
+            return packageItemRepository.save(packageItem);
+        }
+        if (item.getIndexNo().equals(packageItem.getIndexNo())) {
+            return packageItem;
+            
+        }
+        throw new RuntimeException("Your Saved is Duplicated ! ");
+    }
+
+    public List<MPackageItem> findAll() {
+        return packageItemRepository.findAll();
     }
 
     public void deletePackage(Integer indexNo) {
         packageItemRepository.delete(indexNo);
+    }
+
+    private MPackageItem findByItemIndexNoAndPackagesIndexNo(Integer item, Integer packages) {
+        List<MPackageItem> list = packageItemRepository.findByItemIndexNoAndPackagesIndexNo(item, packages);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 
 }

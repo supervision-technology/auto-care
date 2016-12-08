@@ -7,6 +7,7 @@ package com.mac.gl.master.repository.packageItem;
 
 import com.mac.gl.master.model.packageItem.MPackageItem;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Nidura Prageeth
  */
 public interface PackageItemRepository extends JpaRepository<MPackageItem, Serializable>{
+
+    public List<MPackageItem> findByItemIndexNoAndPackagesIndexNo(Integer item, Integer packages);
     
 }

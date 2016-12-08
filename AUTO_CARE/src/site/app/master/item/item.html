@@ -11,54 +11,55 @@
                         <col style="width: 65%"/>
                         <tbody>
                             <tr>
-                                <td><label class="control-label">Type</label></td>
-                                <td><select class="form-control" ng-model="model.item.type">
+                                <td><label class="control-label">Type *</label></td>
+                                <td><select id="type" class="form-control" ng-model="model.item.type" ng-disabled="ui.disable !== 'item'" >
                                         <option value="STOCK" selected>STOCK</option>
                                         <option value="NON-STOCK">NON-STOCK</option>
                                         <option value="SERVICE">SERVICE</option>
+                                        <option value="PACKAGE">PACKAGE</option>
                                     </select>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Name</label></td>
-                                <td><input  class="form-control" ng-model="model.item.name" ></td>
+                                <td><label class="control-label">Name *</label></td>
+                                <td><input  class="form-control" ng-model="model.item.name" ng-disabled="ui.disable !== 'item'" ></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Barcode</label></td>
-                                <td><input class="form-control" ng-model="model.item.barcode" ></td>
+                                <td><label class="control-label">Bar code</label></td>
+                                <td><input class="form-control" ng-model="model.item.barcode" ng-disabled="ui.disable !== 'item'"></td>
                             </tr>
                             <tr>
 
                                 <td><label class="control-label">Print Description</label></td>
-                                <td><input class="form-control" ng-model="model.item.printDescription"></td>
+                                <td><input class="form-control" ng-model="model.item.printDescription" ng-disabled="ui.disable !== 'item'" ></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Unit</label></td>
-                                <td><input class="form-control" ng-model="model.item.unit" ></td>
+                                <td><input class="form-control" ng-model="model.item.unit" ng-disabled="ui.disable !== 'item'"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Sale Price</label></td>
-                                <td><input class="form-control text-right" ng-model="model.item.salePrice" ></td>
+                                <td><label class="control-label">Sale Price *</label></td>
+                                <td><input class="form-control text-right" smart-input="decimal" ng-model="model.item.salesPrice" ng-disabled="ui.disable !== 'item'" ></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Cost Price</label></td>
-                                <td><input class="form-control text-right" ng-model="model.item.costPrice"></td>
+                                <td><input class="form-control text-right" smart-input="decimal" ng-model="model.item.costPrice" ng-disabled="ui.disable !== 'item'" ></td>
                             </tr>
 
                             <tr>
                                 <td><label class="control-label">Department</label></td>
-                                <td><input class="form-control" ng-model="model.item.itemDepartment"  uib-typeahead="itemDepartment as (itemDepartment.name) for itemDepartment in model.itemDepartmentList |filter:$viewValue|limitTo:10"></td>
+                                <td><input class="form-control" ng-model="model.item.itemDepartment" ng-disabled="ui.disable !== 'item'" uib-typeahead="itemDepartment as (itemDepartment.name) for itemDepartment in model.itemDepartmentList |filter:$viewValue|limitTo:10"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Category</label></td>
-                                <td><input class="form-control" ng-model="model.item.category" uib-typeahead="category as (category.name) for category in model.categoryList |filter:$viewValue|limitTo:10"></td>
+                                <td><input class="form-control" ng-model="model.item.category" ng-disabled="ui.disable !== 'item'" uib-typeahead="category as (category.name) for category in model.categoryList |filter:$viewValue|limitTo:10"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Sub Category</label></td>
-                                <td><input class="form-control" ng-model="model.item.subCategory" uib-typeahead="subCategory as (subCategory.name) for subCategory in model.subCategoryList |filter:$viewValue|limitTo:10"></td>
+                                <td><input class="form-control" ng-model="model.item.subCategory" ng-disabled="ui.disable !== 'item'" uib-typeahead="subCategory as (subCategory.name) for subCategory in model.subCategoryList |filter:$viewValue|limitTo:10"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Brand</label></td>
-                                <td><input class="form-control" ng-model="model.item.brand" uib-typeahead="brand as (brand.name) for brand in model.brandList |filter:$viewValue|limitTo:10"></td>
+                                <td><input class="form-control" ng-model="model.item.brand" ng-disabled="ui.disable !== 'item'" uib-typeahead="brand as (brand.name) for brand in model.brandList |filter:$viewValue|limitTo:10" ng-keypress="ui.keyEventItem($event)"></td>
                             </tr>
 
                         </tbody>
@@ -70,20 +71,24 @@
                         <col style="width: 65%"/>
                         <tbody>                   
                             <tr>
-                                <td><label class="control-label">Name</label></td>
-                                <td><input class="form-control" ng-model="tempUnit.name"></td>
+                                <td><label class="control-label">Item *</label></td>
+                                <td><input id="unitItem" class="form-control" ng-model="tempUnit.item"  ng-disabled="ui.disable !== 'unit'" uib-typeahead="item as (item.name +' - Rs:'+ item.salesPrice) for item in model.itemList |filter:$viewValue |filter:{type:'STOCK'}|limitTo:10"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Sale Price</label></td>
-                                <td><input class="form-control" ng-model="tempUnit.salePrice"></td>
+                                <td><label class="control-label">Unit Name *</label></td>
+                                <td><input class="form-control" ng-model="tempUnit.name" ng-disabled="ui.disable !== 'unit'"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Cost Price</label></td>
-                                <td><input class="form-control" ng-model="tempUnit.costPrice"></td>
+                                <td><label class="control-label">Sale Price *</label></td>
+                                <td><input class="form-control" smart-input="decimal" ng-model="tempUnit.salesPrice" ng-disabled="ui.disable !== 'unit'"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">qty</label></td>
-                                <td><input class="form-control" ng-model="tempUnit.qty"></td>
+                                <td><label class="control-label">Cost Price *</label></td>
+                                <td><input class="form-control" smart-input="decimal" ng-model="tempUnit.costPrice" ng-disabled="ui.disable !== 'unit'"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Quantity *</label></td>
+                                <td><input class="form-control" smart-input="decimal" ng-model="tempUnit.qty" ng-keypress="ui.keyEventUnit($event) " ng-disabled="ui.disable !== 'unit'"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -94,16 +99,12 @@
                         <col style="width: 65%"/>
                         <tbody>                   
                             <tr>
-                                <td><label class="control-label">Name</label></td>
-                                <td><input class="form-control" ng-model="model.package.packages.name" uib-typeahead="name as (name.name) for name in model.packageList |filter:$viewValue|limitTo:7" typeahead-on-select="onSelect($model)"></td>
-                            </tr>
-                             <tr>
-                                <td><label class="control-label">Price</label></td>
-                                <td><input class="form-control" ng-model="model.package.packages.salePrice"></td>
+                                <td><label class="control-label">Name *</label></td>
+                                <td><input id="packageItem" class="form-control" ng-model="model.package.packages" ng-disabled="ui.disable !== 'package'"  uib-typeahead="package as (package.name+'  Rs:'+package.salesPrice) for package in model.itemList |filter:$viewValue |filter:{type:'PACKAGE'}|limitTo:10"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Item</label></td>
-                                <td><input class="form-control" ng-model="model.package.item" uib-typeahead="item as (item.name) for item in model.itemList |filter:$viewValue|limitTo:7"></td>
+                                <td><label class="control-label">Item *</label></td>
+                                <td><input class="form-control" ng-model="model.package.item" ng-keypress="ui.keyEventPackage($event)" ng-disabled="ui.disable !== 'package'" uib-typeahead="package as (package.name+'  Rs:'+package.salesPrice) for package in model.itemList |filter:$viewValue |filter:{type:'SERVICE'}|limitTo:10"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -116,18 +117,22 @@
             <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
         </div>
         <table class="table-rounded">
-            <col style="width: 25%">
-            <col style="width: 25%">
+            <col style="width: 20%">
+            <col style="width: 20%">
             <col style="width: 20%">
             <col style="width: 15%">
             <col style="width: 15%">
+            <col style="width: 10%">
             <thead class="background-dark">
                 <tr>
+                    <th>
+                        <label>Type</label>
+                    </th>
                     <th>
                         <label>Name </label>
                     </th>
                     <th>
-                        <label>Barode</label>
+                        <label>Bar code</label>
                     </th>
                     <th>
                         <label>Sale Price</label>
@@ -140,17 +145,20 @@
             </thead>
         </table>
         <div class="smart-scroll-y" style="height: calc(100vh - 200px);">
+            
             <table class="table-rounded animation-fade">
-                <col style="width: 25%">
-                <col style="width: 25%">
+                <col style="width: 20%">
+                <col style="width: 20%">
                 <col style="width: 20%">
                 <col style="width: 15%">
                 <col style="width: 15%">
+                <col style="width: 10%">
                 <tbody>
                     <tr ng-repeat="item in model.itemList| filter : model.search.name | orderBy : 'indexNo'" class="background-light">
+                        <td>{{item.type}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.barcode}}</td>
-                        <td>{{item.salePrice}}</td>
+                        <td>{{item.salesPrice}}</td>
                         <td>{{item.costPrice}}</td>
                         <td class="text-right" style="padding-left: 5px;">
                             <a class="btn btn-primary" ng-click="ui.editItem(item, $index)"><span class="glyphicon glyphicon-edit"></span></a>
@@ -163,14 +171,21 @@
         </div>
     </div>
     <div class="col-xs-8 background-dark" ng-show="ui.tableShow === 2">
+        <div class="row col-xs-5">
+            <input type="text" class="search-input" ng-model="searchUnit" placeholder="search">
+        </div>
         <table class="table-rounded">
-            <col style="width: 25%">
-            <col style="width: 25%">
             <col style="width: 20%">
-            <col style="width: 15%">
-            <col style="width: 15%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 10%">
+            <col style="width: 10%">
             <thead class="background-dark">
                 <tr>
+                    <th>
+                        <label>Item Name</label>
+                    </th>
                     <th>
                         <label>Unit Name</label>
                     </th>
@@ -189,19 +204,21 @@
         </table>
         <div class="smart-scroll-y" style="height: calc(100vh - 150px);">
             <table class="table-rounded animation-fade">
-                <col style="width: 25%">
-                <col style="width: 25%">
                 <col style="width: 20%">
-                <col style="width: 15%">
-                <col style="width: 15%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 10%">
+                <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="unit in model.item.unitList" class="background-light">
+                    <tr ng-repeat="unit in model.unitList|filter:searchUnit |orderBy:'indexNo'" class="background-light">
+                        <td>{{unit.item.name}}</td>
                         <td>{{unit.name}}</td>
-                        <td>{{unit.salePrice}}</td>
+                        <td>{{unit.salesPrice}}</td>
                         <td>{{unit.costPrice}}</td>
                         <td>{{unit.qty}}</td>
                         <td class="text-right" style="padding-left: 5px;">
-                            <a class="btn btn-primary" ng-click="ui.edit(unit, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-primary" ng-click="ui.editUnit(unit, $index)"><span class="glyphicon glyphicon-edit"></span></a>
                             <a class="btn btn-danger" ng-click="http.deleteUnit(unit.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
@@ -211,17 +228,24 @@
         </div>
     </div>
     <div class="col-xs-8 background-dark" ng-show="ui.tableShow === 3">
+        <div class="row col-xs-5">
+            <input type="text" class="search-input" ng-model="searchPackage" placeholder="search">
+        </div>
         <table class="table-rounded">
-            <col style="width: 25%">
-            <col style="width: 25%">
+            <col style="width: 10%">
+            <col style="width: 35%">
+            <col style="width: 35%">
             <col style="width: 20%">
             <thead class="background-dark">
                 <tr>
                     <th>
-                        <label>Item Name</label>
+                        <label>#</label>
                     </th>
                     <th>
-                        <label>Price</label>
+                        <label>Package Name</label>
+                    </th>
+                    <th>
+                        <label>Package Item</label>
                     </th>
                     <th>
                         <label>&nbsp;</label>
@@ -231,18 +255,18 @@
         </table>
         <div class="smart-scroll-y" style="height: calc(100vh - 150px);">
             <table class="table-rounded animation-fade">
-                <col style="width: 25%">
-                <col style="width: 25%">
+                <col style="width: 10%">
+                <col style="width: 35%">
+                <col style="width: 35%">
                 <col style="width: 20%">
-                <col style="width: 15%">
-                <col style="width: 15%">
                 <tbody>
-                    <tr ng-repeat="package in model.packageItemList" class="background-light">
+                    <tr ng-repeat="package in model.packageItemList|filter:searchPackage |orderBy:'indexNo'" class="background-light">
+                        <td>{{package.indexNo}}</td>
                         <td>{{package.packages.name}}</td>
-                        <td>{{package.item.costPrice}}</td>
+                        <td>{{package.item.name}}</td>
                         <td class="text-right" style="padding-left: 5px;">
-                            <a class="btn btn-primary" ng-click="ui.edit(package, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-                            <a class="btn btn-danger" ng-click="http.deletePackageItem(package.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                            <a class="btn btn-primary" ng-click="ui.editPackage(package, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deletePackage(package.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
 
@@ -252,7 +276,6 @@
     </div>
 </div>
 <div class="fab-container">
-    <!--<a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'SAVE'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'ADD'" ng-click="ui.addUnit();"><i class="glyphicon glyphicon-ok"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'PACKAGE'" ng-click="ui.savePackage();"><i class="glyphicon glyphicon-ok"></i></a>
