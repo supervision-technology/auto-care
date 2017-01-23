@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/care-point/master/item")
 public class ItemController {
-
+    
     @Autowired
     private ItemService itemService;
 
@@ -45,9 +45,6 @@ public class ItemController {
 
     @RequestMapping(value = "/delete-item/{indexNo}", method = RequestMethod.DELETE)
     public void deletItem(@PathVariable Integer indexNo) {
-        System.out.println(indexNo);
-        System.out.println(indexNo);
-        System.out.println("#############");
         itemService.deleteItem(indexNo);
     }
 }
