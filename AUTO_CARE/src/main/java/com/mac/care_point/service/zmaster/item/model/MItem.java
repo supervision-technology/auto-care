@@ -3,32 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.model.item;
+package com.mac.care_point.service.zmaster.item.model;
 
-import com.mac.care_point.master.model.brand.MBrand;
-import com.mac.care_point.master.model.category.MCategory;
-import com.mac.care_point.master.model.subCategory.MSubCategory;
-import com.mac.care_point.master.model.itemdepartment.MItemDepartment;
-import com.mac.care_point.service.jobCard.model.TJobItem;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
  *
  * @author Don
  */
-@Entity(name = "com.mac.care_point.master.model.item.MItem")
+@Entity(name = "com.mac.care_point.service.zmaster.item.MItem")
 @Table(name = "m_item")
 public class MItem implements Serializable {
 
@@ -65,30 +56,22 @@ public class MItem implements Serializable {
     @Column(name = "branch")
     private Integer branch;
 
-    @JoinColumn(name = "department", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MItemDepartment department;
+    @Column(name = "department")
+    private Integer department;
 
-    @JoinColumn(name = "category", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MCategory category;
+    @Column(name = "category")
+    private Integer category;
 
-    @JoinColumn(name = "brand", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MBrand brand;
+    @Column(name = "brand")
+    private Integer brand;
 
-    @JoinColumn(name = "sub_category", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MSubCategory subCategory;
+    @Column(name = "sub_category")
+    private Integer subCategory;
 
     public MItem() {
     }
 
-    public MItem(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salesPrice, BigDecimal costPrice, String type, Integer branch, MItemDepartment department, MCategory category, MBrand brand, MSubCategory subCategory) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salesPrice, BigDecimal costPrice, String type, Integer branch, Integer department, Integer category, Integer brand, Integer subCategory) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -176,36 +159,35 @@ public class MItem implements Serializable {
         this.branch = branch;
     }
 
-    public MItemDepartment getDepartment() {
+    public Integer getDepartment() {
         return department;
     }
 
-    public void setDepartment(MItemDepartment department) {
+    public void setDepartment(Integer department) {
         this.department = department;
     }
 
-    public MCategory getCategory() {
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(MCategory category) {
+    public void setCategory(Integer category) {
         this.category = category;
     }
 
-    public MBrand getBrand() {
+    public Integer getBrand() {
         return brand;
     }
 
-    public void setBrand(MBrand brand) {
+    public void setBrand(Integer brand) {
         this.brand = brand;
     }
 
-    public MSubCategory getSubCategory() {
+    public Integer getSubCategory() {
         return subCategory;
     }
 
-    public void setSubCategory(MSubCategory subCategory) {
+    public void setSubCategory(Integer subCategory) {
         this.subCategory = subCategory;
     }
-
 }

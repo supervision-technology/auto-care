@@ -37,18 +37,19 @@ public class JobCardController {
     }
 
     @RequestMapping(value = "/find-job-history/{vehicle}", method = RequestMethod.GET)
-    public List<JobCard> findByJobHistory(@PathVariable Integer vehicle) {
+    public List<JobCard> findByJobHistory(@PathVariable String vehicle) {
         return jobCardService.findByVehicle(vehicle);
     }
 
     @RequestMapping(value = "/find-job-item-history/{jobCardNo}", method = RequestMethod.GET)
     public List<TJobItem> findByJobItemHistory(@PathVariable Integer jobCardNo) {
-        return jobItemService.findByJobCardIndexNo(jobCardNo);
+        return jobItemService.findByJobCard(jobCardNo);
     }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public JobCard insertDetail(@RequestBody JobCard jobCard) {
-        return jobCardService.saveItemDepartment(jobCard);
+        jobCard.setBranch(1);
+        return jobCardService.saveJobCard(jobCard);
     }
 
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)

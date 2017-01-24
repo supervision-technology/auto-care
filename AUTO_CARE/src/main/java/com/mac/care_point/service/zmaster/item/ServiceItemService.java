@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.jobCard;
+package com.mac.care_point.service.zmaster.item;
 
-import com.mac.care_point.service.jobCard.model.TJobItem;
+import com.mac.care_point.service.zmaster.item.model.MItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class JobItemService {
+public class ServiceItemService {
 
     @Autowired
-    private JobItemRepository itemRepository;
+    private ServiceItemRepository itemRepository;
 
-    public List<TJobItem> findByJobCard(Integer jobCard) {
-        return itemRepository.findByJobCard(jobCard);
+    public List<MItem> getAllItems() {
+        return itemRepository.findAll();
     }
 }

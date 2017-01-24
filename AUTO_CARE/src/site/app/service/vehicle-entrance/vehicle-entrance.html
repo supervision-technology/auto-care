@@ -10,7 +10,7 @@
                     </thead>
                 </table>
                 <div class="col-xs-12">
-                    <input type="text" placeholder="vehicle no" class="search-input" ng-model="model.vehicle.number" uib-typeahead="vehicle as (vehicle.vehicleNo) for vehicle in model.vehicle|filter:$viewValue|limitTo:10" typeahead-on-select="ui.getVehicleSelections($model);">
+                    <input id="search" type="text" placeholder="vehicle no" class="search-input" ng-model="model.vehicle.number" uib-typeahead="vehicle as (vehicle.vehicleNo) for vehicle in model.vehicles|filter:$viewValue|limitTo:10" typeahead-on-select="ui.getVehicleSelections($model);" ng-disabled="ui.mode !== 'EDIT'">
                 </div>
             </div>
             <div class="col-xs-12" style="flex: 1 1 auto;">
@@ -25,19 +25,19 @@
                         </tr>
                         <tr>
                             <td>CONTACT</td>
-                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.mobile" ng-readonly="true" style="margin-top: 5px;"></td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.mobile" style="margin-top: 5px;" ng-disabled="ui.mode !== 'EDIT'"></td>
                         </tr>
                         <tr>
                             <td>NIC NUMBER</td>
-                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.nic" ng-readonly="true" style="margin-top: 5px;"></td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.nic" style="margin-top: 5px;" ng-disabled="ui.mode !== 'EDIT'"></td>
                         </tr>
                         <tr>
                             <td>NAME</td>
-                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.name" ng-readonly="true" style="margin-top: 5px;"></td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.client.name" style="margin-top: 5px;" ng-disabled="ui.mode !== 'EDIT'"></td>
                         </tr>
                         <tr>
                             <td>PRICE CATEGORY</td>
-                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.priceCategory.name" ng-readonly="true" style="margin-top: 5px;"></td>
+                            <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.priceCategory.name" style="margin-top: 5px;" ng-disabled="ui.mode !== 'EDIT'"></td>
                         </tr>
                         <tr class="background-light">
                             <td colspan="2">RUNNING KM DETAILS</td>
@@ -45,7 +45,7 @@
                         <tr>
                             <td>NEW RUNNING KM</td>
                             <td>
-                                <input type="text" class="form-control text-right" ng-model="newKmRunningCount" style="margin-top: 5px;"><a ></a>
+                                <input type="text" class="form-control text-right" ng-model="model.data.inMileage" style="margin-top: 5px;" ng-disabled="ui.mode !== 'EDIT'"><a></a>
                             </td>
                             <td>
                                 <a class="btn btn-primary" ng-click="getNewKmRunningCount(newKmRunningCount);"><span class="glyphicon glyphicon-plus"></span></a>
@@ -110,7 +110,7 @@
                     </thead>
                 </table>
             </div>
-            
+
             <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 300px);"  ng-show="model.jobCardHistory.length">
                 <table class="table-rounded table-primary">
                     <col style="width: 50%;"/>
@@ -120,7 +120,7 @@
                         <tr>
                             <td ng-click="historySelectionDetail($index, jobCardHistory)">{{jobCardHistory.indexNo}}</td>
                             <td class="text-right" ng-click="historySelectionDetail($index, jobCardHistory)">{{jobCardHistory.date}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index, jobCardHistory)">{{ui.getDefarancedate(jobCardHistory.date)}} Months ago</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index, jobCardHistory)">{{model.getDefarancedate(jobCardHistory.date)}} Months ago</td>
                         </tr>
                         <tr class="white-row" ng-show="historyActivePosition == $index">
                             <td colspan="4">
@@ -136,7 +136,7 @@
                                         </thead>
                                         <tbody>
                                             <tr class="white-row"  ng-repeat="items in model.jobCardItemDetailHistory">
-                                                <td>{{items.item.name}}</td>
+                                                <td><label class="label label-default">{{items.indexNo}}</label> &nbsp; {{model.item(items.indexNo).name}}</td>
                                                 <td class="text-right">{{items.price}}</td>
                                                 <td class="text-right">{{items.quantity}}</td>
                                                 <td class="text-right">{{items.quantity * items.price}}</td>
@@ -156,5 +156,7 @@
     </div>
 </div>
 <div class="fab-container">
-    <a class="fab fab-lg fab-primary" ng-click="primaryMessage()"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-default" fab-show="ui.mode ==='IDEAL' || ui.mode ==='EDIT'" ng-click="ui.discard();"><i class="glyphicon glyphicon-remove"></i></a>
+    <a class="fab fab-lg fab-primary" fab-show="ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-floppy-save"></i></a>
+    <a class="fab fab-lg fab-primary" fab-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
 </div>

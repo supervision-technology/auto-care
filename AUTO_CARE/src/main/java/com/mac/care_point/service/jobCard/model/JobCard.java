@@ -55,12 +55,10 @@ public class JobCard implements Serializable {
     private Integer priceCategory;
 
     @Column(name = "in_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date inTime;
+    private String inTime;
 
     @Column(name = "out_time")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date outTime;
+    private String outTime;
 
     @Column(name = "in_mileage")
     private Integer inMileage;
@@ -88,7 +86,7 @@ public class JobCard implements Serializable {
     public JobCard() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, Date inTime, Date outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, List<TJobItem> tJobItemList) {
+    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -158,22 +156,6 @@ public class JobCard implements Serializable {
         this.priceCategory = priceCategory;
     }
 
-    public Date getInTime() {
-        return inTime;
-    }
-
-    public void setInTime(Date inTime) {
-        this.inTime = inTime;
-    }
-
-    public Date getOutTime() {
-        return outTime;
-    }
-
-    public void setOutTime(Date outTime) {
-        this.outTime = outTime;
-    }
-
     public Integer getInMileage() {
         return inMileage;
     }
@@ -228,6 +210,22 @@ public class JobCard implements Serializable {
 
     public void setVehicle(Integer vehicle) {
         this.vehicle = vehicle;
+    }
+
+    public String getInTime() {
+        return inTime;
+    }
+
+    public void setInTime(String inTime) {
+        this.inTime = inTime;
+    }
+
+    public String getOutTime() {
+        return outTime;
+    }
+
+    public void setOutTime(String outTime) {
+        this.outTime = outTime;
     }
 
 }

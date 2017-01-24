@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.service.jobCard;
 
-import com.mac.care_point.service.jobCard.model.JobCard;
 import com.mac.care_point.service.jobCard.model.TJobItem;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +15,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
 
-    public List<TJobItem> findByJobCard(JobCard jobCard);
+    public List<TJobItem> findByJobCard(Integer jobCard);
 }
