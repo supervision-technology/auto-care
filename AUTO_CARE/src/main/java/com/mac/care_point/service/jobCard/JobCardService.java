@@ -5,8 +5,7 @@
  */
 package com.mac.care_point.service.jobCard;
 
-import com.mac.care_point.master.model.vehicle.Vehicle;
-import com.mac.care_point.master.repository.vehicle.VehicleRepository;
+import com.mac.care_point.master.vehicle.VehicleRepository;
 import com.mac.care_point.service.jobCard.model.JobCard;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class JobCardService {
     }
 
     public List<JobCard> findByVehicle(String vehicleNo) {
-        Vehicle vehicle = vehicleRepository.findByVehicleNo(vehicleNo);
+        com.mac.care_point.master.vehicle.model.Vehicle vehicle = vehicleRepository.findByVehicleNo(vehicleNo);
         return jobCardRepository.findByVehicle(vehicle.getIndexNo());
     }
 
