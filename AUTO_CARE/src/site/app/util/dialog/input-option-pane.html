@@ -1,0 +1,14 @@
+<div class="option-pane" ng-class="$ctrl.optionPaneClass">
+    <div class="option-pane-body">
+        <div class="option-pane-title">
+            {{$ctrl.title}}
+        </div>
+        <div class="option-pane-input">
+            <input class="form-control input-lg" type="text" ng-model="data.inputText" ng-keypress="ui.keyEvent($event);"/>
+        </div>
+    </div>
+    <div class="option-pane-footer">
+        <button id="btnConfirm" class="btn" ng-click="$ctrl.confirm(data.inputText);">CONFIRM</button>
+        <button id="btnCancel" class="btn clear" ng-click="$ctrl.discard();">CANCEL</button>
+    </div>
+</div>

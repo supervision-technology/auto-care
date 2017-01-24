@@ -1,94 +1,68 @@
 (function () {
 //module
     angular.module("vehicleEntranceModule", ['ui.bootstrap', 'ui-notification']);
-    //http factory
     angular.module("vehicleEntranceModule")
-            .factory("vehicleEntranceFactory", function ($http, systemConfig) {
-                var factory = {};
-                factory.loadVehicle = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/vehicle";
-                    $http.get(url)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
+            .controller("vehicleEntranceController", function ($scope, VehicleEntranceService, $uibModal, Notification, $q) {
 
-                            });
-                };
-
-                factory.getJobHistory = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/find-job-history";
-                    $http.post(url, summary)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-                                if (errorCallback) {
-                                    errorCallback(data);
-                                }
-                            });
-                };
-
-                factory.getJobItemHistory = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/find-job-item-history";
-                    $http.post(url, summary)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-                                if (errorCallback) {
-                                    errorCallback(data);
-                                }
-                            });
-                };
-
-                factory.newJobCart = function (summary, callback, errorCallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/insert-detail";
-                    $http.post(url, summary)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-                                if (errorCallback) {
-                                    errorCallback(data);
-                                }
-                            });
-                };
-
-                return factory;
-            });
-    //controller
-    angular.module("vehicleEntranceModule")
-            .controller("vehicleEntranceController", function ($scope, vehicleEntranceFactory, $modal) {
                 //data models 
                 $scope.model = {};
+                $scope.model.jobCardHistory = [];
+                $scope.model.jobCardItemDetailHistory = [];
+                $scope.model.jobCard =
+                        {
+                            "indexNo": 0,
+                            "number": 0,
+                            "branch": 0,
+                            "date": null,
+                            "transaction": 0,
+                            "priceCategory": 0,
+                            "inTime": null,
+                            "outTime": null,
+                            "inMileage": 0,
+                            "nextMileage": 0,
+                            "status": null,
+                            "bay": 0,
+                            "client": 0,
+                            "vehicle": 0
+                        };
 
                 //ui models
                 $scope.ui = {};
-
-                //http models
-                $scope.http = {};
 
                 $scope.model.vehicle = {
                     "client": null,
                     "priceCategory": null
                 };
 
+                $scope.ui.searchCustomer = function () {
+                    $uibModal.open({
+                        animation: true,
+                        backdrop: 'static',
+                        templateUrl: './app/service/vehicle-entrance/customer-search.html',
+                        controller: 'customerSearchController',
+                        size: 'lg'
+                    }).closed.then(function () {
+                        console.log("closed");
+                    });
+                };
+
                 $scope.ui.getVehicleSelections = function (model) {
+                    var defer = $q.defer();
                     $scope.model.vehicle.client = model.client;
                     $scope.model.vehicle.priceCategory = model.priceCategory;
+                    var vehicleNo = model.vehicleNo;
 
-                    var detailJSON = JSON.stringify(model);
-                    vehicleEntranceFactory.getJobHistory(
-                            detailJSON,
-                            function (data) {
-                                $scope.model.joCard = data;
-                                console.log($scope.model.joCard[0].date);
-                            },
-                            function (data) {
+                    VehicleEntranceService.getJobHistory(vehicleNo)
+                            .success(function (data) {
                                 console.log(data);
-                            }
-                    );
+                                $scope.model.jobCardHistory = [];
+                                $scope.model.jobCardHistory = data;
+                                defer.resolve();
+                            })
+                            .error(function (data) {
+                                $scope.model.jobCardHistory = [];
+                                defer.reject();
+                            });
                 };
 
                 $scope.ui.getDefarancedate = function (date) {
@@ -116,35 +90,25 @@
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.historyActivePosition = $scope.historyActivePosition == $index ? -1 : $index;
 
-                    var detailJSON = JSON.stringify(jobCard);
-                    vehicleEntranceFactory.getJobItemHistory(
-                            detailJSON,
-                            function (data) {
-                                $scope.model.itemdetail = data;
-                            },
-                            function (data) {
+                    //get select job card get items
+                    var jobCardNo = jobCard.indexNo;
+                    VehicleEntranceService.getJobItemHistory(jobCardNo)
+                            .success(function (data) {
                                 console.log(data);
-                            }
-                    );
-                };
-
-                $scope.getJobItemHistory = function (jobCard) {
-                    var detailJSON = JSON.stringify(jobCard);
-                    vehicleEntranceFactory.getJobItemHistory(
-                            detailJSON,
-                            function (data) {
-                                $scope.model.itemdetail = data;
-                            },
-                            function (data) {
-                                console.log(data);
-                            }
-                    );
+                                $scope.model.jobCardItemDetailHistory = [];
+                                $scope.model.jobCardItemDetailHistory = data;
+                            })
+                            .error(function (data) {
+                                $scope.model.jobCardItemDetailHistory = [];
+                            });
                 };
 
                 $scope.ui.init = function () {
-                    vehicleEntranceFactory.loadVehicle(function (data) {
-                        $scope.model.vehicle = data;
-                    });
+                    //load vehicle
+                    VehicleEntranceService.loadVehicle()
+                            .success(function (data) {
+                                $scope.model.vehicle = data;
+                            });
                 };
                 $scope.ui.init();
             });

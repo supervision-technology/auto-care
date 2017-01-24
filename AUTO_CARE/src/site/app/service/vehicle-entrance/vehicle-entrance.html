@@ -21,7 +21,7 @@
                     <tbody class="background-dark">
                         <tr class="background-light">
                             <td>CUSTOMER DETAILS</td>
-                            <td><a class="btn btn-success"><span class="glyphicon glyphicon-plus"></span></a></td>
+                            <td><a class="btn btn-success" ng-click="ui.searchCustomer();"><span class="glyphicon glyphicon-plus"></span></a></td>
                         </tr>
                         <tr>
                             <td>CONTACT</td>
@@ -56,8 +56,8 @@
             </div>
         </div>
     </div>
-    <div class="col-xs-8 background-dark" style="height: calc(100vh);">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+    <div class="col-xs-8 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 3px);">
             <div class="col-xs-12" style="margin-top: 10px;height: 40px;">
                 <table>
                     <thead>
@@ -103,23 +103,24 @@
                     <col style="width: 25%;"/>
                     <thead>
                         <tr>
-                            <th>INDB</th>
+                            <th>INV.NO</th>
                             <th class="text-right">DATE</th>
                             <th class="text-right">DEURATION</th>
                         </tr>
                     </thead>
                 </table>
             </div>
-            <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 300px);">
+            
+            <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 300px);"  ng-show="model.jobCardHistory.length">
                 <table class="table-rounded table-primary">
                     <col style="width: 50%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
-                    <tbody ng-repeat="joCard in model.joCard">
+                    <tbody ng-repeat="jobCardHistory in model.jobCardHistory">
                         <tr>
-                            <td ng-click="historySelectionDetail($index,joCard)">{{joCard.indexNo}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index,joCard)">{{joCard.date}}</td>
-                            <td class="text-right" ng-click="historySelectionDetail($index,joCard)">{{ui.getDefarancedate(joCard.date)}} Months ago</td>
+                            <td ng-click="historySelectionDetail($index, jobCardHistory)">{{jobCardHistory.indexNo}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index, jobCardHistory)">{{jobCardHistory.date}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index, jobCardHistory)">{{ui.getDefarancedate(jobCardHistory.date)}} Months ago</td>
                         </tr>
                         <tr class="white-row" ng-show="historyActivePosition == $index">
                             <td colspan="4">
@@ -134,7 +135,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr class="white-row"  ng-repeat="items in model.itemdetail">
+                                            <tr class="white-row"  ng-repeat="items in model.jobCardItemDetailHistory">
                                                 <td>{{items.item.name}}</td>
                                                 <td class="text-right">{{items.price}}</td>
                                                 <td class="text-right">{{items.quantity}}</td>
@@ -147,6 +148,9 @@
                         </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="placeholder col-xs-12 animation-fade" style="height: calc(100vh - 315px);" ng-hide="model.jobCardHistory.length">
+                <h1>NO JOB HISTORY :(</h1>
             </div>
         </div>
     </div>

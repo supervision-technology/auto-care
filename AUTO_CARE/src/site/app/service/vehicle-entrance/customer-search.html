@@ -1,9 +1,6 @@
-<div class="index-content-header">
-</div>
-
 <div class="index-content-body">
     <div class="col-xs-4 background-light">
-        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+        <div style="display: flex; flex-flow: column; height: calc(100vh - 100px);">
             <div class="col-xs-12" style="margin-top: 25px;">
                 <label>N.I.C</label>
                 <input id="clientNo" type="text" class="form-control" ng-model="model.data.nic" ng-keyup="ui.checkSupplierExists(model.data.nic, 'nic')" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
@@ -30,49 +27,52 @@
 
     </div>
     <div class="col-xs-8 background-dark">
-        <div class="row col-xs-5">
-            <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
-        </div>
-        <table class="table-rounded">
-            <col style="width: 20%">
-            <col style="width: 20%">
-            <col style="width: 20%">
-            <col style="width: 30%">
-            <col style="width: 10%">
-            <thead class="background-dark">
-                <tr>
-                    <th>Index No</th>
-                    <th>Nic</th>
-                    <th>Name</th>
-                    <th>Mobile</th>
-                    <th>&nbsp;</th>
-                </tr>
-            </thead>
-        </table>
-        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+        <div style="display: flex; flex-flow: column; height: calc(100vh - 100px);">
+            <div class="row col-xs-5">
+                <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
+            </div>
             <table class="table-rounded">
                 <col style="width: 20%">
                 <col style="width: 20%">
                 <col style="width: 20%">
                 <col style="width: 30%">
                 <col style="width: 10%">
-                <tbody>
-                    <tr ng-repeat="client in model.client|filter:search" ng-class="{'select-primary-row':client === selectedRow}">
-                        <td>{{client.indexNo}}</td>
-                        <td>{{client.nic}}</td>
-                        <td>{{client.mobile}}</td>
-                        <td>{{client.name}}</td>
-                        <td class="text-right" style="padding-left: 5px;">
-                            <a class="btn btn-primary" ng-click="ui.edit(client, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-                        </td>
+                <thead class="background-dark">
+                    <tr>
+                        <th>Index No</th>
+                        <th>Nic</th>
+                        <th>Name</th>
+                        <th>Mobile</th>
+                        <th>&nbsp;</th>
                     </tr>
-
-                </tbody>
+                </thead>
             </table>
+            <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                <table class="table-rounded">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
+                    <col style="width: 30%">
+                    <col style="width: 10%">
+                    <tbody>
+                        <tr ng-repeat="client in model.client|filter:search" ng-class="{'select-primary-row':client === selectedRow}">
+                            <td>{{client.indexNo}}</td>
+                            <td>{{client.nic}}</td>
+                            <td>{{client.mobile}}</td>
+                            <td>{{client.name}}</td>
+                            <td class="text-right" style="padding-left: 5px;">
+                                <a class="btn btn-primary" ng-click="ui.edit(client, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="fab-container">
+            <a class="fab fab-lg fab-success" ng-click="ui.searchCustomerClose();"><i class="glyphicon glyphicon-plus"></i></a>
+            <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+            <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
         </div>
     </div>
-</div>
-<div class="fab-container">
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
