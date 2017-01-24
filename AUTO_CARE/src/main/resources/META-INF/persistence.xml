@@ -9,11 +9,11 @@
     <class>com.mac.gl.master.controller.priceCategory.MPriceCategory</class>
     <class>com.mac.gl.master.model.vehicleAssignment.VehicleAssignment</class>
     <class>com.mac.gl.master.controller.vehicleAssignment.TVehicleAssignment</class>
-    <class>com.mac.care_point.master.model.vehicleType.VehicleType</class>
-    <class>com.mac.care_point.master.model.bay.Bay</class>
-    <class>com.mac.care_point.master.model.client.Client</class>
-    <class>com.mac.care_point.master.model.vehicle.Vehicle</class>
     <class>com.mac.care_point.service.jobCard.model.JobCard</class>
+    <class>com.mac.care_point.master.bay.model.Bay</class>
+    <class>com.mac.care_point.master.client.model.Client</class>
+    <class>com.mac.care_point.master.vehicleType.model.VehicleType</class>
+    <class>com.mac.care_point.master.vehicle.model.Vehicle</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
