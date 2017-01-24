@@ -62,7 +62,7 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
-                $scope.model.subCategory = [];
+            $scope.model.subCategory = [];
 
 
                 //----------- data models ------------------
@@ -76,41 +76,37 @@
 
                 //----------validate funtion-------------
 
-//                $scope.validateInput = function () {
-//                    if ($scope.model.subCategory.category !== null) {
-//                        return true;
-//                    } else {
-//                        return false;
-//                    }
-
+                $scope.validateInput = function () {
+                    if ($scope.model.subCategory.name !== null) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                };
 
                 //----------http funtion----------------
 
                 $scope.http.deleteSubCategory = function (IndexNo, index) {
                     subCategoryFactory.deleteSubCategory(IndexNo
-                    , function () {
-                        Notification.success(IndexNo + " - "+"Sub-Category Save Successfully");
-                        $scope.model.subCategoryList.splice(index, 1);
-                    }
+                            , function () {
+                                Notification.success(IndexNo + " - " + "Sub-Category Save Successfully");
+                                $scope.model.subCategoryList.splice(index, 1);
+                            }
                     , function (data) {
-                        Notification.error(data)
+                        Notification.error(data);
                     });
                 };
-
-
 
                 //save function 
                 $scope.http.saveSubCategory = function () {
                     var detail = $scope.model.subCategory;
                     var detailJSON = JSON.stringify(detail);
                     console.log(detailJSON);
-
-
                     subCategoryFactory.saveSubCategory(
                             detailJSON,
                             function (data) {
                                 $scope.model.subCategoryList.push(data);
-                                Notification.success(data.indexNo + " - "+"Sub-Category Save Successfully");
+                                Notification.success(data.indexNo + " - " + "Sub-Category Save Successfully");
                                 $scope.model.reset();
 
                             },
@@ -121,14 +117,16 @@
 
                 };
 
-
-
                 //----------------ui funtion--------------
                 //save function 
                 $scope.ui.save = function () {
-                    $scope.http.saveSubCategory();
+                    if ($scope.validateInput()) {
+                        $scope.http.saveSubCategory();
+                    }else{
+                        Notification.error("Please Input Detail");
+                        $scope.model.reset();
+                    }
                 };
-
 
                 //new function
                 $scope.ui.new = function () {
@@ -144,7 +142,6 @@
                     $scope.model.subCategory = subCategory;
                     $scope.model.subCategoryList.splice(index, 1);
                 };
-
 
                 $scope.ui.init = function () {
                     //set ideal mode

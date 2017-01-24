@@ -97,7 +97,7 @@
                 //------------------ validation functions ------------------------------
                 
                 $scope.validateInput = function () {
-                    if ($scope.model.vehicleType.make !== null) {
+                    if ($scope.model.vehicleType.make && $scope.model.vehicleType.priceCategory && $scope.model.vehicleType.model && $scope.model.vehicleType.version && $scope.model.vehicleType.type && $scope.model.vehicleType.fuelType) {
                         return true;
                     } else {
                         return false;

@@ -41,7 +41,6 @@ public class ItemDepartmentController {
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
     public Integer deleteItemDepartment(@PathVariable Integer indexNo) {
         departmentService.deleteItemDepartment(indexNo);
-
         return indexNo;
     }
 }

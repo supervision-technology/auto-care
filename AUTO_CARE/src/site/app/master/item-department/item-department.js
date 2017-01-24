@@ -20,33 +20,9 @@
                             });
                 };
 
-                //load recent weigh
-                factory.loadSummary = function (number, callback) {
-                    var url = systemConfig.apiUrl + "" + number;
-                    $http.get(url)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-
-                            });
-                };
-
-                //update or save summary
-                factory.saveSummary = function (summary, callback) {
-                    var url = systemConfig.apiUrl + "/api/green-leaves/green-leaves-weigh/save-summary";
-                    $http.post(url, summary)
-                            .success(function (data, status, headers) {
-                                callback(data);
-                            })
-                            .error(function (data, status, headers) {
-
-                            });
-                };
-
-                //insert department
+                //insert 
                 factory.insertDepartment = function (detail, callback, errorcallback) {
-                    var url = systemConfig.apiUrl + "/api/green-leaves/master/item-departments/insert-detail";
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item-departments/insert-detail";
                     $http.post(url, detail)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -60,7 +36,7 @@
 
                 //delete 
                 factory.deleteDepartmemt = function (indexNo, callback, errorcallback) {
-                    var url = systemConfig.apiUrl + "/api/green-leaves/master/item-departments/delete-detail/" + indexNo;
+                    var url = systemConfig.apiUrl + "/api/care-point/master/item-departments/delete-detail/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -108,7 +84,14 @@
                 $scope.model.departmentList = [];
 
 
+                $scope.validateInput = function () {
+                    if ($scope.model.department.name) {
+                        return true;
+                    } else {
+                        return false;
+                    }
 
+                };
 
                 $scope.ui.focus = function () {
                     $timeout(function () {
@@ -138,10 +121,10 @@
                 };
                 //save department
                 $scope.ui.save = function () {
-                    if ($scope.model.department) {
+                    if ($scope.validateInput()) {
                         $scope.http.insertItemDepartment();
                     } else {
-                        Notification.error('No Item Department Name to Save ');
+                        Notification.error('Please Input Detail');
                     }
                     $scope.ui.focus();
 
@@ -185,7 +168,7 @@
                                 , function () {
                                     $scope.model.departmentList.splice(index, 1);
                                     Notification.error(indexNo + ' Department Delete Successfully');
-                                    $scope.ui.mode="IDEAL";
+                                    $scope.ui.mode = "IDEAL";
                                 }
                         , function (data) {
                             Notification.error(data);

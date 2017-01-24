@@ -79,9 +79,6 @@
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
 
-
-
-
                 //------------------ model functions ---------------------------
                 //reset model
                 $scope.model.reset = function () {
@@ -90,7 +87,7 @@
 
                 //------------------ validation functions ------------------------------
                 $scope.validateInput = function () {
-                    if ($scope.model.category.name !== null) {
+                    if ($scope.model.category.name) {
                         return true;
                     } else {
                         return false;
@@ -133,7 +130,7 @@
                     if ($scope.validateInput()) {
                         $scope.http.saveCategory();
                     } else {
-                        Notification.error("please input category name");
+                        Notification.error("Please Input Detail");
                     }
                     $scope.ui.focus();
                 };
