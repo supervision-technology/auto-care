@@ -6,7 +6,7 @@
 package com.mac.care_point.master.check_list;
 
 import com.mac.care_point.master.check_list.model.TSubItemCheckResult;
-import com.mac.care_point.master.item.MItem;
+import com.mac.care_point.master.item.model.MItem;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

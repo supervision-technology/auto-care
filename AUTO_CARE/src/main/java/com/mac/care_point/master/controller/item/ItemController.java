@@ -6,7 +6,7 @@
 package com.mac.care_point.master.controller.item;
 
 import com.mac.care_point.master.item.ItemService;
-import com.mac.care_point.master.item.MItem;
+import com.mac.care_point.master.item.model.MItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

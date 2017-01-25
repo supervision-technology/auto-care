@@ -5,7 +5,7 @@
  */
 package com.mac.care_point.master.item;
 
-import com.mac.care_point.master.item.MItem;
+import com.mac.care_point.master.item.model.MItem;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

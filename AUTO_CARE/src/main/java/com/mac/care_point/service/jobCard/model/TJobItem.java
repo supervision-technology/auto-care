@@ -5,7 +5,7 @@
  */
 package com.mac.care_point.service.jobCard.model;
 
-import com.mac.care_point.master.item.MItem;
+import com.mac.care_point.master.item.model.MItem;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.item;
+package com.mac.care_point.master.item.model;
 
 import com.mac.care_point.master.brand.model.MBrand;
 import com.mac.care_point.master.category.model.MCategory;
 import com.mac.care_point.master.itemdepartment.model.MItemDepartment;
-import com.mac.care_point.master.model.subCategory.MSubCategory;
+import com.mac.care_point.master.subCategory.model.MSubCategory;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
@@ -26,7 +26,7 @@ import javax.persistence.Table;
  *
  * @author Don
  */
-@Entity(name = "com.mac.care_point.master.item.MItem")
+@Entity(name = "com.mac.care_point.master.item.model.MItem")
 @Table(name = "m_item")
 public class MItem implements Serializable {
 

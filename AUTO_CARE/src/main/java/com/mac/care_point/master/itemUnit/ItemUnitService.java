@@ -5,7 +5,7 @@
  */
 package com.mac.care_point.master.itemUnit;
 
-import com.mac.care_point.master.item.MItem;
+import com.mac.care_point.master.item.model.MItem;
 import com.mac.care_point.master.itemUnit.model.MItemUnit;
 import com.mac.care_point.master.item.ItemRepository;
 import com.mac.care_point.master.item.ItemService;

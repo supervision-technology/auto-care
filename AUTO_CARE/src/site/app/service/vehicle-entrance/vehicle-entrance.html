@@ -98,13 +98,15 @@
             </div>
             <div class="col-xs-12" style="height: 40px;">
                 <table  class="table-rounded">
-                    <col style="width: 50%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
                     <thead>
                         <tr>
                             <th>INV.NO</th>
                             <th class="text-right">DATE</th>
+                            <th class="text-right">VEHICLE MILEAGE</th>
                             <th class="text-right">DEURATION</th>
                         </tr>
                     </thead>
@@ -113,13 +115,15 @@
 
             <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 300px);"  ng-show="model.jobCardHistory.length">
                 <table class="table-rounded table-primary">
-                    <col style="width: 50%;"/>
+                    <col style="width: 25%;"/>
+                    <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
                     <col style="width: 25%;"/>
                     <tbody ng-repeat="jobCardHistory in model.jobCardHistory">
                         <tr>
-                            <td ng-click="historySelectionDetail($index, jobCardHistory)">{{jobCardHistory.indexNo}}</td>
+                            <td ng-click="historySelectionDetail($index, jobCardHistory)"><label class="label label-primary">{{jobCardHistory.indexNo|fixedLength:4}}</label></td>
                             <td class="text-right" ng-click="historySelectionDetail($index, jobCardHistory)">{{jobCardHistory.date}}</td>
+                            <td class="text-right" ng-click="historySelectionDetail($index, jobCardHistory)"><label class="label label-default">{{jobCardHistory.inMileage}} KM</label></td>
                             <td class="text-right" ng-click="historySelectionDetail($index, jobCardHistory)">{{model.getDefarancedate(jobCardHistory.date)}} Months ago</td>
                         </tr>
                         <tr class="white-row" ng-show="historyActivePosition == $index">
@@ -136,7 +140,7 @@
                                         </thead>
                                         <tbody>
                                             <tr class="white-row"  ng-repeat="items in model.jobCardItemDetailHistory">
-                                                <td><label class="label label-default">{{items.indexNo}}</label> &nbsp; {{model.item(items.indexNo).name}}</td>
+                                                <td><label class="label label-default">{{items.indexNo|fixedLength:4}}</label> &nbsp; {{model.item(items.indexNo).name}}</td>
                                                 <td class="text-right">{{items.price}}</td>
                                                 <td class="text-right">{{items.quantity}}</td>
                                                 <td class="text-right">{{items.quantity * items.price}}</td>

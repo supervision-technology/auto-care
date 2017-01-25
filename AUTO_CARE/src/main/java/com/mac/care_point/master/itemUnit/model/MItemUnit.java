@@ -5,7 +5,7 @@
  */
 package com.mac.care_point.master.itemUnit.model;
 
-import com.mac.care_point.master.item.MItem;
+import com.mac.care_point.master.item.model.MItem;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;

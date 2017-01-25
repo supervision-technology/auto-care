@@ -6,6 +6,8 @@
  */
 package com.mac.care_point.master.item;
 
+import com.mac.care_point.master.item.model.MItem;
+
 /**
  *
  * @author Don
