@@ -152,7 +152,6 @@
                 //new function
                 $scope.ui.new = function () {
                     $scope.ui.mode = "NEW";
-
                     $scope.ui.focus();
                 };
 

@@ -143,7 +143,7 @@
                 };
 
                 //delete unit
-                factory.deleteUnit = function (indexNo, callback,errorcallback) {
+                factory.deleteUnit = function (indexNo, callback, errorcallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/item-unit/delete-unit/" + indexNo;
                     $http.delete(url)
                             .success(function (data, status, headers) {
@@ -190,7 +190,7 @@
             .controller("itemController", function ($scope, itemFactory, Notification, $timeout) {
                 //data models 
                 $scope.model = {};
-
+                $scope.model.itemDepartmentList = [];
                 //ui models
                 $scope.ui = {};
                 $scope.ui.disable = null;
@@ -239,6 +239,29 @@
                     indexNo: null,
                     item: {},
                     packages: {}
+                };
+
+                $scope.ui.departmentLabel = function (indexNo) {
+                   
+                    var label;
+                    angular.forEach($scope.model.itemDepartmentList, function (value) {
+                        if (value.indexNo === indexNo) {
+                            label = value.indexNo + "-" + value.name;
+                            return;
+                        }
+                    });
+                    return label;
+                };
+                $scope.ui.categoryLabel = function (indexNo) {
+                   
+                    var label;
+                    angular.forEach($scope.model.categoryList, function (value) {
+                        if (value.indexNo === indexNo) {
+                            label = value.indexNo + "-" + value.name;
+                            return;
+                        }
+                    });
+                    return label;
                 };
 
                 $scope.ui.keyEventItem = function (event) {

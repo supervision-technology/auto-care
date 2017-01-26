@@ -182,8 +182,7 @@
 
 
                     clientFactory.lordClientFactory(function (data) {
-                        $scope.model.clientList = data;
-                        console.log($scope.model.clientList);
+                        $scope.model.clientList = data;                      
                     });
                 };
 

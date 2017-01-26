@@ -47,11 +47,11 @@
 
                             <tr>
                                 <td><label class="control-label">Department</label></td>
-                                <td><input class="form-control" ng-model="model.item.itemDepartment" ng-disabled="ui.disable !== 'item'" uib-typeahead="itemDepartment as (itemDepartment.name) for itemDepartment in model.itemDepartmentList |filter:$viewValue|limitTo:10"></td>
+                                <td><input class="form-control" ng-model="model.item.department" ng-disabled="ui.disable !== 'item'" uib-typeahead="itemDepartment.indexNo as (itemDepartment.indexNo + ' - ' + itemDepartment.name) for itemDepartment in model.itemDepartmentList|filter:$viewValue|limitTo:10" typeahead-input-formatter="ui.departmentLabel($model);"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Category</label></td>
-                                <td><input class="form-control" ng-model="model.item.category" ng-disabled="ui.disable !== 'item'" uib-typeahead="category as (category.name) for category in model.categoryList |filter:$viewValue|limitTo:10"></td>
+                                <td><input class="form-control" ng-model="model.item.category" ng-disabled="ui.disable !== 'item'" uib-typeahead="category.indexNo as (category.indexNo + ' - ' + category.name) for category in model.categoryList |filter:$viewValue|limitTo:10" typeahead-input-formatter="ui.categoryList($model);"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Sub Category</label></td>
@@ -88,7 +88,7 @@
                             </tr>
                             <tr>
                                 <td><label class="control-label">Quantity *</label></td>
-                                <td><input class="form-control" smart-input="decimal" ng-model="tempUnit.qty" ng-keypress="ui.keyEventUnit($event) " ng-disabled="ui.disable !== 'unit'"></td>
+                                <td><input class="form-control" smart-input="decimal" ng-model="tempUnit.qty" ng-keypress="ui.keyEventUnit($event)" ng-disabled="ui.disable !== 'unit'"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -145,7 +145,7 @@
             </thead>
         </table>
         <div class="smart-scroll-y" style="height: calc(100vh - 200px);">
-            
+
             <table class="table-rounded animation-fade">
                 <col style="width: 20%">
                 <col style="width: 20%">

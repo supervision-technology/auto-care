@@ -4,7 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.item;
+package com.mac.care_point.master.item.model;
 
 import com.mac.care_point.master.item.model.MItem;
 

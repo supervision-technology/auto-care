@@ -1,7 +1,93 @@
-vehicle
-<div>TODO</div>
-<div>ui</div>
-<div>get all done</div>
-<div>/api/green-leaves/master/vehicle(get All)</div>
-<div>/api/green-leaves/master/vehicle/insert-detail(Save)</div>
-<div>/api/green-leaves/master/vehicle/delete-detail/{1}(delete)</div>
+
+
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <div class="col-xs-4 background-light">
+        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+
+            <div class="col-xs-12" style="margin-top: 25px;">
+                <label>Client </label>
+                <input id="clientText" type="text" class="form-control" ng-model="model.vehicle.client" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="clientName as (clientName.name) for clientName in model.clientList |filter:$viewValue|limitTo:10" />
+                <label>Vehicle No</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.vehicleNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Vehicle Type</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.vehicleType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="vehicleType as (vehicleType.type) for vehicleType in model.vehicleTypeList |filter:$viewValue|limitTo:10"/>
+                <label>Year</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.year" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Engine No</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.engineNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Chasis No</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.chasisNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Insurance Expiry Date</label>
+                <input type="date" class="form-control" ng-model="model.vehicle.insuranceExpiryDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Revenue Expiry Date</label>
+                <input type="date" class="form-control" ng-model="model.vehicle.revenueExpiryDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Last Milage</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.lastMilage" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Next Milage</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.nextMilage" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Colour</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.colour" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Price Category</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory as (priceCategory.name) for priceCategory in model.priceCategoryList |filter:$viewValue|limitTo:10"/>        
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-8 background-dark">
+        <div class="row col-xs-5">
+            <input type="text" class="search-input" ng-model="model.vehicle.name" placeholder="search">
+        </div>
+        <table class="table-rounded">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 10%">
+            <thead class="background-dark">
+                <tr>
+                    <th>Client</th>
+                    <th>Vehicle</th>
+                    <th>Eng No</th>
+                    <th>Last Milage</th>
+                    <th>Next Milage</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+            <table class="table-rounded">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="vehicle in model.vehicleList|filter :{name:model.search.name}">
+                        <td>{{vehicle.client.name}}</td>
+                        <td>{{vehicle.vehicleNo}}</td>
+                        <td>{{vehicle.engineNo}}</td>
+                        <td>{{vehicle.lastMilage}}</td>
+                        <td>{{vehicle.nextMilage}}</td>
+                        <td class="text-right" style="padding-left: 5px;">
+                            <a class="btn btn-primary" ng-click="ui.edit(vehicle, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deleteVehicle(vehicle.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

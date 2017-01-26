@@ -5,7 +5,7 @@
  */
 package com.mac.care_point.master.subItem;
 
-import com.mac.care_point.master.item.MSubItem;
+import com.mac.care_point.master.item.model.MSubItem;
 import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 

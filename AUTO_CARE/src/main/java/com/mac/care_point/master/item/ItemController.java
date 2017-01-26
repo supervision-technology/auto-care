@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.controller.item;
+package com.mac.care_point.master.item;
 
-import com.mac.care_point.master.item.ItemService;
 import com.mac.care_point.master.item.model.MItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -7,9 +7,9 @@ package com.mac.care_point.master.check_list;
 
 import com.mac.care_point.master.check_list.model.TDailyCleckList;
 import com.mac.care_point.master.item.model.MItem;
-import com.mac.care_point.master.item.MSubItem;
+import com.mac.care_point.master.item.model.MSubItem;
 import com.mac.care_point.master.check_list.model.TSubItemCheckResult;
-import com.mac.care_point.master.item.Items;
+import com.mac.care_point.master.item.model.Items;
 import com.mac.care_point.master.check_list.SubItemRepository;
 import com.mac.care_point.master.check_list.TDailyCleckListRepository;
 import com.mac.care_point.master.check_list.TSubItemCheckResultRepository;

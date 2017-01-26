@@ -5,21 +5,14 @@
  */
 package com.mac.care_point.master.item.model;
 
-import com.mac.care_point.master.brand.model.MBrand;
-import com.mac.care_point.master.category.model.MCategory;
-import com.mac.care_point.master.itemdepartment.model.MItemDepartment;
-import com.mac.care_point.master.subCategory.model.MSubCategory;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -63,21 +56,17 @@ public class MItem implements Serializable {
     @Column(name = "branch")
     private Integer branch;
 
-    @JoinColumn(name = "department", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MItemDepartment department;
+    @Column(name = "department")
+    private Integer department;
 
-    @JoinColumn(name = "category", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MCategory category;
+     @Column(name = "category")
+    private Integer category;
 
-    @JoinColumn(name = "brand", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MBrand brand;
+    @Column(name = "brand")
+    private Integer brand;
 
-    @JoinColumn(name = "sub_category", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private MSubCategory subCategory;
+    @Column(name = "sub_category")
+    private Integer subCategory;
 
     public MItem() {
     }
@@ -86,7 +75,7 @@ public class MItem implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salesPrice, BigDecimal costPrice, String type, Integer branch, MItemDepartment department, MCategory category, MBrand brand, MSubCategory subCategory) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salesPrice, BigDecimal costPrice, String type, Integer branch, Integer department, Integer category, Integer brand, Integer subCategory) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -102,107 +91,185 @@ public class MItem implements Serializable {
         this.subCategory = subCategory;
     }
 
+    /**
+     * @return the indexNo
+     */
     public Integer getIndexNo() {
         return indexNo;
     }
 
+    /**
+     * @param indexNo the indexNo to set
+     */
     public void setIndexNo(Integer indexNo) {
         this.indexNo = indexNo;
     }
 
+    /**
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name the name to set
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return the barcode
+     */
     public String getBarcode() {
         return barcode;
     }
 
+    /**
+     * @param barcode the barcode to set
+     */
     public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
 
+    /**
+     * @return the printDescription
+     */
     public String getPrintDescription() {
         return printDescription;
     }
 
+    /**
+     * @param printDescription the printDescription to set
+     */
     public void setPrintDescription(String printDescription) {
         this.printDescription = printDescription;
     }
 
+    /**
+     * @return the unit
+     */
     public String getUnit() {
         return unit;
     }
 
+    /**
+     * @param unit the unit to set
+     */
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
+    /**
+     * @return the salesPrice
+     */
     public BigDecimal getSalesPrice() {
         return salesPrice;
     }
 
+    /**
+     * @param salesPrice the salesPrice to set
+     */
     public void setSalesPrice(BigDecimal salesPrice) {
         this.salesPrice = salesPrice;
     }
 
+    /**
+     * @return the costPrice
+     */
     public BigDecimal getCostPrice() {
         return costPrice;
     }
 
+    /**
+     * @param costPrice the costPrice to set
+     */
     public void setCostPrice(BigDecimal costPrice) {
         this.costPrice = costPrice;
     }
 
+    /**
+     * @return the type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * @param type the type to set
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * @return the branch
+     */
     public Integer getBranch() {
         return branch;
     }
 
+    /**
+     * @param branch the branch to set
+     */
     public void setBranch(Integer branch) {
         this.branch = branch;
     }
 
-    public MItemDepartment getDepartment() {
+    /**
+     * @return the department
+     */
+    public Integer getDepartment() {
         return department;
     }
 
-    public void setDepartment(MItemDepartment department) {
+    /**
+     * @param department the department to set
+     */
+    public void setDepartment(Integer department) {
         this.department = department;
     }
 
-    public MCategory getCategory() {
+    /**
+     * @return the category
+     */
+    public Integer getCategory() {
         return category;
     }
 
-    public void setCategory(MCategory category) {
+    /**
+     * @param category the category to set
+     */
+    public void setCategory(Integer category) {
         this.category = category;
     }
 
-    public MBrand getBrand() {
+    /**
+     * @return the brand
+     */
+    public Integer getBrand() {
         return brand;
     }
 
-    public void setBrand(MBrand brand) {
+    /**
+     * @param brand the brand to set
+     */
+    public void setBrand(Integer brand) {
         this.brand = brand;
     }
 
-    public MSubCategory getSubCategory() {
+    /**
+     * @return the subCategory
+     */
+    public Integer getSubCategory() {
         return subCategory;
     }
 
-    public void setSubCategory(MSubCategory subCategory) {
+    /**
+     * @param subCategory the subCategory to set
+     */
+    public void setSubCategory(Integer subCategory) {
         this.subCategory = subCategory;
     }
 
