@@ -27,7 +27,6 @@
         "vehicleModule",
         "itemModule",
         "jobCardModule",
-        "customerSearchModule",
         "subItemModule"
     ]);
 
@@ -153,10 +152,6 @@
                         .when("/master/sub-item", {
                             templateUrl: "app/master/sub-item/sub-item.html",
                             controller: "subItemController"
-                        })
-                        .when("/customer-search/customer-search", {
-                            templateUrl: "app/service/vehicle-entrance/customer-search.html",
-                            controller: "customerSearchController"
                         })
                         .when("/master/sub_item", {
                             templateUrl: "app/master/sub-item/sub-item.html",

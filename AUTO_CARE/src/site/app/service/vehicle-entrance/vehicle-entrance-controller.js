@@ -2,11 +2,10 @@
 //module
     angular.module("vehicleEntranceModule", ['ui.bootstrap', 'ui-notification']);
     angular.module("vehicleEntranceModule")
-            .controller("vehicleEntranceController", function ($scope, VehicleEntranceModel, ConfirmPane, $uibModal, $timeout, $filter) {
+            .controller("vehicleEntranceController", function ($scope, VehicleEntranceModel, ConfirmPane, $timeout, $filter) {
                 $scope.model = new VehicleEntranceModel();
                 //ui models
                 $scope.ui = {};
-
 
                 $scope.ui.new = function () {
                     $scope.ui.mode = "EDIT";
@@ -19,22 +18,24 @@
                     }, 10);
                 };
 
-                $scope.ui.searchCustomer = function () {
-                    $uibModal.open({
-                        animation: true,
-                        backdrop: 'static',
-                        templateUrl: './app/service/vehicle-entrance/customer-search.html',
-                        controller: 'customerSearchController',
-                        size: 'lg'
-                    }).closed.then(function () {
-                        console.log("closed");
-                    });
+                $scope.ui.search = function (model) {
+                    if (model === "NEW") {
+                        $scope.ui.mode = "SELECTED";
+                    } else {
+                        $scope.ui.mode = "SELECTION";
+                    }
+                };
+
+                $scope.ui.selectVehicel = function (model) {
+                    // $scope.model.vehicle = $scope.model.vehicelOb(model.vehicleNo);
+                    $scope.ui.getVehicleSelections(model);
+                    $scope.indextab = 0;
                 };
 
                 $scope.ui.getVehicleSelections = function (model) {
-                    console.log(model);
-                    $scope.model.vehicle.client = model.client;
-                    $scope.model.vehicle.priceCategory = model.priceCategory;
+                    $scope.tempData = model;
+                    $scope.model.vehicle = model;
+
                     //set transaction data
                     $scope.model.data.client = model.client.indexNo;
                     $scope.model.data.priceCategory = model.priceCategory.indexNo;
@@ -83,6 +84,28 @@
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
                     $scope.historyActivePosition = $scope.historyActivePosition == $index ? -1 : $index;
                     $scope.model.getJobItemHistory(jobCard.indexNo);
+                };
+
+
+                $scope.ui.getRunningKmDetails = function () {
+                    var inMilage = $scope.model.data.inMileage;
+                    var vehicle = $scope.model.vehicle;
+                    console.log(vehicle);
+                    console.log(inMilage);
+                    //update vehicle
+//                    $scope.model.updateVehicle();
+                };
+
+//  ----------------------------------- search functions -----------------------------------
+
+                $scope.ui.clientAndVehicleClier = function () {
+                    console.log("new client save");
+                    $scope.model.saveNewClient();
+                };
+
+                $scope.ui.clientAndVehicleClierSave = function () {
+                    console.log("client select");
+                    console.log($scope.model.clientData);
                 };
 
                 $scope.ui.init = function () {

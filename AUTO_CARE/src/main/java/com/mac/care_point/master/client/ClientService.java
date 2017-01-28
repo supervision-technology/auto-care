@@ -6,8 +6,6 @@
 package com.mac.care_point.master.client;
 
 import com.mac.care_point.master.client.model.Client;
-import com.mac.care_point.master.priceCategory.model.PriceCategory;
-import com.mac.care_point.master.client.ClientRepository;
 import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;

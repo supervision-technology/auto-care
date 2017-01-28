@@ -22,15 +22,21 @@
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/job-card/insert-detail", data);
         };
 
-
         //cleint search
         this.loadClients = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/client");
         };
-        
-        this.saveClients = function () {
-            return $http.post(systemConfig.apiUrl + "/api/care-point/master/client/insert-detail");
+
+        this.saveClient = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/master/client/insert-client", data);
         };
+        
+        //update vehicle milage
+        this.saveVehicle = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/master/vehicle/insert-detail", data);
+        };
+        
+        
     };
 
     angular.module("appModule")

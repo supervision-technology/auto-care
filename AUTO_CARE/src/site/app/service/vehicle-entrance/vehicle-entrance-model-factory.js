@@ -29,8 +29,11 @@
                         "indexNo": null,
                         "name": null,
                         "mobile": null,
-                        "nic": null
+                        "nic": null,
+                        "branch": null,
+                        "type":"NORMAL"
                     };
+                    return data;
                 };
                 return factory;
             });
