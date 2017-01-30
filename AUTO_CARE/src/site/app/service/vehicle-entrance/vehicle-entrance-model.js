@@ -4,11 +4,11 @@
             this.constructor();
         }
 
-//prototype functions
+        //prototype functions
         VehicleEntranceModel.prototype = {
-//weigh data
             data: {},
             clientData: {},
+            vehicleData: {},
             //route information
             jobCardHistory: [],
             //branch information
@@ -55,15 +55,19 @@
                 var that = this;
                 that.data = VehicleEntranceModelFactory.newData();
                 that.clientData = VehicleEntranceModelFactory.newClientData();
+                that.vehicleData = VehicleEntranceModelFactory.newVehicleData();
+                
                 //load default values
                 VehicleEntranceService.loadVehicle()
                         .success(function (data) {
                             that.vehicles = data;
                         });
+                        
                 VehicleEntranceService.loadItems()
                         .success(function (data) {
                             that.items = data;
                         });
+                        
                 VehicleEntranceService.loadClients()
                         .success(function (data) {
                             that.clients = data;
@@ -161,6 +165,7 @@
                             defer.reject();
                         });
             },
+            
 //  ----------------------------------- u pdate mileage functions -----------------------------------
 
             updateVehicle: function (vehicle) {

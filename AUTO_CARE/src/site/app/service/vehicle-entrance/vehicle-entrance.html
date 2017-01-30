@@ -1,6 +1,6 @@
 <div class="index-content-body">
     <uib-tabset active="indextab">
-        <uib-tab heading="SEARCH" index="0">
+        <uib-tab heading="SEARCH" index="0" select="ui.search('JOBCARD');">
             <div class="col-xs-4 background-dark">
                 <div class="row" style="display: flex; flex-flow: column;height: calc(100vh - 40px);">
                     <div class="col-xs-12" style="flex: 0 0 auto; height: 70px;margin-top: 50px;margin-bottom: 50px;">
@@ -171,8 +171,19 @@
             <uib-tabset>
                 <uib-tab heading="SEARCH" index="0" select="ui.search('SEARCH');">
                     <div class="col-xs-12 background-light" style="display: flex; flex-flow: column; height: calc(100vh - 100px);">
-                        <div class="row col-xs-5">
-                            <input type="text" class="search-input" ng-model="search.vehicle.vehicleNo">
+                        <div class="row col-xs-12" style="margin-top: 10px;">
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" ng-model="search.vehicleNo" placeholder="vehicle no">
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" ng-model="search.client.name" placeholder="client name">
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" ng-model="search.client.nic" placeholder="nic">
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="text" class="form-control" ng-model="search.client.mobile" placeholder="mobile">
+                            </div>
                         </div>
                         <table class="table-rounded">
                             <col style="width: 15%">
@@ -228,15 +239,15 @@
                                 <tbody>
                                     <tr>
                                         <td>NIC NUMBER</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="model.clientData.nic" style="margin-top: 5px;"></td>
+                                        <td><input type="text" class="form-control text-right" ng-model="that.clientData.nic" style="margin-top: 5px;"></td>
                                     </tr>
                                     <tr>
                                         <td>CLIENT NAME</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="model.clientData.name" style="margin-top: 5px;"></td>
+                                        <td><input type="text" class="form-control text-right" ng-model="that.clientData.name" style="margin-top: 5px;"></td>
                                     </tr>
                                     <tr>
                                         <td>MOBILE</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="model.clientData.mobilr" style="margin-top: 5px;"></td>
+                                        <td><input type="text" class="form-control text-right" ng-model="that.clientData.mobilr" style="margin-top: 5px;"></td>
                                     </tr>
                                 </tbody>
                             </table>

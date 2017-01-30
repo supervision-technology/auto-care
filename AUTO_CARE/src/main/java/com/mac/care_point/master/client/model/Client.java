@@ -13,7 +13,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -31,7 +30,6 @@ public class Client implements Serializable {
     private Integer indexNo;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
@@ -53,13 +51,11 @@ public class Client implements Serializable {
     private String addressLine3;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "mobile")
     private String mobile;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "branch")
     private int branch;
 
@@ -69,7 +65,6 @@ public class Client implements Serializable {
     private String type;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "nic")
     private String nic;
@@ -159,11 +154,6 @@ public class Client implements Serializable {
 
     public void setNic(String nic) {
         this.nic = nic;
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" + "indexNo=" + indexNo + ", name=" + name + ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", addressLine3=" + addressLine3 + ", mobile=" + mobile + ", branch=" + branch + ", type=" + type + ", nic=" + nic + '}';
     }
 
 }

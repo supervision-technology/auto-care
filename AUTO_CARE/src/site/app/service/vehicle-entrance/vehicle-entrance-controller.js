@@ -21,8 +21,10 @@
                 $scope.ui.search = function (model) {
                     if (model === "NEW") {
                         $scope.ui.mode = "SELECTED";
-                    } else {
+                    } else if (model === "SEARCH") {
                         $scope.ui.mode = "SELECTION";
+                    } else if (model === "JOBCARD") {
+                        $scope.ui.mode = "IDEAL";
                     }
                 };
 
@@ -61,11 +63,6 @@
                     $scope.model.clear();
                 };
 
-                $scope.ui.confirm = function () {
-                    $scope.ui.mode = "IDEAL";
-                    $scope.model.clear();
-                };
-
 //                $scope.oilUsage = 6000;
 //                $scope.difarance = 0;
 //                $scope.oilStatus = 0;
@@ -78,7 +75,6 @@
 //                        $scope.oilStatus = $scope.oilUsage - $scope.difarance;
 //                    }
 //                };
-//
 
                 $scope.historySelectionDetail = function ($index, jobCard) {
                     $scope.isVisible = $scope.isVisible == 0 ? true : false;
