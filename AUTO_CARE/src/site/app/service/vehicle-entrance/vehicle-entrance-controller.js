@@ -60,12 +60,12 @@
                 $scope.ui.setClientType = function (model) {
                     if (model === "NEW") {
                         $scope.clientFunction = false;
-                        $scope.model.vehicleData.client.type = "NEW";
                         $scope.model.clearVehicledata();
+                        $scope.model.vehicleData.client.type = "NEW";
                     } else {
                         $scope.clientFunction = true;
-                        $scope.model.vehicleData.client.type = "REGISTER";
                         $scope.model.clearVehicledata();
+                        $scope.model.vehicleData.client.type = "REGISTER";
                     }
                 };
 
