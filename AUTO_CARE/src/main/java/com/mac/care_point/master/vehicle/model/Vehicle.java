@@ -25,15 +25,13 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Supervision
  */
-@Entity
+@Entity(name = "com.mac.care_point.master.vehicle.model.Vehicle")
 @Table(name = "m_vehicle")
-@XmlRootElement
 public class Vehicle implements Serializable {
 
     @Id

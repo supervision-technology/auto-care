@@ -2,6 +2,7 @@
     angular.module("appModule")
             .factory("VehicleEntranceModelFactory", function () {
                 var factory = {};
+                //job card
                 factory.newData = function () {
                     var data = {
                         "indexNo": 0,
@@ -23,23 +24,11 @@
                     return data;
                 };
 
-
-                factory.newClientData = function () {
-                    var data = {
-                        "indexNo": null,
-                        "name": null,
-                        "mobile": null,
-                        "nic": null,
-                        "branch": null,
-                        "type": "NORMAL"
-                    };
-                    return data;
-                };
-
+                //new vehicle
                 factory.newVehicleData = function () {
                     var data = {
                         "indexNo": null,
-                        "vehicleNo": null,
+                        "vehicleNo": "",
                         "year": null,
                         "engineNo": null,
                         "chasisNo": null,
@@ -48,7 +37,33 @@
                         "lastMilage": null,
                         "nextMilage": null,
                         "colour": null,
-                        "client": null
+                        "client": {
+                            "indexNo": "",
+                            "name": "",
+                            "addressLine1": null,
+                            "addressLine2": null,
+                            "addressLine3": null,
+                            "mobile": null,
+                            "branch": null,
+                            "type": null,
+                            "nic": null
+                        },
+                        "vehicleType": {
+                            "indexNo": "",
+                            "make": null,
+                            "model": null,
+                            "version": null,
+                            "fuelType": null,
+                            "type": "",
+                            "priceCategory": {
+                                "indexNo": "",
+                                "name": ""
+                            }
+                        },
+                        "priceCategory": {
+                            "indexNo": null,
+                            "name": null
+                        }
                     };
                     return data;
                 };

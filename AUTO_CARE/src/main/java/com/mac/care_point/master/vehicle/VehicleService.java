@@ -5,6 +5,8 @@
  */
 package com.mac.care_point.master.vehicle;
 
+import com.mac.care_point.master.client.ClientRepository;
+import com.mac.care_point.master.client.model.Client;
 import com.mac.care_point.master.vehicle.model.Vehicle;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class VehicleService {
-      
+
     @Autowired
     private VehicleRepository vehicleRepository;
-    
-     public List<Vehicle> findAll() {
+
+    @Autowired
+    private ClientRepository clientRepository;
+
+    public List<Vehicle> findAll() {
         return vehicleRepository.findAll();
     }
 
@@ -33,5 +38,15 @@ public class VehicleService {
 
     public void deleteDetail(Integer indexNo) {
         vehicleRepository.delete(indexNo);
+    }
+
+    public Vehicle saveNewClientAndNEwVehicle(Vehicle vehicle) {
+        if (vehicle.getClient().getIndexNo() == null) {
+            Client client = clientRepository.save(vehicle.getClient());
+            vehicle.setClient(client);
+            return vehicleRepository.save(vehicle);
+        } else {
+            return vehicleRepository.save(vehicle);
+        }
     }
 }

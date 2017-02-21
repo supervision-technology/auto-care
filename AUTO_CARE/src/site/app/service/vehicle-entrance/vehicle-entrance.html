@@ -1,6 +1,6 @@
 <div class="index-content-body">
     <uib-tabset active="indextab">
-        <uib-tab heading="SEARCH" index="0" select="ui.search('JOBCARD');">
+        <uib-tab heading="SEARCH" index="0">
             <div class="col-xs-4 background-dark">
                 <div class="row" style="display: flex; flex-flow: column;height: calc(100vh - 40px);">
                     <div class="col-xs-12" style="flex: 0 0 auto; height: 70px;margin-top: 50px;margin-bottom: 50px;">
@@ -168,121 +168,129 @@
             </div>
         </uib-tab>
         <uib-tab heading="SEARCH" index="1">
-            <uib-tabset>
-                <uib-tab heading="SEARCH" index="0" select="ui.search('SEARCH');">
-                    <div class="col-xs-12 background-light" style="display: flex; flex-flow: column; height: calc(100vh - 100px);">
-                        <div class="row col-xs-12" style="margin-top: 10px;">
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" ng-model="search.vehicleNo" placeholder="vehicle no">
-                            </div>
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" ng-model="search.client.name" placeholder="client name">
-                            </div>
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" ng-model="search.client.nic" placeholder="nic">
-                            </div>
-                            <div class="col-xs-3">
-                                <input type="text" class="form-control" ng-model="search.client.mobile" placeholder="mobile">
-                            </div>
+            <div class="col-xs-12 background-light" style="display: flex; flex-flow: column; height: calc(100vh - 100px);">
+                <div class="row col-xs-12" style="margin-top: 10px;">
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" ng-model="search.vehicleNo" placeholder="vehicle no">
+                    </div>
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" ng-model="search.client.name" placeholder="client name">
+                    </div>
+                    <div class="col-xs-3">
+                        <input type="text" class="form-control" ng-model="search.client.nic" placeholder="nic">
+                    </div>
+                    <div class="col-xs-3">
+                        <div class="btn-group col-lg-12" style="padding-left: 0 !important;padding-right: 0 !important;">
+                            <label class="btn btn-success col-lg-6 text-capitalize" ng-model="radioModel" uib-btn-radio="'SELECT'" ng-change="ui.toggleSelections('SELECT');">SELECT</label>
+                            <label class="btn btn-success col-lg-6 text-capitalize" ng-model="radioModel" uib-btn-radio="'EDIT'" ng-change="ui.toggleSelections('EDIT');">EDIT</label>
                         </div>
-                        <table class="table-rounded">
-                            <col style="width: 15%">
-                            <col style="width: 10%">
-                            <col style="width: 20%">
-                            <col style="width: 15%">
-                            <col style="width: 15%">
-                            <col style="width: 10%">
-                            <thead class="background-dark">
-                                <tr>
-                                    <th>Vehicle No</th>
-                                    <th>Color</th>
-                                    <th>Price Category</th>
-                                    <th>Client Name</th>
-                                    <th>NIC</th>
-                                    <th>Mobile</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="smart-scroll-y">
-                            <table class="table-rounded">
-                                <col style="width: 15%">
-                                <col style="width: 10%">
-                                <col style="width: 20%">
-                                <col style="width: 15%">
-                                <col style="width: 15%">
-                                <col style="width: 10%">
-                                <tbody>
-                                    <tr ng-repeat="vehicle in model.vehicles|filter:search">
-                                        <td>{{vehicle.vehicleNo}}</td>
-                                        <td>{{vehicle.colour}}</td>
-                                        <td>{{vehicle.priceCategory.name}}</td>
-                                        <td>{{vehicle.client.name}}</td>
-                                        <td>{{vehicle.client.nic}}</td>
-                                        <td>{{vehicle.client.mobile}}</td>
-                                        <td class="text-right" style="padding-left: 5px;">
-                                            <a class="btn btn-primary" ng-click="ui.selectVehicel(vehicle);"><span class="glyphicon glyphicon-edit"></span></a>
-                                        </td>
-                                    </tr>
+                    </div>
+                </div>
+                <table class="table-rounded"> 
+                    <col style="width: 15%">
+                    <col style="width: 10%">
+                    <col style="width: 20%">
+                    <col style="width: 15%">
+                    <col style="width: 15%">
+                    <col style="width: 10%">
+                    <thead class="background-dark">
+                        <tr>
+                            <th>Vehicle No</th>
+                            <th>Color</th>
+                            <th>Price Category</th>
+                            <th>Client Name</th>
+                            <th>NIC</th>
+                            <th>Mobile</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y">
+                    <table class="table-rounded">
+                        <col style="width: 15%">
+                        <col style="width: 10%">
+                        <col style="width: 20%">
+                        <col style="width: 15%">
+                        <col style="width: 15%">
+                        <col style="width: 10%">
+                        <tbody>
+                            <tr ng-repeat="vehicle in model.vehicles|filter:search">
+                                <td>{{vehicle.vehicleNo}}</td>
+                                <td>{{vehicle.colour}}</td>
+                                <td>{{vehicle.priceCategory.name}}</td>
+                                <td>{{vehicle.client.name}}</td>
+                                <td>{{vehicle.client.nic}}</td>
+                                <td>{{vehicle.client.mobile}}</td>
+                                <td class="text-right" style="padding-left: 5px;">
+                                    <a class="btn btn-primary" ng-click="ui.selectVehicel(vehicle);"><span class="glyphicon glyphicon-edit"></span></a>
+                                </td>
+                            </tr>
 
-                                </tbody>
-                            </table>
-                        </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="NEW" index="2">
+            <div class="col-xs-6 background-light">
+                <div class="col-xs-12" style="flex: 1 1 auto;margin-top: 10px;">
+                    <div class="btn-group col-lg-12" style="padding-left: 0 !important;padding-right: 0 !important;">
+                        <label class="btn btn-primary col-lg-6 text-capitalize" ng-model="radioType" uib-btn-radio="'NEW'" ng-change="ui.setClientType(radio)">NEW</label>
+                        <label class="btn btn-primary col-lg-6 text-capitalize" ng-model="radioType" uib-btn-radio="'REGISTER'" ng-change="ui.setClientType(radio)">REGISTER</label>
                     </div>
-                </uib-tab>
-                <uib-tab heading="NEW" index="1" select="ui.search('NEW');">
-                    <div class="col-xs-6 background-light">
-                        <div class="col-xs-12" style="flex: 1 1 auto;">
-                            <table class="table-rounded animation-fade">
-                                <col style="width: 40%"/>
-                                <col style="width: 50%"/> 
-                                <tbody>
-                                    <tr>
-                                        <td>NIC NUMBER</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="that.clientData.nic" style="margin-top: 5px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>CLIENT NAME</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="that.clientData.name" style="margin-top: 5px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>MOBILE</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="that.clientData.mobilr" style="margin-top: 5px;"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 background-light">
-                        <div class="col-xs-12" style="flex: 1 1 auto;">
-                            <table class="table-rounded animation-fade">
-                                <col style="width: 40%"/>
-                                <col style="width: 50%"/> 
-                                <tbody>
-                                    <tr>
-                                        <td>VEHICLE NUMBER</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="model.clientData.nic" style="margin-top: 5px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>VEHICLE TYPE</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="model.clientData.nic" style="margin-top: 5px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>PRICE CATEGORY</td>
-                                        <td><input type="text" class="form-control text-right" ng-model="model.clientData.nic" style="margin-top: 5px;"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </uib-tab>
-            </uib-tabset>
+                    <table class="table-rounded animation-fade">
+                        <col style="width: 40%"/>
+                        <col style="width: 50%"/> 
+                        <tbody>
+                            <tr ng-show="clientFunction">
+                                <td>CLIENT</td>
+                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.client" style="margin-top: 5px;" uib-typeahead="client as (client.indexNo + '-' + client.name) for client in model.clients|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.clientLabel($model)"></td>
+                            </tr>
+                            <tr>
+                                <td>CLIENT NAME</td>
+                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.client.name" style="margin-top: 5px;" ng-disabled="clientFunction"></td>
+                            </tr>
+                            <tr>
+                                <td>CLIENT MOBILE</td>
+                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.client.mobile" style="margin-top: 5px;" ng-disabled="clientFunction"></td>
+                            </tr>
+                            <tr>
+                                <td>CLIENT NIC</td>
+                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.client.nic" style="margin-top: 5px;" ng-disabled="clientFunction"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xs-6 background-light">
+                <div class="col-xs-12" style="flex: 1 1 auto;margin-top: 5px;">
+                    <table class="table-rounded animation-fade">
+                        <col style="width: 40%"/>
+                        <col style="width: 50%"/> 
+                        <tbody>
+                            <tr>
+                                <td>VEHICLE NUMBER</td>
+                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.vehicleNo" style="margin-top: 5px;"></td>
+                            </tr>
+                            <tr>
+                                <td>VEHICLE TYPE</td>
+                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.vehicleType" style="margin-top: 5px;" uib-typeahead="vehicleType as (vehicleType.indexNo + '-' + vehicleType.type) for vehicleType in model.vehicleTypes|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.vehicleTypeLabel($model)"></td>
+                            </tr>
+                            <tr>
+                                <td>PRICE CATEGORY</td>
+                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.priceCategory" style="margin-top: 5px;" uib-typeahead="priceCategory as (priceCategory.indexNo + '-' + priceCategory.name) for priceCategory in model.priceCategorys|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.priceCategoryLabel($model)"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-success" ng-click="ui.saveVehicle();">SAVE</a>
+                </div>
+            </div>
+        </uib-tab>
     </uib-tabset>
 </div>
 <div class="fab-container">
     <a class="fab fab-default" fab-show="ui.mode ==='IDEAL' || ui.mode ==='EDIT'" ng-click="ui.discard();"><i class="glyphicon glyphicon-remove"></i></a>
+    <a class="fab fab-lg fab-warning" fab-show="ui.mode === 'EDIT'" ng-click="ui.edit();"><i class="glyphicon glyphicon-floppy-save"></i></a>
     <a class="fab fab-lg fab-primary" fab-show="ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-floppy-save"></i></a>
     <a class="fab fab-lg fab-primary" fab-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-default" fab-show="ui.mode ==='SELECTED'" ng-click="ui.clientAndVehicleClier();"><i class="glyphicon glyphicon-remove"></i></a>
-    <a class="fab fab-lg fab-primary" fab-show="ui.mode ==='SELECTED'" ng-click="ui.clientAndVehicleClierSave();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>

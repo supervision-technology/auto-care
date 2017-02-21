@@ -9,7 +9,6 @@
 
                 $scope.ui.new = function () {
                     $scope.ui.mode = "EDIT";
-                    $scope.model.clear();
                     $scope.model.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.model.data.inTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                     $scope.model.data.outTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
@@ -19,30 +18,55 @@
                 };
 
                 $scope.ui.search = function (model) {
-                    if (model === "NEW") {
-                        $scope.ui.mode = "SELECTED";
+                    if (model === "JOBCARD") {
+                        $scope.ui.mode = "IDEAL";
+
                     } else if (model === "SEARCH") {
                         $scope.ui.mode = "SELECTION";
-                    } else if (model === "JOBCARD") {
-                        $scope.ui.mode = "IDEAL";
+
+                    } else if (model === "NEW") {
+                        $scope.ui.mode = "SELECTED";
+                    }
+                };
+
+                $scope.ui.toggleSelections = function (model) {
+                    if (model === "SELECT") {
+                        $scope.ui.selectionType = "SELECT";
+                    } else if (model === "EDIT") {
+                        $scope.ui.selectionType = "EDIT";
                     }
                 };
 
                 $scope.ui.selectVehicel = function (model) {
-                    // $scope.model.vehicle = $scope.model.vehicelOb(model.vehicleNo);
-                    $scope.ui.getVehicleSelections(model);
-                    $scope.indextab = 0;
+                    if ($scope.ui.selectionType === "SELECT") {
+                        $scope.ui.getVehicleSelections(model);
+                        $scope.model.getJobHistory(model.vehicleNo);
+                        $scope.indextab = 0;
+
+                    } else if ($scope.ui.selectionType === "EDIT") {
+                        $scope.model.vehicleData = model;
+                        $scope.indextab = 2;
+                    }
                 };
 
                 $scope.ui.getVehicleSelections = function (model) {
-                    $scope.tempData = model;
                     $scope.model.vehicle = model;
-
-                    //set transaction data
                     $scope.model.data.client = model.client.indexNo;
                     $scope.model.data.priceCategory = model.priceCategory.indexNo;
                     $scope.model.data.vehicle = model.indexNo;
                     $scope.model.getJobHistory(model.vehicleNo);
+                };
+
+                $scope.ui.setClientType = function (model) {
+                    if (model === "NEW") {
+                        $scope.clientFunction = false;
+                        $scope.model.vehicleData.client.type = "NEW";
+                        $scope.model.clearVehicledata();
+                    } else {
+                        $scope.clientFunction = true;
+                        $scope.model.vehicleData.client.type = "REGISTER";
+                        $scope.model.clearVehicledata();
+                    }
                 };
 
                 $scope.ui.save = function () {
@@ -61,6 +85,16 @@
                 $scope.ui.discard = function () {
                     $scope.ui.mode = "IDEAL";
                     $scope.model.clear();
+                };
+
+                $scope.ui.saveVehicle = function () {
+                    $scope.model.saveVehicle();
+                    $scope.indextab = 0;
+                };
+
+                $scope.ui.edit = function () {
+                    $scope.model.vehicleData = $scope.model.vehicle;
+                    $scope.indextab = 2;
                 };
 
 //                $scope.oilUsage = 6000;
@@ -88,21 +122,8 @@
                     var vehicle = $scope.model.vehicle;
                     console.log(vehicle);
                     console.log(inMilage);
-                    //update vehicle
-//                    $scope.model.updateVehicle();
                 };
 
-//  ----------------------------------- search functions -----------------------------------
-
-                $scope.ui.clientAndVehicleClier = function () {
-                    console.log("new client save");
-                    $scope.model.saveNewClient();
-                };
-
-                $scope.ui.clientAndVehicleClierSave = function () {
-                    console.log("client select");
-                    console.log($scope.model.clientData);
-                };
 
                 $scope.ui.init = function () {
                     $scope.ui.mode = "IDEAL";

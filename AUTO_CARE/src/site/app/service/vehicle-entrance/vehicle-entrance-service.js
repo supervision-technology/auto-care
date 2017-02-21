@@ -26,14 +26,18 @@
         this.loadClients = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/client");
         };
-
-        this.saveClient = function (data) {
-            return $http.post(systemConfig.apiUrl + "/api/care-point/master/client/insert-client", data);
+        
+        this.loadVehiicleType = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/vehicle-type");
+        };
+        
+        this.loadPriceCategory = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/priceCategory");
         };
         
         //update vehicle milage
         this.saveVehicle = function (data) {
-            return $http.post(systemConfig.apiUrl + "/api/care-point/master/vehicle/insert-detail", data);
+            return $http.post(systemConfig.apiUrl + "/api/care-point/master/vehicle/insert-detail-client-vehicle", data);
         };
         
         
