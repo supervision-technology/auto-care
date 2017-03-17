@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Don
+ * @author Kavish Manjitha
  */
 @CrossOrigin
 @RestController
@@ -28,10 +28,10 @@ public class ItemController {
     private ItemService itemService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<MItem> getAllItem() {
-        return itemService.getAllItem();
+    public List<MItem> findAllItems(){
+        return itemService.findAllItems();
     }
-
+    
     @RequestMapping(value = "/all-packages", method = RequestMethod.GET)
     public List<MItem> getAllItemByType() {
         return itemService.findByType();

@@ -13,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 
 /**
  *
- * @author Supervision
+ * @author Don
  */
 public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
 
@@ -23,5 +23,7 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
     
      @Query(value = "SELECT MAX(number) FROM t_job_card WHERE branch=:branch", nativeQuery = true)
     public Integer getMaximumNumberByBranch(@Param("branch") Integer branch);
+
+    public List<JobCard> findByStatus(String PENDING_STATUS);
 
 }

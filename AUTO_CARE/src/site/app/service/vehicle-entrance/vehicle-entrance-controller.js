@@ -2,51 +2,38 @@
 //module
     angular.module("vehicleEntranceModule", ['ui.bootstrap', 'ui-notification']);
     angular.module("vehicleEntranceModule")
-            .controller("vehicleEntranceController", function ($scope, VehicleEntranceModel, ConfirmPane, $timeout, $filter) {
+            .controller("vehicleEntranceController", function ($scope, VehicleEntranceModel, Notification, ConfirmPane, $timeout) {
+
                 $scope.model = new VehicleEntranceModel();
-                //ui models
+                $scope.name = 'test';
                 $scope.ui = {};
 
                 $scope.ui.new = function () {
                     $scope.ui.mode = "EDIT";
-                    $scope.model.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
-                    $scope.model.data.inTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
-                    $scope.model.data.outTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                     $timeout(function () {
                         document.querySelectorAll("#search")[0].focus();
                     }, 10);
                 };
 
-                $scope.ui.search = function (model) {
-                    if (model === "JOBCARD") {
-                        $scope.ui.mode = "IDEAL";
+                $scope.ui.toggleType = function (model) {
+                    if (model === "JOB_CARD") {
+                        $scope.ui.mode = "EDIT";
 
-                    } else if (model === "SEARCH") {
-                        $scope.ui.mode = "SELECTION";
+                    } else if (model === "ADVANCE_SEARCH") {
+                        $scope.ui.mode = "SEARCH";
 
                     } else if (model === "NEW") {
-                        $scope.ui.mode = "SELECTED";
-                    }
-                };
-
-                $scope.ui.toggleSelections = function (model) {
-                    if (model === "SELECT") {
-                        $scope.ui.selectionType = "SELECT";
-                    } else if (model === "EDIT") {
-                        $scope.ui.selectionType = "EDIT";
+                        $scope.ui.mode = "CLIENT";
+                        $scope.ui.setClientType('NEW');
+                        //$scope.model.clearVehicledata();
+                        $scope.model.vehicleData.vehicleNo = $scope.model.vehicle.vehicleNo;
                     }
                 };
 
                 $scope.ui.selectVehicel = function (model) {
-                    if ($scope.ui.selectionType === "SELECT") {
-                        $scope.ui.getVehicleSelections(model);
-                        $scope.model.getJobHistory(model.vehicleNo);
-                        $scope.indextab = 0;
-
-                    } else if ($scope.ui.selectionType === "EDIT") {
-                        $scope.model.vehicleData = model;
-                        $scope.indextab = 2;
-                    }
+                    $scope.ui.getVehicleSelections(model);
+                    $scope.model.getJobHistory(model.vehicleNo);
+                    $scope.indextab = 0;
                 };
 
                 $scope.ui.getVehicleSelections = function (model) {
@@ -60,26 +47,33 @@
                 $scope.ui.setClientType = function (model) {
                     if (model === "NEW") {
                         $scope.clientFunction = false;
-                        $scope.model.clearVehicledata();
                         $scope.model.vehicleData.client.type = "NEW";
+                        $scope.radioType = 'NEW';
                     } else {
                         $scope.clientFunction = true;
-                        $scope.model.clearVehicledata();
                         $scope.model.vehicleData.client.type = "REGISTER";
+                        $scope.radioType = 'REGISTER';
                     }
                 };
 
                 $scope.ui.save = function () {
-                    ConfirmPane.primaryConfirm("Hello World")
-                            .confirm(function () {
-                                $scope.model.saveJobCard();
-                                $scope.model.clear();
-                                $scope.ui.mode = "IDEAL";
-                            })
-                            .discard(function () {
-                                $scope.ui.mode = "IDEAL";
-                                console.log("REJECT");
-                            });
+                    if (!$scope.model.vehicle.vehicleNo) {
+                        Notification.error("please select vehicle");
+                    } else if (!$scope.model.data.inMileage) {
+                        Notification.error("please select in milage");
+                    } else if ($scope.model.vehicle.vehicleNo
+                            && $scope.model.data.inMileage) {
+                        ConfirmPane.primaryConfirm("SAVE JOB CARD")
+                                .confirm(function () {
+                                    $scope.model.saveJobCard();
+                                    $scope.model.clear();
+                                    $scope.ui.mode = "IDEAL";
+                                })
+                                .discard(function () {
+                                    $scope.ui.mode = "IDEAL";
+                                    console.log("REJECT");
+                                });
+                    }
                 };
 
                 $scope.ui.discard = function () {
@@ -88,8 +82,39 @@
                 };
 
                 $scope.ui.saveVehicle = function () {
-                    $scope.model.saveVehicle();
-                    $scope.indextab = 0;
+                    if (!$scope.model.vehicleData.client.name) {
+                        Notification.error("enter client name");
+
+                    } else if (!$scope.model.vehicleData.client.mobile) {
+                        Notification.error("enter client mobile");
+
+                    } else if (!$scope.model.vehicleData.client.nic) {
+                        Notification.error("enter client nic");
+
+                    } else if (!$scope.model.vehicleData.vehicleNo) {
+                        Notification.error("enter vehicle no");
+
+                    } else if (!$scope.model.vehicleData.vehicleType.indexNo) {
+                        Notification.error("enter vehicle type");
+
+                    } else if (!$scope.model.vehicleData.priceCategory.indexNo) {
+                        Notification.error("enter price category");
+
+                    } else if ($scope.model.vehicleData.client.name
+                            && $scope.model.vehicleData.client.mobile
+                            && $scope.model.vehicleData.client.nic
+                            && $scope.model.vehicleData.vehicleNo
+                            && $scope.model.vehicleData.vehicleType.indexNo
+                            && $scope.model.vehicleData.priceCategory.indexNo) {
+                        var vehicleData = $scope.model.duplicateVehicleCheck($scope.model.vehicleData.vehicleNo);
+                        if (angular.isUndefined(vehicleData)) {
+                            $scope.ui.mode = "EDIT";
+                            $scope.model.saveVehicle();
+                            $scope.indextab = 0;
+                        } else {
+                            Notification.error("this vehicle allrady exsist!");
+                        }
+                    }
                 };
 
                 $scope.ui.edit = function () {
@@ -120,8 +145,10 @@
                 $scope.ui.getRunningKmDetails = function () {
                     var inMilage = $scope.model.data.inMileage;
                     var vehicle = $scope.model.vehicle;
+                    var lastMilage = $scope.model.vehicleHistoryDetail.lastMileage;
                     console.log(vehicle);
                     console.log(inMilage);
+                    console.log(lastMilage);
                 };
 
 

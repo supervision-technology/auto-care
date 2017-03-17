@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.jobCard;
 
+import com.mac.care_point.master.vehicle.model.Vehicle;
 import com.mac.care_point.service.jobCard.model.JobCard;
 import com.mac.care_point.service.jobCard.model.TJobItem;
 import java.util.List;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Supervision
+ * @author Don
  */
 @CrossOrigin
 @RestController
@@ -30,11 +31,6 @@ public class JobCardController {
 
     @Autowired
     private JobItemService jobItemService;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<JobCard> findAll() {
-        return jobCardService.findAll();
-    }
 
     @RequestMapping(value = "/find-job-history/{vehicle}", method = RequestMethod.GET)
     public List<JobCard> findByJobHistory(@PathVariable String vehicle) {
@@ -52,9 +48,8 @@ public class JobCardController {
         return jobCardService.saveJobCard(jobCard);
     }
 
-    @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
-    public Integer deleteDetail(@PathVariable Integer indexNo) {
-        jobCardService.deleteItemDepartment(indexNo);
-        return indexNo;
+    @RequestMapping(value = "/insert-detail-client-vehicle", method = RequestMethod.POST)
+    public Vehicle saveNewClientAndNEwVehicle(@RequestBody Vehicle vehicle) {
+        return jobCardService.saveNewClientAndNEwVehicle(vehicle);
     }
 }

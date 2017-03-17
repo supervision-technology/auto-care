@@ -41,20 +41,23 @@ $warning-color-extra-dark-border:    darken($warning-color-extra-dark,10%);
 $danger-color-extra-dark-border:     darken($danger-color-extra-dark,10%);
 
 $bg-ultra-dark-color:   #2F323A;
-$bg-dark-color:         #EDEFF5;
+$bg-hi-dark-color:      #F0F0F0;
+$bg-dark-color:         #FAFAFA;//#EDEFF5;
 $bg-light-color:        #FFFFFF;
 
 $bg-ultra-dark-color-border:   darken(#2F323A,10%);
-$bg-dark-color-border:         darken(#EDEFF5,10%);
+$bg-hi-dark-color-border:         #DCDCDC;//darken(#EDEFF5,10%);
+$bg-dark-color-border:         #EDEDED;//darken(#EDEFF5,10%);
 $bg-light-color-border:        darken(#FFFFFF,10%);
 
 /*$control-border-color:  #E6E8E8;
 $control-border-fous:   #5093E1;*/
 $control-border-color:  lighten($primary-color, 20%);
-$control-border-disabled:  lighten($default-color, 20%);
+$control-border-disabled:  #DCDCDC;//lighten($default-color, 20%);
 $control-border-fous:   lighten($danger-color, 20%);
 
-$scrollbar-thumb-color:       #D1D7E9;
+$scrollbar-thumb-color:       #E2E2E2;//#D1D7E9;
+$scrollbar-thumb-color-dark:  lighten($bg-ultra-dark-color, 20%);
 
-$dark-font-color: #333;
+$dark-font-color: #808080;
 $light-font-color: #FFFFFF;

@@ -36,10 +36,6 @@ public class VehicleController {
     public Vehicle insertPriceCategory(@RequestBody Vehicle vehicle) {
         return vehicleService.saveDetail(vehicle);
     }
-    @RequestMapping(value = "/insert-detail-client-vehicle", method = RequestMethod.POST)
-    public Vehicle saveNewClientAndNEwVehicle(@RequestBody Vehicle vehicle) {
-        return vehicleService.saveNewClientAndNEwVehicle(vehicle);
-    }
 
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
     public Integer delete(@PathVariable Integer indexNo) {

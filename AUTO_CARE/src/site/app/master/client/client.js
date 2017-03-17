@@ -31,7 +31,7 @@
                                     errorCallback(data);
                                 }
                             });
-                }
+                };
 
                 //delete
                 factory.deleteClientFactory = function (indexNo, callback, errorCallback) {
@@ -114,11 +114,11 @@
                             detailJSON,
                             function (data) {
                                 $scope.model.clientList.push(data);
-                                Notification.success(data.indexNo + " - "+"Client Save Successfully")
+                                Notification.success(data.indexNo + " - "+"Client Save Successfully");
                                 $scope.model.reset();
                             },
                             function (data) {
-                                Notification.error(data.message)
+                                Notification.error(data.message);
                             }
                     );
 
@@ -177,10 +177,6 @@
 
                     //reset mdel
                     $scope.model.reset();
-
-                    //load pricepriceCategory
-
-
                     clientFactory.lordClientFactory(function (data) {
                         $scope.model.clientList = data;                      
                     });

@@ -8,12 +8,12 @@
                 $scope.employee = [
                     {
                         image: "/img/avatar.jpg",
-                        name: "Nidura Prageeth Silva",
+                        name: "Kavish Manjitha Perera",
                         role: "employee"
                     },
                     {
                         image: "/img/avatar.jpg",
-                        name: "Nidura Prageeth Silva",
+                        name: "Kavish Manjitha Perera",
                         role: "employee"
                     },
                     {

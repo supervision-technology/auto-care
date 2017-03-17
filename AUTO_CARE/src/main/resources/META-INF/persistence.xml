@@ -14,6 +14,8 @@
     <class>com.mac.care_point.master.client.model.Client</class>
     <class>com.mac.care_point.master.vehicleType.model.VehicleType</class>
     <class>com.mac.care_point.master.vehicle.model.Vehicle</class>
+    <class>com.mac.care_point.master.item.model.MItem</class>
+    <class>com.mac.care_point.master.itemUnit.model.MItemUnits</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

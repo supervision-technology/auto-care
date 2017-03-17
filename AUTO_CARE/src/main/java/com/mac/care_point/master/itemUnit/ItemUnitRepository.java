@@ -5,17 +5,14 @@
  */
 package com.mac.care_point.master.itemUnit;
 
-import com.mac.care_point.master.itemUnit.model.MItemUnit;
+import com.mac.care_point.master.itemUnit.model.MItemUnits;
 import java.io.Serializable;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author Nidura Prageeth
+ * @author Kavish Manjitha
  */
-public interface ItemUnitRepository extends JpaRepository<MItemUnit, Serializable> {
-
-    public List<MItemUnit> findByItemIndexNo(Integer indexNo);
+public interface ItemUnitRepository extends JpaRepository<MItemUnits, Serializable> {
 
 }

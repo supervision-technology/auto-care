@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.itemUnit;
+package com.mac.care_point.service.service_selection;
 
-import com.mac.care_point.master.itemUnit.model.MItemUnits;
+import com.mac.care_point.service.jobCard.JobCardRepository;
+import com.mac.care_point.service.jobCard.model.JobCard;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,25 +15,20 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Kavish Manjitha
+ * @author Don
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class ItemUnitService {
+public class ServiceSelectionService {
 
     @Autowired
-    private ItemUnitRepository itemUnitRepository;
+    private JobCardRepository jobCardRepository;
 
-    public List<MItemUnits> getAllItemUnits() {
-        return itemUnitRepository.findAll();
-    }
+    private final String PENDING_STATUS = "PENDING";
+    private final String APPROVE_STATUS = "APPROVE";
+    private final String DELETE_STATUS = "DELETED";
 
-    public MItemUnits saveItemUnits(MItemUnits unit) {
-        return itemUnitRepository.save(unit);
+    public List<JobCard> getPendingVehicles() {
+        return jobCardRepository.findByStatus(PENDING_STATUS);
     }
-
-    public void deleteItemUnits(Integer indexNo) {
-        itemUnitRepository.delete(indexNo);
-    }
-    
 }

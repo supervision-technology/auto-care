@@ -1,7 +1,6 @@
 package com.mac.care_point.master.itemUnit;
 
-import com.mac.care_point.master.item.model.MItem;
-import com.mac.care_point.master.itemUnit.model.MItemUnit;
+import com.mac.care_point.master.itemUnit.model.MItemUnits;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Nidura Prageeth
+ * @author Kavish Manjitha
  */
 @CrossOrigin
 @RestController
@@ -24,12 +23,12 @@ public class ItemUnitController {
     private ItemUnitService itemUnitService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<MItemUnit> getAllItemUnits() {
+    public List<MItemUnits> getAllItemUnits() {
         return itemUnitService.getAllItemUnits();
     }
 
     @RequestMapping(value = "/save-unit", method = RequestMethod.POST)
-    public MItemUnit saveItemUnits(@RequestBody MItemUnit unit) {
+    public MItemUnits saveItemUnits(@RequestBody MItemUnits unit) {
         return itemUnitService.saveItemUnits(unit);
     }
 
@@ -38,10 +37,4 @@ public class ItemUnitController {
         itemUnitService.deleteItemUnits(indexNo);
         return indexNo;
     }
-
-    @RequestMapping(value = "/item", method = RequestMethod.POST)
-    public List<MItemUnit> findByItem(@RequestBody MItem item) {
-        return itemUnitService.findByItem(item.getIndexNo());
-    }
-
 }

@@ -6,7 +6,6 @@
 package com.mac.care_point.master.item.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,12 +13,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
- * @author Don
+ * @author Kavish Manjitha
  */
-@Entity(name = "com.mac.care_point.master.item.model.MItem")
+@Entity
 @Table(name = "m_item")
 public class MItem implements Serializable {
 
@@ -30,247 +31,191 @@ public class MItem implements Serializable {
     private Integer indexNo;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
 
+    @Size(max = 25)
     @Column(name = "barcode")
     private String barcode;
 
+    @Size(max = 50)
     @Column(name = "print_description")
     private String printDescription;
 
+    @Size(max = 25)
     @Column(name = "unit")
     private String unit;
 
-    @Basic(optional = false)
-    @Column(name = "sales_price")
-    private BigDecimal salesPrice;
-
     @Column(name = "cost_price")
-    private BigDecimal costPrice;
+    private Short costPrice;
 
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
+
+    @Basic(optional = false)
+    @Column(name = "department")
+    private Integer department;
+
+    @Basic(optional = false)
+    @Column(name = "brand")
+    private Integer brand;
+
+    @Basic(optional = false)
+    @Column(name = "category")
+    private Integer category;
+
+    @Basic(optional = false)
+    @Column(name = "sub_category")
+    private Integer sub_category;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "sale_price_normal_cus")
+    private short salePriceNormalCus;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "sale_price_register_cus")
+    private short salePriceRegisterCus;
 
     @Column(name = "branch")
     private Integer branch;
 
-    @Column(name = "department")
-    private Integer department;
-
-     @Column(name = "category")
-    private Integer category;
-
-    @Column(name = "brand")
-    private Integer brand;
-
-    @Column(name = "sub_category")
-    private Integer subCategory;
-
     public MItem() {
     }
 
-    public MItem(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, BigDecimal salesPrice, BigDecimal costPrice, String type, Integer branch, Integer department, Integer category, Integer brand, Integer subCategory) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormalCus, short salePriceRegisterCus, Integer branch) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
         this.printDescription = printDescription;
         this.unit = unit;
-        this.salesPrice = salesPrice;
         this.costPrice = costPrice;
         this.type = type;
-        this.branch = branch;
         this.department = department;
-        this.category = category;
         this.brand = brand;
-        this.subCategory = subCategory;
+        this.category = category;
+        this.sub_category = sub_category;
+        this.salePriceNormalCus = salePriceNormalCus;
+        this.salePriceRegisterCus = salePriceRegisterCus;
+        this.branch = branch;
     }
 
-    /**
-     * @return the indexNo
-     */
     public Integer getIndexNo() {
         return indexNo;
     }
 
-    /**
-     * @param indexNo the indexNo to set
-     */
     public void setIndexNo(Integer indexNo) {
         this.indexNo = indexNo;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the barcode
-     */
     public String getBarcode() {
         return barcode;
     }
 
-    /**
-     * @param barcode the barcode to set
-     */
     public void setBarcode(String barcode) {
         this.barcode = barcode;
     }
 
-    /**
-     * @return the printDescription
-     */
     public String getPrintDescription() {
         return printDescription;
     }
 
-    /**
-     * @param printDescription the printDescription to set
-     */
     public void setPrintDescription(String printDescription) {
         this.printDescription = printDescription;
     }
 
-    /**
-     * @return the unit
-     */
     public String getUnit() {
         return unit;
     }
 
-    /**
-     * @param unit the unit to set
-     */
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
-    /**
-     * @return the salesPrice
-     */
-    public BigDecimal getSalesPrice() {
-        return salesPrice;
-    }
-
-    /**
-     * @param salesPrice the salesPrice to set
-     */
-    public void setSalesPrice(BigDecimal salesPrice) {
-        this.salesPrice = salesPrice;
-    }
-
-    /**
-     * @return the costPrice
-     */
-    public BigDecimal getCostPrice() {
+    public Short getCostPrice() {
         return costPrice;
     }
 
-    /**
-     * @param costPrice the costPrice to set
-     */
-    public void setCostPrice(BigDecimal costPrice) {
+    public void setCostPrice(Short costPrice) {
         this.costPrice = costPrice;
     }
 
-    /**
-     * @return the type
-     */
     public String getType() {
         return type;
     }
 
-    /**
-     * @param type the type to set
-     */
     public void setType(String type) {
         this.type = type;
     }
 
-    /**
-     * @return the branch
-     */
-    public Integer getBranch() {
-        return branch;
-    }
-
-    /**
-     * @param branch the branch to set
-     */
-    public void setBranch(Integer branch) {
-        this.branch = branch;
-    }
-
-    /**
-     * @return the department
-     */
     public Integer getDepartment() {
         return department;
     }
 
-    /**
-     * @param department the department to set
-     */
     public void setDepartment(Integer department) {
         this.department = department;
     }
 
-    /**
-     * @return the category
-     */
-    public Integer getCategory() {
-        return category;
-    }
-
-    /**
-     * @param category the category to set
-     */
-    public void setCategory(Integer category) {
-        this.category = category;
-    }
-
-    /**
-     * @return the brand
-     */
     public Integer getBrand() {
         return brand;
     }
 
-    /**
-     * @param brand the brand to set
-     */
     public void setBrand(Integer brand) {
         this.brand = brand;
     }
 
-    /**
-     * @return the subCategory
-     */
-    public Integer getSubCategory() {
-        return subCategory;
+    public Integer getCategory() {
+        return category;
     }
 
-    /**
-     * @param subCategory the subCategory to set
-     */
-    public void setSubCategory(Integer subCategory) {
-        this.subCategory = subCategory;
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
+
+    public Integer getSub_category() {
+        return sub_category;
+    }
+
+    public void setSub_category(Integer sub_category) {
+        this.sub_category = sub_category;
+    }
+
+    public short getSalePriceNormalCus() {
+        return salePriceNormalCus;
+    }
+
+    public void setSalePriceNormalCus(short salePriceNormalCus) {
+        this.salePriceNormalCus = salePriceNormalCus;
+    }
+
+    public short getSalePriceRegisterCus() {
+        return salePriceRegisterCus;
+    }
+
+    public void setSalePriceRegisterCus(short salePriceRegisterCus) {
+        this.salePriceRegisterCus = salePriceRegisterCus;
+    }
+
+    public Integer getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Integer branch) {
+        this.branch = branch;
     }
 
 }

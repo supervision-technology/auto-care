@@ -37,7 +37,7 @@
         
         //update vehicle milage
         this.saveVehicle = function (data) {
-            return $http.post(systemConfig.apiUrl + "/api/care-point/master/vehicle/insert-detail-client-vehicle", data);
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/job-card/insert-detail-client-vehicle", data);
         };
         
         

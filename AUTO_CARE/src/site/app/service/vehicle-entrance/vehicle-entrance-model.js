@@ -1,5 +1,5 @@
 (function () {
-    var factory = function (VehicleEntranceModelFactory, VehicleEntranceService, $q) {
+    var factory = function (VehicleEntranceModelFactory, VehicleEntranceService, $q, $filter) {
         function VehicleEntranceModel() {
             this.constructor();
         }
@@ -80,6 +80,7 @@
                         .success(function (data) {
                             that.vehicleTypes = data;
                         });
+
                 VehicleEntranceService.loadPriceCategory()
                         .success(function (data) {
                             that.priceCategorys = data;
@@ -154,6 +155,9 @@
             },
             saveJobCard: function () {
                 var defer = $q.defer();
+                this.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                this.data.inTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
+                this.data.outTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                 VehicleEntranceService.saveJobCard(JSON.stringify(this.data))
                         .success(function (data) {
                             defer.resolve();
@@ -161,6 +165,16 @@
                         .error(function (data) {
                             defer.reject();
                         });
+            },
+            duplicateVehicleCheck: function (vehicleNo) {
+                var data;
+                angular.forEach(this.vehicles, function (values) {
+                    if (values.vehicleNo === vehicleNo) {
+                        data = values;
+                        return;
+                    }
+                });
+                return data;
             },
             saveVehicle: function () {
                 var defer = $q.defer();
@@ -178,6 +192,7 @@
                             defer.resolve();
                         })
                         .error(function (data) {
+                            console.log(data);
                             defer.reject();
                         });
             },
@@ -197,7 +212,7 @@
                 var label;
                 angular.forEach(this.vehicleTypes, function (value) {
                     if (value.indexNo === parseInt(model.indexNo)) {
-                        label = value.indexNo + "-" + value.type;
+                        label = value.indexNo + "-" + value.fuelType;
                         return;
                     }
                 });

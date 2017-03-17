@@ -1,16 +1,9 @@
 <div class="index-content-body">
     <uib-tabset active="indextab">
-        <uib-tab heading="SEARCH" index="0">
+        <uib-tab heading="JOB CARD" index="0" select="ui.toggleType('JOB_CARD');">
             <div class="col-xs-4 background-dark">
                 <div class="row" style="display: flex; flex-flow: column;height: calc(100vh - 40px);">
                     <div class="col-xs-12" style="flex: 0 0 auto; height: 70px;margin-top: 50px;margin-bottom: 50px;">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="text-left ">VEHICLE ENTRANCE</th>
-                                </tr>
-                            </thead>
-                        </table>
                         <div class="col-xs-12">
                             <input id="search" type="text" placeholder="vehicle no" class="search-input" ng-model="model.vehicle.vehicleNo" uib-typeahead="vehicle as (vehicle.vehicleNo) for vehicle in model.vehicles|filter:$viewValue|limitTo:10" typeahead-on-select="ui.getVehicleSelections($model);" ng-disabled="ui.mode !== 'EDIT'">
                         </div>
@@ -38,7 +31,7 @@
                                     <td colspan="2"><input type="text" class="form-control text-right" ng-model="model.vehicle.priceCategory.name" style="margin-top: 5px;" ng-disabled="true"></td>
                                 </tr>
                                 <tr class="background-dark">
-                                    <td colspan="2">RUNNING KM DETAILS</td>
+                                    <td colspan="3">RUNNING KM DETAILS</td>
                                 </tr>
                                 <tr>
                                     <td>NEW RUNNING KM</td>
@@ -79,7 +72,7 @@
                                 <tr>
                                     <td>RUNNING KM DETAILS</td>
                                     <td class="text-left">LAST CHECK - {{model.vehicleHistoryDetail.lastMileage}} KM</td>
-                                    <td class="text-left">NOW CHECK - {{newKmRunningCount}} KM</td>
+                                    <td class="text-left">NOW CHECK - {{model.data.inMileage}} KM</td>
                                 </tr>
                                 <tr>
                                     <td>LAST USE OIL</td>
@@ -167,7 +160,7 @@
                 </div>
             </div>
         </uib-tab>
-        <uib-tab heading="SEARCH" index="1">
+        <uib-tab heading="ADVANCE SEARCH" index="1" select="ui.toggleType('ADVANCE_SEARCH');">
             <div class="col-xs-12 background-light" style="display: flex; flex-flow: column; height: calc(100vh - 100px);">
                 <div class="row col-xs-12" style="margin-top: 10px;">
                     <div class="col-xs-3">
@@ -180,10 +173,6 @@
                         <input type="text" class="form-control" ng-model="search.client.nic" placeholder="nic">
                     </div>
                     <div class="col-xs-3">
-                        <div class="btn-group col-lg-12" style="padding-left: 0 !important;padding-right: 0 !important;">
-                            <label class="btn btn-success col-lg-6 text-capitalize" ng-model="radioModel" uib-btn-radio="'SELECT'" ng-change="ui.toggleSelections('SELECT');">SELECT</label>
-                            <label class="btn btn-success col-lg-6 text-capitalize" ng-model="radioModel" uib-btn-radio="'EDIT'" ng-change="ui.toggleSelections('EDIT');">EDIT</label>
-                        </div>
                     </div>
                 </div>
                 <table class="table-rounded"> 
@@ -225,13 +214,12 @@
                                     <a class="btn btn-primary" ng-click="ui.selectVehicel(vehicle);"><span class="glyphicon glyphicon-edit"></span></a>
                                 </td>
                             </tr>
-
                         </tbody>
                     </table>
                 </div>
             </div>
         </uib-tab>
-        <uib-tab heading="NEW" index="2">
+        <uib-tab heading="NEW" index="2" select="ui.toggleType('NEW');">
             <div class="col-xs-6 background-light">
                 <div class="col-xs-12" style="flex: 1 1 auto;margin-top: 10px;">
                     <div class="btn-group col-lg-12" style="padding-left: 0 !important;padding-right: 0 !important;">
@@ -274,7 +262,7 @@
                             </tr>
                             <tr>
                                 <td>VEHICLE TYPE</td>
-                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.vehicleType" style="margin-top: 5px;" uib-typeahead="vehicleType as (vehicleType.indexNo + '-' + vehicleType.type) for vehicleType in model.vehicleTypes|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.vehicleTypeLabel($model)"></td>
+                                <td><input type="text" class="form-control text-right" ng-model="model.vehicleData.vehicleType" style="margin-top: 5px;" uib-typeahead="vehicleType as (vehicleType.indexNo + '-' + vehicleType.fuelType) for vehicleType in model.vehicleTypes|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.vehicleTypeLabel($model)"></td>
                             </tr>
                             <tr>
                                 <td>PRICE CATEGORY</td>
@@ -282,15 +270,14 @@
                             </tr>
                         </tbody>
                     </table>
-                    <a class="btn btn-success" ng-click="ui.saveVehicle();">SAVE</a>
                 </div>
             </div>
         </uib-tab>
     </uib-tabset>
 </div>
 <div class="fab-container">
-    <a class="fab fab-default" fab-show="ui.mode ==='IDEAL' || ui.mode ==='EDIT'" ng-click="ui.discard();"><i class="glyphicon glyphicon-remove"></i></a>
-    <a class="fab fab-lg fab-warning" fab-show="ui.mode === 'EDIT'" ng-click="ui.edit();"><i class="glyphicon glyphicon-floppy-save"></i></a>
+    <a class="fab fab-lg fab-success" fab-show="ui.mode === 'CLIENT'" ng-click="ui.saveVehicle();"><i class="glyphicon glyphicon-user"></i></a>
+    <a class="fab fab-warning" ng-show="model.vehicle.client" fab-show="ui.mode === 'EDIT'" ng-click="ui.edit();"><i class="glyphicon glyphicon-edit"></i></a>
     <a class="fab fab-lg fab-primary" fab-show="ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-floppy-save"></i></a>
     <a class="fab fab-lg fab-primary" fab-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
 </div>
