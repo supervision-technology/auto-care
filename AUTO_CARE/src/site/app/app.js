@@ -112,7 +112,6 @@
                             templateUrl: "app/front-office/invoice/invoice.html",
                             controller: "invoiceController"
                         })
-
                         //master
                         .when("/master/item", {
                             templateUrl: "app/master/item/item.html",
