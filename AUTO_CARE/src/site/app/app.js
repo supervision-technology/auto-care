@@ -184,13 +184,43 @@
                 $scope.toggleHamburger = function () {
                     $scope.hamburgerOpen = !$scope.hamburgerOpen;
 
-//                    if ($scope.hamburgerOpen) {
-//                        $timeout(function () {
-//                            angular.element(document.querySelector(".side-bar-left")).css("display", "none");
-//                        }, 600);
-//                    } else {
-//                        angular.element(document.querySelector(".side-bar-left")).css("display", "flex");
-//                    }
+                    $scope.showChilds = function (index) {
+
+                        $scope.items[index].active = !$scope.items[index].active;
+                        collapseAnother(index);
+                    };
+
+                    var collapseAnother = function (index) {
+                        for (var i = 0; i < $scope.items.length; i++) {
+                            if (i != index) {
+                                $scope.items[i].active = false;
+                            }
+                        }
+                    };
+
+                    $scope.items = [
+                        {
+                            name: "Item1",
+                            subItems: [
+                                {
+                                    routingUrl: "#/service/vehicle-entrance",
+                                    routingName: "Vehicle Entrance"
+                                },
+                                {
+                                    routingUrl: "#/service/vehicle-entrance/new-client-history",
+                                    routingName: "Old Client History"
+                                },
+                                {
+                                    routingUrl: "#/service/vehicle-entrance/old-client-history",
+                                    routingName: "New Client"
+                                },
+                                {
+                                    routingUrl: "#/service/service-selection",
+                                    routingName: "Old Client History"
+                                }
+                            ]
+                        }
+                    ];
                 };
             });
 }());
