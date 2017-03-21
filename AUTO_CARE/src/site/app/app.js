@@ -5,7 +5,6 @@
         "ui.bootstrap",
         "homeModule",
         "dailyCheckListModule",
-        "vehicleEntranceModule",
         "employeeAssignmentModule",
         "serviceSelectionModule",
         "bayAssignmentModule",
@@ -21,6 +20,7 @@
         "itemDepartmentModule",
         "brandModule",
         "bayModule",
+        "vehicleEntranceModule",
         "priceCategoryModule",
         "vehicleTypeModule",
         "clientModule",
@@ -63,14 +63,6 @@
                         //vehicle-entrance
                         .when("/service/vehicle-entrance", {
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
-                            controller: "vehicleEntranceController"
-                        })
-                        .when("/service/vehicle-entrance/old-client-history", {
-                            templateUrl: "app/service/vehicle-entrance/old-client-history.html",
-                            controller: "vehicleEntranceController"
-                        })
-                        .when("/service/vehicle-entrance/new-client-history", {
-                            templateUrl: "app/service/vehicle-entrance/new-client-history.html",
                             controller: "vehicleEntranceController"
                         })
                         //service-selection
@@ -196,30 +188,30 @@
                             }
                         }
                     };
-
-                    $scope.items = [
-                        {
-                            name: "Item1",
-                            subItems: [
-                                {
-                                    routingUrl: "#/service/vehicle-entrance",
-                                    routingName: "Vehicle Entrance"
-                                },
-                                {
-                                    routingUrl: "#/service/vehicle-entrance/new-client-history",
-                                    routingName: "Old Client History"
-                                },
-                                {
-                                    routingUrl: "#/service/vehicle-entrance/old-client-history",
-                                    routingName: "New Client"
-                                },
-                                {
-                                    routingUrl: "#/service/service-selection",
-                                    routingName: "Old Client History"
-                                }
-                            ]
-                        }
-                    ];
+//
+//                    $scope.items = [
+//                        {
+//                            name: "Item1",
+//                            subItems: [
+//                                {
+//                                    routingUrl: "#/service/vehicle-entrance",
+//                                    routingName: "Vehicle Entrance"
+//                                },
+//                                {
+//                                    routingUrl: "#/service/vehicle-entrance/new-client-history",
+//                                    routingName: "Old Client History"
+//                                },
+//                                {
+//                                    routingUrl: "#/service/vehicle-entrance/old-client-history",
+//                                    routingName: "New Client"
+//                                },
+//                                {
+//                                    routingUrl: "#/service/service-selection",
+//                                    routingName: "Old Client History"
+//                                }
+//                            ]
+//                        }
+//                    ];
                 };
             });
 }());
