@@ -23,14 +23,8 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
     
-    private final String PACKAGE_ITEM = "PACKAGE";
-    
     public List<MItem> findAllItems() {
         return itemRepository.findAll();
-    }
-
-    public List<MItem> findByType() {
-        return itemRepository.findByType(PACKAGE_ITEM);
     }
 
     public MItem saveItem(MItem item) {

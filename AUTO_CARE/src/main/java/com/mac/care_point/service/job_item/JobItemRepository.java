@@ -13,4 +13,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Kavish Manjitha
  */
 public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
+    
 }

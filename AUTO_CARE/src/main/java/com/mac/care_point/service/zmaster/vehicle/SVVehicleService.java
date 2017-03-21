@@ -19,9 +19,13 @@ public class SVVehicleService {
 
     @Autowired
     private SVVehicleRepository vehicleRepository;
-    
-    List<MVehicle> getVehicleById(String vehicleNo) {
+
+    public List<MVehicle> getAllVehicles() {
+        return vehicleRepository.findAll();
+    }
+
+    public List<MVehicle> getVehicleById(String vehicleNo) {
         return vehicleRepository.findVehicleByVehicleNo(vehicleNo);
     }
-    
+
 }

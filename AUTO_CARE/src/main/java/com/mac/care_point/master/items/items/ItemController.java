@@ -34,11 +34,6 @@ public class ItemController {
         return itemService.findAllItems();
     }
 
-    @RequestMapping(value = "/all-packages", method = RequestMethod.GET)
-    public List<MItem> getAllItemByType() {
-        return itemService.findByType();
-    }
-
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
     public MItem saveItem(@RequestBody MItem item) {
         item.setBranch(BRANCH);

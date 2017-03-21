@@ -10,7 +10,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class SVVehicleController {
     @Autowired
     private SVVehicleService vehicleService;
+    
+    @RequestMapping(method = RequestMethod.GET) 
+    public List<MVehicle> getAllVehicles(){
+        return vehicleService.getAllVehicles();
+    }
     
     @RequestMapping(value = "/search-vehicle/{vehicleNo}", method = RequestMethod.GET) 
     public List<MVehicle> getAllVehiclesByID(@PathVariable String vehicleNo){

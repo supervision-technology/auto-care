@@ -103,7 +103,7 @@ angular.module('appModule')
                         <span class="input-group-btn"> \
 				<button class="btn btn-primary" type="button" ng-click="rangeMinusFunc()" style="background: #9DA5BE !important;color: white! important;font-weight:700;">-</button> \
 			</span> \
-                                <input class="form-control" style="width: 50px;margin-top: 7px;font-weight:700;" name="{{nameOfField}}" id="{{idOfField}}" type="text" range-min="{{rangeMin}}" range-step="{{rangeStep}}" range-max="{{rangeMax}}" ng-model="rangeModel" required read-only/>  \
+                                <input class="form-control" style="width: 50px;margin-top: 7px;font-weight:700;text-align: center;" name="{{nameOfField}}" id="{{idOfField}}" type="text" range-min="{{rangeMin}}" range-step="{{rangeStep}}" range-max="{{rangeMax}}" ng-model="rangeModel" required read-only/>  \
 			<span class="input-group-btn"> \
                                 <button class="btn btn-primary" type="button" ng-click="rangePlusFunc()" style="background: #9DA5BE !important;color: white! important;font-weight:700;">+</button>\
 			</span> \
