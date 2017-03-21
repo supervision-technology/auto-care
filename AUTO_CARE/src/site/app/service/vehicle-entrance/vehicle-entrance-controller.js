@@ -4,7 +4,7 @@
     angular.module("vehicleEntranceModule")
             .controller("vehicleEntranceController", function ($scope,vehicleEntranceModel , $timeout) {
                 $scope.model = new vehicleEntranceModel();      
-        
+              
                 $scope.ui = {};
                 $scope.ui.searchUi;
                 $scope.ui.nextButton = function (buttonIndex) {
