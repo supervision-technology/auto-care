@@ -14,6 +14,7 @@
         "requestItemModule",
         //front office
         "dashBoardModule",
+        "itemModule",
         "invoiceModule",
         "subCategoryModule",
         "categoryModule",
@@ -25,7 +26,6 @@
         "vehicleTypeModule",
         "clientModule",
         "vehicleModule",
-        "itemModule",
         "jobCardModule",
         "subItemModule"
 

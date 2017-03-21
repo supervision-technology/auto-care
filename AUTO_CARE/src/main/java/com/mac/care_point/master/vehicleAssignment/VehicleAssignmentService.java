@@ -5,10 +5,11 @@
  */
 package com.mac.care_point.master.vehicleAssignment;
 
-import com.mac.care_point.service.jobCard.model.JobCard;
-import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
-import com.mac.care_point.service.jobCard.JobCardRepository;
+
 import com.mac.care_point.master.vehicle.VehicleRepository;
+import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
+import com.mac.care_point.service.job_card.JobCardRepository;
+import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.util.Date;
 import java.util.List;

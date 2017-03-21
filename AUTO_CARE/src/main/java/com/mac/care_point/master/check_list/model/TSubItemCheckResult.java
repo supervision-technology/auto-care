@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.master.check_list.model;
 
-import com.mac.care_point.master.item.model.MSubItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;

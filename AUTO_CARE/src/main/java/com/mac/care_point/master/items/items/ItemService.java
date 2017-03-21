@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.item;
+package com.mac.care_point.master.items.items;
 
-import com.mac.care_point.master.item.model.MItem;
+import com.mac.care_point.master.items.items.model.MItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,14 +23,14 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
     
-    private final String ITEM_TYPE = "PACKAGE_ITEM";
+    private final String PACKAGE_ITEM = "PACKAGE";
     
     public List<MItem> findAllItems() {
         return itemRepository.findAll();
     }
 
     public List<MItem> findByType() {
-        return itemRepository.findByType(ITEM_TYPE);
+        return itemRepository.findByType(PACKAGE_ITEM);
     }
 
     public MItem saveItem(MItem item) {

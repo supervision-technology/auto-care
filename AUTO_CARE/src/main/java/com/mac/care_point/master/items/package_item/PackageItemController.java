@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.packageItem;
+package com.mac.care_point.master.items.package_item;
 
-import com.mac.care_point.master.item.model.MItem;
-import com.mac.care_point.master.packageItem.model.MPackageItem;
-import com.mac.care_point.master.item.ItemRepository;
-import com.mac.care_point.master.item.ItemService;
+import com.mac.care_point.master.items.items.model.MItem;
+import com.mac.care_point.master.items.package_item.model.MPackageItem;
+import com.mac.care_point.master.items.items.ItemRepository;
+import com.mac.care_point.master.items.items.ItemService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +31,14 @@ public class PackageItemController {
     @Autowired
     private PackageItemService packageItemService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<MPackageItem> findAll() {
-        return packageItemService.findAll();
+    @RequestMapping(value = "/get-package-items/{indexNo}", method = RequestMethod.GET)
+    public List<MPackageItem> findByItemGetPackageItem(@PathVariable Integer indexNo) {
+        return packageItemService.findByPackages(indexNo);
     }
 
     @RequestMapping(value = "/save-package", method = RequestMethod.POST)
-    public MPackageItem savePackage(@RequestBody MPackageItem packageItem) {
-        return packageItemService.savePackage(packageItem);
+    public MPackageItem savePackage(@RequestBody MPackageItem packItem) {
+        return packageItemService.savePackage(packItem);
     }
 
     @RequestMapping(value = "/delete-package/{indexNo}", method = RequestMethod.DELETE)

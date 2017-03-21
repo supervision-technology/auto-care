@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.item.model;
+package com.mac.care_point.master.items.items.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -75,13 +75,13 @@ public class MItem implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "sale_price_normal_cus")
-    private short salePriceNormalCus;
+    @Column(name = "sale_price_normal")
+    private short salePriceNormal;
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "sale_price_register_cus")
-    private short salePriceRegisterCus;
+    @Column(name = "sale_price_register")
+    private short salePriceRegister;
 
     @Column(name = "branch")
     private Integer branch;
@@ -89,7 +89,7 @@ public class MItem implements Serializable {
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormalCus, short salePriceRegisterCus, Integer branch) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer branch) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -101,8 +101,8 @@ public class MItem implements Serializable {
         this.brand = brand;
         this.category = category;
         this.sub_category = sub_category;
-        this.salePriceNormalCus = salePriceNormalCus;
-        this.salePriceRegisterCus = salePriceRegisterCus;
+        this.salePriceNormal = salePriceNormal;
+        this.salePriceRegister = salePriceRegister;
         this.branch = branch;
     }
 
@@ -194,20 +194,20 @@ public class MItem implements Serializable {
         this.sub_category = sub_category;
     }
 
-    public short getSalePriceNormalCus() {
-        return salePriceNormalCus;
+    public short getSalePriceNormal() {
+        return salePriceNormal;
     }
 
-    public void setSalePriceNormalCus(short salePriceNormalCus) {
-        this.salePriceNormalCus = salePriceNormalCus;
+    public void setSalePriceNormal(short salePriceNormal) {
+        this.salePriceNormal = salePriceNormal;
     }
 
-    public short getSalePriceRegisterCus() {
-        return salePriceRegisterCus;
+    public short getSalePriceRegister() {
+        return salePriceRegister;
     }
 
-    public void setSalePriceRegisterCus(short salePriceRegisterCus) {
-        this.salePriceRegisterCus = salePriceRegisterCus;
+    public void setSalePriceRegister(short salePriceRegister) {
+        this.salePriceRegister = salePriceRegister;
     }
 
     public Integer getBranch() {

@@ -15,8 +15,8 @@
                         "brand": null,
                         "category": null,
                         "sub_category": null,
-                        "salePriceNormalCus": null,
-                        "salePriceRegisterCus": null,
+                        "salePriceNormal": null,
+                        "salePriceRegister": null,
                         "branch": null
                     };
                     return data;
@@ -27,9 +27,18 @@
                         "item": null,
                         "name": null,
                         "qty": null,
-                        "salePriceNormalCus": null,
-                        "salePriceRegisterCus": null,
+                        "salePriceNormal": null,
+                        "salePriceRegister": null,
                         "costPrice": null
+                    };
+                    return data;
+                };
+
+                factory.newPackageData = function () {
+                    var data = {
+                        "indexNo": null,
+                        "packages": null,
+                        "item": null
                     };
                     return data;
                 };

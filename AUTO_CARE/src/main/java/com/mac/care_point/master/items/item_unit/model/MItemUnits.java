@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.itemUnit.model;
+package com.mac.care_point.master.items.item_unit.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -47,13 +47,13 @@ public class MItemUnits implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "sale_price_normal_cus")
-    private short salePriceNormalCus;
+    @Column(name = "sale_price_normal")
+    private short salePriceNormal;
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "sale_price_register_cus")
-    private short salePriceRegisterCus;
+    @Column(name = "sale_price_register")
+    private short salePriceRegister;
 
     @Basic(optional = false)
     @NotNull
@@ -63,17 +63,13 @@ public class MItemUnits implements Serializable {
     public MItemUnits() {
     }
 
-    public MItemUnits(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public MItemUnits(Integer indexNo, Integer item, String name, short qty, short salePriceNormalCus, short salePriceRegisterCus, short costPrice) {
+    public MItemUnits(Integer indexNo, Integer item, String name, short qty, short salePriceNormal, short salePriceRegister, short costPrice) {
         this.indexNo = indexNo;
         this.item = item;
         this.name = name;
         this.qty = qty;
-        this.salePriceNormalCus = salePriceNormalCus;
-        this.salePriceRegisterCus = salePriceRegisterCus;
+        this.salePriceNormal = salePriceNormal;
+        this.salePriceRegister = salePriceRegister;
         this.costPrice = costPrice;
     }
 
@@ -109,20 +105,20 @@ public class MItemUnits implements Serializable {
         this.qty = qty;
     }
 
-    public short getSalePriceNormalCus() {
-        return salePriceNormalCus;
+    public short getSalePriceNormal() {
+        return salePriceNormal;
     }
 
-    public void setSalePriceNormalCus(short salePriceNormalCus) {
-        this.salePriceNormalCus = salePriceNormalCus;
+    public void setSalePriceNormal(short salePriceNormal) {
+        this.salePriceNormal = salePriceNormal;
     }
 
-    public short getSalePriceRegisterCus() {
-        return salePriceRegisterCus;
+    public short getSalePriceRegister() {
+        return salePriceRegister;
     }
 
-    public void setSalePriceRegisterCus(short salePriceRegisterCus) {
-        this.salePriceRegisterCus = salePriceRegisterCus;
+    public void setSalePriceRegister(short salePriceRegister) {
+        this.salePriceRegister = salePriceRegister;
     }
 
     public short getCostPrice() {
@@ -132,5 +128,4 @@ public class MItemUnits implements Serializable {
     public void setCostPrice(short costPrice) {
         this.costPrice = costPrice;
     }
-
 }

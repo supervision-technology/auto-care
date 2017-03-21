@@ -9,6 +9,8 @@
             //data model
             itemData: {},
             itemUnitData: {},
+            packageData: {},
+
             //uib-typeahead
             items: [],
             itemunits: [],
@@ -16,15 +18,19 @@
             categorys: [],
             subCategorys: [],
             brands: [],
+
             //view table lists
             itemViewList: [],
             itemunitsViewList: [],
+            packageViewList: [],
+
             //constructor
             constructor: function () {
                 var that = this;
 
                 that.itemData = itemFactory.newItemData();
                 that.itemUnitData = itemFactory.newItemUnitData();
+                that.packageUnitData = itemFactory.newPackageData();
 
                 itemService.loadItem()
                         .success(function (data) {
@@ -115,6 +121,49 @@
                 itemService.deleteItemUnit(itemsUnits.indexNo)
                         .success(function (data) {
                             that.itemunitsViewList.splice($index, 1);
+                            defer.resolve();
+                        })
+                        .error(function (data) {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
+            //package items
+            addPackageItem: function () {
+                var defer = $q.defer();
+                var that = this;
+                itemService.savePackageItem(this.packageData)
+                        .success(function (data) {
+                            that.packageViewList.unshift(data);
+                            that.packageData = {};
+                            defer.resolve();
+                        })
+                        .error(function (data) {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
+            getPackageItems: function (indexNo) {
+                var defer = $q.defer();
+                var that = this;
+                itemService.getPackageItems(indexNo)
+                        .success(function (data) {
+                            that.packageViewList = [];
+                            that.packageViewList = data;
+                            defer.resolve();
+                        })
+                        .error(function () {
+                            that.packageViewList = [];
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
+            deletePackageItems: function (package, $index) {
+                var defer = $q.defer();
+                var that = this;
+                itemService.deletePackageItem(package.indexNo)
+                        .success(function (data) {
+                            that.packageViewList.splice($index, 1);
                             defer.resolve();
                         })
                         .error(function (data) {

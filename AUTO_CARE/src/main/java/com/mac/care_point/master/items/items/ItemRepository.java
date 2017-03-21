@@ -3,17 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.jobCard;
+package com.mac.care_point.master.items.items;
 
-import com.mac.care_point.service.jobCard.model.TJobItem;
+import com.mac.care_point.master.items.items.model.MItem;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author Don
+ * @author Kavish Manjitha
  */
-public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
+public interface ItemRepository extends JpaRepository<MItem, Integer> {
 
-    public List<TJobItem> findByJobCard(Integer jobCard);
+    public List<MItem> findByType(String type);
+
 }

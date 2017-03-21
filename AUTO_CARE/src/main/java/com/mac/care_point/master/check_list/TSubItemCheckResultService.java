@@ -6,14 +6,14 @@
 package com.mac.care_point.master.check_list;
 
 import com.mac.care_point.master.check_list.model.TDailyCleckList;
-import com.mac.care_point.master.item.model.MItem;
-import com.mac.care_point.master.item.model.MSubItem;
+import com.mac.care_point.master.items.items.model.MItem;
+import com.mac.care_point.master.items.items.model.MSubItem;
 import com.mac.care_point.master.check_list.model.TSubItemCheckResult;
-import com.mac.care_point.master.item.model.Items;
+import com.mac.care_point.master.items.items.model.Items;
 import com.mac.care_point.master.check_list.SubItemRepository;
 import com.mac.care_point.master.check_list.TDailyCleckListRepository;
 import com.mac.care_point.master.check_list.TSubItemCheckResultRepository;
-import com.mac.care_point.master.item.ItemRepository;
+import com.mac.care_point.master.items.items.ItemRepository;
 import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.util.ArrayList;
 import java.util.Date;

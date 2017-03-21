@@ -17,7 +17,7 @@
         this.loadItemDepartment = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-departments");
         };
-        
+
         //load master files
         this.loadItem = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item");
@@ -41,6 +41,14 @@
             return $http.post(systemConfig.apiUrl + "/api/care-point/master/item-unit/save-unit", data);
         };
 
+        this.savePackageItem = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/master/package-item/save-package", data);
+        };
+        
+        this.getPackageItems = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/package-item/get-package-items/" + indexNo);
+        };
+
 
         //delete functions
         this.deleteItem = function (indexNo) {
@@ -49,6 +57,10 @@
 
         this.deleteItemUnit = function (indexNo) {
             return $http.delete(systemConfig.apiUrl + "/api/care-point/master/item-unit/save-unit/" + indexNo);
+        };
+        
+        this.deletePackageItem = function (indexNo) {
+            return $http.delete(systemConfig.apiUrl + "/api/care-point/master/package-item/delete-package/" + indexNo);
         };
     };
 

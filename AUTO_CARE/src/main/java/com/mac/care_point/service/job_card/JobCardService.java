@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.itemUnit;
+package com.mac.care_point.service.job_card;
 
-import com.mac.care_point.master.itemUnit.model.MItemUnits;
+import com.mac.care_point.service.job_card.model.JobCard;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,21 +18,15 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class ItemUnitService {
+public class JobCardService {
 
-    @Autowired
-    private ItemUnitRepository itemUnitRepository;
-
-    public List<MItemUnits> getAllItemUnits() {
-        return itemUnitRepository.findAll();
-    }
-
-    public MItemUnits saveItemUnits(MItemUnits unit) {
-        return itemUnitRepository.save(unit);
-    }
-
-    public void deleteItemUnits(Integer indexNo) {
-        itemUnitRepository.delete(indexNo);
-    }
+    final String PENDING_STATUS = "PENDING";
+    final String FINISHED_STATUS = "FINISHED";
     
+    @Autowired
+    private JobCardRepository jobCardRepository;
+
+    public  List<JobCard> getPendingJobCard() {
+        return jobCardRepository.findByStatus(PENDING_STATUS);
+    }
 }

@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.item;
+package com.mac.care_point.master.items.item_unit;
 
-import com.mac.care_point.master.item.model.MItem;
-import java.util.List;
+import com.mac.care_point.master.items.item_unit.model.MItemUnits;
+import java.io.Serializable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Kavish Manjitha
  */
-public interface ItemRepository extends JpaRepository<MItem, Integer> {
-
-    public List<MItem> findByType(String type);
+public interface ItemUnitRepository extends JpaRepository<MItemUnits, Serializable> {
 
 }

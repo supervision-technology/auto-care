@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.jobCard.model;
+package com.mac.care_point.service.job_card.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mac.care_point.service.job_item.model.TJobItem;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Supervision
+ * @author Kavish Manjitha
  */
 @Entity
 @Table(name = "t_job_card")

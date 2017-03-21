@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.packageItem;
+package com.mac.care_point.master.items.package_item;
 
-import com.mac.care_point.master.packageItem.model.MPackageItem;
+import com.mac.care_point.master.items.package_item.model.MPackageItem;
 import java.io.Serializable;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +16,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface PackageItemRepository extends JpaRepository<MPackageItem, Serializable>{
 
-    public List<MPackageItem> findByItemIndexNoAndPackagesIndexNo(Integer item, Integer packages);
+    public List<MPackageItem> findByPackages(Integer indexNo);
     
 }

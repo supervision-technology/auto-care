@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.itemUnit;
+package com.mac.care_point.service.job_item;
 
-import com.mac.care_point.master.itemUnit.model.MItemUnits;
-import java.io.Serializable;
+import com.mac.care_point.service.job_item.model.TJobItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Kavish Manjitha
  */
-public interface ItemUnitRepository extends JpaRepository<MItemUnits, Serializable> {
-
+public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
 }

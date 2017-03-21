@@ -5,8 +5,6 @@
  */
 package com.mac.care_point.master.check_list;
 
-import com.mac.care_point.master.item.model.MItem;
-import com.mac.care_point.master.item.model.MSubItem;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

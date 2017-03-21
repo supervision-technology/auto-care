@@ -1,6 +1,6 @@
-package com.mac.care_point.master.itemUnit;
+package com.mac.care_point.master.items.item_unit;
 
-import com.mac.care_point.master.itemUnit.model.MItemUnits;
+import com.mac.care_point.master.items.item_unit.model.MItemUnits;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

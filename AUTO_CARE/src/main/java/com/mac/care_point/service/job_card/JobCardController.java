@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.check_list;
+package com.mac.care_point.service.job_card;
 
-import com.mac.care_point.master.items.items.model.Items;
-import java.util.Date;
+import com.mac.care_point.service.job_card.model.JobCard;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,21 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Don
+ * @author Kavish Manjitha
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/care-point/master/all-items")
-public class TitemCheckResultController {
+@RequestMapping("/api/care-point/transaction/job-card")
+public class JobCardController {
 
     @Autowired
-    private TSubItemCheckResultService subItemCheckResultService;
-
-    private final Date DATE = new Date();
-    private final Integer BRANCH = 1;
-
-    @RequestMapping(method = RequestMethod.GET)
-    public List<Items> findALLTItemCheckResult() {
-        return subItemCheckResultService.getALlItems(DATE, BRANCH);
+    private JobCardService jobCardService;
+    
+    @RequestMapping(value = "/get-pending-job-cards",method = RequestMethod.GET)
+    public List<JobCard> getPendingJobCard(){
+        return jobCardService.getPendingJobCard();
     }
+    
 }

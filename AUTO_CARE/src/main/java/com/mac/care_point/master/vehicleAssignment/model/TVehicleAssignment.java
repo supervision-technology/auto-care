@@ -7,7 +7,7 @@ package com.mac.care_point.master.vehicleAssignment.model;
 
 
 import com.mac.care_point.master.bay.model.Bay;
-import com.mac.care_point.service.jobCard.model.JobCard;
+import com.mac.care_point.service.job_card.model.JobCard;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;

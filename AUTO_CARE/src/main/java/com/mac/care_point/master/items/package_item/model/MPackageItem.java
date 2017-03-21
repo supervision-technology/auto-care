@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.packageItem.model;
+package com.mac.care_point.master.items.package_item.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.mac.care_point.master.item.model.MItem;
+import com.mac.care_point.master.items.items.model.MItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -27,30 +27,24 @@ import javax.persistence.ManyToOne;
 @Entity
 @Table(name = "r_package_item")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class MPackageItem implements Serializable{
+public class MPackageItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
-    @JoinColumn(name = "package", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MItem packages;
-    
-    @JoinColumn(name = "item", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MItem item;
+
+    @Column(name = "package")
+    private Integer packages;
+
+    @Column(name = "item")
+    private Integer item;
 
     public MPackageItem() {
     }
 
-    public MPackageItem(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public MPackageItem(Integer indexNo, MItem packages, MItem item) {
+    public MPackageItem(Integer indexNo, Integer packages, Integer item) {
         this.indexNo = indexNo;
         this.packages = packages;
         this.item = item;
@@ -64,21 +58,19 @@ public class MPackageItem implements Serializable{
         this.indexNo = indexNo;
     }
 
-    public MItem getPackages() {
+    public Integer getPackages() {
         return packages;
     }
 
-    public void setPackages(MItem packages) {
+    public void setPackages(Integer packages) {
         this.packages = packages;
     }
 
-    public MItem getItem() {
+    public Integer getItem() {
         return item;
     }
 
-    public void setItem(MItem item) {
+    public void setItem(Integer item) {
         this.item = item;
     }
-
-    
 }

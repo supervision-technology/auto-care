@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.item;
+package com.mac.care_point.master.items.items;
 
-import com.mac.care_point.master.item.model.MItem;
+import com.mac.care_point.master.items.items.model.MItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,15 +23,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/care-point/master/item")
 public class ItemController {
-    
+
     @Autowired
     private ItemService itemService;
 
+    final int BRANCH = 1;
+
     @RequestMapping(method = RequestMethod.GET)
-    public List<MItem> findAllItems(){
+    public List<MItem> findAllItems() {
         return itemService.findAllItems();
     }
-    
+
     @RequestMapping(value = "/all-packages", method = RequestMethod.GET)
     public List<MItem> getAllItemByType() {
         return itemService.findByType();
@@ -39,6 +41,8 @@ public class ItemController {
 
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
     public MItem saveItem(@RequestBody MItem item) {
+        item.setBranch(BRANCH);
+        //TODO: set login branch
         return itemService.saveItem(item);
     }
 
