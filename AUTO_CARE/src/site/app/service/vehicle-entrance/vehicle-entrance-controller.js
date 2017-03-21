@@ -26,6 +26,10 @@
                         $scope.ui.searchUi = 'ur4';
                     }
                 };
+                
+                $scope.ui.getVehicleList = function (){
+                    $scope.model.vehicleList();
+                };
 
                 $scope.ui.init = function () {
                     $scope.ui.searchUi = 'ur1';

@@ -7,8 +7,8 @@
             
             <!--vehicle entrance div-->
             <div class="col-xs-12"  style="margin-top:30%;" ng-show="ui.searchUi === 'ur1'">
-                <input class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> <br>
-                <input type="submit" value="Next" class="btn btn-lg btn-success" ng-click="ui.nextButton('fristButton');"  style="float: right;"/>
+                <input class="form-control" ng-model="yhujgy" uib-typeahead="vehicle.indexNo as (vehicle.indexNo + ' - ' + vehicle.name) for vehicle in model.vehicleList|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.vehicleLabel($model)"  style="float: right;"> <br>
+                <input type="submit" value="Next" class="btn btn-lg btn-success" ng-click="ui.nextButton('fristButton');" />
                 <input type="reset" value="Clear" class="btn btn-lg btn-warning" ng-click="ui.clearButton();" style="float: right;"/>
             </div>
 

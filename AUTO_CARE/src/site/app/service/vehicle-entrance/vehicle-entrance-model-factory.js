@@ -2,7 +2,7 @@
     angular.module("appModule")
             .factory("vehicleEntranceFactory", function (){
             var factory = {};
-                    factory.newVehicle = function (){
+                    factory.newVehicleData = function (){
                     var data = {
                             "indexNo": null,
                             "vehicleNo": null,

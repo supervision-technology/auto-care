@@ -34,7 +34,4 @@ public class SVVehicleController {
     public List<MVehicle> getAllVehiclesByID(@PathVariable String vehicleNo){
         return vehicleService.getVehicleById(vehicleNo);
     }
-    
-    
-    
 }
