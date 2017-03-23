@@ -4,83 +4,79 @@
         <div class="col-xs-2"></div>
 
         <div class="col-xs-8">
-            
+
             <!--vehicle entrance div-->
             <div class="col-xs-12"  style="margin-top:30%;" ng-show="ui.searchUi === 'ur1'">
-                <input class="form-control" ng-model="yhujgy" uib-typeahead="vehicle.indexNo as (vehicle.indexNo + ' - ' + vehicle.name) for vehicle in model.vehicleList|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.vehicleLabel($model)"  style="float: right;"> <br>
-                <input type="submit" value="Next" class="btn btn-lg btn-success" ng-click="ui.nextButton('fristButton');" />
-                <input type="reset" value="Clear" class="btn btn-lg btn-warning" ng-click="ui.clearButton();" style="float: right;"/>
+                <input class="form-control" ng-model="model.newVehicleData" style="font-size: 50px; height: 60px;" uib-typeahead="vehicle.indexNo as vehicle.vehicleNo for vehicle in model.vehicleList|filter:{vehicleNo :$viewValue}|limitTo:10" typeahead-input-formatter="model.vehicleLabel($model)" typeahead-on-select="ui.getSelectVehicle($model)" style="float: right;" ><br>
+                <input type="submit" value="Next" class="btn btn-lg btn-success" ng-click="ui.onSelect();" style="width: 100px;margin-left: 20px; margin-right: 10px;  float: right;"/>
+                <input type="reset" value="Clear" class="btn btn-lg btn-warning" ng-click="ui.clearButton();" style="width: 100px; padding-left:10px; float: right;"/>
+                
             </div>
 
             <!--old client div-->
             <div class="col-xs-12" ng-show="ui.searchUi === 'ur2'">
+                <h1><label>Old Client</label></h1>
                 <div style="width: 80%; margin: 0 auto;margin-top: 50px;"> 
                     <div class="col-xs-6" style="flex: 0 0 auto; height: 360px; padding-right: 22px;">
                         <label style="font-size: 20px;">CLIENT DETAILS</label><br>
                         <label>Name :</label>
-                        <input class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> <br>
+                        <input class="form-control" ng-disabled="ui.mode == EDIT " ng-model="model.clientData.name" uib-typeahead="client as client.name for client in model.clientList|filter:{name :$viewValue}|limitTo:10" typeahead-on-select="ui.getSelectData($model)" style="float: right;" >  <br>
                         <label>NIC :</label>
-                        <input class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> <br>
+                        <input class="form-control" ng-disabled="ui.mode == EDIT" ng-model="model.clientData.nic" uib-typeahead="client as client.nic for client in model.clientList|filter:{nic :$viewValue}|limitTo:10" typeahead-on-select="ui.getSelectData($model)" style="float: right;" > <br>
                         <label>Mobile :</label>
-                        <input class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"><br>
-
+                        <input class="form-control" ng-disabled="ui.mode == EDIT" ng-model="model.clientData.mobile" uib-typeahead="client as client.mobile for client in model.clientList|filter:{mobile :$viewValue}|limitTo:10" typeahead-on-select="ui.getSelectData($model)" style="float: right;" ><br>
+                        <input class="btn btn-sm btn-success" type="submit" ng-click="ui.new()" value="New" style="float: right;"/>
                     </div>
                     <div class="col-xs-6" style="flex: 0 0 auto; height: 360px; padding-left: 22px;">
                         <label style="font-size: 20px;">VEHICLE DETAILS</label><br>
                         <label>Vehicle No :</label>
-                        <input class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"><br>
-                        <label>Type :</label>
-                        <input class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"><br>
+                        <input class="form-control" ng-model="model.vehicleData.vehicleNo" disabled><br>
+                        <label>Vehicle Type :</label>
+                        <input class="form-control" ng-model="model.vehicleData.vehicleType" disabled><br>
                         <label>Chassis No :</label>
-                        <input class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"><br>
+                        <input class="form-control" ng-model="model.vehicleData.chasisNo" disabled><br>
                         <label>Price Category :</label>
-                        <input class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"><br> 
+                        <input class="form-control"  ng-model="model.vehicleData.priceCategory" disabled><br>
+                        <label>Last Milage :</label>
+                        <input class="form-control"  ng-model="model.vehicleData.lastMilage" ><br> 
                     </div >
-                    <input class="btn btn-lg btn-success" type="submit" ng-click="ui.nextButton('secondButton');" value="Next" style="float: right;"/>
+                    <input class="btn btn-lg btn-default" type="submit" ng-click="ui.updateVehicle()" value="Update" style="float: right;"/>
+                    <input class="btn btn-lg btn-success" type="submit" ng-click="ui.saveJob()" value="Finish" style="float: right;"/>
                     <input class="btn btn-lg btn-primary" type="submit" ng-click="ui.backButton('secondButton');" value="Back"  style="float: right;"/>
                 </div>
-                <!--                <div class="fab-container">
-                                    <a class="fab fab-lg fab-success"><i class="glyphicon glyphicon-triangle-left"></i></a>
-                                    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-triangle-right"></i></a>
-                                </div>-->
             </div>
 
-            <!--old client div-->
+            <!--new client div-->
             <div class="col-xs-12" ng-show="ui.searchUi === 'ur3'">
-                <div>
-                    <div style="width: 80%; margin: 0 auto;margin-top: 50px;"> 
-                        <div class="col-xs-6" style="flex: 0 0 auto; height: 430px; padding-right: 22px;">
-                            <label style="font-size: 20px;">CLIENT DETAILS</label><br>
-                            <label>Mobile :</label>
-                            <input class="form-control"><br>
-                            <label>NIC :</label>
-                            <input class="form-control"><br>
-                            <label>Name :</label>
-                            <input class="form-control"><br>
-                        </div>
-                        <div class="col-xs-6" style="flex: 0 0 auto; height: 430px; padding-left: 22px;">
-                            <label style="font-size: 20px;">VEHICLE DETAILS</label><br>
-                            <label>Vehicle No :</label>
-                            <input class="form-control"><br>
-                            <label>Type :</label>
-                            <input class="form-control"><br>
-                            <label>Chassis No :</label>
-                            <input class="form-control"><br>
-                            <label>Price Category :</label>
-                            <input class="form-control"><br>
-                            <label>In Mileage :</label>
-                            <input class="form-control"><br>
-                        </div>
-                        <input class="btn btn-lg btn-success" type="submit" ng-click="ui.nextButton('secondButton');" value="Next" style="float: right;"/>        
-                        <input class="btn btn-lg btn-primary" type="submit" ng-click="ui.backButton('thirdButton');" value="Back" style="float: right;"/>
+                <label>New Client</label>
+                <div style="width: 80%; margin: 0 auto;margin-top: 50px;"> 
+                    <div class="col-xs-6" style="flex: 0 0 auto; height: 360px; padding-right: 22px;">
+                        <label style="font-size: 20px;">CLIENT DETAILS</label><br>
+                        <label>Name :</label>
+                        <input class="form-control" ng-model="model.clientData.name" uib-typeahead="client as client.name for client in model.clientList|filter:{name :$viewValue}|limitTo:10" typeahead-on-select="ui.getSelectData($model)" style="float: right;" >  <br>
+                        <label>NIC :</label>
+                        <input class="form-control" ng-model="model.clientData.nic" uib-typeahead="client as client.nic for client in model.clientList|filter:{nic :$viewValue}|limitTo:10" typeahead-on-select="ui.getSelectData($model)" style="float: right;" > <br>
+                        <label>Mobile :</label>
+                        <input class="form-control" ng-model="model.clientData.mobile" uib-typeahead="client as client.mobile for client in model.clientList|filter:{mobile :$viewValue}|limitTo:10" typeahead-on-select="ui.getSelectData($model)" style="float: right;" ><br>
+                        <input class="btn btn-sm btn-success" type="submit" ng-click="ui.new()" value="New" style="float: right;"/>
                     </div>
+                    <div class="col-xs-6" style="flex: 0 0 auto; height: 360px; padding-left: 22px;">
+                        <label style="font-size: 20px;">VEHICLE DETAILS</label><br>
+                        <label>Vehicle No :</label>
+                        <input class="form-control" ng-model="model.vehicleData.vehicleNo" ><br>
+                        <label>Vehicle Type :</label>
+                        <input class="form-control" ng-model="model.vehicleData.vehicleType" ><br>
+                        <label>Chassis No :</label>
+                        <input class="form-control" ng-model="model.vehicleData.chasisNo" ><br>
+                        <label>Price Category :</label>
+                        <input class="form-control"  ng-model="model.vehicleData.priceCategory" ><br> 
+                        <label>Last Milage :</label>
+                        <input class="form-control"  ng-model="model.vehicleData.lastMilage" ><br> 
+                    </div >
+                    <input class="btn btn-lg btn-default" type="submit" ng-click="ui.updateVehicle()" value="Update" style="float: right;"/>
+                    <input class="btn btn-lg btn-success" type="submit" ng-click="ui.saveJob()" value="Finish" style="float: right;"/>
+                    <input class="btn btn-lg btn-primary" type="submit" ng-click="ui.backButton('secondButton');" value="Back"  style="float: right;"/>
                 </div>
-                <!--                <div class="fab-container">
-                                    new
-                                    <a class="fab fab-lg fab-success"><i class="glyphicon glyphicon-triangle-left"></i></a>
-                                    save
-                                    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-triangle-right"></i></a>
-                                </div>-->
             </div>
         </div>
         <div class="col-xs-2"></div> 

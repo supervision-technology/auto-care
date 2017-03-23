@@ -22,11 +22,16 @@ public class JobCardService {
 
     final String PENDING_STATUS = "PENDING";
     final String FINISHED_STATUS = "FINISHED";
-    
+
     @Autowired
     private JobCardRepository jobCardRepository;
 
-    public  List<JobCard> getPendingJobCard() {
+    public List<JobCard> getPendingJobCard() {
         return jobCardRepository.findByStatus(PENDING_STATUS);
     }
+
+    public JobCard saveJobCard(JobCard jobCard) {
+        return jobCardRepository.save(jobCard);
+    }
+
 }

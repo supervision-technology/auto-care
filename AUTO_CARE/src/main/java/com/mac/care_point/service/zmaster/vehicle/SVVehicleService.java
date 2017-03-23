@@ -24,8 +24,12 @@ public class SVVehicleService {
         return vehicleRepository.findAll();
     }
 
-    public List<MVehicle> getVehicleById(String vehicleNo) {
-        return vehicleRepository.findVehicleByVehicleNo(vehicleNo);
+    public MVehicle getVehicleById(Integer indexNo) {
+        return vehicleRepository.findOne(indexNo);
+    }
+
+    public MVehicle saveVehicle(MVehicle vehicle) {
+        return vehicleRepository.save(vehicle);
     }
 
 }

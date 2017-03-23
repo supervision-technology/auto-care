@@ -5,21 +5,14 @@
  */
 package com.mac.care_point.service.zmaster.vehicle.model;
 
-import com.mac.care_point.master.client.model.Client;
-import com.mac.care_point.master.priceCategory.model.PriceCategory;
-
-import com.mac.care_point.master.vehicleType.model.VehicleType;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -74,6 +67,7 @@ public class MVehicle implements Serializable {
     @Column(name = "colour")
     private String colour;
 
+    @NotNull
     @Column(name = "client")
     private Integer client;
 

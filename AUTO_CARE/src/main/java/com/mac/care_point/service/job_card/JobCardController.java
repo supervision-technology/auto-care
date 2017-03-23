@@ -9,6 +9,7 @@ import com.mac.care_point.service.job_card.model.JobCard;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,10 +25,15 @@ public class JobCardController {
 
     @Autowired
     private JobCardService jobCardService;
-    
+  
     @RequestMapping(value = "/get-pending-job-cards",method = RequestMethod.GET)
     public List<JobCard> getPendingJobCard(){
         return jobCardService.getPendingJobCard();
+    }
+    
+    @RequestMapping(value = "/save-job-card" , method = RequestMethod.POST)
+    public JobCard saveJovCard(@RequestBody JobCard jobCard){
+        return jobCardService.saveJobCard(jobCard);
     }
     
 }

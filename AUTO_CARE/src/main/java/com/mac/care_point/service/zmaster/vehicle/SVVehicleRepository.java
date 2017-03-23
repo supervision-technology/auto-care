@@ -15,6 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface SVVehicleRepository extends JpaRepository<MVehicle, Integer>{
 
-    public List<MVehicle> findVehicleByVehicleNo(String vehicleNo);
+    public List<MVehicle> findVehicleByIndexNo(Integer indexNo);
             
 }

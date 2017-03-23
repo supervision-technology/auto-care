@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,9 +30,13 @@ public class SVVehicleController {
     public List<MVehicle> getAllVehicles(){
         return vehicleService.getAllVehicles();
     }
+    @RequestMapping (value = "/save-vehicle", method = RequestMethod.POST)
+    public MVehicle saveVehicle(@RequestBody MVehicle vehicle){
+        return vehicleService.saveVehicle(vehicle);
+    }
     
-    @RequestMapping(value = "/search-vehicle/{vehicleNo}", method = RequestMethod.GET) 
-    public List<MVehicle> getAllVehiclesByID(@PathVariable String vehicleNo){
-        return vehicleService.getVehicleById(vehicleNo);
+    @RequestMapping(value = "/search-vehicle/{indexNo}", method = RequestMethod.GET) 
+    public MVehicle getAllVehiclesByID(@PathVariable Integer indexNo){
+        return vehicleService.getVehicleById(indexNo);
     }
 }
