@@ -27,6 +27,7 @@
                         "item": null,
                         "name": null,
                         "qty": null,
+                        "priceCategory": null,
                         "salePriceNormal": null,
                         "salePriceRegister": null,
                         "costPrice": null

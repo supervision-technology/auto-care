@@ -7,6 +7,7 @@
                     var data = {
                         "indexNo": null,
                         "packageItem": null,
+                        "itemUnit": null,
                         "quantity": null,
                         "price": null,
                         "value": null,

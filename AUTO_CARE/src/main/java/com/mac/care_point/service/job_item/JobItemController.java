@@ -9,6 +9,8 @@ import com.mac.care_point.service.job_item.model.TJobItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +27,23 @@ public class JobItemController {
     @Autowired
     private JobItemService jobItemService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<TJobItem> getALlJobItems() {
-        return jobItemService.getAllJobItem();
-
+    //for service selections
+    @RequestMapping(value = "/save-job-items", method = RequestMethod.POST)
+    public TJobItem saveJobItem(@RequestBody TJobItem jobItem) {
+        return jobItemService.saveJobItem(jobItem);
     }
+
+    //for service selections
+    @RequestMapping(value = "/delete-job-items/{indexNo}", method = RequestMethod.DELETE)
+    public Integer deleteJobItem(@PathVariable Integer indexNo) {
+        jobItemService.deleteJobItem(indexNo);
+        return indexNo;
+    }
+
+    //for service selections
+    @RequestMapping(value = "/find-by-job-card-items/{jobCardIndexNo}", method = RequestMethod.GET)
+    public List<TJobItem> findByJobCardItems(@PathVariable Integer jobCardIndexNo) {
+        return jobItemService.findByJobCardItems(jobCardIndexNo);
+    }
+
 }

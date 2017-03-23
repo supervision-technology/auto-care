@@ -45,6 +45,9 @@ public class MItemUnits implements Serializable {
     @Column(name = "qty")
     private short qty;
 
+    @Column(name = "price_category")
+    private Integer priceCategory;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "sale_price_normal")
@@ -63,11 +66,12 @@ public class MItemUnits implements Serializable {
     public MItemUnits() {
     }
 
-    public MItemUnits(Integer indexNo, Integer item, String name, short qty, short salePriceNormal, short salePriceRegister, short costPrice) {
+    public MItemUnits(Integer indexNo, Integer item, String name, short qty, Integer priceCategory, short salePriceNormal, short salePriceRegister, short costPrice) {
         this.indexNo = indexNo;
         this.item = item;
         this.name = name;
         this.qty = qty;
+        this.priceCategory = priceCategory;
         this.salePriceNormal = salePriceNormal;
         this.salePriceRegister = salePriceRegister;
         this.costPrice = costPrice;
@@ -105,6 +109,14 @@ public class MItemUnits implements Serializable {
         this.qty = qty;
     }
 
+    public Integer getPriceCategory() {
+        return priceCategory;
+    }
+
+    public void setPriceCategory(Integer priceCategory) {
+        this.priceCategory = priceCategory;
+    }
+
     public short getSalePriceNormal() {
         return salePriceNormal;
     }
@@ -128,4 +140,5 @@ public class MItemUnits implements Serializable {
     public void setCostPrice(short costPrice) {
         this.costPrice = costPrice;
     }
+
 }

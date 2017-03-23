@@ -23,8 +23,16 @@ public class JobItemService {
     @Autowired
     private JobItemRepository jobItemRepository;
 
-    public List<TJobItem> getAllJobItem() {
-        return jobItemRepository.findAll();
+    public TJobItem saveJobItem(TJobItem jobItem) {
+        return jobItemRepository.save(jobItem);
+    }
+
+    public void deleteJobItem(Integer indexNo) {
+        jobItemRepository.delete(indexNo);
+    }
+
+    public List<TJobItem> findByJobCardItems(Integer jobCardIndexNo) {
+        return jobItemRepository.findByJobCard(jobCardIndexNo);
     }
 
 }

@@ -67,8 +67,6 @@
                         Notification.error("enter item unit sale price normal");
                     } else if (!$scope.model.itemUnitData.salePriceRegister) {
                         Notification.error("enter item cost sale price register");
-                    } else if ($scope.model.itemUnitData.costPrice) {
-                        Notification.error("enter item cost price");
                     } else if ($scope.model.itemUnitData.item
                             && $scope.model.itemUnitData.name
                             && $scope.model.itemUnitData.qty
@@ -81,6 +79,10 @@
                 //edit item units
                 $scope.ui.editeItemUnits = function (itemsUnits, $index) {
                     $scope.model.editeItemUnits(itemsUnits, $index);
+                };
+
+                $scope.ui.getItemType = function (model) {
+                   $scope.itemType = $scope.model.item(model).type;
                 };
 
                 //delete item units

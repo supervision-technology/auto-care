@@ -43,7 +43,7 @@ public class MVehicle implements Serializable {
     @Size(max = 25)
     @Column(name = "vehicle_no")
     private String vehicleNo;
-    
+
     @Column(name = "year")
     private Integer year;
 
@@ -83,10 +83,13 @@ public class MVehicle implements Serializable {
     @Column(name = "price_category")
     private Integer priceCategory;
 
+    @Column(name = "type")
+    private String type;
+
     public MVehicle() {
     }
 
-    public MVehicle(Integer indexNo, String vehicleNo, Integer year, String engineNo, String chasisNo, Date insuranceExpiryDate, Date revenueExpiryDate, int lastMilage, Integer nextMilage, String colour, Integer client, Integer vehicleType, Integer priceCategory) {
+    public MVehicle(Integer indexNo, String vehicleNo, Integer year, String engineNo, String chasisNo, Date insuranceExpiryDate, Date revenueExpiryDate, int lastMilage, Integer nextMilage, String colour, Integer client, Integer vehicleType, Integer priceCategory, String type) {
         this.indexNo = indexNo;
         this.vehicleNo = vehicleNo;
         this.year = year;
@@ -100,6 +103,7 @@ public class MVehicle implements Serializable {
         this.client = client;
         this.vehicleType = vehicleType;
         this.priceCategory = priceCategory;
+        this.type = type;
     }
 
     public Integer getIndexNo() {
@@ -206,6 +210,12 @@ public class MVehicle implements Serializable {
         this.priceCategory = priceCategory;
     }
 
- 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
 }

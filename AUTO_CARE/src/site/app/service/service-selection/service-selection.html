@@ -1,14 +1,16 @@
 <div class="tile-list background-dark">
-    <div class="tile-list-title">
+    <div class="tile-list-title" style="margin-right: 5px;">
         <h4>VEHICLE</h4>
     </div>
     <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" ng-repeat="details in model.pendingJobCards">
+        <div class="tile tile-128" ng-repeat="details in model.pendingJobCards" ng-class="{'white-row':$index == selectedJobCardRow}" ng-click="ui.selectedJobCardRow($index, details);">
             <span>
                 <img src="/img/01.png"/>  
                 <label>
                     {{model.vehicleData(details.vehicle).vehicleNo}}
                 </label>
+                <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
+                <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
             </span>
         </div>
     </div>
@@ -39,11 +41,11 @@
                                         <col style="width: 30%;"/>
                                         <col style="width: 10%;"/>
                                         <tbody>
-                                            <tr class="background-light" ng-class="{'selected-row':$index == selectedPackageItemRow}">
-                                                <td class="text-bold" ng-click="packageSelectionDetail($index, detils.indexNo)">{{detils.name}}</td>
-                                                <td ng-click="packageSelectionDetail($index, detils.indexNo)">{{detils.salePriceNormal|number:2}}</td>
-                                                <td ng-click="packageSelectionDetail($index, detils.indexNo)">{{detils.salePriceRegister|number:2}}</td>
-                                                <td><a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                            <tr class="background-light" ng-click="packageSelectionDetail($index, detils.indexNo)">
+                                                <td class="text-bold">{{detils.name}}</td>
+                                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                                <td><a class="btn btn-primary" ng-click="addPackageAndServiceItem(detils, 'PACKAGE_ITEM');"><span class="glyphicon glyphicon-plus"></span></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -71,7 +73,7 @@
                         </uib-tab>
                         <uib-tab heading="SERVICE" index="1">
                             <div class="col-xs-8">
-                                <input type="text" class="search-input" placeholder="search" ng-model="search">
+                                <input type="text" class="search-input" placeholder="search" ng-model="searchService">
                             </div>
                             <table class="square-table background-dark">
                                 <col style="width: 60%;"/>
@@ -87,24 +89,48 @@
                                 </thead>
                             </table>
                             <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
+                                <div ng-repeat="details in model.items|filter: { type: 'SERVICE' }|filter:{ name : searchService}" ng-click="ui.serviceSelectionDetail($index, details.indexNo)">
                                     <table class="square-table">
                                         <col style="width: 60%;"/>
-                                        <col style="width: 30%;"/>
-                                        <col style="width: 10%;"/>
+                                        <col style="width: 25%;"/>
+                                        <col style="width: 15%;"/>
                                         <tbody>
-                                            <tr class="background-light" ng-repeat="details in model.items|filter: { type: 'SERVICE' }|filter:search">
-                                                <td class="text-bold" ng-click="serviceSelectionDetail($index)">{{details.name}}</td>
-                                                <td ng-click="serviceSelectionDetail($index, detils.indexNo)">{{details.salePriceNormal|number:2}}</td>
-                                                <td ng-click="serviceSelectionDetail($index, detils.indexNo)">{{details.salePriceRegister|number:2}}</td>
-                                                <td><a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                            <tr class="background-light">
+                                                <td class="text-bold">{{details.name}}</td>
+                                                <td ng-show="selectVehicleType === 'NORMAL'"><label class="label label-primary">{{details.salePriceNormal|number:2}}</label></td>
+                                                <td ng-show="selectVehicleType === 'REGISTER'">{{details.salePriceRegister|number:2}}</td>
+                                                <td><a class="btn btn-primary" ng-click="addPackageAndServiceItem(details, 'SERVICE_ITEM');"><span class="glyphicon glyphicon-plus"></span></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="animation-v-grow background-dark" ng-show="selectServicePosition == $index">
+                                        <table class="square-table">
+                                            <col style="width: 60%;"/>
+                                            <col style="width: 25%;"/>
+                                            <col style="width: 15%;"/>
+                                            <thead>
+                                                <tr>
+                                                    <th>NAME</th>
+                                                    <th class="text-right">AMOUNT</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="background-dark" ng-repeat="details in model.itemUnitList">
+                                                    <td><label class="label label-default"> {{details.name}}</label></td>
+                                                    <td ng-show="selectVehicleType === 'NORMAL'">{{details.salePriceNormal|number:2}}</td>
+                                                    <td ng-show="selectVehicleType === 'REGISTER'">{{details.salePriceRegister|number:2}}</td>
+                                                    <td><a class="btn btn-primary" ng-click="addItemUnit(details, 1);"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
+                            </div>
                         </uib-tab>
                         <uib-tab heading="ITEM" index="2">
                             <div class="col-xs-8">
-                                <input type="text" class="search-input" placeholder="search" ng-model="search">
+                                <input type="text" class="search-input" placeholder="search" ng-model="searchItem">
                             </div>
 
                             <table class="square-table background-dark">
@@ -124,7 +150,7 @@
                                 </thead>
                             </table>
                             <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
-                                <div>
+                                <div ng-repeat="details in model.items|filter: { type: 'STOCK' }|filter:{ name : searchItem}" ng-class="{'selected-row':$index == itemSelectedRow}">
                                     <table class="square-table">
                                         <col style="width: 30%;"/>
                                         <col style="width: 15%;"/>
@@ -132,10 +158,10 @@
                                         <col style="width: 15%;"/>
                                         <col style="width: 10%;"/>
                                         <tbody>
-                                            <tr class="background-light" ng-repeat="details in model.items|filter: { type: 'SERVICE' }|filter:search" ng-class="{'selected-row':$index == itemSelectedRow}">
-                                                <td ng-click="itemSelectionDetail($index, detils.indexNo)" class="text-bold"><label class="label label-default">{{$index| fixedLength:5}}</label> &nbsp;&nbsp;{{details.name}}</td>
-                                                <td ng-click="itemSelectionDetail($index, detils.indexNo)">{{details.salePriceNormal|number:2}}</td>
-                                                <td ng-click="itemSelectionDetail($index, detils.indexNo)">{{details.salePriceRegister|number:2}}</td>
+                                            <tr class="background-light">
+                                                <td ng-click="ui.itemSelectionDetail($index, details.indexNo)" class="text-bold"><label class="label label-default">{{details.indexNo| fixedLength:5}}</label> &nbsp;&nbsp;{{details.name}}</td>
+                                                <td ng-click="ui.itemSelectionDetail($index, details.indexNo)" ng-show="selectVehicleType === 'NORMAL'">{{details.salePriceNormal|number:2}}</td>
+                                                <td ng-click="ui.itemSelectionDetail($index, details.indexNo)" ng-show="selectVehicleType === 'REGISTER'">{{details.salePriceRegister|number:2}}</td>
                                                 <td>
                                                     <div range-spinner
                                                          range-min="1" 
@@ -143,17 +169,59 @@
                                                          range-max="15" 
                                                          range-default-value="0"
                                                          range-decimal-precision="1"				
-                                                         range-model="rangeModel"
+                                                         range-model="qty"
                                                          accept-decimal="false"
                                                          name-of-field="rangeFieldName"
                                                          id-of-field="rangeFieldId">
                                                     </div>
                                                 </td>
-                                                <td class="text-right" ng-click="itemSelectionDetail($index)">{{items.price}}</td>
-                                                <td><a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                                <td ng-show="selectVehicleType === 'NORMAL'" class="text-right">{{details.salePriceNormal * qty|number:2}}</td>
+                                                <td ng-show="selectVehicleType === 'REGISTER'" class="text-right">{{details.salePriceRegister * qty|number:2}}</td>
+                                                <td><a class="btn btn-primary" ng-click="addNormalItem(details, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <div class="animation-v-grow background-dark" ng-show="selectItemPosition == $index">
+                                        <table class="square-table">
+                                            <col style="width: 30%;"/>
+                                            <col style="width: 15%;"/>
+                                            <col style="width: 30%;"/>
+                                            <col style="width: 15%;"/>
+                                            <col style="width: 10%;"/>
+                                            <thead>
+                                                <tr>
+                                                    <th>NAME</th>
+                                                    <th class="text-right">U.PRICE</th>
+                                                    <th class="text-center">QTY</th>
+                                                    <th class="text-right">AMOUNT</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="background-dark" ng-repeat="details in model.itemUnitList">
+                                                    <td><label class="label label-default"> {{details.name}}</label></td>
+                                                    <td ng-show="selectVehicleType === 'NORMAL'">{{details.salePriceNormal|number:2}}</td>
+                                                    <td ng-show="selectVehicleType === 'REGISTER'">{{details.salePriceRegister|number:2}}</td>
+                                                    <td>
+                                                        <div range-spinner
+                                                             range-min="1" 
+                                                             range-step="1"  
+                                                             range-max="15" 
+                                                             range-default-value="0"
+                                                             range-decimal-precision="1"				
+                                                             range-model="qty"
+                                                             accept-decimal="false"
+                                                             name-of-field="rangeFieldName"
+                                                             id-of-field="rangeFieldId">
+                                                        </div>
+                                                    </td>
+                                                    <td ng-show="selectVehicleType === 'NORMAL'" class="text-right">{{details.salePriceNormal * qty|number:2}}</td>
+                                                    <td ng-show="selectVehicleType === 'REGISTER'" class="text-right">{{details.salePriceRegister * qty|number:2}}</td>
+                                                    <td><a class="btn btn-primary" ng-click="addItemUnit(details, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </uib-tab>
@@ -164,8 +232,8 @@
 
         <div class="col-xs-5 background-dark">
             <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
-                <div class="col-xs-12" style="height: 60px;">
-                    <table class="table-rounded">
+                <div>
+                    <table class="square-table table-rounded">
                         <col style="width: 10%;"/>
                         <col style="width: 40%;"/>
                         <col style="width: 10%;"/>
@@ -183,8 +251,8 @@
                         </thead>
                     </table>
                 </div>
-                <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 112px);">
-                    <table class="table-rounded">
+                <div class="smart-scroll-y" style="height: calc(100vh - 91px);padding-left: 5px;">
+                    <table class="square-table background-dark">
                         <col style="width: 10%;"/>
                         <col style="width: 40%;"/>
                         <col style="width: 10%;"/>
@@ -192,26 +260,30 @@
                         <col style="width: 15%;"/>
                         <tbody ng-repeat="selections in model.jobItemList">
                             <tr>
-                                <td ng-click="selectionsSelectionDetail($index)">
-                                    <label class="label label-danger">{{$index}}</label>
+                                <td>
+                                    <label class="label label-danger" style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
+                                    <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
+                                    <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
+                                    <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="selections.itemUnit != null">S</label>
                                 </td>
-                                <td>{{selections.item}}</td>
+                                <td ng-show="selections.item != null">{{model.itemData(selections.item).name}}</td>
+                                <td ng-show="selections.itemUnit != null">{{model.itemUnitData(selections.itemUnit).name}}</td>
                                 <td class="text-right">{{selections.quantity}}</td>
-                                <td class="text-right">{{selections.value}}</td>
-                                <td><a class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                <td class="text-right">{{selections.value|number:2}}</td>
+                                <td><a class="btn btn-danger"><span class="glyphicon glyphicon-remove" ng-click="ui.deleteSelectDetails($index);"></span></a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="col-xs-12">
-                    <table class="table-rounded">
+                <div>
+                    <table class="square-table background-dark">
                         <col style="width: 50%;"/>
                         <col style="width: 35%;"/>
                         <col style="width: 15%;"/>
                         <tbody>
                             <tr class="text-bold">
                                 <td>TOTAL</td>
-                                <td class="text-right">41000.00</td>
+                                <td class="text-right">{{model.getSelectItemTotal() | number:2}}</td>
                                 <th>&nbsp;</th>
                             </tr>
                         </tbody>
@@ -219,11 +291,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="fab-container">
-        <!--new-->
-        <a class="fab fab-lg fab-success"><i class="glyphicon glyphicon-triangle-left"></i></a>
-        <!--save-->
-        <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-triangle-right"></i></a>
     </div>
 </div>

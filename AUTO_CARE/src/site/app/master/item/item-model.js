@@ -18,6 +18,7 @@
             categorys: [],
             subCategorys: [],
             brands: [],
+            priceCategory: [],
 
             //view table lists
             itemViewList: [],
@@ -61,6 +62,10 @@
                 itemService.loadItemDepartment()
                         .success(function (data) {
                             that.itemDepartments = data;
+                        });
+                itemService.loadPriceCategory()
+                        .success(function (data) {
+                            that.priceCategory = data;
                         });
             },
             clear: function () {
@@ -171,12 +176,21 @@
                         });
                 return defer.promise;
             },
+            priceCategoryLable: function (indexNo) {
+                var item;
+                angular.forEach(this.priceCategory, function (value) {
+                    if (value.indexNo === parseInt(indexNo)) {
+                        item = value.indexNo + "-" + value.name;
+                        return;
+                    }
+                });
+                return item;
+            },
             brandLable: function (indexNo) {
                 var item;
                 angular.forEach(this.brands, function (value) {
                     if (value.indexNo === parseInt(indexNo)) {
                         item = value.indexNo + "-" + value.name;
-                        ;
                         return;
                     }
                 });
@@ -187,7 +201,6 @@
                 angular.forEach(this.items, function (value) {
                     if (value.indexNo === parseInt(indexNo)) {
                         item = value.indexNo + "-" + value.name;
-                        ;
                         return;
                     }
                 });
@@ -198,7 +211,6 @@
                 angular.forEach(this.categorys, function (value) {
                     if (value.indexNo === parseInt(indexNo)) {
                         item = value.indexNo + "-" + value.name;
-                        ;
                         return;
                     }
                 });
@@ -209,7 +221,6 @@
                 angular.forEach(this.subCategorys, function (value) {
                     if (value.indexNo === parseInt(indexNo)) {
                         item = value.indexNo + "-" + value.name;
-                        ;
                         return;
                     }
                 });
@@ -220,7 +231,16 @@
                 angular.forEach(this.itemDepartments, function (value) {
                     if (value.indexNo === parseInt(indexNo)) {
                         item = value.indexNo + "-" + value.name;
-                        ;
+                        return;
+                    }
+                });
+                return item;
+            },
+            item: function (indexNo) {
+                var item;
+                angular.forEach(this.items, function (value) {
+                    if (value.indexNo === parseInt(indexNo)) {
+                        item = value;
                         return;
                     }
                 });

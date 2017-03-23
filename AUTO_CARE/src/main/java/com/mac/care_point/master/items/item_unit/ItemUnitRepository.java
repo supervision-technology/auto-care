@@ -7,6 +7,7 @@ package com.mac.care_point.master.items.item_unit;
 
 import com.mac.care_point.master.items.item_unit.model.MItemUnits;
 import java.io.Serializable;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -14,5 +15,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Kavish Manjitha
  */
 public interface ItemUnitRepository extends JpaRepository<MItemUnits, Serializable> {
+
+    public List<MItemUnits> findByItemAndPriceCategory(Integer item, Integer priceCategory);
 
 }

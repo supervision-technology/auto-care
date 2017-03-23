@@ -17,6 +17,10 @@
         this.loadItemDepartment = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-departments");
         };
+        
+        this.loadPriceCategory = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/priceCategory");
+        };
 
         //load master files
         this.loadItem = function () {

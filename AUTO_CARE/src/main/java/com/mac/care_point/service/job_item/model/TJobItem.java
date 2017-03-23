@@ -30,6 +30,9 @@ public class TJobItem {
     @Column(name = "package_item")
     private Integer packageItem;
 
+    @Column(name = "item_unit")
+    private Integer itemUnit;
+
     @Basic(optional = false)
     @Column(name = "quantity")
     private short quantity;
@@ -63,9 +66,10 @@ public class TJobItem {
     public TJobItem() {
     }
 
-    public TJobItem(Integer indexNo, Integer packageItem, short quantity, short price, short value, String orderStatus, String jobStatus, boolean formCustomer, Integer jobCard, Integer item) {
+    public TJobItem(Integer indexNo, Integer packageItem, Integer itemUnit, short quantity, short price, short value, String orderStatus, String jobStatus, boolean formCustomer, Integer jobCard, Integer item) {
         this.indexNo = indexNo;
         this.packageItem = packageItem;
+        this.itemUnit = itemUnit;
         this.quantity = quantity;
         this.price = price;
         this.value = value;
@@ -90,6 +94,14 @@ public class TJobItem {
 
     public void setPackageItem(Integer packageItem) {
         this.packageItem = packageItem;
+    }
+
+    public Integer getItemUnit() {
+        return itemUnit;
+    }
+
+    public void setItemUnit(Integer itemUnit) {
+        this.itemUnit = itemUnit;
     }
 
     public short getQuantity() {
@@ -155,4 +167,5 @@ public class TJobItem {
     public void setItem(Integer item) {
         this.item = item;
     }
+
 }
