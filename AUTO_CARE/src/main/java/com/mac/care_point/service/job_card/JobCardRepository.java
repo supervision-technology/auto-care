@@ -8,6 +8,8 @@ package com.mac.care_point.service.job_card;
 import com.mac.care_point.service.job_card.model.JobCard;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -19,4 +21,9 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
     
     public List<JobCard> findByStatus(String status);
 
+    @Query(value = "SELECT MAX(number)FROM t_job_card WHERE branch=:branch" , nativeQuery = true)
+    public  Integer getMaximumNumberByBranch (@Param("branch")Integer branch);
+    
+    
+        
 }

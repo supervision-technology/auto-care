@@ -82,7 +82,6 @@ public class MClient implements Serializable{
         this.addressLine3 = addressLine3;
         this.mobile = mobile;
         this.branch = branch;
-        this.type = type;
         this.nic = nic;
     }
 
@@ -140,14 +139,6 @@ public class MClient implements Serializable{
 
     public void setBranch(int branch) {
         this.branch = branch;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getNic() {

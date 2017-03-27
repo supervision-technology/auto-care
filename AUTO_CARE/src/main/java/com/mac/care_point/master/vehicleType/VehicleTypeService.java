@@ -22,10 +22,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class VehicleTypeService {
     
-     @Autowired
+    @Autowired
     private VehicleTypeRepository vehicleTypeRepository;
     
-     public List<VehicleType> findAll() {
+    public List<VehicleType> findAll() {
         return vehicleTypeRepository.findAll();
     }
 

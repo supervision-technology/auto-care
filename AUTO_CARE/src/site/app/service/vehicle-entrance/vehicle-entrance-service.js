@@ -21,6 +21,12 @@
         this.updateVehicle = function (data){
             return $http.post(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/save-vehicle" , data);
         };
+        this.loadVehicleType = function (){
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle-type");
+        };
+        this.loadPriceCategory = function (){
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/price-category");
+        };
 
 
     };

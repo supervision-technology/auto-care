@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.zmaster.client;
+package com.mac.care_point.service.zmaster.vehicle_type;
 
-import com.mac.care_point.service.zmaster.client.model.MClient;
+import com.mac.care_point.service.zmaster.vehicle_type.model.MVehicleType;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,22 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class SVClientService {
+public class SVVehicleTypeService {
     
     @Autowired
-    private SVClientRepository clientRepository;
+    private SVVehicleTypeRepository vehicleTypeRepository;
     
-    public List<MClient> getAllClient() {
-        return clientRepository.findAll();
+    public List<MVehicleType> findAll() {
+        return vehicleTypeRepository.findAll();
     }
-
-    public MClient getClientByIndexNo(Integer indexNo) {
-        return clientRepository.findOne(indexNo);
-    }
-
-    public MClient saveClient(MClient client) {
-        client.setBranch(1);
-        return  clientRepository.save(client);
-    }
-    
 }

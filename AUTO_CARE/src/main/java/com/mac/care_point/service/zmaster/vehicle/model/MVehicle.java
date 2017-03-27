@@ -43,6 +43,7 @@ public class MVehicle implements Serializable {
     @Size(max = 50)
     @Column(name = "engine_no")
     private String engineNo;
+    
     @Size(max = 50)
     @Column(name = "chasis_no")
     private String chasisNo;
@@ -73,7 +74,8 @@ public class MVehicle implements Serializable {
 
     @Column(name = "vehicle_type")
     private Integer vehicleType;
-
+    
+    @NotNull
     @Column(name = "price_category")
     private Integer priceCategory;
 

@@ -9,12 +9,15 @@ import com.mac.care_point.service.zmaster.vehicle.model.MVehicle;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
  * @author Kalum
  */
 @Service
+@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class SVVehicleService {
 
     @Autowired

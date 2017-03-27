@@ -33,6 +33,7 @@ public class JobCardController {
     
     @RequestMapping(value = "/save-job-card" , method = RequestMethod.POST)
     public JobCard saveJovCard(@RequestBody JobCard jobCard){
+        jobCard.setBranch(1);
         return jobCardService.saveJobCard(jobCard);
     }
     

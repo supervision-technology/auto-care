@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.zmaster.client;
+package com.mac.care_point.service.zmaster.price_category;
 
-import com.mac.care_point.service.zmaster.client.model.MClient;
+import com.mac.care_point.service.zmaster.price_category.model.MPriceCategory;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,22 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class SVClientService {
-    
+public class SVPriceCategoryService {
     @Autowired
-    private SVClientRepository clientRepository;
+    SVPriceCategoryRepository priceCategoryRepository;
     
-    public List<MClient> getAllClient() {
-        return clientRepository.findAll();
+    public List<MPriceCategory> findAll() {
+        return priceCategoryRepository.findAll();
     }
-
-    public MClient getClientByIndexNo(Integer indexNo) {
-        return clientRepository.findOne(indexNo);
-    }
-
-    public MClient saveClient(MClient client) {
-        client.setBranch(1);
-        return  clientRepository.save(client);
-    }
-    
 }

@@ -16,7 +16,8 @@
                         "colour": null,
                         "client": null,
                         "vehicleType": null,
-                        "priceCategory": null
+                        "priceCategory": null,
+                        "type": null
                     };
                     return data;
                 };
@@ -45,13 +46,32 @@
                         "inTime": null,
                         "outTime": null,
                         "inMileage": null,
-                        "nextMileage":null ,
+                        "nextMileage": null,
                         "status": null,
                         "bay": null,
                         "client": null,
-                        "vehicle":null 
+                        "vehicle": null
                     };
                     return data;
+                };
+                factory.newVehicleTypeData = function () {
+                    var data = {
+                        "indexNo": null,
+                        "make": null,
+                        "model": null,
+                        "version": null,
+                        "fuelType": null,
+                        "type": null,
+                        "priceCategory": null
+                    };
+                    return data;
+                };
+                    factory.newPriceCategoryData = function (){
+                    var data = {
+                        "indexNo":null,
+                        "name":null 
+                    };
+                    return  data;
                 };
                 return factory;
             }

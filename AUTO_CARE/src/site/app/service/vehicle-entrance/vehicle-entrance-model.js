@@ -1,25 +1,32 @@
 (function () {
-    var factory = function (vehicleEntranceService,Notification, vehicleEntranceFactory, $q, $filter) {
+    var factory = function (vehicleEntranceService, vehicleEntranceFactory, $q, $filter) {
         function vehicleEntranceModel() {
             this.constructor();
         }
 
         vehicleEntranceModel.prototype = {
             //data model
+            
             vehicleData: {},
             clientData: {},
             jobcard: {},
+            vehicleTypeData: {},
+            priceCategoryData :{},
 
             //uib-typeHead
             vehicleList: [],
             clientList: [],
+            vehicleTypeList: [],
+            priceCategoryList :[],
 
             constructor: function () {
                 var that = this;
                 this.vehicleData = vehicleEntranceFactory.newVehicleData();
                 this.clientData = vehicleEntranceFactory.newClientData();
                 this.jobcard = vehicleEntranceFactory.newJobCardData();
-
+                this.vehicleTypeData = vehicleEntranceFactory.newVehicleTypeData();
+                this.priceCategoryData = vehicleEntranceFactory.newPriceCategoryData();
+                
                 vehicleEntranceService.loadVehicle()
                         .success(function (data) {
                             that.vehicleList = data;
@@ -29,6 +36,30 @@
                         .success(function (data) {
                             that.clientList = data;
                         });
+
+                vehicleEntranceService.loadVehicleType()
+                        .success(function (data) {
+                            that.vehicleTypeList = data;
+                        });
+                vehicleEntranceService.loadPriceCategory()
+                        .success(function (data) {
+                            that.priceCategoryList = data;
+                        });
+            },
+            clearModel : function (){
+                this.clientData = {};
+                this.vehicleData = {};
+                this.jobcard = {};
+                this.vehicleTypeData = {};
+                this.priceCategoryData = {};
+            },
+            
+            clear: function () {
+                this.clientData = {};
+//                this.vehicleData ={};
+//                this.jobcard ={};
+//                this.vehicleTypeData ={};
+//                this.priceCategoryData ={};
             },
             vehicleSerachByIndex: function (indexNo) {
                 var that = this;
@@ -43,9 +74,19 @@
                         });
             },
             saveJobCard: function () {
-                this.jobcard.client = this.clientData.indexNo;
-                this.jobcard.vehicle = this.vehicleData.indexNo;
                 var that = this;
+
+                that.jobcard.transaction = 1;
+                that.jobcard.inTime = $filter('date')(new Date(), 'yyyy-MM-dd hh:mm:ss');
+                ;
+                that.jobcard.status = "PENDING";
+                that.jobcard.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                that.jobcard.bay = 1;
+                that.jobcard.priceCategory = that.vehicleData.priceCategory;
+                that.jobcard.inMileage = that.vehicleData.lastMilage;
+                that.jobcard.client = that.clientData.indexNo;
+                that.jobcard.vehicle = that.vehicleData.indexNo;
+//                that.jobcard.vehicle = that.vehicleData.indexNo;
                 var defer = $q.defer();
                 console.log(that.jobcard);
                 vehicleEntranceService.saveJob(JSON.stringify(that.jobcard))
@@ -58,13 +99,15 @@
                 return defer.promise;
             },
             updateClientFromVehicle: function () {
-                var that=this;
+                var that = this;
                 this.vehicleData.client = that.clientData.indexNo;
-                console.log(this.clientData.indexNo);
+                this.vehicleData.type = "NORMAL";
+                console.log(that.clientData);
+                console.log(that.vehicleData);
                 var defer = $q.defer();
                 vehicleEntranceService.updateVehicle(JSON.stringify(this.vehicleData))
-                        .success(function () {
-//                            Notification.success(data.vehicleNo+" Update Successfully");
+                        .success(function (data) {
+                            that.vehicleData = data;
                             defer.resolve();
                         })
                         .error(function () {
@@ -73,13 +116,10 @@
                 return defer.promise;
             },
             newClient: function () {
-                var that=this;
+                var that = this;
                 var defer = $q.defer();
-                this.clientData.type = "type";
                 vehicleEntranceService.newClient(JSON.stringify(this.clientData))
                         .success(function (data) {
-//                            Notification.success(data.name +" Added Successfully ")
-//                            that.updateClientFromVehicle(data.indexNo);
                             that.clientData = data;
                             defer.resolve();
                         })
@@ -99,6 +139,16 @@
                 });
                 return vehicle;
             },
+            vehicle: function (vehicleNo) {
+                var data;
+                angular.forEach(this.vehicleList, function (value) {
+                    if (angular.equals(value.vehicleNo,vehicleNo)) {
+                        data = value;
+                        return;
+                    }
+                });
+                return data;
+            },
             clientLabel: function (indexNo) {
                 var client = "";
                 angular.forEach(this.clientList, function (value) {
@@ -108,6 +158,28 @@
                     }
                 });
                 return client;
+            },
+
+            vehicleTypeLabel: function (indexNo) {
+                var vehicleType = "";
+                angular.forEach(this.vehicleTypeList, function (value) {
+                    if (value.indexNo === parseInt(indexNo)) {
+                        vehicleType = value.type;
+                        return;
+                    }
+                });
+                return vehicleType;
+            },
+            
+            priceCategoryLabel : function (indexNo){
+                var priceCategory="";
+                angular.forEach(this.priceCategoryList ,function(value){
+                    if (value.indexNo === parseInt(indexNo)) {
+                        priceCategory = value.name;
+                        return ;
+                    }
+                });
+                return priceCategory;
             }
         };
         return vehicleEntranceModel;
