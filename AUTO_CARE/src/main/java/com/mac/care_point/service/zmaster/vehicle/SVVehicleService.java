@@ -35,4 +35,8 @@ public class SVVehicleService {
         return vehicleRepository.save(vehicle);
     }
 
+    MVehicle getVehicleByVehicleNo(String vehicleNo) {
+        return vehicleRepository.findVehicleByVehicleNo(vehicleNo);
+    }
+
 }

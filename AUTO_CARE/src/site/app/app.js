@@ -27,7 +27,8 @@
         "clientModule",
         "vehicleModule",
         "jobCardModule",
-        "subItemModule"
+        "subItemModule",
+        "app"
 
     ]);
 
@@ -50,6 +51,11 @@
                         .when("/login", {
                             templateUrl: "app/system/login/login.html"
                         })
+                        //Pagination Test
+//                        .when("/pagination/pagination-test", {
+//                            templateUrl: "app/master/pagination/pagination.html",
+//                            controller: "ExampleController"
+//                        })
                         //daily-check-list
                         .when("/service/daily-check-list", {
                             templateUrl: "app/service/daily-check-list/daily-check-list.html",
@@ -60,9 +66,14 @@
                             templateUrl: "app/service/employee-assignment/employee-assignment.html",
                             controller: "employeeAssignmentController"
                         })
-                        //vehicle-entrance
+                        //vehicle-entrance-test
                         .when("/service/vehicle-entrance", {
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
+                            controller: "vehicleEntranceController"
+                        })    
+                        //vehicle-entrance
+                        .when("/service/vehicle-entrance-test", {
+                            templateUrl: "app/service/vehicle-entrance/test/vehicle-entrance.html",
                             controller: "vehicleEntranceController"
                         })
                         //service-selection

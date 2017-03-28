@@ -66,7 +66,17 @@
                 vehicleEntranceService.vehicleSerachByIndex(indexNo)
                         .success(function (data) {
                             that.vehicleData = data;
-
+                            vehicleEntranceService.getClientByIndexNo(that.vehicleData.client)
+                                    .success(function (data) {
+                                        that.clientData = data;
+                                    });
+                        });
+            },
+            vehicleSerachByVehicleNo: function (vehicleNo) {
+                var that = this;
+                vehicleEntranceService.vehicleSerachByVehicleNo(vehicleNo)
+                        .success(function (data) {
+                            that.vehicleData = data; 
                             vehicleEntranceService.getClientByIndexNo(that.vehicleData.client)
                                     .success(function (data) {
                                         that.clientData = data;
@@ -101,7 +111,6 @@
             updateClientFromVehicle: function () {
                 var that = this;
                 this.vehicleData.client = that.clientData.indexNo;
-                this.vehicleData.type = "NORMAL";
                 console.log(that.clientData);
                 console.log(that.vehicleData);
                 var defer = $q.defer();
@@ -118,6 +127,7 @@
             newClient: function () {
                 var that = this;
                 var defer = $q.defer();
+                this.clientData.type = "NEW";
                 vehicleEntranceService.newClient(JSON.stringify(this.clientData))
                         .success(function (data) {
                             that.clientData = data;

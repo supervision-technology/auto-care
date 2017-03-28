@@ -12,6 +12,9 @@
         this.vehicleSerachByIndex = function (indexNo){
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/search-vehicle/" + indexNo);
         };
+        this.vehicleSerachByVehicleNo = function (vehicleNo){
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/search-vehicle-vehicleNo/" + vehicleNo);
+        };
         this.getClientByIndexNo = function (client){
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/client/search-client/" + client);
         };
