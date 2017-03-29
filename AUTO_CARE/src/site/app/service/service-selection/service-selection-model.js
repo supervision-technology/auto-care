@@ -15,6 +15,7 @@
                     itemUnitList: [],
                     pendingJobCards: [],
                     jobItemList: [],
+
                     constructor: function () {
                         var that = this;
                         this.data = ServiceSelectionModelFactory.newData();
@@ -38,38 +39,40 @@
                                     that.itemUnits = data;
                                 });
                     },
-                    clear: function () {
-
-                    },
-//                    getItemsByPriceCategory: function (priceCategory) {
-//                        var that = this;
-//                        var defer = $q.defer();
-//                        ServiceSelectionService.loadItemsByPriceCategory()
-//                                .success(function (data) {
-//                                    that.items = [];
-//                                    that.items = data;
-//                                    defer.resolve();
-//                                })
-//                                .error(function () {
-//                                    that.items = [];
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
-//                    },
-                    addPackageAndServiceItem: function (item, type, jobCard) {
+                    addPackageAndServiceItem: function (item, type, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
-                        this.data = ServiceSelectionModelFactory.newData();
-                        that.data.quantity = 1;
-                        that.data.price = item.salePriceNormal;
-                        that.data.value = item.salePriceNormal;
-                        that.data.jobCard = jobCard;
-                        that.data.item = item.indexNo;
 
-                        if (type === "PACKAGE_ITEM") {
-                            this.data.package = 1;
+                        this.data = ServiceSelectionModelFactory.newData();
+                        if (vehicleType === "REGISTER") {
+                            //value change
+                            that.data.quantity = 1;
+                            that.data.price = item.salePriceRegister;
+                            that.data.value = item.salePriceRegister;
+
+                            that.data.jobCard = jobCard;
+                            that.data.item = item.indexNo;
+
+                            if (type === "PACKAGE_ITEM") {
+                                this.data.package = 1;
+                            } else {
+                                this.data.package = 0;
+                            }
+
                         } else {
-                            this.data.package = 0;
+                            //value change
+                            that.data.quantity = 1;
+                            that.data.price = item.salePriceNormal;
+                            that.data.value = item.salePriceNormal;
+
+                            that.data.jobCard = jobCard;
+                            that.data.item = item.indexNo;
+
+                            if (type === "PACKAGE_ITEM") {
+                                this.data.package = 1;
+                            } else {
+                                this.data.package = 0;
+                            }
                         }
 
                         ServiceSelectionService.saveJobItems(this.data)
@@ -83,15 +86,25 @@
                                 });
                         defer.promise;
                     },
-                    addNormalItem: function (item, qty, jobCard) {
+                    addNormalItem: function (item, qty, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
                         this.data = ServiceSelectionModelFactory.newData();
-                        that.data.quantity = qty;
-                        that.data.price = item.salePriceNormal;
-                        that.data.value = qty * item.salePriceNormal;
-                        that.data.item = item.indexNo;
-                        that.data.jobCard = jobCard;
+                        if (vehicleType === "REGISTER") {
+                            //value change
+                            that.data.quantity = qty;
+                            that.data.price = item.salePriceRegister;
+                            that.data.value = qty * item.salePriceRegister;
+                            that.data.item = item.indexNo;
+                            that.data.jobCard = jobCard;
+                        } else {
+                            //value change
+                            that.data.quantity = qty;
+                            that.data.price = item.salePriceNormal;
+                            that.data.value = qty * item.salePriceNormal;
+                            that.data.item = item.indexNo;
+                            that.data.jobCard = jobCard;
+                        }
 
                         ServiceSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
@@ -104,15 +117,26 @@
                                 });
                         defer.promise;
                     },
-                    addItemUnit: function (itemUnit, qty, jobCard) {
+                    addItemUnit: function (itemUnit, qty, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
+                        
                         this.data = ServiceSelectionModelFactory.newData();
-                        that.data.quantity = 1;
-                        that.data.price = itemUnit.salePriceNormal;
-                        that.data.value = itemUnit.salePriceNormal;
-                        that.data.itemUnit = itemUnit.indexNo;
-                        that.data.jobCard = jobCard;
+                        var itemUnitData = that.itemUnitData(itemUnit);
+                        
+                        if (vehicleType === "REGISTER") {
+                            that.data.quantity = qty;
+                            that.data.price = itemUnitData.salePriceRegister;
+                            that.data.value = parseFloat(qty * itemUnitData.salePriceRegister);
+                            that.data.itemUnit = itemUnitData.indexNo;
+                            that.data.jobCard = jobCard;
+                        } else {
+                            that.data.quantity = qty;
+                            that.data.price = itemUnitData.salePriceNormal;
+                            that.data.value = parseFloat(qty * itemUnitData.salePriceNormal);
+                            that.data.itemUnit = itemUnitData.indexNo;
+                            that.data.jobCard = jobCard;
+                        }
 
                         ServiceSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
@@ -178,19 +202,15 @@
                                 });
                         return defer.promise;
                     },
-                    getItemUnits: function (indexNo, packageCategory) {
-                        var defer = $q.defer();
-                        var that = this;
-                        ServiceSelectionService.getItemUnits(indexNo, packageCategory)
-                                .success(function (data) {
-                                    that.itemUnitList = [];
-                                    that.itemUnitList = data;
-                                    defer.resolve();
-                                })
-                                .error(function () {
-                                    defer.reject();
-                                });
-                        return defer.promis;
+                    getItemUnits: function (item, priceCategory) {
+                        var data = [];
+                        angular.forEach(this.itemUnits, function (values) {
+                            if (values.item === parseInt(item) && values.priceCategory === parseInt(priceCategory)) {
+                                data.push(values);
+                                return;
+                            }
+                        });
+                        return data;
                     },
                     itemData: function (indexNo) {
                         var data = "";
@@ -235,7 +255,7 @@
                     duplicateItemUnitCheck: function (itemUnit) {
                         var data;
                         angular.forEach(this.jobItemList, function (values) {
-                            if (values.itemUnit === parseInt(itemUnit.indexNo)) {
+                            if (values.itemUnit === parseInt(itemUnit)) {
                                 data = values;
                                 return;
                             }

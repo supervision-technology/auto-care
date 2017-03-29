@@ -3,48 +3,52 @@
     angular.module("serviceSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, ServiceSelectionModel, Notification) {
+            .controller("serviceSelectionController", function ($scope, ServiceSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ServiceSelectionModel();
                 $scope.ui = {};
 
+                //variables pass data to methods
                 $scope.selectedJobCardIndexNo = null;
                 $scope.selectVehicleType = null;
                 $scope.selectVehiclePriceCategory = null;
 
-                $scope.ui.selectedJobCardRow = function ($index, jobCard) {
-                    $scope.selectedJobCardRow = $index;
+                $scope.ui.selectedJobCardRow = function (jobCard) {
+                    //job card seletion
                     $scope.selectedJobCardIndexNo = jobCard.indexNo;
+
+                    //get vehicle type and price category
                     $scope.selectVehicleType = $scope.model.vehicleData(jobCard.vehicle).type;
                     $scope.selectVehiclePriceCategory = jobCard.priceCategory;
+
+                    //get job card history
                     $scope.model.getJobItemHistory(jobCard.indexNo);
+
+                    //clear position
+                    $scope.ui.viewPositionClear();
                 };
 
-                $scope.packageSelectionDetail = function ($index, package) {
-                    //get package items
+                $scope.ui.viewPositionClear = function () {
+                    $scope.selectPackagePosition = null;
+ 
+                };
+
+                //get package items
+                $scope.viewPackageDetails = function ($index, package) {
+                    $scope.selectPackagePosition = null;
                     $scope.model.getPackageItems(package);
                     $scope.isVisible = $scope.isVisible === 0 ? true : false;
-                    $scope.selectPackagePosition = $scope.selectPackagePosition === $index ? -1 : $index;
+                    $scope.selectPackageItemPosition = $scope.selectPackageItemPosition === $index ? -1 : $index;
                 };
 
-                $scope.ui.serviceSelectionDetail = function ($index, service) {
-                    //get item units
-                    $scope.model.getItemUnits(service, $scope.selectVehiclePriceCategory);
-                    $scope.isVisible = $scope.isVisible === 0 ? true : false;
-                    $scope.selectServicePosition = $scope.selectServicePosition === $index ? -1 : $index;
+                $scope.ui.getItemUnits = function ($index, package) {
+                    return $scope.model.getItemUnits(package, $scope.selectVehiclePriceCategory);
                 };
 
-                $scope.ui.itemSelectionDetail = function ($index, item) {
-                    //get item units
-                    $scope.model.getItemUnits(item, $scope.selectVehiclePriceCategory);
-                    $scope.isVisible = $scope.isVisible === 0 ? true : false;
-                    $scope.selectItemPosition = $scope.selectItemPosition === $index ? -1 : $index;
-                };
-
-                $scope.addPackageAndServiceItem = function (item, type) {
+                $scope.ui.addPackageAndServiceItem = function (item, type) {
                     if ($scope.selectedJobCardIndexNo) {
                         var itemStatus = $scope.model.duplicateItemCheck(item);
                         if (angular.isUndefined(itemStatus)) {
-                            $scope.model.addPackageAndServiceItem(item, type, $scope.selectedJobCardIndexNo);
+                            $scope.model.addPackageAndServiceItem(item, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
                         } else {
                             Notification.error("this item is allrday exsist");
                         }
@@ -53,11 +57,11 @@
                     }
                 };
 
-                $scope.addNormalItem = function (item, qty) {
+                $scope.ui.addNormalItem = function (item, qty) {
                     if ($scope.selectedJobCardIndexNo) {
                         var itemStatus = $scope.model.duplicateItemCheck(item);
                         if (angular.isUndefined(itemStatus)) {
-                            $scope.model.addNormalItem(item, qty, $scope.selectedJobCardIndexNo);
+                            $scope.model.addNormalItem(item, qty, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
                         } else {
                             Notification.error("this item is allrday exsist");
                         }
@@ -66,11 +70,11 @@
                     }
                 };
 
-                $scope.addItemUnit = function (itemUnit, type) {
+                $scope.ui.addItemUnit = function (itemUnit, type) {
                     if ($scope.selectedJobCardIndexNo) {
                         var itemStatus = $scope.model.duplicateItemUnitCheck(itemUnit);
                         if (angular.isUndefined(itemStatus)) {
-                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo);
+                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
                         } else {
                             Notification.error("this item is allrday exsist");
                         }
@@ -80,7 +84,10 @@
                 };
 
                 $scope.ui.deleteSelectDetails = function ($index) {
-                    $scope.model.deleteSelectDetails($index);
+                    ConfirmPane.dangerConfirm("Do you sure want to delete item")
+                            .confirm(function () {
+                                $scope.model.deleteSelectDetails($index);
+                            });
                 };
 
             });

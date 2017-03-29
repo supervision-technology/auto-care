@@ -4,7 +4,7 @@ table.square-table{
     width:100%;
 
     thead{
-        font-weight: 500;
+    
     }
 
     tbody{
@@ -17,7 +17,6 @@ table.square-table{
 
     th{
         padding: 0 15px 0 15px;
-        text-transform: uppercase;
     }
 
     td{
@@ -37,11 +36,21 @@ table.square-table{
 
     tbody tr .btn{
         border-color: transparent;
-        color: $primary-color !important;
+        color: $light-font-color !important;
     }
 
-    tbody tr .btn-primary{
-        background: $light-font-color !important;
+    .btn-primary{
+        background: $primary-color !important;
+    }
+    .btn-success{
+        background: $success-color !important;
+    }
+
+    .btn-danger{
+        background: $danger-color !important;
+    }
+    .btn-default{
+        background: $default-color !important;
     }
 
     /*---- table selection---*/
