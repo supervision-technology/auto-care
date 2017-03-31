@@ -21,6 +21,9 @@
         this.saveJob = function (data){
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/job-card/save-job-card" , data);
         };
+        this.getJobCard = function (indexNo){
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-client-history/" + indexNo);
+        };
         this.updateVehicle = function (data){
             return $http.post(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/save-vehicle" , data);
         };

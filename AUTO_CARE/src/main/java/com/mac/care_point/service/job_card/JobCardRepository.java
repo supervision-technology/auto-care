@@ -24,6 +24,6 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
     @Query(value = "SELECT MAX(number)FROM t_job_card WHERE branch=:branch" , nativeQuery = true)
     public  Integer getMaximumNumberByBranch (@Param("branch")Integer branch);
     
-    
-        
+    public List<JobCard> findJobCardByClient(Integer indexNo);
+
 }

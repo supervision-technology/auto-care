@@ -18,5 +18,5 @@ public interface SVVehicleRepository extends JpaRepository<MVehicle, Integer>{
     public List<MVehicle> findVehicleByIndexNo(Integer indexNo);
 
     public MVehicle findVehicleByVehicleNo(String vehicleNo);
-            
+ 
 }

@@ -45,26 +45,7 @@
 //                    }
 //                };
 //
-//                $scope.validateVehicleData = function () {
-//                    if (!$scope.model.vehicleData.vehicleNo) {
-//                        Notification.error("Please Input Vehicle No");
-//                        return false;
-//                    } else if (!$scope.model.vehicleData.vehicleType) {
-//                        Notification.error("Please Input Vehicle Type");
-//                        return false;
-//                    } else if (!$scope.model.vehicleData.chasisNo) {
-//                        Notification.error("Please Input Chassis No");
-//                        return false;
-//                    } else if (!$scope.model.vehicleData.priceCategory) {
-//                        Notification.error("Please Input Price Category");
-//                        return false;
-//                    } else if ($scope.model.vehicleData.vehicleNo
-//                            && $scope.model.vehicleData.vehicleType
-//                            && $scope.model.vehicleData.chasisNo
-//                            && $scope.model.vehicleData.priceCategory) {
-//                        return true;
-//                    }
-//                };
+//                
 //
 //                $scope.ui.saveJobCard = function () {
 //                    //ex client
@@ -268,3 +249,61 @@
 ////                $scope.ui.init();
 ////            });
 ////}());
+
+//                $scope.ui.next = function (ui) {
+//                    if (ui === 'ui2') {
+//                        $scope.ui.changeUi = 'ui2';
+//                        var vehicleStatus = $scope.model.vehicle($scope.vehicleNo);
+//                        if (angular.isUndefined(vehicleStatus)) {
+//                            $scope.ui.changeUi = 'ui2';
+//                            if (angular.isUndefined($scope.model.clientData.indexNo)) {
+//                                $scope.model.newClient()
+//                                        .then(function (data) {
+//                                            $scope.model.clientData = data;
+//                                            Notification.success("New client added success !!!")
+//                                                    .then(function () {
+//                                                        $scope.model.updateClientFromVehicle()
+//                                                                .then(function () {
+//                                                                    Notification.success("New vehicle added and client old assing to vehicle success !!!");
+//                                                                }, function () {
+//                                                                    Notification.error("New vehicle added and client old assing to vehicle Fail !!!");
+//                                                                });
+//                                                    }, function () {
+//                                                        Notification.error("sssssssssssddddddddddddddddddddSsssss");
+//                                                    });
+//                                            $scope.ui.changeUi = 'ui3';
+//                                        }, function () {
+//                                            Notification.error("New client added fail !!!");
+//                                        });
+//                            } else {
+//                                $scope.ui.changeUi = 'ui3';
+//                                $scope.model.updateClientFromVehicle()
+//                                        .then(function () {
+//                                            Notification.success("New vehicle added and client old assing to vehicle success !!!");
+//                                        }, function () {
+//
+//                                        });
+//                            }
+//                        }
+//                        $scope.ui.changeUi = 'ui2';
+//                        $scope.model.vehicleSerachByVehicleNo($scope.vehicleNo);
+//
+//                    } else if (ui === 'ui3') {
+//                        $scope.ui.changeUi = 'ui3';
+//                        $scope.ui.saveClientAndAssingVehicle();
+//                    } else if (ui === 'ui4') {
+//                        $scope.ui.saveJobCard();
+//                    }
+//                };
+                
+                
+                
+//                else {
+//                                $scope.ui.changeUi = 'ui3';
+//                                $scope.model.updateClientFromVehicle()
+//                                        .then(function () {
+//                                            Notification.success("New vehicle added and client old assing to vehicle success !!!");
+//                                        }, function () {
+//
+//                                        });
+//                            }

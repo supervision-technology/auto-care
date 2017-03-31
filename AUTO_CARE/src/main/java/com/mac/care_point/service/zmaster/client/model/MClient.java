@@ -63,11 +63,6 @@ public class MClient implements Serializable{
 
     @Basic(optional = false)
     @Size(min = 1, max = 25)
-    @Column(name = "type")
-    private String type;
-
-    @Basic(optional = false)
-    @Size(min = 1, max = 25)
     @Column(name = "nic")
     private String nic;
 

@@ -30,6 +30,10 @@ public class JobCardService {
         return jobCardRepository.findByStatus(PENDING_STATUS);
     }
     
+    public List<JobCard> getClientHistory(Integer indexNo) {
+        return jobCardRepository.findJobCardByClient(indexNo);
+    }
+    
 
     public JobCard saveJobCard(JobCard jobCard) {
         if (jobCard.getIndexNo() == null) {
@@ -39,11 +43,7 @@ public class JobCardService {
             }
             jobCard.setNumber(maxNo + 1);
         }
-        System.out.println(jobCard.getBranch());
-        System.out.println(jobCard.getClient());
-        System.out.println(jobCard.getIndexNo());
-        System.out.println(jobCard.getNumber());
-        System.out.println(jobCard.getStatus());
+
         return jobCardRepository.save(jobCard);
     }
 

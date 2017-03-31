@@ -79,6 +79,7 @@ public class MVehicle implements Serializable {
     @Column(name = "price_category")
     private Integer priceCategory;
 
+
     @Column(name = "type")
     private String type;
 
