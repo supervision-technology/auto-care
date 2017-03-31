@@ -6,17 +6,7 @@
                 $scope.model = new vehicleEntranceModel();
 
                 $scope.ui = {};
-                $scope.ui.mode;
 
-                $scope.ui.edit = function () {
-                    $scope.ui.mode = "EDIT";
-                };
-                $scope.ui.clientEdit = function () {
-                    $scope.ui.mode = "EDIT";
-                };
-                $scope.ui.vehicleEdit = function () {
-                    $scope.ui.mode = "EDITED";
-                };
 
                 $scope.ui.keyEvent = function (e) {
                     var code = e ? e.keyCode || e.which : 13;
@@ -27,7 +17,10 @@
 
                 $scope.ui.new = function () {
                     $scope.model.clientData = {};
-                    $scope.ui.edit();
+                    $scope.ui.clientDisabled = false;
+                };
+                $scope.ui.edit = function () {
+                    $scope.ui.clientDisabled = false;
                 };
 
                 $scope.ui.saveJobCard = function () {
@@ -95,10 +88,8 @@
                                             Notification.success("New client added success !!!");
                                             $scope.model.vehicleData = {};
                                             $scope.model.vehicleData.vehicleNo = vehicleNo;
-                                            console.log($scope.model.vehicleData.vehicleNo);
                                             $scope.ui.changeUi = 'ui3';
-                                            $scope.ui.edit();
-                                            $scope.model.loadJobCardByClientIndexNo($scope.model.clientData.indexNo)
+                                            $scope.ui.vehicleDisabled = false;
                                         }, function () {
                                             Notification.error("New client added fail !!!");
                                         });
@@ -109,11 +100,11 @@
                             $scope.model.vehicleData = {};
                             $scope.model.vehicleData.vehicleNo = vehicleNo;
                             $scope.ui.changeUi = 'ui3';
-                            $scope.ui.edit();
+
+//                            $scope.ui.clientEdit();
                         }
                         //vehicle thiyenawanm
                     } else {
-
                         if (angular.isUndefined($scope.model.clientData.indexNo)) {
                             if ($scope.validateClient()) {
                                 $scope.model.newClient()
@@ -126,6 +117,9 @@
                             }
                         } else {
                             $scope.ui.changeUi = 'ui3';
+                            console.log($scope.model.clientData.indexNo);
+                            console.log("$scope.model.clientData.indexNo");
+                            $scope.model.loadJobCardByClientIndexNo($scope.model.clientData.indexNo);
                         }
                     }
 
@@ -143,7 +137,8 @@
                                                 $scope.model.clearModel();
                                                 $scope.vehicleNo = "";
                                                 $scope.ui.changeUi = 'ui1';
-
+                                                $scope.ui.clientDisabled = true;
+                                                $scope.ui.vehicleDisabled = true;
                                             }, function () {
                                                 Notification.error("Save job-card fail !!!");
                                             });
@@ -156,16 +151,22 @@
                 $scope.ui.secondStep = function () {
                     if ($scope.model.vehicle($scope.vehicleNo)) {
                         $scope.ui.changeUi = 'ui2';
+                        $scope.ui.vehicleDisabled = true;
+
                         $scope.model.vehicleSerachByVehicleNo($scope.vehicleNo);
                     } else {
                         $scope.ui.changeUi = 'ui2';
                         $scope.ui.new();
+                        $scope.ui.vehicleDisabled = false;
                     }
                 };
 
 
                 $scope.ui.init = function () {
                     $scope.ui.changeUi = 'ui1';
+                    $scope.ui.clientDisabled = true;
+                    $scope.ui.vehicleDisabled = true;
+
                 };
 
                 $scope.ui.init();

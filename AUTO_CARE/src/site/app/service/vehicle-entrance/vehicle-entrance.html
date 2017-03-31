@@ -15,15 +15,16 @@
             <div class="form-group col-xs-12">
                 <div class="col-xs-12">
                     <h1 class="text-center">Vehicle No : {{vehicleNo}}</h1>
+                    {{ui.clientDisabled}}
                 </div>
             </div>
             <div class="form-group col-xs-12">
                 <div class="row">
                     <div class="col-xs-4">
-                        <input ng-model="model.clientData.mobile" ng-readonly="ui.mode == EDIT" class="form-control input-lg" maxlength="10" placeholder="MOBILE NO.">
+                        <input ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" maxlength="10" placeholder="MOBILE NO.">
                     </div>
                     <div class="col-xs-5">
-                        <input type="text" ng-model="model.clientData.name" ng-readonly="ui.mode == EDIT" class="form-control input-lg" placeholder="NAME">
+                        <input type="text" ng-model="model.clientData.name" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="NAME">
                     </div>
                     <div class="col-xs-3">
                         <button class="btn btn-primary" style="width: 50px; height: 50px"  ng-click="ui.edit()"><span class="glyphicon glyphicon-edit"></span></button>
@@ -76,24 +77,24 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <label style="font-size: 20px">Vehicle No :</label>
-                        <input type="text" class="form-control input-lg" ng-disabled="ui.mode == EDIT" ng-model="model.vehicleData.vehicleNo" ><br>
+                        <input type="text" class="form-control input-lg"  ng-model="model.vehicleData.vehicleNo" ng-disabled="ui.vehicleDisabled"  ><br>
 
                         <label style="font-size: 20px">Chassis No :</label>
-                        <input type="text" class="form-control input-lg" ng-disabled="ui.mode == EDIT" ng-model="model.vehicleData.chasisNo" ><br>
+                        <input type="text" class="form-control input-lg"  ng-model="model.vehicleData.chasisNo" ng-disabled="ui.vehicleDisabled" ><br>
 
                         <label style="font-size: 20px">Current Milage :</label>
-                        <input type="text" class="form-control input-lg"  ng-model="model.vehicleData.lastMilage" ><br>
+                        <input type="text" class="form-control input-lg" ng-model="model.vehicleData.lastMilage" ><br>
                     </div>
 
                     <div class="col-xs-6">
                         <div>
                             <label style="font-size: 20px">Vehicle Type :</label>
-                            <select class="form-control input-lg" ng-options="vehicleType.indexNo as vehicleType.model for vehicleType in model.vehicleTypeList" ng-model="model.vehicleData.vehicleType" ng-disabled="ui.mode == EDIT">
+                            <select class="form-control input-lg" ng-options="vehicleType.indexNo as vehicleType.model for vehicleType in model.vehicleTypeList" ng-model="model.vehicleData.vehicleType" ng-disabled="ui.vehicleDisabled">
                             </select>
                         </div>
                         <div style="margin-top: 20px ">
                             <label style="font-size: 20px">Price Category :</label>
-                            <select class="form-control input-lg" ng-options="priceCategory.indexNo as priceCategory.name for priceCategory in model.priceCategoryList" ng-model="model.vehicleData.priceCategory" ng-disabled="ui.mode == EDIT" >
+                            <select class="form-control input-lg" ng-options="priceCategory.indexNo as priceCategory.name for priceCategory in model.priceCategoryList" ng-model="model.vehicleData.priceCategory" ng-disabled="ui.vehicleDisabled">
                             </select>
                         </div>
                         <div style="padding-top: 50px; padding-left: 300px">
@@ -113,9 +114,9 @@
                             <col style="width: 5%">
                             <thead class="background-dark">
                                 <tr>
-                                    <th style="font-size: 20px"><label>Mobile</label></th>
-                                    <th style="font-size: 20px"><label>Name</label></th>
-                                    <th style="font-size: 20px"><label>City</label> </th>
+                                    <th style="font-size: 20px"><label>Vehicle</label></th>
+                                    <th style="font-size: 20px"><label>In Mileage</label></th>
+                                    <th style="font-size: 20px"><label>Job Date {{ model.jobCardList.length}} </label> </th>
                                 </tr>
                             </thead>
                         </table>
@@ -127,12 +128,12 @@
                             <col style="width: 35%">
                             <col style="width: 5%">
                             <tbody>
-                                <tr ng-repeat="jobCard in model.jobCardList| filter:model.jobCard.indexNo | orderBy:'indexNo'">
-                                    <td style="font-size: 20px">{{jobCard.vehicle}}</td>
-                                    <td style="font-size: 20px">{{jobCard.in_mileage}}</td>
-                                    <td style="font-size: 20px">{{jobCard.date}}</td>
+                                <tr ng-repeat="job in model.jobCardList">
+                                    <td style="font-size: 20px">{{job.vehicle}}</td>
+                                    <td style="font-size: 20px">{{job.inMileage}}</td>
+                                    <td style="font-size: 20px">{{job.date}}</td>
                                     <td class="text-right" style="padding-left: 5px;">
-                                        <button class="btn btn-default" ng-click="ui.setParam(client)"><span class="glyphicon glyphicon-check"></span></button>
+                                        <!--<button class="btn btn-default" ng-click="ui.setParam(client)"><span class="glyphicon glyphicon-check"></span></button>-->
                                     </td>
                                 </tr>
                             </tbody>

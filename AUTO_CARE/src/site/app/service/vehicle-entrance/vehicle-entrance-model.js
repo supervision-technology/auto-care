@@ -54,7 +54,7 @@
                 var that =this;
                 vehicleEntranceService.getJobCard(indexNo)
                         .success(function (data){
-                            that.jobCardList =data;
+                            that.jobCardList = data;
                         });
             },
             loadVehicle: function () {
