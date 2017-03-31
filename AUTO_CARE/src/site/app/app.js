@@ -84,6 +84,12 @@
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
+                        
+                        //service-selection for job card entrance
+                        .when("/service/service-selection/:jobCardIndexNo", {
+                            templateUrl: "app/service/service-selection/service-selection.html",
+                            controller: "serviceSelectionController"
+                        })
                         //bay-assignment
                         .when("/service/bay-assignment", {
                             templateUrl: "app/service/bay-assignment/bay-assignment.html",

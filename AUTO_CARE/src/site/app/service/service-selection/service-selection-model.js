@@ -20,6 +20,11 @@
                         var that = this;
                         this.data = ServiceSelectionModelFactory.newData();
 
+                        ServiceSelectionService.pendingJobCards()
+                                .success(function (data) {
+                                    that.pendingJobCards = data;
+                                });
+                                
                         ServiceSelectionService.loadItems()
                                 .success(function (data) {
                                     that.items = data;
@@ -27,11 +32,6 @@
                         ServiceSelectionService.loadVehicles()
                                 .success(function (data) {
                                     that.vehicles = data;
-                                });
-
-                        ServiceSelectionService.pendingJobCards()
-                                .success(function (data) {
-                                    that.pendingJobCards = data;
                                 });
 
                         ServiceSelectionService.loadItemUnits()
@@ -84,7 +84,7 @@
                                 .error(function () {
                                     defer.reject();
                                 });
-                        defer.promise;
+                        return defer.promise;
                     },
                     addNormalItem: function (item, qty, jobCard, vehicleType) {
                         var defer = $q.defer();
@@ -115,15 +115,15 @@
                                 .error(function () {
                                     defer.reject();
                                 });
-                        defer.promise;
+                        return  defer.promise;
                     },
                     addItemUnit: function (itemUnit, qty, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
-                        
+
                         this.data = ServiceSelectionModelFactory.newData();
                         var itemUnitData = that.itemUnitData(itemUnit);
-                        
+
                         if (vehicleType === "REGISTER") {
                             that.data.quantity = qty;
                             that.data.price = itemUnitData.salePriceRegister;
@@ -147,7 +147,7 @@
                                 .error(function () {
                                     defer.reject();
                                 });
-                        defer.promise;
+                        return defer.promise;
                     },
                     getSelectItemTotal: function () {
                         var total = 0.0;

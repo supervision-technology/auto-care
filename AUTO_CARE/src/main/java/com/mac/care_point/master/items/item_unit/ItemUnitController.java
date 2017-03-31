@@ -37,9 +37,4 @@ public class ItemUnitController {
         itemUnitService.deleteItemUnits(indexNo);
         return indexNo;
     }
-
-    @RequestMapping(value = "/find-item-unit/{indexNo}/{priceCategory}", method = RequestMethod.GET)
-    public List<MItemUnits> findUtemUnitByItem(@PathVariable Integer indexNo,@PathVariable Integer priceCategory) {
-        return itemUnitService.findUtemUnitByItem(indexNo,priceCategory);
-    }
 }

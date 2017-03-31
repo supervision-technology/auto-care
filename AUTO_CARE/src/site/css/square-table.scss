@@ -42,6 +42,7 @@ table.square-table{
     .btn-primary{
         background: $primary-color !important;
     }
+    
     .btn-success{
         background: $success-color !important;
     }
@@ -55,7 +56,7 @@ table.square-table{
 
     /*---- table selection---*/
     .selected-row{
-        background-color:$primary-color !important;
+        background-color: $primary-color !important;
         color:white;
     }
 }

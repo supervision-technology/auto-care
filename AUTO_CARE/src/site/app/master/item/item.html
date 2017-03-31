@@ -30,7 +30,7 @@
                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.salePriceNormal" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Sale Price(S)*</label></td>
+                                <td><label class="control-label">Sale Price(R)*</label></td>
                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.salePriceRegister" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
@@ -94,7 +94,7 @@
                                         <label>S.Price(N)</label>
                                     </th>
                                     <th class="text-right">
-                                        <label>S.Price(S)</label>
+                                        <label>S.Price(R)</label>
                                     </th>
                                     <th>
                                         <label>Type</label>
@@ -142,7 +142,7 @@
                         <tbody>
                             <tr>
                                 <td><label class="control-label">Item*</label></td>
-                                <td><input class="form-control" ng-model="model.itemUnitData.item" uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemLable($model);" typeahead-on-select="ui.getItemType($model);" ng-disabled="ui.mode !== 'EDIT'"></td>
+                                <td><input class="form-control" ng-model="model.itemUnitData.item" uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items | filter: { type: 'STOCK' } |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemLable($model);" typeahead-on-select="ui.getItemType($model);" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Item Type</label></td>
@@ -166,7 +166,7 @@
                                 <td><input smart-input="decimal" class="form-control" ng-model="model.itemUnitData.salePriceNormal" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">S.Price(S)*</label></td>
+                                <td><label class="control-label">S.Price(R)*</label></td>
                                 <td><input smart-input="decimal" class="form-control" ng-model="model.itemUnitData.salePriceRegister" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
@@ -202,7 +202,7 @@
                                         <label>S.Price(N)</label>
                                     </th>
                                     <th class="text-right">
-                                        <label>S.Price(S)</label>
+                                        <label>S.Price(R)</label>
                                     </th>
                                     <th class="text-right">
                                         <label>Qty</label>

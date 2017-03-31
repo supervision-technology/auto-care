@@ -25,10 +25,6 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/package-item/get-package-items/" + indexNo);
         };
 
-        this.getItemUnits = function (indexNo, priceCategory) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit/find-item-unit/" + indexNo + "/" + priceCategory);
-        };
-
         this.saveJobItems = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/job-item/save-job-items", data);
         };
