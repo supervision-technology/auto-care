@@ -6,26 +6,25 @@
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
             <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
                 <label>Make :</label>
-                <input class="form-control" id="MakeText" ng-model="model.vehicleType.make" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <input class="form-control" ng-model="model.vehicleType.make" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
                 <label>Model :</label>
-                <input class="form-control" id="modelText" ng-model="model.vehicleType.model" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <input class="form-control" ng-model="model.vehicleType.model" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
                 <label>Version :</label>
-                <input class="form-control" id="versionText "ng-model="model.vehicleType.version" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <input class="form-control" ng-model="model.vehicleType.version" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
                 <label>Fuel :</label>
-                <input class="form-control" id="fuelText" ng-model="model.vehicleType.fuelType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
-                <label>Price :</label>
-                <input class="form-control" id="priceText" ng-model="model.vehicleType.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory as (priceCategory.name) for priceCategory in model.vehicleType.priceCategoryList |filter:$viewValue|limitTo:10">
+                <input class="form-control" ng-model="model.vehicleType.fuelType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <label>Price Category :</label>
+                <input class="form-control" ng-model="model.vehicleType.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory.indexNo as (priceCategory.indexNo +' - '+priceCategory.name) for priceCategory in model.priceCategoryList |filter:$viewValue|limitTo:10" typeahead-input-formatter="priceCategoryLable($model);">
                 <label>Type:</label>
-                <input class="form-control" id="typeText" ng-model="model.vehicleType.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <input class="form-control" ng-model="model.vehicleType.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
             </div>
         </div>
     </div>
     <div class="col-xs-8 background-dark">
         <div class="row col-xs-5">
-            <input type="text" class="search-input" ng-model="model.search.model" placeholder="search">
+            <input type="text" class="search-input" ng-model="search" placeholder="search">
         </div>
         <table class="table-rounded">
-            <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
             <col style="width: 15%">
@@ -34,7 +33,7 @@
             <col style="width: 10%">
             <thead class="background-dark">
                 <tr> 
-                    
+
                     <th>
                         <label>Made</label>
                     </th>
@@ -48,9 +47,6 @@
                         <label>Fuel</label>
                     </th>
                     <th>
-                        <label>Price</label>
-                    </th>
-                    <th>
                         <label>Type</label>
                     </th>
                     <th>&nbsp;</th>
@@ -59,8 +55,7 @@
         </table>
         <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
             <table class="table-rounded"> 
-                
-                <col style="width: 15%">
+
                 <col style="width: 15%">
                 <col style="width: 15%">
                 <col style="width: 15%">
@@ -68,13 +63,11 @@
                 <col style="width: 15%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="vehicleType in model.vehicleTypeList| filter:{model:model.search.model} | orderBy:'indexNo'">                      
-                        
+                    <tr ng-repeat="vehicleType in model.vehicleTypeList| filter:{model:search} | orderBy:'indexNo'">                      
                         <td>{{vehicleType.make}}</td>
                         <td>{{vehicleType.model}}</td>
                         <td>{{vehicleType.version}}</td>
                         <td>{{vehicleType.fuelType}}</td>
-                        <td>{{vehicleType.priceCategory.name}}</td>
                         <td>{{vehicleType.type}}</td>
                         <td class="text-right" style="padding-left: 5px;">
                             <a class="btn btn-primary" ng-click="ui.edit(vehicleType, $index)"><span class="glyphicon glyphicon-edit"></span></a>
@@ -84,16 +77,9 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-xs-12 background-light" style="position: fixed;bottom: 1px;margin-left: -10px">
-            <ul uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" max-size="maxSize"
-                class="pagination-sm" boundary-link-numbers="true" rotate="false"></ul>
-        </div>
     </div>
 </div>
 <div class="fab-container">
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
-<!--<div class="index-content-footer">
-    content footer
-</div>-->

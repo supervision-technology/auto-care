@@ -33,12 +33,12 @@
                     var url = systemConfig.apiUrl + "/api/care-point/master/vehicle-type";
                     $http.get(url)
                             .success(function (data, status, headers) {
-                                callback(data)
+                                callback(data);
                             })
                             .error(function (data, status, headers) {
 
                             });
-                }
+                };
                 factory.lordPriceCategory = function (callback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/priceCategory";
                     $http.get(url)
@@ -158,11 +158,54 @@
                 $scope.ui.save = function () {
                     if ($scope.validateInput()) {
                         $scope.http.saveVehicle();
-                    }else{
-                        Notification.error("Please Input Details")
+                    } else {
+                        Notification.error("Please Input Details");
                     }
                 };
 
+                $scope.clientData = function (indexNo) {
+                    var client = "";
+                    angular.forEach($scope.model.clientList, function (value) {
+                        if (value.indexNo === indexNo) {
+                            client = value;
+                            return;
+                        }
+                    });
+                    return client;
+                };
+                
+                $scope.clientLable = function (indexNo) {
+                    var client;
+                    angular.forEach($scope.model.clientList, function (value) {
+                        if (value.indexNo === indexNo) {
+                            client = value.indexNo + ' - ' + value.name;
+                            return;
+                        }
+                    });
+                    return client;
+                };
+                
+                $scope.vehicleTypeLabel = function (indexNo){
+                    var vehicleType;
+                    angular.forEach($scope.model.vehicleTypeList, function (value){
+                        if (value.indexNo === indexNo) {
+                            vehicleType = value.type;
+                            return ;
+                        }
+                    });
+                    return vehicleType;
+                };
+                
+                $scope.priceCategoryLabel = function (indexNo){
+                    var priceCategory;
+                    angular.forEach($scope.model.priceCategoryList, function (value){
+                        if (value.indexNo === indexNo) {
+                            priceCategory = value.name;
+                            return ;
+                        }
+                    });
+                    return priceCategory;
+                };
 
                 //new function
                 $scope.ui.new = function () {

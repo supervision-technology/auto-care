@@ -44,15 +44,13 @@ public class Vehicle implements Serializable {
     @Column(name = "vehicle_no")
     private String vehicleNo;
 
-    @Column(name = "type")
-    private String type;
-
     @Column(name = "year")
     private Integer year;
 
     @Size(max = 50)
     @Column(name = "engine_no")
     private String engineNo;
+    
     @Size(max = 50)
     @Column(name = "chasis_no")
     private String chasisNo;
@@ -77,25 +75,26 @@ public class Vehicle implements Serializable {
     @Column(name = "colour")
     private String colour;
 
-    @JoinColumn(name = "client", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Client client;
+    @NotNull
+    @Column(name = "client")
+    private Integer client;
 
-    @JoinColumn(name = "vehicle_type", referencedColumnName = "index_no")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private VehicleType vehicleType;
+    @Column(name = "vehicle_type")
+    private Integer vehicleType;
+    
+    @NotNull
+    @Column(name = "price_category")
+    private Integer priceCategory;
 
-    @JoinColumn(name = "price_category", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private PriceCategory priceCategory;
+    @Column(name = "type")
+    private String type;
 
     public Vehicle() {
     }
 
-    public Vehicle(Integer indexNo, String vehicleNo, String type, Integer year, String engineNo, String chasisNo, Date insuranceExpiryDate, Date revenueExpiryDate, int lastMilage, Integer nextMilage, String colour, Client client, VehicleType vehicleType, PriceCategory priceCategory) {
+    public Vehicle(Integer indexNo, String vehicleNo, Integer year, String engineNo, String chasisNo, Date insuranceExpiryDate, Date revenueExpiryDate, int lastMilage, Integer nextMilage, String colour, Integer client, Integer vehicleType, Integer priceCategory, String type) {
         this.indexNo = indexNo;
         this.vehicleNo = vehicleNo;
-        this.type = type;
         this.year = year;
         this.engineNo = engineNo;
         this.chasisNo = chasisNo;
@@ -107,15 +106,7 @@ public class Vehicle implements Serializable {
         this.client = client;
         this.vehicleType = vehicleType;
         this.priceCategory = priceCategory;
-    }
-
-    public Vehicle(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public Vehicle(Integer indexNo, int lastMilage) {
-        this.indexNo = indexNo;
-        this.lastMilage = lastMilage;
+        this.type = type;
     }
 
     public Integer getIndexNo() {
@@ -198,27 +189,27 @@ public class Vehicle implements Serializable {
         this.colour = colour;
     }
 
-    public Client getClient() {
+    public Integer getClient() {
         return client;
     }
 
-    public void setClient(Client client) {
+    public void setClient(Integer client) {
         this.client = client;
     }
 
-    public VehicleType getVehicleType() {
+    public Integer getVehicleType() {
         return vehicleType;
     }
 
-    public void setVehicleType(VehicleType vehicleType) {
+    public void setVehicleType(Integer vehicleType) {
         this.vehicleType = vehicleType;
     }
 
-    public PriceCategory getPriceCategory() {
+    public Integer getPriceCategory() {
         return priceCategory;
     }
 
-    public void setPriceCategory(PriceCategory priceCategory) {
+    public void setPriceCategory(Integer priceCategory) {
         this.priceCategory = priceCategory;
     }
 

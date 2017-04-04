@@ -69,24 +69,21 @@ public class VehicleType implements Serializable {
     @Column(name = "type")
     private String type;
 
-    @JoinColumn(name = "price_category", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private PriceCategory priceCategory;
+    @NotNull
+    @Column(name = "price_category")
+    private Integer priceCategory;
 
     public VehicleType() {
     }
 
-    public VehicleType(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public VehicleType(Integer indexNo, String make, String model, String version, String fuelType, String type) {
+    public VehicleType(Integer indexNo, String make, String model, String version, String fuelType, String type, Integer priceCategory) {
         this.indexNo = indexNo;
         this.make = make;
         this.model = model;
         this.version = version;
         this.fuelType = fuelType;
         this.type = type;
+        this.priceCategory = priceCategory;
     }
 
     public Integer getIndexNo() {
@@ -137,37 +134,13 @@ public class VehicleType implements Serializable {
         this.type = type;
     }
 
-    public PriceCategory getPriceCategory() {
+    public Integer getPriceCategory() {
         return priceCategory;
     }
-
-    public void setPriceCategory(PriceCategory priceCategory) {
+    
+    public void setPriceCategory(Integer priceCategory) {
         this.priceCategory = priceCategory;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (indexNo != null ? indexNo.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof VehicleType)) {
-            return false;
-        }
-        VehicleType other = (VehicleType) object;
-        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.mac.gl.master.model.vehicleType.VehicleType[ indexNo=" + indexNo + " ]";
-    }
-
+    
 }
