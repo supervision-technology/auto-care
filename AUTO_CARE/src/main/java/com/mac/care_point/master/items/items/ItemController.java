@@ -45,4 +45,9 @@ public class ItemController {
     public void deletItem(@PathVariable Integer indexNo) {
         itemService.deleteItem(indexNo);
     }
+
+    @RequestMapping(value = "/find-item-by-category/{category}/{packageCategory}", method = RequestMethod.GET)
+    public List<MItem> findByCategory(@PathVariable Integer category,@PathVariable Integer packageCategory) {
+        return itemService.findByCategoryAndPriceCategory(category,packageCategory);
+    }
 }

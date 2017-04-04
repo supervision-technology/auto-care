@@ -1,17 +1,19 @@
 (function () {
     angular.module("appModule")
-            .factory("ServiceSelectionModel", function (ServiceSelectionService, ServiceSelectionModelFactory, $q) {
-                function ServiceSelectionModel() {
+            .factory("ItemSelectionModel", function (ItemSelectionService, ItemSelectionModelFactory, $q) {
+                function ItemSelectionModel() {
                     this.constructor();
                 }
 
-                ServiceSelectionModel.prototype = {
-                    
+                ItemSelectionModel.prototype = {
+
                     data: {},
+                    jobCardData: {},
                     //master data lists
                     items: [],
                     vehicles: [],
                     itemUnits: [],
+                    category: [],
 
                     packageItemList: [],
                     //select package items list
@@ -25,23 +27,24 @@
 
                     constructor: function () {
                         var that = this;
-                        this.data = ServiceSelectionModelFactory.newData();
+                        this.data = ItemSelectionModelFactory.newData();
+                        this.jobCardData = ItemSelectionModelFactory.newJobCardData();
 
-                        ServiceSelectionService.pendingJobCards()
-                                .success(function (data) {
-                                    that.pendingJobCards = data;
-                                });
-
-                        ServiceSelectionService.loadItems()
+                        ItemSelectionService.loadItems()
                                 .success(function (data) {
                                     that.items = data;
                                 });
-                        ServiceSelectionService.loadVehicles()
+                        ItemSelectionService.loadCategory()
+                                .success(function (data) {
+                                    that.category = data;
+                                });
+
+                        ItemSelectionService.loadVehicles()
                                 .success(function (data) {
                                     that.vehicles = data;
                                 });
 
-                        ServiceSelectionService.loadItemUnits()
+                        ItemSelectionService.loadItemUnits()
                                 .success(function (data) {
                                     that.itemUnits = data;
                                 });
@@ -50,7 +53,7 @@
                         var defer = $q.defer();
                         var that = this;
 
-                        this.data = ServiceSelectionModelFactory.newData();
+                        this.data = ItemSelectionModelFactory.newData();
                         if (vehicleType === "REGISTER") {
                             //value change
                             that.data.quantity = 1;
@@ -82,10 +85,10 @@
                             }
                         }
 
-                        ServiceSelectionService.saveJobItems(this.data)
+                        ItemSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
-                                    this.data = ServiceSelectionModelFactory.newData();
+                                    this.data = ItemSelectionModelFactory.newData();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -96,7 +99,7 @@
                     addNormalItem: function (item, qty, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
-                        this.data = ServiceSelectionModelFactory.newData();
+                        this.data = ItemSelectionModelFactory.newData();
                         if (vehicleType === "REGISTER") {
                             //value change
                             that.data.quantity = qty;
@@ -113,10 +116,10 @@
                             that.data.jobCard = jobCard;
                         }
 
-                        ServiceSelectionService.saveJobItems(this.data)
+                        ItemSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
-                                    this.data = ServiceSelectionModelFactory.newData();
+                                    this.data = ItemSelectionModelFactory.newData();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -128,7 +131,7 @@
                         var defer = $q.defer();
                         var that = this;
 
-                        this.data = ServiceSelectionModelFactory.newData();
+                        this.data = ItemSelectionModelFactory.newData();
                         var itemUnitData = that.itemUnitData(itemUnit);
 
                         if (vehicleType === "REGISTER") {
@@ -145,10 +148,10 @@
                             that.data.jobCard = jobCard;
                         }
 
-                        ServiceSelectionService.saveJobItems(this.data)
+                        ItemSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
-                                    this.data = ServiceSelectionModelFactory.newData();
+                                    this.data = ItemSelectionModelFactory.newData();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -167,7 +170,7 @@
                     deleteSelectDetails: function (index) {
                         var defer = $q.defer();
                         var that = this;
-                        ServiceSelectionService.deleteJobItems(this.jobItemList[index].indexNo)
+                        ItemSelectionService.deleteJobItems(this.jobItemList[index].indexNo)
                                 .success(function () {
                                     that.jobItemList.splice(index, 1);
                                     that.getSelectItemTotal();
@@ -179,17 +182,17 @@
                                 });
                         return defer.promise;
                     },
-                    getJobItemHistory: function (jobCard) {
+                    findJobCard: function (jobCard) {
                         var defer = $q.defer();
                         var that = this;
-                        ServiceSelectionService.getJobItemHistory(jobCard)
+                        ItemSelectionService.findJobCard(jobCard)
                                 .success(function (data) {
-                                    that.jobItemList = [];
-                                    angular.extend(that.jobItemList, data);
+                                    that.jobCardData = new ItemSelectionModelFactory.newJobCardData();
+                                    that.jobCardData = data;
                                     defer.resolve();
                                 })
                                 .error(function () {
-                                    that.jobItemList = [];
+                                    that.jobCardData = new ItemSelectionModelFactory.newJobCardData();
                                     defer.reject();
                                 });
                         return  defer.promise;
@@ -197,7 +200,7 @@
                     getPackageItems: function (indexNo) {
                         var defer = $q.defer();
                         var that = this;
-                        ServiceSelectionService.getPackageItems(indexNo)
+                        ItemSelectionService.getPackageItems(indexNo)
                                 .success(function (data) {
                                     that.packageItemList = [];
                                     that.packageItemList = data;
@@ -205,6 +208,21 @@
                                 })
                                 .error(function () {
                                     that.packageItemList = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    getItemsByCategory: function (category, priceCategory) {
+                        var defer = $q.defer();
+                        var that = this;
+                        ItemSelectionService.findByCategoryAndItems(category, priceCategory)
+                                .success(function (data) {
+                                    that.filterItems = [];
+                                    that.filterItems = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.filterItems = [];
                                     defer.reject();
                                 });
                         return defer.promise;
@@ -222,7 +240,7 @@
                     getItemByPriceCategory: function (priceCategory) {
                         var that = this;
                         this.filterItems = [];
-                        angular.forEach(this.items, function (values) {
+                        angular.forEach(this.filterItems, function (values) {
                             if (values.priceCategory === parseInt(priceCategory)) {
                                 that.filterItems.push(values);
                                 return;
@@ -281,6 +299,6 @@
                         return data;
                     }
                 };
-                return ServiceSelectionModel;
+                return ItemSelectionModel;
             });
 }());

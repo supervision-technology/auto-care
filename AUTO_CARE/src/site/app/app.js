@@ -7,6 +7,7 @@
         "dailyCheckListModule",
         "employeeAssignmentModule",
         "serviceSelectionModule",
+        "itemSelectionModule",
         "bayAssignmentModule",
         "finalCheckListModule",
         "supervisorSelectionModule",
@@ -85,11 +86,23 @@
                             controller: "serviceSelectionController"
                         })
                         
+                        .when("/service/item-selection", {
+                            templateUrl: "app/service/item-selection/item-selection.html",
+                            controller: "itemSelectionController"
+                        })
+                        
+                        .when("/service/item-selection/:jobCardIndexNo", {
+                            templateUrl: "app/service/item-selection/item-selection.html",
+                            controller: "itemSelectionController"
+                        })
+                        
                         //service-selection for job card entrance
                         .when("/service/service-selection/:jobCardIndexNo", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
+                        
+             
                         //bay-assignment
                         .when("/service/bay-assignment", {
                             templateUrl: "app/service/bay-assignment/bay-assignment.html",

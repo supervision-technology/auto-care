@@ -1,33 +1,17 @@
 (function () {
 //module
-    angular.module("serviceSelectionModule", ['ui.bootstrap']);
+    angular.module("itemSelectionModule", ['ui.bootstrap']);
     //controller
-    angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, $routeParams, ServiceSelectionModel, ServiceSelectionService, Notification, ConfirmPane) {
+    angular.module("itemSelectionModule")
+            .controller("itemSelectionController", function ($scope, $routeParams, ItemSelectionModel, Notification, ConfirmPane) {
 
-                $scope.model = new ServiceSelectionModel();
+                $scope.model = new ItemSelectionModel();
                 $scope.ui = {};
 
                 //variables pass data to methods
                 $scope.selectedJobCardIndexNo = null;
                 $scope.selectVehicleType = null;
                 $scope.selectVehiclePriceCategory = null;
-
-                $scope.ui.selectedJobCardRow = function (jobCard) {
-
-                    //job card seletion
-                    $scope.selectedJobCardIndexNo = jobCard.indexNo;
-
-                    //get vehicle type and price category
-                    $scope.selectVehicleType = $scope.model.vehicleData(jobCard.vehicle).type;
-                    $scope.selectVehiclePriceCategory = jobCard.priceCategory;
-
-                    //get price category items
-                    $scope.model.getItemByPriceCategory($scope.selectVehiclePriceCategory);
-                  
-                    //get job card history
-                    $scope.model.getJobItemHistory(jobCard.indexNo);
-                };
 
                 //get package items
                 $scope.viewPackageDetails = function ($index, package) {
@@ -36,7 +20,7 @@
                     $scope.isVisible = $scope.isVisible === 0 ? true : false;
                     $scope.selectPackageItemPosition = $scope.selectPackageItemPosition === $index ? -1 : $index;
                 };
-                
+
                 //get item units by drop dowsn list
                 $scope.ui.getItemUnits = function ($index, package) {
                     return $scope.model.getItemUnits(package, $scope.selectVehiclePriceCategory);
@@ -106,18 +90,31 @@
                             });
                 };
 
-                $scope.init = function () {
+                $scope.ui.getItemsByCategory = function (details) {
+                    $scope.model.getItemsByCategory(details, $scope.model.jobCardData.priceCategory);
+                };
+
+                $scope.ui.getItemData = function () {
                     var jobCardIndexNo = parseInt($routeParams.jobCardIndexNo);
                     if (jobCardIndexNo) {
-                        ServiceSelectionService.pendingJobCards()
-                                .success(function (data) {
-                                    angular.forEach(data, function (values) {
-                                        if (values.indexNo === jobCardIndexNo) {
-                                            $scope.ui.selectedJobCardRow(values);
-                                        }
-                                    });
-                                });
+                        var jobCard = $scope.model.findJobCard(jobCardIndexNo);
+                        //job card seletion
+                        $scope.selectedJobCardIndexNo = jobCard.indexNo;
+
+                        //get vehicle type and price category
+                        $scope.selectVehicleType = $scope.model.vehicleData(jobCard.vehicle).type;
+                        $scope.selectVehiclePriceCategory = jobCard.priceCategory;
+
+                        //get price category items
+                        $scope.model.getItemByPriceCategory($scope.selectVehiclePriceCategory);
+
+                        //get job card history
+                        $scope.model.getJobItemHistory(jobCard.indexNo);
                     }
+                };
+
+                $scope.init = function () {
+
                 };
 
                 $scope.init();

@@ -17,4 +17,6 @@ public interface ItemRepository extends JpaRepository<MItem, Integer> {
 
     public List<MItem> findByType(String type);
 
+    public List<MItem> findByCategoryAndPriceCategory(Integer category,Integer packageCategory);
+
 }

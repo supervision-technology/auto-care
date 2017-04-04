@@ -32,6 +32,11 @@ public class JobCardController {
         return jobCardService.getClientHistory(indexNo);
     }
 
+    @RequestMapping(value = "/get-job-card/{indexNo}", method = RequestMethod.GET)
+    public JobCard getJobCard(@PathVariable Integer indexNo) {
+        return jobCardService.getJobCard(indexNo);
+    }
+
     @RequestMapping(value = "/get-pending-job-cards", method = RequestMethod.GET)
     public List<JobCard> getPendingJobCard() {
         return jobCardService.getPendingJobCard();

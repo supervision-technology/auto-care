@@ -1,0 +1,161 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body ">
+
+    <div class="col-xs-4 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            <table class="square-table background-dark">
+                <col style="width: 80%;"/>
+                <col style="width: 20%;"/>
+                <thead>
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
+                <table class="square-table">
+                    <col style="width: 100%;"/>
+                    <tbody>
+                        <tr class="background-light" ng-repeat="detils in model.category">
+                            <td class="text-bold">{{detils.name}}</td>
+                            <td> <a ng-click="ui.getItemsByCategory(detils.indexNo);" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 background-light">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            <table class="square-table background-dark">
+                <col style="width: 80%;"/>
+                <col style="width: 20%;"/>
+                <thead>
+                    <tr>
+                        <th>CATEGORY</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
+                <div class="col-xs-8">
+                    <input type="text" class="search-input" placeholder="search" ng-model="searchItem">
+                </div>
+                <table class="square-table background-dark">
+                    <col style="width: 30%;"/>
+                    <col style="width: 40%;"/>
+                    <col style="width: 20%;"/>
+                    <col style="width: 10%;"/>
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>&nbsp;</th>
+                            <th class="text-center">QTY</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
+                    <table class="square-table">
+                        <col style="width: 30%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 20%;"/>
+                        <col style="width: 10%;"/>
+                        <tbody>
+                            <tr class="background-light" ng-repeat="detils in model.filterItems|filter: { type: 'STOCK' }|filter:{ name : searchItem}">
+                                <td class="text-bold">{{detils.name}}</td>
+                                <td ng-show="selectVehicleType === 'REGISTER' && !ui.getItemUnits($index, detils.indexNo).length">{{detils.salePriceRegister|number:2}}</td>
+                                <td ng-show="selectVehicleType === 'NORMAL' && !ui.getItemUnits($index, detils.indexNo).length">{{detils.salePriceNormal|number:2}}</td>
+                                <td ng-show="ui.getItemUnits($index, detils.indexNo).length"> 
+                                    <select class="form-control form-group-lg" ng-model="selectIemUnit" style="margin-top: 8px;">
+                                        <option  ng-show="selectVehicleType === 'NORMAL'" value="{{itemUnits.indexNo}}" ng-repeat=" itemUnits in ui.getItemUnits($index, detils.indexNo)">
+                                            {{itemUnits.name}}  -  {{ itemUnits.salePriceNormal|number:2}} 
+                                        </option>
+                                        <option  ng-show="selectVehicleType === 'REGISTER'" value="{{itemUnits.indexNo}}" ng-repeat=" itemUnits in ui.getItemUnits($index, detils.indexNo)">
+                                            {{itemUnits.name}}  -  {{ itemUnits.salePriceRegister|number:2}} 
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div range-spinner
+                                         range-min="1" 
+                                         range-step="1"  
+                                         range-max="15" 
+                                         range-default-value="0"
+                                         range-decimal-precision="1"				
+                                         range-model="qty"
+                                         accept-decimal="false"
+                                         name-of-field="rangeFieldName"
+                                         id-of-field="rangeFieldId">
+                                    </div>
+                                </td>
+                                <td ng-show="ui.getItemUnits($index, detils.indexNo).length"><a class="btn btn-success" ng-click="ui.addItemUnit(selectIemUnit, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                <td ng-show="!ui.getItemUnits($index, detils.indexNo).length"><a class="btn btn-primary" ng-click="ui.addNormalItem(detils, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            <input type="text" ng-model="model.jobCardData.indexNo" />
+            <input type="text" ng-model="model.jobCardData.priceCategory" />
+            <div style="height: 50px;" ng-show="model.jobItemList.length">
+                <table class="square-table table-rounded">
+                    <col style="width: 10%;"/>
+                    <col style="width: 40%;"/>
+                    <col style="width: 10%;"/>
+                    <col style="width: 35%;"/>
+                    <col style="width: 15%;"/>
+                    <col/>
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>SELECTIONS</th>
+                            <th class="text-right">QTY</th>
+                            <th class="text-center">AMOUNT</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="smart-scroll-y" style="height: calc(100vh - 91px);padding-left: 5px;" ng-show="model.jobItemList.length">
+                <table class="square-table background-dark">
+                    <col style="width: 10%;"/>
+                    <col style="width: 40%;"/>
+                    <col style="width: 10%;"/>
+                    <col style="width: 35%;"/>
+                    <col style="width: 15%;"/>
+                    <tbody ng-repeat="selections in model.jobItemList">
+                        <tr>
+                            <td>
+                                <!-- item items-->
+                                <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
+                                <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
+                                <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
+                                <!-- item units-->
+                                <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">S</label>
+                            </td>
+                            <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
+                            <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                            <td class="text-right"><small>{{selections.quantity}}</small></td>
+                            <td class="text-right"><small>{{selections.value|number:2}}</small></td>
+                            <td><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 64px);padding-bottom: 10px;" ng-hide="model.jobItemList.length">
+                <h1>ITEM NOT FOUND :( </h1>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-click="ui.getItemData();"><i class="glyphicon glyphicon-plus"></i></a>
+</div>

@@ -22,7 +22,7 @@ public class ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
-    
+
     public List<MItem> findAllItems() {
         return itemRepository.findAll();
     }
@@ -37,5 +37,9 @@ public class ItemService {
         } catch (Exception e) {
             throw new RuntimeException("cannot delete this item because there are details in other transaction");
         }
+    }
+
+    public List<MItem> findByCategoryAndPriceCategory(Integer category, Integer packageCategory) {
+        return itemRepository.findByCategoryAndPriceCategory(category, packageCategory);
     }
 }

@@ -37,7 +37,7 @@
                 };
                 factory.newJobCardData = function () {
                     var data = {
-                        "indexNo": null,
+                        "indexNo": 0,
                         "number": null,
                         "branch": null,
                         "date": null,
