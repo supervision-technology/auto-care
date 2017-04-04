@@ -40,7 +40,12 @@
                             && $scope.model.itemData.salePriceNormal
                             && $scope.model.itemData.salePriceRegister
                             && $scope.model.itemData.costPrice) {
-                        $scope.model.saveItem();
+                        $scope.model.saveItem()
+                                .then(function (){
+                                    Notification.success("Item save Success");
+                                },function (){
+                                    Notification.error("Item save Fail");
+                                });
                     }
                 };
 

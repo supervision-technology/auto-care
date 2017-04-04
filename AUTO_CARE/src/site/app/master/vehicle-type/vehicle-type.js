@@ -8,7 +8,7 @@
                 var factory = {};
 
                 // lord factory
-                factory.lordVehicleTypeFactory = function (callback) {
+                factory.lordVehicleType = function (callback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/vehicle-type";
 
                     $http.get(url)
@@ -65,17 +65,7 @@
 
     //controller
     angular.module("vehicleTypeModule")
-            .controller("vehicleTypeController", function ($scope, $log, vehicleTypeFactory, Notification, $timeout) {
-                $scope.totalItems = 64;
-                $scope.currentPage = 4;
-
-                $scope.setPage = function (pageNo) {
-                    $scope.currentPage = pageNo;
-                };
-
-                $scope.pageChanged = function () {
-                    $log.log('Page changed to: ' + $scope.currentPage);
-                };
+            .controller("vehicleTypeController", function ($scope, vehicleTypeFactory, Notification, $timeout) {
                 //data models 
                 $scope.model = {};
 
@@ -95,7 +85,7 @@
                 };
 
                 //------------------ validation functions ------------------------------
-                
+
                 $scope.validateInput = function () {
                     if ($scope.model.vehicleType.make && $scope.model.vehicleType.priceCategory && $scope.model.vehicleType.model && $scope.model.vehicleType.version && $scope.model.vehicleType.type && $scope.model.vehicleType.fuelType) {
                         return true;
@@ -103,7 +93,6 @@
                         return false;
                     }
                 };
-
 
                 //<-----------------http funtiion------------------->
                 $scope.http.saveVehicleType = function () {
@@ -127,7 +116,7 @@
 
                 $scope.http.deleteVehicleType = function (indexNo, index) {
                     vehicleTypeFactory.deleteVehicleTypeFactory(indexNo, function () {
-                        $scope.model.vehicleTypeList.splice(index,1);
+                        $scope.model.vehicleTypeList.splice(index, 1);
                         Notification.success("delete success");
                     });
                 };
@@ -157,12 +146,22 @@
 
                 //edit funtion
                 $scope.ui.edit = function (vehicleTypes, index) {
-                    console.log(vehicleTypes);
                     $scope.ui.mode = "EDIT";
                     $scope.model.vehicleType = vehicleTypes;
                     $scope.model.vehicleTypeList.splice(index, 1);
 
                     $scope.ui.focus();
+                };
+
+                $scope.priceCategoryLable = function (indexNo) {
+                    var priceCategory = "";
+                    angular.forEach($scope.model.priceCategoryList, function (value) {
+                        if (value.indexNo === indexNo) {
+                            priceCategory = value.name;
+                            return;
+                        }
+                    });
+                    return priceCategory;
                 };
 
 
@@ -174,11 +173,11 @@
                     $scope.model.reset();
 
                     vehicleTypeFactory.lordPriceCategory(function (data) {
-                        $scope.model.vehicleType.priceCategoryList = data;
+                        $scope.model.priceCategoryList = data;
                     });
 
                     //load vehicle type
-                    vehicleTypeFactory.lordVehicleTypeFactory(function (data) {
+                    vehicleTypeFactory.lordVehicleType(function (data) {
                         $scope.model.vehicleTypeList = data;
                     });
                 };

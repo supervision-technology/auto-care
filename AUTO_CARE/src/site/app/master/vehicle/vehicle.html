@@ -9,11 +9,11 @@
 
             <div class="col-xs-12" style="margin-top: 25px;">
                 <label>Client </label>
-                <input id="clientText" type="text" class="form-control" ng-model="model.vehicle.client" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="clientName as (clientName.name) for clientName in model.clientList |filter:$viewValue|limitTo:10" />
+                <input id="clientText" type="text" class="form-control" ng-model="model.vehicle.client" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="client.indexNo as (client.indexNo + ' - ' + client.name) for client in model.clientList |filter:$viewValue|limitTo:10" typeahead-input-formatter="clientLable($model)" />
                 <label>Vehicle No</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.vehicleNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Vehicle Type</label>
-                <input type="text" class="form-control" ng-model="model.vehicle.vehicleType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="vehicleType as (vehicleType.type) for vehicleType in model.vehicleTypeList |filter:$viewValue|limitTo:10"/>
+                <input type="text" class="form-control" ng-model="model.vehicle.vehicleType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="vehicleType.indexNo as (vehicleType.indexNo + ' - ' +vehicleType.type) for vehicleType in model.vehicleTypeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="vehicleTypeLabel($model)"/>
                 <label>Year</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.year" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Engine No</label>
@@ -21,9 +21,9 @@
                 <label>Chasis No</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.chasisNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Insurance Expiry Date</label>
-                <input type="date" class="form-control" ng-model="model.vehicle.insuranceExpiryDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <input smart-input='date' class="form-control" ng-model="model.vehicle.insuranceExpiryDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Revenue Expiry Date</label>
-                <input type="date" class="form-control" ng-model="model.vehicle.revenueExpiryDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <input smart-input='date' class="form-control" ng-model="model.vehicle.revenueExpiryDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Last Milage</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.lastMilage" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Next Milage</label>
@@ -31,7 +31,14 @@
                 <label>Colour</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.colour" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Price Category</label>
-                <input type="text" class="form-control" ng-model="model.vehicle.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory as (priceCategory.name) for priceCategory in model.priceCategoryList |filter:$viewValue|limitTo:10"/>        
+                <input type="text" class="form-control" ng-model="model.vehicle.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory.indexNo as (priceCategory.indexNo + ' - ' + priceCategory.name) for priceCategory in model.priceCategoryList | filter:$viewValue|limitTo:10" typeahead-input-formatter = "priceCategoryLabel($model)"/>        
+                <label>Type</label>
+                <select class="form-control" ng-model="model.vehicle.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                    <option value="NEW"> NEW </option>
+                    <option value="REGISTERED"> REGISTERED </option>
+                    <option value="NORMAL" > NORMAL </option>
+                </select>
+                <!--<input type="text" class="form-control" ng-model="model.vehicle.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />-->        
             </div>
         </div>
     </div>
@@ -68,7 +75,7 @@
                 <col style="width: 10%">
                 <tbody>
                     <tr ng-repeat="vehicle in model.vehicleList|filter :{name:model.search.name}">
-                        <td>{{vehicle.client.name}}</td>
+                        <td>{{clientData(vehicle.client).name}}</td>
                         <td>{{vehicle.vehicleNo}}</td>
                         <td>{{vehicle.engineNo}}</td>
                         <td>{{vehicle.lastMilage}}</td>

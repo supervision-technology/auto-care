@@ -33,16 +33,6 @@
                             <td><label>Address 03 :</label></td>
                             <td><input class="form-control" ng-model="model.client.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
                         </tr>
-                        <tr>
-                            <td><label>Type :</label></td>
-                            <td>   
-                                <select class="form-control" ng-model="model.client.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
-                                    <option value="NEW" selected>NEW</option>
-                                    <option value="REGISTER" selected>REGISTER</option>
-                                    <option value="NORMAL">NORMAL</option>
-                                </select>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -65,7 +55,6 @@
                             <th> <label>#</label> </th>
                             <th> <label>Name</label></th>
                             <th> <label>Nic</label></th>
-                            <th> <label>Type</label> </th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -120,22 +109,22 @@
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
 
-<!--    <ul ng-if="vm.pager.pages.length" class="pagination">
-        <li ng-class="{disabled:vm.pager.currentPage === 1}">
-            <a ng-click="vm.setPage(1)">First</a>
-        </li>
-        <li ng-class="{disabled:vm.pager.currentPage === 1}">
-            <a ng-click="vm.setPage(vm.pager.currentPage - 1)">Previous</a>
-        </li>
-        <li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
-            <a ng-click="vm.setPage(page)">{{page}}</a>
-        </li>               
-        <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-            <a ng-click="vm.setPage(vm.pager.currentPage + 1)">Next</a>
-        </li>
-        <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
-            <a ng-click="vm.setPage(vm.pager.totalPages)">Last</a>
-        </li>
-    </ul>-->
+    <!--    <ul ng-if="vm.pager.pages.length" class="pagination">
+            <li ng-class="{disabled:vm.pager.currentPage === 1}">
+                <a ng-click="vm.setPage(1)">First</a>
+            </li>
+            <li ng-class="{disabled:vm.pager.currentPage === 1}">
+                <a ng-click="vm.setPage(vm.pager.currentPage - 1)">Previous</a>
+            </li>
+            <li ng-repeat="page in vm.pager.pages" ng-class="{active:vm.pager.currentPage === page}">
+                <a ng-click="vm.setPage(page)">{{page}}</a>
+            </li>               
+            <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
+                <a ng-click="vm.setPage(vm.pager.currentPage + 1)">Next</a>
+            </li>
+            <li ng-class="{disabled:vm.pager.currentPage === vm.pager.totalPages}">
+                <a ng-click="vm.setPage(vm.pager.totalPages)">Last</a>
+            </li>
+        </ul>-->
 
 </div>

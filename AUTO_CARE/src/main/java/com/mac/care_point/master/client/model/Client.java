@@ -61,18 +61,13 @@ public class Client implements Serializable {
 
     @Basic(optional = false)
     @Size(min = 1, max = 25)
-    @Column(name = "type")
-    private String type;
-
-    @Basic(optional = false)
-    @Size(min = 1, max = 25)
     @Column(name = "nic")
     private String nic;
 
     public Client() {
     }
 
-    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String nic) {
+    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -80,7 +75,7 @@ public class Client implements Serializable {
         this.addressLine3 = addressLine3;
         this.mobile = mobile;
         this.branch = branch;
-        this.type = type;
+        
         this.nic = nic;
     }
 
@@ -138,14 +133,6 @@ public class Client implements Serializable {
 
     public void setBranch(int branch) {
         this.branch = branch;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getNic() {

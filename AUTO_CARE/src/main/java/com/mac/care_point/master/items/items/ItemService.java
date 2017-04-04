@@ -6,6 +6,7 @@
 package com.mac.care_point.master.items.items;
 
 import com.mac.care_point.master.items.items.model.MItem;
+import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,13 +23,29 @@ public class ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
-    
+
+    public MItem findByNameAndType(String name, String type) {
+        List<MItem> nameAndTypeList = itemRepository.findByNameAndType(name, type);
+        if (nameAndTypeList.isEmpty()) {
+            return null;
+        }
+        return nameAndTypeList.get(0);
+    }
+
     public List<MItem> findAllItems() {
         return itemRepository.findAll();
     }
 
     public MItem saveItem(MItem item) {
-        return itemRepository.save(item);
+        MItem item1 = findByNameAndType(item.getName(), item.getType());
+        if (item1 == null) {
+            return itemRepository.save(item);
+        } else {
+            if (item1.getName().equals(item.getName())) {
+                return itemRepository.save(item);
+            }
+            throw new DuplicateEntityException("This Item existing");
+        }
     }
 
     public void deleteItem(Integer indexNo) {
