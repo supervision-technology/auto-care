@@ -17,6 +17,7 @@
                         "sub_category": null,
                         "salePriceNormal": null,
                         "salePriceRegister": null,
+                        "priceCategory": null,
                         "branch": null
                     };
                     return data;

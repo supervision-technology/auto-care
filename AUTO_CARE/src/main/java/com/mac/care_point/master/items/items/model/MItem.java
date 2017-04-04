@@ -83,13 +83,16 @@ public class MItem implements Serializable {
     @Column(name = "sale_price_register")
     private short salePriceRegister;
 
+    @Column(name = "price_category")
+    private Integer priceCategory;
+
     @Column(name = "branch")
     private Integer branch;
 
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer branch) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer priceCategory, Integer branch) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -103,6 +106,7 @@ public class MItem implements Serializable {
         this.sub_category = sub_category;
         this.salePriceNormal = salePriceNormal;
         this.salePriceRegister = salePriceRegister;
+        this.priceCategory = priceCategory;
         this.branch = branch;
     }
 
@@ -216,6 +220,14 @@ public class MItem implements Serializable {
 
     public void setBranch(Integer branch) {
         this.branch = branch;
+    }
+
+    public Integer getPriceCategory() {
+        return priceCategory;
+    }
+
+    public void setPriceCategory(Integer priceCategory) {
+        this.priceCategory = priceCategory;
     }
 
 }
