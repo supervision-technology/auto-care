@@ -130,7 +130,8 @@
                                     Notification.success("Save vehicle and assing client Success !!!");
                                     $scope.model.saveJobCard()
                                             .then(function (data) {
-                                                $window.location.href = systemConfig.apiUrl + "#/service/service-selection/" + data;
+                                                $scope.ui.goToItemSelection(data);
+                                        
                                                 Notification.success("Save job-card success !!!");
                                                 $scope.model.clearModel();
                                                 $scope.vehicleNo = "";
@@ -144,6 +145,10 @@
                                     Notification.error("Save vehicle and assing client fail !!!");
                                 });
                     }
+                };
+
+                $scope.ui.goToItemSelection = function (data) {
+                    $window.location.href = systemConfig.apiUrl + "#/service/item-selection/" + data;
                 };
 
                 $scope.ui.secondStep = function () {

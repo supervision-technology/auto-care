@@ -3,7 +3,7 @@
     angular.module("itemSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("itemSelectionModule")
-            .controller("itemSelectionController", function ($scope, $routeParams, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("itemSelectionController", function ($scope, $window, systemConfig, $routeParams, ItemSelectionModel, Notification, ConfirmPane) {
 
                 $scope.model = new ItemSelectionModel();
                 $scope.ui = {};
@@ -60,6 +60,10 @@
                 //category select get items
                 $scope.ui.getItemsByCategory = function (details) {
                     $scope.model.getItemsByCategory(details, $scope.model.jobCardData.priceCategory);
+                };
+
+                $scope.ui.backToVehicleEntrance = function () {
+                    $window.location.href = systemConfig.apiUrl + "#/service/vehicle-entrance";
                 };
 
                 $scope.init = function () {
