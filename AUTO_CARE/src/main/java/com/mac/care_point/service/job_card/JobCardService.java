@@ -42,7 +42,6 @@ public class JobCardService {
             }
             jobCard.setNumber(maxNo + 1);
         }
-
         return jobCardRepository.save(jobCard);
     }
 

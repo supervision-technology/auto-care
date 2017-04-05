@@ -2,7 +2,7 @@
 //module
     angular.module("vehicleEntranceModule", ['ui.bootstrap', 'ui-notification']);
     angular.module("vehicleEntranceModule")
-            .controller("vehicleEntranceController", function ($scope, Notification, $filter, vehicleEntranceModel, $timeout) {
+            .controller("vehicleEntranceController", function ($scope, $window, Notification, systemConfig, $filter, $location, vehicleEntranceModel, $timeout) {
                 $scope.model = new vehicleEntranceModel();
 
                 $scope.ui = {};
@@ -84,7 +84,7 @@
                         if (angular.isUndefined($scope.model.clientData.indexNo)) {
                             if ($scope.validateClient()) {
                                 $scope.model.newClient()
-                                        .then(function () {
+                                        .then(function (data) {
                                             Notification.success("New client added success !!!");
                                             $scope.model.vehicleData = {};
                                             $scope.model.vehicleData.vehicleNo = vehicleNo;
@@ -117,8 +117,6 @@
                             }
                         } else {
                             $scope.ui.changeUi = 'ui3';
-                            console.log($scope.model.clientData.indexNo);
-                            console.log("$scope.model.clientData.indexNo");
                             $scope.model.loadJobCardByClientIndexNo($scope.model.clientData.indexNo);
                         }
                     }
@@ -127,18 +125,18 @@
 
                 $scope.ui.jobCardNsext = function () {
                     if ($scope.validateVehicleData) {
-                        console.log($scope.model.jobcard);
                         $scope.model.updateClientFromVehicle()
                                 .then(function () {
                                     Notification.success("Save vehicle and assing client Success !!!");
                                     $scope.model.saveJobCard()
-                                            .then(function () {
+                                            .then(function (data) {
+                                                $window.location.href = systemConfig.apiUrl + "#/service/service-selection/" + data;
                                                 Notification.success("Save job-card success !!!");
                                                 $scope.model.clearModel();
                                                 $scope.vehicleNo = "";
-                                                $scope.ui.changeUi = 'ui1';
                                                 $scope.ui.clientDisabled = true;
                                                 $scope.ui.vehicleDisabled = true;
+
                                             }, function () {
                                                 Notification.error("Save job-card fail !!!");
                                             });

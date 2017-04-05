@@ -118,7 +118,7 @@
                         .success(function (data) {
                             that.loadClient();
                             that.loadVehicle();
-                            defer.resolve();
+                            defer.resolve(data);
                         })
                         .error(function () {
                             defer.reject();
@@ -127,9 +127,7 @@
             },
             updateClientFromVehicle: function () {
                 var that = this;
-                console.log(this.vehicleData);
                 this.vehicleData.client = that.clientData.indexNo;
-                console.log(this.vehicleData);
                 this.vehicleData.type = "NORMAL";
                 var defer = $q.defer();
                 vehicleEntranceService.updateVehicle(JSON.stringify(that.vehicleData))
