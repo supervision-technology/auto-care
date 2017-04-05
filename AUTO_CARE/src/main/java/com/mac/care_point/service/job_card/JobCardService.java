@@ -37,7 +37,7 @@ public class JobCardService {
     public JobCard saveJobCard(JobCard jobCard) {
         if (jobCard.getIndexNo() == null) {
             Integer maxNo = jobCardRepository.getMaximumNumberByBranch(jobCard.getBranch());
-            if (maxNo == 0) {
+            if (maxNo == null) {
                 maxNo = 0;
             }
             jobCard.setNumber(maxNo + 1);
