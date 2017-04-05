@@ -49,8 +49,7 @@
                 $routeProvider
                         //system
                         .when("/", {
-                            templateUrl: "app/system/home/home.html",
-                            controller: "homeController"
+                            redirectTo: "/service/vehicle-entrance"
                         })
                         .when("/login", {
                             templateUrl: "app/system/login/login.html"
@@ -74,7 +73,7 @@
                         .when("/service/vehicle-entrance", {
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
                             controller: "vehicleEntranceController"
-                        })    
+                        })
                         //vehicle-entrance
                         .when("/service/vehicle-entrance-test", {
                             templateUrl: "app/service/vehicle-entrance/test/vehicle-entrance.html",
@@ -85,24 +84,24 @@
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
-                        
+
                         .when("/service/item-selection", {
                             templateUrl: "app/service/item-selection/item-selection.html",
                             controller: "itemSelectionController"
                         })
-                        
+
                         .when("/service/item-selection/:jobCardIndexNo", {
                             templateUrl: "app/service/item-selection/item-selection.html",
                             controller: "itemSelectionController"
                         })
-                        
+
                         //service-selection for job card entrance
                         .when("/service/service-selection/:jobCardIndexNo", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
-                        
-             
+
+
                         //bay-assignment
                         .when("/service/bay-assignment", {
                             templateUrl: "app/service/bay-assignment/bay-assignment.html",

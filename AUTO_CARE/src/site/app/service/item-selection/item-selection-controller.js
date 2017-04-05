@@ -13,17 +13,22 @@
                 $scope.selectVehicleType = null;
                 $scope.selectVehiclePriceCategory = null;
 
-                //get package items
-                $scope.viewPackageDetails = function ($index, package) {
-                    $scope.selectPackagePosition = null;
-                    $scope.model.getPackageItems(package);
-                    $scope.isVisible = $scope.isVisible === 0 ? true : false;
-                    $scope.selectPackageItemPosition = $scope.selectPackageItemPosition === $index ? -1 : $index;
-                };
+                $scope.ui.selectedJobCardRow = function (jobCardIndexNo) {
+                    $scope.model.findJobCard(jobCardIndexNo)
+                            .then(function (data) {
+                                $scope.model.jobCardData = data;
 
-                //get item units by drop dowsn list
-                $scope.ui.getItemUnits = function ($index, package) {
-                    return $scope.model.getItemUnits(package, $scope.selectVehiclePriceCategory);
+                                //job card seletion
+                                $scope.selectedJobCardIndexNo = data.indexNo;
+
+                                //get vehicle type and price category
+                                $scope.selectVehicleType = $scope.model.vehicleData(data.vehicle).type;
+                                $scope.selectVehiclePriceCategory = data.priceCategory;
+
+//                                //get price category items
+//                                $scope.model.getItemByPriceCategory($scope.selectVehiclePriceCategory);
+
+                            });
                 };
 
                 //add package and serveice items
@@ -43,44 +48,6 @@
                     }
                 };
 
-                //add stock items
-                $scope.ui.addNormalItem = function (item, qty) {
-                    if ($scope.selectedJobCardIndexNo) {
-                        var itemStatus = $scope.model.duplicateItemCheck(item);
-                        if (angular.isUndefined(itemStatus)) {
-                            ConfirmPane.successConfirm("Do you sure want to add item")
-                                    .confirm(function () {
-                                        $scope.model.addNormalItem(item, qty, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
-                                    });
-                        } else {
-                            Notification.error("this item is allrday exsist");
-                        }
-                    } else {
-                        Notification.error("select vehicle");
-                    }
-                };
-
-                //add stock item units
-                $scope.ui.addItemUnit = function (itemUnit, type) {
-                    if ($scope.selectedJobCardIndexNo) {
-                        if (itemUnit) {
-                            var itemStatus = $scope.model.duplicateItemUnitCheck(itemUnit);
-                            if (angular.isUndefined(itemStatus)) {
-                                ConfirmPane.successConfirm("Do you sure want to add item")
-                                        .confirm(function () {
-                                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
-                                        });
-                            } else {
-                                Notification.error("this item is allrday exsist");
-                            }
-                        } else {
-                            Notification.error("select item");
-                        }
-                    } else {
-                        Notification.error("select vehicle");
-                    }
-                };
-
                 //delete item
                 $scope.ui.deleteSelectDetails = function ($index) {
                     ConfirmPane.dangerConfirm("Do you sure want to delete item")
@@ -90,31 +57,18 @@
                             });
                 };
 
+                //category select get items
                 $scope.ui.getItemsByCategory = function (details) {
                     $scope.model.getItemsByCategory(details, $scope.model.jobCardData.priceCategory);
                 };
 
-                $scope.ui.getItemData = function () {
+                $scope.init = function () {
+                    //get routing paramiets job card index
                     var jobCardIndexNo = parseInt($routeParams.jobCardIndexNo);
                     if (jobCardIndexNo) {
-                        var jobCard = $scope.model.findJobCard(jobCardIndexNo);
-                        //job card seletion
-                        $scope.selectedJobCardIndexNo = jobCard.indexNo;
-
-                        //get vehicle type and price category
-                        $scope.selectVehicleType = $scope.model.vehicleData(jobCard.vehicle).type;
-                        $scope.selectVehiclePriceCategory = jobCard.priceCategory;
-
-                        //get price category items
-                        $scope.model.getItemByPriceCategory($scope.selectVehiclePriceCategory);
-
-                        //get job card history
-                        $scope.model.getJobItemHistory(jobCard.indexNo);
+                        $scope.model.clear();
+                        $scope.ui.selectedJobCardRow(jobCardIndexNo);
                     }
-                };
-
-                $scope.init = function () {
-
                 };
 
                 $scope.init();
