@@ -19,7 +19,7 @@
                     <tbody>
                         <tr class="background-light" ng-repeat="detils in model.category" style="animation: 0.5s fadeIn">
                             <td ng-click="ui.getItemsByCategory(detils.indexNo);" class="text-bold">{{detils.name}}</td>
-                            <td><a ng-click="ui.getItemsByCategory(detils.indexNo);" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
+                            <td><a ng-click="ui.getItemsByCategory(detils.indexNo);" class="btn btn-default"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
@@ -42,15 +42,13 @@
                 <input type="text" class="search-input" placeholder="search" ng-model="searchService">
             </div>
             <table class="square-table background-dark" ng-show="model.filterItems.length">
+                <col style="width: 50%;"/>
                 <col style="width: 30%;"/>
-                <col style="width: 40%;"/>
                 <col style="width: 20%;"/>
-                <col style="width: 10%;"/>
                 <thead>
                     <tr>
                         <th>NAME</th>
-                        <th>&nbsp;</th>
-                        <th class="text-center">QTY</th>
+                        <th class="text-right">PRICE</th>
                         <th>&nbsp;</th>
                     </tr>
                 </thead>
@@ -63,8 +61,8 @@
                     <tbody>
                         <tr class="background-light" ng-repeat="detils in model.filterItems|filter: { type: 'SERVICE' }|filter:{ name:searchService }" style="animation: 0.5s fadeIn">
                             <td class="text-bold">{{detils.name}}</td>
-                            <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
-                            <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                            <td class="text-right" ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                            <td class="text-right" ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
                             <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE');"/><span class="glyphicon glyphicon-plus"></span></a></td>
                         </tr>
                     </tbody>
