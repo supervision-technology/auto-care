@@ -1,212 +1,484 @@
 <div class="tile-list background-dark">
-    <div class="tile-list-title">
+    <div class="tile-list-title" style="margin-right: 5px;">
         <h4>VEHICLE</h4>
     </div>
     <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" ng-repeat="vehicle in vehicle">
+        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
             <span>
-                <img src="{{vehicle.image}}"/>  
-
+                <img src="/img/01.png"/>  
                 <label>
-                    {{vehicle.number}}
+                    {{model.vehicleData(details.vehicle).vehicleNo}}
                 </label>
+                <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
+                <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
             </span>
         </div>
     </div>
 </div>
-
 <div class="index-content-body">
     <div style="float: left; width: calc(100% - 133px);">
-        <div class="col-xs-8 background-light">
-            <div class="row full-height" style="display: flex; flex-flow: column;">
-                <div>
-                    <uib-tabset>
-                        <uib-tab heading="ITEM" index="2">
-                            <div class="col-xs-8">
-                                <input type="text" class="search-input" placeholder="search" ng-model="search">
-                            </div>
-                            <table class="square-table background-dark">
-                                <col style="width: 40%;"/>
-                                <col style="width: 15%;"/>
-                                <col style="width: 15%;"/>
-                                <col style="width: 15%;"/>
-                                <col style="width: 15%;"/>
-                                <col />
-                                <thead>
-                                    <tr>
-                                        <th>NAME</th>
-                                        <th>U.PRICE</th>
-                                        <th>QTY</th>
-                                        <th>AMOUNT</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                            <div class="smart-scroll-y" style="height: calc(100vh - 213px);">
-                                <table class="square-table">
-                                    <col style="width: 40%;"/>
-                                    <col style="width: 15%;"/>
-                                    <col style="width: 15%;"/>
-                                    <col style="width: 15%;"/>
-                                    <col style="width: 15%;"/>
-                                    <tbody ng-repeat="items in items|filter:search">
-                                        <tr class="background-light">
-                                            <td ng-click="itemSelectionDetail($index)">{{items.name}}</td>
-                                            <td ng-click="itemSelectionDetail($index)">{{items.price}}</td>
-                                            <td><input type="text" style="width: 60px"></td>
-                                            <td ng-click="itemSelectionDetail($index)">{{items.price}}</td>
-                                            <td><a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </uib-tab>
+        <uib-tabset>
+            <uib-tab heading="PAYMENT METHOD" index="2">
+                <div class="col-xs-7 background-light">
+                    <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                        <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-top: 10px;">
+                            <uib-accordion close-others="oneAtATime">
 
-                        <uib-tab heading="PACKAGE" index="0">
-                            <table class="square-table background-dark">
-                                <col style="width: 60%;"/>
-                                <col style="width: 30%;"/>
-                                <col style="width: 10%;"/>
-                                <thead>
-                                    <tr>
-                                        <th>PACKAGE NAME</th>
-                                        <th>PRICE</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                            <div class="smart-scroll-y" style="height: calc(100vh - 105px);">
-                                <div ng-repeat="package in package">
-                                    <table class="square-table background-dark">
-                                        <col style="width: 60%;"/>
-                                        <col style="width: 30%;"/>
-                                        <col style="width: 10%;"/>
+                                <div uib-accordion-group class="panel-warning" heading="CASH AMOUNT" is-open="cedit_amount">
+                                    <table class="table-rounded control-table">
+                                        <col style="width: 35%"/>
+                                        <col style="width: 65%"/>
                                         <tbody>
-                                            <tr class="background-light">
-                                                <td ng-click="packageSelectionDetail($index)">{{package.name}}</td>
-                                                <td ng-click="packageSelectionDetail($index)">{{package.price}}</td>
-                                                <td><a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                            <tr>
+                                                <td><label>INVOICE AMOUNT</label></td>
+                                                <td><input class="form-control" ng-model="model.client.nic"> </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div class="animation-v-grow background-light-dark" ng-show="packagePositionVehicle == $index">
+                                </div>
+
+                                <div uib-accordion-group class="panel-success" heading="CHEQUE AMOUNT" is-open="cheque_amount">
+                                    <table class="table-rounded control-table">
+                                        <col style="width: 33.3%"/>
+                                        <col style="width: 33.3%"/>
+                                        <col style="width: 33.3%"/>
+                                        <tbody>
+                                            <tr>
+                                                <th><label>CARD NO</label></th>
+                                                <th><label>BANK</label></th>
+                                                <th><label>AMOUNT</label></th>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table-rounded control-table">
+                                        <col style="width: 33.3%"/>
+                                        <col style="width: 33.3%"/>
+                                        <col style="width: 33.3%"/>
+                                        <tbody>
+                                            <tr>
+                                                <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                                <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                                <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div uib-accordion-group class="panel-default" heading="CARD AMOUNT" is-open="card_amount">
+                                    <table class="table-rounded control-table">
+                                        <col style="width: 33.3%"/>
+                                        <col style="width: 33.3%"/>
+                                        <col style="width: 33.3%"/>
+                                        <tbody>
+                                            <tr>
+                                                <td><label>CARD NO</label></td>
+                                                <td><label>BANK</label></td>
+                                                <td><label>AMOUNT</label></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table-rounded control-table">
+                                        <col style="width: 33.3%"/>
+                                        <col style="width: 33.3%"/>
+                                        <col style="width: 33.3%"/>
+                                        <tbody>
+                                            <tr>
+                                                <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                                <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                                <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </uib-accordion>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-5 background-dark">
+                    <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                        <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+                            <table class="table-rounded control-table">
+                                <col style="width: 35%"/>
+                                <col style="width: 65%"/>
+                                <tbody>
+                                    <tr>
+                                        <td><label>INVOICE AMOUNT</label></td>
+                                        <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>CREDIT AMOUNT</label></td>
+                                        <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>CHEQUE AMOUNT</label></td>
+                                        <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>CARD AMOUNT</label></td>
+                                        <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>PAID TOTAL</label></td>
+                                        <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                    </tr>
+                                    <tr>
+                                        <td><label>BALANCE</label></td>
+                                        <td><input class="form-control" ng-model="model.client.nic"> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab heading="JOB ITEM DETAILS" index="0">
+                <div class="col-xs-7 background-light">
+                    <div class="row" style="display: flex; flex-flow: column;">
+                        <uib-tabset>
+                            <uib-tab heading="PACKAGE" index="0">
+                                <table class="square-table background-dark">
+                                    <col style="width: 50%;"/>
+                                    <col style="width: 30%;"/>
+                                    <col style="width: 20%;"/>
+                                    <thead>
+                                        <tr>
+                                            <th>PACKAGE NAME</th>
+                                            <th>PRICE</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="smart-scroll-y" style="height: calc(100vh - 104px);" ng-show="selectedJobCardIndexNo">
+                                    <div ng-repeat="detils in model.filterItems|filter: { type: 'PACKAGE' }">
                                         <table class="square-table">
+                                            <col style="width: 50%;"/>
                                             <col style="width: 30%;"/>
-                                            <col style="width: 70%;"/>
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>name</th>
-                                                </tr>
-                                            </thead>
+                                            <col style="width: 20%;"/>
                                             <tbody>
-                                                <tr class="background-light-dark" ng-repeat="items in package.discription.items">
-                                                    <td>{{items.indexNo}}</td>
-                                                    <td>{{items.name}}</td>
+                                                <tr class="background-light">
+                                                    <td ng-click="viewPackageDetails($index, detils.indexNo);" class="text-bold">{{detils.name}}</td>
+                                                    <td ng-click="viewPackageDetails($index, detils.indexNo);" ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                                    <td ng-click="viewPackageDetails($index, detils.indexNo);" ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                                                    <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'PACKAGE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <div class="animation-v-grow background-dark" ng-show="selectPackageItemPosition == $index">
+                                            <table class="square-table">
+                                                <col style="width: 30%;"/>
+                                                <col style="width: 70%;"/>
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>NAME</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="background-dark" ng-repeat="details in model.packageItemList">
+                                                        <td><label>{{model.itemData(details.item).indexNo | fixedLength:5}}</label></td>
+                                                        <td>{{model.itemData(details.item).name}}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 118px);" ng-hide="selectedJobCardIndexNo">
+                                    <h1>PLEASE SELECT VEHICLE</h1>
+                                </div>
+                            </uib-tab>
+                            <uib-tab heading="SERVICE" index="1">
+                                <div class="col-xs-8">
+                                    <input type="text" class="search-input" placeholder="search" ng-model="searchService">
+                                </div>
+                                <table class="square-table background-dark">
+                                    <col style="width: 50%;"/>
+                                    <col style="width: 30%;"/>
+                                    <col style="width: 20%;"/>
+                                    <col />
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                            <th>PRICE</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="smart-scroll-y" style="height: calc(100vh - 204px);" ng-show="selectedJobCardIndexNo">
+                                    <table class="square-table">
+                                        <col style="width: 50%;"/>
+                                        <col style="width: 30%;"/>
+                                        <col style="width: 20%;"/>
+                                        <tbody>
+                                            <tr class="background-light" ng-repeat="detils in model.filterItems|filter: { type: 'SERVICE' }|filter:{ name : searchService}">
+                                                <td class="text-bold">{{detils.name}}</td>
+                                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                                                <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 175px);" ng-hide="selectedJobCardIndexNo">
+                                    <h1>PLEASE SELECT VEHICLE</h1>
+                                </div>
+                            </uib-tab>
+                            <uib-tab heading="ITEM" index="2">
+                                <div class="col-xs-8">
+                                    <input type="text" class="search-input" placeholder="search" ng-model="searchItem">
+                                </div>
+                                <table class="square-table background-dark">
+                                    <col style="width: 30%;"/>
+                                    <col style="width: 40%;"/>
+                                    <col style="width: 20%;"/>
+                                    <col style="width: 10%;"/>
+                                    <thead>
+                                        <tr>
+                                            <th>NAME</th>
+                                            <th>&nbsp;</th>
+                                            <th class="text-center">QTY</th>
+                                            <th>&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                <div class="smart-scroll-y" style="height: calc(100vh - 204px);" ng-show="selectedJobCardIndexNo">
+                                    <table class="square-table">
+                                        <col style="width: 30%;"/>
+                                        <col style="width: 40%;"/>
+                                        <col style="width: 20%;"/>
+                                        <col style="width: 10%;"/>
+                                        <tbody>
+                                            <tr class="background-light" ng-repeat="detils in model.filterItems|filter: { type: 'STOCK' }|filter:{ name : searchItem}">
+                                                <td class="text-bold">{{detils.name}}</td>
+                                                <td ng-show="selectVehicleType === 'REGISTER' && !ui.getItemUnits($index, detils.indexNo).length">{{detils.salePriceRegister|number:2}}</td>
+                                                <td ng-show="selectVehicleType === 'NORMAL' && !ui.getItemUnits($index, detils.indexNo).length">{{detils.salePriceNormal|number:2}}</td>
+                                                <td ng-show="ui.getItemUnits($index, detils.indexNo).length"> 
+                                                    <select class="form-control form-group-lg" ng-model="selectIemUnit" style="margin-top: 8px;">
+                                                        <option  ng-show="selectVehicleType === 'NORMAL'" value="{{itemUnits.indexNo}}" ng-repeat=" itemUnits in ui.getItemUnits($index, detils.indexNo)">
+                                                            {{itemUnits.name}}  -  {{ itemUnits.salePriceNormal|number:2}} 
+                                                        </option>
+                                                        <option  ng-show="selectVehicleType === 'REGISTER'" value="{{itemUnits.indexNo}}" ng-repeat=" itemUnits in ui.getItemUnits($index, detils.indexNo)">
+                                                            {{itemUnits.name}}  -  {{ itemUnits.salePriceRegister|number:2}} 
+                                                        </option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <div range-spinner
+                                                         range-min="1" 
+                                                         range-step="1"  
+                                                         range-max="15" 
+                                                         range-default-value="0"
+                                                         range-decimal-precision="1"				
+                                                         range-model="qty"
+                                                         accept-decimal="false"
+                                                         name-of-field="rangeFieldName"
+                                                         id-of-field="rangeFieldId">
+                                                    </div>
+                                                </td>
+                                                <td ng-show="ui.getItemUnits($index, detils.indexNo).length"><a class="btn btn-success" ng-click="ui.addItemUnit(selectIemUnit, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                                <td ng-show="!ui.getItemUnits($index, detils.indexNo).length"><a class="btn btn-primary" ng-click="ui.addNormalItem(detils, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="placeholder col-lg-12 animation-fade background-light-dark" style="height: calc(100vh - 175px);" ng-hide="selectedJobCardIndexNo">
+                                    <h1>PLEASE SELECT VEHICLE</h1>
+                                </div>
+                            </uib-tab>
+                        </uib-tabset>
+                    </div>
+                </div>
 
-                        </uib-tab>
-                        <uib-tab heading="SERVICE" index="1">
-                            <div class="col-xs-8">
-                                <input type="text" class="search-input" placeholder="search" ng-model="search">
-                            </div>
-                            <table class="square-table background-dark">
-                                <col style="width: 60%;"/>
-                                <col style="width: 30%;"/>
+                <div class="col-xs-5 background-dark">
+                    <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
+                        <div style="height: 50px;" ng-show="model.jobItemList.length">
+                            <table class="square-table table-rounded">
                                 <col style="width: 10%;"/>
-                                <col />
+                                <col style="width: 40%;"/>
+                                <col style="width: 10%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <col/>
                                 <thead>
                                     <tr>
-                                        <th>NAME</th>
-                                        <th>AMOUNT</th>
+                                        <th>&nbsp;</th>
+                                        <th>SELECTIONS</th>
+                                        <th class="text-right">QTY</th>
+                                        <th class="text-center">AMOUNT</th>
                                         <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="smart-scroll-y" style="height: calc(100vh - 170px);">
+                        </div>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 91px);padding-left: 5px;" ng-show="model.jobItemList.length">
+                            <table class="square-table background-dark">
+                                <col style="width: 10%;"/>
+                                <col style="width: 40%;"/>
+                                <col style="width: 10%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody ng-repeat="selections in model.jobItemList">
+                                    <tr>
+                                        <td>
+                                            <!-- item items-->
+                                            <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
+                                            <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
+                                            <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
+                                            <!-- item units-->
+                                            <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">S</label>
+                                        </td>
+                                        <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
+                                        <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                        <td class="text-right"><small>{{selections.quantity}}</small></td>
+                                        <td class="text-right"><small>{{selections.value|number:2}}</small></td>
+                                        <td><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 64px);padding-bottom: 10px;" ng-hide="model.jobItemList.length">
+                            <h1>ITEM NOT FOUND :( </h1>
+                        </div>
+                        <div class="background-dark">
+                            <table class="square-table">
+                                <col style="width: 50%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody>
+                                    <tr class="text-bold">
+                                        <td>TOTAL</td>
+                                        <td class="text-right">{{model.getSelectItemTotal() | number:2}}</td>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+            <uib-tab heading="LAST INVOICE DETAILS" index="1">
+                <div class="col-xs-7 background-light">
+                    <div class="row" style="display: flex; flex-flow: column;">
+                        <table class="square-table background-dark">
+                            <col style="width: 50%;"/>
+                            <col style="width: 30%;"/>
+                            <col style="width: 20%;"/>
+                            <thead>
+                                <tr>
+                                    <th>PACKAGE NAME</th>
+                                    <th>PRICE</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 104px);" ng-show="selectedJobCardIndexNo">
+                            <div ng-repeat="detils in model.filterItems|filter: { type: 'PACKAGE' }">
                                 <table class="square-table">
-                                    <col style="width: 60%;"/>
+                                    <col style="width: 50%;"/>
                                     <col style="width: 30%;"/>
-                                    <col style="width: 10%;"/>
-                                    <tbody ng-repeat="service in service|filter:search" >
+                                    <col style="width: 20%;"/>
+                                    <tbody>
                                         <tr class="background-light">
-                                            <td ng-click="serviceSelectionDetail($index)">{{service.name}}</td>
-                                            <td ng-click="serviceSelectionDetail($index)">{{service.price}}</td>
-                                            <td><a class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></a></td>
+                                            <td ng-click="viewPackageDetails($index, detils.indexNo);" class="text-bold">{{detils.name}}</td>
+                                            <td ng-click="viewPackageDetails($index, detils.indexNo);" ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                            <td ng-click="viewPackageDetails($index, detils.indexNo);" ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                                            <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'PACKAGE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <div class="animation-v-grow background-dark" ng-show="selectPackageItemPosition == $index">
+                                    <table class="square-table">
+                                        <col style="width: 30%;"/>
+                                        <col style="width: 70%;"/>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>NAME</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="background-dark" ng-repeat="details in model.packageItemList">
+                                                <td><label>{{model.itemData(details.item).indexNo | fixedLength:5}}</label></td>
+                                                <td>{{model.itemData(details.item).name}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </uib-tab>
+                        </div>
+                        <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 118px);" ng-hide="selectedJobCardIndexNo">
+                            <h1>PLEASE SELECT VEHICLE</h1>
+                        </div>
+                    </div>
+                </div>
 
-                    </uib-tabset>
+                <div class="col-xs-5 background-dark">
+                    <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
+                        <div style="height: 50px;" ng-show="model.jobItemList.length">
+                            <table class="square-table table-rounded">
+                                <col style="width: 10%;"/>
+                                <col style="width: 40%;"/>
+                                <col style="width: 10%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <col/>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>SELECTIONS</th>
+                                        <th class="text-right">QTY</th>
+                                        <th class="text-center">AMOUNT</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 91px);padding-left: 5px;" ng-show="model.jobItemList.length">
+                            <table class="square-table background-dark">
+                                <col style="width: 10%;"/>
+                                <col style="width: 40%;"/>
+                                <col style="width: 10%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody ng-repeat="selections in model.jobItemList">
+                                    <tr>
+                                        <td>
+                                            <!-- item items-->
+                                            <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
+                                            <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
+                                            <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
+                                            <!-- item units-->
+                                            <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">S</label>
+                                        </td>
+                                        <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
+                                        <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                        <td class="text-right"><small>{{selections.quantity}}</small></td>
+                                        <td class="text-right"><small>{{selections.value|number:2}}</small></td>
+                                        <td><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 64px);padding-bottom: 10px;" ng-hide="model.jobItemList.length">
+                            <h1>ITEM NOT FOUND :( </h1>
+                        </div>
+                        <div class="background-dark">
+                            <table class="square-table">
+                                <col style="width: 50%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody>
+                                    <tr class="text-bold">
+                                        <td>TOTAL</td>
+                                        <td class="text-right">{{model.getSelectItemTotal() | number:2}}</td>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-xs-4 background-dark">
-            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
-                <div class="col-xs-12">
-                    <table class="table-rounded background-dark">
-                        <col style="width: 60%;"/>
-                        <col style="width: 27%;"/>
-                        <col style="width: 13%;"/>
-                        <thead class="background-dark">
-                            <tr>
-                                <th>Services</th>
-                                <th>AMOUNT</th>
-                                <th>&nbsp;</th>
-                            </tr>
-                        </thead>
-                    </table>
-                </div>
-                <div class="col-xs-12 smart-scroll-y" style="height: calc(100vh - 280px);">
-                    <table class="table-rounded">
-                        <col style="width: 60%;"/>
-                        <col style="width: 27%;"/>
-                        <col style="width: 13%;"/>
-                        <tbody ng-repeat="service in service">
-                            <tr>
-                                <td style="font-size: 12px">{{service.name}}</td>
-                                <td>{{service.price}}</td>
-                                <td><a class="btn btn-default"><span class="glyphicon glyphicon-ok"></span></a></td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-xs-12 pull-right">
-                    <table class="table-rounded table-primary">
-                        <col style="width: 50%;"/>
-                        <col style="width: 50%;"/>
-                        <tbody>
-                            <tr>
-                                <td>Total :</td>
-                                <td class="text-right"><input type="text" class="form-control" ng-model="total"></td>
-                            </tr>
-                            <tr>
-                                <td>Discount :</td>
-                                <td>
-                                    <input type="text" class="form-control text-right" placeholder="Rs" style="width: 48%; display: inline; float: left;" ng-model="discount1" ng-change="calNetAmount1(discount1)">
-                                    <input type="text" class="form-control text-right" placeholder="%" style="width: 48%; display: inline; float: right;" ng-model="discount2" ng-change="calNetAmount2(discount2)">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b>Net Amount :</b></td>
-                                <td class="text-right"><input type="text" class="form-control" ng-model="netAmount"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
+            </uib-tab>
+        </uib-tabset>
     </div>
-</div>
-<div class="fab-container">
-    <a class="fab fab-lg fab-primary"><i class="glyphicon glyphicon-ok"></i></a>
 </div>

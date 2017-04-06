@@ -1,10 +1,7 @@
 {
-  "name": "green-leaves",
+"name": "care-point",
   "version": "1.0.0",
   "description": "tea factory management system",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Channa Jayamuni <hjchanna@gmail.com>",
   "devDependencies": {
     "browser-sync": "^2.16.0",
