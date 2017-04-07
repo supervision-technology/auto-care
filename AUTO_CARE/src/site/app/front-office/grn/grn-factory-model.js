@@ -11,7 +11,8 @@
                         "date": null,
                         "amount": null,
                         "refNumber": null,
-                        "branch": null
+                        "branch": null,
+                        "grnItemList":[]
                     };
                     return data;
                 };

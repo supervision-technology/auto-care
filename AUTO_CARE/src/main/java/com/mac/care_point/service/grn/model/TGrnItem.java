@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.grn.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import javax.persistence.Basic;
@@ -33,27 +34,28 @@ public class TGrnItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Column(name = "item")
     private Integer item;
-    
+
     @Column(name = "unit_price")
     private BigDecimal unitPrice;
-    
+
     @Column(name = "qty")
     private BigDecimal qty;
-    
+
     @Column(name = "value")
     private BigDecimal value;
-    
+
     @Column(name = "discount")
     private BigDecimal discount;
-    
+
     @Column(name = "net_value")
     private BigDecimal netValue;
-    
+
     @JoinColumn(name = "grn", referencedColumnName = "index_no")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @JsonIgnore
     private TGrn grn;
 
     public TGrnItem() {
@@ -70,7 +72,6 @@ public class TGrnItem implements Serializable {
         this.grn = grn;
     }
 
-    
     public TGrnItem(Integer indexNo) {
         this.indexNo = indexNo;
     }
