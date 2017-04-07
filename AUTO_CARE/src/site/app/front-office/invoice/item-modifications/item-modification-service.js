@@ -39,5 +39,5 @@
     };
 
     angular.module("appModule")
-            .service("invoiceService", service);
+            .service("itemModificationService", service);
 }());

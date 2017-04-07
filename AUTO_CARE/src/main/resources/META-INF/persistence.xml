@@ -16,6 +16,12 @@
     <class>com.mac.care_point.master.items.items.model.MItem</class>
     <class>com.mac.care_point.master.items.item_unit.model.MItemUnits</class>
     <class>com.mac.care_point.service.job_card.model.JobCard</class>
+    <class>com.mac.care_point.service.invoice.payment_method.model.TChequeDetail</class>
+    <class>com.mac.care_point.service.invoice.payment_method.model.MBankBranch</class>
+    <class>com.mac.care_point.service.invoice.payment_method.model.TPayment</class>
+    <class>com.mac.care_point.service.invoice.payment_method.model.TCardDetail</class>
+    <class>com.mac.care_point.service.invoice.payment.model.TCustomerPayment</class>
+    <class>com.mac.care_point.service.invoice.invoice.model.TInvoice</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
