@@ -34,11 +34,9 @@
                 <input type="text" class="form-control" ng-model="model.vehicle.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory.indexNo as (priceCategory.indexNo + ' - ' + priceCategory.name) for priceCategory in model.priceCategoryList | filter:$viewValue|limitTo:10" typeahead-input-formatter = "priceCategoryLabel($model)"/>        
                 <label>Type</label>
                 <select class="form-control" ng-model="model.vehicle.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
-                    <option value="NEW"> NEW </option>
                     <option value="REGISTERED"> REGISTERED </option>
                     <option value="NORMAL" > NORMAL </option>
                 </select>
-                <!--<input type="text" class="form-control" ng-model="model.vehicle.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />-->        
             </div>
         </div>
     </div>

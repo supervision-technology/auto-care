@@ -1,14 +1,19 @@
 (function () {
     angular.module("invoiceModule", ['ui.bootstrap']);
     angular.module("invoiceModule")
-            .controller("invoiceController", function ($scope, invoiceModel, Notification, ConfirmPane) {
-                $scope.model = new invoiceModel();
+            .controller("invoiceController", function ($scope, itemModificationModel, invoiceModel, Notification, ConfirmPane) {
+
+                $scope.model = new itemModificationModel();
+                $scope.invoiceModel = new invoiceModel();
+
+                //-----------------------------------open item modification -----------------------------------
                 $scope.ui = {};
 
                 //variables pass data to methods
                 $scope.selectedJobCardIndexNo = null;
                 $scope.selectVehicleType = null;
                 $scope.selectVehiclePriceCategory = null;
+                $scope.selectInvoice = null;
 
                 $scope.ui.selectedJobCardRow = function (jobCard) {
 
@@ -24,6 +29,13 @@
 
                     //get job card history
                     $scope.model.getJobItemHistory(jobCard.indexNo);
+
+                    //get vehicle invoice by job card
+                    $scope.invoiceModel.getInvoiceByJobCard(jobCard.indexNo);
+                    $scope.selectInvoice = null;
+
+                    //get job card vehicle data and client data
+                    $scope.invoiceModel.selectJobCardVehicle(jobCard);
                 };
 
                 //get package items
@@ -102,9 +114,21 @@
                                 $scope.model.deleteSelectDetails($index);
                             });
                 };
+                //-----------------------------------end item modification -----------------------------------
+
+                //-----------------------------------open invoice payment method -----------------------------------
+
+                //get item units by drop dowsn list
+                $scope.ui.getInvoiceByJobCard = function ($index, jobCard) {
+                    $scope.selectInvoice = $index;
+                    return $scope.invoiceModel.getJobItemHistory(jobCard);
+                };
+
+                //-----------------------------------end invoice payment method -----------------------------------
 
                 $scope.init = function () {
-                    
+                    //set ideal mode
+                    $scope.ui.mode = "IDEAL";
                 };
 
                 $scope.init();

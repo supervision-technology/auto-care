@@ -215,6 +215,10 @@ tr.ng-leave{
     color: $light-font-color;
     background-color: $success-color !important;
 }
+.select-default-row{
+    color: $light-font-color;
+    background-color: $default-color !important;
+}
 
 tbody tr input{
     color: $dark-font-color;
