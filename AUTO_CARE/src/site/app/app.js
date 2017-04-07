@@ -121,9 +121,14 @@
                             controller: "dashBoardController"
                         })
                         //front-office
+                        //invoice
                         .when("/front-office/invoice", {
                             templateUrl: "app/front-office/invoice/invoice.html",
                             controller: "invoiceController"
+                        })
+                        //grn
+                        .when("/front-office/grn", {
+                            templateUrl: "app/front-office/grn/grn.html"
                         })
                         //master
                         .when("/master/item", {
