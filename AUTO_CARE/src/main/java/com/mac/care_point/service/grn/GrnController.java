@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,11 +23,33 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/care-point/transaction/grn")
 public class GrnController {
+    private Integer branch=1;
+    
      @Autowired
     private GrnService grnService;
 
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public List<TGrn> getAllGrn() {
         return grnService.getAllGrn();
+    }
+    @RequestMapping(value = "/grn-payment-history-by-supplier/{supplier}", method = RequestMethod.GET)
+    public List<Object[]> getSupplierGrnPaymentHistory(@PathVariable Integer supplier) {
+        System.out.println("Controller");
+        return grnService.getSupplierGrnPaymentHistory(supplier);
+    }
+    
+    @RequestMapping(value = "/save-grn", method = RequestMethod.POST)
+    public Integer saveGrn(@RequestBody TGrn grn) {
+         
+        System.out.println("grn");
+        System.out.println(grn.getAmount());
+        System.out.println(grn.getDate());
+        System.out.println(grn.getRefNumber());
+        System.out.println(grn.getSupplier());
+        System.out.println(grn.getDiscount());
+        System.out.println(grn.getNetAmount());
+        grn.setBranch(branch);
+        TGrn saveGrn= grnService.saveGrn(grn);
+        return saveGrn.getIndexNo();
     }
 }

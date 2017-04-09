@@ -18,7 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -26,7 +25,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "t_grn_item")
-@XmlRootElement
 public class TGrnItem implements Serializable {
 
     @Id
@@ -53,9 +51,9 @@ public class TGrnItem implements Serializable {
     @Column(name = "net_value")
     private BigDecimal netValue;
 
+    @JsonIgnore
     @JoinColumn(name = "grn", referencedColumnName = "index_no")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    @JsonIgnore
     private TGrn grn;
 
     public TGrnItem() {

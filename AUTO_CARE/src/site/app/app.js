@@ -29,6 +29,7 @@
         "vehicleModule",
         "jobCardModule",
         "subItemModule",
+        "grnModule",
         "app"
 
     ]);
@@ -128,7 +129,8 @@
                         })
                         //grn
                         .when("/front-office/grn", {
-                            templateUrl: "app/front-office/grn/grn.html"
+                            templateUrl: "app/front-office/grn/grn.html",
+                            controller: "grnController"
                         })
                         //master
                         .when("/master/item", {

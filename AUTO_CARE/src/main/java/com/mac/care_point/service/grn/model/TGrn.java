@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.service.grn.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,7 +22,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -31,7 +29,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "t_grn")
-@XmlRootElement
 public class TGrn implements Serializable {
 
     @Id
@@ -50,6 +47,12 @@ public class TGrn implements Serializable {
     @Column(name = "amount")
     private BigDecimal amount;
     
+    @Column(name = "discount")
+    private BigDecimal discount;
+    
+    @Column(name = "net_amount")
+    private BigDecimal netAmount;
+    
     @Size(max = 25)
     @Column(name = "ref_number")
     private String refNumber;
@@ -61,12 +64,12 @@ public class TGrn implements Serializable {
     private Integer supplier;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "grn", fetch = FetchType.EAGER)
-    private List<TGrnItem> tGrnItemList;
+    private List<TGrnItem> grnItemList;
 
     public TGrn() {
     }
 
-    public TGrn(Integer indexNo,Integer supplier, Integer number, Date date, BigDecimal amount, String refNumber, Integer branch, List<TGrnItem> tGrnItemList) {
+    public TGrn(Integer indexNo,Integer supplier, Integer number, Date date, BigDecimal amount,BigDecimal discount,BigDecimal netAmount, String refNumber, Integer branch, List<TGrnItem> grnItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.supplier = supplier;
@@ -74,7 +77,9 @@ public class TGrn implements Serializable {
         this.amount = amount;
         this.refNumber = refNumber;
         this.branch = branch;
-        this.tGrnItemList = tGrnItemList;
+        this.grnItemList = grnItemList;
+        this.discount = discount;
+        this.netAmount= netAmount;
     }
 
     
@@ -122,6 +127,22 @@ public class TGrn implements Serializable {
         this.amount = amount;
     }
 
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+   
+    public BigDecimal getNetAmount() {
+        return netAmount;
+    }
+
+    public void setNetAmount(BigDecimal netAmount) {
+        this.netAmount = netAmount;
+    }
+
     public String getRefNumber() {
         return refNumber;
     }
@@ -138,12 +159,12 @@ public class TGrn implements Serializable {
         this.branch = branch;
     }
 
-    public List<TGrnItem> getTGrnItemList() {
-        return tGrnItemList;
+    public List<TGrnItem> getGrnItemList() {
+        return grnItemList;
     }
 
-    public void setTGrnItemList(List<TGrnItem> tGrnItemList) {
-        this.tGrnItemList = tGrnItemList;
+    public void setGrnItemList(List<TGrnItem> grnItemList) {
+        this.grnItemList = grnItemList;
     }
  
 }

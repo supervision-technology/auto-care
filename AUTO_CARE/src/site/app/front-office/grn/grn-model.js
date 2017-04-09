@@ -1,39 +1,201 @@
 (function () {
     angular.module("appModule")
-            .factory("grnModel", function (grnService, grnModelFactory, $q) {
+            .factory("grnModel", function (GrnService, grnModelFactory, $q, optionPane) {
                 function grnModel() {
                     this.constructor();
                 }
 
-                invoiceModel.prototype = {
-                    
+                grnModel.prototype = {
+
+                    //model factory data
                     data: {},
+                    tempData: {},
                     //master data lists
-                    
+                    items: [],
+                    suppliers: [],
+
+                    //opreation data
+                    categoryIndex: null,
+                    brandIndex: null,
 
                     constructor: function () {
                         var that = this;
-                        this.data = invoiceModelFactory.newData();
+                        that.data = grnModelFactory.newData();
+                        that.tempData = grnModelFactory.tempData();
 
-                        invoiceService.pendingJobCards()
-                                .success(function (data) {
-                                    that.pendingJobCards = data;
-                                });
-
-                        invoiceService.loadItems()
+                        GrnService.loadItems()
                                 .success(function (data) {
                                     that.items = data;
-                                });
-                        invoiceService.loadVehicles()
-                                .success(function (data) {
-                                    that.vehicles = data;
+
                                 });
 
-                        invoiceService.loadItemUnits()
+                        GrnService.loadSupplier()
                                 .success(function (data) {
-                                    that.itemUnits = data;
+                                    that.suppliers = data;
                                 });
+
                     },
+                    itemLable: function (index) {
+                        var label;
+                        angular.forEach(this.items, function (value) {
+                            if (value.indexNo === index) {
+                                label = value.barcode + ' - ' + value.name;
+                                return;
+                            }
+                        });
+                        return label;
+                    },
+                    supplierLable: function (index) {
+                        var label;
+                        angular.forEach(this.suppliers, function (value) {
+                            if (value.indexNo === index) {
+                                label = value.indexNo + ' - ' + value.name;
+                                return;
+                            }
+                        });
+                        return label;
+                    },
+
+                    //validation
+                    validateBarcode: function (barcode) {
+                        var c = null;
+                        angular.forEach(this.items, function (value) {
+                            if (value.barcode === barcode) {
+                                c = value;
+                                return;
+                            }
+                        });
+                        if (c) {
+                            this.tempData.item = c.indexNo;
+                            this.tempData.unitPrice = c.costPrice;
+                        } else {
+                            this.tempData.item = null;
+                        }
+                    },
+
+                    addData: function () {
+                        var that = this;
+                        var saveConfirmation = true;
+
+                        if (!that.tempData.barcode) {
+                            saveConfirmation = false;
+                            optionPane.dangerMessage("Enter Barcode for Find Item !");
+                        }
+                        if (!that.tempData.item) {
+                            saveConfirmation = false;
+                            optionPane.dangerMessage("Select Item !");
+                        }
+                        if (!that.tempData.unitPrice) {
+                            saveConfirmation = false;
+                            optionPane.dangerMessage("Enter Cost Price !");
+                        }
+                        if (!that.tempData.qty) {
+                            saveConfirmation = false;
+                            optionPane.dangerMessage("Enter Quantity !");
+                        }
+                        if (saveConfirmation) {
+                            that.data.grnItemList.unshift(that.tempData);
+                            this.tempData = grnModelFactory.tempData();
+                            this.summaryValueCalculator();
+                            return saveConfirmation;
+                        }
+                        return saveConfirmation;
+                    },
+                    getItemLabel: function (indexNo) {
+
+                        var that = this;
+                        var label = null;
+                        angular.forEach(this.items, function (value) {
+                            if (value.indexNo === indexNo) {
+                                label = value;
+                                that.categoryIndex = value.category;
+                                that.brandIndex = value.brand;
+                                return;
+                            }
+                        });
+                        return label;
+                    }
+                    , summaryValueCalculator: function () {
+                        var that = this;
+                        var valueSummary = 0;
+                        var qtySummary = 0;
+
+                        angular.forEach(that.data.grnItemList, function (value) {
+                            valueSummary += value.unitPrice * value.qty;
+                            qtySummary += value.qty;
+
+                        });
+                        this.data.summaryQty = qtySummary;
+                        this.data.amount = valueSummary;
+                        this.data.netAmount= valueSummary;
+                        this.data.discount= 0.00;
+                        this.data.discountRate= 0.00;
+                    },
+                    saveGrn: function () {
+                        var defer = $q.defer();
+                        var that = this;
+                        var saveConfirmation = true;
+
+                        if (!that.data.supplier) {
+                            saveConfirmation = false;
+                            optionPane.dangerMessage("Select Supplier for Save Grn !");
+                        }
+                        if (!that.data.date) {
+                            saveConfirmation = false;
+                            optionPane.dangerMessage("Select Date for Save Grn !");
+                        }
+                        if (!that.data.grnItemList) {
+                            saveConfirmation = false;
+                            optionPane.dangerMessage("Add Grn Item for Save Grn !");
+                        }
+
+                        if (saveConfirmation) {
+                            console.log(this.data);
+                            GrnService.saveGrn(JSON.stringify(this.data))
+                                    .success(function (data) {
+                                        defer.resolve();
+                                    })
+                                    .error(function (data) {
+                                        defer.reject();
+                                    });
+                            return defer.promise;
+                        }
+
+                    },
+                    netValueCalculator: function () {
+                        var that = this;
+                        if (this.data.amount) {
+                            that.data.netAmount = this.data.amount - this.data.discount;
+                            that.data.discountRate = (this.data.discount * 100) / this.data.amount;
+                        }
+                    }
+                   
+                    , discountRate: function () {
+                        var that = this;
+                        if (this.data.amount) {
+                            that.data.discount = (this.data.amount * that.data.discountRate) / 100;
+                            that.data.netAmount = this.data.amount - this.data.discount;
+                        }
+                    }
+                    , edit: function (index) {
+                        var that = this;
+                        that.tempData = that.data.grnItemList[index];
+                        that.data.grnItemList.splice(index, 1);
+                        this.summaryValueCalculator();
+                        this.netValueCalculator();
+                    }
+                    , delete: function (index) {
+                        var that = this;
+                        that.data.grnItemList.splice(index, 1);
+                        this.summaryValueCalculator();
+                        this.netValueCalculator();
+                    }
+                    , clear: function () {
+                        var that = this;
+                        that.data = grnModelFactory.newData();
+                        that.tempData = grnModelFactory.tempData();
+                    }
+
 //                    addPackageAndServiceItem: function (item, type, jobCard, vehicleType) {
 //                        var defer = $q.defer();
 //                        var that = this;
@@ -265,10 +427,10 @@
 //                                data = values;
 //                                return;
 //                            }
-//                        });
-//                        return data;
+                    //                        });
+                    //                        return data;
 //                    }
-//                };
+                };
                 return grnModel;
             });
 }());
