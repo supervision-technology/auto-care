@@ -5,7 +5,7 @@
 
         //load pending jobcards
         this.loadItems = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item");
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/stock-item");
         };
         
         this.loadSupplier = function () {

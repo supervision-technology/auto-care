@@ -42,4 +42,8 @@ public class ItemService {
     public List<MItem> findByCategoryAndPriceCategory(Integer category, Integer packageCategory) {
         return itemRepository.findByCategoryAndPriceCategory(category, packageCategory);
     }
+
+    List<MItem> findItemsByTypeAndBranchAndQty(int BRANCH, String TYPE) {
+        return itemRepository.findByBranchAndType(BRANCH,TYPE);
+    }
 }

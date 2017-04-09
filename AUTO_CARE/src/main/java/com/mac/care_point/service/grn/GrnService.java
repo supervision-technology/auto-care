@@ -5,8 +5,11 @@
  */
 package com.mac.care_point.service.grn;
 
+import com.mac.care_point.master.items.items.ItemRepository;
+import com.mac.care_point.master.items.items.model.MItem;
 import com.mac.care_point.service.grn.model.TGrn;
 import com.mac.care_point.service.grn.model.TGrnItem;
+import com.mac.care_point.service.grn.model.TStockLedger;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,12 @@ public class GrnService {
     @Autowired
     private GrnRepository grnRepository;
 
+    @Autowired
+    private StockLedgerRepository ledgerRepository;
+
+    @Autowired
+    private ItemRepository itemRepository;
+
     List<TGrn> getAllGrn() {
         return grnRepository.findAll();
     }
@@ -37,6 +46,7 @@ public class GrnService {
 
     @Transactional
     public TGrn saveGrn(TGrn grn) {
+
         TGrn findLastRow = grnRepository.findFirst1ByOrderByIndexNoDesc();
 
         if (findLastRow != null) {
@@ -44,9 +54,31 @@ public class GrnService {
         } else {
             grn.setNumber(1);
         }
-        
+
         for (TGrnItem item : grn.getGrnItemList()) {
-            System.out.println("#########################");
+            TStockLedger stockLedger = new TStockLedger();
+
+            stockLedger.setBranch(grn.getBranch());
+            stockLedger.setDate(grn.getDate());
+            stockLedger.setForm("GRN_FORM");
+            stockLedger.setInQty(item.getQty());
+//            stockLedger.setIndexNo(0);//auto incerment
+            stockLedger.setItem(item.getItem());
+            stockLedger.setOutQty(new BigDecimal(0));
+            stockLedger.setStore(1);
+
+            ledgerRepository.save(stockLedger);
+
+            MItem selectItem = itemRepository.getOne(item.getItem());
+
+            if (selectItem.getQty() != null) {
+                selectItem.setQty(new BigDecimal(selectItem.getQty().doubleValue() + item.getQty().doubleValue()));
+
+            } else {
+                selectItem.setQty(item.getQty());
+            }
+            itemRepository.save(selectItem);
+
             item.setGrn(grn);
             item.setValue(new BigDecimal(item.getQty().doubleValue() * item.getUnitPrice().doubleValue()));
             item.setNetValue(item.getValue());

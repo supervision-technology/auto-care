@@ -6,6 +6,7 @@
 package com.mac.care_point.master.items.items.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -88,11 +89,14 @@ public class MItem implements Serializable {
 
     @Column(name = "branch")
     private Integer branch;
+    
+    @Column(name = "qty")
+    private BigDecimal qty;
 
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer priceCategory, Integer branch) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer priceCategory, Integer branch, BigDecimal qty) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -108,6 +112,7 @@ public class MItem implements Serializable {
         this.salePriceRegister = salePriceRegister;
         this.priceCategory = priceCategory;
         this.branch = branch;
+        this.qty = qty;
     }
 
     public Integer getIndexNo() {
@@ -221,13 +226,21 @@ public class MItem implements Serializable {
     public void setBranch(Integer branch) {
         this.branch = branch;
     }
-
+    
     public Integer getPriceCategory() {
         return priceCategory;
     }
 
     public void setPriceCategory(Integer priceCategory) {
         this.priceCategory = priceCategory;
+    }
+
+    public BigDecimal getQty() {
+        return qty;
+    }
+
+    public void setQty(BigDecimal qty) {
+        this.qty = qty;
     }
 
 }

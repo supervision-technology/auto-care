@@ -28,10 +28,15 @@ public class ItemController {
     private ItemService itemService;
 
     final int BRANCH = 1;
+    final String TYPE = "STOCK";
 
     @RequestMapping(method = RequestMethod.GET)
     public List<MItem> findAllItems() {
         return itemService.findAllItems();
+    }
+    @RequestMapping(value = "/stock-item",method = RequestMethod.GET)
+    public List<MItem> findItemsByTypeAndBranchAndQty() {
+        return itemService.findItemsByTypeAndBranchAndQty(BRANCH,TYPE);
     }
 
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
