@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.invoice.payment;
+package com.mac.care_point.service.invoice.invoice;
 
-import com.mac.care_point.service.invoice.invoice.model.TInvoice;
+import com.mac.care_point.service.invoice.invoice.model.TCustomerLedger;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Kavish Manjitha
  */
-public interface CustomerPaymentRepository extends JpaRepository<TInvoice, Integer>{
+public interface ClientLegerRepository extends JpaRepository<TCustomerLedger, Integer>{
     
 }

@@ -6,7 +6,6 @@
 package com.mac.care_point.service.invoice.invoice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mac.care_point.service.invoice.payment.model.TCustomerPayment;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -23,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -38,47 +38,67 @@ public class TInvoice implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
-    @Column(name = "job_card")
-    private Integer jobCard;
-    
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "number")
-    private Integer number;
-    
+    private int number;
+
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "amount")
     private BigDecimal amount;
-    
+
     @Column(name = "discount_rate")
     private Integer discountRate;
-    
+
     @Column(name = "discount_amount")
     private BigDecimal discountAmount;
-    
-    @Size(max = 25)
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "net_amount")
+    private BigDecimal netAmount;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "branch")
+    private int branch;
+
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 25)
     @Column(name = "status")
     private String status;
-    
+
+    @Column(name = "jobCard")
+    private Integer jobCard;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice", fetch = FetchType.LAZY)
-    private List<TCustomerPayment> tCustomerPaymentList;
+    private List<TCustomerLedger> tCustomerLedgerList;
 
     public TInvoice() {
     }
 
-    public TInvoice(Integer indexNo, Date date, Integer jobCard, Integer number, BigDecimal amount, Integer discountRate, BigDecimal discountAmount, String status, List<TCustomerPayment> tCustomerPaymentList) {
+    public TInvoice(Integer indexNo, Date date, int number, BigDecimal amount, Integer discountRate, BigDecimal discountAmount, BigDecimal netAmount, int branch, String status, Integer jobCard, List<TCustomerLedger> tCustomerLedgerList) {
         this.indexNo = indexNo;
         this.date = date;
-        this.jobCard = jobCard;
         this.number = number;
         this.amount = amount;
         this.discountRate = discountRate;
         this.discountAmount = discountAmount;
+        this.netAmount = netAmount;
+        this.branch = branch;
         this.status = status;
-        this.tCustomerPaymentList = tCustomerPaymentList;
+        this.jobCard = jobCard;
+        this.tCustomerLedgerList = tCustomerLedgerList;
     }
 
     public Integer getIndexNo() {
@@ -97,19 +117,11 @@ public class TInvoice implements Serializable {
         this.date = date;
     }
 
-    public Integer getJobCard() {
-        return jobCard;
-    }
-
-    public void setJobCard(Integer jobCard) {
-        this.jobCard = jobCard;
-    }
-
-    public Integer getNumber() {
+    public int getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(int number) {
         this.number = number;
     }
 
@@ -137,6 +149,22 @@ public class TInvoice implements Serializable {
         this.discountAmount = discountAmount;
     }
 
+    public BigDecimal getNetAmount() {
+        return netAmount;
+    }
+
+    public void setNetAmount(BigDecimal netAmount) {
+        this.netAmount = netAmount;
+    }
+
+    public int getBranch() {
+        return branch;
+    }
+
+    public void setBranch(int branch) {
+        this.branch = branch;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -145,13 +173,19 @@ public class TInvoice implements Serializable {
         this.status = status;
     }
 
-    public List<TCustomerPayment> gettCustomerPaymentList() {
-        return tCustomerPaymentList;
+    public Integer getJobCard() {
+        return jobCard;
     }
 
-    public void settCustomerPaymentList(List<TCustomerPayment> tCustomerPaymentList) {
-        this.tCustomerPaymentList = tCustomerPaymentList;
+    public void setJobCard(Integer jobCard) {
+        this.jobCard = jobCard;
     }
 
-   
+    public List<TCustomerLedger> gettCustomerLedgerList() {
+        return tCustomerLedgerList;
+    }
+
+    public void settCustomerLedgerList(List<TCustomerLedger> tCustomerLedgerList) {
+        this.tCustomerLedgerList = tCustomerLedgerList;
+    }
 }

@@ -1,7 +1,7 @@
 (function () {
     angular.module("invoiceModule", ['ui.bootstrap']);
     angular.module("invoiceModule")
-            .controller("invoiceController", function ($scope, itemModificationModel, invoiceModel, Notification, ConfirmPane) {
+            .controller("invoiceController", function ($scope, itemModificationModel, optionPane, invoiceModel, Notification, ConfirmPane) {
 
                 $scope.model = new itemModificationModel();
                 $scope.invoiceModel = new invoiceModel();
@@ -16,6 +16,7 @@
                 $scope.selectInvoice = null;
 
                 $scope.ui.selectedJobCardRow = function (jobCard) {
+                    $scope.invoiceModel.clear();
 
                     //job card seletion
                     $scope.selectedJobCardIndexNo = jobCard.indexNo;
@@ -124,11 +125,87 @@
                     return $scope.invoiceModel.getJobItemHistory(jobCard);
                 };
 
+
+                $scope.ui.saveInvoice = function () {
+                    if ($scope.selectedJobCardIndexNo) {
+                        if ($scope.invoiceModel.paymentData.balance >= 0) {
+                            if ($scope.invoiceModel.paymentData.balance > 0) {
+                                ConfirmPane.primaryConfirm("Your Over Payment" + $scope.invoiceModel.paymentData.balance)
+                                        .confirm(function () {
+                                            $scope.invoiceModel.saveInvoice()
+                                                    .then(function (data) {
+                                                        optionPane.successMessage("Save Invoice" + data.number);
+                                                    });
+                                        });
+                            } else {
+                                ConfirmPane.successConfirm("Do you want to save invoice")
+                                        .confirm(function () {
+                                            $scope.invoiceModel.saveInvoice()
+                                                    .then(function (data) {
+                                                        optionPane.successMessage("Save Invoice" + data.number);
+                                                    });
+                                        });
+                            }
+                        } else {
+                            Notification.error("please settle payment");
+                        }
+
+                    } else {
+                        Notification.error("select vehicle");
+                    }
+                };
+
+                $scope.ui.getCashPayment = function (amount, type) {
+                    if ($scope.selectedJobCardIndexNo) {
+                        console.log(amount);
+                        console.log(type);
+                        $scope.invoiceModel.getInsertCashPayment(amount, type);
+                    } else {
+                        Notification.error("select vehicle");
+                    }
+                };
+
+                $scope.ui.paymentDelete = function ($index) {
+                    $scope.cashPayment.paymentDelete($index);
+                    $scope.amounts = 0.0;
+                };
+
+                $scope.ui.getCashPaymentDelete = function () {
+                    $scope.invoiceModel.getCashPaymentDelete();
+                };
+
+                $scope.ui.getInsertCardAndChequePayment = function (paymentInformation, type) {
+                    if ($scope.selectedJobCardIndexNo) {
+                        $scope.invoiceModel.getInsertCardAndChequePayment(paymentInformation, type);
+                    } else {
+                        Notification.error("select vehicle");
+                    }
+                };
+
+//                $scope.ui.getDiscountRate = function () {
+//                    $scope.invoiceModel.invoiceData.discountRate = $scope.invoiceModel.invoiceData.discountAmount * 100 / $scope.invoiceModel.invoiceData.amount;
+//                    $scope.invoiceModel.invoiceData.netAmount = parseFloat($scope.invoiceModel.invoiceData.amount - $scope.invoiceModel.invoiceData.discountAmount);
+//                };
+//
+//                $scope.ui.getDiscountAmount = function () {
+//                    $scope.invoiceModel.invoiceData.discountAmount = parseFloat($scope.invoiceModel.invoiceData.amount * $scope.invoiceModel.invoiceData.discountRate / 100);
+//                    $scope.invoiceModel.invoiceData.netAmount = parseFloat($scope.invoiceModel.invoiceData.amount - $scope.invoiceModel.invoiceData.discountAmount);
+//                };
+
                 //-----------------------------------end invoice payment method -----------------------------------
 
+
                 $scope.init = function () {
-                    //set ideal mode
-                    $scope.ui.mode = "IDEAL";
+                    $scope.$watch("[invoiceModel.invoiceData.amount,invoiceModel.invoiceData.discountRate,invoiceModel.invoiceData.discountAmount]", function (newVal, oldVal) {
+                        $scope.invoiceModel.getInvoiceData($scope.selectedJobCardIndexNo);
+                        $scope.invoiceModel.getPaymentDetails();
+                    }, true);
+
+                    $scope.$watch("[invoiceModel.paymentInformationList.length]", function (newVal, oldVal) {
+                        if ($scope.invoiceModel.paymentInformationList.length) {
+                            $scope.invoiceModel.getPaymentDetails();
+                        }
+                    }, true);
                 };
 
                 $scope.init();

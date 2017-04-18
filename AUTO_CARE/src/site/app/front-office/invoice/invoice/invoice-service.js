@@ -22,9 +22,18 @@
         this.loadVehicleType = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle-type");
         };
-        
+
         this.loadPriceCategory = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/price-category");
+        };
+
+        this.loadBankAndBranch = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/bankbranch");
+        };
+
+        //invoice save
+        this.saveInvoice = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/save-invoice", data);
         };
     };
 

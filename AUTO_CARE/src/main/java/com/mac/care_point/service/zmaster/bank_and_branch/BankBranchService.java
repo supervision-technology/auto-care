@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.invoice.payment;
+package com.mac.care_point.service.zmaster.bank_and_branch;
 
-import com.mac.care_point.service.invoice.invoice.InvoiceRepository;
+import com.mac.care_point.service.zmaster.bank_and_branch.model.MBankBranch;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,14 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class PaymentService {
+public class BankBranchService {
 
-    
     @Autowired
-    private InvoiceRepository invoiceRepository;
-    
-    @Autowired
-    private CustomerPaymentRepository customerPaymentRepository;
-    
-    
+    private BankBranchRepository bankBranchRepository;
+
+    public List<MBankBranch> getALlBranckAndBranch() {
+        return bankBranchRepository.findAll();
+    }
+
 }

@@ -15,6 +15,7 @@ public interface Constant {
     public static final String PENDING_STATUS = "PENDING";
     public static final String APPROVE_STATUS = "APPROVED";
     public static final String CONFIRM_STATUS = "CONFIRMED";
+    public static final String FINISHE_STATUS = "FINISHED";
     public static final String DLETED_STATUS = "DELETED";
 
     //payment types
@@ -23,6 +24,7 @@ public interface Constant {
     public static final String CARD_PAYMENT = "CARD_PAYMENT";
 
     //invoice payment
+    public static final String INVOICE_CREATE = "INVOICE_CREATE";
     public static final String INVOICE_PAYMENT = "INVOICE_PAYMENT";
     public static final String CUSTOMER_PAYMENT = "CUSTOMER_PAYMENT";
     public static final String GRN_PAYMENT = "GRN_PAYMENT";
@@ -31,5 +33,6 @@ public interface Constant {
     //t_payment information table - form names
     public static final String INVOICE_FORM = "INVOICE_FORM";
     public static final String GRN_FORM = "GRN_FORM";
+    
 
 }
