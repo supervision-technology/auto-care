@@ -6,13 +6,41 @@
                 $scope.model = new vehicleEntranceModel();
 
                 $scope.ui = {};
-
+                $scope.imagemodel = [];
 
                 $scope.ui.keyEvent = function (e) {
                     var code = e ? e.keyCode || e.which : 13;
                     if (code === 13) {
                         $scope.ui.secondStep();
                     }
+                };
+                
+                $scope.ui.showImg = function (){
+                    if ($scope.imagemodel.length === 0) {
+                        $scope.ui.showImg === 2;
+                    }
+                };
+
+                $scope.ui.imageUpload = function () {
+                    $scope.ui.changeUi = 'ui4';
+                };
+
+                $scope.ui.changeFunction = function (event) {
+                    var files = event.target.files;
+
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        var reader = new FileReader();
+                        reader.onload = $scope.imageIsLoaded;
+                        reader.readAsDataURL(file);
+                    }
+                };
+
+                $scope.imageIsLoaded = function (e) {
+                    $scope.$apply(function () {
+                        $scope.imagemodel.push(e.target.result);
+                        console.log($scope.imagemodel[0]);
+                    });
                 };
 
                 $scope.ui.new = function () {
@@ -131,7 +159,7 @@
                                     $scope.model.saveJobCard()
                                             .then(function (data) {
                                                 $scope.ui.goToItemSelection(data);
-                                        
+
                                                 Notification.success("Save job-card success !!!");
                                                 $scope.model.clearModel();
                                                 $scope.vehicleNo = "";

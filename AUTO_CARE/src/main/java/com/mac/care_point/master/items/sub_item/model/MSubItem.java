@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.items.items.model;
+package com.mac.care_point.master.items.sub_item.model;
 
+import com.mac.care_point.master.items.items.model.MItem;
 import com.mac.care_point.master.items.items.model.MItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
