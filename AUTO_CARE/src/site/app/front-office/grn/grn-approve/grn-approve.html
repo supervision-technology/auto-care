@@ -11,7 +11,7 @@
                             <td>
                     <center>
                         <label class="h4">
-                            <b>PENDING PURCHASE ORDER :</b>
+                            <b>PENDING GRN LIST:</b>
                         </label>
                     </center>
                     </td>
@@ -56,79 +56,88 @@
             </div>
         </div>
     </div>
-
     <div class="col-xs-9 background-light">
-        <div class="row col-xs-4 nopadding">
-            <table class="table-rounded control-table">
-                <col style="width: 100%"/>
-                <tbody>
-                    <tr>
-                        <td>CURRENT DATE<input class="form-control" id="date" smart-input="date" placeholder="date" ng-model="model.data.date" ng-disabled="ui.mode !== 'NEW' "></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="row col-xs-4 nopadding">
-            <table class="table-rounded control-table">
-                <col style="width: 100%"/>
-                <tbody>
-                    <tr>
-                        <td>DELIVER DATE<input class="form-control" placeholder="deliver date" 
-                                               smart-input="date"
-                                               ng-model="model.data.supplier" 
-                                               ng-disabled="ui.mode !== 'NEW'">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="row col-xs-4 nopadding">
-            <table class="table-rounded control-table">
-                <col style="width: 100%"/>
-                <tbody>
-                    <tr>
-                        <td>SUPPLIER<input class="form-control" id="supplier" placeholder="supplier" ng-model="model.data.date" ng-disabled="ui.mode !== 'NEW' "></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="background-light">
-            <div class="row col-xs-12 nopadding">
-                <table class="table-rounded control-table square-table">
-                    <col style="width: 20%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 10%"/>
-                    <col style="width: 10%"/>
-                    <col style="width: 10%"/>
-                    <col style="width: 10%"/>
-                    <col style="width: 10%"/>
-                    <col style="width: 10%"/>
-                    <col style="width: 10%"/>
-                    <col style="width: 10%"/>
+        <div class="col-xs-12 background-light nopadding">
+            <div class="row col-xs-3 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
                     <tbody>
                         <tr>
-                            <td style="padding-right: 0 !important">BARCODE<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">DESCRIPTION<input class="form-control" id="barcode" placeholder="" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">PRICE<input class="form-control" id="barcode" placeholder="" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">QTY<input class="form-control" id="barcode" placeholder="" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">VALUE<input class="form-control" id="barcode" placeholder="" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">DISC<input class="form-control" id="barcode" placeholder="" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">D.VALUE<input class="form-control" id="barcode" placeholder="" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">NET<input class="form-control" id="barcode" placeholder="" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">STOCK<input class="form-control" id="barcode" placeholder="" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td style="padding-right: 0 !important">
-                                <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.addData()">
-                                    <span class="glyphicon glyphicon-plus">
-                                    </span>
-                                </a> 
-                            </td>
+                            <td><input class="form-control" placeholder="number" ng-model="model.data.number" ng-disabled="ui.mode !== 'EDIT'"></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            <div class="row col-xs-3 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control" id="date" smart-input="date" placeholder="date" ng-model="model.data.date" ng-disabled="ui.mode !== 'NEW' "></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-3 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control" placeholder="deliver date" smart-input="date" ng-model="model.data.deleverDate" ng-disabled="ui.mode !== 'NEW'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-3 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td><input class="form-control" placeholder="supplier" ng-model="model.data.supplier" 
+                                       uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
+                                       typeahead-input-formatter="model.supplierLable($model)" 
+                                       ng-disabled="ui.mode !== 'NEW'"
+                                       typeahead-editable="false"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="background-light">
+                <div class="row col-xs-12 nopadding">
+                    <table class="table-rounded control-table square-table">
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 7%"/>
+                        <tbody>
+                            <tr>
+                                <td>BARCODE<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>DESCRIPTION<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>PRICE<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>QTY<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>Value<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>DISCOUNT<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>D.VALUE<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>NET<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>STOCK<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                                <td>
+                                    <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.addData()">
+                                        <span class="glyphicon glyphicon-plus">
+                                        </span>
+                                    </a> 
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-
         <table class="table-rounded">
             <col style="width: 20%"/>
             <col style="width: 20%"/>
@@ -138,6 +147,7 @@
             <col style="width: 10%"/>
             <col style="width: 10%"/>
             <col style="width: 10%"/>
+            <col style="width: 7%"/>
             <col style="width: 10%"/>
 
             <thead class="background-dark">
@@ -150,11 +160,12 @@
                     <th class="text-right">Discount</th>
                     <th class="text-right">D.Value</th>
                     <th class="text-right">Net</th>
+                    <th class="text-right">Stock</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
         </table>
-        <div class="smart-scroll-y" style="height: calc(100vh - 265px);">
+        <div class="smart-scroll-y" style="height: calc(100vh - 296px);">
             <table class="table-rounded">
                 <col style="width: 20%"/>
                 <col style="width: 20%"/>
@@ -164,6 +175,7 @@
                 <col style="width: 10%"/>
                 <col style="width: 10%"/>
                 <col style="width: 10%"/>
+                <col style="width: 7%"/>
                 <col style="width: 10%"/>
                 <tbody>
                     <tr ng-repeat="grnItem in [1,2,3,4]">
@@ -175,57 +187,66 @@
                         <td class="text-right">10%</td>
                         <td class="text-right">4000.00</td>
                         <td class="text-right">36000.00</td>
+                        <td class="text-right">0</td>
                         <td class="text-right">
                             <a class="btn btn-primary" ng-click="ui.edit($index)"><span class="glyphicon glyphicon-edit"></span></a>
                             <a class="btn btn-danger" ng-click="ui.delete($index)"><span class="glyphicon glyphicon-trash"></span></a>
                         </td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
-        <div class="col-xs-9" style="position: fixed;bottom: 1px;margin-left:-15px">
+        <div class="col-xs-9" style="position: fixed;bottom: 1px;margin-left:-15px;">
             <table class="table-rounded background-dark">
-                <col style="width: 30%"/>
-                <col style="width: 20%"/>
-                <col style="width: 10%"/>
-                <col style="width: 10%"/>
-                <col style="width: 10%"/>
-                <col style="width: 10%"/>
-                <col style="width: 10%"/>
-                <col style="width: 10%"/>
+                <col style="width: 20%">
+                <col style="width: 10%">
+                <col style="width: 20%">
+                <col style="width: 10%">
+                <col style="width: 15%">
+                <col style="width: 10%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 10%">
+                <col style="width: 10%">
                 <tbody>
                     <tr class="background-dark">
                         <td></td>
-                        <td class="text-right"><b>TOTAL :</b></td>
-                        <td><input class="form-control text-right" smart-input="decimal" placeholder="value" ng-model="model.data.summaryQty" ng-disabled="true"></td>
-                        <td><input class="form-control text-right" smart-input="decimal" placeholder="discount" ng-model="model.data.amount" ng-disabled="true"></td>
                         <td></td>
-                        <td><input class="form-control text-right" smart-input="decimal" placeholder="net value" ng-model="model.data.amount" ng-disabled="true"></td>
-                        <td><input class="form-control text-right" smart-input="decimal" placeholder="net value" ng-model="model.data.amount" ng-disabled="true"></td>
+                        <td class="text-right"><b>TOTAL :</b></td>
+                        <td><input class="form-control text-right"placeholder="qty" ng-model="model.data.amount" ng-disabled="true"></td>
+                        <td><input class="form-control text-right" placeholder="value" ng-model="model.data.amount" ng-disabled="true"></td>
+                        <td></td>
+                        <td><input class="form-control text-right" placeholder="discount value" ng-model="model.data.amount" ng-disabled="true"></td>
+                        <td><input class="form-control text-right" placeholder="net value" ng-model="model.data.amount" ng-disabled="true"></td>
+                        <td>&nbsp;</td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr class="background-dark">
                         <td></td>
-                        <td class="text-right"><b>NBT DETAIL :</b></td>
+                        <td></td>
+                        <td class="text-right"><b>NBT DETAILS :</b></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td><input class="form-control text-right" placeholder="nbt %" ng-model="model.data.amount" ng-disabled="true"></td>
                         <td><input class="form-control text-right" placeholder="nbt value" ng-model="model.data.amount" ng-disabled="true"></td>
                         <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                     </tr>
                     <tr class="background-dark">
                         <td></td>
-                        <td class="text-right"><b>VAT DETAIL :</b></td>
+                        <td></td>
+                        <td class="text-right"><b>VAT DETAILS :</b></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td><input class="form-control text-right" placeholder="vat %" ng-model="model.data.amount" ng-disabled="true"></td>
                         <td><input class="form-control text-right" placeholder="vat value" ng-model="model.data.amount" ng-disabled="true"></td>
                         <td>&nbsp;</td>
+                        <td>&nbsp;</td>
                     </tr>
                     <tr class="background-dark">
+                        <td></td>
                         <td></td>
                         <td class="text-right"><b>SUMMARY :</b></td>
                         <td></td>

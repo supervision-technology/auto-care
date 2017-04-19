@@ -92,7 +92,7 @@
                 <col style="width: 100%"/>
                 <tbody>
                     <tr>
-                        <td><input class="form-control" placeholder="select a purchase order" ng-model="model.data.supplier" 
+                        <td><input class="form-control" placeholder="remarks" ng-model="model.data.supplier" 
                                    uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
                                    typeahead-input-formatter="model.supplierLable($model)" 
                                    ng-disabled="ui.mode !== 'NEW'"
@@ -106,16 +106,14 @@
         <div class="background-light col-sm-6 nopadding">
             <div class="row col-xs-12 nopadding">
                 <table class="table-rounded control-table square-table">
-                    <col style="width: 22%"/>
-                    <col style="width: 25%"/>
                     <col style="width: 20%"/>
+                    <col style="width: 45%"/>
                     <col style="width: 20%"/>
-                    <col style="width: 13%"/>
+                    <col style="width: 15%"/>
                     <tbody>
                         <tr>
                             <td>BARCODE<input class="form-control" id="barcode" placeholder="barcode" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td>desc<input class="form-control" id="" placeholder="description" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td>price<input class="form-control" id="" placeholder="price" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
+                            <td>DESCRIPTION<input class="form-control" id="" placeholder="description" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
                             <td>QTY<input class="form-control" id="" placeholder="qty" ng-model="model.tempData.barcode" ng-keypress="ui.validateBarcode($event)" ng-disabled="ui.mode !== 'NEW'"></td>
                             <td>
                                 <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.addData()">
@@ -133,14 +131,12 @@
                     <col style="width: 20%"/>
                     <col style="width: 30%"/>
                     <col style="width: 15%"/>
-                    <col style="width: 15%"/>
                     <col style="width: 20%"/>
 
                     <thead class="background-dark">
                         <tr>
                             <th>Barcode</th>
                             <th>Description</th>
-                            <th class="text-right">Price</th>
                             <th class="text-right">Qty</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -151,13 +147,11 @@
                         <col style="width: 20%"/>
                         <col style="width: 30%"/>
                         <col style="width: 15%"/>
-                        <col style="width: 15%"/>
                         <col style="width: 20%"/>
                         <tbody>
                             <tr ng-repeat="grnItem in [1,2,3,4,5,6,7,8,9,0]">
                                 <td><span class="label label-default">12345</span></td>
                                 <td class="over-flow-hidden">Item Name</td>
-                                <td class="text-right">4000.00</td>
                                 <td class="text-right">10</td>
                                 <td class="text-right">
                                     <a class="btn btn-primary" ng-click="ui.edit($index)"><span class="glyphicon glyphicon-edit"></span></a>
@@ -166,6 +160,25 @@
                             </tr>
 
                         </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-4" style="position: fixed;bottom: 1px;margin-left:-15px;height:40px;width: 506px">
+                    <table class="table-rounded">
+                        <col style="width: 15%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 25%"/>
+
+                        <thead class="background-dark">
+                            <tr>
+                                <td><span class="label label-primary">10</span></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right"><b>992</b></td>
+                                <td></td>
+                            </tr>
+                        </thead>
                     </table>
                 </div>
             </div>
@@ -184,7 +197,7 @@
                         <tr>
                             <th>Barcode</th>
                             <th>Description</th>
-                            <th class="text-right">Price</th>
+                            <th>PO No</th>
                             <th class="text-right">Qty</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -201,7 +214,7 @@
                             <tr ng-repeat="grnItem in [1,2,3,4]">
                                 <td><span class="label label-default">12345</span></td>
                                 <td class="over-flow-hidden">Item Name</td>
-                                <td class="text-right">4000.00</td>
+                                <td class="text-right">PO0076</td>
                                 <td class="text-right">10</td>
                                 <td class="text-right">
                                     <a class="btn btn-danger" ng-click="ui.delete($index)"><span class="glyphicon glyphicon-trash"></span></a>
@@ -211,41 +224,25 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
+                <div class="col-xs-4" style="position: fixed;bottom: 1px;margin-left:-15px;height:40px;width: 506px">
+                    <table class="table-rounded">
+                        <col style="width: 15%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 10%"/>
 
-        <div class="col-xs-8" style="position: fixed;bottom: 1px;margin-left:-15px;width: 64%">
-            <div class="col-md-6 nopadding">
-                <table class="table-rounded background-dark">
-                    <col style="width: 40%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 20%"/>
-                    <tbody>
-                        <tr class="background-dark">
-                            <td class="text-right"><b>SUMMARY :</b></td>
-                            <td><input class="form-control text-right" smart-input="decimal" placeholder="qty" ng-model="model.data.summaryQty" ng-disabled="true"></td>
-                            <td><input class="form-control text-right" smart-input="decimal" placeholder="value" ng-model="model.data.summaryQty" ng-disabled="true"></td>
-                            <td><input class="form-control text-right" smart-input="decimal" placeholder="discount" ng-model="model.data.amount" ng-disabled="true"></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6 nopadding">
-                <table class="table-rounded background-dark">
-                    <col style="width: 40%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 20%"/>
-                    <tbody>
-                        <tr class="background-dark">
-                            <td class="text-right"><b>SUMMARY :</b></td>
-                            <td><input class="form-control text-right" smart-input="decimal" placeholder="qty" ng-model="model.data.summaryQty" ng-disabled="true"></td>
-                            <td><input class="form-control text-right" smart-input="decimal" placeholder="value" ng-model="model.data.summaryQty" ng-disabled="true"></td>
-                            <td><input class="form-control text-right" smart-input="decimal" placeholder="discount" ng-model="model.data.amount" ng-disabled="true"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        <thead class="background-dark">
+                            <tr>
+                                <td><span class="label label-primary">10</span></td>
+                                <td></td>
+                                <td></td>
+                                <td class="text-right"><b>9</b></td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

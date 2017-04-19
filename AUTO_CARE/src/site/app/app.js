@@ -30,7 +30,8 @@
         "jobCardModule",
         "subItemModule",
         "grnModule",
-        "app"
+        "app",
+        "purchaseOrderRequestModule"
 
     ]);
 
@@ -132,6 +133,11 @@
                             templateUrl: "app/front-office/grn/grn-request/grn-request.html"
 //                            controller: "grnController"
                         })
+                        //grn approve
+                        .when("/front-office/grn/grn-approve", {
+                            templateUrl: "app/front-office/grn/grn-approve/grn-approve.html"
+//                            controller: "grnController"
+                        })
                         //grn direct
                         .when("/front-office/grn/grn-direct", {
                             templateUrl: "app/front-office/grn/grn-direct/grn.html",
@@ -139,8 +145,8 @@
                         })
                         //purchase order request
                         .when("/front-office/purchase-order/request", {
-                            templateUrl: "app/front-office/purchase-order/request/purchase-order-request.html"
-//                            controller: "grnController"
+                            templateUrl: "app/front-office/purchase-order/request/purchase-order-request.html",
+                            controller: "purchaseOrderRequestController"
                         })
                         //purchase order approve
                         .when("/front-office/purchase-order/approve", {
