@@ -8,6 +8,8 @@
                 purchaseOrderRequestModel.prototype = {
 
                     data: {},
+                    tempData: {},
+                    summaryData: {},
                     //master data lists
                     suppliers: [],
                     allItems: [],
@@ -17,6 +19,7 @@
                         var that = this;
                         this.data = PurchaseOrderRequestModelFactory.newData();
                         this.tempData = PurchaseOrderRequestModelFactory.tempData();
+                        this.summaryData = PurchaseOrderRequestModelFactory.summaryData();
 
                         PurchaseOrderRequestService.loadSuppliers()
                                 .success(function (data) {
@@ -100,6 +103,38 @@
                         } else {
                             this.tempData.item = null;
                         }
+                    },
+                    addData:function (){
+                        this.data.purchaseOrderItemList.push(this.tempData);
+                        this.tempData = PurchaseOrderRequestModelFactory.tempData();
+                        this.summaryCalculator();
+                    },
+                    getItemName:function (indexNo){
+                       var itemName = null;
+                        angular.forEach(this.supplierItems, function (value) {
+                            if (value.indexNo === indexNo) {
+                                itemName = value.name;
+                                return;
+                            }
+                        });
+                        return itemName;
+                    },
+                    summaryCalculator:function (){
+                       var qty=0;
+                       var val=0;
+                       var discount=0;
+                       var itemValue=0;
+                        angular.forEach(this.data.purchaseOrderItemList, function (value) {
+                            qty=parseFloat(qty)+parseFloat(value.qty);
+                            val+=value.value;
+                            discount+=value.discountValue;
+                            itemValue+=value.netValue;
+                        });
+                        this.summaryData.qty=qty;
+                        this.summaryData.value=val;
+                        this.summaryData.discountValue=discount;
+                        this.data.itemValue=itemValue;
+                        this.data.grandTotal=itemValue;
                     }
                 };
                 return purchaseOrderRequestModel;

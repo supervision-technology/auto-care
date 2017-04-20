@@ -74,9 +74,9 @@
                             <td>PRICE<input class="form-control" id="price" placeholder="price" ng-model="model.tempData.price" ng-disabled="ui.mode !== 'NEW'"></td>
                             <td>QTY<input class="form-control" id="qty" placeholder="qty" ng-model="model.tempData.qty" ng-keyup="ui.calculatedValue()" ng-disabled="ui.mode !== 'NEW'"></td>
                             <td>Value<input class="form-control" id="value" placeholder="value" ng-model="model.tempData.value" ng-disabled="ui.mode !== 'EDIT'"></td>
-                            <td>DISCOUNT %<input class="form-control" id="discount" placeholder="discount" ng-model="model.tempData.discount" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td>D.VALUE<input class="form-control" id="disValue" placeholder="discount value" ng-model="model.tempData.discountValue" ng-disabled="ui.mode !== 'NEW'"></td>
-                            <td>NET<input class="form-control" id="net" placeholder="net" ng-model="model.tempData.net" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            <td>DISCOUNT %<input class="form-control" id="discount" placeholder="discount" ng-model="model.tempData.discount" ng-keyup="ui.calculateDiscountWithRate()" ng-disabled="ui.mode !== 'NEW'"></td>
+                            <td>D.VALUE<input class="form-control" id="disValue" placeholder="discount value" ng-model="model.tempData.discountValue" ng-keyup="ui.calculateDiscountWithValue()" ng-keypress="ui.callAddData()" ng-disabled="ui.mode !== 'NEW'"></td>
+                            <td>NET<input class="form-control" id="net" placeholder="net value" ng-model="model.tempData.netValue" ng-disabled="ui.mode !== 'EDIT'"></td>
                             <td>STOCK<input class="form-control" id="stockQty" placeholder="stock qty" ng-model="model.tempData.stockQty" ng-disabled="ui.mode !== 'EDIT'"></td>
                             <td>
                                 <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.addData()">
@@ -128,15 +128,15 @@
             <col style="width: 10%"/>
             <col style="width: 10%"/>
             <tbody>
-                <tr ng-repeat="grnItem in [1,2,3,4]">
-                    <td><span class="label label-default">12345</span></td>
-                    <td class="over-flow-hidden">Item Name</td>
-                    <td class="text-right">4000.00</td>
-                    <td class="text-right">10</td>
-                    <td class="text-right">40000.00</td>
-                    <td class="text-right">10%</td>
-                    <td class="text-right">4000.00</td>
-                    <td class="text-right">36000.00</td>
+                <tr class="background-dark" ng-repeat="item in model.data.purchaseOrderItemList">
+                    <td><span class="label label-default">{{item.barcode}}</span></td>
+                    <td class="over-flow-hidden">{{model.getItemName(item.item)}}</td>
+                    <td class="text-right">{{item.price | number:2}}</td>
+                    <td class="text-right">{{item.qty | number:2}}</td>
+                    <td class="text-right">{{item.value | number:2}}</td>
+                    <td class="text-right">{{item.discount | number:2}}%</td>
+                    <td class="text-right">{{item.discountValue | number:2}}</td>
+                    <td class="text-right">{{item.netValue | number:2}}</td>
                     <td class="text-right">
                         <a class="btn btn-primary" ng-click="ui.edit($index)"><span class="glyphicon glyphicon-edit"></span></a>
                         <a class="btn btn-danger" ng-click="ui.delete($index)"><span class="glyphicon glyphicon-trash"></span></a>
@@ -176,7 +176,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><input class="form-control text-right" placeholder="nbt %" ng-model="model.data.nbt" ng-disabled="ui.mode != 'EDIT'"></td>
+                    <td><input class="form-control text-right" placeholder="nbt %" ng-model="model.data.nbt" ng-keyup="ui.calculateNBT()" ng-disabled="ui.mode != 'NEW'"></td>
                     <td><input class="form-control text-right" placeholder="nbt value" ng-model="model.data.nbtValue" ng-disabled="ui.mode != 'EDIT'"></td>
                     <td>&nbsp;</td>
                 </tr>
@@ -187,7 +187,7 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td><input class="form-control text-right" placeholder="vat %" ng-model="model.data.vat" ng-disabled="ui.mode != 'EDIT'"></td>
+                    <td><input class="form-control text-right" placeholder="vat %" ng-model="model.data.vat" ng-keyup="ui.calculateVAT()" ng-disabled="ui.mode != 'NEW'"></td>
                     <td><input class="form-control text-right" placeholder="vat value" ng-model="model.data.vatValue" ng-disabled="ui.mode != 'EDIT'"></td>
                     <td>&nbsp;</td>
                 </tr>
