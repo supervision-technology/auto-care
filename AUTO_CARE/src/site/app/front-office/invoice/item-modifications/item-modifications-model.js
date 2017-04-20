@@ -6,7 +6,7 @@
                 }
 
                 itemModificationModel.prototype = {
-                    
+
                     data: {},
                     //master data lists
                     items: [],
@@ -279,6 +279,19 @@
                             }
                         });
                         return data;
+                    },
+                    removeJobCard: function () {
+                       var that = this;
+//                        angular.forEach(this.pendingJobCards, function (values) {
+//                            if (values.indexNo === parseInt(jobCard)) {
+//                                that.pendingJobCards.splice(that.pendingJobCards.indexOf(values), 1);
+//                            }
+//                        });
+
+                        itemModificationService.pendingJobCards()
+                                .success(function (data) {
+                                    that.pendingJobCards = data;
+                                });
                     }
                 };
                 return itemModificationModel;

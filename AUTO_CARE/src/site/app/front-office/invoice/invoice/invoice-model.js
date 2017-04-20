@@ -17,13 +17,13 @@
 
                     paymentInformationList: [],
 
+                    //master data lists
                     vehicleList: [],
                     clientList: [],
                     vehicleTypeList: [],
                     priceCategoryList: [],
                     bankBranchList: [],
 
-                    //master data lists
                     invoiceHistoryList: [],
                     jobItemHistortList: [],
                     constructor: function () {
@@ -67,11 +67,12 @@
                         this.invoiceData = invoiceFactory.newInvoiceData();
                         this.clientData = invoiceFactory.newClientData();
                         this.vehicleData = invoiceFactory.newVehicleData();
-                        this.invoicePaymentData = invoiceFactory.newInvoicePayment();
 
                         this.paymentData = invoiceFactory.paymentData();
                         this.customerLegerData = invoiceFactory.customerLegerData();
                         this.paymentInformation = invoiceFactory.paymentInformation();
+
+                        this.invoicePaymentData = invoiceFactory.newInvoicePayment();
 
                         this.invoiceHistoryList = [];
                         this.jobItemHistortList = [];
@@ -208,6 +209,9 @@
                         this.paymentData.cardAmount = this.getTotalPaymentTypeWise('CARD');
                         this.paymentData.totalAmount = parseFloat(this.paymentData.cashAmount + this.paymentData.chequeAmount + this.paymentData.cardAmount);
                         this.paymentData.balance = this.paymentData.totalAmount - this.invoiceData.netAmount;
+                        if (this.paymentData.balance > 0) {
+                            this.paymentData.overPayment = this.paymentData.balance;
+                        }
                     },
                     //insert cash payment
                     getInsertCashPayment: function (amount, type) {
@@ -223,7 +227,7 @@
                         this.paymentInformation = {};
                     },
                     //delete card payment and cheque payment
-                    paymentDelete: function ($index) {
+                    getCardAndChequePaymentDelete: function ($index) {
                         this.paymentInformationList.splice($index, 1);
                         this.getPaymentDetails();
                     },

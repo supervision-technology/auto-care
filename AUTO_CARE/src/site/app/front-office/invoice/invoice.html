@@ -32,7 +32,7 @@
                                         <tbody>
                                             <tr>
                                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="cashPayment"></td>
-                                                <td><a class="btn btn-success" ng-click="ui.getCashPayment(amounts, 'CASH');"><span class="glyphicon glyphicon-plus"></span></a> </td>
+                                                <td><a class="btn btn-success" ng-click="ui.getCashPayment(cashPayment, 'CASH');"><span class="glyphicon glyphicon-plus"></span></a> </td>
                                                 <td><a class="btn btn-danger" ng-click="ui.getCashPaymentDelete();"><span class="glyphicon glyphicon-remove"></span></a> </td>
                                             </tr>
                                         </tbody>
@@ -82,10 +82,10 @@
                                             <tbody>
                                                 <tr ng-repeat="paymenetInformation in invoiceModel.paymentInformationList|filter:{type:'CHEQUE'}">
                                                     <td>{{paymenetInformation.number}}</td>
-                                                    <td>{{paymenetInformation.chequeDate}}</td>
+                                                    <td>{{paymenetInformation.chequeDate| date:'yyyy-MM-dd'}}</td>
                                                     <td>{{invoiceModel.bankListLable(paymenetInformation.bank)}}</td>
                                                     <td>{{paymenetInformation.amount}}</td>
-                                                    <td><a class="btn btn-danger" ng-click="ui.paymentDelete($index);"><span class="glyphicon glyphicon-remove"></span></a> </td>
+                                                    <td><a class="btn btn-danger" ng-click="ui.getCardAndChequePaymentDelete($index);"><span class="glyphicon glyphicon-remove"></span></a> </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -101,7 +101,7 @@
                                         <tbody>
                                             <tr>
                                                 <th><label>CARD NO</label></th>
-                                                <th><label>BANK</label></th>
+                                                <th><label>CARD TYPE</label></th>
                                                 <th><label>AMOUNT</label></th>
                                                 <th>&nbsp;</th>
                                             </tr>
@@ -140,7 +140,7 @@
                                                     <td>{{paymenetInformation.chequeDate}}</td>
                                                     <td>{{invoiceModel.cardType}}</td>
                                                     <td>{{paymenetInformation.amount}}</td>
-                                                    <td><a class="btn btn-danger" ng-click="ui.paymentDelete($index);"><span class="glyphicon glyphicon-remove"></span></a> </td>
+                                                    <td><a class="btn btn-danger" ng-click="ui.getCardAndChequePaymentDelete($index);"><span class="glyphicon glyphicon-remove"></span></a> </td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -157,17 +157,27 @@
                                 <col style="width: 35%"/>
                                 <col style="width: 65%"/>
                                 <tbody>
+                                    <tr class="select-default-row">
+                                        <td><label>OUTSATANDING</label></td>
+                                        <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.outstandingAmount" readonly> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table-rounded control-table">
+                                <col style="width: 35%"/>
+                                <col style="width: 65%"/>
+                                <tbody>
                                     <tr>
                                         <td><label>JOB CARD AMOUNT</label></td>
                                         <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.amount" readonly> </td>
                                     </tr>
                                     <tr>
                                         <td><label>DISCOUNT RATE</label></td>
-                                        <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountRate"> </td>
+                                        <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountRate" ng-readonly="selectedJobCardIndexNo === null"> </td>
                                     </tr>
                                     <tr>
                                         <td><label>DISCOUNT AMOUNT</label></td>
-                                        <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountAmount"> </td>
+                                        <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountAmount" readonly> </td>
                                     </tr>
                                     <tr>
                                         <td><label>NET AMOUNT</label></td>
@@ -192,6 +202,16 @@
                                     <tr>
                                         <td><label>BALANCE</label></td>
                                         <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.balance" readonly> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table-rounded control-table">
+                                <col style="width: 35%"/>
+                                <col style="width: 65%"/>
+                                <tbody>
+                                    <tr class="select-default-row">
+                                        <td><label>OVER PAYMENT</label></td>
+                                        <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoiceData.overPayment"> </td>
                                     </tr>
                                 </tbody>
                             </table>

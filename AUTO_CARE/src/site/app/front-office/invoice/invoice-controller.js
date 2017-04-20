@@ -134,6 +134,8 @@
                                         .confirm(function () {
                                             $scope.invoiceModel.saveInvoice()
                                                     .then(function (data) {
+                                                        $scope.model.removeJobCard();
+                                                        $scope.invoiceModel.clear();
                                                         optionPane.successMessage("Save Invoice" + data.number);
                                                     });
                                         });
@@ -142,12 +144,22 @@
                                         .confirm(function () {
                                             $scope.invoiceModel.saveInvoice()
                                                     .then(function (data) {
+                                                        $scope.model.removeJobCard();
+                                                        $scope.invoiceModel.clear();
                                                         optionPane.successMessage("Save Invoice" + data.number);
                                                     });
                                         });
                             }
                         } else {
-                            Notification.error("please settle payment");
+                            ConfirmPane.successConfirm("Do you want to save invoice Payment Settle OutStanding")
+                                    .confirm(function () {
+                                        $scope.invoiceModel.saveInvoice()
+                                                .then(function (data) {
+                                                    $scope.model.removeJobCard();
+                                                    $scope.invoiceModel.clear();
+                                                    optionPane.successMessage("Save Invoice" + data.number);
+                                                });
+                                    });
                         }
 
                     } else {
@@ -157,21 +169,21 @@
 
                 $scope.ui.getCashPayment = function (amount, type) {
                     if ($scope.selectedJobCardIndexNo) {
-                        console.log(amount);
-                        console.log(type);
-                        $scope.invoiceModel.getInsertCashPayment(amount, type);
+                        if (0.0 === parseFloat($scope.invoiceModel.getTotalPaymentTypeWise('CASH'))) {
+                            $scope.invoiceModel.getInsertCashPayment(amount, type);
+                        }
                     } else {
                         Notification.error("select vehicle");
                     }
                 };
 
-                $scope.ui.paymentDelete = function ($index) {
-                    $scope.cashPayment.paymentDelete($index);
-                    $scope.amounts = 0.0;
+                $scope.ui.getCardAndChequePaymentDelete = function ($index) {
+                    $scope.invoiceModel.getCardAndChequePaymentDelete($index);
                 };
 
                 $scope.ui.getCashPaymentDelete = function () {
                     $scope.invoiceModel.getCashPaymentDelete();
+                    $scope.cashPayment = 0.0;
                 };
 
                 $scope.ui.getInsertCardAndChequePayment = function (paymentInformation, type) {

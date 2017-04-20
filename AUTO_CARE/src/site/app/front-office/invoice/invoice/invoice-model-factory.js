@@ -13,7 +13,9 @@
                         "netAmount": 0.0,
                         "discountRate": 0,
                         "discountAmount": 0,
-                        "status": null
+                        "status": null,
+                        "overPayment": null,
+                        "outStandingAmount": null
                     };
                     return data;
                 };
