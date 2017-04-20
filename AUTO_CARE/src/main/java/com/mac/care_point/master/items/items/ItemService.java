@@ -46,4 +46,8 @@ public class ItemService {
     List<MItem> findItemsByTypeAndBranchAndQty(int BRANCH, String TYPE) {
         return itemRepository.findByBranchAndType(BRANCH,TYPE);
     }
+
+    List<MItem> getSupplierItem(Integer branch,String stock,String nonStock) {
+        return itemRepository. findByBranchAndTypeOrType(branch,stock,nonStock);
+    }
 }

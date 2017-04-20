@@ -71,12 +71,6 @@ public class GrnService {
 
             MItem selectItem = itemRepository.getOne(item.getItem());
 
-            if (selectItem.getQty() != null) {
-                selectItem.setQty(new BigDecimal(selectItem.getQty().doubleValue() + item.getQty().doubleValue()));
-
-            } else {
-                selectItem.setQty(item.getQty());
-            }
             itemRepository.save(selectItem);
 
             item.setGrn(grn);

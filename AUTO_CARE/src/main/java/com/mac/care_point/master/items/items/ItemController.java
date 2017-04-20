@@ -28,7 +28,8 @@ public class ItemController {
     private ItemService itemService;
 
     final int BRANCH = 1;
-    final String TYPE = "STOCK";
+    final String STOCK = "STOCK";
+    final String NON_STOCK = "NON-STOCK";
 
     @RequestMapping(method = RequestMethod.GET)
     public List<MItem> findAllItems() {
@@ -36,7 +37,7 @@ public class ItemController {
     }
     @RequestMapping(value = "/stock-item",method = RequestMethod.GET)
     public List<MItem> findItemsByTypeAndBranchAndQty() {
-        return itemService.findItemsByTypeAndBranchAndQty(BRANCH,TYPE);
+        return itemService.findItemsByTypeAndBranchAndQty(BRANCH,STOCK);
     }
 
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
@@ -49,6 +50,11 @@ public class ItemController {
     @RequestMapping(value = "/delete-item/{indexNo}", method = RequestMethod.DELETE)
     public void deletItem(@PathVariable Integer indexNo) {
         itemService.deleteItem(indexNo);
+    }
+    
+    @RequestMapping(value = "/stock-nonstock-item", method = RequestMethod.GET)
+    public List<MItem> supplierItems() {
+        return itemService.getSupplierItem(BRANCH,STOCK,NON_STOCK);
     }
 
     @RequestMapping(value = "/find-item-by-category/{category}/{packageCategory}", method = RequestMethod.GET)

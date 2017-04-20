@@ -7,10 +7,10 @@
         this.loadSuppliers = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
         };
-//
-//        this.loadVehicles = function () {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle");
-//        };
+
+        this.loadItems = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/stock-nonstock-item");
+        };
 //
 //        this.loadItemUnits = function () {
 //            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit");

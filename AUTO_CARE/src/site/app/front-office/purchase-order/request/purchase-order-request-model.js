@@ -10,6 +10,8 @@
                     data: {},
                     //master data lists
                     suppliers: [],
+                    allItems: [],
+                    supplierItems: [],
 
                     constructor: function () {
                         var that = this;
@@ -19,6 +21,10 @@
                         PurchaseOrderRequestService.loadSuppliers()
                                 .success(function (data) {
                                     that.suppliers = data;
+                                });
+                        PurchaseOrderRequestService.loadItems()
+                                .success(function (data) {
+                                    that.allItems = data;
                                 });
 //
 //                        invoiceService.loadItems()
@@ -43,8 +49,57 @@
                                 return;
                             }
                         });
-                        console.log(label);
                         return label;
+                    },
+                    loadItem: function (supplier) {
+                        var that = this;
+                        this.supplierItems=[];
+                        angular.forEach(this.allItems, function (value) {
+                            if (value.supplier === supplier) {
+                                that.supplierItems.push(value);
+                            }
+                        });
+                        console.log(that.supplierItems);
+                    },
+                    validateBarcode: function (barcode) {
+                        var selectItem = null;
+                        angular.forEach(this.supplierItems, function (value) {
+                            if (value.barcode === barcode) {
+                                selectItem = value;
+                                return;
+                            }
+                        });
+                        if (selectItem) {
+                            this.tempData.item = selectItem.indexNo;
+                            this.tempData.price = selectItem.costPrice;
+                        } else {
+                            this.tempData.item = null;
+                        }
+                    },
+                    itemLable: function (index) {
+                        var label;
+                        angular.forEach(this.supplierItems, function (value) {
+                            if (value.indexNo === index) {
+                                label = value.barcode + ' - ' + value.name;
+                                return;
+                            }
+                        });
+                        return label;
+                    },
+                    setItemDetail:function (indexNo){
+                        var selectItem = null;
+                        angular.forEach(this.supplierItems, function (value) {
+                            if (value.indexNo === indexNo) {
+                                selectItem = value;
+                                return;
+                            }
+                        });
+                        if (selectItem) {
+                            this.tempData.barcode = selectItem.barcode;
+                            this.tempData.price = selectItem.costPrice;
+                        } else {
+                            this.tempData.item = null;
+                        }
                     }
                 };
                 return purchaseOrderRequestModel;
