@@ -2,10 +2,12 @@
 //module
     angular.module("vehicleEntranceModule", ['ui.bootstrap', 'ui-notification']);
     angular.module("vehicleEntranceModule")
-            .controller("vehicleEntranceController", function ($scope, $window, Notification, systemConfig, $filter, $location, vehicleEntranceModel, $timeout) {
+            .controller("vehicleEntranceController", function ($scope, ConfirmPane, systemConfig, $window, Notification, $filter, $location, vehicleEntranceModel, $timeout) {
                 $scope.model = new vehicleEntranceModel();
 
                 $scope.ui = {};
+                $scope.imagemodel = [];
+                $scope.imagemodelX = [];
 
 
                 $scope.ui.keyEvent = function (e) {
@@ -13,6 +15,84 @@
                     if (code === 13) {
                         $scope.ui.secondStep();
                     }
+                };
+
+                $scope.ui.showImg = function () {
+                    if ($scope.imagemodel.length === 0) {
+                        $scope.ui.showImg === 2;
+                    }
+                };
+
+                $scope.ui.imageUpload = function () {
+                    $scope.ui.changeUi = 'ui4';
+                };
+
+                $scope.ui.uploadForm = function () {
+
+                    ConfirmPane.successConfirm("Do you want to Save Images ?")
+                            .confirm(function () {
+                                for (var i = 0; i < $scope.imagemodel.length; i++) {
+                                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/upload-image";
+                                    var formData = new FormData();
+                                    formData.append("file", $scope.imagemodel[i]);
+
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", url);
+                                    xhr.send(formData);
+                                    Notification.success("Image save success");
+                                }
+                                // save job card
+                                if ($scope.validateVehicleData) {
+                                    $scope.model.updateClientFromVehicle()
+                                            .then(function () {
+                                                Notification.success("Save vehicle and assing client Success !!!");
+                                                $scope.model.saveJobCard()
+                                                        .then(function (data) {
+                                                            $scope.ui.goToItemSelection(data);
+
+                                                            Notification.success("Save job-card success !!!");
+                                                            $scope.model.clearModel();
+                                                            $scope.vehicleNo = "";
+                                                            $scope.ui.clientDisabled = true;
+                                                            $scope.ui.vehicleDisabled = true;
+
+                                                        }, function () {
+                                                            Notification.error("Save job-card fail !!!");
+                                                        });
+                                            }, function () {
+                                                Notification.error("Save vehicle and assing client fail !!!");
+                                            });
+                                }
+                            })
+                            .discard(function () {
+                                ConfirmPane.dangerConfirm("Do you want to Delete All Images ?")
+                                        .confirm(function () {
+                                            $scope.imagemodelX = [];
+                                        })
+                                        .discard(function () {
+                                            $scope.ui.changeUi = 'ui4'
+                                        });
+                            });
+
+                };
+
+                $scope.ui.changeFunction = function (event) {
+                    var files = event.target.files;
+                    for (var i = 0; i < files.length; i++) {
+                        var file = files[i];
+                        $scope.imagemodel.push(file);
+
+
+                        var reader = new FileReader();
+                        reader.onload = $scope.imageIsLoaded;
+                        reader.readAsDataURL(file);
+                    }
+                };
+
+                $scope.imageIsLoaded = function (e) {
+                    $scope.$apply(function () {
+                        $scope.imagemodelX.push(e.target.result);
+                    });
                 };
 
                 $scope.ui.new = function () {
@@ -124,25 +204,33 @@
                 };
 
                 $scope.ui.jobCardNsext = function () {
-                    if ($scope.validateVehicleData) {
-                        $scope.model.updateClientFromVehicle()
-                                .then(function () {
-                                    Notification.success("Save vehicle and assing client Success !!!");
-                                    $scope.model.saveJobCard()
-                                            .then(function (data) {
-                                                $scope.ui.goToItemSelection(data);
-                                        
-                                                Notification.success("Save job-card success !!!");
-                                                $scope.model.clearModel();
-                                                $scope.vehicleNo = "";
-                                                $scope.ui.clientDisabled = true;
-                                                $scope.ui.vehicleDisabled = true;
+                    if ($scope.validateVehicleData()) {
+                        ConfirmPane.infoConfirm("Do you want to capture new images")
+                                .confirm(function () {
+                                    $scope.ui.changeUi = 'ui4';
+                                })
+                                .discard(function () {
+                                    if ($scope.validateVehicleData) {
+                                        $scope.model.updateClientFromVehicle()
+                                                .then(function () {
+                                                    Notification.success("Save vehicle and assing client Success !!!");
+                                                    $scope.model.saveJobCard()
+                                                            .then(function (data) {
+                                                                $scope.ui.goToItemSelection(data);
 
-                                            }, function () {
-                                                Notification.error("Save job-card fail !!!");
-                                            });
-                                }, function () {
-                                    Notification.error("Save vehicle and assing client fail !!!");
+                                                                Notification.success("Save job-card success !!!");
+                                                                $scope.model.clearModel();
+                                                                $scope.vehicleNo = "";
+                                                                $scope.ui.clientDisabled = true;
+                                                                $scope.ui.vehicleDisabled = true;
+
+                                                            }, function () {
+                                                                Notification.error("Save job-card fail !!!");
+                                                            });
+                                                }, function () {
+                                                    Notification.error("Save vehicle and assing client fail !!!");
+                                                });
+                                    }
                                 });
                     }
                 };

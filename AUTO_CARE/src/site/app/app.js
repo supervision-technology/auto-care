@@ -54,31 +54,24 @@
                         .when("/login", {
                             templateUrl: "app/system/login/login.html"
                         })
-                        //Pagination Test
-//                        .when("/pagination/pagination-test", {
-//                            templateUrl: "app/master/pagination/pagination.html",
-//                            controller: "ExampleController"
-//                        })
                         //daily-check-list
                         .when("/service/daily-check-list", {
                             templateUrl: "app/service/daily-check-list/daily-check-list.html",
                             controller: "dailyCheckListController"
                         })
+                        
                         //employee-assignment
                         .when("/service/employee-assignment", {
                             templateUrl: "app/service/employee-assignment/employee-assignment.html",
                             controller: "employeeAssignmentController"
                         })
+                        
                         //vehicle-entrance-test
                         .when("/service/vehicle-entrance", {
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
                             controller: "vehicleEntranceController"
                         })
-                        //vehicle-entrance
-                        .when("/service/vehicle-entrance-test", {
-                            templateUrl: "app/service/vehicle-entrance/test/vehicle-entrance.html",
-                            controller: "vehicleEntranceController"
-                        })
+                        
                         //service-selection
                         .when("/service/service-selection", {
                             templateUrl: "app/service/service-selection/service-selection.html",
@@ -90,17 +83,17 @@
                             controller: "itemSelectionController"
                         })
 
+                        //service-selection for job card entrance
                         .when("/service/item-selection/:jobCardIndexNo", {
                             templateUrl: "app/service/item-selection/item-selection.html",
                             controller: "itemSelectionController"
                         })
 
-                        //service-selection for job card entrance
+
                         .when("/service/service-selection/:jobCardIndexNo", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
-
 
                         //bay-assignment
                         .when("/service/bay-assignment", {
@@ -125,10 +118,6 @@
                         //dash-Board
                         .when("/front-office/service-dashboard", {
                             templateUrl: "app/front-office/service-dashboard/service-dashboard.html",
-                            controller: "dashBoardController"
-                        })
-                        .when("/front-office/service-das0hboard", {
-                            templatek: "app/front-office/service-dashboard/service-dashboard.html",
                             controller: "dashBoardController"
                         })
                         //front-office
@@ -182,10 +171,6 @@
                             controller: "jobCardController"
                         })
                         .when("/master/sub-item", {
-                            templateUrl: "app/master/sub-item/sub-item.html",
-                            controller: "subItemController"
-                        })
-                        .when("/master/sub_item", {
                             templateUrl: "app/master/sub-item/sub-item.html",
                             controller: "subItemController"
                         })

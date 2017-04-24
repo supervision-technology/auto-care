@@ -3,29 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.check_list.model;
+package com.mac.care_point.service.daily_check_list.model;
 
-import com.mac.care_point.master.items.items.model.MSubItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Don
+ * @author Kalum
  */
 @Entity
 @Table(name = "t_sub_item_check_result")
+@XmlRootElement
 public class TSubItemCheckResult implements Serializable {
 
     @Id
@@ -46,24 +44,26 @@ public class TSubItemCheckResult implements Serializable {
     @Column(name = "comfirmation")
     private Boolean comfirmation;
 
+    @Column(name = "sub_item")
+    private Integer subItem;
+
     @Size(max = 25)
     @Column(name = "time")
     private String time;
 
-    @JoinColumn(name = "sub_item")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MSubItem subItem;
-
-    @JoinColumn(name = "daily_check_list")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private TDailyCleckList dailyCheckList;
+    @Column(name = "daily_check_list")
+    private Integer dailyCheckList;
 
     public TSubItemCheckResult() {
     }
 
-    public TSubItemCheckResult(boolean checked, MSubItem subItem, TDailyCleckList dailyCheckList) {
+    public TSubItemCheckResult(Integer indexNo, boolean checked, String reason, Boolean comfirmation, Integer subItem, String time, Integer dailyCheckList) {
+        this.indexNo = indexNo;
         this.checked = checked;
+        this.reason = reason;
+        this.comfirmation = comfirmation;
         this.subItem = subItem;
+        this.time = time;
         this.dailyCheckList = dailyCheckList;
     }
 
@@ -75,7 +75,7 @@ public class TSubItemCheckResult implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public boolean getChecked() {
+    public boolean isChecked() {
         return checked;
     }
 
@@ -99,6 +99,14 @@ public class TSubItemCheckResult implements Serializable {
         this.comfirmation = comfirmation;
     }
 
+    public Integer getSubItem() {
+        return subItem;
+    }
+
+    public void setSubItem(Integer subItem) {
+        this.subItem = subItem;
+    }
+
     public String getTime() {
         return time;
     }
@@ -107,19 +115,12 @@ public class TSubItemCheckResult implements Serializable {
         this.time = time;
     }
 
-    public MSubItem getSubItem() {
-        return subItem;
-    }
-
-    public void setSubItem(MSubItem subItem) {
-        this.subItem = subItem;
-    }
-
-    public TDailyCleckList getDailyCheckList() {
+    public Integer getDailyCheckList() {
         return dailyCheckList;
     }
 
-    public void setDailyCheckList(TDailyCleckList dailyCheckList) {
+    public void setDailyCheckList(Integer dailyCheckList) {
         this.dailyCheckList = dailyCheckList;
     }
+
 }
