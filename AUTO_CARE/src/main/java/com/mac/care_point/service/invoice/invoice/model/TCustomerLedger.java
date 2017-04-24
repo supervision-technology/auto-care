@@ -43,6 +43,9 @@ public class TCustomerLedger implements Serializable {
     @Column(name = "credit_amount")
     private BigDecimal creditAmount;
 
+    @Column(name = "client")
+    private Integer client;
+
     @Size(max = 25)
     @Column(name = "type")
     private String type;
@@ -56,11 +59,12 @@ public class TCustomerLedger implements Serializable {
     public TCustomerLedger() {
     }
 
-    public TCustomerLedger(Integer indexNo, Date date, BigDecimal debitAmount, BigDecimal creditAmount, String type, Integer invoice, Integer payment) {
+    public TCustomerLedger(Integer indexNo, Date date, BigDecimal debitAmount, BigDecimal creditAmount, Integer client, String type, Integer invoice, Integer payment) {
         this.indexNo = indexNo;
         this.date = date;
         this.debitAmount = debitAmount;
         this.creditAmount = creditAmount;
+        this.client = client;
         this.type = type;
         this.invoice = invoice;
         this.payment = payment;
@@ -98,6 +102,14 @@ public class TCustomerLedger implements Serializable {
         this.creditAmount = creditAmount;
     }
 
+    public Integer getClient() {
+        return client;
+    }
+
+    public void setClient(Integer client) {
+        this.client = client;
+    }
+
     public String getType() {
         return type;
     }
@@ -121,11 +133,4 @@ public class TCustomerLedger implements Serializable {
     public void setPayment(Integer payment) {
         this.payment = payment;
     }
-
-    @Override
-    public String toString() {
-        return "TCustomerLedger{" + "indexNo=" + indexNo + ", date=" + date + ", debitAmount=" + debitAmount + ", creditAmount=" + creditAmount + ", type=" + type + ", invoice=" + invoice + ", payment=" + payment + '}';
-    }
-
-    
 }

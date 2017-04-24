@@ -61,6 +61,9 @@ public class TInvoice implements Serializable {
     @Column(name = "discount_amount")
     private BigDecimal discountAmount;
 
+    @Column(name = "over_payment")
+    private BigDecimal overPayment;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "net_amount")
@@ -81,19 +84,20 @@ public class TInvoice implements Serializable {
     private Integer jobCard;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice", fetch = FetchType.EAGER)
     private List<TCustomerLedger> tCustomerLedgerList;
 
     public TInvoice() {
     }
 
-    public TInvoice(Integer indexNo, Date date, int number, BigDecimal amount, Integer discountRate, BigDecimal discountAmount, BigDecimal netAmount, int branch, String status, Integer jobCard, List<TCustomerLedger> tCustomerLedgerList) {
+    public TInvoice(Integer indexNo, Date date, int number, BigDecimal amount, Integer discountRate, BigDecimal discountAmount, BigDecimal overPayment, BigDecimal netAmount, int branch, String status, Integer jobCard, List<TCustomerLedger> tCustomerLedgerList) {
         this.indexNo = indexNo;
         this.date = date;
         this.number = number;
         this.amount = amount;
         this.discountRate = discountRate;
         this.discountAmount = discountAmount;
+        this.overPayment = overPayment;
         this.netAmount = netAmount;
         this.branch = branch;
         this.status = status;
@@ -147,6 +151,14 @@ public class TInvoice implements Serializable {
 
     public void setDiscountAmount(BigDecimal discountAmount) {
         this.discountAmount = discountAmount;
+    }
+
+    public BigDecimal getOverPayment() {
+        return overPayment;
+    }
+
+    public void setOverPayment(BigDecimal overPayment) {
+        this.overPayment = overPayment;
     }
 
     public BigDecimal getNetAmount() {

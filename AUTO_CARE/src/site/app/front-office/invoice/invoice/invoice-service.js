@@ -35,6 +35,17 @@
         this.saveInvoice = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/save-invoice", data);
         };
+
+        //get client over payments
+        this.getClientOverPayment = function (cllient) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/client-get-over-payment/" + cllient);
+        };
+        
+        this.loadInvoiceData = function (invoiceNumber) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/get-invoice-details/" + invoiceNumber);
+        };
+        
+        
     };
 
     angular.module("appModule")

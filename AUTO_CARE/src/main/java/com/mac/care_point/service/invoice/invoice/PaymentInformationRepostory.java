@@ -6,6 +6,7 @@
 package com.mac.care_point.service.invoice.invoice;
 
 import com.mac.care_point.service.invoice.invoice.model.TPaymentInformation;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Kavish Manjitha
  */
 public interface PaymentInformationRepostory extends JpaRepository<TPaymentInformation, Integer>{
+
+    public List<TPaymentInformation> findByPayment(Integer indexNo);
     
 }

@@ -5,13 +5,14 @@
  */
 package com.mac.care_point.service.invoice.invoice.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  *
  * @author Kavish Manjitha
  */
-public class InvoicePayment {
+public class InvoicePayment implements Serializable {
 
     private TInvoice invoice;
     private TPayment payment;

@@ -71,12 +71,50 @@
                         this.paymentData = invoiceFactory.paymentData();
                         this.customerLegerData = invoiceFactory.customerLegerData();
                         this.paymentInformation = invoiceFactory.paymentInformation();
-
                         this.invoicePaymentData = invoiceFactory.newInvoicePayment();
 
                         this.invoiceHistoryList = [];
                         this.jobItemHistortList = [];
                         this.paymentInformationList = [];
+
+                        this.paymentData.totalAmount = 0.0;
+                    },
+                    getClientOverPayment: function (client) {
+                        var defer = $q.defer();
+                        var that = this;
+                        invoiceService.getClientOverPayment(client)
+                                .success(function (data) {
+                                    if (parseInt(data) > 0) {
+                                        that.invoiceData.overAmount = parseFloat(data);
+                                        defer.resolve();
+                                    } else {
+                                        that.invoiceData.outStandingAmount = parseFloat(-1 * data);
+                                        defer.resolve();
+                                    }
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    loadInvoiceData: function (invoiceNumber) {
+                        var defer = $q.defer();
+                        var that = this;
+                        invoiceService.loadInvoiceData(invoiceNumber)
+                                .success(function (data) {
+                                    that.invoicePaymentData = invoiceFactory.newInvoicePayment();
+                                    angular.extend(that.invoicePaymentData, data);
+                                    that.invoiceData = that.invoicePaymentData.invoice;
+                                    that.paymentData = that.invoicePaymentData.payment;
+                                    that.paymentInformationList = that.invoicePaymentData.paymentInformationsList;
+                                    
+                                    console.log(that.invoicePaymentData);
+                                    that.getPaymentDetails();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
                     },
                     getJobItemHistory: function (jobCard) {
                         var defer = $q.defer();
@@ -132,8 +170,10 @@
 
                         if (this.invoiceData.discountAmount || this.invoiceData.discountRate) {
                             //discount amount create
-                            this.invoiceData.discountAmount = parseFloat(this.invoiceData.amount * this.invoiceData.discountRate / 100);
-                            this.invoiceData.netAmount = parseFloat(this.invoiceData.amount - this.invoiceData.discountAmount);
+                            this.invoiceData.discountAmount = parseFloat(this.invoiceData.amount)
+                                    * parseFloat(this.invoiceData.discountRate / 100);
+                            this.invoiceData.netAmount = parseFloat(this.invoiceData.amount)
+                                    - parseFloat(this.invoiceData.discountAmount);
 
                         } else {
                             this.invoiceData.discountRate = 0;
@@ -204,13 +244,26 @@
                         return lable;
                     },
                     getPaymentDetails: function () {
-                        this.paymentData.cashAmount = this.getTotalPaymentTypeWise('CASH');
-                        this.paymentData.chequeAmount = this.getTotalPaymentTypeWise('CHEQUE');
-                        this.paymentData.cardAmount = this.getTotalPaymentTypeWise('CARD');
-                        this.paymentData.totalAmount = parseFloat(this.paymentData.cashAmount + this.paymentData.chequeAmount + this.paymentData.cardAmount);
-                        this.paymentData.balance = this.paymentData.totalAmount - this.invoiceData.netAmount;
-                        if (this.paymentData.balance > 0) {
-                            this.paymentData.overPayment = this.paymentData.balance;
+                        this.paymentData.cashAmount = parseFloat(this.getTotalPaymentTypeWise('CASH'));
+                        this.paymentData.chequeAmount = parseFloat(this.getTotalPaymentTypeWise('CHEQUE'));
+                        this.paymentData.cardAmount = parseFloat(this.getTotalPaymentTypeWise('CARD'));
+                        this.paymentData.overAmount = parseFloat(this.getTotalPaymentTypeWise('OVER_PAYMENT'));
+
+                        this.paymentData.totalAmount =
+                                parseFloat(this.paymentData.cashAmount)
+                                + parseFloat(this.paymentData.cardAmount)
+                                + parseFloat(this.paymentData.chequeAmount)
+                                + parseFloat(this.paymentData.overAmount);
+
+                        this.paymentData.balance =
+                                parseFloat(this.invoiceData.netAmount)
+                                - parseFloat(this.paymentData.totalAmount);
+
+                        if (parseFloat(this.paymentData.balance) < 0) {
+                            this.invoiceData.overPayment = parseFloat(-1 * this.paymentData.balance);
+                            this.paymentData.balance = 0.0;
+                        } else {
+                            this.invoiceData.overPayment = 0.0;
                         }
                     },
                     //insert cash payment
@@ -226,11 +279,20 @@
                         this.paymentInformationList.push(paymentInformation);
                         this.paymentInformation = {};
                     },
+                    //insert client over payment settle
+                    insertClientOverPayment: function (amount, type) {
+                        this.paymentInformation = invoiceFactory.paymentInformation();
+                        this.paymentInformation.type = type;
+                        this.paymentInformation.amount = amount;
+                        this.paymentInformationList.push(this.paymentInformation);
+                        this.paymentInformation = {};
+                    },
                     //delete card payment and cheque payment
                     getCardAndChequePaymentDelete: function ($index) {
                         this.paymentInformationList.splice($index, 1);
                         this.getPaymentDetails();
                     },
+                    //cash payment delete
                     getCashPaymentDelete: function () {
                         var that = this;
                         angular.forEach(this.paymentInformationList, function (values) {
@@ -240,6 +302,7 @@
                             }
                         });
                     },
+                    //total payment CASH,CHEQUE,CARD
                     getTotalPaymentTypeWise: function (type) {
                         var total = 0.0;
                         angular.forEach(this.paymentInformationList, function (values) {

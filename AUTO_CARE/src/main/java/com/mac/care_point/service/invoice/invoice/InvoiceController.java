@@ -7,6 +7,7 @@ package com.mac.care_point.service.invoice.invoice;
 
 import com.mac.care_point.service.invoice.invoice.model.InvoicePayment;
 import com.mac.care_point.service.invoice.invoice.model.TInvoice;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,6 +28,11 @@ public class InvoiceController {
 
     @Autowired
     private InvoiceService invoiceService;
+    
+    @RequestMapping(value = "/get-invoice-details/{invoiceNumber}", method = RequestMethod.GET)
+    public InvoicePayment loadInvoiceDetails(@PathVariable Integer invoiceNumber) {
+        return invoiceService.loadInvoiceDetails(invoiceNumber, 1);
+    }
 
     @RequestMapping(value = "/find-by-job-card/{jobCard}", method = RequestMethod.GET)
     public List<TInvoice> findByJobCard(@PathVariable Integer jobCard) {
@@ -37,4 +43,10 @@ public class InvoiceController {
     public TInvoice saveInvoice(@RequestBody InvoicePayment invoicePayment) {
         return invoiceService.saveInvoice(invoicePayment);
     }
+
+    @RequestMapping(value = "/client-get-over-payment/{client}", method = RequestMethod.GET)
+    public BigDecimal addClientOverPayment(@PathVariable Integer client) {
+        return invoiceService.addClientOverPayment(client);
+    }
+    
 }

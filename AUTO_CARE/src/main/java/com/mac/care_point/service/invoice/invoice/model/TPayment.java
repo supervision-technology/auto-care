@@ -29,26 +29,26 @@ public class TPayment implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "number")
     private int number;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "total_amount")
     private BigDecimal totalAmount;
-    
+
     @Column(name = "cash_amount")
     private BigDecimal cashAmount;
-    
+
     @Column(name = "cheque_amount")
     private BigDecimal chequeAmount;
-    
+
     @Column(name = "card_amount")
     private BigDecimal cardAmount;
-    
+
     public TPayment() {
     }
 

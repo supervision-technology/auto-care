@@ -6,6 +6,7 @@
 package com.mac.care_point.service.invoice.invoice;
 
 import com.mac.care_point.service.invoice.invoice.model.TInvoice;
+import com.mac.care_point.service.invoice.invoice.model.TPayment;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,4 +22,7 @@ public interface InvoiceRepository extends JpaRepository<TInvoice, Integer> {
 
     @Query(value = "SELECT MAX(number)FROM t_invoice WHERE branch=:branch", nativeQuery = true)
     public Integer getMaximumNumberByBranch(@Param("branch") Integer branch);
+
+    public List<TInvoice> findByNumberAndBranch(Integer invoiceNumber, Integer branch);
+
 }

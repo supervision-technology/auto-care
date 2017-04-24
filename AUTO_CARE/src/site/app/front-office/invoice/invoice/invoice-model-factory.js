@@ -14,8 +14,7 @@
                         "discountRate": 0,
                         "discountAmount": 0,
                         "status": null,
-                        "overPayment": null,
-                        "outStandingAmount": null
+                        "overPayment": null
                     };
                     return data;
                 };

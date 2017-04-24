@@ -18,6 +18,8 @@ import com.mac.care_point.service.invoice.invoice.model.TPayment;
 import com.mac.care_point.service.invoice.invoice.model.TPaymentInformation;
 import com.mac.care_point.service.job_card.JobCardRepository;
 import com.mac.care_point.service.job_card.model.JobCard;
+import com.mac.care_point.system.exception.EntityNotFoundException;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -53,6 +55,9 @@ public class InvoiceService {
         TPayment payment = invoicePayment.getPayment();
         List<TPaymentInformation> paymentInformationList = invoicePayment.getPaymentInformationsList();
 
+        JobCard jobCard = jobCardRepository.getOne(invoice.getJobCard());
+        jobCard.setStatus(Constant.FINISHE_STATUS);
+
         invoice.setBranch(1);
         //step 01
         //invoice save
@@ -73,6 +78,8 @@ public class InvoiceService {
         customerLedger.setDate(new Date());
         customerLedger.setInvoice(tInvoice.getIndexNo());
         customerLedger.setType(Constant.INVOICE_CREATE);
+        customerLedger.setClient(jobCard.getClient());
+        System.out.println(jobCard.getClient());
         clientLegerRepository.save(customerLedger);
 
         //step 02
@@ -84,24 +91,62 @@ public class InvoiceService {
             tPaymentInformation.setFormName(Constant.INVOICE_FORM);
             tPaymentInformation.setPayment(savePaymentData.getIndexNo());
 
-            //client cledger save  - payment invoice
-            TCustomerLedger customerLedgerPaymnetSave = new TCustomerLedger();
-            customerLedgerPaymnetSave.setDebitAmount(tPaymentInformation.getAmount());
-            customerLedgerPaymnetSave.setDate(new Date());
-            customerLedgerPaymnetSave.setInvoice(tInvoice.getIndexNo());
-            customerLedgerPaymnetSave.setType(Constant.INVOICE_PAYMENT);
-            customerLedgerPaymnetSave.setPayment(savePaymentData.getIndexNo());
-            
-            clientLegerRepository.save(customerLedgerPaymnetSave);
+            if (!"OVER_PAYMENT".equals(tPaymentInformation.getType())) {
+                //client cledger save  - payment invoice
+                TCustomerLedger customerLedgerPaymnetSave = new TCustomerLedger();
+                customerLedgerPaymnetSave.setDebitAmount(tPaymentInformation.getAmount());
+                customerLedgerPaymnetSave.setDate(new Date());
+                customerLedgerPaymnetSave.setInvoice(tInvoice.getIndexNo());
+                customerLedgerPaymnetSave.setType(Constant.INVOICE_PAYMENT);
+                customerLedgerPaymnetSave.setPayment(savePaymentData.getIndexNo());
+                System.out.println(jobCard.getClient());
+                customerLedgerPaymnetSave.setClient(jobCard.getClient());
+                clientLegerRepository.save(customerLedgerPaymnetSave);
+            }
+
             paymentInformationRepostory.save(tPaymentInformation);
         }
 
         //step 03
         //job card finished status
-        JobCard jobCard = jobCardRepository.getOne(invoice.getJobCard());
-        jobCard.setStatus(Constant.FINISHE_STATUS);
         jobCardRepository.save(jobCard);
 
         return tInvoice;
+    }
+
+    public BigDecimal addClientOverPayment(Integer client) {
+        return clientLegerRepository.addClientOverPayment(client);
+    }
+
+    @Transactional
+    public InvoicePayment loadInvoiceDetails(Integer invoiceNumber, Integer branch) {
+        
+        //get invoice data
+        List<TInvoice> getInvoiceList = invoiceRepository.findByNumberAndBranch(invoiceNumber, branch);
+        TInvoice tInvoice = getInvoiceList.get(0);
+        
+        
+        if (getInvoiceList.isEmpty()) {
+            throw new EntityNotFoundException("invoice not found for number " + invoiceNumber);
+        } else {
+
+            //client leger data
+            List<TCustomerLedger> getClientLegerList = clientLegerRepository.findByInvoiceAndCreditAmountIsNull(tInvoice.getIndexNo());
+            TCustomerLedger customerLedger = getClientLegerList.get(0);
+
+            //get payment data
+            TPayment tPayment = paymentRepository.findOne(customerLedger.getPayment());
+            
+            //payment informetion list
+            List<TPaymentInformation> getPaymnetInformationList = paymentInformationRepostory.findByPayment(tPayment.getIndexNo());
+           
+            //fill invoicePayment
+            InvoicePayment invoicePayment = new InvoicePayment();
+            invoicePayment.setInvoice(tInvoice);
+            invoicePayment.setPayment(tPayment);
+            invoicePayment.setPaymentInformationsList(getPaymnetInformationList);
+
+            return invoicePayment;
+        }
     }
 }

@@ -25,6 +25,8 @@
                     $scope.selectVehicleType = $scope.model.vehicleData(jobCard.vehicle).type;
                     $scope.selectVehiclePriceCategory = jobCard.priceCategory;
 
+                    $scope.invoiceModel.getClientOverPayment(jobCard.client);
+
                     //get price category items
                     $scope.model.getItemByPriceCategory($scope.selectVehiclePriceCategory);
 
@@ -37,6 +39,22 @@
 
                     //get job card vehicle data and client data
                     $scope.invoiceModel.selectJobCardVehicle(jobCard);
+                };
+
+                $scope.ui.load = function (e, number) {
+                    var code = e ? e.keyCode || e.which : 13;
+                    if (code === 13) {
+                        $scope.invoiceModel.loadInvoiceData(number)
+                                .then(function () {
+
+                                }, function () {
+                                    if (number) {
+                                        Notification.error("Green leaves receive cannot be found at " + number + ".");
+                                    } else {
+                                        Notification.error("Please enter a valid number.");
+                                    }
+                                });
+                    }
                 };
 
                 //get package items
@@ -67,6 +85,14 @@
                     } else {
                         Notification.error("select vehicle");
                     }
+                };
+
+                $scope.ui.clear = function () {
+                    $scope.cashPayment = 0.0;
+                    $scope.invoiceModel.invoiceData.netAmount = 0.0;
+                    $scope.invoiceModel.paymentData.balance = 0.0;
+                    $scope.invoiceModel.invoiceData.amount = 0.0;
+                    $scope.invoiceModel.clear();
                 };
 
                 //add stock items
@@ -115,6 +141,7 @@
                                 $scope.model.deleteSelectDetails($index);
                             });
                 };
+
                 //-----------------------------------end item modification -----------------------------------
 
                 //-----------------------------------open invoice payment method -----------------------------------
@@ -125,38 +152,25 @@
                     return $scope.invoiceModel.getJobItemHistory(jobCard);
                 };
 
-
                 $scope.ui.saveInvoice = function () {
                     if ($scope.selectedJobCardIndexNo) {
                         if ($scope.invoiceModel.paymentData.balance >= 0) {
-                            if ($scope.invoiceModel.paymentData.balance > 0) {
-                                ConfirmPane.primaryConfirm("Your Over Payment" + $scope.invoiceModel.paymentData.balance)
-                                        .confirm(function () {
-                                            $scope.invoiceModel.saveInvoice()
-                                                    .then(function (data) {
-                                                        $scope.model.removeJobCard();
-                                                        $scope.invoiceModel.clear();
-                                                        optionPane.successMessage("Save Invoice" + data.number);
-                                                    });
-                                        });
-                            } else {
-                                ConfirmPane.successConfirm("Do you want to save invoice")
-                                        .confirm(function () {
-                                            $scope.invoiceModel.saveInvoice()
-                                                    .then(function (data) {
-                                                        $scope.model.removeJobCard();
-                                                        $scope.invoiceModel.clear();
-                                                        optionPane.successMessage("Save Invoice" + data.number);
-                                                    });
-                                        });
-                            }
+                            ConfirmPane.successConfirm("Do you want to save invoice")
+                                    .confirm(function () {
+                                        $scope.invoiceModel.saveInvoice()
+                                                .then(function (data) {
+                                                    $scope.model.removeJobCard();
+                                                    $scope.ui.clear();
+                                                    optionPane.successMessage("Save Invoice" + data.number);
+                                                });
+                                    });
                         } else {
                             ConfirmPane.successConfirm("Do you want to save invoice Payment Settle OutStanding")
                                     .confirm(function () {
                                         $scope.invoiceModel.saveInvoice()
                                                 .then(function (data) {
                                                     $scope.model.removeJobCard();
-                                                    $scope.invoiceModel.clear();
+                                                    $scope.ui.clear();
                                                     optionPane.successMessage("Save Invoice" + data.number);
                                                 });
                                     });
@@ -188,7 +202,41 @@
 
                 $scope.ui.getInsertCardAndChequePayment = function (paymentInformation, type) {
                     if ($scope.selectedJobCardIndexNo) {
-                        $scope.invoiceModel.getInsertCardAndChequePayment(paymentInformation, type);
+
+                        if (type === "CHEQUE") {
+                            if (!paymentInformation.number) {
+                                Notification.error("please enter cheque no");
+                            } else if (!paymentInformation.chequeDate) {
+                                Notification.error("please enter cheque date");
+                            } else if (!paymentInformation.bank) {
+                                Notification.error("please enter cheque bank");
+                            } else if (!paymentInformation.amount) {
+                                Notification.error("please enter cheque amount");
+                            } else {
+                                $scope.invoiceModel.getInsertCardAndChequePayment(paymentInformation, type);
+                            }
+                        } else if (type === "CARD") {
+                            if (!paymentInformation.number) {
+                                Notification.error("please enter number");
+                            } else if (!paymentInformation.cardType) {
+                                Notification.error("please enter card type");
+                            } else if (!paymentInformation.amount) {
+                                Notification.error("please enter card amount");
+                            } else {
+                                $scope.invoiceModel.getInsertCardAndChequePayment(paymentInformation, type);
+                            }
+                        }
+
+                    } else {
+                        Notification.error("select vehicle");
+                    }
+                };
+
+                $scope.ui.addClientOverPayment = function (amount) {
+                    if ($scope.selectedJobCardIndexNo) {
+                        if (0.0 === parseFloat($scope.invoiceModel.getTotalPaymentTypeWise('OVER_PAYMENT'))) {
+                            $scope.invoiceModel.insertClientOverPayment(amount, 'OVER_PAYMENT');
+                        }
                     } else {
                         Notification.error("select vehicle");
                     }
