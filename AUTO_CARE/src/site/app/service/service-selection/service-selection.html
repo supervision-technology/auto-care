@@ -3,7 +3,7 @@
         <h4>VEHICLE</h4>
     </div>
     <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'white-row':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
             <span>
                 <img src="/img/01.png"/>  
                 <label>

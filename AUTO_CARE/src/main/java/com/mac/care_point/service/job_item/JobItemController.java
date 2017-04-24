@@ -44,6 +44,13 @@ public class JobItemController {
     @RequestMapping(value = "/find-by-job-card-items/{jobCardIndexNo}", method = RequestMethod.GET)
     public List<TJobItem> findByJobCardItems(@PathVariable Integer jobCardIndexNo) {
         return jobItemService.findByJobCardItems(jobCardIndexNo);
+
     }
 
+    //for final check list(complited and pending)
+    @RequestMapping(value = "/check-item/{item}/{status}", method = RequestMethod.GET)
+    public TJobItem checkItem(@PathVariable Integer item, @PathVariable String status) {
+        return jobItemService.checkItem(item, status);
+
+    }
 }

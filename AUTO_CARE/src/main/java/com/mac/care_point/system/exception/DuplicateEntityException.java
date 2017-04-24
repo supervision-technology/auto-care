@@ -5,8 +5,10 @@
  */
 package com.mac.care_point.system.exception;
 
-import com.mac.gl.system.exception.handler.SystemErrorResponse;
-import com.mac.gl.system.exception.handler.SystemException;
+import com.mac.care_point.system.exception.handler.SystemErrorResponse;
+import com.mac.care_point.system.exception.handler.SystemException;
+
+
 
 /**
  *
