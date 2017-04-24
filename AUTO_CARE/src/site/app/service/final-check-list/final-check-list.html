@@ -1,15 +1,16 @@
 <div class="tile-list background-dark">
-    <div class="tile-list-title">
+    <div class="tile-list-title" style="margin-right: 5px;">
         <h4>VEHICLE</h4>
     </div>
     <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" ng-repeat="vehicle in vehicles">
+        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
             <span>
-                <img src="{{vehicle.image}}"/>  
-
+                <img src="/img/01.png"/>  
                 <label>
-                    {{vehicle.number}}
+                    {{model.vehicleData(details.vehicle).vehicleNo}}
                 </label>
+                <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
+                <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
             </span>
         </div>
     </div>
@@ -28,8 +29,8 @@
 
             <div class="row" style="display: flex; flex-flow: column;">
                 <table class="square-table background-dark" style="width: 99%">
-                    <col style="width: 30%;"/>
-                    <col style="width: 60%;"/>
+                    <col style="width: 15%;"/>
+                    <col style="width: 75%;"/>
                     <col style="width: 10%;"/>
                     <thead>
                         <tr>
@@ -39,24 +40,24 @@
                         </tr>
                     </thead>
                 </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
-                    <div ng-repeat="item in checkList">
+                <div class="smart-scroll-y" style="height: calc(100vh - 104px);" ng-show="model.jobItemList.length">
+                    <div ng-repeat="selections in model.jobItemList|filter:{jobStatus : 'PENDING'}">
                         <table class="square-table">
-                            <col style="width: 30%;"/>
-                            <col style="width: 60%;"/>
+                            <col style="width: 15%;"/>
+                            <col style="width: 75%;"/>
                             <col style="width: 10%;"/>
                             <tbody>
                                 <tr class="background-light">
-                                    <td>{{item.indexNo}}</td>
-                                    <td>{{item.name}}</td>
-                                    <td><a class="btn btn-danger" ng-click="doRemoveFromCheck($index, item)"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
+                                    <td>{{selections.indexNo}}</td>
+                                    <td>{{model.itemData(selections.item).name}}</td>
+                                    <td><a  ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.checkItemComplite($index, selections);"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="placeholder nopadding" style="height: calc(100vh - 105px);" ng-hide="checkList.length">
-                        <h1>NO CHECK ITEMS TO DISPLAY :(</h1>
-                    </div>
+                </div>
+                <div class="placeholder nopadding" style="height: calc(100vh - 105px);" ng-hide="model.jobItemList.length">
+                    <h1>NO CHECK ITEMS TO DISPLAY :(</h1>
                 </div>
             </div>
 
@@ -64,8 +65,8 @@
         <div class="col-xs-6 background-dark">
             <div class="row" style="display: flex; flex-flow: column;">
                 <table class="square-table background-dark">
-                    <col style="width: 30%;"/>
-                    <col style="width: 60%;"/>
+                    <col style="width: 15%;"/>
+                    <col style="width: 75%;"/>
                     <col style="width: 10%;"/>
                     <thead>
                         <tr>
@@ -75,24 +76,24 @@
                         </tr>
                     </thead>
                 </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
-                    <div ng-repeat="item in checkedList">
+                <div class="smart-scroll-y" style="height: calc(100vh - 104px);" ng-show="model.complitedJobItem.length">
+                    <div ng-repeat="selections in model.complitedJobItem|filter:{jobStatus : 'COMPLITED'}">
                         <table class="square-table">
-                            <col style="width: 30%;"/>
-                            <col style="width: 60%;"/>
+                            <col style="width: 15%;"/>
+                            <col style="width: 75%;"/>
                             <col style="width: 10%;"/>
                             <tbody>
                                 <tr class="background-light">
-                                    <td>{{item.indexNo}}</td>
-                                    <td>{{item.name}}</td>
-                                    <td><a class="btn btn-danger" ng-click="doRemoveFromChecked($index, item)"><span class="glyphicon glyphicon-arrow-left"></span></a></td>
+                                    <td>{{selections.indexNo}}</td>
+                                    <td>{{model.itemData(selections.item).name}}</td>
+                                    <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.checkItemPending($index, selections);"><span class="glyphicon glyphicon-arrow-left"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <div class="placeholder col-xs-12" style="height: calc(100vh - 122px)" ng-hide="checkedList.length">
-                        <h1>NO CHECKED ITEMS TO DISPLAY :(</h1>
-                    </div>
+                </div>
+                <div class="placeholder col-xs-12" style="height: calc(100vh - 122px)" ng-hide=" model.complitedJobItem.length">
+                    <h1>NO CHECKED ITEMS TO DISPLAY :(</h1>
                 </div>
             </div>
         </div>

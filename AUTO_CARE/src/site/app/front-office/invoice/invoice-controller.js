@@ -16,7 +16,8 @@
                 $scope.selectInvoice = null;
 
                 $scope.ui.selectedJobCardRow = function (jobCard) {
-                    $scope.invoiceModel.clear();
+                    //clear
+                    $scope.ui.clear();
 
                     //job card seletion
                     $scope.selectedJobCardIndexNo = jobCard.indexNo;
@@ -88,10 +89,7 @@
                 };
 
                 $scope.ui.clear = function () {
-                    $scope.cashPayment = 0.0;
-                    $scope.invoiceModel.invoiceData.netAmount = 0.0;
-                    $scope.invoiceModel.paymentData.balance = 0.0;
-                    $scope.invoiceModel.invoiceData.amount = 0.0;
+                    $scope.invoiceModel.cashPayment = 0.0;
                     $scope.invoiceModel.clear();
                 };
 
@@ -196,8 +194,8 @@
                 };
 
                 $scope.ui.getCashPaymentDelete = function () {
+                    $scope.invoiceModel.cashPayment = 0.0;
                     $scope.invoiceModel.getCashPaymentDelete();
-                    $scope.cashPayment = 0.0;
                 };
 
                 $scope.ui.getInsertCardAndChequePayment = function (paymentInformation, type) {

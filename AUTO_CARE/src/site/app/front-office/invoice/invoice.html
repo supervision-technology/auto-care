@@ -31,8 +31,8 @@
                                         <col style="width: 15%"/>
                                         <tbody>
                                             <tr>
-                                                <td><input smart-input="decimal" class="form-control text-right" ng-model="cashPayment"></td>
-                                                <td><a class="btn btn-lg btn-success" ng-click="ui.getCashPayment(cashPayment, 'CASH');"><span class="glyphicon glyphicon-plus"></span></a> </td>
+                                                <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.cashPayment"></td>
+                                                <td><a class="btn btn-lg btn-success" ng-click="ui.getCashPayment(invoiceModel.cashPayment, 'CASH');"><span class="glyphicon glyphicon-plus"></span></a> </td>
                                                 <td><a class="btn btn-lg btn-danger" ng-click="ui.getCashPaymentDelete();"><span class="glyphicon glyphicon-remove"></span></a> </td>
                                             </tr>
                                         </tbody>
@@ -166,11 +166,11 @@
                                 <col style="width: 50%"/>
                                 <col style="width: 15%"/>
                                 <tbody>
-                                    <tr class="select-primary-row-table-header">
+                                    <tr>
                                         <td><label>CLIENT OVER PAYMENT</label></td>
                                         <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.overAmount" readonly> </td>
                                         <td>
-                                            <a class="btn btn-primary" ng-click="ui.addClientOverPayment(invoiceModel.invoiceData.overAmount);"><span class="glyphicon glyphicon-plus"></span></a>
+                                            <a class="btn btn-default" ng-click="ui.addClientOverPayment(invoiceModel.invoiceData.overAmount);"><span class="glyphicon glyphicon-plus"></span></a>
                                         </td>
                                     </tr>
 <!--                                    <tr class="select-primary-row-table-header">

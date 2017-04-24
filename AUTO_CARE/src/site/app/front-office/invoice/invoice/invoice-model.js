@@ -5,7 +5,7 @@
                     this.constructor();
                 }
                 invoiceModel.prototype = {
-
+                    cashPayment: 0.0,
                     invoiceData: {},
                     clientData: {},
                     vehicleData: {},
@@ -78,6 +78,10 @@
                         this.paymentInformationList = [];
 
                         this.paymentData.totalAmount = 0.0;
+
+                        this.invoiceData.netAmount = 0.0;
+                        this.paymentData.balance = 0.0;
+                        this.invoiceData.amount = 0.0;
                     },
                     getClientOverPayment: function (client) {
                         var defer = $q.defer();
@@ -107,7 +111,7 @@
                                     that.invoiceData = that.invoicePaymentData.invoice;
                                     that.paymentData = that.invoicePaymentData.payment;
                                     that.paymentInformationList = that.invoicePaymentData.paymentInformationsList;
-                                    
+
                                     console.log(that.invoicePaymentData);
                                     that.getPaymentDetails();
                                 })
