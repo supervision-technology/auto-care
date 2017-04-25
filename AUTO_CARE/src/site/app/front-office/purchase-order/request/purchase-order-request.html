@@ -41,7 +41,7 @@
                         <td><input class="form-control" placeholder="supplier" ng-model="model.data.supplier" 
                                    uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
                                    typeahead-input-formatter="model.supplierLable($model)" 
-                                   typeahead-on-select="model.loadItem(model.data.supplier)"
+                                   typeahead-on-select="ui.loadItem(model.data.supplier)"
                                    typeahead-editable="false"
                                    ng-disabled="ui.mode !== 'NEW'"
                                    >
@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <table class="table-rounded">
+    <table class="table-rounded" ng-show="model.data.purchaseOrderItemList.length">
         <col style="width: 10%"/>
         <col style="width: 20%"/>
         <col style="width: 10%"/>
@@ -116,7 +116,7 @@
             </tr>
         </thead>
     </table>
-    <div class="smart-scroll-y" style="height: calc(100vh - 296px);">
+    <div class="smart-scroll-y" style="height: calc(100vh - 296px);" ng-show="model.data.purchaseOrderItemList.length">
         <table class="table-rounded">
             <col style="width: 10%"/>
             <col style="width: 20%"/>
@@ -145,6 +145,9 @@
 
             </tbody>
         </table>
+    </div>
+    <div class="placeholder col-md-12" ng-hide="model.data.purchaseOrderItemList.length" style="height: calc(100vh - 341px); padding: 0px 10px 10px 10px;">
+        <h1>PLEASE ADD PURCHASE ORDER REQUEST ITEM TO DISPLAY :(</h1>
     </div>
     <div class="col-xs-12" style="position: fixed;bottom: 1px;margin-left:-15px;">
         <table class="table-rounded background-dark">
@@ -175,8 +178,8 @@
                     <td class="text-right"><b>NBT DETAILS :</b></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td><input class="form-control text-right" placeholder="nbt %" ng-model="model.data.nbt" ng-keyup="ui.calculateNBT()" ng-disabled="ui.mode != 'NEW'"></td>
+                    <td class="text-right"><input type="checkbox" ng-model="chxNBT" ng-change="ui.checkBoxNBTFunction();"/></td>
+                    <td><input class="form-control text-right" placeholder="nbt %" ng-model="model.data.nbt" ng-change="ui.calculateNBT()" ng-disabled="true"></td>
                     <td><input class="form-control text-right" placeholder="nbt value" ng-model="model.data.nbtValue" ng-disabled="ui.mode != 'EDIT'"></td>
                     <td>&nbsp;</td>
                 </tr>
@@ -186,8 +189,8 @@
                     <td class="text-right"><b>VAT DETAILS :</b></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td><input class="form-control text-right" placeholder="vat %" ng-model="model.data.vat" ng-keyup="ui.calculateVAT()" ng-disabled="ui.mode != 'NEW'"></td>
+                    <td class="text-right"><input type="checkbox" ng-model="chxVAT" ng-change="ui.checkBoxVATFunction();"/></td>
+                    <td><input class="form-control text-right" placeholder="vat %" ng-model="model.data.vat" ng-change="ui.calculateVAT(model.data.vat)" ng-disabled="true"></td>
                     <td><input class="form-control text-right" placeholder="vat value" ng-model="model.data.vatValue" ng-disabled="ui.mode != 'EDIT'"></td>
                     <td>&nbsp;</td>
                 </tr>

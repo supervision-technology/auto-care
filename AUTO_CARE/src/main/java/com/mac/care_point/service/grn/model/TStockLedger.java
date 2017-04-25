@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "t_stock_ledger")
-@XmlRootElement
 public class TStockLedger implements Serializable {
 
     @Id

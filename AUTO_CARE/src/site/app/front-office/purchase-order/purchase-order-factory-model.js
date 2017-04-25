@@ -10,6 +10,7 @@
                         "number": null,
                         "date": null,
                         "deliverDate": null,
+                        "approvedDate": null,
                         "status": null,
                         "isView": null,
                         "formName": null,
@@ -40,6 +41,7 @@
                         "orderQty": null,
                         "recieveQty": null,
                         "balanceQty": null,
+                        "status": "PENDING"
                         
                     };
                     return tempData;

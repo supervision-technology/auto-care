@@ -4,17 +4,17 @@
     var service = function (systemConfig, $http) {
 
         //load pending jobcards
-        this.loadItems = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/stock-item");
-        };
-        
-        this.loadSupplier = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
-        };
-
-        this.saveGrn = function (data) {
-            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-grn", data);
-        };
+//        this.loadItems = function () {
+//            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/stock-item");
+//        };
+//        
+//        this.loadSupplier = function () {
+//            return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
+//        };
+//
+//        this.saveGrn = function (data) {
+//            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-grn", data);
+//        };
 //        this.loadVehicles = function () {
 //            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle");
 //        };
@@ -43,6 +43,6 @@
     };
 
     angular.module("appModule")
-            .service("directGrnService", service);
+            .service("GrnService", service);
 }());
 

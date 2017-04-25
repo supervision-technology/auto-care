@@ -20,6 +20,8 @@
     <class>com.mac.care_point.service.grn.model.TStockLedger</class>
     <class>com.mac.care_point.service.grn.model.TGrnItem</class>
     <class>com.mac.care_point.master.supplier.model.MSupplier</class>
+    <class>com.mac.care_point.service.purchase_order.model.TPurchaseOrder</class>
+    <class>com.mac.care_point.service.purchase_order.model.TPurchaseOrderDetail</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

@@ -1,11 +1,11 @@
 (function () {
     angular.module("appModule")
-            .factory("grnModel", function (GrnService, grnModelFactory, $q, optionPane) {
-                function grnModel() {
+            .factory("directGrnModel", function (directGrnService, directGrnModelFactory, $q, optionPane) {
+                function directGrnModel() {
                     this.constructor();
                 }
 
-                grnModel.prototype = {
+                directGrnModel.prototype = {
 
                     //model factory data
                     data: {},
@@ -20,16 +20,16 @@
 
                     constructor: function () {
                         var that = this;
-                        that.data = grnModelFactory.newData();
-                        that.tempData = grnModelFactory.tempData();
+                        that.data = directGrnModelFactory.newData();
+                        that.tempData = directGrnModelFactory.tempData();
 
-                        GrnService.loadItems()
+                        directGrnService.loadItems()
                                 .success(function (data) {
                                     that.items = data;
 
                                 });
 
-                        GrnService.loadSupplier()
+                        directGrnService.loadSupplier()
                                 .success(function (data) {
                                     that.suppliers = data;
                                 });
@@ -95,7 +95,7 @@
                         }
                         if (saveConfirmation) {
                             that.data.grnItemList.unshift(that.tempData);
-                            this.tempData = grnModelFactory.tempData();
+                            this.tempData = directGrnModelFactory.tempData();
                             this.summaryValueCalculator();
                             return saveConfirmation;
                         }
@@ -151,7 +151,7 @@
 
                         if (saveConfirmation) {
                             console.log(this.data);
-                            GrnService.saveGrn(JSON.stringify(this.data))
+                            directGrnService.saveGrn(JSON.stringify(this.data))
                                     .success(function (data) {
                                         defer.resolve();
                                     })
@@ -192,8 +192,8 @@
                     }
                     , clear: function () {
                         var that = this;
-                        that.data = grnModelFactory.newData();
-                        that.tempData = grnModelFactory.tempData();
+                        that.data = directGrnModelFactory.newData();
+                        that.tempData = directGrnModelFactory.tempData();
                     }
 
 //                    addPackageAndServiceItem: function (item, type, jobCard, vehicleType) {
@@ -431,6 +431,6 @@
                     //                        return data;
 //                    }
                 };
-                return grnModel;
+                return directGrnModel;
             });
 }());

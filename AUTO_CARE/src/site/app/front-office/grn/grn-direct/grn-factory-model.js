@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .factory("grnModelFactory", function () {
+            .factory("directGrnModelFactory", function () {
                 var factory = {};
 
                 factory.newData = function () {

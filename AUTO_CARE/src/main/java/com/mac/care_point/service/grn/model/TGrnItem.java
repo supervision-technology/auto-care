@@ -33,7 +33,7 @@ public class TGrnItem implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @Column(name = "item")
+    @Column(name = "purchase_order_item")
     private Integer item;
 
     @Column(name = "unit_price")

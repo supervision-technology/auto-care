@@ -31,7 +31,8 @@
         "subItemModule",
         "grnModule",
         "app",
-        "purchaseOrderRequestModule"
+        "purchaseOrderRequestModule",
+        "purchaseOrderApproveModule"
 
     ]);
 
@@ -130,8 +131,8 @@
                         })
                         //grn request
                         .when("/front-office/grn/grn-request", {
-                            templateUrl: "app/front-office/grn/grn-request/grn-request.html"
-//                            controller: "grnController"
+                            templateUrl: "app/front-office/grn/grn-request/grn-request.html",
+                            controller: "grnController"
                         })
                         //grn approve
                         .when("/front-office/grn/grn-approve", {
@@ -141,7 +142,7 @@
                         //grn direct
                         .when("/front-office/grn/grn-direct", {
                             templateUrl: "app/front-office/grn/grn-direct/grn.html",
-                            controller: "grnController"
+                            controller: "directGrnController"
                         })
                         //purchase order request
                         .when("/front-office/purchase-order/request", {
@@ -150,8 +151,8 @@
                         })
                         //purchase order approve
                         .when("/front-office/purchase-order/approve", {
-                            templateUrl: "app/front-office/purchase-order/approve/purchase-order-approve.html"
-//                            controller: "grnController"
+                            templateUrl: "app/front-office/purchase-order/approve/purchase-order-approve.html",
+                            controller: "purchaseOrderApproveController"
                         })
                         //master
                         .when("/master/item", {

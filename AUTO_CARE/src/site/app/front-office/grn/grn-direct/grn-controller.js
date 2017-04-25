@@ -1,8 +1,8 @@
 (function () {
     angular.module("grnModule", ['ui.bootstrap']);
     angular.module("grnModule")
-            .controller("grnController", function ($scope, $timeout,$filter, grnModel, Notification, ConfirmPane) {
-                $scope.model = new grnModel();
+            .controller("directGrnController", function ($scope, $timeout,$filter, directGrnModel, Notification, ConfirmPane) {
+                $scope.model = new directGrnModel();
                 $scope.ui = {};
 
                 $scope.ui.new = function () {
