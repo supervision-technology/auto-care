@@ -6,6 +6,7 @@
 package com.mac.care_point.service.grn;
 
 import com.mac.care_point.service.grn.model.TGrn;
+import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -23,33 +24,42 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/care-point/transaction/grn")
 public class GrnController {
-    private Integer branch=1;
-    
-     @Autowired
+
+    private final Integer branch = 1;
+    private final String status_approved = "APPROVED";
+
+    @Autowired
     private GrnService grnService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public List<TGrn> getAllGrn() {
-        return grnService.getAllGrn();
+    @RequestMapping(value = "/approve-purchasse-order", method = RequestMethod.GET)
+    public List<TPurchaseOrder> getApprovedPurchaseOrder() {
+        return grnService.getApprovedPurchaseOrder(branch, status_approved);
     }
-    @RequestMapping(value = "/grn-payment-history-by-supplier/{supplier}", method = RequestMethod.GET)
-    public List<Object[]> getSupplierGrnPaymentHistory(@PathVariable Integer supplier) {
-        System.out.println("Controller");
-        return grnService.getSupplierGrnPaymentHistory(supplier);
-    }
-    
-    @RequestMapping(value = "/save-grn", method = RequestMethod.POST)
-    public Integer saveGrn(@RequestBody TGrn grn) {
-         
-        System.out.println("grn");
-        System.out.println(grn.getAmount());
-        System.out.println(grn.getDate());
-        System.out.println(grn.getRefNumber());
-        System.out.println(grn.getSupplier());
-        System.out.println(grn.getDiscount());
-        System.out.println(grn.getNetAmount());
-        grn.setBranch(branch);
-        TGrn saveGrn= grnService.saveGrn(grn);
+
+    @RequestMapping(value = "/save-grn-recieve", method = RequestMethod.POST)
+    public Integer savePurchaseOrder(@RequestBody TGrn grn) {
+        System.out.println("grn.getGrnItemList()###");
+        System.out.println(grn.getGrnItemList().size());
+
+        TGrn saveGrn = grnService.saveGrnRecieve(grn);
         return saveGrn.getIndexNo();
     }
+
+//    @RequestMapping(value = "/all", method = RequestMethod.GET)
+//    public List<TGrn> getAllGrn() {
+//        return grnService.getAllGrn();
+//    }
+//    @RequestMapping(value = "/grn-payment-history-by-supplier/{supplier}", method = RequestMethod.GET)
+//    public List<Object[]> getSupplierGrnPaymentHistory(@PathVariable Integer supplier) {
+//        System.out.println("Controller");
+//        return grnService.getSupplierGrnPaymentHistory(supplier);
+//    }
+//    
+//    @RequestMapping(value = "/save-grn", method = RequestMethod.POST)
+//    public Integer saveGrn(@RequestBody TGrn grn) {
+//         
+//        grn.setBranch(branch);
+//        TGrn saveGrn= grnService.saveGrn(grn);
+//        return saveGrn.getIndexNo();
+//    }
 }

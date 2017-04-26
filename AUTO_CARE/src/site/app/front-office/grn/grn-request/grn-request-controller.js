@@ -12,11 +12,30 @@
                     $scope.model.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
                 };
+                $scope.ui.selectPurchaseOrder = function (indexNo) {
+                    $scope.model.selectPurchaseOrder(indexNo);
+//                    $scope.ui.selectedDetailIndex = indexNo;
+
+                };
+                $scope.ui.select = function (indexNo) {
+                    $scope.model.select(indexNo);
+                };
+                $scope.ui.editItemQty = function (indexNo) {
+                    $scope.model.editItemQty(indexNo);
+                };
+                $scope.ui.addData = function () {
+                    $scope.model.addData();
+                };
+                $scope.ui.save = function () {
+                    $scope.model.save();
+                };
+                $scope.ui.discard = function () {
+                    $scope.model.discard();
+                };
+                
                 $scope.init = function () {
                     $scope.ui.mode = 'IDEAL';
-                    $scope.$watch("model.data.grnItemList", function () {
-                        $scope.model.summaryValueCalculator();
-                    });
+
                 };
 
                 $scope.init();

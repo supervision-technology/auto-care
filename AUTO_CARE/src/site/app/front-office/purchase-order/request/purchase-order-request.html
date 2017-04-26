@@ -18,7 +18,7 @@
                 <col style="width: 100%"/>
                 <tbody>
                     <tr>
-                        <td><input class="form-control" id="date" smart-input="date" placeholder="date" ng-model="model.data.date" ng-disabled="ui.mode !== 'NEW' "></td>
+                        <td><input class="form-control" id="date" smart-input="date" title="current date" placeholder="date" ng-model="model.data.date" ng-disabled="ui.mode !== 'NEW' "></td>
                     </tr>
                 </tbody>
             </table>
@@ -28,7 +28,7 @@
                 <col style="width: 100%"/>
                 <tbody>
                     <tr>
-                        <td><input class="form-control" placeholder="deliver date" smart-input="date" ng-model="model.data.deliverDate" ng-disabled="ui.mode !== 'NEW'"></td>
+                        <td><input class="form-control" placeholder="deliver date" smart-input="date" title="deliver date" ng-model="model.data.deliverDate" ng-disabled="ui.mode !== 'NEW'"></td>
                     </tr>
                 </tbody>
             </table>
@@ -38,7 +38,7 @@
                 <col style="width: 100%"/>
                 <tbody>
                     <tr>
-                        <td><input class="form-control" placeholder="supplier" ng-model="model.data.supplier" 
+                        <td><input class="form-control" title="supplier" placeholder="supplier" ng-model="model.data.supplier" 
                                    uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
                                    typeahead-input-formatter="model.supplierLable($model)" 
                                    typeahead-on-select="ui.loadItem(model.data.supplier)"
@@ -131,7 +131,7 @@
                 <tr class="background-dark" ng-repeat="item in model.data.purchaseOrderItemList">
                     <td><span class="label label-default">{{item.barcode}}</span></td>
                     <td class="over-flow-hidden">{{model.getItemName(item.item)}}</td>
-                    <td class="text-right">{{item.price | number:2}}</td>
+                    <td class="text-right">{{item.price | number:3}}</td>
                     <td class="text-right">{{item.qty | number:2}}</td>
                     <td class="text-right">{{item.value | number:2}}</td>
                     <td class="text-right">{{item.discount | number:2}}%</td>

@@ -3,10 +3,22 @@
 
     var service = function (systemConfig, $http) {
 
-        //load pending jobcards
-//        this.loadItems = function () {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/stock-item");
-//        };
+//        load Approved Purchase Order
+        this.loadApprovedPurchaseOrder = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/grn/approve-purchasse-order");
+        };
+         //load Suppliers
+        this.loadSuppliers = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
+        };
+//        load Suppliers
+         this.loadItems = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/stock-nonstock-item");
+        };
+        this.saveGrnReceive = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-grn-recieve", data);
+        };
+
 //        
 //        this.loadSupplier = function () {
 //            return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");

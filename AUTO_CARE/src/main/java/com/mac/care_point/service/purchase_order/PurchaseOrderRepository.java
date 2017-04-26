@@ -20,5 +20,9 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
 
     //get pending purchase order list
     public List<TPurchaseOrder> findByBranchAndStatus(Integer branch, String status);
-    
+
+    public List<TPurchaseOrder> findByBranchAndStatusAndIsView(Integer branch, String status, boolean b);
+
+    public List<TPurchaseOrder> findByBranchAndStatusAndIsView(Integer branch, String status, int i);
+
 }

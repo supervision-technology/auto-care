@@ -8,7 +8,7 @@
                 $scope.ui.new = function () {
                     $scope.ui.mode = 'NEW';
                     $scope.model.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
-                    $scope.model.data.deliverDate= $filter('date')(new Date().setMonth(new Date().getMonth()+2), 'yyyy-MM-dd');
+                    $scope.model.data.deliverDate= $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.ui.focus('#date');
                 };
 
