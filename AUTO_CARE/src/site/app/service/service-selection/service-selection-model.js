@@ -6,7 +6,7 @@
                 }
 
                 ServiceSelectionModel.prototype = {
-                    
+
                     data: {},
                     //master data lists
                     items: [],
@@ -116,7 +116,7 @@
                         ServiceSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
-                                    this.data = ServiceSelectionModelFactory.newData();
+                                    that.data = ServiceSelectionModelFactory.newData();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -156,13 +156,57 @@
                                 });
                         return defer.promise;
                     },
-                    getSelectItemTotal: function () {
+                    getSelectItemTotalForService: function () {
+                        var total = 0.0;
+                        var that = this;
+                        angular.forEach(this.jobItemList, function (values) {
+                            if (that.itemData(values.item).type === "SERVICE") {
+                                total += values.value;
+                                return;
+                            }
+                        });
+                        return total;
+                    },
+                    getSelectItemTotalForItemAndItemUnits: function () {
+                        var total = 0.0;
+                        var that = this;
+                        angular.forEach(this.jobItemList, function (values) {
+                            if (that.itemData(values.item).type === "STOCK" || values.itemUnit !== null) {
+                                total += values.value;
+                                return;
+                            }
+                        });
+                        return total;
+                    },
+                    getSelectItemAllItems: function () {
                         var total = 0.0;
                         angular.forEach(this.jobItemList, function (values) {
                             total += values.value;
                             return;
                         });
                         return total;
+                    },
+                    getSelectJobItemForService: function () {
+                        var that = this;
+                        var lists = [];
+                        angular.forEach(this.jobItemList, function (values) {
+                            if (that.itemData(values.item).type === "SERVICE") {
+                                lists.push(values);
+                                return;
+                            }
+                        });
+                        return lists;
+                    },
+                    getSelectJobItemForItemAndItemUnits: function () {
+                        var that = this;
+                        var lists = [];
+                        angular.forEach(this.jobItemList, function (values) {
+                            if (that.itemData(values.item).type === "STOCK" || values.itemUnit !== null) {
+                                lists.push(values);
+                                return;
+                            }
+                        });
+                        return lists;
                     },
                     deleteSelectDetails: function (index) {
                         var defer = $q.defer();

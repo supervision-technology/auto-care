@@ -7,7 +7,6 @@ package com.mac.care_point.service.daily_check_list;
 
 import com.mac.care_point.service.daily_check_list.model.TDailyCheckList;
 import com.mac.care_point.service.daily_check_list.model.TSubItemCheckResult;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;

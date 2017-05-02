@@ -3,11 +3,11 @@
 
     var service = function (systemConfig, $http) {
 
-        //load pending jobcards
+        //load 
         this.loadCategory = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/category");
         };
-
+        
         this.loadItems = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item");
         };
@@ -18,6 +18,15 @@
 
         this.loadItemUnits = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit");
+        };
+
+        //load pending jobcards
+        this.pendingJobCards = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-pending-job-cards");
+        };
+
+        this.getPackageItems = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/package-item/get-package-items/" + indexNo);
         };
 
         this.saveJobItems = function (data) {
@@ -36,7 +45,7 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-job-card/" + indexNo);
         };
 
-        this.findByCategoryAndItems = function (category, priceCategory) {
+        this.findByCategoryAndPriceCategory = function (category, priceCategory) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/find-item-by-category/" + category + "/" + priceCategory);
         };
     };

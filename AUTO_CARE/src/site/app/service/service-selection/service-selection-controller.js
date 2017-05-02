@@ -24,7 +24,7 @@
 
                     //get price category items
                     $scope.model.getItemByPriceCategory($scope.selectVehiclePriceCategory);
-                  
+
                     //get job card history
                     $scope.model.getJobItemHistory(jobCard.indexNo);
                 };
@@ -36,7 +36,7 @@
                     $scope.isVisible = $scope.isVisible === 0 ? true : false;
                     $scope.selectPackageItemPosition = $scope.selectPackageItemPosition === $index ? -1 : $index;
                 };
-                
+
                 //get item units by drop dowsn list
                 $scope.ui.getItemUnits = function ($index, package) {
                     return $scope.model.getItemUnits(package, $scope.selectVehiclePriceCategory);
@@ -104,6 +104,10 @@
                                 //delete job card details
                                 $scope.model.deleteSelectDetails($index);
                             });
+                };
+
+                $scope.ui.toggleType = function (type) {
+                    $scope.ui.type = type;
                 };
 
                 $scope.init = function () {
