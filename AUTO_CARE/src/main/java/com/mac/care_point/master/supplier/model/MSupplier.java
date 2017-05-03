@@ -57,10 +57,13 @@ public class MSupplier implements Serializable {
     @Column(name = "address_line_3")
     private String addressLine3;
 
+    @Column(name = "credit_period")
+    private Integer creditPeriod;
+
     public MSupplier() {
     }
 
-    public MSupplier(Integer indexNo, String name, String contactName, String contactNo, String addressLine1, String addressLine2, String addressLine3) {
+    public MSupplier(Integer indexNo, String name, String contactName, String contactNo, String addressLine1, String addressLine2, String addressLine3, Integer creditPeriod) {
         this.indexNo = indexNo;
         this.name = name;
         this.contactName = contactName;
@@ -68,10 +71,7 @@ public class MSupplier implements Serializable {
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.addressLine3 = addressLine3;
-    }
-
-    public MSupplier(Integer indexNo) {
-        this.indexNo = indexNo;
+        this.creditPeriod = creditPeriod;
     }
 
     public Integer getIndexNo() {
@@ -128,6 +128,14 @@ public class MSupplier implements Serializable {
 
     public void setAddressLine3(String addressLine3) {
         this.addressLine3 = addressLine3;
+    }
+
+    public Integer getCreditPeriod() {
+        return creditPeriod;
+    }
+
+    public void setCreditPeriod(Integer creditPeriod) {
+        this.creditPeriod = creditPeriod;
     }
 
 }

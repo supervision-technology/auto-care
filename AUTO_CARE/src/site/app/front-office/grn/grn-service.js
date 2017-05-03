@@ -2,7 +2,8 @@
     'use strict';
 
     var service = function (systemConfig, $http) {
-
+        
+//        request
 //        load Approved Purchase Order
         this.loadApprovedPurchaseOrder = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/grn/approve-purchasse-order");
@@ -18,40 +19,30 @@
         this.saveGrnReceive = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-grn-recieve", data);
         };
-
-//        
-//        this.loadSupplier = function () {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
-//        };
-//
-//        this.saveGrn = function (data) {
-//            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-grn", data);
-//        };
-//        this.loadVehicles = function () {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle");
-//        };
-//
-//        this.loadItemUnits = function () {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit");
-//        };
-//
-//        //load pending jobcards
-//        this.pendingJobCards = function () {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-pending-job-cards");
-//        };
-//
-//        this.getPackageItems = function (indexNo) {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/master/package-item/get-package-items/" + indexNo);
-//        };
-//
-//
-//        this.deleteJobItems = function (indexNo) {
-//            return $http.delete(systemConfig.apiUrl + "/api/care-point/transaction/job-item/delete-job-items/" + indexNo);
-//        };
-//
-//        this.getJobItemHistory = function (indexNo) {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-by-job-card-items/" + indexNo);
-//        };
+        
+        
+//        approve
+//        load pending grn list
+        this.loadPendingGrnList = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/grn/pending-grn-list");
+        };
+//        load Approved Purchase Order item only
+        this.loadApprovedPurchaseOrderItemList = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/grn/approve-purchase-order-item-list");
+        };
+//      grn approve
+        this.saveGrnApprove = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-grn-approve", data);
+        };
+//       
+//      direct GRN
+         this.getStockQty = function (item) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/stock-qty/" + item);
+        };
+//      save Direct Grn
+        this.saveDirectGrn = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-direct-grn", data);
+        };
     };
 
     angular.module("appModule")

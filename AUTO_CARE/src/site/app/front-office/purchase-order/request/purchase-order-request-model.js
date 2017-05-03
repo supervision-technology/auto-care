@@ -67,6 +67,8 @@
                     validateBarcode: function (barcode) {
                         var selectItem = null;
                         angular.forEach(this.supplierItems, function (value) {
+                            console.log(barcode+" = "+value.barcode);
+                            console.log(barcode);
                             if (value.barcode === barcode) {
                                 selectItem = value;
                                 return;
@@ -179,8 +181,6 @@
                         if (item) {
                             PurchaseOrderRequestService.getStockQty(item)
                                     .success(function (data) {
-                                        console.log(data);
-                                        console.log("stock qty");
                                         that.tempData.stockQty = data;
                                     });
                         }

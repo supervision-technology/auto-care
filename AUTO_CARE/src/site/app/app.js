@@ -31,6 +31,9 @@
         "subItemModule",
         "grnModule",
         "app",
+        "grnModule",
+        "directGrnModule",
+        "grnApproveModule",
         "purchaseOrderRequestModule",
         "purchaseOrderApproveModule"
 
@@ -136,8 +139,8 @@
                         })
                         //grn approve
                         .when("/front-office/grn/grn-approve", {
-                            templateUrl: "app/front-office/grn/grn-approve/grn-approve.html"
-//                            controller: "grnController"
+                            templateUrl: "app/front-office/grn/grn-approve/grn-approve.html",
+                            controller: "grnApproveController"
                         })
                         //grn direct
                         .when("/front-office/grn/grn-direct", {

@@ -9,7 +9,8 @@
                         supplier: null,
                         number: null,
                         date: null,
-                        amount: null,
+                        creditPeriod: 0,
+                        amount: 0,
                         refNumber: null,
                         branch: null,
                         nbt: null,
@@ -38,9 +39,18 @@
                         value:null,
                         discount:null,
                         discountValue:null,
-                        netValue:null
+                        netValue:null,
+                        stockQty:0
                     };
                     return tempData;
+                };
+                factory.summaryData = function () {
+                    var summaryData = {
+                        qty:0.00,
+                        value:0.00,
+                        discount:0.00
+                    };
+                    return summaryData;
                 };
 
                 return factory;

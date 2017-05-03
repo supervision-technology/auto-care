@@ -104,13 +104,16 @@ public class TGrn implements Serializable {
     @Column(name = "supplier")
     private Integer supplier;
     
+    @Column(name = "credit_period")
+    private Integer creditPeriod;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "grn", fetch = FetchType.EAGER)
     private List<TGrnItem> grnItemList;
 
     public TGrn() {
     }
 
-    public TGrn(Integer indexNo, int number, Date date, BigDecimal amount, String refNumber, int branch, BigDecimal nbt, BigDecimal nbtValue, BigDecimal vat, BigDecimal vatValue, BigDecimal grandAmount, BigDecimal payAmount, BigDecimal balanceAmount, BigDecimal returnValue, String status, String type, Boolean isNbt, Boolean isVat, Integer supplier, List<TGrnItem> grnItemList) {
+    public TGrn(Integer indexNo, int number, Date date, BigDecimal amount, String refNumber, int branch, BigDecimal nbt, BigDecimal nbtValue, BigDecimal vat, BigDecimal vatValue, BigDecimal grandAmount, BigDecimal payAmount, BigDecimal balanceAmount, BigDecimal returnValue, String status, String type, Boolean isNbt, Boolean isVat, Integer supplier, Integer creditPeriod, List<TGrnItem> grnItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.date = date;
@@ -130,10 +133,10 @@ public class TGrn implements Serializable {
         this.isNbt = isNbt;
         this.isVat = isVat;
         this.supplier = supplier;
+        this.creditPeriod = creditPeriod;
         this.grnItemList = grnItemList;
     }
 
-   
     public Integer getIndexNo() {
         return indexNo;
     }
@@ -277,7 +280,7 @@ public class TGrn implements Serializable {
     public void setIsVat(Boolean isVat) {
         this.isVat = isVat;
     }
-    
+
     public Integer getSupplier() {
         return supplier;
     }
@@ -285,12 +288,21 @@ public class TGrn implements Serializable {
     public void setSupplier(Integer supplier) {
         this.supplier = supplier;
     }
- 
-     public List<TGrnItem> getGrnItemList() {
+
+    public Integer getCreditPeriod() {
+        return creditPeriod;
+    }
+
+    public void setCreditPeriod(Integer creditPeriod) {
+        this.creditPeriod = creditPeriod;
+    }
+
+    public List<TGrnItem> getGrnItemList() {
         return grnItemList;
     }
 
     public void setGrnItemList(List<TGrnItem> grnItemList) {
         this.grnItemList = grnItemList;
     }
+
 }

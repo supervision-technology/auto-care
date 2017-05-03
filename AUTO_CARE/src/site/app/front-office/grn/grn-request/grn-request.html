@@ -29,6 +29,8 @@
                                        uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
                                        typeahead-input-formatter="model.getSupplier($model)" 
                                        typeahead-editable="false"
+                                       typeahead-on-select="ui.changeSupplier()"
+                                       
                                        ng-disabled="ui.mode !== 'NEW'"
                                        >
                             </td>
@@ -40,10 +42,10 @@
                 <table class="table-rounded control-table table-hover">
                     <col style="width: 100%"/>
                     <tbody>
-                        <tr class="animation-fade" ng-repeat="order in model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier}" >
-                            <td class="text-center" ng-class="model.selectedDetailIndex === order.number ? 'selected' : ''">
+                        <tr class="animation-fade" ng-repeat="order in model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier} track by $index" ng-if="model.orderLengthCheck(order.purchaseOrderItemList);" >
+                            <td class="text-center" ng-class="model.selectedDetailIndex === order.indexNo ? 'selected' : ''">
                                 <b>{{model.getSupplier(order.supplier)}}</b>
-                                <a class="btn btn-success pull-right" style="margin-top: 5px" ng-click="ui.selectPurchaseOrder(order.number)"><span class="glyphicon glyphicon-arrow-right"></span></a><br>
+                                <a class="btn btn-success pull-right" style="margin-top: 5px" ng-click="ui.selectPurchaseOrder(order.indexNo,order.number)"><span class="glyphicon glyphicon-arrow-right"></span></a><br>
                                 <label class="pull-left label label-default" style="margin-top: 8px">{{order.number | fixedLength:5}}</label>
                                 <label class="">{{order.approvedDate}}</label>
                                 <label class="pull-right">{{order.grandTotal | number:2}}</label>
@@ -155,7 +157,7 @@
                                                   typeahead-input-formatter="model.getItemLable($model)" 
                                                   typeahead-editable="false"
                                                   ng-disabled="true"></td>
-                            <td>QTY<input class="form-control" id="qty" placeholder="qty" ng-model="model.tempData.qty" ng-disabled="ui.mode !== 'NEW'"></td>
+                            <td>QTY<input class="form-control" id="qty" placeholder="receive qty" ng-model="model.tempData.receiveQty" ng-disabled="ui.mode !== 'NEW'"></td>
                             <td>
                                 <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.addData()">
                                     <span class="glyphicon glyphicon-plus">
@@ -190,13 +192,13 @@
                         <col style="width: 15%"/>
                         <col style="width: 20%"/>
                         <tbody>
-                            <tr ng-repeat="approvedItem in model.purchaseOrderItemList">
+                            <tr ng-repeat="approvedItem in model.purchaseOrderItemList | filter:{status:'APPROVED'}" ng-if="approvedItem.balanceQty > 0">
                                 <td><span class="label label-default">{{model.getItemObject(approvedItem.item).barcode}}</span></td>
                                 <td class="over-flow-hidden">{{model.getItemObject(approvedItem.item).name}}</td>
-                                <td class="text-right">{{approvedItem.qty}}</td>
+                                <td class="text-right">{{approvedItem.balanceQty}}</td>
                                 <td class="text-right">
-                                    <a class="btn btn-primary" ng-click="ui.editItemQty($index)"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a class="btn btn-success" ng-click="ui.select($index)"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                                    <a class="btn btn-primary" ng-click="ui.editItemQty(approvedItem.indexNo)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="btn btn-success" ng-click="ui.select(approvedItem.indexNo)"><span class="glyphicon glyphicon-arrow-right"></span></a>
                                 </td>
                             </tr>
 
@@ -213,7 +215,7 @@
 
                         <thead class="background-dark">
                             <tr>
-                                <td><span class="label label-primary">{{model.purchaseOrderItemList.length}}</span></td>
+                                <td><span class="label label-primary">{{model.itemTotalCount}}</span></td>
                                 <td></td>
                                 <td></td>
                                 <td class="text-right"><b>{{model.itemTotalQty|number:2}}</b></td>
@@ -228,7 +230,7 @@
             </div>
         </div>
         <div class="background-light col-sm-6 nopadding">
-            <div class="col-sm-12 nopadding">
+            <div class="col-sm-12 nopadding" ng-show="model.data.grnItemList.length">
 
                 <table class="table-rounded">
                     <col style="width: 30%"/>
@@ -258,10 +260,10 @@
                             <tr ng-repeat="grnItem in model.data.grnItemList">
                                 <td><span class="label label-default">{{model.getItemObject(grnItem.item).barcode}}</span></td>
                                 <td class="over-flow-hidden">{{model.getItemObject(grnItem.item).name}}</td>
-                                <td class="text-right">{{grnItem.purchaseOrderItem}}</td>
-                                <td class="text-right">{{grnItem.qty}}</td>
+                                <td class="text-right">{{grnItem.selectedPONumber}}</td>
+                                <td class="text-right">{{grnItem.receiveQty}}</td>
                                 <td class="text-right">
-                                    <a class="btn btn-danger" ng-click="ui.delete($index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    <a class="btn btn-danger" ng-click="ui.deleteItem($index)"><span class="glyphicon glyphicon-trash"></span></a>
                                 </td>
                             </tr>
 
@@ -278,23 +280,24 @@
 
                         <thead class="background-dark">
                             <tr>
-                                <td><span class="label label-primary">10</span></td>
+                                <td><span class="label label-primary">{{model.data.grnItemList.length}}</span></td>
                                 <td></td>
                                 <td></td>
-                                <td class="text-right"><b>9</b></td>
+                                <td class="text-right"><b>{{model.totalGrnQty | number:2}}</b></td>
+                                <!--<td class="text-right"><b>45</b></td>-->
                                 <td></td>
                             </tr>
                         </thead>
                     </table>
                 </div>
             </div>
+            <div class="placeholder col-md-12" ng-hide="model.data.grnItemList.length" style="height: calc(100vh - 116px); padding: 0px 10px 10px 10px;">
+                <h1>PLEASE ADD RECEIVE ITEMS TO DISPLAY :(</h1>
+            </div>
         </div>
     </div>
 </div>
 <div class="fab-container">
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-default" ng-show="ui.mode === 'NEW'" ng-click="ui.discard();"><i class="glyphicon glyphicon-remove"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
-    <!--    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-        <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>-->
 </div>

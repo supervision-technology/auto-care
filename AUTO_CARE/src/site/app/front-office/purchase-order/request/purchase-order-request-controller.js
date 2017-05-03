@@ -140,6 +140,7 @@
                     $scope.model.data.grandTotal = $scope.model.data.itemValue + $scope.model.data.nbtValue;
                     $scope.model.data.vatValue = null;
                     $scope.model.data.vat = null;
+                    $scope.chxVat = false;
                 };
 
                 $scope.ui.calculateVAT = function (vatRate) {

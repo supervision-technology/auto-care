@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
 /**
  *
@@ -35,7 +36,6 @@ public class TGrnItem implements Serializable {
     private Integer indexNo;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "price")
     private BigDecimal price;
 
@@ -48,10 +48,13 @@ public class TGrnItem implements Serializable {
     @NotNull
     @Column(name = "value")
     private BigDecimal value;
+    
+    @Column(name = "item")
+    private Integer item;
 
     @Column(name = "discount")
     private BigDecimal discount;
-
+    
     @Column(name = "purchase_order_item")
     private Integer purchaseOrderItem;
 
@@ -62,7 +65,7 @@ public class TGrnItem implements Serializable {
     @NotNull
     @Column(name = "net_value")
     private BigDecimal netValue;
-
+    
     @JsonIgnore
     @JoinColumn(name = "grn", referencedColumnName = "index_no")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
@@ -71,11 +74,12 @@ public class TGrnItem implements Serializable {
     public TGrnItem() {
     }
 
-    public TGrnItem(Integer indexNo, BigDecimal price, BigDecimal qty, BigDecimal value, BigDecimal discount, Integer purchaseOrderItem, BigDecimal discountValue, BigDecimal netValue, TGrn grn) {
+    public TGrnItem(Integer indexNo, BigDecimal price, BigDecimal qty, BigDecimal value, Integer item, BigDecimal discount, Integer purchaseOrderItem, BigDecimal discountValue, BigDecimal netValue, TGrn grn) {
         this.indexNo = indexNo;
         this.price = price;
         this.qty = qty;
         this.value = value;
+        this.item = item;
         this.discount = discount;
         this.purchaseOrderItem = purchaseOrderItem;
         this.discountValue = discountValue;
@@ -91,11 +95,11 @@ public class TGrnItem implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public BigDecimal getUnitPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setUnitPrice(BigDecimal price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -113,6 +117,14 @@ public class TGrnItem implements Serializable {
 
     public void setValue(BigDecimal value) {
         this.value = value;
+    }
+
+    public Integer getItem() {
+        return item;
+    }
+
+    public void setItem(Integer item) {
+        this.item = item;
     }
 
     public BigDecimal getDiscount() {
