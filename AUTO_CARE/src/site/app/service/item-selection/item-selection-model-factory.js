@@ -20,6 +20,16 @@
                     return data;
                 };
 
+                factory.newCustomerReservedItemData = function () {
+                    var data = {
+                        "indexNo": null,
+                        "name": null,
+                        "qty": null,
+                        "jobCard": null
+                    };
+                    return data;
+                };
+
                 factory.newJobCardData = function () {
                     var data = {
                         "indexNo": 0,

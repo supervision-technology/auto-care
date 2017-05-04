@@ -1,12 +1,12 @@
 (function () {
     angular.module("appModule")
-            .factory("invoiceModel", function (invoiceService, invoiceModelFactory, $q) {
-                function invoiceModel() {
+            .factory("itemModificationModel", function (itemModificationService, itemModificationFactory, $q) {
+                function itemModificationModel() {
                     this.constructor();
                 }
 
-                invoiceModel.prototype = {
-                    
+                itemModificationModel.prototype = {
+
                     data: {},
                     //master data lists
                     items: [],
@@ -25,23 +25,23 @@
 
                     constructor: function () {
                         var that = this;
-                        this.data = invoiceModelFactory.newData();
+                        this.data = itemModificationFactory.newData();
 
-                        invoiceService.pendingJobCards()
+                        itemModificationService.pendingJobCards()
                                 .success(function (data) {
                                     that.pendingJobCards = data;
                                 });
 
-                        invoiceService.loadItems()
+                        itemModificationService.loadItems()
                                 .success(function (data) {
                                     that.items = data;
                                 });
-                        invoiceService.loadVehicles()
+                        itemModificationService.loadVehicles()
                                 .success(function (data) {
                                     that.vehicles = data;
                                 });
 
-                        invoiceService.loadItemUnits()
+                        itemModificationService.loadItemUnits()
                                 .success(function (data) {
                                     that.itemUnits = data;
                                 });
@@ -50,7 +50,7 @@
                         var defer = $q.defer();
                         var that = this;
 
-                        this.data = invoiceModelFactory.newData();
+                        this.data = itemModificationFactory.newData();
                         if (vehicleType === "REGISTER") {
                             //value change
                             that.data.quantity = 1;
@@ -82,10 +82,10 @@
                             }
                         }
 
-                        invoiceService.saveJobItems(this.data)
+                        itemModificationService.saveJobItems(this.data)
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
-                                    this.data = invoiceModelFactory.newData();
+                                    this.data = itemModificationFactory.newData();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -96,7 +96,7 @@
                     addNormalItem: function (item, qty, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
-                        this.data = invoiceModelFactory.newData();
+                        this.data = itemModificationFactory.newData();
                         if (vehicleType === "REGISTER") {
                             //value change
                             that.data.quantity = qty;
@@ -113,10 +113,10 @@
                             that.data.jobCard = jobCard;
                         }
 
-                        invoiceService.saveJobItems(this.data)
+                        itemModificationService.saveJobItems(this.data)
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
-                                    this.data = invoiceModelFactory.newData();
+                                    this.data = itemModificationFactory.newData();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -128,7 +128,7 @@
                         var defer = $q.defer();
                         var that = this;
 
-                        this.data = invoiceModelFactory.newData();
+                        this.data = itemModificationFactory.newData();
                         var itemUnitData = that.itemUnitData(itemUnit);
 
                         if (vehicleType === "REGISTER") {
@@ -145,10 +145,10 @@
                             that.data.jobCard = jobCard;
                         }
 
-                        invoiceService.saveJobItems(this.data)
+                        itemModificationService.saveJobItems(this.data)
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
-                                    this.data = invoiceModelFactory.newData();
+                                    this.data = itemModificationFactory.newData();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -167,7 +167,7 @@
                     deleteSelectDetails: function (index) {
                         var defer = $q.defer();
                         var that = this;
-                        invoiceService.deleteJobItems(this.jobItemList[index].indexNo)
+                        itemModificationService.deleteJobItems(this.jobItemList[index].indexNo)
                                 .success(function () {
                                     that.jobItemList.splice(index, 1);
                                     that.getSelectItemTotal();
@@ -182,7 +182,7 @@
                     getJobItemHistory: function (jobCard) {
                         var defer = $q.defer();
                         var that = this;
-                        invoiceService.getJobItemHistory(jobCard)
+                        itemModificationService.getJobItemHistory(jobCard)
                                 .success(function (data) {
                                     that.jobItemList = [];
                                     angular.extend(that.jobItemList, data);
@@ -197,7 +197,7 @@
                     getPackageItems: function (indexNo) {
                         var defer = $q.defer();
                         var that = this;
-                        invoiceService.getPackageItems(indexNo)
+                        itemModificationService.getPackageItems(indexNo)
                                 .success(function (data) {
                                     that.packageItemList = [];
                                     that.packageItemList = data;
@@ -279,8 +279,21 @@
                             }
                         });
                         return data;
+                    },
+                    removeJobCard: function () {
+                       var that = this;
+//                        angular.forEach(this.pendingJobCards, function (values) {
+//                            if (values.indexNo === parseInt(jobCard)) {
+//                                that.pendingJobCards.splice(that.pendingJobCards.indexOf(values), 1);
+//                            }
+//                        });
+
+                        itemModificationService.pendingJobCards()
+                                .success(function (data) {
+                                    that.pendingJobCards = data;
+                                });
                     }
                 };
-                return invoiceModel;
+                return itemModificationModel;
             });
 }());

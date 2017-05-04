@@ -48,6 +48,9 @@ public class ItemService {
     }
 
     List<MItem> getSupplierItem(Integer branch,String stock,String nonStock) {
+        System.out.println(branch);
+        System.out.println(stock);
+        System.out.println(nonStock);
         return itemRepository. findByBranchAndTypeOrType(branch,stock,nonStock);
     }
 }

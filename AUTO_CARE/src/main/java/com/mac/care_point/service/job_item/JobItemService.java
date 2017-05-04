@@ -35,4 +35,11 @@ public class JobItemService {
         return jobItemRepository.findByJobCard(jobCardIndexNo);
     }
 
+    //for final check list
+    public TJobItem checkItem(Integer item, String status) {
+        TJobItem jobItem = jobItemRepository.getOne(item);
+        jobItem.setJobStatus(status);
+        return jobItemRepository.save(jobItem);
+    }
+
 }

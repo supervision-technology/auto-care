@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .factory("invoiceModelFactory", function () {
+            .factory("itemModificationFactory", function () {
                 var factory = {};
 
                 factory.newData = function () {

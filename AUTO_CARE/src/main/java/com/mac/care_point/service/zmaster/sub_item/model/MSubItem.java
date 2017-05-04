@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.items.items.model;
+package com.mac.care_point.service.zmaster.sub_item.model;
 
-import com.mac.care_point.master.items.items.model.MItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,7 +20,7 @@ import javax.validation.constraints.Size;
  *
  * @author Don
  */
-@Entity
+@Entity (name = "com.mac.care_point.service.zmaster.item.model.MSubItem")
 @Table(name = "m_sub_item")
 public class MSubItem implements Serializable {
 
@@ -53,9 +49,8 @@ public class MSubItem implements Serializable {
     @Column(name = "active")
     private boolean active;
 
-    @JoinColumn(name = "item")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private MItem item;
+    @Column(name = "item")
+    private Integer item;
 
     public MSubItem() {
     }
@@ -111,11 +106,11 @@ public class MSubItem implements Serializable {
         this.active = active;
     }
 
-    public MItem getItem() {
+    public Integer getItem() {
         return item;
     }
 
-    public void setItem(MItem item) {
+    public void setItem(Integer item) {
         this.item = item;
     }
 

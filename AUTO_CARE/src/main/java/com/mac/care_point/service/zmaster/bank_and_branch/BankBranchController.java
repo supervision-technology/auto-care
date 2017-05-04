@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.check_list;
+package com.mac.care_point.service.zmaster.bank_and_branch;
 
-import com.mac.care_point.master.items.items.model.Items;
-import java.util.Date;
+import com.mac.care_point.service.zmaster.bank_and_branch.model.MBankBranch;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,21 +15,19 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Don
+ * @author Kavish Manjitha
  */
-@CrossOrigin
 @RestController
-@RequestMapping("/api/care-point/master/all-items")
-public class TitemCheckResultController {
+@CrossOrigin
+@RequestMapping(value = "/api/care-point/service/zmaster/bankbranch")
+public class BankBranchController {
 
     @Autowired
-    private TSubItemCheckResultService subItemCheckResultService;
-
-    private final Date DATE = new Date();
-    private final Integer BRANCH = 1;
+    public BankBranchService bankBranchService;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Items> findALLTItemCheckResult() {
-        return subItemCheckResultService.getALlItems(DATE, BRANCH);
+    public List<MBankBranch> getALlBranckAndBranch() {
+        return bankBranchService.getALlBranckAndBranch();
     }
+
 }

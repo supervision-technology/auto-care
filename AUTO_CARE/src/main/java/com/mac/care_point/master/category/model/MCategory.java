@@ -34,17 +34,42 @@ public class MCategory implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "colour")
+    private String colour;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "view_approve")
+    private Boolean viewApprove;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "static_feild")
+    private Boolean staticFeild;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "static_feild_name")
+    private String staticFeildName;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "image")
+    private String image;
+
     public MCategory() {
     }
 
-    public MCategory(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public MCategory(Integer indexNo, String name) {
+    public MCategory(Integer indexNo, String name, String colour, Boolean viewApprove, Boolean staticFeild, String staticFeildName, String image) {
         this.indexNo = indexNo;
         this.name = name;
-
+        this.colour = colour;
+        this.viewApprove = viewApprove;
+        this.staticFeild = staticFeild;
+        this.staticFeildName = staticFeildName;
+        this.image = image;
     }
 
     public Integer getIndexNo() {
@@ -61,6 +86,46 @@ public class MCategory implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public void setColour(String colour) {
+        this.colour = colour;
+    }
+
+    public Boolean getViewApprove() {
+        return viewApprove;
+    }
+
+    public void setViewApprove(Boolean viewApprove) {
+        this.viewApprove = viewApprove;
+    }
+
+    public Boolean getStaticFeild() {
+        return staticFeild;
+    }
+
+    public void setStaticFeild(Boolean staticFeild) {
+        this.staticFeild = staticFeild;
+    }
+
+    public String getStaticFeildName() {
+        return staticFeildName;
+    }
+
+    public void setStaticFeildName(String staticFeildName) {
+        this.staticFeildName = staticFeildName;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
 }

@@ -110,7 +110,6 @@
                                 Notification.error(data.message);
                             }
                     );
-
                 };
 
 

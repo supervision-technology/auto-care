@@ -5,7 +5,7 @@
  */
 package com.mac.care_point.master.subItem;
 
-import com.mac.care_point.master.items.items.model.MSubItem;
+import com.mac.care_point.master.items.sub_item.model.MSubItem;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
