@@ -1,7 +1,51 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+(function () {
+    'use strict';
 
+    var service = function (systemConfig, $http) {
+        
+//        request
+//        load Approved Purchase Order
+        this.loadApprovedPurchaseOrder = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/grn/approve-purchasse-order");
+        };
+         //load Suppliers
+        this.loadSuppliers = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
+        };
+//        load Suppliers
+         this.loadItems = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/stock-nonstock-item");
+        };
+        this.saveGrnReceive = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-grn-recieve", data);
+        };
+        
+        
+//        approve
+//        load pending grn list
+        this.loadPendingGrnList = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/grn/pending-grn-list");
+        };
+//        load Approved Purchase Order item only
+        this.loadApprovedPurchaseOrderItemList = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/grn/approve-purchase-order-item-list");
+        };
+//      grn approve
+        this.saveGrnApprove = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-grn-approve", data);
+        };
+//       
+//      direct GRN
+         this.getStockQty = function (item) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/stock-qty/" + item);
+        };
+//      save Direct Grn
+        this.saveDirectGrn = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/grn/save-direct-grn", data);
+        };
+    };
+
+    angular.module("appModule")
+            .service("GrnService", service);
+}());
 

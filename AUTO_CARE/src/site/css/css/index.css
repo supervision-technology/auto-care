@@ -511,3 +511,8 @@ tbody tr:hover{
     color: #ffffff;
     background-color: #50C14E;
 }
+.over-flow-hidden{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}

@@ -28,7 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "t_stock_ledger")
-@XmlRootElement
 public class TStockLedger implements Serializable {
 
     @Id
@@ -73,10 +72,6 @@ public class TStockLedger implements Serializable {
         this.item = item;
         this.store = store;
     }
-    
-    public TStockLedger(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
 
     public Integer getIndexNo() {
         return indexNo;
@@ -84,22 +79,6 @@ public class TStockLedger implements Serializable {
 
     public void setIndexNo(Integer indexNo) {
         this.indexNo = indexNo;
-    }
-
-    public Integer getItem() {
-        return item;
-    }
-
-    public void setItem(Integer item) {
-        this.item = item;
-    }
-
-    public Integer getStore() {
-        return store;
-    }
-
-    public void setStore(Integer store) {
-        this.store = store;
     }
 
     public Date getDate() {
@@ -140,6 +119,22 @@ public class TStockLedger implements Serializable {
 
     public void setBranch(Integer branch) {
         this.branch = branch;
+    }
+
+    public Integer getItem() {
+        return item;
+    }
+
+    public void setItem(Integer item) {
+        this.item = item;
+    }
+
+    public Integer getStore() {
+        return store;
+    }
+
+    public void setStore(Integer store) {
+        this.store = store;
     }
 
 }

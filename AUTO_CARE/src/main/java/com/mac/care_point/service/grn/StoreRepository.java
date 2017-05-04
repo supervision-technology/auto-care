@@ -5,20 +5,14 @@
  */
 package com.mac.care_point.service.grn;
 
-import com.mac.care_point.service.grn.model.TGrn;
-import java.util.List;
+import com.mac.care_point.service.grn.model.MStore;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author L T430
  */
-public interface GrnRepository extends JpaRepository<TGrn, Integer> {
-
-    public List<TGrn> findAll();
-
-    public TGrn findFirst1ByOrderByIndexNoDesc();
-
-    public List<TGrn> findByBranchAndStatus(Integer branch, String status_pending);
-
+public interface StoreRepository extends JpaRepository<MStore, Integer>{
+    
+    
 }

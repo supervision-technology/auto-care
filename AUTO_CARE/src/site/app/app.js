@@ -29,7 +29,13 @@
         "vehicleModule",
         "jobCardModule",
         "subItemModule",
-        "app"
+        "grnModule",
+        "app",
+        "grnModule",
+        "directGrnModule",
+        "grnApproveModule",
+        "purchaseOrderRequestModule",
+        "purchaseOrderApproveModule"
 
     ]);
 
@@ -126,9 +132,30 @@
                             templateUrl: "app/front-office/invoice/invoice.html",
                             controller: "invoiceController"
                         })
-                        //grn
-                        .when("/front-office/grn", {
-                            templateUrl: "app/front-office/grn/grn.html"
+                        //grn request
+                        .when("/front-office/grn/grn-request", {
+                            templateUrl: "app/front-office/grn/grn-request/grn-request.html",
+                            controller: "grnController"
+                        })
+                        //grn approve
+                        .when("/front-office/grn/grn-approve", {
+                            templateUrl: "app/front-office/grn/grn-approve/grn-approve.html",
+                            controller: "grnApproveController"
+                        })
+                        //grn direct
+                        .when("/front-office/grn/grn-direct", {
+                            templateUrl: "app/front-office/grn/grn-direct/grn.html",
+                            controller: "directGrnController"
+                        })
+                        //purchase order request
+                        .when("/front-office/purchase-order/request", {
+                            templateUrl: "app/front-office/purchase-order/request/purchase-order-request.html",
+                            controller: "purchaseOrderRequestController"
+                        })
+                        //purchase order approve
+                        .when("/front-office/purchase-order/approve", {
+                            templateUrl: "app/front-office/purchase-order/approve/purchase-order-approve.html",
+                            controller: "purchaseOrderApproveController"
                         })
                         //master
                         .when("/master/item", {
