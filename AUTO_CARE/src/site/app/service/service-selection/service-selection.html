@@ -20,7 +20,7 @@
         <div class="col-xs-7 background-light">
             <div class="row full-height" style="display: flex; flex-flow: column;">
                 <uib-tabset>
-                    <uib-tab heading="PACKAGE" index="0">
+                    <uib-tab heading="PACKAGE" index="0" select="ui.toggleType('ALL_SELECTIONS');">
                         <table class="square-table background-dark">
                             <col style="width: 50%;"/>
                             <col style="width: 30%;"/>
@@ -72,7 +72,7 @@
                             <h1>PLEASE SELECT VEHICLE</h1>
                         </div>
                     </uib-tab>
-                    <uib-tab heading="SERVICE" index="1">
+                    <uib-tab heading="SERVICE" index="1" select="ui.toggleType('SERVICE');">
                         <div class="col-xs-8">
                             <input type="text" class="search-input" placeholder="search" ng-model="searchService">
                         </div>
@@ -108,7 +108,7 @@
                             <h1>PLEASE SELECT VEHICLE</h1>
                         </div>
                     </uib-tab>
-                    <uib-tab heading="ITEM" index="2">
+                    <uib-tab heading="ITEM" index="2" select="ui.toggleType('ITEM');">
                         <div class="col-xs-8">
                             <input type="text" class="search-input" placeholder="search" ng-model="searchItem">
                         </div>
@@ -175,7 +175,138 @@
         </div>
 
         <div class="col-xs-5 background-dark">
-            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" ng-show="ui.type === 'SERVICE'">
+                <div style="height: 50px;" ng-show="model.jobItemList.length">
+                    <table class="square-table table-rounded">
+                        <col style="width: 10%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <col/>
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>SELECTIONS</th>
+                                <th class="text-right">QTY</th>
+                                <th class="text-center">AMOUNT</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="smart-scroll-y" style="height: calc(100vh - 91px);padding-left: 5px;" ng-show="model.jobItemList.length">
+                    <table class="square-table background-dark">
+                        <col style="width: 10%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <tbody ng-repeat="selections in model.getSelectJobItemForService()">
+                            <tr>
+                                <td>
+                                    <!-- item items-->
+                                    <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
+                                    <label class="label label-primary" style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
+                                    <label class="label label-success" style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
+                                    <!-- /item items-->
+
+                                    <!-- item units-->
+                                    <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">I</label>
+                                    <!-- /item units-->
+                                </td>
+                                <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
+                                <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                <td class="text-right"><small>{{selections.quantity}}</small></td>
+                                <td class="text-right"><small>{{selections.value|number:2}}</small></td>
+                                <td><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 64px);padding-bottom: 10px;" ng-hide="model.jobItemList.length">
+                    <h1>SERVICE NOT FOUND :( </h1>
+                </div>
+                <div class="background-dark">
+                    <table class="square-table">
+                        <col style="width: 50%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <tbody>
+                            <tr class="text-bold">
+                                <td>SERVICE TOTAL</td>
+                                <td class="text-right">{{model.getSelectItemTotalForService() | number:2}}</td>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" ng-show="ui.type === 'ITEM'">
+                <div style="height: 50px;" ng-show="model.jobItemList.length">
+                    <table class="square-table table-rounded">
+                        <col style="width: 10%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <col/>
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>SELECTIONS</th>
+                                <th class="text-right">QTY</th>
+                                <th class="text-center">AMOUNT</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="smart-scroll-y" style="height: calc(100vh - 91px);padding-left: 5px;" ng-show="model.jobItemList.length">
+                    <table class="square-table background-dark">
+                        <col style="width: 10%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <tbody ng-repeat="selections in model.getSelectJobItemForItemAndItemUnits()">
+                            <tr>
+                                <td>
+                                    <!-- item items-->
+                                    <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
+                                    <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
+                                    <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
+                                    <!-- item units-->
+                                    <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">I</label>
+                                </td>
+                                <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
+                                <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                <td class="text-right"><small>{{selections.quantity}}</small></td>
+                                <td class="text-right"><small>{{selections.value|number:2}}</small></td>
+                                <td><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 64px);padding-bottom: 10px;" ng-hide="model.jobItemList.length">
+                    <h1>ITEM NOT FOUND :( </h1>
+                </div>
+                <div class="background-dark">
+                    <table class="square-table">
+                        <col style="width: 50%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <tbody>
+                            <tr class="text-bold">
+                                <td>ITEM TOTAL</td>
+                                <td class="text-right">{{model.getSelectItemTotalForItemAndItemUnits() | number:2}}</td>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" ng-show="ui.type === 'ALL_SELECTIONS'">
                 <div style="height: 50px;" ng-show="model.jobItemList.length">
                     <table class="square-table table-rounded">
                         <col style="width: 10%;"/>
@@ -210,7 +341,7 @@
                                     <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
                                     <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
                                     <!-- item units-->
-                                    <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">S</label>
+                                    <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">I</label>
                                 </td>
                                 <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
                                 <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
@@ -221,18 +352,28 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 64px);padding-bottom: 10px;" ng-hide="model.jobItemList.length">
+                <div class="placeholder col-lg-12 animation-fade" style="height: calc(100vh - 164px);padding-bottom: 10px;" ng-hide="model.jobItemList.length">
                     <h1>ITEM NOT FOUND :( </h1>
                 </div>
-                <div class="background-dark">
+                <div class="background-light-dark" style="margin-left: 5px;margin-right: 5px;">
                     <table class="square-table">
                         <col style="width: 50%;"/>
                         <col style="width: 35%;"/>
                         <col style="width: 15%;"/>
                         <tbody>
+                            <tr class="text-bold ">
+                                <td>SERVICE TOTAL</td>
+                                <td class="text-right">{{model.getSelectItemTotalForService() | number:2}}</td>
+                                <th>&nbsp;</th>
+                            </tr>
                             <tr class="text-bold">
-                                <td>TOTAL</td>
-                                <td class="text-right">{{model.getSelectItemTotal() | number:2}}</td>
+                                <td>ITEM TOTAL</td>
+                                <td class="text-right">{{model.getSelectItemTotalForItemAndItemUnits() | number:2}}</td>
+                                <th>&nbsp;</th>
+                            </tr>
+                            <tr class="text-bold">
+                                <td>ALL TOTAL</td>
+                                <td class="text-right">{{model.getSelectItemAllItems() | number:2}}</td>
                                 <th>&nbsp;</th>
                             </tr>
                         </tbody>

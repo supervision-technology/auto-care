@@ -6,7 +6,6 @@
 package com.mac.care_point.master.items.sub_item.model;
 
 import com.mac.care_point.master.items.items.model.MItem;
-import com.mac.care_point.master.items.items.model.MItem;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
