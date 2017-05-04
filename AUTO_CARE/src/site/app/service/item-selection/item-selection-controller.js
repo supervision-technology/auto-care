@@ -110,6 +110,26 @@
                             });
                 };
 
+
+                //delete customer recerved item
+                $scope.ui.deleteCustomerReservedItem = function ($index, indexNo) {
+                    ConfirmPane.dangerConfirm("Do you sure want to delete item")
+                            .confirm(function () {
+                                $scope.model.deleteCustomerReceiveItem($index, indexNo);
+                            });
+                };
+
+                //add customer reserved items
+                $scope.ui.addCustomerReservedItem = function () {
+                    if (!$scope.model.customerReservedItemData.name) {
+                        Notification.error("please enter item name");
+                    } else if (!$scope.model.customerReservedItemData.qty) {
+                        Notification.error("please select qty");
+                    } else if ($scope.model.customerReservedItemData.name && $scope.model.customerReservedItemData.qty) {
+                        $scope.model.saveCustomerReceiveItem($scope.selectedJobCardIndexNo);
+                    }
+                };
+
                 $scope.init = function () {
                     //get routing paramiets job card index
                     var jobCardIndexNo = parseInt($routeParams.jobCardIndexNo);
@@ -126,6 +146,9 @@
                                 });
                         //view select job item history
                         $scope.model.getJobItemHistory(jobCardIndexNo);
+
+                        //job card select get customer reserved item list
+                        $scope.model.findByJobCardCustomerReceiveItem(jobCardIndexNo);
                     }
                 };
                 $scope.init();

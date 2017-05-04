@@ -9,6 +9,7 @@
 
                     data: {},
                     jobCardData: {},
+                    customerReservedItemData: {},
                     //master data lists
                     items: [],
                     vehicles: [],
@@ -24,10 +25,13 @@
                     jobItemList: [],
                     //job card select filter items
                     filterItems: [],
+                    //select job card customer reserved itemes list
+                    customerReceivedItems: [],
                     constructor: function () {
                         var that = this;
                         this.data = ItemSelectionModelFactory.newData();
                         this.jobCardData = ItemSelectionModelFactory.newJobCardData();
+                        this.customerReservedItemData = ItemSelectionModelFactory.newCustomerReservedItemData();
 
                         ItemSelectionService.loadItems()
                                 .success(function (data) {
@@ -334,7 +338,7 @@
                         });
                         return total;
                     },
-                                        getSelectJobItemForService: function () {
+                    getSelectJobItemForService: function () {
                         var that = this;
                         var lists = [];
                         angular.forEach(this.jobItemList, function (values) {
@@ -355,6 +359,53 @@
                             }
                         });
                         return lists;
+                    },
+                    //find job card by customer receved items
+                    findByJobCardCustomerReceiveItem: function (jobCard) {
+                        var that = this;
+                        var defer = $q.defer();
+                        ItemSelectionService.findByJobCardCustomerReceiveItem(jobCard)
+                                .success(function (data) {
+                                    that.customerReceivedItems = [];
+                                    that.customerReceivedItems = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.customerReceivedItems = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    saveCustomerReceiveItem: function (jobCard) {
+                        var that = this;
+                        var defer = $q.defer();
+                        this.customerReservedItemData.jobCard = jobCard;
+                        ItemSelectionService.saveCustomerReceiveItem(this.customerReservedItemData)
+                                .success(function (data) {
+                                    that.customerReceivedItems.unshift(data);
+                                    that.customerReservedItemData = {};
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    deleteCustomerReceiveItem: function ($index, indexNo) {
+                        var that = this;
+                        ItemSelectionService.deleteCustomerReceiveItem(parseInt(indexNo))
+                                .success(function (data) {
+                                    var id = -1;
+                                    for (var i = 0; i < that.customerReceivedItems.length; i++) {
+                                        if (that.customerReceivedItems[i].indexNo === parseInt(data)) {
+                                            id = i;
+                                        }
+                                    }
+                                    that.customerReceivedItems.splice(id, 1);
+                                })
+                                .error(function () {
+
+                                });
                     }
                 };
                 return ItemSelectionModel;
