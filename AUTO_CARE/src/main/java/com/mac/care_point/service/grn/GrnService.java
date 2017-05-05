@@ -121,6 +121,32 @@ public class GrnService {
     TGrn saveDirectGrn(TGrn grn) {
         for (TGrnItem grnItem : grn.getGrnItemList()) {
             grnItem.setGrn(grn);
+            
+            
+//          stock ledger start
+            TStockLedger ledger = new TStockLedger();
+            ledger.setBranch(grn.getBranch());
+            ledger.setDate(grn.getDate());
+            ledger.setForm("GRN Approve");
+            ledger.setInQty(grnItem.getQty());
+
+            ledger.setItem(grnItem.getItem());
+            ledger.setOutQty(new BigDecimal(0));
+            //store start
+            List<MStore> storeList = storeRepository.findAll();
+            MStore saveStore = new MStore();
+            if (storeList.isEmpty()) {
+                //default store save
+                MStore store = new MStore();
+                store.setName("Default Store");
+                saveStore = storeRepository.save(store);
+            } else {
+                saveStore = storeList.get(0);
+            }
+            ledger.setStore(saveStore.getIndexNo());
+            //store end
+            stockLedgerRepository.save(ledger);
+//          stock ledger end
         }
         return grnRepository.save(grn);
     }
