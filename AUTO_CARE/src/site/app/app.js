@@ -157,6 +157,11 @@
                             templateUrl: "app/front-office/purchase-order/approve/purchase-order-approve.html",
                             controller: "purchaseOrderApproveController"
                         })
+                        //stock item request 
+                        .when("/stock/request-item", {
+                            templateUrl: "app/stock/request-item/request-item.html",
+                            controller: ""
+                        })
                         //master
                         .when("/master/item", {
                             templateUrl: "app/master/item/item.html",

@@ -6,7 +6,6 @@
                 }
 
                 ItemSelectionModel.prototype = {
-
                     data: {},
                     jobCardData: {},
                     customerReservedItemData: {},
@@ -15,7 +14,6 @@
                     vehicles: [],
                     itemUnits: [],
                     category: [],
-
                     packageItemList: [],
                     //select package items list
                     itemUnitList: [],
@@ -82,7 +80,6 @@
                         var category = categoryData.indexNo;
                         ItemSelectionService.findByCategoryAndPriceCategory(category, priceCategory)
                                 .success(function (data) {
-                                    console.log(data);
                                     that.filterItems = [];
                                     that.filterItems = data;
                                     defer.resolve();
@@ -148,6 +145,7 @@
                                 });
                         return defer.promise;
                     },
+//------------------------------- service,stock items,package duplicate check ------------------------------- 
                     duplicateItemCheck: function (item) {
                         var data;
                         angular.forEach(this.jobItemList, function (values) {
@@ -168,6 +166,7 @@
                         });
                         return data;
                     },
+//------------------------------- /service,stock items,package duplicate check ------------------------------- 
                     itemData: function (indexNo) {
                         var data = "";
                         angular.forEach(this.items, function (values) {
@@ -198,6 +197,7 @@
                         });
                         return data;
                     },
+//------------------------------- add stock items,packages and servicee -------------------------------                     
                     addPackageAndServiceItem: function (item, type, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
@@ -208,31 +208,16 @@
                             that.data.quantity = 1;
                             that.data.price = item.salePriceRegister;
                             that.data.value = item.salePriceRegister;
-
-                            that.data.jobCard = jobCard;
-                            that.data.item = item.indexNo;
-
-                            if (type === "PACKAGE_ITEM") {
-                                this.data.package = 1;
-                            } else {
-                                this.data.package = 0;
-                            }
-
                         } else {
                             //value change
                             that.data.quantity = 1;
                             that.data.price = item.salePriceNormal;
                             that.data.value = item.salePriceNormal;
-
-                            that.data.jobCard = jobCard;
-                            that.data.item = item.indexNo;
-
-                            if (type === "PACKAGE_ITEM") {
-                                this.data.package = 1;
-                            } else {
-                                this.data.package = 0;
-                            }
                         }
+
+                        that.data.itemType = type;
+                        that.data.jobCard = jobCard;
+                        that.data.item = item.indexNo;
 
                         ItemSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
@@ -248,22 +233,23 @@
                     addNormalItem: function (item, qty, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
+
                         this.data = ItemSelectionModelFactory.newData();
                         if (vehicleType === "REGISTER") {
                             //value change
                             that.data.quantity = qty;
                             that.data.price = item.salePriceRegister;
                             that.data.value = qty * item.salePriceRegister;
-                            that.data.item = item.indexNo;
-                            that.data.jobCard = jobCard;
                         } else {
                             //value change
                             that.data.quantity = qty;
                             that.data.price = item.salePriceNormal;
                             that.data.value = qty * item.salePriceNormal;
-                            that.data.item = item.indexNo;
-                            that.data.jobCard = jobCard;
                         }
+
+                        that.data.itemType = "STOCK_ITEM";
+                        that.data.item = item.indexNo;
+                        that.data.jobCard = jobCard;
 
                         ItemSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
@@ -287,15 +273,15 @@
                             that.data.quantity = qty;
                             that.data.price = itemUnitData.salePriceRegister;
                             that.data.value = parseFloat(qty * itemUnitData.salePriceRegister);
-                            that.data.itemUnit = itemUnitData.indexNo;
-                            that.data.jobCard = jobCard;
                         } else {
                             that.data.quantity = qty;
                             that.data.price = itemUnitData.salePriceNormal;
                             that.data.value = parseFloat(qty * itemUnitData.salePriceNormal);
-                            that.data.itemUnit = itemUnitData.indexNo;
-                            that.data.jobCard = jobCard;
                         }
+
+                        that.data.itemType = "ITEM_UNIT";
+                        that.data.itemUnit = itemUnitData.indexNo;
+                        that.data.jobCard = jobCard;
 
                         ItemSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
@@ -308,6 +294,8 @@
                                 });
                         return defer.promise;
                     },
+//------------------------------- /add stock items,packages and servicee -------------------------------                    
+//------------------------------- get totals -------------------------------
                     getSelectItemTotalForService: function () {
                         var total = 0.0;
                         var that = this;
@@ -360,7 +348,8 @@
                         });
                         return lists;
                     },
-                    //find job card by customer receved items
+//------------------------------- /get totals -------------------------------
+//------------------------------- customer received items -------------------------------
                     findByJobCardCustomerReceiveItem: function (jobCard) {
                         var that = this;
                         var defer = $q.defer();
@@ -406,6 +395,15 @@
                                 .error(function () {
 
                                 });
+                    },
+//------------------------------- /customer received items -------------------------------
+                    findByItemStockItmQty: function (item) {
+                        console.log(item);
+//                        ItemSelectionService.findByItemStockItmQty(item)
+//                                .success(function (data) {
+//                                    console.log(data);
+//                                });
+                        return 0;
                     }
                 };
                 return ItemSelectionModel;

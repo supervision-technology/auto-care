@@ -56,9 +56,13 @@
         this.deleteCustomerReceiveItem = function (indexNo) {
             return $http.delete(systemConfig.apiUrl + "/api/care-point/transaction/client-received-item/delete-client-received-item/" + indexNo);
         };
-        
+
         this.findByJobCardCustomerReceiveItem = function (jobCard) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/client-received-item/" + jobCard);
+        };
+
+        this.findByItemStockItmQty = function (item) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock/" + item);
         };
     };
 

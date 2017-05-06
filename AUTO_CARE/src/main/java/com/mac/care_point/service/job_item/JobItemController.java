@@ -27,6 +27,8 @@ public class JobItemController {
     @Autowired
     private JobItemService jobItemService;
 
+    private final Integer BRANCH = 1;
+
     //for service selections
     @RequestMapping(value = "/save-job-items", method = RequestMethod.POST)
     public TJobItem saveJobItem(@RequestBody TJobItem jobItem) {
@@ -52,5 +54,12 @@ public class JobItemController {
     public TJobItem checkItem(@PathVariable Integer item, @PathVariable String status) {
         return jobItemService.checkItem(item, status);
 
+    }
+
+    //get stock leger get item qty for item selection stock item qty
+    @RequestMapping(value = "/get-item-qty-by-stock/{item}", method = RequestMethod.GET)
+    public Object[] getItemQtyByStockLeger(@PathVariable Integer item) {
+        //TODO:get login branch
+        return jobItemService.getItemQtyByStockLeger(item, BRANCH);
     }
 }

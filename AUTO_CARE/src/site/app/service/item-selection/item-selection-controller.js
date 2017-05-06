@@ -18,6 +18,7 @@
                     if (data.staticFeild) {
                         if (data.staticFeildName === 'PACKAGE') {
                             $scope.ui.model = "PACKAGE";
+                            $scope.model.filterItems = [];
                             $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
                         } else if (data.staticFeildName === 'STOCK') {
                             $scope.ui.model = "STOCK";
@@ -26,6 +27,7 @@
                     } else {
                         //service -  lord items
                         $scope.ui.model = "SERVICE";
+                        $scope.model.filterItems = [];
                         $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
                     }
                 };

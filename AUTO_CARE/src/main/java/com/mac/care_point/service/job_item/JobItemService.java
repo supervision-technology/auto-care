@@ -42,4 +42,8 @@ public class JobItemService {
         return jobItemRepository.save(jobItem);
     }
 
+    public Object[] getItemQtyByStockLeger(Integer item, Integer branch) {
+        return jobItemRepository.getItemQtyByStockLeger(item, branch);
+    }
+
 }

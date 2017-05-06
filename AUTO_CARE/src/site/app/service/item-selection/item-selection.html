@@ -1,5 +1,5 @@
 <div class="index-content-body ">
-
+    <!------ category ---->
     <div class="col-xs-7 background-light" ng-show="ui.model === 'CATEGORY'">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
             <div class="tile-lists">
@@ -15,8 +15,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    <!------ category ---->
 
+    </div>
+    <!------ package selction ---->
     <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'PACKAGE'">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
             <table class="square-table background-dark">
@@ -68,6 +70,8 @@
             </div>
         </div>
     </div>
+    <!------ /package selction ---->
+    <!------ stock item selction ---->
     <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'STOCK'">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
             <div class="col-xs-7">
@@ -96,7 +100,7 @@
                     <tbody>
                         <tr class="background-light" ng-repeat="detils in model.filterItems|filter:{ name : searchItem}">
                             <td class="text-bold">{{detils.name}}</td>
-                            <td ng-show="selectVehicleType === 'REGISTER' && !ui.getItemUnits($index, detils.indexNo).length">{{detils.salePriceRegister|number:2}}</td>
+                            <td ng-show="selectVehicleType === 'REGISTER' && !ui.getItemUnits($index, detils.indexNo).length">{{detils.salePriceRegister|number:2}}<span class="label label-default">{{model.findByItemStockItmQty(detils.indexNo)}}</span></td>
                             <td ng-show="selectVehicleType === 'NORMAL' && !ui.getItemUnits($index, detils.indexNo).length">{{detils.salePriceNormal|number:2}}</td>
                             <td ng-show="ui.getItemUnits($index, detils.indexNo).length"> 
                                 <select class="form-control form-group-lg" ng-model="selectIemUnit" style="margin-top: 8px;">
@@ -121,14 +125,16 @@
                                      id-of-field="rangeFieldId">
                                 </div>
                             </td>
-                            <td ng-show="ui.getItemUnits($index, detils.indexNo).length"><a class="btn btn-success" ng-click="ui.addItemUnit(selectIemUnit, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
-                            <td ng-show="!ui.getItemUnits($index, detils.indexNo).length"><a class="btn btn-primary" ng-click="ui.addNormalItem(detils, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+                            <td ng-show="ui.getItemUnits($index, detils.indexNo).length"><a class="btn" ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" ng-click="ui.addItemUnit(selectIemUnit, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+                            <td ng-show="!ui.getItemUnits($index, detils.indexNo).length"><a class="btn" ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" ng-click="ui.addNormalItem(detils, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <!------ /stock item selction ---->
+    <!------ serveice selction ---->
     <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'SERVICE'">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
             <div class="col-xs-8">
@@ -157,16 +163,19 @@
                             <td class="text-bold">{{detils.name}}</td>
                             <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
                             <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
-                            <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                            <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <!------ /serveice selction ---->
+    <!------ total ---->
     <div class="col-xs-5 background-dark">
         <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">   
             <uib-tabset>
+                <!------ all total (package and service and stock items)---->
                 <uib-tab heading="ALL SELECTIONS" index="0">
                     <div style="height: 50px;">
                         <table class="square-table table-rounded">
@@ -197,14 +206,10 @@
                             <tbody>
                                 <tr ng-repeat="selections in model.jobItemList" style="animation: 0.5s fadeIn">
                                     <td>
-                                        <!-- item items-->
-                                        <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
-                                        <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
-                                        <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
-                                        <!-- /item items-->
-                                        <!-- item units-->
-                                        <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">I</label>
-                                        <!-- /item units-->
+                                        <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
+                                        <label class="label label-primary" style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
+                                        <label class="label label-success" style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
+                                        <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'ITEM_UNIT'">I</label>
                                     </td>
                                     <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
                                     <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
@@ -215,7 +220,6 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- totals-->
                     <div class="background-light-dark" style="margin-left: 5px;margin-right: 5px;">
                         <table class="square-table">
                             <col style="width: 50%;"/>
@@ -240,8 +244,9 @@
                             </tbody>
                         </table>
                     </div>
-                    <!-- /totals-->
                 </uib-tab>
+                <!------ /all total (package and service and stock items)---->
+                <!------ stock item total---->
                 <uib-tab heading="ITEM" index="1">
                     <div style="height: 50px;">
                         <table class="square-table table-rounded">
@@ -272,12 +277,8 @@
                             <tbody ng-repeat="selections in model.getSelectJobItemForItemAndItemUnits()">
                                 <tr>
                                     <td>
-                                        <!-- item items-->
-                                        <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
-                                        <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
-                                        <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
-                                        <!-- item units-->
-                                        <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">I</label>
+                                        <label class="label label-success" style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
+                                        <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'ITEM_UNIT'">I</label>
                                     </td>
                                     <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
                                     <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
@@ -303,6 +304,8 @@
                         </table>
                     </div>
                 </uib-tab>
+                <!------ /stock item total---->
+                <!------ service total---->
                 <uib-tab heading="SERVICE" index="2">
                     <div style="height: 50px;">
                         <table class="square-table table-rounded">
@@ -323,7 +326,7 @@
                             </thead>
                         </table>
                     </div>
-                    <div class="smart-scroll-y" style="height: calc(100vh - 204px);padding-left: 5px;">
+                    <div class="smart-scroll-y" style="height: calc(100vh - 140px);padding-left: 5px;">
                         <table class="square-table background-dark">
                             <col style="width: 10%;"/>
                             <col style="width: 40%;"/>
@@ -333,12 +336,7 @@
                             <tbody ng-repeat="selections in model.getSelectJobItemForService()">
                                 <tr>
                                     <td>
-                                        <!-- item items-->
-                                        <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="model.itemData(selections.item).type === 'PACKAGE'">P</label>
-                                        <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'SERVICE'">S</label>
-                                        <label class="label label-success" style="display: inline-block; width: 20px;"  ng-show="model.itemData(selections.item).type === 'STOCK'">I</label>
-                                        <!-- item units-->
-                                        <label class="label label-warning" style="display: inline-block; width: 20px;" ng-show="selections.itemUnit !== null">I</label>
+                                        <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
                                     </td>
                                     <td ng-show="selections.item != null"><small>{{model.itemData(selections.item).name}}</small></td>
                                     <td ng-show="selections.itemUnit != null"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
@@ -364,6 +362,8 @@
                         </table>
                     </div>
                 </uib-tab>
+                <!------ /service total---->
+                <!------ client reserved item---->
                 <uib-tab heading="CLIENT RECEVED ITEM" index="3">
                     <div class="background-dark">
                         <table class="square-table">
@@ -423,15 +423,17 @@
                                 <tr>
                                     <td class="text-bold"><small>{{selections.name}}</small></td>
                                     <td class="text-right text-bold">{{selections.qty}}</td>
-                                    <td><a class="btn btn-danger" ng-click="ui.deleteCustomerReservedItem($index,selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td><a class="btn btn-danger" ng-click="ui.deleteCustomerReservedItem($index, selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </uib-tab>
+                <!------ /client reserved item---->
             </uib-tabset>
         </div>
     </div>
+    <!------ /total ---->
 </div>
 <div class="fab-container pull-left">
     <a class="fab fab-lg fab-success" ng-hide="ui.model === 'CATEGORY'" ng-click="ui.backToCategory();"><i class="glyphicon glyphicon-chevron-left"></i></a>

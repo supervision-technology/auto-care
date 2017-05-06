@@ -6,16 +6,15 @@
                 factory.newData = function () {
                     var data = {
                         "indexNo": null,
-                        "packageItem": null,
                         "itemUnit": null,
+                        "item": null,
+                        "itemType": null,
                         "quantity": null,
                         "price": null,
                         "value": null,
                         "orderStatus": "PENDING",
                         "jobStatus": "PENDING",
-                        "formCustomer": true,
-                        "jobCard": null,
-                        "item": null
+                        "jobCard": null
                     };
                     return data;
                 };

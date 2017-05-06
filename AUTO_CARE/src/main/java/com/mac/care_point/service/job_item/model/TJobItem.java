@@ -27,11 +27,14 @@ public class TJobItem {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @Column(name = "package_item")
-    private Integer packageItem;
+    @Column(name = "item")
+    private Integer item;
 
     @Column(name = "item_unit")
     private Integer itemUnit;
+
+    @Column(name = "item_type")
+    private String itemType;
 
     @Basic(optional = false)
     @Column(name = "quantity")
@@ -53,31 +56,10 @@ public class TJobItem {
     @Column(name = "job_status")
     private String jobStatus;
 
-    @Basic(optional = false)
-    @Column(name = "form_customer")
-    private boolean formCustomer;
-
     @Column(name = "job_card")
     private Integer jobCard;
 
-    @Column(name = "item")
-    private Integer item;
-
     public TJobItem() {
-    }
-
-    public TJobItem(Integer indexNo, Integer packageItem, Integer itemUnit, short quantity, short price, short value, String orderStatus, String jobStatus, boolean formCustomer, Integer jobCard, Integer item) {
-        this.indexNo = indexNo;
-        this.packageItem = packageItem;
-        this.itemUnit = itemUnit;
-        this.quantity = quantity;
-        this.price = price;
-        this.value = value;
-        this.orderStatus = orderStatus;
-        this.jobStatus = jobStatus;
-        this.formCustomer = formCustomer;
-        this.jobCard = jobCard;
-        this.item = item;
     }
 
     public Integer getIndexNo() {
@@ -88,12 +70,12 @@ public class TJobItem {
         this.indexNo = indexNo;
     }
 
-    public Integer getPackageItem() {
-        return packageItem;
+    public Integer getItem() {
+        return item;
     }
 
-    public void setPackageItem(Integer packageItem) {
-        this.packageItem = packageItem;
+    public void setItem(Integer item) {
+        this.item = item;
     }
 
     public Integer getItemUnit() {
@@ -102,6 +84,14 @@ public class TJobItem {
 
     public void setItemUnit(Integer itemUnit) {
         this.itemUnit = itemUnit;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
 
     public short getQuantity() {
@@ -144,14 +134,6 @@ public class TJobItem {
         this.jobStatus = jobStatus;
     }
 
-    public boolean isFormCustomer() {
-        return formCustomer;
-    }
-
-    public void setFormCustomer(boolean formCustomer) {
-        this.formCustomer = formCustomer;
-    }
-
     public Integer getJobCard() {
         return jobCard;
     }
@@ -159,13 +141,4 @@ public class TJobItem {
     public void setJobCard(Integer jobCard) {
         this.jobCard = jobCard;
     }
-
-    public Integer getItem() {
-        return item;
-    }
-
-    public void setItem(Integer item) {
-        this.item = item;
-    }
-
 }
