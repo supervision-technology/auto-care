@@ -6,7 +6,6 @@
 package com.mac.care_point.master.items.items.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -86,9 +85,6 @@ public class MItem implements Serializable {
 
     @Column(name = "price_category")
     private Integer priceCategory;
-
-    @Column(name = "branch")
-    private Integer branch;
     
     @Column(name = "supplier")
     private Integer supplier;
@@ -97,7 +93,7 @@ public class MItem implements Serializable {
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer priceCategory, Integer branch, Integer supplier) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer priceCategory, Integer supplier) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -112,7 +108,6 @@ public class MItem implements Serializable {
         this.salePriceNormal = salePriceNormal;
         this.salePriceRegister = salePriceRegister;
         this.priceCategory = priceCategory;
-        this.branch = branch;
         this.supplier = supplier;
     }
 
@@ -179,14 +174,6 @@ public class MItem implements Serializable {
     public void setDepartment(Integer department) {
         this.department = department;
     }
-   
-    public Integer getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Integer supplier) {
-        this.supplier = supplier;
-    }
 
     public Integer getBrand() {
         return brand;
@@ -228,20 +215,20 @@ public class MItem implements Serializable {
         this.salePriceRegister = salePriceRegister;
     }
 
-    public Integer getBranch() {
-        return branch;
-    }
-
-    public void setBranch(Integer branch) {
-        this.branch = branch;
-    }
-    
     public Integer getPriceCategory() {
         return priceCategory;
     }
 
     public void setPriceCategory(Integer priceCategory) {
         this.priceCategory = priceCategory;
+    }
+
+    public Integer getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Integer supplier) {
+        this.supplier = supplier;
     }
 
 }

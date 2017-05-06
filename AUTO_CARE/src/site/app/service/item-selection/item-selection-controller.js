@@ -112,7 +112,6 @@
                             });
                 };
 
-
                 //delete customer recerved item
                 $scope.ui.deleteCustomerReservedItem = function ($index, indexNo) {
                     ConfirmPane.dangerConfirm("Do you sure want to delete item")
