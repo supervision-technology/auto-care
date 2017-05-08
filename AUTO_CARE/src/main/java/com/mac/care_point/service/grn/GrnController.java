@@ -71,6 +71,7 @@ public class GrnController {
     public Integer saveDirectGrn(@RequestBody TGrn grn) {
         grn.setStatus(status_approved);
         grn.setType("direct grn");
+        grn.setBranch(branch);
         
         TGrn saveGrn = grnService.saveDirectGrn(grn);
         return saveGrn.getNumber();

@@ -58,11 +58,17 @@ public class TStockLedger implements Serializable {
     
     @Column(name = "store")
     private Integer store;
+    
+    @Column(name = "avarage_price")
+    private BigDecimal avaragePrice;
+    
+    @Column(name = "form_index_no")
+    private BigDecimal formIndexNo;
 
     public TStockLedger() {
     }
 
-    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer branch, Integer item, Integer store) {
+    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer branch, Integer item, Integer store, BigDecimal avaragePrice, BigDecimal formIndexNo) {
         this.indexNo = indexNo;
         this.date = date;
         this.inQty = inQty;
@@ -71,6 +77,8 @@ public class TStockLedger implements Serializable {
         this.branch = branch;
         this.item = item;
         this.store = store;
+        this.avaragePrice = avaragePrice;
+        this.formIndexNo = formIndexNo;
     }
 
     public Integer getIndexNo() {
@@ -136,5 +144,23 @@ public class TStockLedger implements Serializable {
     public void setStore(Integer store) {
         this.store = store;
     }
+
+    public BigDecimal getAvaragePrice() {
+        return avaragePrice;
+    }
+
+    public void setAvaragePrice(BigDecimal avaragePrice) {
+        this.avaragePrice = avaragePrice;
+    }
+
+    public BigDecimal getFormIndexNo() {
+        return formIndexNo;
+    }
+
+    public void setFormIndexNo(BigDecimal formIndexNo) {
+        this.formIndexNo = formIndexNo;
+    }
+
+  
 
 }

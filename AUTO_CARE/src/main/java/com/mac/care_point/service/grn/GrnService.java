@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.grn;
 
+import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.grn.model.MStore;
 import com.mac.care_point.service.grn.model.TGrn;
 import com.mac.care_point.service.grn.model.TGrnItem;
@@ -14,6 +15,7 @@ import com.mac.care_point.service.purchase_order.PurchaseOrderRepository;
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrderDetail;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -93,7 +95,9 @@ public class GrnService {
             TStockLedger ledger = new TStockLedger();
             ledger.setBranch(grn.getBranch());
             ledger.setDate(grn.getDate());
-            ledger.setForm("GRN Approve");
+            ledger.setForm(Constant.GRN_APPROVE_FORM);
+            ledger.setFormIndexNo(new BigDecimal(grn.getIndexNo()));
+            ledger.setAvaragePrice(grnItem.getNetValue());
             ledger.setInQty(grnItem.getQty());
 
             TPurchaseOrderDetail findOne = purchaseOrderDetailRepository.findOne(grnItem.getPurchaseOrderItem());
@@ -105,7 +109,7 @@ public class GrnService {
             if (storeList.isEmpty()) {
                 //default store save
                 MStore store = new MStore();
-                store.setName("Default Store");
+                store.setName(Constant.MAIN_STOCK);
                 saveStore = storeRepository.save(store);
             } else {
                 saveStore = storeList.get(0);
@@ -119,17 +123,18 @@ public class GrnService {
     }
 
     TGrn saveDirectGrn(TGrn grn) {
+            List<TStockLedger> leadgerList=new ArrayList<>();
         for (TGrnItem grnItem : grn.getGrnItemList()) {
             grnItem.setGrn(grn);
-            
-            
 //          stock ledger start
             TStockLedger ledger = new TStockLedger();
             ledger.setBranch(grn.getBranch());
             ledger.setDate(grn.getDate());
-            ledger.setForm("GRN Approve");
+            ledger.setBranch(grn.getBranch());
+            ledger.setForm(Constant.DIRECT_GRN_FORM);
             ledger.setInQty(grnItem.getQty());
-
+//            ledger.setFormIndexNo(new BigDecimal(grn.getIndexNo()));
+            ledger.setAvaragePrice(grnItem.getNetValue());
             ledger.setItem(grnItem.getItem());
             ledger.setOutQty(new BigDecimal(0));
             //store start
@@ -138,17 +143,22 @@ public class GrnService {
             if (storeList.isEmpty()) {
                 //default store save
                 MStore store = new MStore();
-                store.setName("Default Store");
+                store.setName(Constant.MAIN_STOCK);
                 saveStore = storeRepository.save(store);
             } else {
                 saveStore = storeList.get(0);
             }
             ledger.setStore(saveStore.getIndexNo());
             //store end
-            stockLedgerRepository.save(ledger);
+            leadgerList.add(ledger);
 //          stock ledger end
         }
-        return grnRepository.save(grn);
+        TGrn saveObject = grnRepository.save(grn);
+        for (TStockLedger stockLedger : leadgerList) {
+            stockLedger.setFormIndexNo(new BigDecimal(saveObject.getIndexNo()));
+            stockLedgerRepository.save(stockLedger);
+        }
+        return saveObject;
     }
 
 }
