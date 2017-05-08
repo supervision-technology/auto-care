@@ -37,4 +37,9 @@ public class ItemUnitController {
         itemUnitService.deleteItemUnits(indexNo);
         return indexNo;
     }
+
+    @RequestMapping(value = "/find-by-item/{item}", method = RequestMethod.GET)
+    public List<MItemUnits> findByItem(@PathVariable Integer item) {
+        return itemUnitService.findByItem(item);
+    }
 }

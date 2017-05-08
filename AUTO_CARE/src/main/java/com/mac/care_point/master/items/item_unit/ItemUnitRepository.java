@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface ItemUnitRepository extends JpaRepository<MItemUnits, Serializable> {
 
-    public List<MItemUnits> findByItemAndPriceCategory(Integer item, Integer priceCategory);
+    public List<MItemUnits> findByItemAndItemUnitType(Integer item,String itemUnitType);
 
+    public List<MItemUnits> findByItem(Integer item);
 }

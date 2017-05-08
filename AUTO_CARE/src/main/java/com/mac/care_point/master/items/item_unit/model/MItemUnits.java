@@ -6,6 +6,7 @@
 package com.mac.care_point.master.items.item_unit.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,25 +44,22 @@ public class MItemUnits implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "qty")
-    private short qty;
-
-    @Column(name = "price_category")
-    private Integer priceCategory;
+    private BigDecimal qty;
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "sale_price_normal")
-    private short salePriceNormal;
+    private BigDecimal salePriceNormal;
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "sale_price_register")
-    private short salePriceRegister;
+    private BigDecimal salePriceRegister;
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "cost_price")
-    private short costPrice;
+    private BigDecimal costPrice;
 
     @Basic(optional = false)
     @NotNull
@@ -69,18 +67,6 @@ public class MItemUnits implements Serializable {
     private String itemUnitType;
 
     public MItemUnits() {
-    }
-
-    public MItemUnits(Integer indexNo, Integer item, String name, short qty, Integer priceCategory, short salePriceNormal, short salePriceRegister, short costPrice, String itemUnitType) {
-        this.indexNo = indexNo;
-        this.item = item;
-        this.name = name;
-        this.qty = qty;
-        this.priceCategory = priceCategory;
-        this.salePriceNormal = salePriceNormal;
-        this.salePriceRegister = salePriceRegister;
-        this.costPrice = costPrice;
-        this.itemUnitType = itemUnitType;
     }
 
     public Integer getIndexNo() {
@@ -107,43 +93,35 @@ public class MItemUnits implements Serializable {
         this.name = name;
     }
 
-    public short getQty() {
+    public BigDecimal getQty() {
         return qty;
     }
 
-    public void setQty(short qty) {
+    public void setQty(BigDecimal qty) {
         this.qty = qty;
     }
 
-    public Integer getPriceCategory() {
-        return priceCategory;
-    }
-
-    public void setPriceCategory(Integer priceCategory) {
-        this.priceCategory = priceCategory;
-    }
-
-    public short getSalePriceNormal() {
+    public BigDecimal getSalePriceNormal() {
         return salePriceNormal;
     }
 
-    public void setSalePriceNormal(short salePriceNormal) {
+    public void setSalePriceNormal(BigDecimal salePriceNormal) {
         this.salePriceNormal = salePriceNormal;
     }
 
-    public short getSalePriceRegister() {
+    public BigDecimal getSalePriceRegister() {
         return salePriceRegister;
     }
 
-    public void setSalePriceRegister(short salePriceRegister) {
+    public void setSalePriceRegister(BigDecimal salePriceRegister) {
         this.salePriceRegister = salePriceRegister;
     }
 
-    public short getCostPrice() {
+    public BigDecimal getCostPrice() {
         return costPrice;
     }
 
-    public void setCostPrice(short costPrice) {
+    public void setCostPrice(BigDecimal costPrice) {
         this.costPrice = costPrice;
     }
 

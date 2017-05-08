@@ -35,4 +35,7 @@ public class ItemUnitService {
         itemUnitRepository.delete(indexNo);
     }
 
+    public List<MItemUnits> findByItem(Integer item) {
+        return itemUnitRepository.findByItem(item);
+    }
 }

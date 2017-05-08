@@ -10,7 +10,6 @@
             itemData: {},
             itemUnitData: {},
             packageData: {},
-
             //uib-typeahead
             items: [],
             itemunits: [],
@@ -19,12 +18,10 @@
             subCategorys: [],
             brands: [],
             priceCategory: [],
-
             //view table lists
             itemViewList: [],
             itemunitsViewList: [],
             packageViewList: [],
-
             //constructor
             constructor: function () {
                 var that = this;
@@ -88,6 +85,8 @@
             saveItemUnit: function () {
                 var defer = $q.defer();
                 var that = this;
+                this.itemUnitData.itemUnitType = "NORMAL";
+
                 itemService.saveItemUnit(JSON.stringify(this.itemUnitData))
                         .success(function (data) {
                             that.itemunitsViewList.unshift(data);
@@ -245,6 +244,21 @@
                     }
                 });
                 return item;
+            },
+            loadItemUnitByItem: function (item) {
+                var that = this;
+                var defer = $q;
+                itemService.loadItemUnitByItem(item)
+                        .success(function (data) {
+                            that.itemunitsViewList = [];
+                            that.itemunitsViewList = data;
+                            defer.resolve();
+                        })
+                        .error(function () {
+                            that.itemunitsViewList = [];
+                            defer.reject();
+                        });
+                return defer.promise;
             }
         };
         return itemModel;
