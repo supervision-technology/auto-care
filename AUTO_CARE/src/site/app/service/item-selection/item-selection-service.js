@@ -61,8 +61,8 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/client-received-item/" + jobCard);
         };
 
-        this.findByItemStockItmQty = function (item) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock/" + item);
+        this.findByItemStockItmQty = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock");
         };
     };
 

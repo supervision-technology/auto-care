@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.job_item.model;
 
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,6 +40,10 @@ public class TJobItem {
     @Basic(optional = false)
     @Column(name = "quantity")
     private short quantity;
+    
+    @Basic(optional = false)
+    @Column(name = "stock_remove_qty")
+    private BigDecimal stockRemoveQty;
 
     @Basic(optional = false)
     @Column(name = "price")
@@ -46,7 +51,7 @@ public class TJobItem {
 
     @Basic(optional = false)
     @Column(name = "value")
-    private short value;
+    private BigDecimal value;
 
     @Basic(optional = false)
     @Column(name = "order_status")
@@ -59,7 +64,22 @@ public class TJobItem {
     @Column(name = "job_card")
     private Integer jobCard;
 
+
     public TJobItem() {
+    }
+
+    public TJobItem(Integer indexNo, Integer item, Integer itemUnit, String itemType, short quantity, BigDecimal stockRemoveQty, short price, BigDecimal value, String orderStatus, String jobStatus, Integer jobCard) {
+        this.indexNo = indexNo;
+        this.item = item;
+        this.itemUnit = itemUnit;
+        this.itemType = itemType;
+        this.quantity = quantity;
+        this.stockRemoveQty = stockRemoveQty;
+        this.price = price;
+        this.value = value;
+        this.orderStatus = orderStatus;
+        this.jobStatus = jobStatus;
+        this.jobCard = jobCard;
     }
 
     public Integer getIndexNo() {
@@ -110,11 +130,11 @@ public class TJobItem {
         this.price = price;
     }
 
-    public short getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(short value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
@@ -141,4 +161,13 @@ public class TJobItem {
     public void setJobCard(Integer jobCard) {
         this.jobCard = jobCard;
     }
+
+    public BigDecimal getStockRemoveQty() {
+        return stockRemoveQty;
+    }
+
+    public void setStockRemoveQty(BigDecimal stockRemoveQty) {
+        this.stockRemoveQty = stockRemoveQty;
+    }
+
 }

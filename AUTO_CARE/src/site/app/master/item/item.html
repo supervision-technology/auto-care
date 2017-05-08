@@ -161,12 +161,8 @@
                                 <td><input class="form-control" ng-model="model.itemUnitData.name" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">Price Category</label></td>
-                                <td><input class="form-control" ng-model="model.itemUnitData.priceCategory" uib-typeahead="priceCategory.indexNo as (priceCategory.indexNo + ' - ' + priceCategory.name) for priceCategory in model.priceCategory |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.priceCategoryLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
-                            </tr>
-                            <tr>
                                 <td><label class="control-label">Qty*</label></td>
-                                <td><input smart-input="integer" class="form-control" ng-model="model.itemUnitData.qty" ng-disabled="ui.mode !== 'EDIT'"></td>
+                                <td><input smart-input="decimal" class="form-control" ng-model="model.itemUnitData.qty" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
 

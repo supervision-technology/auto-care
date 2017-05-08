@@ -15,8 +15,6 @@
                     itemUnits: [],
                     category: [],
                     packageItemList: [],
-                    //select package items list
-                    itemUnitList: [],
                     //pending job card list
                     pendingJobCards: [],
                     //select job card items
@@ -25,6 +23,8 @@
                     filterItems: [],
                     //select job card customer reserved itemes list
                     customerReceivedItems: [],
+                    //items bt stock leger
+                    itemsByStockLeger: [],
                     constructor: function () {
                         var that = this;
                         this.data = ItemSelectionModelFactory.newData();
@@ -36,6 +36,11 @@
                                     that.items = data;
                                 });
 
+                        ItemSelectionService.pendingJobCards()
+                                .success(function (data) {
+                                    that.pendingJobCards = data;
+                                });
+                                
                         ItemSelectionService.loadCategory()
                                 .success(function (data) {
                                     that.category = data;
@@ -58,6 +63,21 @@
                         this.jobItemList = [];
                         //job card select filter items
                         this.filterItems = [];
+                    },
+                    findItemsForStockLeger: function () {
+                        var that = this;
+                        var defer = $q;
+                        ItemSelectionService.findByItemStockItmQty()
+                                .success(function (data) {
+                                    that.itemsByStockLeger = [];
+                                    that.itemsByStockLeger = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.itemsByStockLeger = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
                     },
                     findJobCardDetail: function (jobCard) {
                         var defer = $q.defer();
@@ -120,30 +140,15 @@
                                 });
                         return  defer.promise;
                     },
-                    getItemUnits: function (item, priceCategory) {
+                    getItemUnits: function (item) {
                         var data = [];
                         angular.forEach(this.itemUnits, function (values) {
-                            if (values.item === parseInt(item) && values.priceCategory === parseInt(priceCategory)) {
+                            if (values.item === parseInt(item)) {
                                 data.push(values);
                                 return;
                             }
                         });
                         return data;
-                    },
-                    deleteSelectDetails: function (index) {
-                        var defer = $q.defer();
-                        var that = this;
-                        ItemSelectionService.deleteJobItems(this.jobItemList[index].indexNo)
-                                .success(function () {
-                                    that.jobItemList.splice(index, 1);
-                                    that.getSelectItemTotal();
-                                    defer.resolve();
-                                })
-                                .error(function () {
-                                    that.getSelectItemTotal();
-                                    defer.reject();
-                                });
-                        return defer.promise;
                     },
 //------------------------------- service,stock items,package duplicate check ------------------------------- 
                     duplicateItemCheck: function (item) {
@@ -230,38 +235,6 @@
                                 });
                         return defer.promise;
                     },
-                    addNormalItem: function (item, qty, jobCard, vehicleType) {
-                        var defer = $q.defer();
-                        var that = this;
-
-                        this.data = ItemSelectionModelFactory.newData();
-                        if (vehicleType === "REGISTER") {
-                            //value change
-                            that.data.quantity = qty;
-                            that.data.price = item.salePriceRegister;
-                            that.data.value = qty * item.salePriceRegister;
-                        } else {
-                            //value change
-                            that.data.quantity = qty;
-                            that.data.price = item.salePriceNormal;
-                            that.data.value = qty * item.salePriceNormal;
-                        }
-
-                        that.data.itemType = "STOCK_ITEM";
-                        that.data.item = item.indexNo;
-                        that.data.jobCard = jobCard;
-
-                        ItemSelectionService.saveJobItems(this.data)
-                                .success(function (data) {
-                                    that.jobItemList.unshift(data);
-                                    that.data = ItemSelectionModelFactory.newData();
-                                    defer.resolve();
-                                })
-                                .error(function () {
-                                    defer.reject();
-                                });
-                        return  defer.promise;
-                    },
                     addItemUnit: function (itemUnit, qty, jobCard, vehicleType) {
                         var defer = $q.defer();
                         var that = this;
@@ -279,17 +252,36 @@
                             that.data.value = parseFloat(qty * itemUnitData.salePriceNormal);
                         }
 
-                        that.data.itemType = "ITEM_UNIT";
+                        that.data.itemType = "STOCK_ITEM";
                         that.data.itemUnit = itemUnitData.indexNo;
                         that.data.jobCard = jobCard;
+                        that.data.item = itemUnitData.item;
+                        that.data.stockRemoveQty = parseFloat(qty * itemUnitData.qty);
 
                         ItemSelectionService.saveJobItems(this.data)
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
-                                    this.data = ItemSelectionModelFactory.newData();
+                                    that.data = ItemSelectionModelFactory.newData();
+                                    that.findItemsForStockLeger();
                                     defer.resolve();
                                 })
                                 .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    deleteSelectDetails: function (index) {
+                        var defer = $q.defer();
+                        var that = this;
+                        ItemSelectionService.deleteJobItems(this.jobItemList[index].indexNo)
+                                .success(function () {
+                                    that.jobItemList.splice(index, 1);
+                                    that.findItemsForStockLeger();
+                                    that.getSelectItemTotal();
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.getSelectItemTotal();
                                     defer.reject();
                                 });
                         return defer.promise;
@@ -325,28 +317,6 @@
                             return;
                         });
                         return total;
-                    },
-                    getSelectJobItemForService: function () {
-                        var that = this;
-                        var lists = [];
-                        angular.forEach(this.jobItemList, function (values) {
-                            if (that.itemData(values.item).type === "SERVICE") {
-                                lists.push(values);
-                                return;
-                            }
-                        });
-                        return lists;
-                    },
-                    getSelectJobItemForItemAndItemUnits: function () {
-                        var that = this;
-                        var lists = [];
-                        angular.forEach(this.jobItemList, function (values) {
-                            if (that.itemData(values.item).type === "STOCK" || values.itemUnit !== null) {
-                                lists.push(values);
-                                return;
-                            }
-                        });
-                        return lists;
                     },
 //------------------------------- /get totals -------------------------------
 //------------------------------- customer received items -------------------------------
@@ -395,15 +365,6 @@
                                 .error(function () {
 
                                 });
-                    },
-//------------------------------- /customer received items -------------------------------
-                    findByItemStockItmQty: function (item) {
-                        console.log(item);
-//                        ItemSelectionService.findByItemStockItmQty(item)
-//                                .success(function (data) {
-//                                    console.log(data);
-//                                });
-                        return 0;
                     }
                 };
                 return ItemSelectionModel;

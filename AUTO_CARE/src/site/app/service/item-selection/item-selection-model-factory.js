@@ -14,7 +14,8 @@
                         "value": null,
                         "orderStatus": "PENDING",
                         "jobStatus": "PENDING",
-                        "jobCard": null
+                        "jobCard": null,
+                        "stockRemoveQty": null
                     };
                     return data;
                 };

@@ -6,6 +6,8 @@
 package com.mac.care_point.service.job_item;
 
 import com.mac.care_point.service.job_item.model.TJobItem;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,8 +44,17 @@ public class JobItemService {
         return jobItemRepository.save(jobItem);
     }
 
-    public Object[] getItemQtyByStockLeger(Integer item, Integer branch) {
-        return jobItemRepository.getItemQtyByStockLeger(item, branch);
+    public List<Object[]> getItemQtyByStockLeger(Integer branch) {
+        List<Object[]> getDataList = jobItemRepository.getItemQtyByStockLeger(branch);
+        List<Object[]> sendDataList = new ArrayList<>();
+        for (Object[] objects : getDataList) {
+            BigDecimal qty = ((BigDecimal) objects[1]).subtract((BigDecimal) objects[2]);
+            if (qty.compareTo(BigDecimal.ZERO) != 0) {
+                Object[] dataList = new Object[]{objects[0], qty};
+                sendDataList.add(dataList);
+            }
+        }
+        return sendDataList;
     }
 
 }

@@ -57,9 +57,9 @@ public class JobItemController {
     }
 
     //get stock leger get item qty for item selection stock item qty
-    @RequestMapping(value = "/get-item-qty-by-stock/{item}", method = RequestMethod.GET)
-    public Object[] getItemQtyByStockLeger(@PathVariable Integer item) {
+    @RequestMapping(value = "/get-item-qty-by-stock", method = RequestMethod.GET)
+    public List<Object[]> getItemQtyByStockLeger() {
         //TODO:get login branch
-        return jobItemService.getItemQtyByStockLeger(item, BRANCH);
+        return jobItemService.getItemQtyByStockLeger(BRANCH);
     }
 }

@@ -3,10 +3,11 @@
     angular.module("itemSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("itemSelectionModule")
-            .controller("itemSelectionController", function ($scope, $window, systemConfig, $routeParams, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("itemSelectionController", function ($scope, $routeParams, ItemSelectionModel, Notification, ConfirmPane) {
 
                 $scope.model = new ItemSelectionModel();
                 $scope.ui = {};
+                
                 $scope.ui.model = "CATEGORY";
                 $scope.selectVehicleType = null;
                 $scope.selectPackageItemPosition = null;
@@ -22,7 +23,7 @@
                             $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
                         } else if (data.staticFeildName === 'STOCK') {
                             $scope.ui.model = "STOCK";
-                            $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
+                            $scope.model.findItemsForStockLeger();
                         }
                     } else {
                         //service -  lord items
@@ -35,11 +36,6 @@
                 //back to category page
                 $scope.ui.backToCategory = function () {
                     $scope.ui.model = "CATEGORY";
-                };
-
-                //get item units by drop dowsn list
-                $scope.ui.getItemUnits = function ($index, item) {
-                    return $scope.model.getItemUnits(item, $scope.model.jobCardData.priceCategory);
                 };
 
                 $scope.ui.getPackageDetails = function ($index, package) {
@@ -56,23 +52,6 @@
                             ConfirmPane.successConfirm("Do you sure want to add item")
                                     .confirm(function () {
                                         $scope.model.addPackageAndServiceItem(item, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
-                                    });
-                        } else {
-                            Notification.error("this item is allrday exsist");
-                        }
-                    } else {
-                        Notification.error("select vehicle");
-                    }
-                };
-
-                //add stock items
-                $scope.ui.addNormalItem = function (item, qty) {
-                    if ($scope.selectedJobCardIndexNo) {
-                        var itemStatus = $scope.model.duplicateItemCheck(item);
-                        if (angular.isUndefined(itemStatus)) {
-                            ConfirmPane.successConfirm("Do you sure want to add item")
-                                    .confirm(function () {
-                                        $scope.model.addNormalItem(item, qty, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
                                     });
                         } else {
                             Notification.error("this item is allrday exsist");
@@ -112,14 +91,6 @@
                             });
                 };
 
-                //delete customer recerved item
-                $scope.ui.deleteCustomerReservedItem = function ($index, indexNo) {
-                    ConfirmPane.dangerConfirm("Do you sure want to delete item")
-                            .confirm(function () {
-                                $scope.model.deleteCustomerReceiveItem($index, indexNo);
-                            });
-                };
-
                 //add customer reserved items
                 $scope.ui.addCustomerReservedItem = function () {
                     if (!$scope.model.customerReservedItemData.name) {
@@ -129,6 +100,14 @@
                     } else if ($scope.model.customerReservedItemData.name && $scope.model.customerReservedItemData.qty) {
                         $scope.model.saveCustomerReceiveItem($scope.selectedJobCardIndexNo);
                     }
+                };
+
+                //delete customer recerved item
+                $scope.ui.deleteCustomerReservedItem = function ($index, indexNo) {
+                    ConfirmPane.dangerConfirm("Do you sure want to delete item")
+                            .confirm(function () {
+                                $scope.model.deleteCustomerReceiveItem($index, indexNo);
+                            });
                 };
 
                 $scope.init = function () {
