@@ -211,6 +211,24 @@
                             templateUrl: "app/master/sub-item/sub-item.html",
                             controller: "subItemController"
                         })
+                        
+                        //stock transfer
+                        //branch-transfer-out
+                        .when("/stock/transfer/branch-transfer-out", {
+                            templateUrl: "app/front-office/stock/branch-transfer/branch-transfer-out/branch-transfer-out.html"
+                        })
+                        //branch-transfer-in
+                        .when("/stock/transfer/branch-transfer-in", {
+                            templateUrl: "app/front-office/stock/branch-transfer/branch-transfer-in/branch-transfer-in.html"
+                        })
+                        //internal-transfer-out
+                        .when("/stock/transfer/internal-transfer-out", {
+                            templateUrl: "app/front-office/stock/internal-transfer/internal-transfer-out/internal-transfer-out.html"
+                        })
+                        //internal-transfer-in
+                        .when("/stock/transfer/internal-transfer-in", {
+                            templateUrl: "app/front-office/stock/internal-transfer/internal-transfer-in/internal-transfer-in.html"
+                        })
                         .otherwise({
                             redirectTo: "/"
                         });
