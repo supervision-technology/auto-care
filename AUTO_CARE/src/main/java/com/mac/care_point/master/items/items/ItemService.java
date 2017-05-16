@@ -43,14 +43,14 @@ public class ItemService {
         return itemRepository.findByCategoryAndPriceCategory(category, packageCategory);
     }
 
-    List<MItem> findItemsByTypeAndBranchAndQty(int BRANCH, String TYPE) {
-        return itemRepository.findByBranchAndType(BRANCH,TYPE);
+    List<MItem> findItemsByTypeAndBranchAndQty(String TYPE) {
+        return itemRepository.findByType(TYPE);
     }
 
-    List<MItem> getSupplierItem(Integer branch,String stock,String nonStock) {
-        System.out.println(branch);
-        System.out.println(stock);
-        System.out.println(nonStock);
-        return itemRepository. findByBranchAndTypeOrType(branch,stock,nonStock);
+    List<MItem> getSupplierItem(String stock,String nonStock) {
+//        System.out.println(branch);
+//        System.out.println(stock);
+//        System.out.println(nonStock);
+        return itemRepository. findByTypeOrType(stock,nonStock);
     }
 }

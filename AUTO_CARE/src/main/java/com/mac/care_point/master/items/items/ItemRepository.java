@@ -19,7 +19,7 @@ public interface ItemRepository extends JpaRepository<MItem, Integer> {
 
     public List<MItem> findByCategoryAndPriceCategory(Integer category, Integer packageCategory);
 
-    public List<MItem> findByBranchAndType(int BRANCH, String TYPE);
+//    public List<MItem> findByBranchAndType(int BRANCH, String TYPE);
 
-    public List<MItem> findByBranchAndTypeOrType(Integer branch, String stock, String nonStock);
+    public List<MItem> findByTypeOrType(String stock, String nonStock);
 }

@@ -37,12 +37,12 @@ public class ItemController {
     }
     @RequestMapping(value = "/stock-item",method = RequestMethod.GET)
     public List<MItem> findItemsByTypeAndBranchAndQty() {
-        return itemService.findItemsByTypeAndBranchAndQty(BRANCH,STOCK);
+        return itemService.findItemsByTypeAndBranchAndQty(STOCK);
     }
 
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
     public MItem saveItem(@RequestBody MItem item) {
-        item.setBranch(BRANCH);
+//        item.setBranch(BRANCH);
         //TODO: set login branch
         return itemService.saveItem(item);
     }
@@ -54,7 +54,7 @@ public class ItemController {
     
     @RequestMapping(value = "/stock-nonstock-item", method = RequestMethod.GET)
     public List<MItem> supplierItems() {
-        return itemService.getSupplierItem(BRANCH,STOCK,NON_STOCK);
+        return itemService.getSupplierItem(STOCK,NON_STOCK);
     }
 
     @RequestMapping(value = "/find-item-by-category/{category}/{packageCategory}", method = RequestMethod.GET)

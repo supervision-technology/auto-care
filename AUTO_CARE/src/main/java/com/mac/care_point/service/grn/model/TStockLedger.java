@@ -14,13 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -59,8 +56,11 @@ public class TStockLedger implements Serializable {
     @Column(name = "store")
     private Integer store;
     
-    @Column(name = "avarage_price")
-    private BigDecimal avaragePrice;
+    @Column(name = "avarage_price_in")
+    private BigDecimal avaragePriceIn;
+    
+    @Column(name = "avarage_price_out")
+    private BigDecimal avaragePriceOut;
     
     @Column(name = "form_index_no")
     private BigDecimal formIndexNo;
@@ -68,7 +68,7 @@ public class TStockLedger implements Serializable {
     public TStockLedger() {
     }
 
-    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer branch, Integer item, Integer store, BigDecimal avaragePrice, BigDecimal formIndexNo) {
+    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer branch, Integer item, Integer store, BigDecimal avaragePriceIn, BigDecimal avaragePriceOut, BigDecimal formIndexNo) {
         this.indexNo = indexNo;
         this.date = date;
         this.inQty = inQty;
@@ -77,7 +77,8 @@ public class TStockLedger implements Serializable {
         this.branch = branch;
         this.item = item;
         this.store = store;
-        this.avaragePrice = avaragePrice;
+        this.avaragePriceIn = avaragePriceIn;
+        this.avaragePriceOut = avaragePriceOut;
         this.formIndexNo = formIndexNo;
     }
 
@@ -145,12 +146,20 @@ public class TStockLedger implements Serializable {
         this.store = store;
     }
 
-    public BigDecimal getAvaragePrice() {
-        return avaragePrice;
+    public BigDecimal getAvaragePriceIn() {
+        return avaragePriceIn;
     }
 
-    public void setAvaragePrice(BigDecimal avaragePrice) {
-        this.avaragePrice = avaragePrice;
+    public void setAvaragePriceIn(BigDecimal avaragePriceIn) {
+        this.avaragePriceIn = avaragePriceIn;
+    }
+
+    public BigDecimal getAvaragePriceOut() {
+        return avaragePriceOut;
+    }
+
+    public void setAvaragePriceOut(BigDecimal avaragePriceOut) {
+        this.avaragePriceOut = avaragePriceOut;
     }
 
     public BigDecimal getFormIndexNo() {
@@ -161,6 +170,5 @@ public class TStockLedger implements Serializable {
         this.formIndexNo = formIndexNo;
     }
 
-  
-
+   
 }
