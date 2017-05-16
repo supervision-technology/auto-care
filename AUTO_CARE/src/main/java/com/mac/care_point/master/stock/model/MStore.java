@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.grn.model;
+package com.mac.care_point.master.stock.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -12,15 +12,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author L T430
  */
-@Entity(name = "com.mac.care_point.service.grn.model.MStore")
+@Entity
 @Table(name = "m_store")
 public class MStore implements Serializable {
 
@@ -29,33 +30,32 @@ public class MStore implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-
+    
     @Basic(optional = false)
-    @NotNull
+    @Column(name = "name")
+    private String name;
+    
+    @Basic(optional = false)
     @Column(name = "number")
     private int number;
     
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "branch")
-    private int branch;
-    
-    @Size(max = 25)
-    @Column(name = "name")
-    private String name;
-
     @Column(name = "type")
     private String type;
+    
+    @Basic(optional = false)
+    @Column(name = "branch")
+    private int branch;
 
     public MStore() {
     }
 
-    public MStore(Integer indexNo, int number, int branch, String name, String type) {
+    public MStore(Integer indexNo, String name, int number, String type, int branch) {
         this.indexNo = indexNo;
-        this.number = number;
-        this.branch = branch;
         this.name = name;
+        this.number = number;
         this.type = type;
+        this.branch = branch;
     }
 
     public Integer getIndexNo() {
@@ -74,6 +74,13 @@ public class MStore implements Serializable {
         this.name = name;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
 
     public String getType() {
         return type;
@@ -81,14 +88,6 @@ public class MStore implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
     }
 
     public int getBranch() {

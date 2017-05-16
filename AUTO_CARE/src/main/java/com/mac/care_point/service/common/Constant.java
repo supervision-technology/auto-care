@@ -35,9 +35,20 @@ public interface Constant {
     public static final String GRN_FORM = "GRN_FORM";
     
     //m_stock list
-    public static final String MAIN_STOCK = "main_stock";
-    public static final String FRONT_STOCK = "front_stock";
-    public static final String BULK_STOCK = "bulk_stock";
+    public static final String MAIN_STOCK = "MAIN_STOCK";
+    public static final String FRONT_STOCK = "FRONT_STOCK";
+    public static final String BULK_STOCK = "BULK_STOCK";
+    
+    //TStock transfer type
+    public static final String INTERNAL_TRANSFER = "INTERNAL_TRANSFER";
+    public static final String EXTERNAL_TRANSFER = "EXTERNAL_TRANSFER";
+    
+    //TStock Transfer Form
+    public static final String BRANCH_TRANSFER_OUT = "BRANCH_TRANSFER_OUT";
+    public static final String BRANCH_TRANSFER_IN = "BRANCH_TRANSFER_IN";
+    public static final String INTERNAL_TRANSFER_IN = "INTERNAL_TRANSFER_IN";
+    public static final String INTERNAL_TRANSFER_OUT = "INTERNAL_TRANSFER_OUT";
+    
     
     
 

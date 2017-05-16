@@ -31,6 +31,8 @@
         "subItemModule",
         "grnModule",
         "app",
+        "stockTransferBranchInModule",
+        "stockTransferBranchOutModule",
         "grnModule",
         "directGrnModule",
         "grnApproveModule",
@@ -65,19 +67,19 @@
                             templateUrl: "app/service/daily-check-list/daily-check-list.html",
                             controller: "dailyCheckListController"
                         })
-                        
+
                         //employee-assignment
                         .when("/service/employee-assignment", {
                             templateUrl: "app/service/employee-assignment/employee-assignment.html",
                             controller: "employeeAssignmentController"
                         })
-                        
+
                         //vehicle-entrance-test
                         .when("/service/vehicle-entrance", {
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
                             controller: "vehicleEntranceController"
                         })
-                        
+
                         //service-selection
                         .when("/service/service-selection", {
                             templateUrl: "app/service/service-selection/service-selection.html",
@@ -206,15 +208,17 @@
                             templateUrl: "app/master/sub-item/sub-item.html",
                             controller: "subItemController"
                         })
-                        
+
                         //stock transfer
                         //branch-transfer-out
                         .when("/stock/transfer/branch-transfer-out", {
-                            templateUrl: "app/front-office/stock/branch-transfer/branch-transfer-out/branch-transfer-out.html"
+                            templateUrl: "app/front-office/stock/branch-transfer/branch-transfer-out/branch-transfer-out.html",
+                            controller: "stockTransferBranchOutController"
                         })
                         //branch-transfer-in
                         .when("/stock/transfer/branch-transfer-in", {
-                            templateUrl: "app/front-office/stock/branch-transfer/branch-transfer-in/branch-transfer-in.html"
+                            templateUrl: "app/front-office/stock/branch-transfer/branch-transfer-in/branch-transfer-in.html",
+                            controller: "stockTransferBranchInController"
                         })
                         //internal-transfer-out
                         .when("/stock/transfer/internal-transfer-out", {

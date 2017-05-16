@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.grn.model;
+package com.mac.care_point.service.stock.transfer.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -14,35 +14,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author L T430
  */
-@Entity
+@Entity(name="com.mac.care_point.service.stock.transfer.model.TStockLedger")
 @Table(name = "t_stock_ledger")
 public class TStockLedger implements Serializable {
-
-    @Column(name = "avarage_price_in")
-    private BigDecimal avaragePriceIn;
-    @Column(name = "avarage_price_out")
-    private BigDecimal avaragePriceOut;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "form_index_no")
-    private int formIndexNo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "branch")
-    private int branch;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,39 +32,56 @@ public class TStockLedger implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
     
+    @Basic(optional = false)
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
     
     @Column(name = "in_qty")
     private BigDecimal inQty;
+   
+    @Column(name = "item")
+    private Integer item;
+   
+    @Column(name = "store")
+    private Integer store;
     
     @Column(name = "out_qty")
     private BigDecimal outQty;
     
-    @Size(max = 25)
+    @Column(name = "avarage_price_in")
+    private BigDecimal avaragePriceIn;
+    
+    @Column(name = "avarage_price_out")
+    private BigDecimal avaragePriceOut;
+    
+    @Basic(optional = false)
+    @Column(name = "form_index_no")
+    private int formIndexNo;
+    
+    @Basic(optional = false)
     @Column(name = "form")
     private String form;
     
-    
-    @Column(name = "item")
-    private Integer item;
-    
-    @Column(name = "store")
-    private Integer store;
+    @Basic(optional = false)
+    @Column(name = "branch")
+    private int branch;
 
     public TStockLedger() {
     }
 
-    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer branch, Integer item, Integer store) {
+    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, Integer item, Integer store, BigDecimal outQty, BigDecimal avaragePriceIn, BigDecimal avaragePriceOut, int formIndexNo, String form, int branch) {
         this.indexNo = indexNo;
         this.date = date;
         this.inQty = inQty;
-        this.outQty = outQty;
-        this.form = form;
-        this.branch = branch;
         this.item = item;
         this.store = store;
+        this.outQty = outQty;
+        this.avaragePriceIn = avaragePriceIn;
+        this.avaragePriceOut = avaragePriceOut;
+        this.formIndexNo = formIndexNo;
+        this.form = form;
+        this.branch = branch;
     }
 
     public Integer getIndexNo() {
@@ -109,23 +108,6 @@ public class TStockLedger implements Serializable {
         this.inQty = inQty;
     }
 
-    public BigDecimal getOutQty() {
-        return outQty;
-    }
-
-    public void setOutQty(BigDecimal outQty) {
-        this.outQty = outQty;
-    }
-
-    public String getForm() {
-        return form;
-    }
-
-    public void setForm(String form) {
-        this.form = form;
-    }
-
-
     public Integer getItem() {
         return item;
     }
@@ -140,6 +122,14 @@ public class TStockLedger implements Serializable {
 
     public void setStore(Integer store) {
         this.store = store;
+    }
+
+    public BigDecimal getOutQty() {
+        return outQty;
+    }
+
+    public void setOutQty(BigDecimal outQty) {
+        this.outQty = outQty;
     }
 
     public BigDecimal getAvaragePriceIn() {
@@ -166,6 +156,14 @@ public class TStockLedger implements Serializable {
         this.formIndexNo = formIndexNo;
     }
 
+    public String getForm() {
+        return form;
+    }
+
+    public void setForm(String form) {
+        this.form = form;
+    }
+
     public int getBranch() {
         return branch;
     }
@@ -173,5 +171,6 @@ public class TStockLedger implements Serializable {
     public void setBranch(int branch) {
         this.branch = branch;
     }
-
+ 
+    
 }
