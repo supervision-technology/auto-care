@@ -97,19 +97,26 @@ public class GrnService {
             ledger.setDate(grn.getDate());
             ledger.setForm(Constant.GRN_APPROVE_FORM);
             ledger.setFormIndexNo(new BigDecimal(grn.getIndexNo()));
-            ledger.setAvaragePrice(grnItem.getNetValue());
+            ledger.setAvaragePriceIn(grnItem.getNetValue());
+            ledger.setAvaragePriceOut(new BigDecimal(0));
             ledger.setInQty(grnItem.getQty());
+            ledger.setOutQty(new BigDecimal(0));
 
             TPurchaseOrderDetail findOne = purchaseOrderDetailRepository.findOne(grnItem.getPurchaseOrderItem());
             ledger.setItem(findOne.getItem());
             ledger.setOutQty(new BigDecimal(0));
             //store start
-            List<MStore> storeList = storeRepository.findAll();
+            List<MStore> storeList = storeRepository.findByBranchAndType(grn.getBranch(),Constant.MAIN_STOCK);
             MStore saveStore = new MStore();
             if (storeList.isEmpty()) {
                 //default store save
                 MStore store = new MStore();
                 store.setName(Constant.MAIN_STOCK);
+                store.setType(Constant.MAIN_STOCK);
+                store.setBranch(grn.getBranch());
+                MStore lastNumber = storeRepository.findFirst1ByOrderByNumberDesc();
+                
+                store.setNumber(lastNumber.getNumber()+1);
                 saveStore = storeRepository.save(store);
             } else {
                 saveStore = storeList.get(0);
@@ -133,22 +140,26 @@ public class GrnService {
             ledger.setBranch(grn.getBranch());
             ledger.setForm(Constant.DIRECT_GRN_FORM);
             ledger.setInQty(grnItem.getQty());
-//            ledger.setFormIndexNo(new BigDecimal(grn.getIndexNo()));
-            ledger.setAvaragePrice(grnItem.getNetValue());
+            ledger.setAvaragePriceIn(grnItem.getNetValue());
+            ledger.setAvaragePriceOut(new BigDecimal(0));
             ledger.setItem(grnItem.getItem());
             ledger.setOutQty(new BigDecimal(0));
             //store start
-            List<MStore> storeList = storeRepository.findAll();
-            MStore saveStore = new MStore();
+            List<MStore> storeList = storeRepository.findByBranchAndType(grn.getBranch(),Constant.MAIN_STOCK);
+            MStore store = new MStore();
             if (storeList.isEmpty()) {
                 //default store save
-                MStore store = new MStore();
-                store.setName(Constant.MAIN_STOCK);
-                saveStore = storeRepository.save(store);
+               store.setName(Constant.MAIN_STOCK);
+                store.setType(Constant.MAIN_STOCK);
+                store.setBranch(grn.getBranch());
+                MStore lastNumber = storeRepository.findFirst1ByOrderByNumberDesc();
+                
+                store.setNumber(lastNumber.getNumber()+1);
+                store = storeRepository.save(store);
             } else {
-                saveStore = storeList.get(0);
+                store = storeList.get(0);
             }
-            ledger.setStore(saveStore.getIndexNo());
+            ledger.setStore(store.getIndexNo());
             //store end
             leadgerList.add(ledger);
 //          stock ledger end
