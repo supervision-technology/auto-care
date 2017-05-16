@@ -37,7 +37,8 @@
         "directGrnModule",
         "grnApproveModule",
         "purchaseOrderRequestModule",
-        "purchaseOrderApproveModule"
+        "purchaseOrderApproveModule",
+        "stockTransferInternalOutModule"
 
     ]);
 
@@ -222,7 +223,8 @@
                         })
                         //internal-transfer-out
                         .when("/stock/transfer/internal-transfer-out", {
-                            templateUrl: "app/front-office/stock/internal-transfer/internal-transfer-out/internal-transfer-out.html"
+                            templateUrl: "app/front-office/stock/internal-transfer/internal-transfer-out/internal-transfer-out.html",
+                            controller: "stockTransferInternalOutController"
                         })
                         //internal-transfer-in
                         .when("/stock/transfer/internal-transfer-in", {

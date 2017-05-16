@@ -43,6 +43,11 @@ public class TransferBranchController {
     public List<Object[]> getItemQtyByStock(@PathVariable Integer branch, @PathVariable Integer item) {
         return transferBranchService.getItemQtyByStock(branch, item);
     }
+    
+    @RequestMapping(value = "/get-item-qty-by-stock/{branch}/{item}/{store}", method = RequestMethod.GET)
+    public List<Object[]> getItemQtyByStockWithStock(@PathVariable Integer branch, @PathVariable Integer item,@PathVariable Integer store) {
+        return transferBranchService.getItemQtyByStockWithStock(branch, item,store);
+    }
 
     @RequestMapping(value = "/save-branch-transfer-out", method = RequestMethod.POST)
     public Integer saveTransferOut(@RequestBody TStockTransfer stockTransfer) {

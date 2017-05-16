@@ -154,6 +154,9 @@ public class TransferBranchService {
     List<Object[]> getItemQtyByStock(Integer branch, Integer item) {
         return transferRepository.getItemQtyByStock(branch, item);
     }
+    List<Object[]> getItemQtyByStockWithStock(Integer branch, Integer item,Integer store) {
+        return transferRepository.getItemQtyByStockWithStock(branch, item,store);
+    }
 
     private Integer getNextOutNumber(int fromBranch, String EXTERNAL_TRANSFER) {
         return transferRepository.getNextOutNumber(fromBranch, EXTERNAL_TRANSFER);

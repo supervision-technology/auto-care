@@ -29,9 +29,13 @@
         this.getPendingTransferByBranchAndStore = function (branch,store) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/external/pending-transfer-order/"+branch+"/"+store);
         };
-        //get pending transfer branch and stock
+        //get stock qty
         this.getItemStockQty = function (branch,item) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/external/get-item-qty/"+branch+"/"+item);
+        };
+        //get stock qty with store
+        this.getItemStockQtyByStore = function (branch,item,store) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/external/get-item-qty-by-stock/"+branch+"/"+item+"/"+store);
         };
            //save branch transfer in
         this.saveExternalTransferIn = function (data) {
