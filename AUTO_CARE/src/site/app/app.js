@@ -9,7 +9,6 @@
         "serviceSelectionModule",
         "itemSelectionModule",
         "bayAssignmentModule",
-        "finalCheckListModule",
         "supervisorSelectionModule",
         //stock
         "requestItemModule",
@@ -111,11 +110,6 @@
                             templateUrl: "app/stock/request-item/request-item.html",
                             controller: "requestItemController"
                         })
-                        //final-check-list
-                        .when("/service/final-check-list", {
-                            templateUrl: "app/service/final-check-list/final-check-list.html",
-                            controller: "finalCheckListController"
-                        })
                         //supervisor-selection
                         .when("/service/supervisor-selection", {
                             templateUrl: "app/service/supervisor-selection/supervisor-selection.html",
@@ -160,7 +154,7 @@
                         //stock item request 
                         .when("/stock/request-item", {
                             templateUrl: "app/stock/request-item/request-item.html",
-                            controller: ""
+                            controller: "requestItemController"
                         })
                         //master
                         .when("/master/item", {

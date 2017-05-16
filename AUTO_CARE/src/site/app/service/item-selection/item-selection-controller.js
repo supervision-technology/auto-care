@@ -9,6 +9,7 @@
                 $scope.ui = {};
                 
                 $scope.ui.model = "CATEGORY";
+                
                 $scope.selectVehicleType = null;
                 $scope.selectPackageItemPosition = null;
                 $scope.selectedJobCardIndexNo = null;
@@ -112,15 +113,13 @@
 
                 $scope.init = function () {
                     //get routing paramiets job card index
-                    var jobCardIndexNo = parseInt($routeParams.jobCardIndexNo);
+                    var jobCardIndexNo = parseInt($routeParams.jobCardIndexNo);                    
                     if (jobCardIndexNo) {
                         //find select job card history
                         $scope.model.findJobCardDetail(jobCardIndexNo)
                                 .then(function () {
                                     $scope.selectedJobCardIndexNo = jobCardIndexNo;
                                     if ($scope.selectVehicleType) {
-                                        $scope.selectVehicleType = $scope.model.vehicleData($scope.model.jobCardData.vehicle).type;
-                                    } else {
                                         $scope.selectVehicleType = $scope.model.vehicleData($scope.model.jobCardData.vehicle).type;
                                     }
                                 });

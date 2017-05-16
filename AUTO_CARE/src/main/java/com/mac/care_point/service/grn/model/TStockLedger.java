@@ -35,39 +35,47 @@ public class TStockLedger implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
+
     @Column(name = "in_qty")
     private BigDecimal inQty;
-    
+
     @Column(name = "out_qty")
     private BigDecimal outQty;
-    
+
     @Size(max = 25)
     @Column(name = "form")
     private String form;
-    
+
+    @Column(name = "form_index_no")
+    private Integer formIndexNo;
+
+    @Column(name = "item_index_no")
+    private Integer itemIndexNo;
+
     @Column(name = "branch")
     private Integer branch;
-    
+
     @Column(name = "item")
     private Integer item;
-    
+
     @Column(name = "store")
     private Integer store;
 
     public TStockLedger() {
     }
 
-    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer branch, Integer item, Integer store) {
+    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer formIndexNo, Integer itemIndexNo, Integer branch, Integer item, Integer store) {
         this.indexNo = indexNo;
         this.date = date;
         this.inQty = inQty;
         this.outQty = outQty;
         this.form = form;
+        this.formIndexNo = formIndexNo;
+        this.itemIndexNo = itemIndexNo;
         this.branch = branch;
         this.item = item;
         this.store = store;
@@ -135,6 +143,22 @@ public class TStockLedger implements Serializable {
 
     public void setStore(Integer store) {
         this.store = store;
+    }
+
+    public Integer getFormIndexNo() {
+        return formIndexNo;
+    }
+
+    public void setFormIndexNo(Integer formIndexNo) {
+        this.formIndexNo = formIndexNo;
+    }
+
+    public Integer getItemIndexNo() {
+        return itemIndexNo;
+    }
+
+    public void setItemIndexNo(Integer itemIndexNo) {
+        this.itemIndexNo = itemIndexNo;
     }
 
 }

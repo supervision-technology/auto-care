@@ -32,6 +32,7 @@ public interface Constant {
 
     //t_payment information table - form names
     public static final String INVOICE_FORM = "INVOICE_FORM";
+    public static final String STOCK_FORM = "STOCK_FORM";
     public static final String GRN_FORM = "GRN_FORM";
     
     //m_stock list

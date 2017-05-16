@@ -28,12 +28,16 @@
         this.getJobItemHistory = function (indexNo) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-by-job-card-items/" + indexNo);
         };
-        
-        this.checkItem = function (item, status) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/check-item/" + item + "/" + status);
+
+        this.checkItem = function (item, status, selectedJobCardIndexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/check-item/" + item + "/" + status + "/" + selectedJobCardIndexNo);
+        };
+
+        this.findByItemStockItmQty = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock");
         };
     };
 
     angular.module("appModule")
-            .service("finalCheckListService", service);
+            .service("requestItemService", service);
 }());
