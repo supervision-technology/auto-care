@@ -64,6 +64,8 @@ public class GrnService {
         }
         List<TGrnItem> grnItemList = grn.getGrnItemList();
         grn.setGrnItemList(null);
+        grn.setGrandAmount(grn.getAmount());
+        grn.setBalanceAmount(grn.getGrandAmount());
 
         TGrn saveGrn = grnRepository.save(grn);
 
@@ -77,6 +79,7 @@ public class GrnService {
                 purchaseOrderDetailRepository.save(findDetail);
             }
         }
+        
         return saveGrn;
     }
 
@@ -89,6 +92,7 @@ public class GrnService {
     }
 
     TGrn approveGrnRecieve(TGrn grn) {
+        
         for (TGrnItem grnItem : grn.getGrnItemList()) {
             grnItem.setGrn(grn);
 //          stock ledger start
@@ -106,7 +110,7 @@ public class GrnService {
             ledger.setItem(findOne.getItem());
             ledger.setOutQty(new BigDecimal(0));
             //store start
-            List<MStore> storeList = storeRepository.findByBranchAndType(grn.getBranch(),Constant.MAIN_STOCK);
+            List<MStore> storeList = storeRepository.findByBranchAndType(grn.getBranch(), Constant.MAIN_STOCK);
             MStore saveStore = new MStore();
             if (storeList.isEmpty()) {
                 //default store save
@@ -115,8 +119,8 @@ public class GrnService {
                 store.setType(Constant.MAIN_STOCK);
                 store.setBranch(grn.getBranch());
                 MStore lastNumber = storeRepository.findFirst1ByOrderByNumberDesc();
-                
-                store.setNumber(lastNumber.getNumber()+1);
+
+                store.setNumber(lastNumber.getNumber() + 1);
                 saveStore = storeRepository.save(store);
             } else {
                 saveStore = storeList.get(0);
@@ -130,7 +134,7 @@ public class GrnService {
     }
 
     TGrn saveDirectGrn(TGrn grn) {
-            List<TStockLedger> leadgerList=new ArrayList<>();
+        List<TStockLedger> leadgerList = new ArrayList<>();
         for (TGrnItem grnItem : grn.getGrnItemList()) {
             grnItem.setGrn(grn);
 //          stock ledger start
@@ -145,16 +149,16 @@ public class GrnService {
             ledger.setItem(grnItem.getItem());
             ledger.setOutQty(new BigDecimal(0));
             //store start
-            List<MStore> storeList = storeRepository.findByBranchAndType(grn.getBranch(),Constant.MAIN_STOCK);
+            List<MStore> storeList = storeRepository.findByBranchAndType(grn.getBranch(), Constant.MAIN_STOCK);
             MStore store = new MStore();
             if (storeList.isEmpty()) {
                 //default store save
-               store.setName(Constant.MAIN_STOCK);
+                store.setName(Constant.MAIN_STOCK);
                 store.setType(Constant.MAIN_STOCK);
                 store.setBranch(grn.getBranch());
                 MStore lastNumber = storeRepository.findFirst1ByOrderByNumberDesc();
-                
-                store.setNumber(lastNumber.getNumber()+1);
+
+                store.setNumber(lastNumber.getNumber() + 1);
                 store = storeRepository.save(store);
             } else {
                 store = storeList.get(0);

@@ -23,10 +23,10 @@
                 <table class="table-rounded control-table table-hover">
                     <col style="width: 100%"/>
                     <tbody>
-                        <tr ng-repeat="unit in model.mainList">
+                        <tr ng-repeat="unit in model.mainList" ng-click="ui.selectGrn($index,unit.indexNo)">
                             <td class="text-center" ng-class="model.selectedGrnIndex === unit.indexNo ? 'selected' : ''">
                                 <b>{{model.getSupplier(unit.supplier)}}</b>
-                                <a class="btn btn-success pull-right" style="margin-top: 5px" ng-click="ui.selectGrn($index,unit.indexNo)"><span class="glyphicon glyphicon-arrow-right"></span></a><br>
+                                <a class="btn btn-success pull-right" style="margin-top: 5px"><span class="glyphicon glyphicon-arrow-right"></span></a><br>
                                 <label class="pull-left label label-default" style="margin-top: 8px">{{unit.number | fixedLength:5}}</label>
                                 <label class="">{{unit.date}}</label>
                                 <label class="pull-right">{{unit.grnAmount|number:2}}</label>

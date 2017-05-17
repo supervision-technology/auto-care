@@ -9,6 +9,7 @@ import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,6 +44,11 @@ public class PurchaseOrderApproveController {
         purchaseOrder.setReturnStatus("NON");
         TPurchaseOrder savedPurchaseOrder= purchaseOrderApproveService.savePurchaseOrderApprove(purchaseOrder,status_approved);
         return savedPurchaseOrder.getIndexNo();
+    }
+    @RequestMapping(value = "/delete/{indexNo}", method = RequestMethod.GET)
+    public Integer deletePurchaseOrder(@PathVariable Integer indexNo) {
+         return purchaseOrderApproveService.deletePurchaseOrder(indexNo);
+      
     }
     
 

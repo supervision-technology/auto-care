@@ -20,6 +20,10 @@
         this.getStockQty = function (item) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/stock-qty/" + item);
         };
+        //load pending purchase order
+        this.loadPendingPurchaseOrderByNumber = function (number) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/load-pending-purchase-order/" + number);
+        };
 
 
 //      APPROVE
@@ -29,6 +33,11 @@
 //
         this.savePurchaseOrderApprove = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-approve/save", data);
+        };
+       
+       //delete Purchase Order
+        this.deletePurchaseOrder = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-approve/delete/"+indexNo);
         };
 //        //load pending jobcards
 //        this.pendingJobCards = function () {

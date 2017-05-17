@@ -23,10 +23,10 @@
                 <table class="table-rounded control-table table-hover">
                     <col style="width: 100%"/>
                     <tbody>
-                        <tr ng-repeat="order in model.pendingPurchaseOrderList">
+                        <tr ng-repeat="order in model.pendingPurchaseOrderList" ng-click="ui.selectPurchaseOrder(order,$index)">
                             <td class="text-center" ng-class="ui.selectedDetailIndex === order.indexNo ? 'selected' : ''">
                                 <b>{{model.getSupplier(order.supplier)}}</b>
-                                <a class="btn btn-success pull-right" style="margin-top: 5px" ng-click="ui.selectPurchaseOrder(order,$index)"><span class="glyphicon glyphicon-arrow-right"></span></a><br>
+                                <a class="btn btn-success pull-right" style="margin-top: 5px" ><span class="glyphicon glyphicon-arrow-right"></span></a><br>
                                 <label class="pull-left label label-default" style="margin-top: 8px">{{order.number | fixedLength:5}}</label>
                                 <label class="">{{order.date}}</label>
                                 <label class="pull-right">{{order.grandTotal2 | number:2}}</label>
@@ -264,6 +264,6 @@
     </div>
 </div>
 <div class="fab-container">
-    <a class="fab fab-default" fab-show="true" ng-click="ui.discard();"><i class="glyphicon glyphicon-remove"></i></a>
+    <a class="fab fab-danger" fab-show="true" ng-click="ui.discard();"><i class="glyphicon glyphicon-remove"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
