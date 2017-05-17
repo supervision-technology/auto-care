@@ -41,34 +41,12 @@
         this.saveExternalTransferIn = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/external/save-branch-transfer-in", data);
         };
+           //save Internal transfer out
+        this.saveInternalTransferOut = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/external/save-internal-transfer-out", data);
+        };
 //        
-//        this.getStockQty = function (item) {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/stock-qty/" + item);
-//        };
-//
-//
-////      APPROVE
-//        this.loadPendingPurchaseOrder = function () {
-//            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-approve/pending-purchase-order");
-//        };
-////
-//        this.savePurchaseOrderApprove = function (data) {
-//            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-approve/save", data);
-//        };
-////        //load pending jobcards
-////        this.pendingJobCards = function () {
-////            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-pending-job-cards");
-////        };
-////
-////
-////
-////        this.deleteJobItems = function (indexNo) {
-////            return $http.delete(systemConfig.apiUrl + "/api/care-point/transaction/job-item/delete-job-items/" + indexNo);
-////        };
-////
-////        this.getJobItemHistory = function (indexNo) {
-////            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-by-job-card-items/" + indexNo);
-////        };
+//        
     };
 
     angular.module("appModule")

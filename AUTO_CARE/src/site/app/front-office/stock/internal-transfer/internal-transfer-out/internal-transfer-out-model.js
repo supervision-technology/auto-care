@@ -240,17 +240,18 @@
                         }
 
                         if (saveConfirmation) {
-                            StockTransferService.saveExternalTransferOut(JSON.stringify(this.data))
-                                    .success(function (data) {
-                                        defer.resolve();
-                                        that.clear();
-                                        Notification.success("Item Transfer Success");
-                                    })
-                                    .error(function (data) {
-                                        defer.reject();
-                                        Notification.error("Item Transfer Fail");
-                                    });
-                            return defer.promise;
+                            console.log(this.data);
+//                            StockTransferService.saveExternalTransferOut(JSON.stringify(this.data))
+//                                    .success(function (data) {
+//                                        defer.resolve();
+//                                        that.clear();
+//                                        Notification.success("Item Transfer Success");
+//                                    })
+//                                    .error(function (data) {
+//                                        defer.reject();
+//                                        Notification.error("Item Transfer Fail");
+//                                    });
+//                            return defer.promise;
                         }
                     },
 //                    clear: function () {
