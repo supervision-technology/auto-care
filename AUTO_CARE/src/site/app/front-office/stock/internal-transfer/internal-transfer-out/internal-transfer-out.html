@@ -5,12 +5,13 @@
     <div class="col-xs-12 background-light">
         <div class="row col-xs-12 nopadding">
             <table class="table-rounded control-table">
-                <col style="width: 16.6%"/>
-                <col style="width: 16.6%"/>
-                <col style="width: 16.6%"/>
-                <col style="width: 16.6%"/>
-                <col style="width: 16.6%"/>
-                <col style="width: 16.6%"/>
+                <col style="width: 14.28%"/>
+                <col style="width: 14.28%"/>
+                <col style="width: 14.28%"/>
+                <col style="width: 14.28%"/>
+                <col style="width: 14.28%"/>
+                <col style="width: 14.28%"/>
+                <col style="width: 14.28%"/>
                 <tbody>
                     <tr>
                         <td>NUMBER :<input class="form-control" placeholder="number" ng-model="model.data.fromNumber" ng-disabled="ui.mode !== 'EDIT'"></td>
@@ -21,17 +22,18 @@
                                                  typeahead-on-select="ui.removeTempData()"
                                                  typeahead-editable="false" 
                                                  ng-disabled="ui.mode !== 'NEW'"></td>
-                        <td>FROM STOCK :<input class="form-control" placeholder="to branch" ng-model="model.data.fromStore"
+                        <td>FROM STOCK :<input class="form-control" placeholder="from stock" ng-model="model.data.fromStore"
                                                uib-typeahead="stock.indexNo as (stock.number+ ' - ' + stock.name) for stock in model.stocks |filter:$viewValue | filter:{branch:model.data.fromBranch} |limitTo:10" 
                                                typeahead-input-formatter="model.stockLabel($model)"
                                                typeahead-on-select='ui.getPendingTransferOrders(model.data.toBranch,model.data.toStock)'
                                                typeahead-editable="false" ng-disabled="ui.mode !== 'NEW'"></td>
-                        <td>TO STOCK :<input class="form-control" placeholder="remarks" ng-model="model.data.toStore"
+                        <td>TO STOCK :<input class="form-control" placeholder="to stock" ng-model="model.data.toStore"
                                              uib-typeahead="stock.indexNo as (stock.number+ ' - ' + stock.name) for stock in model.stocks |filter:$viewValue | filter:{branch:model.data.fromBranch} |limitTo:10" 
                                              typeahead-input-formatter="model.stockLabel($model)"
                                              typeahead-on-select='ui.getPendingTransferOrders(model.data.toBranch,model.data.toStock)'
                                              typeahead-editable="false" ng-disabled="ui.mode !== 'NEW'"></td>
                         <td>REFERENCE NO :<input class="form-control" placeholder="reference Number" ng-model="model.data.refNumber" ng-disabled="ui.mode !== 'NEW'"></td>
+                        <td>REMARKS :<input class="form-control" placeholder="remarks" ng-model="model.data.remarks" ng-disabled="ui.mode !== 'NEW'"></td>
                     </tr>
                 </tbody>
             </table>
@@ -120,7 +122,7 @@
         </div>
     </div>
 
-    <div class="placeholder col-md-12" ng-hide="model.data.transferItemList.length" style="height: calc(100vh - 240px); padding: 0px 10px 10px 10px;">
+    <div class="placeholder col-md-12" ng-hide="model.data.transferItemList.length" style="height: calc(100vh - 190px); padding: 0px 10px 10px 10px;">
         <h1>PLEASE ADD TRANSFER ITEM TO DISPLAY :(</h1>
     </div>
     <div class="col-xs-12" style="position: fixed;bottom: 1px;margin-left:-15px;" ng-show="model.data.transferItemList.length">

@@ -41,9 +41,14 @@
         this.saveExternalTransferIn = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/external/save-branch-transfer-in", data);
         };
+        
+        
+        
+//        INTERNAL TRANSFET
+        
            //save Internal transfer out
         this.saveInternalTransferOut = function (data) {
-            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/external/save-internal-transfer-out", data);
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/internal/save-internal-transfer-out", data);
         };
 //        
 //        

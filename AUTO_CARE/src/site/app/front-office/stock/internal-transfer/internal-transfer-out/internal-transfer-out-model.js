@@ -185,7 +185,6 @@
 
                     getItemName: function (indexNo) {
                         var itemName = null;
-                        console.log(indexNo);
                         angular.forEach(this.allItems, function (value) {
                             if (value.indexNo === indexNo) {
                                 itemName = value.name;
@@ -241,23 +240,23 @@
 
                         if (saveConfirmation) {
                             console.log(this.data);
-//                            StockTransferService.saveExternalTransferOut(JSON.stringify(this.data))
-//                                    .success(function (data) {
-//                                        defer.resolve();
-//                                        that.clear();
-//                                        Notification.success("Item Transfer Success");
-//                                    })
-//                                    .error(function (data) {
-//                                        defer.reject();
-//                                        Notification.error("Item Transfer Fail");
-//                                    });
-//                            return defer.promise;
+                            StockTransferService.saveInternalTransferOut(JSON.stringify(this.data))
+                                    .success(function (data) {
+                                        defer.resolve();
+                                        that.clear();
+                                        Notification.success("Item Transfer Success");
+                                    })
+                                    .error(function (data) {
+                                        defer.reject();
+                                        Notification.error("Item Transfer Fail");
+                                    });
+                            return defer.promise;
                         }
                     },
-//                    clear: function () {
-//                        this.data = StockTransferModelFactory.newData();
-//                        this.tempData = StockTransferModelFactory.tempData();
-//                    }
+                    clear: function () {
+                        this.data = StockTransferModelFactory.newData();
+                        this.tempData = StockTransferModelFactory.tempData();
+                    }
                 };
                 return stockTransferInternalOutModel;
             });
