@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -25,7 +26,7 @@ public class TransferInternalController {
     @Autowired
     private TransferInternalService internalTransferService;
     
-     @RequestMapping(value = "/save-intermal-transfer-out", method = RequestMethod.POST)
+     @RequestMapping(value = "/save-internal-transfer-out", method = RequestMethod.POST)
     public Integer saveTransferOut(@RequestBody TStockTransfer stockTransfer) {
 
         stockTransfer.setType(Constant.INTERNAL_TRANSFER_OUT);
