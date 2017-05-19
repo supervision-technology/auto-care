@@ -3,12 +3,9 @@
 
     var service = function (systemConfig, $http) {
 
-        this.getInvoiceByJobCard = function (indexNo) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/find-by-job-card/" + indexNo);
-        };
-
-        this.getJobItemHistory = function (indexNo) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-by-job-card-items/" + indexNo);
+        //load pending jobcards
+        this.pendingJobCards = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-pending-job-cards");
         };
 
         this.loadVehicle = function () {
@@ -19,16 +16,16 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/client");
         };
 
-        this.loadVehicleType = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle-type");
+        this.loadBank = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/bank");
+        };
+        
+        this.loadBranch = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/branch");
         };
 
-        this.loadPriceCategory = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/price-category");
-        };
-
-        this.loadBankAndBranch = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/bankbranch");
+        this.getJobItemHistory = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-by-job-card-items/" + indexNo);
         };
 
         //invoice save
@@ -40,12 +37,16 @@
         this.getClientOverPayment = function (cllient) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/client-get-over-payment/" + cllient);
         };
-        
+
         this.loadInvoiceData = function (invoiceNumber) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/get-invoice-details/" + invoiceNumber);
         };
-        
-        
+
+        //vehicle select get job card
+        this.getInvoiceByJobCard = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/find-by-job-card/" + indexNo);
+        };
+
     };
 
     angular.module("appModule")

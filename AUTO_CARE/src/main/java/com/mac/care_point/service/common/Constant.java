@@ -35,11 +35,5 @@ public interface Constant {
     public static final String STOCK_FORM = "STOCK_FORM";
     public static final String GRN_FORM = "GRN_FORM";
     
-    //m_stock list
-    public static final String MAIN_STOCK = "main_stock";
-    public static final String FRONT_STOCK = "front_stock";
-    public static final String BULK_STOCK = "bulk_stock";
-    
-    
 
 }

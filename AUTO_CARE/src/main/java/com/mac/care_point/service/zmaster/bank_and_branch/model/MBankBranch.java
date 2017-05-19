@@ -30,10 +30,6 @@ public class MBankBranch implements Serializable {
     private Integer indexNo;
 
     @Size(max = 50)
-    @Column(name = "bank")
-    private String bank;
-
-    @Size(max = 50)
     @Column(name = "name")
     private String name;
 
@@ -41,14 +37,11 @@ public class MBankBranch implements Serializable {
     @Column(name = "code")
     private String code;
 
-    public MBankBranch() {
-    }
+    @Size(max = 50)
+    @Column(name = "bank")
+    private String bank;
 
-    public MBankBranch(Integer indexNo, String bank, String name, String code) {
-        this.indexNo = indexNo;
-        this.bank = bank;
-        this.name = name;
-        this.code = code;
+    public MBankBranch() {
     }
 
     public Integer getIndexNo() {
@@ -57,14 +50,6 @@ public class MBankBranch implements Serializable {
 
     public void setIndexNo(Integer indexNo) {
         this.indexNo = indexNo;
-    }
-
-    public String getBank() {
-        return bank;
-    }
-
-    public void setBank(String bank) {
-        this.bank = bank;
     }
 
     public String getName() {
@@ -83,4 +68,12 @@ public class MBankBranch implements Serializable {
         this.code = code;
     }
 
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+    
 }

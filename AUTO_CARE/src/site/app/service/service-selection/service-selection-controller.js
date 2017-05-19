@@ -12,17 +12,13 @@
                 $scope.selectPackageItemPosition = null;
                 $scope.selectedJobCardIndexNo = null;
 
-
                 $scope.ui.selectedJobCardRow = function (jobCardIndexNo) {
                     //find select job card history
+                    $scope.selectVehicleType = null;
                     $scope.model.findJobCardDetail(jobCardIndexNo)
                             .then(function () {
                                 $scope.selectedJobCardIndexNo = jobCardIndexNo;
-                                if ($scope.selectVehicleType) {
-                                    $scope.selectVehicleType = $scope.model.vehicleData($scope.model.jobCardData.vehicle).type;
-                                } else {
-                                    $scope.selectVehicleType = $scope.model.vehicleData($scope.model.jobCardData.vehicle).type;
-                                }
+                                $scope.selectVehicleType = $scope.model.vehicleData($scope.model.jobCardData.vehicle).type;
                             });
                     //view select job item history
                     $scope.model.getJobItemHistory(jobCardIndexNo);

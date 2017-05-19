@@ -13,17 +13,7 @@
                         "netAmount": 0.0,
                         "discountRate": 0,
                         "discountAmount": 0,
-                        "status": null,
-                        "overPayment": null
-                    };
-                    return data;
-                };
-
-                factory.newInvoicePayment = function () {
-                    var data = {
-                        "invoice": {},
-                        "payment": {},
-                        "paymentInformationsList": []
+                        "status": null
                     };
                     return data;
                 };
@@ -40,69 +30,17 @@
                     return data;
                 };
 
-                factory.newClientData = function () {
+
+                factory.newInvoicePayment = function () {
                     var data = {
-                        "indexNo": null,
-                        "name": null,
-                        "address1": null,
-                        "address2": null,
-                        "address3": null,
-                        "mobile": null,
-                        "branch": null,
-                        "type": null,
-                        "nic": null
+                        "invoice": {},
+                        "payment": {},
+                        "paymentInformationsList": []
                     };
                     return data;
                 };
-
-                factory.newVehicleData = function () {
-                    var data = {
-                        "indexNo": null,
-                        "vehicleNo": null,
-                        "year": null,
-                        "engineNo": null,
-                        "chasisNo": null,
-                        "insuranceExpiryDate": null,
-                        "revenueExpiryDate": null,
-                        "lastMilage": null,
-                        "nextMilage": null,
-                        "colour": null,
-                        "client": null,
-                        "vehicleType": null,
-                        "priceCategory": null,
-                        "type": null
-                    };
-                    return data;
-                };
-
-                factory.paymentData = function () {
-                    var data = {
-                        "indexNo": null,
-                        "number": null,
-                        "totalAmount": 0.0,
-                        "cashAmount": 0.0,
-                        "chequeAmount": 0.0,
-                        "cardAmount": 0.0
-                    };
-                    return data;
-                };
-
-
-                factory.customerLegerData = function () {
-                    var data = {
-                        "indexNo": null,
-                        "date": null,
-                        "debitAmount": 0.0,
-                        "creditAmount": 0.0,
-                        "chequeAmount": 0.0,
-                        "type": null,
-                        "invoice": null,
-                        "payment": null
-                    };
-                    return data;
-                };
-
-                factory.paymentInformation = function () {
+                
+                factory.newPaymentInformation = function () {
                     var data = {
                         "indexNo": null,
                         "number": null,

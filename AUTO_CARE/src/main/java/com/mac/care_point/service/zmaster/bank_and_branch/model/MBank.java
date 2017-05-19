@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.grn.model;
+package com.mac.care_point.service.zmaster.bank_and_branch.model;
 
 import java.io.Serializable;
 import javax.persistence.Basic;
@@ -17,30 +17,31 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author L T430
+ * @author Kavish Manjitha
  */
+
+
 @Entity
-@Table(name = "m_store")
-public class MStore implements Serializable {
+@Table(name = "m_bank")
+public class MBank implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
-    @Size(max = 25)
+
+    @Size(max = 50)
     @Column(name = "name")
     private String name;
 
-    public MStore() {
+    @Size(max = 25)
+    @Column(name = "code")
+    private String code;
+
+    public MBank() {
     }
 
-    public MStore(Integer indexNo, String name) {
-        this.indexNo = indexNo;
-        this.name = name;
-    }
-  
     public Integer getIndexNo() {
         return indexNo;
     }
@@ -57,4 +58,11 @@ public class MStore implements Serializable {
         this.name = name;
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
 }

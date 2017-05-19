@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.service.grn;
 
-import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.grn.model.MStore;
 import com.mac.care_point.service.grn.model.TGrn;
 import com.mac.care_point.service.grn.model.TGrnItem;
@@ -101,14 +100,12 @@ public class GrnService {
             ledger.setItem(findOne.getItem());
             ledger.setOutQty(new BigDecimal(0));
             //store start
-            List<MStore> storeList = storeRepository.findByTypeAndBranch(Constant.MAIN_STOCK, grn.getBranch());
+            List<MStore> storeList = storeRepository.findAll();
             MStore saveStore = new MStore();
             if (storeList.isEmpty()) {
                 //default store save
                 MStore store = new MStore();
-                store.setName("Main Stock");
-                store.setType(Constant.MAIN_STOCK);
-                store.setBranch(grn.getBranch());
+                store.setName("Default Store");
                 saveStore = storeRepository.save(store);
             } else {
                 saveStore = storeList.get(0);
@@ -124,33 +121,6 @@ public class GrnService {
     TGrn saveDirectGrn(TGrn grn) {
         for (TGrnItem grnItem : grn.getGrnItemList()) {
             grnItem.setGrn(grn);
-            //stock ledger start
-            TStockLedger ledger = new TStockLedger();
-            ledger.setBranch(grn.getBranch());
-            ledger.setDate(grn.getDate());
-            ledger.setForm("GRN Approve");
-            ledger.setInQty(grnItem.getQty());
-
-            TPurchaseOrderDetail findOne = purchaseOrderDetailRepository.findOne(grnItem.getPurchaseOrderItem());
-            ledger.setItem(findOne.getItem());
-            ledger.setOutQty(new BigDecimal(0));
-            //store start
-            List<MStore> storeList = storeRepository.findByTypeAndBranch(Constant.MAIN_STOCK, grn.getBranch());
-            MStore saveStore = new MStore();
-            if (storeList.isEmpty()) {
-                //default store save
-                MStore store = new MStore();
-                store.setName("Main Stock");
-                store.setType(Constant.MAIN_STOCK);
-                store.setBranch(grn.getBranch());
-                saveStore = storeRepository.save(store);
-            } else {
-                saveStore = storeList.get(0);
-            }
-            ledger.setStore(saveStore.getIndexNo());
-            //store end
-            stockLedgerRepository.save(ledger);
-//          stock ledger end
         }
         return grnRepository.save(grn);
     }
