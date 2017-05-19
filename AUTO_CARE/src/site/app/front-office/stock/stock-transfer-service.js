@@ -50,6 +50,15 @@
         this.saveInternalTransferOut = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/internal/save-internal-transfer-out", data);
         };
+           //save Internal transfer in
+        this.saveInternalTransferIn = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/internal/save-internal-transfer-in", data);
+        };
+        
+        //get pending transfer branch and stock for Internal
+        this.getPendingTransferOrdersForInternal = function (branch,store) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/stock-transfer/internal/pending-transfer-order/"+branch+"/"+store);
+        };
 //        
 //        
     };

@@ -30,7 +30,7 @@ public class TransferInternalService {
 
     @Autowired
     private TransferRepository transferRepository;
-  
+
     @Autowired
     private TransferStockLedgerRepository stockLedgerRepository;
 
@@ -48,7 +48,7 @@ public class TransferInternalService {
 
             // set stock ledger
             TStockLedger stockLedger = new TStockLedger();
-            
+
             stockLedger.setAvaragePriceIn(new BigDecimal(0));
             stockLedger.setAvaragePriceOut(itemAvaragePrice.multiply(stockTransferItem.getQty()));//calculat avarage price
             stockLedger.setBranch(stockTransfer.getFromBranch());
@@ -64,11 +64,52 @@ public class TransferInternalService {
         }
         TStockTransfer saveObject = transferRepository.save(stockTransfer);
         //save stock ledger
-         for (TStockLedger tStockLedger : stockLedgerList) {
+        for (TStockLedger tStockLedger : stockLedgerList) {
             tStockLedger.setFormIndexNo(saveObject.getIndexNo());
             stockLedgerRepository.save(tStockLedger);
         }
         return saveObject.getOutNumber();
     }
 
+    Integer saveInternalTransferIn(TStockTransfer stockTransfer) {
+        Integer nextInNumber = getNextInNumber(stockTransfer.getFromBranch(), Constant.EXTERNAL_TRANSFER);
+        stockTransfer.setInNumber(nextInNumber);
+
+        // Stock Ledger List
+        List<TStockLedger> stockLedgerList = new ArrayList<>();
+
+        for (TStockTransferItem item : stockTransfer.getTransferItemList()) {
+
+            // get avarage price
+            BigDecimal itemAvaragePrice = transferRepository.getItemAvaragePrice(stockTransfer.getFromBranch(), item.getItem());
+            TStockLedger stockLedger = new TStockLedger();
+            stockLedger.setAvaragePriceIn(itemAvaragePrice.multiply(item.getQty()));//calculat avarage price
+            stockLedger.setAvaragePriceOut(new BigDecimal(0));
+            stockLedger.setBranch(stockTransfer.getToBranch());
+            stockLedger.setDate(new Date());
+            stockLedger.setForm(Constant.INTERNAL_TRANSFER_IN);
+            stockLedger.setFormIndexNo(0);//:defined method footer
+            stockLedger.setInQty(item.getQty());
+            stockLedger.setItem(item.getItem());
+            stockLedger.setOutQty(new BigDecimal(0));
+            stockLedger.setStore(stockTransfer.getToStore());
+
+            stockLedgerList.add(stockLedger);
+        }
+        stockTransfer.setTransferItemList(null);
+        TStockTransfer saveObject = transferRepository.save(stockTransfer);
+        for (TStockLedger tStockLedger : stockLedgerList) {
+            tStockLedger.setFormIndexNo(saveObject.getIndexNo());
+            stockLedgerRepository.save(tStockLedger);
+        }
+        return saveObject.getIndexNo();
+
+    }
+
+    List<TStockTransfer> findPendingTransferOrders(Integer branch, Integer stock, String PENDING_STATUS, String INTERNAL_TRANSFER_OUT) {
+        return transferRepository.findByToBranchAndToStoreAndStatusAndType(branch, stock, PENDING_STATUS, INTERNAL_TRANSFER_OUT);
+    }
+     private Integer getNextInNumber(int fromBranch, String EXTERNAL_TRANSFER) {
+        return transferRepository.getNextInNumber(fromBranch, EXTERNAL_TRANSFER);
+    }
 }

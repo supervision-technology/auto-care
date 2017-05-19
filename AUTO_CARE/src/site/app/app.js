@@ -38,7 +38,8 @@
         "grnApproveModule",
         "purchaseOrderRequestModule",
         "purchaseOrderApproveModule",
-        "stockTransferInternalOutModule"
+        "stockTransferInternalOutModule",
+        "stockTransferInternalInModule"
 
     ]);
 
@@ -228,8 +229,9 @@
                         })
                         //internal-transfer-in
                         .when("/stock/transfer/internal-transfer-in", {
-                            templateUrl: "app/front-office/stock/internal-transfer/internal-transfer-in/internal-transfer-in.html"
-                        })
+                            templateUrl: "app/front-office/stock/internal-transfer/internal-transfer-in/internal-transfer-in.html",
+                            controller: "stockTransferInternalInController"
+                })
                         .otherwise({
                             redirectTo: "/"
                         });

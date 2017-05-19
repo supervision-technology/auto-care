@@ -7,8 +7,10 @@ package com.mac.care_point.service.stock.transfer.internal;
 
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.stock.transfer.model.TStockTransfer;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,5 +35,17 @@ public class TransferInternalController {
         stockTransfer.setStatus(Constant.PENDING_STATUS);
         stockTransfer.setToBranch(stockTransfer.getFromBranch());
         return internalTransferService.saveInternalTransferOut(stockTransfer);
+    }
+     @RequestMapping(value = "/save-internal-transfer-in", method = RequestMethod.POST)
+    public Integer saveTransferIn(@RequestBody TStockTransfer stockTransfer) {
+
+        stockTransfer.setType(Constant.INTERNAL_TRANSFER_IN);
+        stockTransfer.setStatus(Constant.FINISHE_STATUS);
+        return internalTransferService.saveInternalTransferIn(stockTransfer);
+    }
+    
+     @RequestMapping(value = "/pending-transfer-order/{branch}/{stock}", method = RequestMethod.GET)
+    public List<TStockTransfer> findAllPendingTransfers(@PathVariable Integer branch, @PathVariable Integer stock) {
+        return internalTransferService.findPendingTransferOrders(branch, stock, Constant.PENDING_STATUS,Constant.INTERNAL_TRANSFER_OUT);
     }
 }

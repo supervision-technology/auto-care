@@ -111,14 +111,14 @@ public class TransferBranchService {
         return transferRepository.findAll();
     }
 
-    List<TStockTransfer> findPendingTransferOrders(Integer branch, Integer stock, String pending_status) {
-        return transferRepository.findByToBranchAndToStoreAndStatus(branch, stock, pending_status);
+    List<TStockTransfer> findPendingTransferOrders(Integer branch, Integer stock, String pending_status,String type) {
+        return transferRepository.findByToBranchAndToStoreAndStatusAndType(branch, stock, pending_status,type);
     }
 
     Integer saveBranchTransferIn(TStockTransfer stockTransfer) {
         stockTransfer.setStatus(Constant.FINISHE_STATUS);
         Integer nextInNumber = getNextInNumber(stockTransfer.getFromBranch(), Constant.EXTERNAL_TRANSFER);
-        stockTransfer.setOutNumber(nextInNumber);
+        stockTransfer.setInNumber(nextInNumber);
         
           // Stock Ledger List
         List<TStockLedger> stockLedgerList = new ArrayList<>();
