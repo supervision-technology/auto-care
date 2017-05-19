@@ -55,10 +55,9 @@
                                     }
 
                                 });
-//                        if (!that.tempData.netQty) {
-//                            Notification.error("Can't Find Stock Qty for this Item !'");
-//                            this.tempData = StockTransferModelFactory.tempData();
-//                        }
+                        if (!that.tempData.netQty) {
+                            Notification.error("Stock Qty Empty for this Item !");
+                        }
 
                     }
                     , validateBarcode: function (barcode) {
@@ -171,17 +170,17 @@
                         });
                         return findObject;
                     },
-//                    edit: function (indexNo) {
-//                        this.tempData = this.data.transferItemList[indexNo];
-//                        this.data.transferItemList.splice(indexNo, 1);
-//                        this.summaryCalculator();
-//                    },
-//
-//                    delete: function (indexNo) {
-//                        this.data.transferItemList.splice(indexNo, 1);
-//                        this.summaryCalculator();
-//                    }
-//                    ,
+                    edit: function (indexNo) {
+                        this.tempData = this.data.transferItemList[indexNo];
+                        this.data.transferItemList.splice(indexNo, 1);
+                        this.summaryCalculator();
+                    },
+
+                    delete: function (indexNo) {
+                        this.data.transferItemList.splice(indexNo, 1);
+                        this.summaryCalculator();
+                    }
+                    ,
 
                     getItemName: function (indexNo) {
                         var itemName = null;

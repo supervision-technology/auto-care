@@ -11,15 +11,15 @@
                     $scope.ui.focus('#date');
                 };
 
-//                $scope.ui.edit = function (indexNo) {
-//                    $scope.model.edit(indexNo);
-//                     $scope.ui.focus('#barcode');
-//                };
-//
-//                $scope.ui.delete = function (indexNo) {
-//                    $scope.model.delete(indexNo);
-//                     $scope.ui.focus('#barcode');
-//                };
+                $scope.ui.edit = function (indexNo) {
+                    $scope.model.edit(indexNo);
+                     $scope.ui.focus('#barcode');
+                };
+
+                $scope.ui.delete = function (indexNo) {
+                    $scope.model.delete(indexNo);
+                     $scope.ui.focus('#barcode');
+                };
 //
                 $scope.ui.save = function () {
                     ConfirmPane.primaryConfirm("Save Internal Transfer Out !")
