@@ -9,6 +9,6 @@ package com.mac.care_point.service.stock.transfer.internal;
  *
  * @author L T430
  */
-public class transferInternalService {
+public class TransferInternalService {
     
 }
