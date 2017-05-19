@@ -11,31 +11,37 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Kavish Manjitha
+ * @author kavish manjitha
  */
 @Entity
 @Table(name = "t_payment_information")
 public class TPaymentInformation implements Serializable {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "index_no")
+    @Column(name = "index_no", nullable = false)
     private Integer indexNo;
 
     @Size(max = 50)
-    @Column(name = "number")
+    @Column(length = 50)
     private String number;
 
     @Column(name = "cheque_date")
@@ -44,43 +50,56 @@ public class TPaymentInformation implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(name = "amount")
+    @Column(nullable = false, precision = 10, scale = 4)
     private BigDecimal amount;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
-    @Column(name = "type")
+    @Column(nullable = false, length = 25)
     private String type;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
-    @Column(name = "form_name")
+    @Column(name = "form_name", nullable = false, length = 25)
     private String formName;
 
-    @Column(name = "payment")
-    private Integer payment;
+    @Size(max = 25)
+    @Column(name = "card_type", length = 25)
+    private String cardType;
 
-    @Column(name = "bank")
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bank", nullable = false)
     private Integer bank;
 
-    @Column(name = "card_type")
-    private String cardType;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "bank_branch", nullable = false)
+    private Integer bankBranch;
+
+    @Column(name = "payment", nullable = false)
+    private Integer payment;
 
     public TPaymentInformation() {
     }
 
-    public TPaymentInformation(Integer indexNo, String number, Date chequeDate, BigDecimal amount, String type, String formName, Integer payment, Integer bank, String cardType) {
+    public TPaymentInformation(Integer indexNo) {
+        this.indexNo = indexNo;
+    }
+
+    public TPaymentInformation(Integer indexNo, String number, Date chequeDate, BigDecimal amount, String type, String formName, String cardType, int bank, int bankBranch, Integer payment) {
         this.indexNo = indexNo;
         this.number = number;
         this.chequeDate = chequeDate;
         this.amount = amount;
         this.type = type;
         this.formName = formName;
-        this.payment = payment;
-        this.bank = bank;
         this.cardType = cardType;
+        this.bank = bank;
+        this.bankBranch = bankBranch;
+        this.payment = payment;
     }
 
     public Integer getIndexNo() {
@@ -131,12 +150,12 @@ public class TPaymentInformation implements Serializable {
         this.formName = formName;
     }
 
-    public Integer getPayment() {
-        return payment;
+    public String getCardType() {
+        return cardType;
     }
 
-    public void setPayment(Integer payment) {
-        this.payment = payment;
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
     }
 
     public Integer getBank() {
@@ -147,12 +166,20 @@ public class TPaymentInformation implements Serializable {
         this.bank = bank;
     }
 
-    public String getCardType() {
-        return cardType;
+    public Integer getBankBranch() {
+        return bankBranch;
     }
 
-    public void setCardType(String cardType) {
-        this.cardType = cardType;
+    public void setBankBranch(Integer bankBranch) {
+        this.bankBranch = bankBranch;
+    }
+
+    public Integer getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Integer payment) {
+        this.payment = payment;
     }
 
 }

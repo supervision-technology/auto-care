@@ -69,7 +69,7 @@ public class TInvoice implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "branch")
-    private int branch;
+    private Integer branch;
 
     @Basic(optional = false)
     @NotNull
@@ -80,14 +80,10 @@ public class TInvoice implements Serializable {
     @Column(name = "jobCard")
     private Integer jobCard;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "invoice", fetch = FetchType.EAGER)
-    private List<TCustomerLedger> tCustomerLedgerList;
-
     public TInvoice() {
     }
 
-    public TInvoice(Integer indexNo, Date date, int number, BigDecimal amount, Integer discountRate, BigDecimal discountAmount, BigDecimal netAmount, int branch, String status, Integer jobCard, List<TCustomerLedger> tCustomerLedgerList) {
+    public TInvoice(Integer indexNo, Date date, int number, BigDecimal amount, Integer discountRate, BigDecimal discountAmount, BigDecimal netAmount, Integer branch, String status, Integer jobCard) {
         this.indexNo = indexNo;
         this.date = date;
         this.number = number;
@@ -98,7 +94,6 @@ public class TInvoice implements Serializable {
         this.branch = branch;
         this.status = status;
         this.jobCard = jobCard;
-        this.tCustomerLedgerList = tCustomerLedgerList;
     }
 
     public Integer getIndexNo() {
@@ -157,11 +152,11 @@ public class TInvoice implements Serializable {
         this.netAmount = netAmount;
     }
 
-    public int getBranch() {
+    public Integer getBranch() {
         return branch;
     }
 
-    public void setBranch(int branch) {
+    public void setBranch(Integer branch) {
         this.branch = branch;
     }
 
@@ -181,11 +176,4 @@ public class TInvoice implements Serializable {
         this.jobCard = jobCard;
     }
 
-    public List<TCustomerLedger> gettCustomerLedgerList() {
-        return tCustomerLedgerList;
-    }
-
-    public void settCustomerLedgerList(List<TCustomerLedger> tCustomerLedgerList) {
-        this.tCustomerLedgerList = tCustomerLedgerList;
-    }
 }

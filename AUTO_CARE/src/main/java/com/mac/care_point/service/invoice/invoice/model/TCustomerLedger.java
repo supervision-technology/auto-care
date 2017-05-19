@@ -17,11 +17,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
  *
- * @author Kavish Manjitha
+ * @author kavish manjitha
  */
 @Entity
 @Table(name = "t_customer_ledger")
@@ -30,42 +31,43 @@ public class TCustomerLedger implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "index_no")
+    @Column(name = "index_no", nullable = false)
     private Integer indexNo;
-
-    @Column(name = "date")
+    
     @Temporal(TemporalType.DATE)
     private Date date;
-
-    @Column(name = "debit_amount")
+    
+    @Column(name = "debit_amount", precision = 10, scale = 4)
     private BigDecimal debitAmount;
-
-    @Column(name = "credit_amount")
+    
+    @Column(name = "credit_amount", precision = 10, scale = 4)
     private BigDecimal creditAmount;
-
-    @Column(name = "client")
-    private Integer client;
-
+    
     @Size(max = 25)
-    @Column(name = "type")
+    @Column(length = 25)
     private String type;
-
+    
+    @Basic(optional = false)
+    @NotNull
+    @Column(nullable = false)
+    private int client;
+        
     @Column(name = "invoice")
     private Integer invoice;
-
+    
     @Column(name = "payment")
     private Integer payment;
 
     public TCustomerLedger() {
     }
 
-    public TCustomerLedger(Integer indexNo, Date date, BigDecimal debitAmount, BigDecimal creditAmount, Integer client, String type, Integer invoice, Integer payment) {
+    public TCustomerLedger(Integer indexNo, Date date, BigDecimal debitAmount, BigDecimal creditAmount, String type, int client, Integer invoice, Integer payment) {
         this.indexNo = indexNo;
         this.date = date;
         this.debitAmount = debitAmount;
         this.creditAmount = creditAmount;
-        this.client = client;
         this.type = type;
+        this.client = client;
         this.invoice = invoice;
         this.payment = payment;
     }
@@ -102,20 +104,20 @@ public class TCustomerLedger implements Serializable {
         this.creditAmount = creditAmount;
     }
 
-    public Integer getClient() {
-        return client;
-    }
-
-    public void setClient(Integer client) {
-        this.client = client;
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public int getClient() {
+        return client;
+    }
+
+    public void setClient(int client) {
+        this.client = client;
     }
 
     public Integer getInvoice() {
@@ -133,4 +135,5 @@ public class TCustomerLedger implements Serializable {
     public void setPayment(Integer payment) {
         this.payment = payment;
     }
+
 }

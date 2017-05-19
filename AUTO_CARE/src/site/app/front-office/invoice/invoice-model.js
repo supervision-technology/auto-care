@@ -174,17 +174,14 @@
                         this.invoicePaymentData.payment = this.paymentData;
                         this.invoicePaymentData.paymentInformationsList = this.paymentInformationList;
 
-                        console.log(this.invoicePaymentData);
-                        console.log(this.invoicePaymentData);
-
-//                        invoiceService.saveInvoice(JSON.stringify(this.invoicePaymentData))
-//                                .success(function (data) {
-//                                    defer.resolve(data);
-//                                })
-//                                .error(function () {
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
+                        invoiceService.saveInvoice(JSON.stringify(this.invoicePaymentData))
+                                .success(function (data) {
+                                    defer.resolve(data);
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
                     },
                     //total payment CASH,CHEQUE,CARD
                     getTotalPaymentTypeWise: function (type) {
