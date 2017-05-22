@@ -33,7 +33,6 @@
         "app",
         "stockTransferBranchInModule",
         "stockTransferBranchOutModule",
-        "grnModule",
         "directGrnModule",
         "grnApproveModule",
         "purchaseOrderRequestModule",
@@ -236,7 +235,7 @@
                         .when("/stock/transfer/internal-transfer-in", {
                             templateUrl: "app/front-office/stock/internal-transfer/internal-transfer-in/internal-transfer-in.html",
                             controller: "stockTransferInternalInController"
-                })
+                        })
                         .otherwise({
                             redirectTo: "/"
                         });
