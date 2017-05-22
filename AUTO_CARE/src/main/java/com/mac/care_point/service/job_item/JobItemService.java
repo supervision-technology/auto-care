@@ -65,7 +65,7 @@ public class JobItemService {
 
         } else {
             //stock "PENDING"
-            List<TStockLedger> stockData = stockLedgerRepository.findByItemIndexNoAndFormIndexNo(jobItem.getItem(), jobCard);
+            List<TStockLedger> stockData = stockLedgerRepository.findByItemAndFormIndexNo(jobItem.getItem(), jobCard);
             stockLedgerRepository.delete(stockData.get(0));
         }
 
