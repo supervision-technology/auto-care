@@ -35,7 +35,7 @@ public class ItemController {
         return itemService.findAllItems();
     }
     @RequestMapping(value = "/stock-item",method = RequestMethod.GET)
-    public List<MItem> findItemsByTypeAndBranchAndQty() {
+    public List<MItem> findItemsByTypeAndQty() {
         return itemService.findItemsByTypeAndQty(STOCK);
     }
 

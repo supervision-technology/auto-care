@@ -32,8 +32,26 @@ public interface Constant {
 
     //t_payment information table - form names
     public static final String INVOICE_FORM = "INVOICE_FORM";
+    public static final String GRN_APPROVE_FORM = "GRN_APPROVE_FORM";
+    public static final String DIRECT_GRN_FORM = "DIRECT_GRN_FORM";
     public static final String STOCK_FORM = "STOCK_FORM";
-    public static final String GRN_FORM = "GRN_FORM";
+    
+//  store name
+    public static final String MAIN_STOCK = "MAIN_STOCK";
+    public static final String FRONT_STOCK = "FRONT_STOCK";
+    public static final String BULK_STOCK = "BULK_STOCK";
+    
+    //TStock transfer type
+    public static final String INTERNAL_TRANSFER = "INTERNAL_TRANSFER";
+    public static final String EXTERNAL_TRANSFER = "EXTERNAL_TRANSFER";
+    
+    //TStock Transfer Form
+    public static final String BRANCH_TRANSFER_OUT = "BRANCH_TRANSFER_OUT";
+    public static final String BRANCH_TRANSFER_IN = "BRANCH_TRANSFER_IN";
+    public static final String INTERNAL_TRANSFER_IN = "INTERNAL_TRANSFER_IN";
+    public static final String INTERNAL_TRANSFER_OUT = "INTERNAL_TRANSFER_OUT";
+    
+    
     
 
 }

@@ -15,6 +15,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface StockLedgerRepository extends JpaRepository<TStockLedger, Integer>{
 
-    public List<TStockLedger> findByItemIndexNoAndFormIndexNo(Integer jobCard, Integer item);
+    public List<TStockLedger> findByItemAndFormIndexNo(Integer jobCard, Integer item);
     
 }

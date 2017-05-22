@@ -156,6 +156,7 @@
                         this.summaryCalculator();
                     },
                     saveDirectGrn: function () {
+                        console.log(this.data);
                         var defer = $q.defer();
                         var that = this;
 

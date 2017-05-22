@@ -59,13 +59,13 @@ public class JobItemService {
             stockLedger.setInQty(BigDecimal.ZERO);
             stockLedger.setItem(jobItem.getItem());
             stockLedger.setOutQty(jobItem.getStockRemoveQty());
-            stockLedger.setItemIndexNo(jobItem.getItem());
+            stockLedger.setItem(jobItem.getItem());
             stockLedger.setStore(1);
             stockLedgerRepository.save(stockLedger);
 
         } else {
             //stock "PENDING"
-            List<TStockLedger> stockData = stockLedgerRepository.findByItemIndexNoAndFormIndexNo(jobItem.getItem(), jobCard);
+            List<TStockLedger> stockData = stockLedgerRepository.findByItemAndFormIndexNo(jobItem.getItem(), jobCard);
             stockLedgerRepository.delete(stockData.get(0));
         }
 

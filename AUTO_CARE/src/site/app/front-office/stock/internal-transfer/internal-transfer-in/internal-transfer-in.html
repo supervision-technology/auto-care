@@ -1,0 +1,167 @@
+<div class="index-content-header"></div>
+
+<div class="index-content-body ">
+
+    <div class="col-xs-3 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 1px);padding: 5px">
+            <div class="col-xs-12 nopadding" style="flex: 0 0 auto;padding-right: 22px;" ng-show="true">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>
+                    <center>
+                        <label class="h4">
+                            <b>PENDING TRANSFER ORDERS :</b>
+                        </label>
+                    </center>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table> 
+            </div>
+            <div class="row col-xs-12 nopadding" style="flex: 0 0 auto;">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>CURRENT BRANCH :<input class="form-control" id="toBranch" placeholder="to branch" ng-model="model.data.toBranch" 
+                                                       uib-typeahead="branch.indexNo as (branch.branchCode+ ' - ' + branch.name) for branch in model.branches |filter:$viewValue|limitTo:10" 
+                                                       typeahead-input-formatter="model.branchLabel($model)"
+                                                       typeahead-on-select="ui.removeAllData()"
+                                                       typeahead-editable="false" ng-disabled="ui.mode !== 'NEW'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-12 nopadding" style="flex: 0 0 auto;">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>CURRENT STOCK :<input class="form-control" placeholder="to stock" ng-model="model.data.toStock"
+                                                      uib-typeahead="stock.indexNo as (stock.number+ ' - ' + stock.name) for stock in model.stocks |filter:$viewValue | filter:{branch:model.data.toBranch} |limitTo:10" 
+                                                      typeahead-input-formatter="model.stockLabel($model)"
+                                                      typeahead-on-select='ui.getPendingTransferOrders(model.data.toBranch,model.data.toStock)'
+                                                      typeahead-editable="false" ng-disabled="ui.mode !== 'NEW'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="smart-scroll-y" style="height: calc(100vh - 235px);" ng-show="model.pendingTransferOrders.length" >
+                <table class="table-rounded control-table table-hover">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr ng-repeat="order in model.pendingTransferOrders">
+                            <td class="text-center" ng-class="ui.selectedDetailIndex === $index ? 'selected' : ''" ng-click="ui.selectTransferOrder($index)">
+                                <b>{{model.stockLabel(order.fromStore)}}</b>
+                                <a class="btn btn-success pull-right" style="margin-top: 5px"><span class="glyphicon glyphicon-arrow-right"></span></a><br>
+                                <label class="pull-left label label-default" style="margin-top: 8px">{{order.outNumber | fixedLength:5}}</label>
+                                <label class="">{{order.outDate}}</label>
+                                <label class="pull-right label label-default" style="margin-top: 8px">{{order.transferItemList.length}}</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+
+            <div class="placeholder col-md-12" ng-hide="model.pendingTransferOrders.length" style="height: calc(100vh - 284px); padding: 0px 10px 10px 10px;">
+                <h1>EMPTY STOCK TRANSFER REQUEST FOR THIS STOCK :(</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-9 background-light">
+        <div class="row col-xs-12 nopadding">
+            <table class="table-rounded control-table">
+                <col style="width: 16.6%"/>
+                <col style="width: 16.6%"/>
+                <col style="width: 16.6%"/>
+                <col style="width: 16.6%"/>
+                <col style="width: 16.6%"/>
+                <col style="width: 16.6%"/>
+                <tbody>
+                    <tr>
+                        <td>IN NUMBER :<input class="form-control" placeholder="number" ng-model="model.data.inNumber" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td>IN DATE :<input class="form-control" placeholder="date" smart-input="date" ng-model="model.data.inDate" ng-disabled="ui.mode !== 'NEW'"></td>
+                        <td>OUT NUMBER :<input class="form-control" placeholder="out number" ng-model="model.data.outNumber" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td>OUT DATE :<input class="form-control" placeholder="date" smart-input="date" ng-model="model.data.outDate" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td>REF.NO :<input class="form-control" placeholder="ref Number" ng-model="model.data.refNumber" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td>REMARKS :<input class="form-control" placeholder="remarks" ng-model="model.data.remarks" ng-disabled="ui.mode !== 'EDIT'"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-9" ng-show="model.data.transferItemList.length">
+
+        <table class="table-rounded " >
+            <col style="width: 15%"/>
+            <col style="width: 45%"/>
+            <col style="width: 15%"/>
+            <col style="width: 15%"/>
+            <col style="width: 10%"/>
+
+            <thead class="background-dark">
+                <tr>
+                    <th>Barcode</th>
+                    <th>Description</th>
+                    <th class="text-right">Qty</th>
+                    <th></th>
+                    <th>Check</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 296px);">
+            <table class="table-rounded">
+                <col style="width: 15%"/>
+                <col style="width: 45%"/>
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+                <tbody>
+                    <tr class="background-dark" ng-repeat="unit in model.data.transferItemList">
+                        <td><span class="label label-default">{{model.getItemBarcode(unit.item)}}</span></td>
+                        <td class="over-flow-hidden">{{model.getItemDescription(unit.item)}}</td>
+                        <td class="text-right">{{unit.qty | number:2}}</td>
+                        <td></td>
+                        <td>
+                            <a class="btn btn-warning" ng-hide="unit.status" ng-click="ui.unitCheck($index)"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-success" ng-show="unit.status" ng-click="ui.unitUncheck($index)"><span class="glyphicon glyphicon-ok"></span></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="placeholder col-md-9" ng-hide="model.data.transferItemList.length" style="height: calc(100vh - 262px); padding: 0px 10px 10px 10px;">
+        <h1>PLEASE ADD PURCHASE ORDER REQUEST ITEM TO DISPLAY :(</h1>
+    </div>
+    <div class="col-xs-12" style="position: fixed;bottom: 1px;margin-left:-15px;">
+        <table class="table-rounded background-dark col-lg-12">
+            <col style="width: 20%"/>
+            <col style="width: 30%"/>
+            <col style="width: 11%"/>
+            <col style="width: 11%"/>
+            <col style="width: 11%"/>
+            <col style="width: 11%"/>
+            <col style="width: 6%"/>
+            <tbody>
+                <tr class="background-dark">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"><b>SUMMARY :</b></td>
+                    <td><input class="form-control text-right"placeholder="qty" ng-model="model.data.totalQty" ng-disabled="ui.mode != 'EDIT'"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

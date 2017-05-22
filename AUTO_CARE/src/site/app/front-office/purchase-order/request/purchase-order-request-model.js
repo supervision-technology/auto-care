@@ -29,20 +29,6 @@
                                 .success(function (data) {
                                     that.allItems = data;
                                 });
-//
-//                        invoiceService.loadItems()
-//                                .success(function (data) {
-//                                    that.items = data;
-//                                });
-//                        invoiceService.loadVehicles()
-//                                .success(function (data) {
-//                                    that.vehicles = data;
-//                                });
-//
-//                        invoiceService.loadItemUnits()
-//                                .success(function (data) {
-//                                    that.itemUnits = data;
-//                                });
                     },
                     supplierLable: function (model) {
                         var label;
@@ -62,13 +48,10 @@
                                 that.supplierItems.push(value);
                             }
                         });
-                        console.log(that.supplierItems);
                     },
                     validateBarcode: function (barcode) {
                         var selectItem = null;
                         angular.forEach(this.supplierItems, function (value) {
-                            console.log(barcode+" = "+value.barcode);
-                            console.log(barcode);
                             if (value.barcode === barcode) {
                                 selectItem = value;
                                 return;
@@ -135,7 +118,7 @@
                             this.tempData = PurchaseOrderRequestModelFactory.tempData();
                             this.summaryCalculator();
                         }
-                        
+
                     },
 
                     edit: function (indexNo) {
@@ -175,6 +158,22 @@
                         this.summaryData.discountValue = discount;
                         this.data.itemValue = itemValue;
                         this.data.grandTotal = itemValue;
+                    },
+                    summaryCalculatorForLoad: function () {
+                        var qty = 0;
+                        var val = 0;
+                        var discount = 0;
+                        var itemValue = 0;
+                        angular.forEach(this.data.purchaseOrderItemList, function (value) {
+                            qty = parseFloat(qty) + parseFloat(value.qty);
+                            val = parseFloat(val) + parseFloat(value.value);
+                            discount = parseFloat(discount) + parseFloat(value.discountValue);
+                            itemValue = parseFloat(itemValue) + parseFloat(value.netValue);
+                        });
+                        this.summaryData.qty = qty;
+                        this.summaryData.value = val;
+                        this.summaryData.discountValue = discount;
+                        this.data.itemValue = itemValue;
                     },
                     getStockQty: function (item) {
                         var that = this;
@@ -217,7 +216,6 @@
                         }
 
                         if (saveConfirmation) {
-                            console.log(this.data);
                             PurchaseOrderRequestService.savePurchaseOrderRequest(JSON.stringify(this.data))
                                     .success(function (data) {
                                         defer.resolve();
@@ -232,6 +230,24 @@
                         this.data = PurchaseOrderRequestModelFactory.newData();
                         this.tempData = PurchaseOrderRequestModelFactory.tempData();
                         this.summaryData = PurchaseOrderRequestModelFactory.summaryData();
+                    }
+                    , loadPendingPurchaseOrderByNumber: function () {
+                        var that = this;
+                        
+                        this.tempData = PurchaseOrderRequestModelFactory.tempData();
+                        this.summaryData = PurchaseOrderRequestModelFactory.summaryData();
+                        
+                        PurchaseOrderRequestService.loadPendingPurchaseOrderByNumber(this.data.number)
+                                .success(function (data) {
+                                    that.data = data;
+                                    that.summaryCalculatorForLoad();
+                                    if (!that.data.number) {
+                                       Notification.error('Not Found Purchase Order for this Number !');
+                                    }else{
+                                        Notification.info('This Purchasse Order status is '+that.data.status+".");
+                                    }
+                                });
+                                return that.data.number;
                     }
                 };
                 return purchaseOrderRequestModel;
