@@ -34,6 +34,7 @@ public interface Constant {
     public static final String INVOICE_FORM = "INVOICE_FORM";
     public static final String GRN_APPROVE_FORM = "GRN_APPROVE_FORM";
     public static final String DIRECT_GRN_FORM = "DIRECT_GRN_FORM";
+    public static final String STOCK_FORM = "STOCK_FORM";
     
 //  store name
     public static final String MAIN_STOCK = "MAIN_STOCK";

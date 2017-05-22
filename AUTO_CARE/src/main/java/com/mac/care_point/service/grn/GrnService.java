@@ -104,7 +104,7 @@ public class GrnService {
             ledger.setBranch(grn.getBranch());
             ledger.setDate(grn.getDate());
             ledger.setForm(Constant.GRN_APPROVE_FORM);
-            ledger.setFormIndexNo(new BigDecimal(grn.getIndexNo()));
+            ledger.setFormIndexNo(grn.getIndexNo());
             ledger.setAvaragePriceIn(grnItem.getNetValue());
             ledger.setAvaragePriceOut(new BigDecimal(0));
             ledger.setInQty(grnItem.getQty());
@@ -190,7 +190,7 @@ public class GrnService {
         }
         TGrn saveObject = grnRepository.save(grn);
         for (TStockLedger stockLedger : leadgerList) {
-            stockLedger.setFormIndexNo(new BigDecimal(saveObject.getIndexNo()));
+            stockLedger.setFormIndexNo(saveObject.getIndexNo());
             stockLedgerRepository.save(stockLedger);
         }
 

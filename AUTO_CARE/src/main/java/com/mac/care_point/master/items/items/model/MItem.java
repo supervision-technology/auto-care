@@ -93,7 +93,24 @@ public class MItem implements Serializable {
     public MItem() {
     }
 
-   
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, String type, Integer department, Integer brand, Integer category, Integer sub_category, BigDecimal costPrice, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Integer supplier) {
+        this.indexNo = indexNo;
+        this.name = name;
+        this.barcode = barcode;
+        this.printDescription = printDescription;
+        this.unit = unit;
+        this.type = type;
+        this.department = department;
+        this.brand = brand;
+        this.category = category;
+        this.sub_category = sub_category;
+        this.costPrice = costPrice;
+        this.salePriceNormal = salePriceNormal;
+        this.salePriceRegister = salePriceRegister;
+        this.priceCategory = priceCategory;
+        this.supplier = supplier;
+    }
+
     public Integer getIndexNo() {
         return indexNo;
     }
@@ -148,14 +165,6 @@ public class MItem implements Serializable {
 
     public void setDepartment(Integer department) {
         this.department = department;
-    }
-   
-    public Integer getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Integer supplier) {
-        this.supplier = supplier;
     }
 
     public Integer getBrand() {
