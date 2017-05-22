@@ -9,10 +9,10 @@
         border-bottom: $bg-dark-color-border solid 2px;
         text-align: center;
         color: #FFF;
-        
+
         background-color: $primary-color;
         height: 40px;
-        
+
         h4{
             transform: translate( 0,50%);
             margin: 0px;
@@ -49,4 +49,14 @@
 .tile-128{
     width: 128px;
     height: 128px;
+}
+
+.disabled-tiles{
+    opacity: 0.5;
+    pointer-events: none;
+
+    > * {
+        opacity: 0.5;
+        pointer-events: none;
+    }
 }

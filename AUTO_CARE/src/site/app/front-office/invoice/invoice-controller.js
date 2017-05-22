@@ -1,10 +1,16 @@
 (function () {
     angular.module("invoiceModule", ['ui.bootstrap']);
     angular.module("invoiceModule")
-            .controller("invoiceController", function ($scope, optionPane, invoiceModel, Notification, ConfirmPane) {
+            .controller("invoiceController", function ($scope, $filter, optionPane, invoiceModel, Notification, ConfirmPane) {
 
                 $scope.invoiceModel = new invoiceModel();
                 $scope.ui = {};
+
+                $scope.ui.new = function () {
+                    $scope.ui.clear();
+                    $scope.ui.mode = 'NEW';
+                    $scope.invoiceModel.invoiceData.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                };
 
                 //variables pass data to methods
                 $scope.selectedJobCardIndexNo = null;
@@ -16,15 +22,24 @@
 
                     $scope.invoiceModel.invoiceData.jobCard = jobCard.indexNo;
                     $scope.invoiceModel.getJobItemHistory(jobCard.indexNo);
+
                     $scope.invoiceModel.getClientOverPayment(jobCard.client);
                 };
 
                 $scope.ui.clear = function () {
-
+                    $scope.invoiceModel.clear();
+                    $scope.invoiceModel.cashPayment = 0.0;
+                    $scope.invoiceModel.settlementAmount = 0.0;
                 };
 
-                $scope.ui.getBranch = function (indexNo) {
-                    $scope.invoiceModel.paymentInfomationData.branch = $scope.invoiceModel.getBranch(indexNo);
+                $scope.ui.load = function (e) {
+                    var code = e ? e.keyCode || e.which : 13;
+                    if (code === 13) {
+                        $scope.invoiceModel.loadInvoiceData()
+                                .then(function () {
+                                    $scope.ui.mode = 'SELECT';
+                                });
+                    }
                 };
 
                 $scope.ui.saveInvoice = function () {
@@ -34,17 +49,16 @@
                                     .confirm(function () {
                                         $scope.invoiceModel.saveInvoice()
                                                 .then(function (data) {
-                                                    $scope.model.removeJobCard();
+                                                    $scope.ui.mode = "IDEAL";
                                                     $scope.ui.clear();
                                                     optionPane.successMessage("Save Invoice" + data.number);
                                                 });
                                     });
                         } else {
-                            ConfirmPane.successConfirm("Do you want to save invoice Payment Settle OutStanding")
+                            ConfirmPane.successConfirm("Do you want to save invoice Payment Settle")
                                     .confirm(function () {
                                         $scope.invoiceModel.saveInvoice()
                                                 .then(function (data) {
-                                                    $scope.model.removeJobCard();
                                                     $scope.ui.clear();
                                                     optionPane.successMessage("Save Invoice" + data.number);
                                                 });
@@ -65,8 +79,8 @@
                     }
                 };
 
-                $scope.ui.getCardAndChequePaymentDelete = function ($index) {
-                    $scope.invoiceModel.getCardAndChequePaymentDelete($index);
+                $scope.ui.getCardAndChequePaymentDelete = function (number) {
+                    $scope.invoiceModel.getCardAndChequePaymentDelete(number);
                 };
 
                 $scope.ui.getCashPaymentDelete = function () {
@@ -107,14 +121,23 @@
                     }
                 };
 
-                $scope.ui.addClientOverPayment = function (amount) {
+                $scope.ui.insertClientOverPaymentSettlment = function (overPayment, amount) {
                     if ($scope.selectedJobCardIndexNo) {
-                        if (0.0 === parseFloat($scope.invoiceModel.getTotalPaymentTypeWise('OVER_PAYMENT'))) {
-                            $scope.invoiceModel.insertClientOverPayment(amount, 'OVER_PAYMENT');
+                        if (0.0 === parseFloat($scope.invoiceModel.getTotalPaymentTypeWise('OVER_PAYMENT_SETTLMENT'))) {
+                            if (overPayment >= amount) {
+                                $scope.invoiceModel.insertClientOverPaymentSettlment(amount, 'OVER_PAYMENT_SETTLMENT');
+                            } else {
+                                Notification.error("plase enter valid amount");
+                            }
                         }
                     } else {
                         Notification.error("select vehicle");
                     }
+                };
+
+                $scope.ui.deleteOverPayment = function () {
+                    $scope.invoiceModel.settlementAmount = 0.0;
+                    $scope.invoiceModel.deleteOverPayment();
                 };
 
                 $scope.ui.getDiscountRate = function () {
@@ -128,11 +151,10 @@
                 };
 
                 $scope.init = function () {
-                    $scope.$watch("[invoiceModel.invoiceData.amount,invoiceModel.paymentInformationList.length]", function (newVal, oldVal) {
-                        if ($scope.invoiceModel.paymentInformationList.length) {
-                            $scope.invoiceModel.getPaymentDetails();
-                        }
+                    $scope.$watch("[invoiceModel.invoiceData.netAmount,invoiceModel.paymentInformationList.length]", function (newVal, oldVal) {
+                        $scope.invoiceModel.getPaymentDetails();
                     }, true);
+                    $scope.ui.mode = 'IDEAL';
                 };
 
                 $scope.init();

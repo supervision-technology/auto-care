@@ -2,7 +2,7 @@
     <div class="tile-list-title" style="margin-right: 5px;">
         <h4>VEHICLE</h4>
     </div>
-    <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
+    <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);" ng-class="{'disabled-tiles': ui.mode !== 'NEW'}" ng-disabled="ui.mode !== 'NEW'">
         <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in invoiceModel.pendingJobCards" ng-class="{'select-default-row':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
             <span>
                 <img src="/img/01.png"/>  
@@ -22,15 +22,15 @@
                 <div class="col-lg-12" style="padding-top: 10px;">
                     <uib-tabset>
                         <uib-tab index="0" heading="CASH" select="ui.toggleType('CASH');">
-                            <table class="table-rounded control-table">
+                            <table class="table-rounded control-table square-table">
                                 <col style="width: 70%"/>
                                 <col style="width: 15%"/>
                                 <col style="width: 15%"/>
                                 <tbody>
                                     <tr>
-                                        <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.cashPayment"></td>
-                                        <td><a class="btn btn-lg btn-success" ng-click="ui.getCashPayment(invoiceModel.cashPayment, 'CASH');"><span class="glyphicon glyphicon-plus"></span></a> </td>
-                                        <td><a class="btn btn-lg btn-danger" ng-click="ui.getCashPaymentDelete();"><span class="glyphicon glyphicon-remove"></span></a> </td>
+                                        <td><input id="cashPayment" smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.cashPayment" ng-disabled="ui.mode !== 'NEW'"></td>
+                                        <td><a class="btn btn-lg btn-success" ng-click="ui.getCashPayment(invoiceModel.cashPayment, 'CASH');" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-plus"></span></a> </td>
+                                        <td><a class="btn btn-lg btn-danger" ng-click="ui.getCashPaymentDelete();"><span class="glyphicon glyphicon-remove" ng-disabled="ui.mode !== 'NEW'"></span></a> </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -42,21 +42,21 @@
                                 <col style="width: 33.33%"/>
                                 <tbody>
                                     <tr>
-                                        <td><label>Cheque No</label><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.number"> </td>
-                                        <td><label>Date</label><input smart-input="date" class="form-control" ng-model="invoiceModel.paymentInfomationData.chequeDate"> </td>
-                                        <td><label>Amount</label><input smart-input="decimal" class="form-control" ng-model="invoiceModel.paymentInfomationData.amount"> </td>
+                                        <td><label>Cheque No</label><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.number" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                        <td><label>Date</label><input smart-input="date" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.chequeDate" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                        <td><label>Amount</label><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.amount" ng-disabled="ui.mode !== 'NEW'"> </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <table class="table-rounded control-table">
+                            <table class="table-rounded control-table square-table">
                                 <col style="width: 50%"/>
                                 <col style="width: 40%"/>
                                 <col style="width: 10%"/>
                                 <tbody>
                                     <tr>
-                                        <td><label>Bank</label><input class="form-control" ng-model="invoiceModel.paymentInfomationData.bank" uib-typeahead="bank.indexNo as (bank.name) for bank in invoiceModel.bankList|filter:$viewValue|limitTo:10" typeahead-input-formatter="invoiceModel.bankLable($model)" typeahead-on-select="ui.getBranch($model);"> </td>
-                                        <td><label>Branch</label><input class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.branch" uib-typeahead="branch.indexNo as (branch.name) for branch in invoiceModel.branchList|filter:$viewValue|limitTo:10" typeahead-input-formatter="invoiceModel.branchkLable($model)"> </td>
-                                        <td><a class="btn btn-success" ng-click="ui.getInsertCardAndChequePayment(invoiceModel.paymentInfomationData, 'CHEQUE');"><span class="glyphicon glyphicon-plus"></span></a> </td>
+                                        <td><label>Bank</label><input class="form-control" ng-model="invoiceModel.paymentInfomationData.bank" uib-typeahead="bank.indexNo as (bank.name) for bank in invoiceModel.bankList|filter:$viewValue|limitTo:10" typeahead-input-formatter="invoiceModel.bankLable($model)" typeahead-on-select="invoiceModel.findByBranchList($model);" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                        <td><label>Branch</label><input class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.bankBranch" uib-typeahead="branch.indexNo as (branch.name) for branch in invoiceModel.branchSearchList|filter:$viewValue|limitTo:10" typeahead-input-formatter="invoiceModel.branchkLable($model)" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                        <td><a class="btn btn-primary" style="margin-top: 28px" ng-click="ui.getInsertCardAndChequePayment(invoiceModel.paymentInfomationData, 'CHEQUE');" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-plus"></span></a> </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -93,7 +93,7 @@
                                             <td>{{invoiceModel.bankLable(paymenetInformation.bank)}}</td>
                                             <td>{{invoiceModel.branchkLable(paymenetInformation.branch)}}</td>
                                             <td class="text-right">{{paymenetInformation.amount|number:2}}</td>
-                                            <td><a class="btn btn-danger" ng-click="ui.getCardAndChequePaymentDelete($index);"><span class="glyphicon glyphicon-remove"></span></a> </td>
+                                            <td><a class="btn btn-danger" ng-click="ui.getCardAndChequePaymentDelete(number);" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-remove"></span></a> </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -114,23 +114,23 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <table class="table-rounded control-table">
+                            <table class="table-rounded control-table square-table">
                                 <col style="width: 30%"/>
                                 <col style="width: 30%"/>
                                 <col style="width: 30%"/>
                                 <col style="width: 10%"/>
                                 <tbody>
                                     <tr>
-                                        <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.number"> </td>
+                                        <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.number" ng-disabled="ui.mode !== 'NEW'"> </td>
                                         <td>
-                                            <select class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.cardType">
+                                            <select class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.cardType" ng-disabled="ui.mode !== 'NEW'">
                                                 <option>Visa</option>
                                                 <option>Maestro</option>
                                                 <option>American Express</option>
                                             </select>
                                         </td>
-                                        <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.amount"> </td>
-                                        <td><a class="btn btn-success" ng-click="ui.getInsertCardAndChequePayment(invoiceModel.paymentInfomationData, 'CARD');"><span class="glyphicon glyphicon-plus"></span></a> </td>
+                                        <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.amount" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                        <td><a class="btn btn-primary" ng-click="ui.getInsertCardAndChequePayment(invoiceModel.paymentInfomationData, 'CARD');" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-plus"></span></a> </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -145,13 +145,37 @@
                                             <td>{{paymenetInformation.number}}</td>
                                             <td>{{invoiceModel.cardType}}</td>
                                             <td class="text-right">{{paymenetInformation.amount|number:2}}</td>
-                                            <td><a class="btn btn-danger" ng-click="ui.getCardAndChequePaymentDelete($index);"><span class="glyphicon glyphicon-remove"></span></a> </td>
+                                            <td><a class="btn btn-danger" ng-click="ui.getCardAndChequePaymentDelete(number);" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-remove"></span></a> </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </uib-tab>
-                        <uib-tab index="3" heading="OVER PAYMENT" select="ui.toggleType('OVER_PAYMENT');">
+                        <uib-tab index="3" heading="OVER PAYMENT" select="ui.toggleType('OVER_PAYMENT');" disable="ui.mode !== 'NEW'">
+                            <table class="table-rounded control-table square-table">
+                                <col style="width: 40%"/>
+                                <col style="width: 40%"/>
+                                <col style="width: 10%"/>
+                                <col style="width: 10%"/>
+                                <tbody>
+                                    <tr>
+                                        <td><label>Over Payment Amount</label><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.overAmount" disabled="true"> </td>
+                                        <td><label>Settlment Amount</label><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.settlementAmount" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                        <td>
+                                            <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.insertClientOverPaymentSettlment(invoiceModel.paymentData.overAmount, invoiceModel.settlementAmount)" ng-disabled="ui.mode !== 'NEW'">
+                                                <span class="glyphicon glyphicon-plus">
+                                                </span>
+                                            </a> 
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger" style="margin-top: 28px" id="btnAddData" ng-click="ui.deleteOverPayment();" ng-disabled="ui.mode !== 'NEW'">
+                                                <span class="glyphicon glyphicon-remove">
+                                                </span>
+                                            </a> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </uib-tab>
                     </uib-tabset>
                 </div>
@@ -161,11 +185,14 @@
             <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
                 <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
                     <table class="table-rounded control-table">
-                        <thead>
-                            <tr class="selected">
-                                <td class="text-center"><h4>DETAILS</h4></td>
-                            </tr>
-                        </thead>
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr>
+                                <td><label>Number</label></td>
+                                <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoicePaymentData.invoiceData.number" ng-keypress="ui.load($event);" ng-disabled="ui.mode === 'NEW'"> </td>
+                            </tr>  
+                        </tbody>
                     </table>
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
@@ -180,11 +207,11 @@
                             </tr>
                             <tr>
                                 <td><label>Rate</label></td>
-                                <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountRate" ng-change="ui.getDiscountAmount();"> </td>
+                                <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountRate" ng-change="ui.getDiscountAmount();" ng-disabled="ui.mode !== 'NEW'"> </td>
                             </tr>
                             <tr>
                                 <td><label>Amount</label></td>
-                                <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountAmount" ng-change="ui.getDiscountRate();"> </td>
+                                <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountAmount" ng-change="ui.getDiscountRate();" ng-disabled="ui.mode !== 'NEW'"> </td>
                             </tr>
                             <tr>
                                 <td><label>Net Amount</label></td>
@@ -205,6 +232,10 @@
                                 <td><label>Card Amount</label></td>
                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.cardAmount" readonly> </td>
                             </tr>
+                            <tr ng-show="invoiceModel.paymentData.overSettlementAmount">
+                                <td><label>Over Payment Settle Amount</label></td>
+                                <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.overSettlementAmount" readonly> </td>
+                            </tr>
                             <tr>
                                 <td><label>Paid Total</label></td>
                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.totalAmount" readonly> </td>
@@ -212,6 +243,10 @@
                             <tr>
                                 <td><label>Balance</label></td>
                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.balance" readonly> </td>
+                            </tr>
+                            <tr ng-show="invoiceModel.paymentData.overPayment">
+                                <td><label>Over Payment</label></td>
+                                <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.overPayment" readonly> </td>
                             </tr>
                         </tbody>
                     </table>
@@ -221,5 +256,6 @@
     </div>
 </div>
 <div class="fab-container">
-    <a class="fab fab-lg fab-primary" ng-click="ui.saveInvoice()"><i class="glyphicon glyphicon-ok"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.saveInvoice()"><i class="glyphicon glyphicon-ok"></i></a>
 </div>

@@ -11,20 +11,14 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -35,8 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class TPaymentInformation implements Serializable {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "index_no", nullable = false)
     private Integer indexNo;
 
@@ -50,13 +44,13 @@ public class TPaymentInformation implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Column(nullable = false, precision = 10, scale = 4)
+    @Column(name = "amount")
     private BigDecimal amount;
 
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
-    @Column(nullable = false, length = 25)
+    @Column(name = "type")
     private String type;
 
     @Basic(optional = false)
@@ -70,12 +64,10 @@ public class TPaymentInformation implements Serializable {
     private String cardType;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "bank", nullable = false)
     private Integer bank;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "bank_branch", nullable = false)
     private Integer bankBranch;
 
@@ -180,6 +172,11 @@ public class TPaymentInformation implements Serializable {
 
     public void setPayment(Integer payment) {
         this.payment = payment;
+    }
+
+    @Override
+    public String toString() {
+        return "TPaymentInformation{" + "indexNo=" + indexNo + ", number=" + number + ", chequeDate=" + chequeDate + ", amount=" + amount + ", type=" + type + ", formName=" + formName + ", cardType=" + cardType + ", bank=" + bank + ", bankBranch=" + bankBranch + ", payment=" + payment + '}';
     }
 
 }

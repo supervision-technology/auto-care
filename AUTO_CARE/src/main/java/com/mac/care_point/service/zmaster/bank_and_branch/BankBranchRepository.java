@@ -6,6 +6,7 @@
 package com.mac.care_point.service.zmaster.bank_and_branch;
 
 import com.mac.care_point.service.zmaster.bank_and_branch.model.MBankBranch;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Kavish Manjitha
  */
 public interface BankBranchRepository extends JpaRepository<MBankBranch, Integer>{
+
+    public List<MBankBranch> findByBank(Integer bank);
     
 }

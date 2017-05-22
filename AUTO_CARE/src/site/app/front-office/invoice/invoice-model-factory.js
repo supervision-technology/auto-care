@@ -39,7 +39,7 @@
                     };
                     return data;
                 };
-                
+
                 factory.newPaymentInformation = function () {
                     var data = {
                         "indexNo": null,
@@ -50,6 +50,7 @@
                         "formName": null,
                         "payment": null,
                         "bank": null,
+                        "bankBranch": null,
                         "cardType": null
                     };
                     return data;

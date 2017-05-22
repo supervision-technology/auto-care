@@ -39,7 +39,7 @@ public class MBankBranch implements Serializable {
 
     @Size(max = 50)
     @Column(name = "bank")
-    private String bank;
+    private Integer bank;
 
     public MBankBranch() {
     }
@@ -68,11 +68,11 @@ public class MBankBranch implements Serializable {
         this.code = code;
     }
 
-    public String getBank() {
+    public Integer getBank() {
         return bank;
     }
 
-    public void setBank(String bank) {
+    public void setBank(Integer bank) {
         this.bank = bank;
     }
     

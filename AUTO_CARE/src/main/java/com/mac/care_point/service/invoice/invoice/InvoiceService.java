@@ -79,7 +79,6 @@ public class InvoiceService {
         customerLedger.setInvoice(tInvoice.getIndexNo());
         customerLedger.setType(Constant.INVOICE_CREATE);
         customerLedger.setClient(jobCard.getClient());
-        System.out.println(jobCard.getClient());
         clientLegerRepository.save(customerLedger);
 
         //step 02
@@ -91,22 +90,19 @@ public class InvoiceService {
             tPaymentInformation.setFormName(Constant.INVOICE_FORM);
             tPaymentInformation.setPayment(savePaymentData.getIndexNo());
 
-            if (!"OVER_PAYMENT".equals(tPaymentInformation.getType())) {
-                //client cledger save  - payment invoice
+            //client cledger save  - payment invoice
+            if (!"OVER_PAYMENT_SETTLMENT".equals(tPaymentInformation.getType())) {
                 TCustomerLedger customerLedgerPaymnetSave = new TCustomerLedger();
                 customerLedgerPaymnetSave.setDebitAmount(tPaymentInformation.getAmount());
                 customerLedgerPaymnetSave.setDate(new Date());
                 customerLedgerPaymnetSave.setInvoice(tInvoice.getIndexNo());
                 customerLedgerPaymnetSave.setType(Constant.INVOICE_PAYMENT);
                 customerLedgerPaymnetSave.setPayment(savePaymentData.getIndexNo());
-                System.out.println(jobCard.getClient());
                 customerLedgerPaymnetSave.setClient(jobCard.getClient());
                 clientLegerRepository.save(customerLedgerPaymnetSave);
             }
-
             paymentInformationRepostory.save(tPaymentInformation);
         }
-
         //step 03
         //job card finished status
         jobCardRepository.save(jobCard);
@@ -120,12 +116,11 @@ public class InvoiceService {
 
     @Transactional
     public InvoicePayment loadInvoiceDetails(Integer invoiceNumber, Integer branch) {
-        
+
         //get invoice data
         List<TInvoice> getInvoiceList = invoiceRepository.findByNumberAndBranch(invoiceNumber, branch);
         TInvoice tInvoice = getInvoiceList.get(0);
-        
-        
+
         if (getInvoiceList.isEmpty()) {
             throw new EntityNotFoundException("invoice not found for number " + invoiceNumber);
         } else {
@@ -136,10 +131,10 @@ public class InvoiceService {
 
             //get payment data
             TPayment tPayment = paymentRepository.findOne(customerLedger.getPayment());
-            
+
             //payment informetion list
             List<TPaymentInformation> getPaymnetInformationList = paymentInformationRepostory.findByPayment(tPayment.getIndexNo());
-           
+
             //fill invoicePayment
             InvoicePayment invoicePayment = new InvoicePayment();
             invoicePayment.setInvoice(tInvoice);

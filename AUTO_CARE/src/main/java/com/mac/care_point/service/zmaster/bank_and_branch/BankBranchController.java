@@ -10,6 +10,7 @@ import com.mac.care_point.service.zmaster.bank_and_branch.model.MBankBranch;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,11 @@ public class BankBranchController {
     @RequestMapping(value = "/branch", method = RequestMethod.GET)
     public List<MBankBranch> getALlBranch() {
         return bankBranchService.getAllBranch();
+    }
+    
+    @RequestMapping(value = "/find-by-branch/{bank}", method = RequestMethod.GET)
+    public List<MBankBranch> findByBankGetBranchs(@PathVariable Integer bank) {
+        return bankBranchService.findByBankGetBranchs(bank);
     }
 
 }

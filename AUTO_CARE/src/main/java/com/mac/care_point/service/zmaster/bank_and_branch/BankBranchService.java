@@ -26,13 +26,17 @@ public class BankBranchService {
 
     @Autowired
     private BankRepository bankRepository;
-    
+
     public List<MBank> getAllBank() {
         return bankRepository.findAll();
     }
-    
+
     public List<MBankBranch> getAllBranch() {
         return bankBranchRepository.findAll();
+    }
+
+    public List<MBankBranch> findByBankGetBranchs(Integer bank) {
+        return bankBranchRepository.findByBank(bank);
     }
 
 }

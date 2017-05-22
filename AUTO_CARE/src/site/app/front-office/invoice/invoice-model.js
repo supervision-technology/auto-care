@@ -11,6 +11,7 @@
                     pendingJobCards: [],
                     bankList: [],
                     branchList: [],
+                    branchSearchList: [],
                     //trasactons list
                     invoiceData: {},
                     paymentData: {},
@@ -26,11 +27,7 @@
                         this.paymentInfomationData = invoiceFactory.newPaymentInformation();
                         //payment invoice model (mix model)
                         this.invoicePaymentData = invoiceFactory.newInvoicePayment();
-
-                        invoiceService.pendingJobCards()
-                                .success(function (data) {
-                                    that.pendingJobCards = data;
-                                });
+                        this.relordPendingJobCard();
 
                         invoiceService.loadVehicle()
                                 .success(function (data) {
@@ -46,19 +43,19 @@
                                 .success(function (data) {
                                     that.bankList = data;
                                 });
-
+                                
                         invoiceService.loadBranch()
                                 .success(function (data) {
                                     that.branchList = data;
                                 });
                     },
                     clear: function () {
-                        console.log("clear");
                         this.invoiceData = invoiceFactory.newInvoiceData();
                         this.paymentData = invoiceFactory.newPaymentData();
                         this.paymentInfomationData = invoiceFactory.newPaymentInformation();
                         //payment invoice model (mix model)
                         this.invoicePaymentData = invoiceFactory.newInvoicePayment();
+                        this.paymentInformationList = [];
                     },
                     vehicle: function (indexNo) {
                         var data = "";
@@ -100,15 +97,18 @@
                         });
                         return data;
                     },
-                    getBranch: function (bank) {
-                        var data = "";
-                        angular.forEach(this.branchList, function (values) {
-                            if (values.bank === bank) {
-                                data = values;
-                                return;
-                            }
-                        });
-                        return data;
+                    findByBranchList: function (bank) {
+                        var that = this;
+                        var defer = $q;
+                        invoiceService.loadBranchByBank(bank)
+                                .success(function (data) {
+                                    that.branchSearchList = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        defer.promise;
                     },
                     getJobItemHistory: function (jobCard) {
                         var defer = $q.defer();
@@ -130,41 +130,44 @@
                         return  defer.promise;
                     },
                     getClientOverPayment: function (client) {
-//                        var defer = $q.defer();
-//                        var that = this;
-//                        invoiceService.getClientOverPayment(client)
-//                                .success(function (data) {
-//                                    if (parseInt(data) > 0) {
-//                                        that.invoiceData.overAmount = parseFloat(data);
-//                                        defer.resolve();
-//                                    } else {
-//                                        that.invoiceData.outStandingAmount = parseFloat(-1 * data);
-//                                        defer.resolve();
-//                                    }
-//                                })
-//                                .error(function () {
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
+                        var defer = $q.defer();
+                        var that = this;
+                        invoiceService.getClientOverPayment(client)
+                                .success(function (data) {
+                                    that.paymentData.overAmount = parseFloat(data);
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
                     },
-                    loadInvoiceData: function (invoiceNumber) {
-//                        var defer = $q.defer();
-//                        var that = this;
-//                        invoiceService.loadInvoiceData(invoiceNumber)
-//                                .success(function (data) {
-//                                    that.invoicePaymentData = invoiceFactory.newInvoicePayment();
-//                                    angular.extend(that.invoicePaymentData, data);
-//                                    that.invoiceData = that.invoicePaymentData.invoice;
-//                                    that.paymentData = that.invoicePaymentData.payment;
-//                                    that.paymentInformationList = that.invoicePaymentData.paymentInformationsList;
-//
-//                                    console.log(that.invoicePaymentData);
-//                                    that.getPaymentDetails();
-//                                })
-//                                .error(function () {
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
+                    loadInvoiceData: function () {
+                        var defer = $q.defer();
+                        var that = this;
+                        invoiceService.loadInvoiceData(this.invoicePaymentData.invoiceData.number)
+                                .success(function (data) {
+                                    that.clear();
+                                    that.invoicePaymentData = data;
+                                    that.invoiceData = that.invoicePaymentData.invoice;
+                                    that.paymentData = that.invoicePaymentData.payment;
+                                    that.paymentInformationList = that.invoicePaymentData.paymentInformationsList;
+
+                                    that.cashPayment = parseFloat(that.getTotalPaymentTypeWise('CASH'));
+                                    that.paymentData.overSettlementAmount = parseFloat(that.getTotalPaymentTypeWise('OVER_PAYMENT_SETTLMENT'));
+                                    that.getPaymentDetails();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    relordPendingJobCard: function () {
+                        var that = this;
+                        invoiceService.pendingJobCards()
+                                .success(function (data) {
+                                    that.pendingJobCards = data;
+                                });
                     },
                     saveInvoice: function () {
                         var that = this;
@@ -173,9 +176,10 @@
                         this.invoicePaymentData.invoice = this.invoiceData;
                         this.invoicePaymentData.payment = this.paymentData;
                         this.invoicePaymentData.paymentInformationsList = this.paymentInformationList;
-
                         invoiceService.saveInvoice(JSON.stringify(this.invoicePaymentData))
                                 .success(function (data) {
+                                    that.relordPendingJobCard();
+                                    that.invoicePaymentData.invoice.jobCard;
                                     defer.resolve(data);
                                 })
                                 .error(function () {
@@ -200,22 +204,24 @@
                         this.paymentData.cashAmount = parseFloat(this.getTotalPaymentTypeWise('CASH'));
                         this.paymentData.chequeAmount = parseFloat(this.getTotalPaymentTypeWise('CHEQUE'));
                         this.paymentData.cardAmount = parseFloat(this.getTotalPaymentTypeWise('CARD'));
-                        this.paymentData.overAmount = parseFloat(this.getTotalPaymentTypeWise('OVER_PAYMENT'));
+                        this.paymentData.overSettlementAmount = parseFloat(this.getTotalPaymentTypeWise('OVER_PAYMENT_SETTLMENT'));
 
                         this.paymentData.totalAmount =
                                 parseFloat(this.paymentData.cashAmount)
                                 + parseFloat(this.paymentData.cardAmount)
                                 + parseFloat(this.paymentData.chequeAmount)
-                                + parseFloat(this.paymentData.overAmount);
+                                + parseFloat(this.paymentData.overSettlementAmount);
 
                         this.paymentData.balance = parseFloat(this.invoiceData.netAmount - this.paymentData.totalAmount);
 
-//                        if (parseFloat(this.paymentData.balance) < 0) {
-//                            this.invoiceData.overPayment = parseFloat(-1 * this.paymentData.balance);
-//                            this.paymentData.balance = 0.0;
-//                        } else {
-//                            this.invoiceData.overPayment = 0.0;
-//                        }
+                        if (parseFloat(this.paymentData.balance) < 0) {
+
+                            this.paymentData.overPayment = parseFloat(-1 * this.paymentData.balance);
+
+                            this.paymentData.balance = 0.0;
+                        } else {
+                            this.paymentData.overPayment = 0.0;
+                        }
                     },
                     //insert cash payment
                     getInsertCashPayment: function (amount, type) {
@@ -231,16 +237,34 @@
                         this.paymentInfomationData = {};
                     },
                     //insert client over payment settle
-                    insertClientOverPayment: function (amount, type) {
-                        this.paymentInfomationData = invoiceFactory.paymentInformation();
+                    insertClientOverPaymentSettlment: function (amount, type) {
+                        this.paymentInfomationData = invoiceFactory.newPaymentInformation();
                         this.paymentInfomationData.type = type;
                         this.paymentInfomationData.amount = amount;
                         this.paymentInformationList.push(this.paymentInfomationData);
                         this.paymentInfomationData = {};
                     },
+                    deleteOverPayment: function () {
+                        var that = this;
+                        angular.forEach(this.paymentInformationList, function (values) {
+                            if (values.type === "OVER_PAYMENT_SETTLMENT") {
+                                that.paymentInformationList.splice(that.paymentInformationList.indexOf(values), 1);
+                                that.getPaymentDetails();
+                                ;
+                            }
+                        });
+                    },
                     //delete card payment and cheque payment
-                    getCardAndChequePaymentDelete: function ($index) {
-                        this.paymentInformationList.splice($index, 1);
+                    getCardAndChequePaymentDelete: function (number) {
+                        var that = this;
+                        var id = -1;
+                        for (var i = 0; i < that.paymentInformationList.length; i++) {
+                            if (that.paymentInformationList[i].number === number) {
+                                id = i;
+                            }
+                        }
+                        this.paymentInformationList.splice(id, 1);
+                        this.getPaymentDetails();
                     },
                     //cash payment delete
                     getCashPaymentDelete: function () {
@@ -248,6 +272,7 @@
                         angular.forEach(this.paymentInformationList, function (values) {
                             if (values.type === 'CASH') {
                                 that.paymentInformationList.splice(that.paymentInformationList.indexOf(values), 1);
+                                that.getPaymentDetails();
                             }
                         });
                     }

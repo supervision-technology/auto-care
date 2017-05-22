@@ -24,6 +24,10 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/branch");
         };
 
+        this.loadBranchByBank = function (bank) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/find-by-branch/" + bank);
+        };
+
         this.getJobItemHistory = function (indexNo) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-by-job-card-items/" + indexNo);
         };
