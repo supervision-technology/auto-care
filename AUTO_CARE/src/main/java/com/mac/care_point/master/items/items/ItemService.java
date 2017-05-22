@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class ItemService {
-    
+
     @Autowired
     private ItemRepository itemRepository;
     
@@ -84,11 +84,11 @@ public class ItemService {
         return itemRepository.findByCategoryAndPriceCategory(category, packageCategory);
     }
     
-    List<MItem> findItemsByTypeAndQty(String TYPE) {
+    public List<MItem> findItemsByTypeAndQty(String TYPE) {
         return itemRepository.findByType(TYPE);
     }
-    
-    List<MItem> getSupplierItem(String stock, String nonStock) {
-        return itemRepository.findByTypeOrType(stock, nonStock);
+
+    public List<MItem> getSupplierItem(String stock, String nonStock) {
+        return itemRepository. findByTypeOrType(stock,nonStock);
     }
 }

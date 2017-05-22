@@ -93,6 +93,7 @@ public class MItem implements Serializable {
     public MItem() {
     }
 
+   
     public Integer getIndexNo() {
         return indexNo;
     }
@@ -147,6 +148,14 @@ public class MItem implements Serializable {
 
     public void setDepartment(Integer department) {
         this.department = department;
+    }
+   
+    public Integer getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Integer supplier) {
+        this.supplier = supplier;
     }
 
     public Integer getBrand() {

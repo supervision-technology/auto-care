@@ -10,6 +10,7 @@ import com.mac.care_point.service.purchase_order.PurchaseOrderStockLedgerReposit
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrderDetail;
 import java.math.BigDecimal;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -52,6 +53,10 @@ public class PurchaseOrderService {
 
     public double getStockQty(Integer item, Integer branch) {
         return stockLedgerRepositoy.getStockQty(item, branch);
+    }
+
+    TPurchaseOrder loadPendingPurchaseOrder(Integer number, Integer branch) {
+        return purchaseOrderRepository.findByNumberAndBranchAndIsView(number,branch,true);
     }
 
 }

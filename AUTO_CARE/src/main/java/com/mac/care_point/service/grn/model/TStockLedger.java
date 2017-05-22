@@ -14,13 +14,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -64,6 +61,15 @@ public class TStockLedger implements Serializable {
 
     @Column(name = "store")
     private Integer store;
+    
+    @Column(name = "avarage_price_in")
+    private BigDecimal avaragePriceIn;
+    
+    @Column(name = "avarage_price_out")
+    private BigDecimal avaragePriceOut;
+    
+    @Column(name = "form_index_no")
+    private BigDecimal formIndexNo;
 
     public TStockLedger() {
     }
@@ -79,6 +85,9 @@ public class TStockLedger implements Serializable {
         this.branch = branch;
         this.item = item;
         this.store = store;
+        this.avaragePriceIn = avaragePriceIn;
+        this.avaragePriceOut = avaragePriceOut;
+        this.formIndexNo = formIndexNo;
     }
 
     public Integer getIndexNo() {
@@ -145,20 +154,28 @@ public class TStockLedger implements Serializable {
         this.store = store;
     }
 
+    public BigDecimal getAvaragePriceIn() {
+        return formIndexNo;
+    }
+
+    public void setAvaragePriceIn(BigDecimal avaragePriceIn) {
+        this.avaragePriceIn = avaragePriceIn;
+    }
+
+    public BigDecimal getAvaragePriceOut() {
+        return avaragePriceOut;
+    }
+
+    public void setAvaragePriceOut(BigDecimal avaragePriceOut) {
+        this.avaragePriceOut = avaragePriceOut;
+    }
+
     public Integer getFormIndexNo() {
         return formIndexNo;
     }
 
     public void setFormIndexNo(Integer formIndexNo) {
         this.formIndexNo = formIndexNo;
-    }
-
-    public Integer getItemIndexNo() {
-        return itemIndexNo;
-    }
-
-    public void setItemIndexNo(Integer itemIndexNo) {
-        this.itemIndexNo = itemIndexNo;
     }
 
 }
