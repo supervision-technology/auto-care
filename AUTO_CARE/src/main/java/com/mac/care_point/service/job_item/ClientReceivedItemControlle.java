@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 @RequestMapping("/api/care-point/transaction/client-received-item")
-public class ClientReceivedItemControle {
+public class ClientReceivedItemControlle {
 
     @Autowired
     private ClientReceivedItemService clientReceivedItemService;

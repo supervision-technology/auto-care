@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.zmaster.bank_and_branch;
 
+import com.mac.care_point.service.zmaster.bank_and_branch.model.MBank;
 import com.mac.care_point.service.zmaster.bank_and_branch.model.MBankBranch;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @CrossOrigin
-@RequestMapping(value = "/api/care-point/service/zmaster/bankbranch")
+@RequestMapping(value = "/api/care-point/service/zmaster")
 public class BankBranchController {
 
     @Autowired
     public BankBranchService bankBranchService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public List<MBankBranch> getALlBranckAndBranch() {
-        return bankBranchService.getALlBranckAndBranch();
+    @RequestMapping(value = "/bank", method = RequestMethod.GET)
+    public List<MBank> getALlBranck() {
+        return bankBranchService.getAllBank();
+    }
+
+    @RequestMapping(value = "/branch", method = RequestMethod.GET)
+    public List<MBankBranch> getALlBranch() {
+        return bankBranchService.getAllBranch();
     }
 
 }

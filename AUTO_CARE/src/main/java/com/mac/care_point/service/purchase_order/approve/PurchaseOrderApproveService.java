@@ -23,15 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class PurchaseOrderApproveService {
 
-     @Autowired
+    @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
 
     List<TPurchaseOrder> getPendingPurchaseOrders(Integer branch, String status) {
-        return purchaseOrderRepository.findByBranchAndStatus(branch,status);
+        return purchaseOrderRepository.findByBranchAndStatusAndIsView(branch, status,true);
     }
 
     TPurchaseOrder savePurchaseOrderApprove(TPurchaseOrder purchaseOrder, String status) {
-       
+
         for (TPurchaseOrderDetail detail : purchaseOrder.getPurchaseOrderItemList()) {
             detail.setPurchaseOrder(purchaseOrder);
             detail.setOrderQty(detail.getQty());
@@ -41,8 +41,12 @@ public class PurchaseOrderApproveService {
         }
         return purchaseOrderRepository.save(purchaseOrder);
     }
-   
 
-    
-    
+    Integer deletePurchaseOrder(Integer indexNo) {
+        TPurchaseOrder purchaseOrder = purchaseOrderRepository.getOne(indexNo);
+        purchaseOrder.setIsView(Boolean.FALSE);
+        purchaseOrderRepository.save(purchaseOrder);
+        return indexNo;
+    }
+
 }

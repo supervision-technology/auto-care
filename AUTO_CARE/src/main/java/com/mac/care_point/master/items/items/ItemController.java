@@ -41,7 +41,6 @@ public class ItemController {
 
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
     public MItem saveItem(@RequestBody MItem item) {
-        //TODO: set login branch
         return itemService.saveItem(item);
     }
 

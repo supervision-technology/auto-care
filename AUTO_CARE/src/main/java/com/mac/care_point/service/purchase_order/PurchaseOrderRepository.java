@@ -25,4 +25,6 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
 
     public List<TPurchaseOrder> findByBranchAndStatusAndIsView(Integer branch, String status, int i);
 
+    public TPurchaseOrder findByNumberAndBranchAndIsView(Integer number, Integer branch,boolean b);
+
 }

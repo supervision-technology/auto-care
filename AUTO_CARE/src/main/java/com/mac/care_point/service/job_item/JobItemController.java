@@ -6,6 +6,7 @@
 package com.mac.care_point.service.job_item;
 
 import com.mac.care_point.service.job_item.model.TJobItem;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +27,8 @@ public class JobItemController {
 
     @Autowired
     private JobItemService jobItemService;
+
+    private final Integer BRANCH = 1;
 
     //for service selections
     @RequestMapping(value = "/save-job-items", method = RequestMethod.POST)
@@ -48,9 +51,24 @@ public class JobItemController {
     }
 
     //for final check list(complited and pending)
-    @RequestMapping(value = "/check-item/{item}/{status}", method = RequestMethod.GET)
-    public TJobItem checkItem(@PathVariable Integer item, @PathVariable String status) {
-        return jobItemService.checkItem(item, status);
-
+    @RequestMapping(value = "/check-item/{item}/{status}/{jobCard}", method = RequestMethod.GET)
+    public TJobItem checkItem(@PathVariable Integer item, @PathVariable String status, @PathVariable Integer jobCard) {
+        //TODO:get login branch
+        return jobItemService.checkItem(item, BRANCH, jobCard, status);
     }
+
+    //get stock leger get item qty for item selection stock item qty
+    @RequestMapping(value = "/get-item-qty-by-stock", method = RequestMethod.GET)
+    public List<Object[]> getItemQtyByStockLeger() {
+        //TODO:get login branch
+        return jobItemService.getItemQtyByStockLeger(BRANCH);
+    }
+
+    //find by stock item qty from item
+    @RequestMapping(value = "/get-item-qty-by-stock/{item}", method = RequestMethod.GET)
+    public BigDecimal getItemQtyByStockLeger(@PathVariable Integer item) {
+        //TODO:get login branch
+        return jobItemService.findByItemStockItem(BRANCH, item);
+    }
+
 }

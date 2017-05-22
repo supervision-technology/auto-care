@@ -25,6 +25,7 @@
                         }
                     }
                 };
+                
                 $scope.ui.calculatedValue = function () {
                     $scope.model.tempData.value = $scope.model.tempData.qty * $scope.model.tempData.price;
                     $scope.model.tempData.discountValue = 0;

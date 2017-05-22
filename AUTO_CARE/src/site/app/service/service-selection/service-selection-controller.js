@@ -3,43 +3,66 @@
     angular.module("serviceSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, $routeParams, ServiceSelectionModel, ServiceSelectionService, Notification, ConfirmPane) {
-
-                $scope.model = new ServiceSelectionModel();
+            .controller("serviceSelectionController", function ($scope, ItemSelectionModel, Notification, ConfirmPane) {
+                $scope.model = new ItemSelectionModel();
                 $scope.ui = {};
 
-                //variables pass data to methods
-                $scope.selectedJobCardIndexNo = null;
+                $scope.ui.model = "CATEGORY";
                 $scope.selectVehicleType = null;
-                $scope.selectVehiclePriceCategory = null;
+                $scope.selectPackageItemPosition = null;
+                $scope.selectedJobCardIndexNo = null;
 
-                $scope.ui.selectedJobCardRow = function (jobCard) {
+                $scope.ui.selectedJobCardRow = function (jobCardIndexNo) {
+                    //find select job card history
+                    $scope.selectVehicleType = null;
+                    $scope.model.findJobCardDetail(jobCardIndexNo)
+                            .then(function () {
+                                $scope.selectedJobCardIndexNo = jobCardIndexNo;
+                                $scope.selectVehicleType = $scope.model.vehicleData($scope.model.jobCardData.vehicle).type;
+                            });
+                    //view select job item history
+                    $scope.model.getJobItemHistory(jobCardIndexNo);
 
-                    //job card seletion
-                    $scope.selectedJobCardIndexNo = jobCard.indexNo;
+                    //job card select get customer reserved item list
+                    $scope.model.findByJobCardCustomerReceiveItem(jobCardIndexNo);
 
-                    //get vehicle type and price category
-                    $scope.selectVehicleType = $scope.model.vehicleData(jobCard.vehicle).type;
-                    $scope.selectVehiclePriceCategory = jobCard.priceCategory;
-
-                    //get price category items
-                    $scope.model.getItemByPriceCategory($scope.selectVehiclePriceCategory);
-
-                    //get job card history
-                    $scope.model.getJobItemHistory(jobCard.indexNo);
+                    $scope.model.findItemsForStockLeger();
+                    $scope.selectIemUnit = null;
                 };
 
-                //get package items
-                $scope.viewPackageDetails = function ($index, package) {
-                    $scope.selectPackagePosition = null;
+                //Category names = PACKAGE,SERVICE AND STOCK ITEMS
+                $scope.ui.categorySelections = function (data) {
+                    //package or stock items
+                    if (!$scope.selectedJobCardIndexNo) {
+                        Notification.error("plase select job card");
+                    } else {
+                        if (data.staticFeild) {
+                            if (data.staticFeildName === 'PACKAGE') {
+                                $scope.ui.model = "PACKAGE";
+                                $scope.model.filterItems = [];
+                                $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
+                            } else if (data.staticFeildName === 'STOCK') {
+                                $scope.ui.model = "STOCK";
+                                $scope.model.findItemsForStockLeger();
+                            }
+                        } else {
+                            //service -  lord items
+                            $scope.ui.model = "SERVICE";
+                            $scope.model.filterItems = [];
+                            $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
+                        }
+                    }
+                };
+
+                //back to category page
+                $scope.ui.backToCategory = function () {
+                    $scope.ui.model = "CATEGORY";
+                };
+
+                $scope.ui.getPackageDetails = function ($index, package) {
                     $scope.model.getPackageItems(package);
                     $scope.isVisible = $scope.isVisible === 0 ? true : false;
                     $scope.selectPackageItemPosition = $scope.selectPackageItemPosition === $index ? -1 : $index;
-                };
-
-                //get item units by drop dowsn list
-                $scope.ui.getItemUnits = function ($index, package) {
-                    return $scope.model.getItemUnits(package, $scope.selectVehiclePriceCategory);
                 };
 
                 //add package and serveice items
@@ -50,23 +73,6 @@
                             ConfirmPane.successConfirm("Do you sure want to add item")
                                     .confirm(function () {
                                         $scope.model.addPackageAndServiceItem(item, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
-                                    });
-                        } else {
-                            Notification.error("this item is allrday exsist");
-                        }
-                    } else {
-                        Notification.error("select vehicle");
-                    }
-                };
-
-                //add stock items
-                $scope.ui.addNormalItem = function (item, qty) {
-                    if ($scope.selectedJobCardIndexNo) {
-                        var itemStatus = $scope.model.duplicateItemCheck(item);
-                        if (angular.isUndefined(itemStatus)) {
-                            ConfirmPane.successConfirm("Do you sure want to add item")
-                                    .confirm(function () {
-                                        $scope.model.addNormalItem(item, qty, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
                                     });
                         } else {
                             Notification.error("this item is allrday exsist");
@@ -106,25 +112,23 @@
                             });
                 };
 
-                $scope.ui.toggleType = function (type) {
-                    $scope.ui.type = type;
-                };
-
-                $scope.init = function () {
-                    var jobCardIndexNo = parseInt($routeParams.jobCardIndexNo);
-                    if (jobCardIndexNo) {
-                        ServiceSelectionService.pendingJobCards()
-                                .success(function (data) {
-                                    angular.forEach(data, function (values) {
-                                        if (values.indexNo === jobCardIndexNo) {
-                                            $scope.ui.selectedJobCardRow(values);
-                                        }
-                                    });
-                                });
+                //add customer reserved items
+                $scope.ui.addCustomerReservedItem = function () {
+                    if (!$scope.model.customerReservedItemData.name) {
+                        Notification.error("please enter item name");
+                    } else if (!$scope.model.customerReservedItemData.qty) {
+                        Notification.error("please select qty");
+                    } else if ($scope.model.customerReservedItemData.name && $scope.model.customerReservedItemData.qty) {
+                        $scope.model.saveCustomerReceiveItem($scope.selectedJobCardIndexNo);
                     }
                 };
 
-                $scope.init();
-
+                //delete customer recerved item
+                $scope.ui.deleteCustomerReservedItem = function ($index, indexNo) {
+                    ConfirmPane.dangerConfirm("Do you sure want to delete item")
+                            .confirm(function () {
+                                $scope.model.deleteCustomerReceiveItem($index, indexNo);
+                            });
+                };
             });
 }());

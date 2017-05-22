@@ -19,9 +19,11 @@ import javax.validation.constraints.Size;
  *
  * @author Kavish Manjitha
  */
+
+
 @Entity
-@Table(name = "m_bank_branch")
-public class MBankBranch implements Serializable {
+@Table(name = "m_bank")
+public class MBank implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,11 +39,7 @@ public class MBankBranch implements Serializable {
     @Column(name = "code")
     private String code;
 
-    @Size(max = 50)
-    @Column(name = "bank")
-    private String bank;
-
-    public MBankBranch() {
+    public MBank() {
     }
 
     public Integer getIndexNo() {
@@ -67,13 +65,4 @@ public class MBankBranch implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
-
-    public String getBank() {
-        return bank;
-    }
-
-    public void setBank(String bank) {
-        this.bank = bank;
-    }
-    
 }

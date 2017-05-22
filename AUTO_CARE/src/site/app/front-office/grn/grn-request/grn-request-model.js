@@ -215,6 +215,7 @@
                         if (saveConfirmation) {
 
                             var defer = $q.defer();
+                            this.data.grandAmount=this.data.amount;
                             GrnService.saveGrnReceive(JSON.stringify(this.data))
                                     .success(function (data) {
                                         Notification.success('GRN Receive Save Success !');
@@ -251,7 +252,7 @@
                         var that = this;
                         var totalGrnQty = 0;
                         angular.forEach(this.data.grnItemList, function (value) {
-                            totalGrnQty += value.qty;
+                            totalGrnQty += parseFloat(value.qty);
                         });
                         this.totalGrnQty = totalGrnQty;
                     },

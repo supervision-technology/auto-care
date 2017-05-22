@@ -15,7 +15,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface StoreRepository extends JpaRepository<MStore, Integer>{
 
-    public List<MStore> findByTypeAndBranch(String MAIN_STOCK,Integer branch);
+    public List<MStore> findByBranchAndType(int branch, String MAIN_STOCK);
+
+    public MStore findFirst1ByOrderByNumberDesc();
     
     
 }

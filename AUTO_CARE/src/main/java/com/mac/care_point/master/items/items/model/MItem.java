@@ -49,9 +49,6 @@ public class MItem implements Serializable {
     @Column(name = "unit")
     private String unit;
 
-    @Column(name = "cost_price")
-    private Short costPrice;
-
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
@@ -74,38 +71,40 @@ public class MItem implements Serializable {
     @Column(name = "sub_category")
     private Integer sub_category;
 
+    @Column(name = "cost_price")
+    private BigDecimal costPrice;
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "sale_price_normal")
-    private short salePriceNormal;
+    private BigDecimal salePriceNormal;
 
     @Basic(optional = false)
     @NotNull
     @Column(name = "sale_price_register")
-    private short salePriceRegister;
+    private BigDecimal salePriceRegister;
 
     @Column(name = "price_category")
     private Integer priceCategory;
 
     @Column(name = "supplier")
     private Integer supplier;
-  
 
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer priceCategory, Integer supplier) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer priceCategory, Integer branch, Integer supplier) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
         this.printDescription = printDescription;
         this.unit = unit;
-        this.costPrice = costPrice;
         this.type = type;
         this.department = department;
         this.brand = brand;
         this.category = category;
         this.sub_category = sub_category;
+        this.costPrice = costPrice;
         this.salePriceNormal = salePriceNormal;
         this.salePriceRegister = salePriceRegister;
         this.priceCategory = priceCategory;
@@ -150,14 +149,6 @@ public class MItem implements Serializable {
 
     public void setUnit(String unit) {
         this.unit = unit;
-    }
-
-    public Short getCostPrice() {
-        return costPrice;
-    }
-
-    public void setCostPrice(Short costPrice) {
-        this.costPrice = costPrice;
     }
 
     public String getType() {
@@ -208,19 +199,27 @@ public class MItem implements Serializable {
         this.sub_category = sub_category;
     }
 
-    public short getSalePriceNormal() {
+    public BigDecimal getCostPrice() {
+        return costPrice;
+    }
+
+    public void setCostPrice(BigDecimal costPrice) {
+        this.costPrice = costPrice;
+    }
+
+    public BigDecimal getSalePriceNormal() {
         return salePriceNormal;
     }
 
-    public void setSalePriceNormal(short salePriceNormal) {
+    public void setSalePriceNormal(BigDecimal salePriceNormal) {
         this.salePriceNormal = salePriceNormal;
     }
 
-    public short getSalePriceRegister() {
+    public BigDecimal getSalePriceRegister() {
         return salePriceRegister;
     }
 
-    public void setSalePriceRegister(short salePriceRegister) {
+    public void setSalePriceRegister(BigDecimal salePriceRegister) {
         this.salePriceRegister = salePriceRegister;
     }
 
@@ -230,6 +229,14 @@ public class MItem implements Serializable {
 
     public void setPriceCategory(Integer priceCategory) {
         this.priceCategory = priceCategory;
+    }
+
+    public Integer getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Integer supplier) {
+        this.supplier = supplier;
     }
 
 }

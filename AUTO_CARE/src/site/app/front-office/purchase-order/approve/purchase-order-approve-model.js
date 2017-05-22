@@ -66,7 +66,6 @@
                         var value = 0.00;
                         angular.forEach(this.pendingPurchaseOrderList, function (value) {
                             value += parseFloat(value.grandTotal2);
-                            console.log(value.grandTotal);
                         });
                         return value;
                     },
@@ -141,6 +140,7 @@
 
                         if (saveConfirmation) {
                             var that = this;
+                            this.data.grandAmount = this.data.grandTotal;
                             PurchaseOrderRequestService.savePurchaseOrderApprove(JSON.stringify(this.data))
                                     .success(function (data) {
                                         that.clear();
@@ -159,12 +159,17 @@
                     edit: function (indexNo) {
                         this.tempData = this.data.purchaseOrderItemList[indexNo];
                         this.data.purchaseOrderItemList.splice(indexNo, 1);
-                        this.tempData.barcode=this.getItem(this.tempData.item).barcode;
+                        this.tempData.barcode = this.getItem(this.tempData.item).barcode;
                         this.summaryCalculator();
-                        console.log(this.tempData.barcode);
                     },
                     discard: function () {
-                       this.clear();
+                        var that=this;
+                        PurchaseOrderRequestService.deletePurchaseOrder(this.data.indexNo)
+                                .success(function (data) {
+                                    Notification.success('Selected Pending Purchase Order Deleted Success !');
+                                    that.clear();
+                                });
+
                     },
                     addData: function () {
                         var that = this;
@@ -193,7 +198,6 @@
                         this.tempData = PurchaseOrderRequestModelFactory.tempData();
                         this.summaryData = PurchaseOrderRequestModelFactory.summaryData();
                         this.loadPendingPurchaseOrder();
-                        console.log('clear');
                     }
                 };
                 return purchaseOrderApproveModel;

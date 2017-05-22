@@ -7,9 +7,14 @@
 
                 $scope.ui.new = function () {
                     $scope.ui.mode = 'NEW';
+                    $scope.model.clear();
+                    $scope.chxNBT = false;
+                    $scope.chxVAT = false;
+                    
                     $scope.model.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
-                    $scope.model.data.deliverDate= $filter('date')(new Date(), 'yyyy-MM-dd');
+                    $scope.model.data.deliverDate = $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.ui.focus('#date');
+
                 };
 
                 $scope.ui.edit = function (indexNo) {
@@ -19,6 +24,19 @@
                 $scope.ui.delete = function (indexNo) {
                     $scope.model.delete(indexNo);
                 };
+                $scope.ui.loadPendingPurchaseOrderByNumber = function (event) {
+                    var key = event ? event.keyCode || event.which : 13;
+                    if (key === 13) {
+                        var number = $scope.model.loadPendingPurchaseOrderByNumber();
+                        console.log(number);
+                        console.log($scope.model.data.number);
+
+                        $timeout(function () {
+                            $scope.chxVAT = $scope.model.data.vat ? true : false;
+                            $scope.chxNBT = $scope.model.data.nbt ? true : false;
+                        }, 100);
+                    }
+                };
 
                 $scope.ui.save = function () {
                     ConfirmPane.primaryConfirm("Save Purchase Order Request !")
@@ -27,6 +45,8 @@
                                         .then(function () {
                                             $scope.ui.mode = "IDEAL";
                                             $scope.model.clear();
+                                            $scope.chxNBT = false;
+                                            $scope.chxVAT = false;
                                             Notification.success("Purchase Order Request Save Success !");
                                         });
                             })
@@ -83,12 +103,12 @@
                     } else {
                         ConfirmPane.primaryConfirm("Do you want to change Supplier !")
                                 .confirm(function () {
-                                    $scope.model.data= {};
+                                    $scope.model.data = {};
                                     $scope.model.tempData = {};
                                     $scope.model.summaryData = {};
                                     $scope.model.supplierItems = [];
-                                    $scope.chxNBT=false;
-                                    $scope.chxVAT=false;
+                                    $scope.chxNBT = false;
+                                    $scope.chxVAT = false;
                                     Notification.success("Supplier Chaneged !");
 
                                 })

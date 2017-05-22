@@ -12,7 +12,6 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,18 +32,17 @@ public class GrnController {
 
     @Autowired
     private GrnService grnService;
-    
-    
 
     @RequestMapping(value = "/approve-purchasse-order", method = RequestMethod.GET)
     public List<TPurchaseOrder> getApprovedPurchaseOrder() {
         return grnService.getApprovedPurchaseOrder(branch, status_approved);
     }
+
     @RequestMapping(value = "/approve-purchase-order-item-list", method = RequestMethod.GET)
     public List<TPurchaseOrderDetail> getApprovedPurchaseOrderItemList() {
         return grnService.getApprovedPurchaseOrder();
     }
-    
+
     @RequestMapping(value = "/pending-grn-list", method = RequestMethod.GET)
     public List<TGrn> getPendingGrnList() {
         return grnService.getPendingGrnList(branch, status_pending);
@@ -59,19 +57,24 @@ public class GrnController {
         TGrn saveGrn = grnService.saveGrnRecieve(grn);
         return saveGrn.getNumber();
     }
+
     @RequestMapping(value = "/save-grn-approve", method = RequestMethod.POST)
     public Integer approveGrnReceive(@RequestBody TGrn grn) {
         grn.setStatus(status_approved);
         grn.setType("grn approve");
-        
+        grn.setBalanceAmount(grn.getGrandAmount());
+
         TGrn saveGrn = grnService.approveGrnRecieve(grn);
         return saveGrn.getNumber();
     }
+
     @RequestMapping(value = "/save-direct-grn", method = RequestMethod.POST)
     public Integer saveDirectGrn(@RequestBody TGrn grn) {
         grn.setStatus(status_approved);
         grn.setType("direct grn");
-        
+        grn.setBranch(branch);
+        grn.setBalanceAmount(grn.getGrandAmount());
+
         TGrn saveGrn = grnService.saveDirectGrn(grn);
         return saveGrn.getNumber();
     }

@@ -14,14 +14,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -49,40 +46,60 @@ public class TStockLedger implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Column(name = "date")
     @Temporal(TemporalType.DATE)
     private Date date;
-    
+
     @Column(name = "in_qty")
     private BigDecimal inQty;
-    
+
     @Column(name = "out_qty")
     private BigDecimal outQty;
-    
+
     @Size(max = 25)
     @Column(name = "form")
     private String form;
-    
-    
+
+    @Column(name = "form_index_no")
+    private Integer formIndexNo;
+
+    @Column(name = "item_index_no")
+    private Integer itemIndexNo;
+
+
     @Column(name = "item")
     private Integer item;
-    
+
     @Column(name = "store")
     private Integer store;
+    
+    @Column(name = "avarage_price_in")
+    private BigDecimal avaragePriceIn;
+    
+    @Column(name = "avarage_price_out")
+    private BigDecimal avaragePriceOut;
+    
+    @Column(name = "form_index_no")
+    private BigDecimal formIndexNo;
 
     public TStockLedger() {
     }
 
-    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer branch, Integer item, Integer store) {
+    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer formIndexNo, Integer itemIndexNo, Integer branch, Integer item, Integer store) {
         this.indexNo = indexNo;
         this.date = date;
         this.inQty = inQty;
         this.outQty = outQty;
         this.form = form;
+        this.formIndexNo = formIndexNo;
+        this.itemIndexNo = itemIndexNo;
         this.branch = branch;
         this.item = item;
         this.store = store;
+        this.avaragePriceIn = avaragePriceIn;
+        this.avaragePriceOut = avaragePriceOut;
+        this.formIndexNo = formIndexNo;
     }
 
     public Integer getIndexNo() {
@@ -125,6 +142,13 @@ public class TStockLedger implements Serializable {
         this.form = form;
     }
 
+    public Integer getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Integer branch) {
+        this.branch = branch;
+    }
 
     public Integer getItem() {
         return item;
@@ -158,11 +182,11 @@ public class TStockLedger implements Serializable {
         this.avaragePriceOut = avaragePriceOut;
     }
 
-    public int getFormIndexNo() {
+    public Integer getFormIndexNo() {
         return formIndexNo;
     }
 
-    public void setFormIndexNo(int formIndexNo) {
+    public void setFormIndexNo(Integer formIndexNo) {
         this.formIndexNo = formIndexNo;
     }
 

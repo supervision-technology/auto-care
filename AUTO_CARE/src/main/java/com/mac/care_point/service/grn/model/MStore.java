@@ -29,7 +29,7 @@ public class MStore implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "number")
@@ -43,19 +43,28 @@ public class MStore implements Serializable {
     @Size(max = 25)
     @Column(name = "name")
     private String name;
+    
+    @Column(name = "branch")
+    private Integer branch;
 
     @Column(name = "type")
     private String type;
+    
+    @Column(name = "branch")
+    private Integer branch;
+    
+    
 
     public MStore() {
     }
 
-    public MStore(Integer indexNo, int number, int branch, String name, String type) {
+    public MStore(Integer indexNo, String name, Integer branch, String type) {
         this.indexNo = indexNo;
         this.number = number;
-        this.branch = branch;
+        this.number = number;
         this.name = name;
         this.type = type;
+        this.branch = branch;
     }
 
     public Integer getIndexNo() {
@@ -74,6 +83,13 @@ public class MStore implements Serializable {
         this.name = name;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
 
     public String getType() {
         return type;

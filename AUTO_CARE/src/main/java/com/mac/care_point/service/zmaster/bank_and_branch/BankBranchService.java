@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.zmaster.bank_and_branch;
 
+import com.mac.care_point.service.zmaster.bank_and_branch.model.MBank;
 import com.mac.care_point.service.zmaster.bank_and_branch.model.MBankBranch;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,14 @@ public class BankBranchService {
     @Autowired
     private BankBranchRepository bankBranchRepository;
 
-    public List<MBankBranch> getALlBranckAndBranch() {
+    @Autowired
+    private BankRepository bankRepository;
+    
+    public List<MBank> getAllBank() {
+        return bankRepository.findAll();
+    }
+    
+    public List<MBankBranch> getAllBranch() {
         return bankBranchRepository.findAll();
     }
 

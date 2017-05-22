@@ -23,6 +23,14 @@
                     }, 10);
                 };
 
+                $scope.ui.selectStock = function (type) {
+                    if (type === 'STOCK') {
+                        $scope.itemStockVisiblePriceCategory = true;
+                    } else {
+                        $scope.itemStockVisiblePriceCategory = false;
+                    }
+                };
+
                 //save item
                 $scope.ui.saveItems = function () {
                     if (!$scope.model.itemData.type) {
@@ -41,9 +49,9 @@
                             && $scope.model.itemData.salePriceRegister
                             && $scope.model.itemData.costPrice) {
                         $scope.model.saveItem()
-                                .then(function (){
+                                .then(function () {
                                     Notification.success("Item save Success");
-                                },function (){
+                                }, function () {
                                     Notification.error("Item save Fail");
                                 });
                     }
@@ -87,7 +95,10 @@
                 };
 
                 $scope.ui.getItemType = function (model) {
-                   $scope.itemType = $scope.model.item(model).type;
+                    $scope.itemType = $scope.model.item(model).type;
+                    $scope.itemUnit = $scope.model.item(model).unit;
+                    //item selected get item wise item units
+                    $scope.model.loadItemUnitByItem(model);
                 };
 
                 //delete item units

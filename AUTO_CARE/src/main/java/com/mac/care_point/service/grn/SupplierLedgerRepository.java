@@ -5,16 +5,13 @@
  */
 package com.mac.care_point.service.grn;
 
-import com.mac.care_point.service.grn.model.TStockLedger;
-import java.util.List;
+import com.mac.care_point.service.grn.model.TSupplierLedger;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author L T430
  */
-public interface StockLedgerRepository extends JpaRepository<TStockLedger, Integer>{
-
-    public List<TStockLedger> findByItemIndexNoAndFormIndexNo(Integer jobCard, Integer item);
+public interface SupplierLedgerRepository extends JpaRepository<TSupplierLedger, Integer>{
     
 }

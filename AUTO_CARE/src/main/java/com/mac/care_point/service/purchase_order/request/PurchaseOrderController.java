@@ -6,6 +6,7 @@
 package com.mac.care_point.service.purchase_order.request;
 
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,6 +45,10 @@ public class PurchaseOrderController {
     @RequestMapping(value = "/stock-qty/{item}", method = RequestMethod.GET)
     public double getStockQty(@PathVariable Integer item) {
         return purchaseOrderService.getStockQty(item,branch);
+    }
+    @RequestMapping(value = "/load-pending-purchase-order/{number}", method = RequestMethod.GET)
+    public TPurchaseOrder loadPendingPurchaseOrder(@PathVariable Integer number) {
+        return purchaseOrderService.loadPendingPurchaseOrder(number,branch);
     }
 
 }

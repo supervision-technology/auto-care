@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.job_item.model;
 
+import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,15 +28,22 @@ public class TJobItem {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @Column(name = "package_item")
-    private Integer packageItem;
+    @Column(name = "item")
+    private Integer item;
 
     @Column(name = "item_unit")
     private Integer itemUnit;
 
+    @Column(name = "item_type")
+    private String itemType;
+
     @Basic(optional = false)
     @Column(name = "quantity")
     private short quantity;
+    
+    @Basic(optional = false)
+    @Column(name = "stock_remove_qty")
+    private BigDecimal stockRemoveQty;
 
     @Basic(optional = false)
     @Column(name = "price")
@@ -43,7 +51,7 @@ public class TJobItem {
 
     @Basic(optional = false)
     @Column(name = "value")
-    private short value;
+    private BigDecimal value;
 
     @Basic(optional = false)
     @Column(name = "order_status")
@@ -53,31 +61,25 @@ public class TJobItem {
     @Column(name = "job_status")
     private String jobStatus;
 
-    @Basic(optional = false)
-    @Column(name = "form_customer")
-    private boolean formCustomer;
-
     @Column(name = "job_card")
     private Integer jobCard;
 
-    @Column(name = "item")
-    private Integer item;
 
     public TJobItem() {
     }
 
-    public TJobItem(Integer indexNo, Integer packageItem, Integer itemUnit, short quantity, short price, short value, String orderStatus, String jobStatus, boolean formCustomer, Integer jobCard, Integer item) {
+    public TJobItem(Integer indexNo, Integer item, Integer itemUnit, String itemType, short quantity, BigDecimal stockRemoveQty, short price, BigDecimal value, String orderStatus, String jobStatus, Integer jobCard) {
         this.indexNo = indexNo;
-        this.packageItem = packageItem;
+        this.item = item;
         this.itemUnit = itemUnit;
+        this.itemType = itemType;
         this.quantity = quantity;
+        this.stockRemoveQty = stockRemoveQty;
         this.price = price;
         this.value = value;
         this.orderStatus = orderStatus;
         this.jobStatus = jobStatus;
-        this.formCustomer = formCustomer;
         this.jobCard = jobCard;
-        this.item = item;
     }
 
     public Integer getIndexNo() {
@@ -88,12 +90,12 @@ public class TJobItem {
         this.indexNo = indexNo;
     }
 
-    public Integer getPackageItem() {
-        return packageItem;
+    public Integer getItem() {
+        return item;
     }
 
-    public void setPackageItem(Integer packageItem) {
-        this.packageItem = packageItem;
+    public void setItem(Integer item) {
+        this.item = item;
     }
 
     public Integer getItemUnit() {
@@ -102,6 +104,14 @@ public class TJobItem {
 
     public void setItemUnit(Integer itemUnit) {
         this.itemUnit = itemUnit;
+    }
+
+    public String getItemType() {
+        return itemType;
+    }
+
+    public void setItemType(String itemType) {
+        this.itemType = itemType;
     }
 
     public short getQuantity() {
@@ -120,11 +130,11 @@ public class TJobItem {
         this.price = price;
     }
 
-    public short getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
-    public void setValue(short value) {
+    public void setValue(BigDecimal value) {
         this.value = value;
     }
 
@@ -144,14 +154,6 @@ public class TJobItem {
         this.jobStatus = jobStatus;
     }
 
-    public boolean isFormCustomer() {
-        return formCustomer;
-    }
-
-    public void setFormCustomer(boolean formCustomer) {
-        this.formCustomer = formCustomer;
-    }
-
     public Integer getJobCard() {
         return jobCard;
     }
@@ -160,12 +162,12 @@ public class TJobItem {
         this.jobCard = jobCard;
     }
 
-    public Integer getItem() {
-        return item;
+    public BigDecimal getStockRemoveQty() {
+        return stockRemoveQty;
     }
 
-    public void setItem(Integer item) {
-        this.item = item;
+    public void setStockRemoveQty(BigDecimal stockRemoveQty) {
+        this.stockRemoveQty = stockRemoveQty;
     }
 
 }

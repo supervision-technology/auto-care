@@ -40,17 +40,19 @@
                     }
                 };
                 $scope.ui.discard = function () {
-                    ConfirmPane.dangerConfirm("Discard All Changes !")
+                    if ($scope.model.data.indexNo) {
+                    ConfirmPane.dangerConfirm("Delete Selected Purchase Order !")
                             .confirm(function () {
                                 $scope.model.discard();
                                 $scope.chxNBT = false;
                                 $scope.chxVAT = false;
-                                Notification.success('Discarded All Changes');
-                                
                             })
                             .discard(function () {
                                 console.log('discard fail');
                             });
+                    }else{
+                        Notification.error('Please Select Porchase Order to Delete !')
+                    }
 
                 };
                 $scope.ui.edit = function (indexNo) {

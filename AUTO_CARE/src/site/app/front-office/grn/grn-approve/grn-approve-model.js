@@ -103,6 +103,7 @@
                     }
                     , selectGrn: function ($index, indexNo) {
                         this.data = this.mainList[$index];
+                        this.data.grandAmount = this.data.amount;
                         this.selectedGrnIndex = indexNo;
 
                     }

@@ -1,18 +1,16 @@
 (function () {
     angular.module("appModule")
-            .factory("finalCheckListModel", function (finalCheckListService, $q) {
-                function finalCheckListModel() {
+            .factory("requestItemModel", function (requestItemService, $q) {
+                function requestItemModel() {
                     this.constructor();
                 }
 
-                finalCheckListModel.prototype = {
-
+                requestItemModel.prototype = {
                     data: {},
                     //master data lists
                     items: [],
                     vehicles: [],
                     itemUnits: [],
-
                     packageItemList: [],
                     //select package items list
                     itemUnitList: [],
@@ -23,36 +21,38 @@
                     //job card select filter items
                     filterItems: [],
                     //complited job items
+                    itemsByStockLeger: [],
                     complitedJobItem: [],
                     constructor: function () {
                         var that = this;
-                        finalCheckListService.pendingJobCards()
+                        requestItemService.pendingJobCards()
                                 .success(function (data) {
                                     that.pendingJobCards = data;
                                 });
 
-                        finalCheckListService.loadItems()
+                        requestItemService.loadItems()
                                 .success(function (data) {
                                     that.items = data;
                                 });
-                        finalCheckListService.loadVehicles()
+                        requestItemService.loadVehicles()
                                 .success(function (data) {
                                     that.vehicles = data;
                                 });
 
-                        finalCheckListService.loadItemUnits()
+                        requestItemService.loadItemUnits()
                                 .success(function (data) {
                                     that.itemUnits = data;
                                 });
+
+                        this.findItemsForStockLeger();
                     },
                     getJobItemHistory: function (jobCard) {
                         var defer = $q.defer();
                         var that = this;
-                        finalCheckListService.getJobItemHistory(jobCard)
+                        requestItemService.getJobItemHistory(jobCard)
                                 .success(function (data) {
                                     that.jobItemList = [];
                                     angular.extend(that.jobItemList, data);
-                                    angular.extend(that.complitedJobItem, data);
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -61,10 +61,28 @@
                                 });
                         return  defer.promise;
                     },
+                    findItemsForStockLeger: function () {
+                        var that = this;
+                        var defer = $q;
+                        requestItemService.findByItemStockItmQty()
+                                .success(function (data) {
+                                    that.itemsByStockLeger = [];
+                                    that.itemsByStockLeger = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.itemsByStockLeger = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    findPackageStockItems: function (packageData) {
+                         
+                    },
                     getPackageItems: function (indexNo) {
                         var defer = $q.defer();
                         var that = this;
-                        finalCheckListService.getPackageItems(indexNo)
+                        requestItemService.getPackageItems(indexNo)
                                 .success(function (data) {
                                     that.packageItemList = [];
                                     that.packageItemList = data;
@@ -106,14 +124,31 @@
                         });
                         return data;
                     },
-                    checkItemComplite: function ($index, item) {
+                    findByStockFromItem: function (item) {
+                        var data = 0.0;
+                        angular.forEach(this.itemsByStockLeger, function (values) {
+                            if (values[0] === parseInt(item)) {
+                                data = values[1];
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    checkItemComplite: function (itemData, selectedJobCardIndexNo) {
                         var defer = $q.defer();
                         var that = this;
                         var status = "COMPLITED";
-                        finalCheckListService.checkItem(item.indexNo, status)
+                        requestItemService.checkItem(itemData.indexNo, status, selectedJobCardIndexNo)
                                 .success(function (data) {
-                                    that.jobItemList.splice($index, 1);
-                                    that.complitedJobItem.unshift(data);
+                                    var id = -1;
+                                    for (var i = 0; i < that.jobItemList.length; i++) {
+                                        if (that.jobItemList[i].indexNo === itemData.indexNo) {
+                                            id = i;
+                                        }
+                                    }
+                                    that.jobItemList.splice(id, 1);
+                                    that.jobItemList.push(data);
+                                    that.findItemsForStockLeger();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -121,14 +156,21 @@
                                 });
                         return defer.promise;
                     },
-                    checkItemPending: function ($index, item) {
+                    checkItemPending: function (itemData, selectedJobCardIndexNo) {
                         var defer = $q.defer();
                         var that = this;
                         var status = "PENDING";
-                        finalCheckListService.checkItem(item.indexNo, status)
+                        requestItemService.checkItem(itemData.indexNo, status, selectedJobCardIndexNo)
                                 .success(function (data) {
-                                    that.complitedJobItem.splice($index, 1);
-                                    that.jobItemList.unshift(data);
+                                    var id = -1;
+                                    for (var i = 0; i < that.jobItemList.length; i++) {
+                                        if (that.jobItemList[i].indexNo === itemData.indexNo) {
+                                            id = i;
+                                        }
+                                    }
+                                    that.jobItemList.splice(id, 1);
+                                    that.jobItemList.push(data);
+                                    that.findItemsForStockLeger();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -137,6 +179,6 @@
                         return defer.promise;
                     }
                 };
-                return finalCheckListModel;
+                return requestItemModel;
             });
 }());
