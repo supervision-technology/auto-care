@@ -66,11 +66,15 @@ public class TStockLedger implements Serializable {
     @Basic(optional = false)
     @Column(name = "branch")
     private int branch;
+   
+    @Basic(optional = false)
+    @Column(name = "type")
+    private String type;
 
     public TStockLedger() {
     }
 
-    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, Integer item, Integer store, BigDecimal outQty, BigDecimal avaragePriceIn, BigDecimal avaragePriceOut, int formIndexNo, String form, int branch) {
+    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, Integer item, Integer store, BigDecimal outQty, BigDecimal avaragePriceIn, BigDecimal avaragePriceOut, int formIndexNo, String form, int branch, String type) {
         this.indexNo = indexNo;
         this.date = date;
         this.inQty = inQty;
@@ -82,6 +86,7 @@ public class TStockLedger implements Serializable {
         this.formIndexNo = formIndexNo;
         this.form = form;
         this.branch = branch;
+        this.type = type;
     }
 
     public Integer getIndexNo() {
@@ -171,6 +176,12 @@ public class TStockLedger implements Serializable {
     public void setBranch(int branch) {
         this.branch = branch;
     }
- 
-    
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

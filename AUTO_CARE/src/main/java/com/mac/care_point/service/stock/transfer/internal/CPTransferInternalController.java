@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/care-point/transaction/stock-transfer/internal")
-public class TransferInternalController {
+public class CPTransferInternalController {
     
     @Autowired
     private TransferInternalService internalTransferService;

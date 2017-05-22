@@ -28,19 +28,6 @@ import javax.validation.constraints.Size;
 @Table(name = "t_stock_ledger")
 public class TStockLedger implements Serializable {
 
-    @Column(name = "avarage_price_in")
-    private BigDecimal avaragePriceIn;
-    @Column(name = "avarage_price_out")
-    private BigDecimal avaragePriceOut;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "form_index_no")
-    private int formIndexNo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "branch")
-    private int branch;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -61,45 +48,41 @@ public class TStockLedger implements Serializable {
     @Column(name = "form")
     private String form;
 
-    @Column(name = "form_index_no")
-    private Integer formIndexNo;
-
-    @Column(name = "item_index_no")
-    private Integer itemIndexNo;
-
-
     @Column(name = "item")
     private Integer item;
 
     @Column(name = "store")
     private Integer store;
-    
+
     @Column(name = "avarage_price_in")
     private BigDecimal avaragePriceIn;
-    
+
     @Column(name = "avarage_price_out")
     private BigDecimal avaragePriceOut;
-    
+
     @Column(name = "form_index_no")
-    private BigDecimal formIndexNo;
+    private Integer formIndexNo;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "branch")
+    private int branch;
 
     public TStockLedger() {
     }
 
-    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer formIndexNo, Integer itemIndexNo, Integer branch, Integer item, Integer store) {
+    public TStockLedger(Integer indexNo, Date date, BigDecimal inQty, BigDecimal outQty, String form, Integer item, Integer store, BigDecimal avaragePriceIn, BigDecimal avaragePriceOut, Integer formIndexNo, int branch) {
         this.indexNo = indexNo;
         this.date = date;
         this.inQty = inQty;
         this.outQty = outQty;
         this.form = form;
-        this.formIndexNo = formIndexNo;
-        this.itemIndexNo = itemIndexNo;
-        this.branch = branch;
         this.item = item;
         this.store = store;
         this.avaragePriceIn = avaragePriceIn;
         this.avaragePriceOut = avaragePriceOut;
         this.formIndexNo = formIndexNo;
+        this.branch = branch;
     }
 
     public Integer getIndexNo() {
@@ -140,14 +123,6 @@ public class TStockLedger implements Serializable {
 
     public void setForm(String form) {
         this.form = form;
-    }
-
-    public Integer getBranch() {
-        return branch;
-    }
-
-    public void setBranch(Integer branch) {
-        this.branch = branch;
     }
 
     public Integer getItem() {

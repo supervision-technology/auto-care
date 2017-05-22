@@ -93,7 +93,7 @@ public class MItem implements Serializable {
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, Short costPrice, String type, Integer department, Integer brand, Integer category, Integer sub_category, short salePriceNormal, short salePriceRegister, Integer priceCategory, Integer branch, Integer supplier) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, String type, Integer department, Integer brand, Integer category, Integer sub_category, BigDecimal costPrice, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Integer supplier) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -165,14 +165,6 @@ public class MItem implements Serializable {
 
     public void setDepartment(Integer department) {
         this.department = department;
-    }
-   
-    public Integer getSupplier() {
-        return supplier;
-    }
-
-    public void setSupplier(Integer supplier) {
-        this.supplier = supplier;
     }
 
     public Integer getBrand() {
