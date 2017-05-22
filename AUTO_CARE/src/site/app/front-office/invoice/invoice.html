@@ -91,7 +91,7 @@
                                             <td>{{paymenetInformation.number}}</td>
                                             <td>{{paymenetInformation.chequeDate| date:'yyyy-MM-dd'}}</td>
                                             <td>{{invoiceModel.bankLable(paymenetInformation.bank)}}</td>
-                                            <td>{{invoiceModel.branchkLable(paymenetInformation.branch)}}</td>
+                                            <td>{{invoiceModel.branchkLable(paymenetInformation.bankBranch)}}</td>
                                             <td class="text-right">{{paymenetInformation.amount|number:2}}</td>
                                             <td><a class="btn btn-danger" ng-click="ui.getCardAndChequePaymentDelete(number);" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-remove"></span></a> </td>
                                         </tr>
@@ -152,6 +152,16 @@
                             </div>
                         </uib-tab>
                         <uib-tab index="3" heading="OVER PAYMENT" select="ui.toggleType('OVER_PAYMENT');" disable="ui.mode !== 'NEW'">
+                            <table class="table-rounded control-table square-table">
+                                <col style="width: 40%"/>
+                                <col style="width: 60%"/>
+                                <tbody>
+                                    <tr>
+                                        <td><label>Credit Amount</label><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.creditAmount" disabled="true"> </td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                             <table class="table-rounded control-table square-table">
                                 <col style="width: 40%"/>
                                 <col style="width: 40%"/>

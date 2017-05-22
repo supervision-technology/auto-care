@@ -97,7 +97,7 @@
                                 Notification.error("please enter cheque date");
                             } else if (!paymentInformation.bank) {
                                 Notification.error("please enter cheque bank");
-                            } else if (!paymentInformation.branch) {
+                            } else if (!paymentInformation.bankBranch) {
                                 Notification.error("please enter cheque branch");
                             } else if (!paymentInformation.amount) {
                                 Notification.error("please enter cheque amount");

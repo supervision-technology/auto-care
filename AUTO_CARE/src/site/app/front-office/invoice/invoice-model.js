@@ -43,7 +43,7 @@
                                 .success(function (data) {
                                     that.bankList = data;
                                 });
-                                
+
                         invoiceService.loadBranch()
                                 .success(function (data) {
                                     that.branchList = data;
@@ -134,7 +134,11 @@
                         var that = this;
                         invoiceService.getClientOverPayment(client)
                                 .success(function (data) {
-                                    that.paymentData.overAmount = parseFloat(data);
+                                    if (data > 0) {
+                                        that.paymentData.overAmount = parseFloat(data);
+                                    } else {
+                                        that.paymentData.creditAmount = parseFloat(data * -1);
+                                    }
                                     defer.resolve();
                                 })
                                 .error(function () {
