@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CPTransferInternalController {
     
     @Autowired
-    private TransferInternalService internalTransferService;
+    private CPTransferInternalService internalTransferService;
     
      @RequestMapping(value = "/save-internal-transfer-out", method = RequestMethod.POST)
     public Integer saveTransferOut(@RequestBody TStockTransfer stockTransfer) {

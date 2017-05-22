@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-public class TransferInternalService {
+public class CPTransferInternalService {
 
     @Autowired
     private TransferRepository transferRepository;
