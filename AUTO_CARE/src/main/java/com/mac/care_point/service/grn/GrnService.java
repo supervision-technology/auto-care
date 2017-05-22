@@ -10,6 +10,7 @@ import com.mac.care_point.service.grn.model.MStore;
 import com.mac.care_point.service.grn.model.TGrn;
 import com.mac.care_point.service.grn.model.TGrnItem;
 import com.mac.care_point.service.grn.model.TStockLedger;
+import com.mac.care_point.service.grn.model.TSupplierLedger;
 import com.mac.care_point.service.purchase_order.PurchaseOrderDetailRepository;
 import com.mac.care_point.service.purchase_order.PurchaseOrderRepository;
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
@@ -41,6 +42,9 @@ public class GrnService {
 
     @Autowired
     private GrnItemRepository grnItemRepository;
+
+    @Autowired
+    private SupplierLedgerRepository supplierLedgerRepository;
 
     @Autowired
     private PurchaseOrderRepository purchaseOrderRepository;
@@ -79,7 +83,7 @@ public class GrnService {
                 purchaseOrderDetailRepository.save(findDetail);
             }
         }
-        
+
         return saveGrn;
     }
 
@@ -92,7 +96,7 @@ public class GrnService {
     }
 
     TGrn approveGrnRecieve(TGrn grn) {
-        
+
         for (TGrnItem grnItem : grn.getGrnItemList()) {
             grnItem.setGrn(grn);
 //          stock ledger start
@@ -130,7 +134,23 @@ public class GrnService {
             stockLedgerRepository.save(ledger);
 //          stock ledger end
         }
-        return grnRepository.save(grn);
+        TGrn saveObject = grnRepository.save(grn);
+
+        TSupplierLedger supplierLedger = new TSupplierLedger();
+        supplierLedger.setBranch(grn.getBranch());
+        supplierLedger.setCreditAmount(grn.getBalanceAmount());
+        supplierLedger.setDate(grn.getDate());
+        supplierLedger.setDebitAmount(new BigDecimal(0));
+        supplierLedger.setFormName(Constant.GRN_APPROVE_FORM);
+        supplierLedger.setGrn(saveObject.getIndexNo());
+        supplierLedger.setIsDelete(false);
+        supplierLedger.setPayment(null);
+        supplierLedger.setRefNumber(null);
+        supplierLedger.setReturn1(null);
+        supplierLedger.setSupplier(grn.getSupplier());
+
+        supplierLedgerRepository.save(supplierLedger);
+        return saveObject;
     }
 
     TGrn saveDirectGrn(TGrn grn) {
@@ -173,6 +193,21 @@ public class GrnService {
             stockLedger.setFormIndexNo(new BigDecimal(saveObject.getIndexNo()));
             stockLedgerRepository.save(stockLedger);
         }
+
+        TSupplierLedger supplierLedger = new TSupplierLedger();
+        supplierLedger.setBranch(grn.getBranch());
+        supplierLedger.setCreditAmount(grn.getBalanceAmount());
+        supplierLedger.setDate(grn.getDate());
+        supplierLedger.setDebitAmount(new BigDecimal(0));
+        supplierLedger.setFormName(Constant.DIRECT_GRN_FORM);
+        supplierLedger.setGrn(saveObject.getIndexNo());
+        supplierLedger.setIsDelete(false);
+        supplierLedger.setPayment(null);
+        supplierLedger.setRefNumber(null);
+        supplierLedger.setReturn1(null);
+        supplierLedger.setSupplier(grn.getSupplier());
+
+        supplierLedgerRepository.save(supplierLedger);
         return saveObject;
     }
 
