@@ -52,12 +52,15 @@ public class MStore implements Serializable {
     public MStore() {
     }
 
-    public MStore(Integer indexNo, String name, Integer branch, String type) {
+    public MStore(int number, int branch, Integer indexNo, String name, String type) {
+        this.number = number;
+        this.branch = branch;
         this.indexNo = indexNo;
         this.name = name;
-        this.branch = branch;
         this.type = type;
     }
+
+  
 
     public Integer getIndexNo() {
         return indexNo;
