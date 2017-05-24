@@ -5,10 +5,13 @@
  */
 package com.mac.care_point.service.job_item;
 
+import com.mac.care_point.master.items.package_item.PackageItemRepository;
+import com.mac.care_point.master.items.package_item.model.MPackageItem;
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.grn.StockLedgerRepository;
 import com.mac.care_point.service.grn.model.TStockLedger;
 import com.mac.care_point.service.job_item.model.TJobItem;
+import com.mac.care_point.service.job_item.model.TPackageItemDetail;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +34,12 @@ public class JobItemService {
 
     @Autowired
     private StockLedgerRepository stockLedgerRepository;
+
+//    @Autowired
+//    private PackageItemRepostory packageItemRepostory;
+//
+//    @Autowired
+//    private PackageItemRepository packageItemRepository;
 
     public TJobItem saveJobItem(TJobItem jobItem) {
         return jobItemRepository.save(jobItem);

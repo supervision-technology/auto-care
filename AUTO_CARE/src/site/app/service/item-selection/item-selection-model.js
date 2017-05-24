@@ -40,7 +40,7 @@
                                 .success(function (data) {
                                     that.pendingJobCards = data;
                                 });
-                                
+
                         ItemSelectionService.loadCategory()
                                 .success(function (data) {
                                     that.category = data;
@@ -63,6 +63,11 @@
                         this.jobItemList = [];
                         //job card select filter items
                         this.filterItems = [];
+                    },
+                    selectMainStockItems: function (itemUnits) {
+                        console.log(itemUnits);
+                        console.log(itemUnits);
+                        console.log(itemUnits);
                     },
                     findItemsForStockLeger: function () {
                         var that = this;

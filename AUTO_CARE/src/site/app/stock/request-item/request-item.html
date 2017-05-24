@@ -18,52 +18,104 @@
 
 <div class="index-content-body ">
     <div style="float: left; width: calc(100% - 133px);">
-        <div class="col-xs-12" style="height: calc(100vh-40px);">
-            <div class="col-xs-6">
-                <h4 class="text-primary">HAVE TO CHECK LIST</h4>
-            </div>
-            <div class="col-xs-6">
-                <h4 class="text-primary">CHECKED LIST</h4>
-            </div>
-        </div>
         <div class="col-xs-6 background-light-dark" style="height: calc(100vh-133px)">
-
             <div class="row" style="display: flex; flex-flow: column;">
-                <table class="square-table background-dark" style="width: 99%">
-                    <col style="width: 15%;"/>
-                    <col style="width: 75%;"/>
-                    <col style="width: 10%;"/>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>NAME</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
-                    <div ng-repeat="selections in model.jobItemList|filter:{orderStatus : 'PENDING'}|filter:{itemType : 'STOCK_ITEM'}">
-                        <table class="square-table">
-                            <col style="width: 40%;"/>
-                            <col style="width: 35%;"/>
-                            <col style="width: 15%;"/>
-                            <col style="width: 10%;"/>
-                            <tbody>
-                                <tr class="background-light">
-                                    <td><span class="label label-success">{{model.findByStockFromItem(selections.item)}}</span> - <span class="label label-default"> ({{model.itemUnitData(selections.itemUnit).qty}} *  {{selections.quantity}} = {{model.itemUnitData(selections.itemUnit).qty * selections.quantity}})</span></td>
-                                    <td>{{model.itemUnitData(selections.itemUnit).name}}</td>
-                                    <td>{{selections.quantity}}</td>
-                                    <td><a  ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.checkItemComplite(selections);"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                <div class="col-xs-6">
+                    <h4 class="text-primary">HAVE TO CHECK LIST</h4>
                 </div>
+                <uib-tabset>
+                    <uib-tab index="0" heading="STOCK_ITEM">
+                        <table class="square-table background-dark" style="width: 99%">
+                            <col style="width: 20%;"/>
+                            <col style="width: 45%;"/>
+                            <col style="width: 15%;"/>
+                            <col style="width: 20%;"/>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Quantity</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 131px);">
+                            <div ng-repeat="selections in model.jobItemList|filter:{orderStatus : 'PENDING'}|filter:{itemType : 'STOCK_ITEM'}">
+                                <table class="square-table">
+                                    <col style="width: 20%;"/>
+                                    <col style="width: 45%;"/>
+                                    <col style="width: 15%;"/>
+                                    <col style="width: 20%;"/>
+                                    <tbody>
+                                        <tr class="background-light">
+                                            <td><span class="label label-success">{{model.findByStockFromItem(selections.item)}}</td>
+                                            <td>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                            <td>{{selections.quantity}}</td>
+                                            <td><a  ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.checkItemComplite(selections);"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="1" heading="PACKAGE_ITEM">
+                        <table class="square-table background-dark">
+                            <col style="width: 50%;"/>
+                            <col style="width: 30%;"/>
+                            <col style="width: 20%;"/>
+                            <thead>
+                                <tr>
+                                    <th>PACKAGE NAME</th>
+                                    <th>PRICE</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
+                            <div ng-repeat="detils in model.filterItems">
+                                <table class="square-table">
+                                    <col style="width: 50%;"/>
+                                    <col style="width: 30%;"/>
+                                    <col style="width: 20%;"/>
+                                    <tbody>
+                                        <tr class="background-light">
+                                            <td ng-click="ui.getPackageDetails($index, detils.indexNo);" class="text-bold">{{detils.name}}</td>
+                                            <td ng-click="ui.getPackageDetails($index, detils.indexNo);" ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                            <td ng-click="ui.getPackageDetails($index, detils.indexNo);" ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                                            <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'PACKAGE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="animation-v-grow background-dark" ng-show="selectPackageItemPosition == $index">
+                                    <table class="square-table">
+                                        <col style="width: 30%;"/>
+                                        <col style="width: 70%;"/>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>NAME</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="background-dark" ng-repeat="details in model.packageItemList">
+                                                <td><label>{{model.itemData(details.item).indexNo | fixedLength:5}}</label></td>
+                                                <td>{{model.itemData(details.item).name}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </uib-tab>
+                </uib-tabset>
             </div>
 
         </div>
         <div class="col-xs-6 background-dark">
             <div class="row" style="display: flex; flex-flow: column;">
+                <div class="col-xs-6">
+                    <h4 class="text-primary">CHECKED LIST</h4>
+                </div>
                 <table class="square-table background-dark">
                     <col style="width: 15%;"/>
                     <col style="width: 75%;"/>
