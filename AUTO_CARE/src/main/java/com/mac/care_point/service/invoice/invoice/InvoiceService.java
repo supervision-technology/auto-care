@@ -44,7 +44,7 @@ public class InvoiceService {
 
     @Autowired
     private JobCardRepository jobCardRepository;
-
+    
     public List<TInvoice> findByJobCard(Integer jobCard) {
         return invoiceRepository.findByJobCard(jobCard);
     }

@@ -23,6 +23,7 @@
     <class>com.mac.care_point.service.purchase_order.model.TPurchaseOrder</class>
     <class>com.mac.care_point.service.purchase_order.model.TPurchaseOrderDetail</class>
     <class>com.mac.care_point.service.grn.model.MStore</class>
+    <class>com.mac.care_point.service.zmaster.bank_and_branch.model.MCardType</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

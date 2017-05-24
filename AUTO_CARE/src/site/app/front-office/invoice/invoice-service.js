@@ -20,6 +20,9 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/bank");
         };
         
+        this.loadCardType = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/card_type");
+        };
         this.loadBranch = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/branch");
         };

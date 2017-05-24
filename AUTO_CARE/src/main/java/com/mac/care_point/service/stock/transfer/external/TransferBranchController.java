@@ -36,7 +36,7 @@ public class TransferBranchController {
 
     @RequestMapping(value = "/pending-transfer-order/{branch}/{stock}", method = RequestMethod.GET)
     public List<TStockTransfer> findAllPendingTransfers(@PathVariable Integer branch, @PathVariable Integer stock) {
-        return transferBranchService.findPendingTransferOrders(branch, stock, Constant.PENDING_STATUS,Constant.BRANCH_TRANSFER_OUT);
+        return transferBranchService.findPendingTransferOrders(branch, stock, Constant.PENDING_STATUS,Constant.EXTERNAL_TRANSFER);
     }
     
     @RequestMapping(value = "/get-item-qty/{branch}/{item}", method = RequestMethod.GET)

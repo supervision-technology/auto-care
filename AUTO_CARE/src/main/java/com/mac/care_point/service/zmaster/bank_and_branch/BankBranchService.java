@@ -7,6 +7,7 @@ package com.mac.care_point.service.zmaster.bank_and_branch;
 
 import com.mac.care_point.service.zmaster.bank_and_branch.model.MBank;
 import com.mac.care_point.service.zmaster.bank_and_branch.model.MBankBranch;
+import com.mac.care_point.service.zmaster.bank_and_branch.model.MCardType;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class BankBranchService {
     @Autowired
     private BankRepository bankRepository;
 
+    @Autowired
+    private CardTypeRepository cardTypeRepository;
+
     public List<MBank> getAllBank() {
         return bankRepository.findAll();
     }
@@ -37,6 +41,10 @@ public class BankBranchService {
 
     public List<MBankBranch> findByBankGetBranchs(Integer bank) {
         return bankBranchRepository.findByBank(bank);
+    }
+
+    public List<MCardType> findByCardType() {
+        return cardTypeRepository.findAll();
     }
 
 }

@@ -11,6 +11,7 @@
                     pendingJobCards: [],
                     bankList: [],
                     branchList: [],
+                    cardTypeList: [],
                     branchSearchList: [],
                     //trasactons list
                     invoiceData: {},
@@ -47,6 +48,11 @@
                         invoiceService.loadBranch()
                                 .success(function (data) {
                                     that.branchList = data;
+                                });
+                                
+                        invoiceService.loadCardType()
+                                .success(function (data) {
+                                    that.cardTypeList = data;
                                 });
                     },
                     clear: function () {
@@ -90,6 +96,16 @@
                     branchkLable: function (indexNo) {
                         var data = "";
                         angular.forEach(this.branchList, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values.name;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    cardTypeLable: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.cardTypeList, function (values) {
                             if (values.indexNo === parseInt(indexNo)) {
                                 data = values.name;
                                 return;
