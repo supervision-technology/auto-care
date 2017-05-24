@@ -149,22 +149,27 @@
                         this.grnQtyCount();
 
                     }, editItemQty: function (indexNo) {
-                        var keyId = -1;
-                        angular.forEach(this.purchaseOrderItemList, function (value, key) {
-                            if (indexNo === value.indexNo) {
-                                keyId = key;
-                            }
-                        });
-                        var selectedItem = this.purchaseOrderItemList[keyId];
-                        selectedItem.purchaseOrderItem = selectedItem.indexNo;
-                        selectedItem.selectedPONumber = this.selectedPONumber;
-                        selectedItem.receiveQty = selectedItem.balanceQty;
-                        selectedItem.barcode = this.getItemObject(selectedItem.item).barcode;
+                        var confirm = true;
+                        if (this.tempData.item) {
+                            confirm = false;
+                            Notification.error('Already Select Edit Item..');
+                        }
+                        if (confirm) {
+                            var keyId = -1;
+                            angular.forEach(this.purchaseOrderItemList, function (value, key) {
+                                if (indexNo === value.indexNo) {
+                                    keyId = key;
+                                }
+                            });
+                            var selectedItem = this.purchaseOrderItemList[keyId];
+                            selectedItem.purchaseOrderItem = selectedItem.indexNo;
+                            selectedItem.selectedPONumber = this.selectedPONumber;
+                            selectedItem.receiveQty = selectedItem.balanceQty;
+                            selectedItem.barcode = this.getItemObject(selectedItem.item).barcode;
 
-                        this.tempData = selectedItem;
-
-
-                        this.purchaseOrderItemList.splice(keyId, 1);
+                            this.tempData = selectedItem;
+                            this.purchaseOrderItemList.splice(keyId, 1);
+                        }
 
                     }, addData: function () {
                         var that = this;
@@ -215,7 +220,7 @@
                         if (saveConfirmation) {
 
                             var defer = $q.defer();
-                            this.data.grandAmount=this.data.amount;
+                            this.data.grandAmount = this.data.amount;
                             GrnService.saveGrnReceive(JSON.stringify(this.data))
                                     .success(function (data) {
                                         Notification.success('GRN Receive Save Success !');
