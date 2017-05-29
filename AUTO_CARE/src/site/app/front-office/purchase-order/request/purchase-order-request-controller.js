@@ -1,7 +1,7 @@
 (function () {
     angular.module("purchaseOrderRequestModule", ['ui.bootstrap']);
     angular.module("purchaseOrderRequestModule")
-            .controller("purchaseOrderRequestController", function ($scope, $filter, $timeout, purchaseOrderRequestModel, Notification, ConfirmPane) {
+            .controller("purchaseOrderRequestController", function ($scope, $rootScope, $uibModal, $uibModalStack, $filter, $timeout, purchaseOrderRequestModel, Notification, ConfirmPane, ModalDialog,optionPane) {
                 $scope.model = new purchaseOrderRequestModel();
                 $scope.ui = {};
 
@@ -10,7 +10,7 @@
                     $scope.model.clear();
                     $scope.chxNBT = false;
                     $scope.chxVAT = false;
-                    
+
                     $scope.model.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.model.data.deliverDate = $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.ui.focus('#date');
@@ -28,8 +28,6 @@
                     var key = event ? event.keyCode || event.which : 13;
                     if (key === 13) {
                         var number = $scope.model.loadPendingPurchaseOrderByNumber();
-                        console.log(number);
-                        console.log($scope.model.data.number);
 
                         $timeout(function () {
                             $scope.chxVAT = $scope.model.data.vat ? true : false;
@@ -165,14 +163,33 @@
 
                 $scope.ui.calculateVAT = function (vatRate) {
                     var nbtValue = $scope.model.data.nbtValue;
-                    console.log('work');
                     if (!$scope.model.data.nbtValue) {
                         nbtValue = 0.00;
                     }
                     $scope.model.data.vatValue = (($scope.model.data.itemValue + nbtValue) * vatRate) / 100;
                     $scope.model.data.grandTotal = $scope.model.data.itemValue + nbtValue + $scope.model.data.vatValue;
-                    console.log($scope.model.data.vat);
-                    console.log(vatRate);
+                };
+                $scope.modalOpen = function () {
+                    if ($scope.model.tempData.item) {
+                        $scope.model.getBranchesStock();
+                        $timeout(function () {
+                            $rootScope.getBranchesStockList = $scope.model.branchesStockList;
+                            console.log($rootScope.getBranchesStockList);
+                            $uibModal.open({
+                                animation: true,
+                                ariaLabelledBy: 'modal-title',
+                                ariaDescribedBy: 'modal-body',
+                                templateUrl: 'app/front-office/popup-dialog/branch-stock-popup.html',
+                                controller: 'purchaseOrderRequestController',
+                                size: 'lg'
+                            });
+                        }, 1000);
+                    }else{
+                        optionPane.defaultMessage("Select a Item for Viwe Branches Stock Quantity");
+                    }
+                };
+                $scope.dismissAllModel = function () {
+                    $uibModalStack.dismissAll();
                 };
 
                 $scope.init = function () {

@@ -1,0 +1,341 @@
+<div class="index-content-header"></div>
+
+<div class="index-content-body ">
+    <div class="col-xs-3 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 1px);padding: 5px">
+            <div class="col-xs-12 nopadding" style="flex: 0 0 auto;padding-right: 22px;" ng-hide="false">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>
+                    <center>
+                        <label class="h4">
+                            <b>SELECT SUPPLIER :</b>
+                        </label>
+                    </center>
+                    </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="form-control"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table> 
+            </div>
+            <div class="smart-scroll-y" style="height: calc(100vh - 106px);" ng-hide="false">
+                <table class="table-rounded control-table table-hover">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr ng-click="ui.selectGrn($index,unit.indexNo)">
+                            <td class="text-center" ng-class="model.selectedGrnIndex === unit.indexNo ? 'selected' : ''">
+                                <b>GRN-00005</b>
+                                <a class="btn btn-success pull-right" style="margin-top: 5px"><span class="glyphicon glyphicon-arrow-right"></span></a><br>
+                                <label class="pull-left label label-default" style="margin-top: 8px">2017-05-25</label>
+                                <label class="">20000.00</label>
+                                <label class="pull-right">12000.00</label>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> 
+            </div>
+            <div class="col-xs-3" style="position: fixed;bottom: 1px;margin-left:-15px;height:40px;" ng-hide="false">
+                <table class="table-rounded">
+                    <col style="width: 15%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 20%"/>
+                    <col style="width: 25%"/>
+
+                    <thead class="background-dark">
+                        <tr>
+                            <td><span class="label label-primary">4</span></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-right"><b>12000.00</b></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="placeholder col-md-12" ng-hide="true" style="height: calc(100vh - 30px); padding: 0px 10px 10px 10px;">
+                <h1>PLEASE ADD GRN FOR DISPLAY :(</h1>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-9 background-light">
+        <div class="col-xs-12 background-light nopadding">
+            <div class="row col-xs-2 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>number<input class="form-control" placeholder="number" ng-model="model.data.number" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-2 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>current date<input class="form-control" id="date" smart-input="date" ng-model="model.data.approveDate" ng-disabled="ui.mode !== 'NEW' "></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-2 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>reference number<input class="form-control" placeholder="reference number" ng-model="model.data.refNumber" 
+                                                       ng-disabled="ui.mode !== 'NEW'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-2 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>credit period<input class="form-control" placeholder="credit period" ng-model="model.data.creditPeriod" 
+                                                    ng-disabled="ui.mode !== 'NEW'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-2 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>supplier<input class="form-control" placeholder="supplier" ng-model="model.data.supplier" 
+                                               uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
+                                               typeahead-input-formatter="model.getSupplier($model)" 
+                                               ng-disabled="true"
+                                               typeahead-editable="false">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row col-xs-2 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>receive date<input class="form-control" smart-input="date" placeholder="receive date" ng-model="model.data.date" 
+                                                   ng-disabled="true"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-lg-12 background-light nopadding">
+            <div class="col-md-8 nopadding">
+                <uib-tabset>
+                    <uib-tab index="0" heading="CASH" select="ui.toggleType('CASH');">
+                        <table class="table-rounded control-table square-table">
+                            <col style="width: 70%"/>
+                            <col style="width: 15%"/>
+                            <col style="width: 15%"/>
+                            <tbody>
+                                <tr>
+                                    <td><input id="cashPayment" smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.cashPayment" ng-disabled="ui.mode !== 'NEW'"></td>
+                                    <td><a class="btn btn-lg btn-success" ng-click="ui.getCashPayment(invoiceModel.cashPayment, 'CASH');" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-plus"></span></a> </td>
+                                    <td><a class="btn btn-lg btn-danger" ng-click="ui.getCashPaymentDelete();"><span class="glyphicon glyphicon-remove" ng-disabled="ui.mode !== 'NEW'"></span></a> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </uib-tab>
+                    <uib-tab index="1" heading="CHEQUE" select="ui.toggleType('CHEQUE');">
+                        <table class="table-rounded control-table">
+                            <col style="width: 33.33%"/>
+                            <col style="width: 33.33%"/>
+                            <col style="width: 33.33%"/>
+                            <tbody>
+                                <tr>
+                                    <td><label>Cheque No</label><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.number" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                    <td><label>Date</label><input smart-input="date" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.chequeDate" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                    <td><label>Amount</label><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.amount" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table-rounded control-table square-table">
+                            <col style="width: 50%"/>
+                            <col style="width: 40%"/>
+                            <col style="width: 10%"/>
+                            <tbody>
+                                <tr>
+                                    <td><label>Bank</label><input class="form-control" ng-model="invoiceModel.paymentInfomationData.bank" uib-typeahead="bank.indexNo as (bank.name) for bank in invoiceModel.bankList|filter:$viewValue|limitTo:10" typeahead-input-formatter="invoiceModel.bankLable($model)" typeahead-on-select="invoiceModel.findByBranchList($model);" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                    <td><label>Branch</label><input class="form-control text-right" ng-model="invoiceModel.paymentInfomationData.bankBranch" uib-typeahead="branch.indexNo as (branch.name) for branch in invoiceModel.branchSearchList|filter:$viewValue|limitTo:10" typeahead-input-formatter="invoiceModel.branchkLable($model)" ng-disabled="ui.mode !== 'NEW'"> </td>
+                                    <td><a class="btn btn-primary" style="margin-top: 28px" ng-click="ui.getInsertCardAndChequePayment(invoiceModel.paymentInfomationData, 'CHEQUE');" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-plus"></span></a> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table-rounded control-table">
+                            <col style="width: 20%"/>
+                            <col style="width: 20%"/>
+                            <col style="width: 15%"/>
+                            <col style="width: 15%"/>
+                            <col style="width: 20%"/>
+                            <col style="width: 10%"/>
+                            <tbody>
+                                <tr>
+                                    <th>Cheque No</th>
+                                    <th>Cheque Date</th>
+                                    <th>bank</th>
+                                    <th>branch</th>
+                                    <th class="text-right">amount</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 440px);">
+                            <table class="table-rounded control-table">
+                                <col style="width: 20%"/>
+                                <col style="width: 20%"/>
+                                <col style="width: 15%"/>
+                                <col style="width: 15%"/>
+                                <col style="width: 20%"/>
+                                <col style="width: 10%"/>
+                                <tbody>
+                                    <tr ng-repeat="paymenetInformation in invoiceModel.paymentInformationList|filter:{type:'CHEQUE'}">
+                                        <td>{{paymenetInformation.number}}</td>
+                                        <td>{{paymenetInformation.chequeDate| date:'yyyy-MM-dd'}}</td>
+                                        <td>{{invoiceModel.bankLable(paymenetInformation.bank)}}</td>
+                                        <td>{{invoiceModel.branchkLable(paymenetInformation.bankBranch)}}</td>
+                                        <td class="text-right">{{paymenetInformation.amount|number:2}}</td>
+                                        <td><a class="btn btn-danger" ng-click="ui.getCardAndChequePaymentDelete(number);" ng-disabled="ui.mode !== 'NEW'"><span class="glyphicon glyphicon-remove"></span></a> </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>  
+                    </uib-tab>
+                    <uib-tab index="3" heading="OVER PAYMENT" select="ui.toggleType('OVER_PAYMENT')">
+                        <table class="table-rounded control-table square-table">
+                            <col style="width: 40%"/>
+                            <col style="width: 60%"/>
+                            <tbody>
+                                <tr>
+                                    <td><label>Credit Amount</label><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.creditAmount" disabled="true"> </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table-rounded control-table square-table">
+                            <col style="width: 40%"/>
+                            <col style="width: 40%"/>
+                            <col style="width: 10%"/>
+                            <col style="width: 10%"/>
+                            <tbody>
+                                <tr>
+                                    <td><label>Over Payment Amount</label><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.paymentData.overAmount" disabled="true"> </td>
+                                    <td><label>Settlement Amount</label><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.settlementAmount" ng-disabled="ui.mode !== 'NEW'"></td>
+                                    <td>
+                                        <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.insertClientOverPaymentSettlment(invoiceModel.paymentData.overAmount, invoiceModel.settlementAmount)" ng-disabled="ui.mode !== 'NEW'">
+                                            <span class="glyphicon glyphicon-plus">
+                                            </span>
+                                        </a> 
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-danger" style="margin-top: 28px" id="btnAddData" ng-click="ui.deleteOverPayment();" ng-disabled="ui.mode !== 'NEW'">
+                                            <span class="glyphicon glyphicon-remove">
+                                            </span>
+                                        </a> 
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
+            <div class="col-md-4 nopadding">
+               <div class="row" style="display: flex; flex-flow: column;">
+                <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+                    <table class="table-rounded control-table">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr>
+                                <td><label>Number</label></td>
+                                <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoicePaymentData.invoiceData.number" ng-keypress="ui.load($event);" ng-disabled="ui.mode === 'NEW'"> </td>
+                            </tr>  
+                        </tbody>
+                    </table>
+                    <table class="table-rounded control-table">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr>
+                                <td><label>Pay Amount</label></td>
+                                <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.amount" readonly> </td>
+                            </tr>
+                            <tr class="background-dark">
+                                <td colspan="2">Discount</td>
+                            </tr>
+                            <tr>
+                                <td><label>Rate</label></td>
+                                <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountRate" ng-change="ui.getDiscountAmount();" ng-disabled="ui.mode !== 'NEW'"> </td>
+                            </tr>
+                            <tr>
+                                <td><label>Amount</label></td>
+                                <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountAmount" ng-change="ui.getDiscountRate();" ng-disabled="ui.mode !== 'NEW'"> </td>
+                            </tr>
+                            <tr>
+                                <td><label>Net Amount</label></td>
+                                <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.netAmount" readonly> </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xs-9" style="position: fixed;bottom: 1px;margin-left:-15px;" ng-hide="false">
+            <table class="table-rounded background-dark">
+                <col style="width: 20%">
+                <col style="width: 10%">
+                <col style="width: 20%">
+                <col style="width: 13%;">
+                <col style="width: 14%;">
+                <col style="width: 2%;">
+                <col style="width: 14%;">
+                <col style="width: 14%;">
+                <col style="width: 8%;">
+                <tbody>
+                    <tr class="background-dark">
+                        <td></td>
+                        <td></td>
+                        <td class="text-right"><b>VAT DETAILS :</b></td>
+                        <td></td>
+                        <td></td>
+                        <td><input type="checkbox" ng-model="chxVAT" ng-disabled="model.data.isVat" checked="model.data.isVat" ng-change="ui.checkBoxVATFunction();"/></td>
+                        <td><input class="form-control text-right" placeholder="vat %" ng-model="model.data.vat" ng-disabled="true"></td>
+                        <td><input class="form-control text-right" placeholder="vat value" ng-model="model.data.vatValue" ng-disabled="true"></td>
+                        <td>&nbsp;</td>
+                    </tr>
+                    <tr class="background-dark">
+                        <td></td>
+                        <td></td>
+                        <td class="text-right"><b>SUMMARY :</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td><input class="form-control text-right" placeholder="po value" ng-model="model.data.grandAmount" ng-disabled="true"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show=" 'IDEAL' === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show=" ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

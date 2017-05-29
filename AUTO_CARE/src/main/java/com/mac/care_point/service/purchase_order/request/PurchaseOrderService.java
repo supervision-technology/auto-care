@@ -59,4 +59,8 @@ public class PurchaseOrderService {
         return purchaseOrderRepository.findByNumberAndBranchAndIsView(number,branch,true);
     }
 
+    List<Object[]> loadStockInBranches(Integer item) {
+       return purchaseOrderRepository.getItemQtyByBranches(item);
+    }
+
 }

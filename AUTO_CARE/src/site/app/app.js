@@ -230,6 +230,11 @@
                             templateUrl: "app/front-office/stock/internal-transfer/internal-transfer-in/internal-transfer-in.html",
                             controller: "stockTransferInternalInController"
                         })
+                        //supplier payment
+                        .when("/supplier-payment/supplier-payment", {
+                            templateUrl: "app/front-office/supplier-payment/supplier-payment.html"
+//                            controller: "stockTransferInternalInController"
+                        })
                         .otherwise({
                             redirectTo: "/"
                         });

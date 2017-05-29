@@ -14,6 +14,7 @@
                     suppliers: [],
                     allItems: [],
                     supplierItems: [],
+                    branchesStockList: [],
 
                     constructor: function () {
                         var that = this;
@@ -88,11 +89,25 @@
                             this.tempData.barcode = selectItem.barcode;
                             this.tempData.price = selectItem.costPrice;
                             this.getStockQty(selectItem.indexNo);
+//                            this.getBranchesStock(selectItem.indexNo);
                         } else {
                             this.tempData.item = null;
+
                         }
                     },
-                    addData: function () {
+                    //model dialog
+                    getBranchesStock: function () {
+                        var that = this;
+                        var item = this.tempData.item;
+                        console.log(item);
+                        PurchaseOrderRequestService.getBranchesStock(item)
+                                .success(function (data) {
+                                    that.branchesStockList = data;
+                                    console.log(data);
+                                });
+                               
+                    }
+                    , addData: function () {
                         var that = this;
 
                         var saveConfirmation = true;
@@ -233,21 +248,21 @@
                     }
                     , loadPendingPurchaseOrderByNumber: function () {
                         var that = this;
-                        
+
                         this.tempData = PurchaseOrderRequestModelFactory.tempData();
                         this.summaryData = PurchaseOrderRequestModelFactory.summaryData();
-                        
+
                         PurchaseOrderRequestService.loadPendingPurchaseOrderByNumber(this.data.number)
                                 .success(function (data) {
                                     that.data = data;
                                     that.summaryCalculatorForLoad();
                                     if (!that.data.number) {
-                                       Notification.error('Not Found Purchase Order for this Number !');
-                                    }else{
-                                        Notification.info('This Purchasse Order status is '+that.data.status+".");
+                                        Notification.error('Not Found Purchase Order for this Number !');
+                                    } else {
+                                        Notification.info('This Purchasse Order status is ' + that.data.status + ".");
                                     }
                                 });
-                                return that.data.number;
+                        return that.data.number;
                     }
                 };
                 return purchaseOrderRequestModel;

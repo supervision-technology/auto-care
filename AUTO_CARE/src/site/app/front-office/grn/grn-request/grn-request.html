@@ -38,11 +38,27 @@
                     </tbody>
                 </table>
             </div>
+            <div class="row col-xs-12 nopadding">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>{{model.items.length}}<input class="form-control" placeholder="item" ng-model="model.data.searchItem" 
+                                       uib-typeahead="item.indexNo as (item.barcode + ' - ' + item.name) for item in model.items |filter:$viewValue|limitTo:10" 
+                                       typeahead-input-formatter="model.getItemLable($model)" 
+                                       typeahead-editable="false"
+                                       ng-disabled="ui.mode !== 'NEW'"
+                                       >
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="smart-scroll-y" style="height: calc(100vh - 106px);" ng-show="model.pendingPurchaseOrderList.length" >
                 <table class="table-rounded control-table table-hover">
                     <col style="width: 100%"/>
                     <tbody>
-                        <tr class="animation-fade" ng-repeat="order in model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier} track by $index"
+                        <tr class="animation-fade" ng-repeat="order in model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier} | filter:model.data.searchItem===null?'':model.data.searchItem track by $index"
                             ng-if="model.orderLengthCheck(order.purchaseOrderItemList);" ng-click="ui.selectPurchaseOrder(order.indexNo,order.number)" >
                             <td class="text-center" ng-class="model.selectedDetailIndex === order.indexNo ? 'selected' : ''">
                                 <b>{{model.getSupplier(order.supplier)}}</b>
@@ -56,7 +72,7 @@
                 </table> 
             </div>
             <div class="col-xs-3" style="position: fixed;bottom: 1px;margin-left:-15px;height:40px;" ng-show="model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier} track by $index"
-                  ng-if="model.orderLengthCheck(order.purchaseOrderItemList);" >
+                 ng-if="model.orderLengthCheck(order.purchaseOrderItemList);" >
                 <table class="table-rounded">
                     <col style="width: 15%"/>
                     <col style="width: 20%"/>

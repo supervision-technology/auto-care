@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.purchase_order.approve;
 
+import com.mac.care_point.service.purchase_order.model.Mail;
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,11 @@ public class PurchaseOrderApproveController {
     public Integer deletePurchaseOrder(@PathVariable Integer indexNo) {
          return purchaseOrderApproveService.deletePurchaseOrder(indexNo);
       
+    }
+      // send appreciation mail and kaizen save
+    @RequestMapping(value = "/send-mail", method = RequestMethod.POST)
+    public int sendEmail() {
+        return purchaseOrderApproveService.sendMail();
     }
     
 
