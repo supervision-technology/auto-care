@@ -11,8 +11,10 @@
                 $scope.selectVehicleType = null;
                 $scope.selectPackageItemPosition = null;
                 $scope.selectedJobCardIndexNo = null;
+                $scope.selectedCategoryColors = null;
 
                 $scope.ui.selectedJobCardRow = function (jobCardIndexNo) {
+
                     //find select job card history
                     $scope.selectVehicleType = null;
                     $scope.model.findJobCardDetail(jobCardIndexNo)
@@ -36,6 +38,7 @@
                     if (!$scope.selectedJobCardIndexNo) {
                         Notification.error("plase select job card");
                     } else {
+                        $scope.selectedCategoryColors = data.colour;
                         if (data.staticFeild) {
                             if (data.staticFeildName === 'PACKAGE') {
                                 $scope.ui.model = "PACKAGE";
@@ -77,6 +80,17 @@
                         } else {
                             Notification.error("this item is allrday exsist");
                         }
+                    } else {
+                        Notification.error("select vehicle");
+                    }
+                };
+
+                $scope.ui.setServiceChargers = function (checkd) {
+                    if ($scope.selectedJobCardIndexNo) {
+                        ConfirmPane.successConfirm("Select Service Chargers")
+                                .confirm(function () {
+                                    $scope.model.setServiceChargers($scope.selectedJobCardIndexNo, checkd);
+                                });
                     } else {
                         Notification.error("select vehicle");
                     }

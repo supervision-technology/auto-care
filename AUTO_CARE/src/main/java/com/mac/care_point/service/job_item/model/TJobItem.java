@@ -39,7 +39,7 @@ public class TJobItem {
 
     @Basic(optional = false)
     @Column(name = "quantity")
-    private short quantity;
+    private BigDecimal quantity;
     
     @Basic(optional = false)
     @Column(name = "stock_remove_qty")
@@ -47,7 +47,7 @@ public class TJobItem {
 
     @Basic(optional = false)
     @Column(name = "price")
-    private short price;
+    private BigDecimal price;
 
     @Basic(optional = false)
     @Column(name = "value")
@@ -68,7 +68,7 @@ public class TJobItem {
     public TJobItem() {
     }
 
-    public TJobItem(Integer indexNo, Integer item, Integer itemUnit, String itemType, short quantity, BigDecimal stockRemoveQty, short price, BigDecimal value, String orderStatus, String jobStatus, Integer jobCard) {
+    public TJobItem(Integer indexNo, Integer item, Integer itemUnit, String itemType, BigDecimal quantity, BigDecimal stockRemoveQty, BigDecimal price, BigDecimal value, String orderStatus, String jobStatus, Integer jobCard) {
         this.indexNo = indexNo;
         this.item = item;
         this.itemUnit = itemUnit;
@@ -114,19 +114,19 @@ public class TJobItem {
         this.itemType = itemType;
     }
 
-    public short getQuantity() {
+    public BigDecimal getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(short quantity) {
+    public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
     }
 
-    public short getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(short price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 

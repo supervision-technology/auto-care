@@ -7,6 +7,7 @@
                 invoiceModel.prototype = {
                     //master list
                     vehicleList: [],
+                    employeeList: [],
                     clientList: [],
                     pendingJobCards: [],
                     bankList: [],
@@ -15,6 +16,7 @@
                     branchSearchList: [],
                     //trasactons list
                     invoiceData: {},
+                    employeeData: {},
                     paymentData: {},
                     paymentInfomationData: {},
                     paymentInformationList: [],
@@ -23,6 +25,7 @@
 
                     constructor: function () {
                         var that = this;
+                        this.employeeData = invoiceFactory.newEmployeeData();
                         this.invoiceData = invoiceFactory.newInvoiceData();
                         this.paymentData = invoiceFactory.newPaymentData();
                         this.paymentInfomationData = invoiceFactory.newPaymentInformation();
@@ -33,6 +36,11 @@
                         invoiceService.loadVehicle()
                                 .success(function (data) {
                                     that.vehicleList = data;
+                                });
+
+                        invoiceService.loadEmployee()
+                                .success(function (data) {
+                                    that.employeeList = data;
                                 });
 
                         invoiceService.loadClient()
@@ -49,13 +57,14 @@
                                 .success(function (data) {
                                     that.branchList = data;
                                 });
-                                
+
                         invoiceService.loadCardType()
                                 .success(function (data) {
                                     that.cardTypeList = data;
                                 });
                     },
                     clear: function () {
+                        this.employeeData = invoiceFactory.newEmployeeData();
                         this.invoiceData = invoiceFactory.newInvoiceData();
                         this.paymentData = invoiceFactory.newPaymentData();
                         this.paymentInfomationData = invoiceFactory.newPaymentInformation();
@@ -88,6 +97,26 @@
                         angular.forEach(this.bankList, function (values) {
                             if (values.indexNo === parseInt(indexNo)) {
                                 data = values.name;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    employeeLable: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.employeeList, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values.indexNo + " - " + values.name;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    employee: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.employeeList, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values;
                                 return;
                             }
                         });

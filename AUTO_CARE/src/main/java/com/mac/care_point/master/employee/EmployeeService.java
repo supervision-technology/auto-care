@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Supervision
+ * @author kavish manjitha
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class EmployeeService {
-    
+
     @Autowired
-    private EmployeeRepository employeeRepository ;
+    private EmployeeRepository employeeRepository;
 
     public List<Employee> findAll() {
         return employeeRepository.findAll();

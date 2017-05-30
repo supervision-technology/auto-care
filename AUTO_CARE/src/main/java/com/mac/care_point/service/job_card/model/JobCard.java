@@ -22,7 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -82,6 +81,9 @@ public class JobCard implements Serializable {
     @Column(name = "vehicle")
     private Integer vehicle;
 
+    @Column(name = "service_chagers")
+    private Boolean serviceChagers;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCard", fetch = FetchType.EAGER)
     private List<TJobItem> tJobItemList;
@@ -89,7 +91,7 @@ public class JobCard implements Serializable {
     public JobCard() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, List<TJobItem> tJobItemList) {
+    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -104,6 +106,7 @@ public class JobCard implements Serializable {
         this.bay = bay;
         this.client = client;
         this.vehicle = vehicle;
+        this.serviceChagers = serviceChagers;
         this.tJobItemList = tJobItemList;
     }
 
@@ -229,6 +232,14 @@ public class JobCard implements Serializable {
 
     public void setOutTime(String outTime) {
         this.outTime = outTime;
+    }
+
+    public Boolean getServiceChagers() {
+        return serviceChagers;
+    }
+
+    public void setServiceChagers(Boolean serviceChagers) {
+        this.serviceChagers = serviceChagers;
     }
 
 }

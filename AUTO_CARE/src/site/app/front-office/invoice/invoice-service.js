@@ -16,10 +16,14 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/client");
         };
 
+        this.loadEmployee = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/employee");
+        };
+
         this.loadBank = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/bank");
         };
-        
+
         this.loadCardType = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/card_type");
         };

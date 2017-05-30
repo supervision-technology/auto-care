@@ -48,18 +48,21 @@ public class TPayment implements Serializable {
 
     @Column(name = "card_amount")
     private BigDecimal cardAmount;
-
+    
+    @Column(name = "resp_employee")
+    private Integer respEmployee;
+    
     public TPayment() {
     }
 
-    public TPayment(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public TPayment(Integer indexNo, int number, BigDecimal totalAmount) {
+    public TPayment(Integer indexNo, int number, BigDecimal totalAmount, BigDecimal cashAmount, BigDecimal chequeAmount, BigDecimal cardAmount, Integer respEmployee) {
         this.indexNo = indexNo;
         this.number = number;
         this.totalAmount = totalAmount;
+        this.cashAmount = cashAmount;
+        this.chequeAmount = chequeAmount;
+        this.cardAmount = cardAmount;
+        this.respEmployee = respEmployee;
     }
 
     public Integer getIndexNo() {
@@ -109,5 +112,13 @@ public class TPayment implements Serializable {
     public void setCardAmount(BigDecimal cardAmount) {
         this.cardAmount = cardAmount;
     }
-    
+
+    public Integer getRespEmployee() {
+        return respEmployee;
+    }
+
+    public void setRespEmployee(Integer respEmployee) {
+        this.respEmployee = respEmployee;
+    }
+   
 }

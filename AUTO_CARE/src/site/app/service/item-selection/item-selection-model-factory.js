@@ -45,7 +45,8 @@
                         "status": null,
                         "bay": null,
                         "client": null,
-                        "vehicle": null
+                        "vehicle": null,
+                        "serviceChagers": 0
                     };
                     return data;
                 };

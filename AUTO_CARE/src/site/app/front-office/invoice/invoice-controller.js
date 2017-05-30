@@ -14,8 +14,11 @@
 
                 //variables pass data to methods
                 $scope.selectedJobCardIndexNo = null;
+                $scope.selectJobCardServiceChagers = null;
+                $scope.employeeResponsibiltySelect = true;
 
                 $scope.ui.selectedJobCardRow = function (jobCard) {
+
                     $scope.invoiceModel.clear();
                     //job card seletion
                     $scope.selectedJobCardIndexNo = jobCard.indexNo;
@@ -24,9 +27,13 @@
                     $scope.invoiceModel.getJobItemHistory(jobCard.indexNo);
 
                     $scope.invoiceModel.getClientOverPayment(jobCard.client);
+
+                    $scope.selectJobCardServiceChagers = jobCard.serviceChagers;
                 };
 
                 $scope.ui.clear = function () {
+                    $scope.selectedJobCardIndexNo = null;
+                    $scope.selectJobCardServiceChagers = null;
                     $scope.invoiceModel.clear();
                     $scope.invoiceModel.cashPayment = 0.0;
                     $scope.invoiceModel.settlementAmount = 0.0;
@@ -42,23 +49,33 @@
                     }
                 };
 
+                $scope.ui.getRepEmployeeData = function (indexNo) {
+                    $scope.invoiceModel.employeeData = $scope.invoiceModel.employee(indexNo);
+                };
+
                 $scope.ui.saveInvoice = function () {
                     if ($scope.selectedJobCardIndexNo) {
-                        if ($scope.invoiceModel.paymentData.balance >= 0) {
+                        if ($scope.invoiceModel.paymentData.chequeAmount > 0 || $scope.invoiceModel.paymentData.balance > 0) {
+                            if (!$scope.invoiceModel.paymentData.respEmployee) {
+                                optionPane.dangerMessage("plase select reponsibilty employee");
+                                $scope.employeeResponsibiltySelect = false;
+                            } else {
+                                ConfirmPane.successConfirm("Do you want to save invoice")
+                                        .confirm(function () {
+                                            $scope.invoiceModel.saveInvoice()
+                                                    .then(function (data) {
+                                                        $scope.ui.mode = "IDEAL";
+                                                        $scope.ui.clear();
+                                                        optionPane.successMessage("Save Invoice" + data.number);
+                                                    });
+                                        });
+                            }
+                        } else {
                             ConfirmPane.successConfirm("Do you want to save invoice")
                                     .confirm(function () {
                                         $scope.invoiceModel.saveInvoice()
                                                 .then(function (data) {
                                                     $scope.ui.mode = "IDEAL";
-                                                    $scope.ui.clear();
-                                                    optionPane.successMessage("Save Invoice" + data.number);
-                                                });
-                                    });
-                        } else {
-                            ConfirmPane.successConfirm("Do you want to save invoice Payment Settle")
-                                    .confirm(function () {
-                                        $scope.invoiceModel.saveInvoice()
-                                                .then(function (data) {
                                                     $scope.ui.clear();
                                                     optionPane.successMessage("Save Invoice" + data.number);
                                                 });

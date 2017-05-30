@@ -64,6 +64,10 @@
         this.findByItemStockItmQty = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock");
         };
+
+        this.setServiceChargers = function (jobCard, status) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/service-charge/" + jobCard + "/" + status);
+        };
     };
 
     angular.module("appModule")

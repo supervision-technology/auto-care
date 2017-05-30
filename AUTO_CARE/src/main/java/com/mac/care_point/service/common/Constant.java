@@ -10,7 +10,10 @@ package com.mac.care_point.service.common;
  * @author Kavish Manjitha
  */
 public interface Constant {
-
+    //job items
+    public static final String SERVICE_CHARGERS = "SERVICE_CHARGERS";
+    
+    
     //common status
     public static final String PENDING_STATUS = "PENDING";
     public static final String APPROVE_STATUS = "APPROVED";

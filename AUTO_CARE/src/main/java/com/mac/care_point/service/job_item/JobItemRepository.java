@@ -44,4 +44,6 @@ public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
             + "   group by\n"
             + "m_item.index_no", nativeQuery = true)
     public List<Object[]> getItemQtyByStock(@Param("branch") Integer branch, @Param("item") Integer item);
+
+    public List<TJobItem> findByJobCardAndItemType(Integer jobCard, String itemType);
 }

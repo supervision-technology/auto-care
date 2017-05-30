@@ -22,10 +22,11 @@
                     var data = {
                         "indexNo": null,
                         "number": null,
-                        "total_amount": 0.0,
-                        "cash_amount": 0.0,
-                        "cheque_amount": 0.0,
-                        "card_amount": 0.0
+                        "totalAmount": 0.0,
+                        "cashAmount": 0.0,
+                        "chequeAmount": 0.0,
+                        "cardAmount": 0.0,
+                        "respEmployee": null
                     };
                     return data;
                 };
@@ -52,6 +53,21 @@
                         "bank": null,
                         "bankBranch": null,
                         "cardType": null
+                    };
+                    return data;
+                };
+                factory.newEmployeeData = function () {
+                    var data = {
+                        "indexNo": null,
+                        "name": null,
+                        "addressLine1": null,
+                        "addressLine2": null,
+                        "addressLine3": null,
+                        "mobile": null,
+                        "branch": null,
+                        "type": null,
+                        "rol": null,
+                        "image": null
                     };
                     return data;
                 };

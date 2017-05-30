@@ -14,7 +14,6 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +55,10 @@ public class JobCardController {
     public Integer saveJovCard(@RequestBody JobCard jobCard) {
         jobCard.setBranch(1);
         return jobCardService.saveJobCard(jobCard).getIndexNo();
+    }
+    @RequestMapping(value = "/service-charge/{jobCard}/{status}", method = RequestMethod.GET)
+    public JobCard setServiceChargers(@PathVariable Integer jobCard,@PathVariable Boolean status) {
+        return jobCardService.setServiceChargers(jobCard,status);
     }
 
     @RequestMapping(value = "/upload-image", method = RequestMethod.POST)//, consumes = "multipart/form-data"

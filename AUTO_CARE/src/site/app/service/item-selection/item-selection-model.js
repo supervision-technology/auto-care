@@ -64,10 +64,19 @@
                         //job card select filter items
                         this.filterItems = [];
                     },
-                    selectMainStockItems: function (itemUnits) {
-                        console.log(itemUnits);
-                        console.log(itemUnits);
-                        console.log(itemUnits);
+                    setServiceChargers: function (jobCard, serviceStatus) {
+                        var that = this;
+                        var defer = $q;
+                        ItemSelectionService.setServiceChargers(jobCard, serviceStatus)
+                                .success(function (data) {
+                                    angular.extend(that.jobCardData, data);
+                                    that.getSelectItemAllItems();
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
                     },
                     findItemsForStockLeger: function () {
                         var that = this;

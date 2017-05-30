@@ -11,10 +11,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author Supervision
+ * @author kavish manjitha
  */
-public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
+public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     public List<Employee> findByName(String name);
-    
+
 }

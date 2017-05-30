@@ -5,7 +5,11 @@
  */
 package com.mac.care_point.service.job_card;
 
+import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.job_card.model.JobCard;
+import com.mac.care_point.service.job_item.JobItemRepository;
+import com.mac.care_point.service.job_item.model.TJobItem;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +29,9 @@ public class JobCardService {
 
     @Autowired
     private JobCardRepository jobCardRepository;
+
+    @Autowired
+    private JobItemRepository jobItemRepository;
 
     public List<JobCard> getPendingJobCard() {
         return jobCardRepository.findByStatus(PENDING_STATUS);
@@ -47,6 +54,38 @@ public class JobCardService {
 
     public JobCard getJobCard(Integer indexNo) {
         return jobCardRepository.findOne(indexNo);
+    }
+
+    @Transactional
+    public JobCard setServiceChargers(Integer jobCard, Boolean status) {
+        //jobcard set service chargers
+        JobCard getJobCardData = jobCardRepository.findOne(jobCard);
+        getJobCardData.setServiceChagers(status);
+
+        //job item insert row service chargers
+        if (getJobCardData.getServiceChagers()) {
+
+            TJobItem jobItem = new TJobItem();
+            jobItem.setJobCard(getJobCardData.getIndexNo());
+            jobItem.setItemType(Constant.SERVICE_CHARGERS);
+            jobItem.setPrice(new BigDecimal("500.00"));
+            jobItem.setQuantity(BigDecimal.ONE);
+            jobItem.setValue(new BigDecimal("500.00"));
+            jobItem.setJobStatus(PENDING_STATUS);
+            jobItem.setOrderStatus(PENDING_STATUS);
+            jobItemRepository.save(jobItem);
+            System.out.println("++++++++++++++++++++++++++++++++++++++ item save");
+        } else {
+            //service chargers remove
+            List<TJobItem> getItemDataList = jobItemRepository.findByJobCardAndItemType(getJobCardData.getIndexNo(), Constant.SERVICE_CHARGERS);
+            for (TJobItem tJobItem : getItemDataList) {
+                //jobItemRepository.delete(tJobItem.getIndexNo());
+                System.out.println(tJobItem.getIndexNo() + "++++++++++++++++++++++++++++++++++++++ item delete");
+            }
+        }
+
+        jobCardRepository.save(getJobCardData);
+        return getJobCardData;
     }
 
 }
