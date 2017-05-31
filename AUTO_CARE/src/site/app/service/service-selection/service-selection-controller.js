@@ -47,6 +47,11 @@
                             } else if (data.staticFeildName === 'STOCK') {
                                 $scope.ui.model = "STOCK";
                                 $scope.model.findItemsForStockLeger();
+                            } else if (data.staticFeildName === 'ATTENCTIONS') {
+
+                                $scope.ui.model = "ATTENCTIONS";
+                                $scope.model.filterItems = [];
+                                $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
                             }
                         } else {
                             //service -  lord items

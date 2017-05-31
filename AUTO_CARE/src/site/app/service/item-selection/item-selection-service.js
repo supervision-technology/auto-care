@@ -68,6 +68,27 @@
         this.setServiceChargers = function (jobCard, status) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/service-charge/" + jobCard + "/" + status);
         };
+
+        //job vehicle attenctions
+        this.getVehicleAttenctionsCategory = function (jobCard, status) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/service-charge/");
+        };
+
+        this.getSelectedVehicleAttenctionCategoryData = function (category) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/service-charge/" + category);
+        };
+
+        this.addJobVehicleAttenction = function (data) {
+            return $http.post(systemConfig.apiUrl + "");
+        };
+
+        this.removeJobVehicleAttenction = function (indexNo) {
+            return $http.delete(systemConfig.apiUrl + "/" + indexNo);
+        };
+
+        this.selectedJobCardGetJobVehicleAttelins = function (jobCardIndexNo) {
+            return $http.get(systemConfig.apiUrl + "/" + jobCardIndexNo)
+        }; 
     };
 
     angular.module("appModule")

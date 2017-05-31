@@ -64,10 +64,13 @@ public class Client implements Serializable {
     @Column(name = "nic")
     private String nic;
 
+    @Column(name = "customer_type")
+    private Integer customerType;
+
     public Client() {
     }
 
-    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic) {
+    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic, Integer customerType) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -75,8 +78,8 @@ public class Client implements Serializable {
         this.addressLine3 = addressLine3;
         this.mobile = mobile;
         this.branch = branch;
-        
         this.nic = nic;
+        this.customerType = customerType;
     }
 
     public Integer getIndexNo() {
@@ -143,4 +146,11 @@ public class Client implements Serializable {
         this.nic = nic;
     }
 
+    public Integer getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
+    }
 }

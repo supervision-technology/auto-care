@@ -50,7 +50,8 @@
                         "status": null,
                         "bay": null,
                         "client": null,
-                        "vehicle": null
+                        "vehicle": null,
+                        "serviceChagers": null
                     };
                     return data;
                 };
@@ -66,10 +67,10 @@
                     };
                     return data;
                 };
-                    factory.newPriceCategoryData = function (){
+                factory.newPriceCategoryData = function () {
                     var data = {
-                        "indexNo":null,
-                        "name":null 
+                        "indexNo": null,
+                        "name": null
                     };
                     return  data;
                 };

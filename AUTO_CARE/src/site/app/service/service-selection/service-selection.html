@@ -2,7 +2,7 @@
     <div class="tile-list-title" style="margin-right: 5px;">
         <h4>VEHICLE</h4>
     </div>
-    <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
+    <div class="smart-scroll-y" style="height: calc(100vh - 40px);">
         <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details.indexNo);">
             <span>
                 <img src="/img/01.png"/>  
@@ -17,16 +17,19 @@
 </div>
 <div class="index-content-body">
     <div style="float: left; width: calc(100% - 133px);">
+
         <div class="col-xs-7 background-light" ng-show="ui.model === 'CATEGORY'">
             <div class="row full-height" style="display: flex; flex-flow: column;">
-                <div class="tile-lists">
-                    <div class="tiles tile-200 col-xs-4" style="background: {{detils.colour}};border-radius: 8px;" ng-repeat="detils in model.category|filter:{viewApprove : true}" ng-click="ui.categorySelections(detils);">
-                        <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
-                            <div class="col-xs-4">
-                                <img src="/img/{{detils.image}}"/>
-                            </div>
-                            <div class="col-xs-8" style="font-size: 19px;">
-                                {{detils.name}}
+                <div class="smart-scroll-y" style="height: calc(100vh - 40px);">
+                    <div class="tile-lists">
+                        <div class="tiles tile-200 col-xs-4" style="background: {{detils.colour}};border-radius: 8px;" ng-repeat="detils in model.category|filter:{viewApprove : true}" ng-click="ui.categorySelections(detils);">
+                            <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
+                                <div class="col-xs-4">
+                                    <img src="/img/{{detils.image}}"/>
+                                </div>
+                                <div class="col-xs-8" style="font-size: 19px;">
+                                    {{detils.name}}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -85,6 +88,55 @@
                 </div>
             </div>
         </div>
+
+        <!------ attenctions selction ---->
+        <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'ATTENCTIONS'">
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
+                <table class="square-table background-dark">
+                    <col style="width: 80%;"/>
+                    <col style="width: 20%;"/>
+                    <thead>
+                        <tr>
+                            <th>ATTENCTION CATEGORY</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
+                    <div ng-repeat="detils in model.filterItems">
+                        <table class="square-table">
+                            <col style="width: 80%;"/>
+                            <col style="width: 20%;"/>
+                            <tbody>
+                                <tr class="background-light">
+                                    <td ng-click="ui.getPackageDetails($index, detils.indexNo);" class="text-bold">{{detils.name}}</td>
+                                    <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'PACKAGE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="animation-v-grow background-dark" ng-show="selectPackageItemPosition == $index">
+                            <table class="square-table">
+                                <col style="width: 30%;"/>
+                                <col style="width: 70%;"/>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>NAME</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="background-dark" ng-repeat="details in model.packageItemList">
+                                        <td><label>{{model.itemData(details.item).indexNo | fixedLength:5}}</label></td>
+                                        <td>{{model.itemData(details.item).name}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!------ /attenctions selction ---->
 
         <div class="col-xs-7 background-light" ng-show="ui.model === 'STOCK'">
             <div class="row full-height" style="display: flex; flex-flow: column;">
@@ -439,7 +491,7 @@
                                     </thead>
                                 </table>
                             </div>
-                            <div class="smart-scroll-y" style="height: calc(100vh - 193px);padding-left: 5px;">
+                            <div class="smart-scroll-y" style="height: calc(100vh - 239px);padding-left: 5px;">
                                 <table class="square-table background-dark">
                                     <col style="width: 70%;"/>
                                     <col style="width: 10%;"/>

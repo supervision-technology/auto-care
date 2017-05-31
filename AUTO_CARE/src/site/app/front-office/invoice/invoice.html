@@ -217,16 +217,16 @@
                                     <tr class="background-dark">
                                         <td colspan="2">Discount</td>
                                     </tr>
-                                    <tr>
+                                    <tr ng-show="!selectJobCardServiceChagers">
                                         <td><label>Rate</label></td>
                                         <td><input smart-input="integer" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountRate" ng-change="ui.getDiscountAmount();" ng-disabled="ui.mode !== 'NEW'" ng-readonly="selectJobCardServiceChagers"> </td>
                                     </tr>
-                                    <tr>
+                                    <tr ng-show="!selectJobCardServiceChagers">
                                         <td><label>Amount</label></td>
                                         <td><input smart-input="decimal" class="form-control text-right" ng-model="invoiceModel.invoiceData.discountAmount" ng-change="ui.getDiscountRate();" ng-disabled="ui.mode !== 'NEW'" ng-readonly="selectJobCardServiceChagers"> </td>
                                     </tr>
                                     <tr ng-show="selectJobCardServiceChagers">
-                                        <td><label>Service Chargers</label></td>
+                                        <td><label>S.Chargers</label></td>
                                         <td><input class="form-control text-right" value="500.00" ng-disabled="true"> </td>
                                     </tr>
                                     <tr>

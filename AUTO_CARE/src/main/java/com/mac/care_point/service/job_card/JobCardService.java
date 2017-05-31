@@ -74,7 +74,6 @@ public class JobCardService {
             jobItem.setJobStatus(PENDING_STATUS);
             jobItem.setOrderStatus(PENDING_STATUS);
             jobItemRepository.save(jobItem);
-            System.out.println("++++++++++++++++++++++++++++++++++++++ item save");
         } else {
             //service chargers remove
             List<TJobItem> getItemDataList = jobItemRepository.findByJobCardAndItemType(getJobCardData.getIndexNo(), Constant.SERVICE_CHARGERS);

@@ -14,7 +14,27 @@
         <div class="col-xs-8 col-xs-offset-2 background-light" ng-show="ui.changeUi === 'ui2'">
             <div class="form-group col-xs-12">
                 <div class="col-xs-12">
-                    <h1 class="text-center">Vehicle No : {{vehicleNo}}</h1>
+                    <table> 
+                        <col style="width: 60%">
+                        <col style="width: 40%">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <h1 class="text-center">Vehicle No : {{vehicleNo}}</h1>
+                                </td>
+                                <td rowspan="2" >
+                        <center>
+                            <img class="img-responsive" src="{{model.clientType(model.clientData.customerType).icon}}" alt=""/>    
+                        </center>
+                        </td>
+                        </tr>
+                        <tr>
+                            <td valign="middle"> 
+                                <h1 class="text-center">{{model.clientType(model.clientData.customerType).name}}</h1> 
+                            </td> 
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="form-group col-xs-12">
@@ -98,7 +118,6 @@
                         </div>
                         <div style="padding-top: 50px; padding-left: 300px">
                             <button class="btn btn-success" style="width: 50px; height: 50px" ng-click="ui.jobCardNsext()"><span class="glyphicon glyphicon-ok"></span></button>
-                            <button class="btn btn-primary" style="width: 50px; height: 50px" ng-click="ui.imageUpload()"><span class="glyphicon glyphicon-camera"></span></button>                        
                         </div>
                     </div>
                 </div>

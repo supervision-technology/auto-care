@@ -20,11 +20,10 @@ import org.eclipse.persistence.sessions.serializers.Serializer;
  *
  * @author Kalum
  */
-
 @Entity(name = "com.mac.care_point.service.zmaster.client.model")
 @Table(name = "m_client")
-public class MClient implements Serializable{
-    
+public class MClient implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -66,10 +65,13 @@ public class MClient implements Serializable{
     @Column(name = "nic")
     private String nic;
 
+    @Column(name = "customer_type")
+    private Integer customerType;
+
     public MClient() {
     }
 
-    public MClient(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String nic) {
+    public MClient(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic, Integer customerType) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -78,6 +80,7 @@ public class MClient implements Serializable{
         this.mobile = mobile;
         this.branch = branch;
         this.nic = nic;
+        this.customerType = customerType;
     }
 
     public Integer getIndexNo() {
@@ -143,7 +146,13 @@ public class MClient implements Serializable{
     public void setNic(String nic) {
         this.nic = nic;
     }
-    
-    
-    
+
+    public Integer getCustomerType() {
+        return customerType;
+    }
+
+    public void setCustomerType(Integer customerType) {
+        this.customerType = customerType;
+    }
+
 }

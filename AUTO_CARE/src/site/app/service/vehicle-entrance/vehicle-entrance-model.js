@@ -5,21 +5,19 @@
         }
 
         vehicleEntranceModel.prototype = {
-
             //data model
             vehicleData: {},
             clientData: {},
             jobcard: {},
             vehicleTypeData: {},
             priceCategoryData: {},
-            
             //uib-typeHead
             vehicleList: [],
             clientList: [],
+            customerTypeList: [],
             vehicleTypeList: [],
             priceCategoryList: [],
             jobCardList: [],
-            
             constructor: function () {
                 var that = this;
                 this.vehicleData = vehicleEntranceFactory.newVehicleData();
@@ -28,16 +26,21 @@
 //                this.jobcard = vehicleEntranceFactory.getJobCard();
                 this.vehicleTypeData = vehicleEntranceFactory.newVehicleTypeData();
                 this.priceCategoryData = vehicleEntranceFactory.newPriceCategoryData();
-                
+
                 this.loadClient();
-                
+
                 this.loadVehicle();
-                
+
                 vehicleEntranceService.loadVehicleType()
                         .success(function (data) {
                             that.vehicleTypeList = data;
-                            console.log(data);
                         });
+
+                vehicleEntranceService.loadCustomerType()
+                        .success(function (data) {
+                            that.customerTypeList = data;
+                        });
+
                 vehicleEntranceService.loadPriceCategory()
                         .success(function (data) {
                             that.priceCategoryList = data;
@@ -50,10 +53,10 @@
                             that.clientList = data;
                         });
             },
-            loadJobCardByClientIndexNo: function(indexNo){
-                var that =this;
+            loadJobCardByClientIndexNo: function (indexNo) {
+                var that = this;
                 vehicleEntranceService.getJobCard(indexNo)
-                        .success(function (data){
+                        .success(function (data) {
                             that.jobCardList = data;
                         });
             },
@@ -109,6 +112,7 @@
                 that.jobcard.status = "PENDING";
                 that.jobcard.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                 that.jobcard.bay = 1;
+                that.jobcard.serviceChagers = 0;
                 that.jobcard.priceCategory = that.vehicleData.priceCategory;
                 that.jobcard.inMileage = that.vehicleData.lastMilage;
                 that.jobcard.client = that.clientData.indexNo;
@@ -145,6 +149,7 @@
                 var that = this;
                 var defer = $q.defer();
                 that.clientData.type = "NEW";
+                that.clientData.customerType = 2;
                 vehicleEntranceService.newClient(JSON.stringify(that.clientData))
                         .success(function (data) {
                             that.clientData = data;
@@ -185,6 +190,16 @@
                     }
                 });
                 return client;
+            },
+            clientType: function (indexNo) {
+                var data = "";
+                angular.forEach(this.customerTypeList, function (value) {
+                    if (value.indexNo === parseInt(indexNo)) {
+                        data = value;
+                        return;
+                    }
+                });
+                return data;
             },
             vehicleTypeLabel: function (indexNo) {
                 var vehicleType = "";
