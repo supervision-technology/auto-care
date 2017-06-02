@@ -13,23 +13,35 @@
                 $scope.selectedJobCardIndexNo = null;
                 $scope.selectedCategoryColors = null;
 
-                $scope.ui.selectedJobCardRow = function (jobCardIndexNo) {
+                $scope.selectCategoryPosition = null;
+                $scope.viewRemarkFeild = null;
+
+                $scope.ui.selectedJobCardRow = function (jobCardData) {
+
+                    //get last job card vehicle attenctions list
+                    $scope.model.getLastJobCardVehicleAttenctions(jobCardData.vehicle);
 
                     //find select job card history
                     $scope.selectVehicleType = null;
-                    $scope.model.findJobCardDetail(jobCardIndexNo)
+                    $scope.model.findJobCardDetail(jobCardData.indexNo)
                             .then(function () {
-                                $scope.selectedJobCardIndexNo = jobCardIndexNo;
-                                $scope.selectVehicleType = $scope.model.vehicleData($scope.model.jobCardData.vehicle).type;
+                                
+                                $scope.selectedJobCardIndexNo = jobCardData.indexNo;
+                                $scope.selectVehicleType = $scope.model.vehicleData(jobCardData.vehicle).type;
+
                             });
+
                     //view select job item history
-                    $scope.model.getJobItemHistory(jobCardIndexNo);
+                    $scope.model.getJobItemHistory(jobCardData.indexNo);
 
                     //job card select get customer reserved item list
-                    $scope.model.findByJobCardCustomerReceiveItem(jobCardIndexNo);
-
+                    $scope.model.findByJobCardCustomerReceiveItem(jobCardData.indexNo);
+                    
+                    //get stock leger items
                     $scope.model.findItemsForStockLeger();
                     $scope.selectIemUnit = null;
+
+                    $scope.ui.backToCategory();
                 };
 
                 //Category names = PACKAGE,SERVICE AND STOCK ITEMS
@@ -41,10 +53,12 @@
                         $scope.selectedCategoryColors = data.colour;
                         if (data.staticFeild) {
                             if (data.staticFeildName === 'PACKAGE') {
+
                                 $scope.ui.model = "PACKAGE";
                                 $scope.model.filterItems = [];
                                 $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
                             } else if (data.staticFeildName === 'STOCK') {
+
                                 $scope.ui.model = "STOCK";
                                 $scope.model.findItemsForStockLeger();
                             } else if (data.staticFeildName === 'ATTENCTIONS') {
@@ -54,6 +68,7 @@
                                 $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
                             }
                         } else {
+
                             //service -  lord items
                             $scope.ui.model = "SERVICE";
                             $scope.model.filterItems = [];
@@ -149,5 +164,46 @@
                                 $scope.model.deleteCustomerReceiveItem($index, indexNo);
                             });
                 };
+
+//------------------------------- vehicle attenctions -------------------------------  
+                $scope.ui.getVehicleAttenctionsData = function ($index, category) {
+                    $scope.model.getSelectedVehicleAttenctionCategoryData(category, $scope.selectedJobCardIndexNo);
+                    $scope.isVisible = $scope.isVisible === 0 ? true : false;
+                    $scope.viewRemarkFeild = false;
+                    $scope.selectCategoryPosition = $scope.selectCategoryPosition === $index ? -1 : $index;
+                };
+
+                $scope.ui.viewRemark = function ($index) {
+                    $scope.isVisible = $scope.isVisible === 0 ? true : false;
+                    $scope.viewRemarkFeild = $scope.viewRemarkFeild === $index ? -1 : $index;
+                };
+
+                $scope.ui.viewRemarkLastJobCard = function ($index, details) {
+                    $scope.isVisible = $scope.isVisible === 0 ? true : false;
+                    $scope.viewRemarkFeild = $scope.viewRemarkFeild === $index ? -1 : $index;
+                    $scope.remark = null;
+                    $scope.remark = details.remark;
+                };
+
+                $scope.ui.addJobVehicleAttenction = function (data) {
+                    if ($scope.selectedJobCardIndexNo) {
+                        $scope.model.addJobVehicleAttenction(data);
+                        //$scope.selectCategoryPosition = null;
+                        $scope.viewRemarkFeild = null;
+                    } else {
+                        Notification.error("select vehicle");
+                    }
+                };
+
+                $scope.ui.addRemarkJobVehicleAttenction = function (remark) {
+                    if ($scope.selectedJobCardIndexNo) {
+                        $scope.model.addRemarkJobVehicleAttenction($scope.viewRemarkFeild, remark);
+                        //$scope.selectCategoryPosition = null;
+                        $scope.viewRemarkFeild = null;
+                    } else {
+                        Notification.error("select vehicle");
+                    }
+                };
+//------------------------------- /vehicle attenctions -------------------------------                 
             });
 }());

@@ -14,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -29,33 +28,40 @@ public class TJobVehicleAttenctions implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 25)
+    @Column(name = "job_card")
+    private Integer jobCard;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "vehicle_attenctions")
+    private Integer vehicleAttenctions;
+
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "vehicle_attenctions_category")
+    private Integer vehicleAttenctionsCategory;
+
+    @Basic(optional = false)
     @Column(name = "status")
     private String status;
-    
+
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "remark")
     private String remark;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
-    @Column(name = "job-card")
-    private Integer jobCard;
 
     public TJobVehicleAttenctions() {
     }
 
-    public TJobVehicleAttenctions(Integer indexNo, String status, String remark, Integer jobCard) {
+    public TJobVehicleAttenctions(Integer indexNo, Integer jobCard, Integer vehicleAttenctions, Integer vehicleAttenctionsCategory, String status, String remark) {
         this.indexNo = indexNo;
+        this.jobCard = jobCard;
+        this.vehicleAttenctions = vehicleAttenctions;
+        this.vehicleAttenctionsCategory = vehicleAttenctionsCategory;
         this.status = status;
         this.remark = remark;
-        this.jobCard = jobCard;
     }
 
     public Integer getIndexNo() {
@@ -88,6 +94,22 @@ public class TJobVehicleAttenctions implements Serializable {
 
     public void setJobCard(Integer jobCard) {
         this.jobCard = jobCard;
+    }
+
+    public Integer getVehicleAttenctions() {
+        return vehicleAttenctions;
+    }
+
+    public void setVehicleAttenctions(Integer vehicleAttenctions) {
+        this.vehicleAttenctions = vehicleAttenctions;
+    }
+
+    public Integer getVehicleAttenctionsCategory() {
+        return vehicleAttenctionsCategory;
+    }
+
+    public void setVehicleAttenctionsCategory(Integer vehicleAttenctionsCategory) {
+        this.vehicleAttenctionsCategory = vehicleAttenctionsCategory;
     }
 
 }

@@ -33,7 +33,7 @@ public class JobCardController {
 
     @Autowired
     private JobCardService jobCardService;
-    
+
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-S");
 
     @RequestMapping(value = "/get-client-history/{indexNo}", method = RequestMethod.GET)
@@ -56,19 +56,19 @@ public class JobCardController {
         jobCard.setBranch(1);
         return jobCardService.saveJobCard(jobCard).getIndexNo();
     }
+
     @RequestMapping(value = "/service-charge/{jobCard}/{status}", method = RequestMethod.GET)
-    public JobCard setServiceChargers(@PathVariable Integer jobCard,@PathVariable Boolean status) {
-        return jobCardService.setServiceChargers(jobCard,status);
+    public JobCard setServiceChargers(@PathVariable Integer jobCard, @PathVariable Boolean status) {
+        return jobCardService.setServiceChargers(jobCard, status);
     }
 
     @RequestMapping(value = "/upload-image", method = RequestMethod.POST)//, consumes = "multipart/form-data"
     public void saveImage(@RequestParam("file") MultipartFile file) {
         try {
-           // System.out.println(file.getSize());
+            // System.out.println(file.getSize());
             String fileName = dateFormat.format(new Date());
             fileName = Base64.getEncoder().encodeToString(fileName.getBytes()) + file.getOriginalFilename();
 
-            
             //System.out.println(fileName);
             File uploadFile = new File("./files", fileName);
             if (!uploadFile.getParentFile().exists()) {

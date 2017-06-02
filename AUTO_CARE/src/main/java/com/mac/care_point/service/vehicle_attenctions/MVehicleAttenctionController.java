@@ -23,28 +23,32 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/api/care-point/service/vehicle-attenctions/")
+@RequestMapping(value = "/api/care-point/service/vehicle-attenctions")
 public class MVehicleAttenctionController {
 
     @Autowired
     private MVehicleAttenctionService vehicleAttenctionService;
 
-    
     //master functions
+    @RequestMapping(method = RequestMethod.GET)
+    public List<MVehicleAttenctions> findAllAtenctions() {
+        return vehicleAttenctionService.findAllAtenctions();
+    }
+
     @RequestMapping(value = "/vehicle-attenctions-category", method = RequestMethod.GET)
     public List<MVehicleAttenctionsCategory> findAllAtenctionsCategory() {
         return vehicleAttenctionService.findAllAtenctionsCategory();
     }
-    
-    @RequestMapping(value = "/find-by-vehicle-attenctions-by-category/{category}", method = RequestMethod.GET)
-    public List<MVehicleAttenctions> findAllAtenctions(@PathVariable Integer category) {
-        return vehicleAttenctionService.findByCategory(category);
-    }
 
     //transaction functions
-    @RequestMapping(value = "/find-by-job-vehicle-attenctions-job-card/{jobCard}", method = RequestMethod.GET)
-    public List<TJobVehicleAttenctions> findTJobVehicleAttenctionsByJobCard(@PathVariable Integer jobCard) {
-        return vehicleAttenctionService.findByJobCard(jobCard);
+    @RequestMapping(value = "/find-by-job-vehicle-attenctions-job-card/{category}/{jobCard}", method = RequestMethod.GET)
+    public List<TJobVehicleAttenctions> findByJobCardAndVehicleAttenctionsCategory(@PathVariable Integer category, @PathVariable Integer jobCard) {
+        return vehicleAttenctionService.findByJobCardAndVehicleAttenctionsCategory(category, jobCard);
+    }
+
+    @RequestMapping(value = "/fill-job-vehicle-attenctions/{jobCard}", method = RequestMethod.GET)
+    public void fillTJobVehicleAttenctions(@PathVariable Integer jobCard) {
+        vehicleAttenctionService.fillTJobVehicleAttenctions(jobCard);
     }
 
     @RequestMapping(value = "/save-job-vehicle-attenctions", method = RequestMethod.POST)
@@ -52,9 +56,9 @@ public class MVehicleAttenctionController {
         return vehicleAttenctionService.saveTJobVehicleAttenctions(jobVehicleAttenctions);
     }
 
-    @RequestMapping(value = "/delete-job-vehicle-attenctions/{indexNo}", method = RequestMethod.GET)
-    public Integer deleteTJobVehicleAttenctions(@PathVariable Integer indexNo) {
-        return vehicleAttenctionService.deleteTJobVehicleAttenctions(indexNo);
+    @RequestMapping(value = "/find-last-job-card/{vehicle}", method = RequestMethod.GET)
+    public List<TJobVehicleAttenctions> getLastJobCardVehicle(@PathVariable Integer vehicle) {
+        return vehicleAttenctionService.getLastJobCardVehicle(vehicle);
     }
 
 }

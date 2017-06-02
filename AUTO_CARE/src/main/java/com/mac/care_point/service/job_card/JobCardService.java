@@ -86,5 +86,4 @@ public class JobCardService {
         jobCardRepository.save(getJobCardData);
         return getJobCardData;
     }
-
 }

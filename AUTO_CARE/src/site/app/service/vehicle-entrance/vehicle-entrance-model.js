@@ -105,6 +105,20 @@
                                     });
                         });
             },
+            fillJobVehicleAttenctions: function (jobCard) {
+                var defer = $q;
+                vehicleEntranceService.fillJobVehicleAttenctions(jobCard)
+                        .success(function (data) {
+                            console.log("+++++++++++++++++++++++++++++++++++++");
+                            console.log("+++++++++++++++++++++++++++++++++++++");
+                            console.log("+++++++++++++++++++++++++++++++++++++");
+                            defer.resolve();
+                        })
+                        .error(function () {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
             saveJobCard: function () {
                 var that = this;
                 that.jobcard.transaction = 1;
@@ -119,9 +133,10 @@
                 that.jobcard.vehicle = that.vehicleData.indexNo;
                 var defer = $q.defer();
                 vehicleEntranceService.saveJob(JSON.stringify(that.jobcard))
-                        .success(function (data) {
+                        .success(function (data) {                            
                             that.loadClient();
                             that.loadVehicle();
+                            that.fillJobVehicleAttenctions(data);
                             defer.resolve(data);
                         })
                         .error(function () {

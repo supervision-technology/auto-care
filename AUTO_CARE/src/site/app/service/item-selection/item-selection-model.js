@@ -15,10 +15,14 @@
                     itemUnits: [],
                     category: [],
                     packageItemList: [],
+                    vehicleAttenctionsCategoryList: [],
+                    vehicleAttenctionsList: [],
                     //pending job card list
                     pendingJobCards: [],
                     //select job card items
                     jobItemList: [],
+                    vehicleAttenctionSelectedList: [],
+                    lastJobCardVehicleAttenctionList: [],
                     //job card select filter items
                     filterItems: [],
                     //select job card customer reserved itemes list
@@ -54,6 +58,16 @@
                         ItemSelectionService.loadItemUnits()
                                 .success(function (data) {
                                     that.itemUnits = data;
+                                });
+
+                        ItemSelectionService.getVehicleAttenctionsCategory()
+                                .success(function (data) {
+                                    that.vehicleAttenctionsCategoryList = data;
+                                });
+
+                        ItemSelectionService.getVehicleAttenctions()
+                                .success(function (data) {
+                                    that.vehicleAttenctionsList = data;
                                 });
                     },
                     clear: function () {
@@ -379,7 +393,85 @@
                                 .error(function () {
 
                                 });
+                    },
+//------------------------------- vehicle attenctions -------------------------------  
+                    vehicleAttenctions: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.vehicleAttenctionsList, function (values) {
+                            if (values.indexNo === indexNo) {
+                                data = values;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    vehicleAttenctionCategory: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.vehicleAttenctionsCategoryList, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    addJobVehicleAttenction: function (data) {
+                        var defer = $q;
+                        ItemSelectionService.addJobVehicleAttenction(data)
+                                .success(function (data) {
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    addRemarkJobVehicleAttenction: function ($index, remark) {
+                        var defer = $q;
+                        var vehicleAttenctionData = this.vehicleAttenctionSelectedList[$index];
+                        vehicleAttenctionData.remark = remark;
+                        ItemSelectionService.addJobVehicleAttenction(vehicleAttenctionData)
+                                .success(function (data) {
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    getSelectedVehicleAttenctionCategoryData: function (category, jobCard) {
+                        var that = this;
+                        var defer = $q;
+                        ItemSelectionService.getSelectedVehicleAttenctionCategoryData(category, jobCard)
+                                .success(function (data) {
+                                    that.vehicleAttenctionSelectedList = [];
+                                    that.vehicleAttenctionSelectedList = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.vehicleAttenctionSelectedList = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    getLastJobCardVehicleAttenctions: function (jobCard) {
+                        var that = this;
+                        var defer = $q;
+                        ItemSelectionService.getLastJobCardVehicleAttenctions(jobCard)
+                                .success(function (data) {
+                                    console.log(data);
+                                    console.log(data);
+                                    console.log(data);
+                                    that.lastJobCardVehicleAttenctionList = [];
+                                    that.lastJobCardVehicleAttenctionList = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
                     }
+//------------------------------- /vehicle attenctions -------------------------------                    
                 };
                 return ItemSelectionModel;
             });

@@ -3,7 +3,7 @@
         <h4>VEHICLE</h4>
     </div>
     <div class="smart-scroll-y" style="height: calc(100vh - 40px);">
-        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details.indexNo);">
+        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
             <span>
                 <img src="/img/01.png"/>  
                 <label>
@@ -92,48 +92,103 @@
         <!------ attenctions selction ---->
         <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'ATTENCTIONS'">
             <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
-                <table class="square-table background-dark">
-                    <col style="width: 80%;"/>
-                    <col style="width: 20%;"/>
-                    <thead>
-                        <tr>
-                            <th>ATTENCTION CATEGORY</th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
-                    <div ng-repeat="detils in model.filterItems">
-                        <table class="square-table">
+                <uib-tabset>
+                    <uib-tab heading="NEW ATTENCTIONS" index="0">
+                        <table class="square-table background-dark">
                             <col style="width: 80%;"/>
                             <col style="width: 20%;"/>
-                            <tbody>
-                                <tr class="background-light">
-                                    <td ng-click="ui.getPackageDetails($index, detils.indexNo);" class="text-bold">{{detils.name}}</td>
-                                    <td><a ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'PACKAGE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                            <thead>
+                                <tr>
+                                    <th>ATTENCTION CATEGORY</th>
+                                    <th>&nbsp;</th>
                                 </tr>
-                            </tbody>
+                            </thead>
                         </table>
-                        <div class="animation-v-grow background-dark" ng-show="selectPackageItemPosition == $index">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 90px);">
+                            <div ng-repeat="detils in model.vehicleAttenctionsCategoryList">
+                                <table class="square-table">
+                                    <col style="width: 100%;"/>
+                                    <tbody>
+                                        <tr class="background-light">
+                                            <td ng-click="ui.getVehicleAttenctionsData($index, detils.indexNo);" class="text-bold">{{detils.name}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="animation-v-grow background-dark" ng-show="selectCategoryPosition == $index">
+                                    <table class="square-table">
+                                        <col style="width: 40%;"/>
+                                        <col style="width: 40%;"/>
+                                        <col style="width: 20%;"/>
+                                        <tbody ng-repeat="details in model.vehicleAttenctionSelectedList">
+                                            <tr class="background-dark" >
+                                                <td>{{model.vehicleAttenctions(details.vehicleAttenctions).name}}</td>
+                                                <td> 
+                                                    <select class="form-control form-group-lg"  ng-model="details.status" ng-change="ui.addJobVehicleAttenction(details);" style="margin-top: 8px;">
+                                                        <option class="N/A">N/A</option>
+                                                        <option class="REPALCE">REPALCE</option>
+                                                        <option class="MODIFICATION">MODIFICATION</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-primary" ng-click="ui.viewRemark($index);"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                                                </td>
+                                            </tr>
+                                            <tr class="animation-fade" ng-show="viewRemarkFeild === $index">
+                                                <td colspan="2">
+                                                    <input type="text" ng-model="remark" class="form-control"/>
+                                                </td>
+                                                <td>
+                                                    <a class="btn btn-success" ng-click="ui.addRemarkJobVehicleAttenction(remark);"><span class="glyphicon glyphicon-plus"></span></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>  
+                            </div>
+                        </div>
+                    </uib-tab>
+                    <uib-tab heading="LAST JOB CARD ATTENCTIONS" index="1">
+                        <table class="square-table background-dark">
+                            <col style="width: 80%;"/>
+                            <col style="width: 20%;"/>
+                            <thead>
+                                <tr>
+                                    <th>ATTENCTIONS</th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 90px);">
                             <table class="square-table">
                                 <col style="width: 30%;"/>
-                                <col style="width: 70%;"/>
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>NAME</th>
+                                <col style="width: 30%;"/>
+                                <col style="width: 30%;"/>
+                                <col style="width: 10%;"/>
+                                <tbody ng-repeat="details in model.lastJobCardVehicleAttenctionList">
+                                    <tr class="background-dark">
+                                        <td>{{model.vehicleAttenctionCategory(details.vehicleAttenctionsCategory).name}}</td>
+                                        <td>{{model.vehicleAttenctions(details.vehicleAttenctions).name}}</td>
+                                        <td> 
+                                            <select class="form-control form-group-lg"  ng-model="details.status" style="margin-top: 8px;" ng-readonly="true">
+                                                <option class="N/A">N/A</option>
+                                                <option class="REPALCE">REPALCE</option>
+                                                <option class="MODIFICATION">MODIFICATION</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <a ng-show="details.remark" class="btn btn-success" ng-click="ui.viewRemarkLastJobCard($index, details);"><span class="glyphicon glyphicon-arrow-down"></span></a>
+                                        </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="background-dark" ng-repeat="details in model.packageItemList">
-                                        <td><label>{{model.itemData(details.item).indexNo | fixedLength:5}}</label></td>
-                                        <td>{{model.itemData(details.item).name}}</td>
+                                    <tr class="background-dark animation-fade" ng-show="viewRemarkFeild === $index">
+                                        <td colspan="4">
+                                           {{remark}}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                </div>
+                    </uib-tab>
+                </uib-tabset>
             </div>
         </div>
         <!------ /attenctions selction ---->
@@ -469,7 +524,7 @@
                                         <td>
                                             <div class="btn-group">
                                                 <label class="btn btn-default" ng-model="model.jobCardData.serviceChagers" uib-btn-radio="false" ng-click="ui.setServiceChargers(model.jobCardData.serviceChagers)">SERVICE CHARGE NO</label>
-                                                <label class="btn btn-primary" ng-model="model.jobCardData.serviceChagers" uib-btn-radio="true" ng-click="ui.setServiceChargers(model.jobCardData.serviceChagers)">SERVICE CHARGE YES</label>
+                                                <label class="btn btn-success" ng-model="model.jobCardData.serviceChagers" uib-btn-radio="true" ng-click="ui.setServiceChargers(model.jobCardData.serviceChagers)">SERVICE CHARGE YES</label>
                                             </div>
                                         </td>
                                         <td></td>

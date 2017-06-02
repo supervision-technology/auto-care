@@ -5,9 +5,12 @@
  */
 package com.mac.care_point.service.vehicle_attenctions;
 
+import com.mac.care_point.service.job_card.JobCardRepository;
+import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.service.vehicle_attenctions.model.MVehicleAttenctions;
 import com.mac.care_point.service.vehicle_attenctions.model.MVehicleAttenctionsCategory;
 import com.mac.care_point.service.vehicle_attenctions.model.TJobVehicleAttenctions;
+import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +34,9 @@ public class MVehicleAttenctionService {
     @Autowired
     private TJobVehicleAttenctionsRepository jobVehicleAttenctionsRepository;
 
+    @Autowired
+    private JobCardRepository jobCardRepository;
+
     public List<MVehicleAttenctions> findAllAtenctions() {
         return attenctionRepository.findAll();
     }
@@ -39,21 +45,37 @@ public class MVehicleAttenctionService {
         return vehicleAttenctionCategoryRepository.findAll();
     }
 
-    public List<TJobVehicleAttenctions> findByJobCard(Integer jobCard) {
-        return jobVehicleAttenctionsRepository.findByJobCard(jobCard);
+    public List<TJobVehicleAttenctions> findByJobCardAndVehicleAttenctionsCategory(Integer category, Integer jobCard) {
+        return jobVehicleAttenctionsRepository.findByJobCardAndVehicleAttenctionsCategory(jobCard, category);
     }
 
+    @Transactional
     public TJobVehicleAttenctions saveTJobVehicleAttenctions(TJobVehicleAttenctions jobVehicleAttenctions) {
         return jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
     }
 
-    public Integer deleteTJobVehicleAttenctions(Integer indexNo) {
-        jobVehicleAttenctionsRepository.delete(indexNo);
-        return indexNo;
+    @Transactional
+    public void fillTJobVehicleAttenctions(Integer jobCard) {
+        //check allrady exsist data
+        List<TJobVehicleAttenctions> getJobCardData = jobVehicleAttenctionsRepository.findByJobCard(jobCard);
+        if (getJobCardData.isEmpty()) {
+            List< MVehicleAttenctions> vehicleAttenctionsList = attenctionRepository.findAll();
+            for (MVehicleAttenctions mVehicleAttenctions : vehicleAttenctionsList) {
+
+                TJobVehicleAttenctions jobVehicleAttenctions = new TJobVehicleAttenctions();
+                jobVehicleAttenctions.setJobCard(jobCard);
+                jobVehicleAttenctions.setVehicleAttenctions(mVehicleAttenctions.getIndexNo());
+                jobVehicleAttenctions.setVehicleAttenctionsCategory(mVehicleAttenctions.getCategory());
+                jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
+            }
+        } else {
+            throw new DuplicateEntityException("Duplicate Data");
+        }
     }
 
-    public List<MVehicleAttenctions> findByCategory(Integer category) {
-        return attenctionRepository.findByCategory(category);
+    public List<TJobVehicleAttenctions> getLastJobCardVehicle(Integer vehicle) {
+        Integer getLastJobCardIndexNo = jobVehicleAttenctionsRepository.getLastJobCardVehicle(vehicle);
+        return jobVehicleAttenctionsRepository.findByJobCardAndStatusNotNull(getLastJobCardIndexNo);
     }
 
 }

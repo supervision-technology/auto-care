@@ -70,25 +70,27 @@
         };
 
         //job vehicle attenctions
-        this.getVehicleAttenctionsCategory = function (jobCard, status) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/service-charge/");
+        this.getVehicleAttenctionsCategory = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/vehicle-attenctions-category");
         };
 
-        this.getSelectedVehicleAttenctionCategoryData = function (category) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/service-charge/" + category);
+        this.getVehicleAttenctions = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions");
+        };
+
+        this.getSelectedVehicleAttenctionCategoryData = function (category, jobCard) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/find-by-job-vehicle-attenctions-job-card/" + category + "/" + jobCard);
         };
 
         this.addJobVehicleAttenction = function (data) {
-            return $http.post(systemConfig.apiUrl + "");
+            return $http.post(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/save-job-vehicle-attenctions", data);
         };
 
-        this.removeJobVehicleAttenction = function (indexNo) {
-            return $http.delete(systemConfig.apiUrl + "/" + indexNo);
+        this.getLastJobCardVehicleAttenctions = function (jobCard) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/find-last-job-card/" + jobCard);
         };
 
-        this.selectedJobCardGetJobVehicleAttelins = function (jobCardIndexNo) {
-            return $http.get(systemConfig.apiUrl + "/" + jobCardIndexNo)
-        }; 
+
     };
 
     angular.module("appModule")

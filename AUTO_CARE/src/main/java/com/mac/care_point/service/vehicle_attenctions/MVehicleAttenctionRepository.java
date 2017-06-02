@@ -6,7 +6,6 @@
 package com.mac.care_point.service.vehicle_attenctions;
 
 import com.mac.care_point.service.vehicle_attenctions.model.MVehicleAttenctions;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -15,6 +14,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface MVehicleAttenctionRepository extends JpaRepository<MVehicleAttenctions, Integer>{
 
-    public List<MVehicleAttenctions> findByCategory(Integer category);
-    
 }
