@@ -5,10 +5,15 @@
  */
 package com.mac.care_point.master.items.items;
 
+import com.mac.care_point.master.branch.BranchRepository;
+import com.mac.care_point.master.branch.model.MBranch;
 import com.mac.care_point.master.items.item_unit.ItemUnitRepository;
 import com.mac.care_point.master.items.item_unit.model.MItemUnits;
 import com.mac.care_point.master.items.items.model.MItem;
+import com.mac.care_point.master.reOrderLevel.ReOrderRepository;
+import com.mac.care_point.master.reOrderLevel.model.MReOrderLevel;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,25 +30,53 @@ public class ItemService {
 
     @Autowired
     private ItemRepository itemRepository;
-    
+
     @Autowired
     private ItemUnitRepository itemUnitRepository;
-    
+
+    @Autowired
+    private BranchRepository branchRepository;
+
+    @Autowired
+    private ReOrderRepository reOrderRepository;
+
     public List<MItem> findAllItems() {
         return itemRepository.findAll();
     }
-    
+
     public MItem saveItem(MItem item) {
-        
+        Integer number = item.getIndexNo();
+
         MItem saveItem = itemRepository.save(item);
-        
-        if ("STOCK".equals(saveItem.getType())) {
+
+        if ("STOCK".equals(saveItem.getType()) || "NON-STOCK".equals(saveItem.getType())) {
+
+            //set reorder qty
+            if (null == number) {
+                List<MBranch> branchList = branchRepository.findAll();
+
+                List<MReOrderLevel> reOrderList = new ArrayList<>();
+
+                for (MBranch branch : branchList) {
+                    MReOrderLevel reOrderLevel = new MReOrderLevel();
+                    reOrderLevel.setItem(saveItem.getIndexNo());
+                    reOrderLevel.setBranch(branch.getIndexNo());
+                    reOrderLevel.setReOrderMax(item.getReOrderMax());
+                    reOrderLevel.setReOrderMin(item.getReOrderMin());
+                    reOrderList.add(reOrderLevel);
+                }
+
+                for (MReOrderLevel mReOrderLevel : reOrderList) {
+                    reOrderRepository.save(mReOrderLevel);
+
+                }
+            }
 
             //create item units
             List<MItemUnits> findItemList = itemUnitRepository.findByItemAndItemUnitType(saveItem.getIndexNo(), "MAIN");
-            
+
             if (findItemList.isEmpty()) {
-                
+
                 MItemUnits itemUnits = new MItemUnits();
                 itemUnits.setItem(saveItem.getIndexNo());
                 itemUnits.setItemUnitType("MAIN");
@@ -53,23 +86,23 @@ public class ItemService {
                 itemUnits.setSalePriceRegister(item.getSalePriceRegister());
                 itemUnits.setCostPrice(item.getCostPrice());
                 itemUnitRepository.save(itemUnits);
-                
+
             } else {
-                
+
                 MItemUnits itemUnits = findItemList.get(0);
                 itemUnits.setName(item.getName());
                 itemUnits.setSalePriceNormal(item.getSalePriceNormal());
                 itemUnits.setSalePriceRegister(item.getSalePriceRegister());
                 itemUnits.setCostPrice(item.getCostPrice());
-                
+
                 itemUnitRepository.save(itemUnits);
-                
+
             }
-            
+
         }
         return saveItem;
     }
-    
+
     public void deleteItem(Integer indexNo) {
         try {
             List<MItemUnits> findItemList = itemUnitRepository.findByItemAndItemUnitType(indexNo, "MAIN");
@@ -79,16 +112,16 @@ public class ItemService {
             throw new RuntimeException("cannot delete this item because there are details in other transaction");
         }
     }
-    
+
     public List<MItem> findByCategoryAndPriceCategory(Integer category, Integer packageCategory) {
         return itemRepository.findByCategoryAndPriceCategory(category, packageCategory);
     }
-    
+
     public List<MItem> findItemsByTypeAndQty(String TYPE) {
         return itemRepository.findByType(TYPE);
     }
 
     public List<MItem> getSupplierItem(String stock, String nonStock) {
-        return itemRepository. findByTypeOrType(stock,nonStock);
+        return itemRepository.findByTypeOrType(stock, nonStock);
     }
 }

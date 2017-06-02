@@ -5,7 +5,7 @@
     <uib-tabset>
         <uib-tab heading="ITEMS" index="0" select="ui.toggleType('ITEMS');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -54,6 +54,10 @@
                                 <td><input class="form-control" ng-model="model.itemData.unit" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
+                                <td><label class="control-label">Supplier</label></td>
+                                <td><input class="form-control" ng-model="model.itemData.supplier" uib-typeahead="supplier.indexNo as (supplier.name+ ' - ' +supplier.contactNo) for supplier in model.suppliers |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.supplierLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr>
                                 <td><label class="control-label">Department</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.department" uib-typeahead="itemDepartment.indexNo as (itemDepartment.indexNo + ' - ' + itemDepartment.name) for itemDepartment in model.itemDepartments |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemDepartmentLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
@@ -68,6 +72,14 @@
                             <tr>
                                 <td><label class="control-label">Brand</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.brand" uib-typeahead="brand.indexNo as (brand.indexNo + ' - ' + brand.name) for brand in model.brands |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.brandLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Re Order Max</label></td>
+                                <td><input class="form-control" ng-model="model.itemData.reOrderMax" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Re Order Min</label></td>
+                                <td><input class="form-control" ng-model="model.itemData.reOrderMin" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -148,14 +160,6 @@
                                 <td><label class="control-label">Item*</label></td>
                                 <td><input class="form-control" ng-model="model.itemUnitData.item" uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items | filter: { type: 'STOCK' } |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemLable($model);" typeahead-on-select="ui.getItemType($model);" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr class="background-dark">
-                                <td><label class="control-label">Item Type</label></td>
-                                <td><input class="form-control" ng-model="itemType" ng-disabled="true"></td>
-                            </tr>
-                            <tr class="background-dark">
-                                <td><label class="control-label">Item Type</label></td>
-                                <td><input class="form-control" ng-model="itemUnit" ng-disabled="true"></td>
-                            </tr>
                             <tr>
                                 <td><label class="control-label">Name*</label></td>
                                 <td><input class="form-control" ng-model="model.itemUnitData.name" ng-disabled="ui.mode !== 'EDIT'"></td>
@@ -179,6 +183,45 @@
                             </tr>
                         </tbody>
                     </table>
+                    <div class="border-all" ng-show="ui.showDetails()">
+                        <div class="modal-header bg-primary">
+                            <div class="col-lg-12">
+                                <center>
+                                    <label>ITEM DETAILS {{model.itemUnitData.item}}</label>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table-rounded control-table">
+                                <col style="width: 35%"/>
+                                <col style="width: 65%"/>
+                                <tbody>
+                                    <tr>
+                                        <td> <label>Item Type :</label></td>
+                                        <td> <label>{{itemType}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Item Unit :</label></td>
+                                        <td> <label>{{itemUnit}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Brand :</label></td>
+                                        <td> <label>{{model.brandLable(itemObject.brand)}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Category :</label></td>
+                                        <td> <label>{{model.categoryLable(itemObject.category)}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Sub Category :</label></td>
+                                        <td> <label>{{model.subCategoryLable(itemObject.sub_category)}}</label></td>
+                                    </tr>
+                                   
+                                </tbody>
+                            </table>
+                           
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-xs-8 background-light">
@@ -310,11 +353,147 @@
                 </div>
             </div>
         </uib-tab>
+        <uib-tab heading="CONSUMABLE ITEMS" index="3" select="ui.toggleType('CONSUMABLE_ITEMS');">
+            <div class="col-xs-4 background-dark">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <table class="table-rounded control-table">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr class="background-light-dark">
+                                <td><label class="control-label">Service</label></td>
+                                <td><input class="form-control" ng-model="model.consumableData.service" uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items|filter: { type: 'SERVICE' }|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemLable($model)" typeahead-on-select="" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Consumable Item</label></td>
+                                <td><input class="form-control" 
+                                           ng-model="model.consumableData.consumable" 
+                                           uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items|filter: { type: 'NON-STOCK' }|filter:$viewValue|limitTo:10" 
+                                           typeahead-input-formatter="model.itemLable($model)" ng-disabled="ui.mode !== 'EDIT'"
+                                           typeahead-on-select="model.selectCunsumableItel(model.consumableData.consumable);"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="control-label">Usage Quantity</label></td>
+                                <td><input class="form-control" smart-input="decimal" ng-model="model.consumableData.qty"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="border-all" ng-show="model.consumableItemIsView">
+                        <div class="modal-header bg-primary">
+                            <div class="col-lg-12">
+                                <center>
+                                    <label>CONSUMABLE ITEM DETAILS</label>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table-rounded control-table">
+                                <col style="width: 35%"/>
+                                <col style="width: 65%"/>
+                                <tbody>
+                                    <tr>
+                                        <td> <label>Full Name :</label></td>
+                                        <td> <label>{{model.selectedConsumableItem.name}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Barcode :</label></td>
+                                        <td> <label>{{model.selectedConsumableItem.barcode}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Unit :</label></td>
+                                        <td> <label>{{model.selectedConsumableItem.unit}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Department :</label></td>
+                                        <td> <label>{{model.itemDepartmentLable(model.selectedConsumableItem.department)}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Brand :</label></td>
+                                        <td> <label>{{model.brandLable(model.selectedConsumableItem.brand)}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Category :</label></td>
+                                        <td> <label>{{model.categoryLable(model.selectedConsumableItem.category)}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Sub Category :</label></td>
+                                        <td> <label>{{model.subCategoryLable(model.selectedConsumableItem.sub_category)}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Sale Price &nbsp;<label class="label label-primary">N</label>:</label></td>
+                                        <td> <label>{{model.selectedConsumableItem.salePriceNormal|number:2}}</label></td>
+                                    </tr>
+                                    <tr>
+                                        <td> <label>Sale Price &nbsp;<label class="label label-primary">R</label>:</label></td>
+                                        <td> <label>{{model.selectedConsumableItem.salePriceRegister|number:2}}</label></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8 background-light">
+                <div class="row col-xs-12">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                        <div class="col-md-6">
+                            <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem" ng-disabled="ui.mode !== 'EDIT'">
+                        </div>
+                        <table class="table-rounded">
+                            <col style="width: 10%">
+                            <col style="width: 30%">
+                            <col style="width: 33%">
+                            <col style="width: 15%">
+                            <col style="width: 12%">
+                            <thead class="background-dark">
+                                <tr>
+                                    <th>
+                                        <label>#</label>
+                                    </th>
+                                    <th>
+                                        <label>Service</label>
+                                    </th>
+                                    <th>
+                                        <label>Consumable Item</label>
+                                    </th>
+                                    <th >
+                                        <label>Usage Qty</label>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                            <table class="table-rounded">
+                                <col style="width: 10%">
+                                <col style="width: 30%">
+                                <col style="width: 30%">
+                                <col style="width: 15%">
+                                <col style="width: 15%">
+                                <tbody>
+                                    <tr ng-repeat="consumable in model.consumableItemList|filter:{service:model.consumableData.service===null?'':model.consumableData.service}|filter:{consumable:model.consumableData.consumable===null?'':model.consumableData.consumable}">
+                                        <td><label class="label label-default">{{consumable.indexNo|fixedLength:5}}</label></td>
+                                        <td>{{model.itemLable(consumable.service)}}</td>
+                                        <td>{{model.itemLable(consumable.consumable)}}</td>
+                                        <td class="text-right">{{consumable.qty|number:2}}</td>
+                                        <td class="text-right" ng-disabled="ui.mode !== 'EDIT'">
+                                            <a class="btn btn-danger" ng-click="ui.deleteConsumableItem(consumable.indexNo);"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
     </uib-tabset>
     <div class="fab-container">
         <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEMS'" ng-click="ui.saveItems()"><i class="glyphicon glyphicon-floppy-save"></i></a>
         <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEMS_UNITS'" ng-click="ui.saveItemUnits()"><i class="glyphicon glyphicon-floppy-save"></i></a>
         <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'PACKAGE_ITEMS'" ng-click="ui.addPackageItem()"><i class="glyphicon glyphicon-floppy-save"></i></a>
+        <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'CONSUMABLE_ITEMS'" ng-click="ui.saveConsumable()"><i class="glyphicon glyphicon-floppy-save"></i></a>
         <a class="fab fab-lg fab-primary" fab-show="ui.mode ==='IDEAL'" ng-click="ui.new()"><i class="glyphicon glyphicon-plus"></i></a>
     </div>
 </div>

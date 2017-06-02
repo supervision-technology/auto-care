@@ -26,6 +26,10 @@
         this.loadItem = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item");
         };
+        
+        this.loadSupplier = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
+        };
 
         this.loadItemUnit = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit");
@@ -38,7 +42,15 @@
         this.loadItemUnitByItem = function (item) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit/find-by-item/" + item);
         };
+       
+        this.loadConsumableItem = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/consumable-item");
+        };
 
+        this.getPackageItems = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/package-item/get-package-items/" + indexNo);
+        };
+        
         //save functions
         this.saveItem = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/master/item/save-item", data);
@@ -51,10 +63,10 @@
         this.savePackageItem = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/master/package-item/save-package", data);
         };
-
-        this.getPackageItems = function (indexNo) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/master/package-item/get-package-items/" + indexNo);
+        this.saveConsumableItem = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/master/consumable-item/save-consumable", data);
         };
+
 
 
         //delete functions
@@ -68,6 +80,10 @@
 
         this.deletePackageItem = function (indexNo) {
             return $http.delete(systemConfig.apiUrl + "/api/care-point/master/package-item/delete-package/" + indexNo);
+        };
+        
+        this.deleteConsumableItem = function (indexNo) {
+            return $http.delete(systemConfig.apiUrl + "/api/care-point/master/consumable-item/delete-consumable/" + indexNo);
         };
     };
 

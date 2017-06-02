@@ -4,6 +4,7 @@
             .controller("grnController", function ($scope, $timeout, $filter, GrnModel, Notification, ConfirmPane) {
                 $scope.model = new GrnModel();
                 $scope.ui = {};
+                $scope.filterList = [];
 
                 $scope.ui.new = function () {
                     $scope.ui.mode = 'NEW';
@@ -42,7 +43,7 @@
 
                 $scope.ui.changeSupplier = function () {
                     $scope.model.changeSupplier();
-                    $scope.ui.mode='IDEAL';
+                    $scope.ui.mode = 'IDEAL';
                 };
 
                 $scope.init = function () {
@@ -50,11 +51,24 @@
 
                     $scope.$watch("model.purchaseOrderItemList", function () {
                         $scope.model.itemTotal();
+//                        console.log("$scope.model.pendingPurchaseOrderList");
+//                        console.log($scope.model.pendingPurchaseOrderList);
                     });
 
+
                 };
+//                $scope.ui.filterMainList = function () {
+//                    $scope.filterList = $scope.model.pendingPurchaseOrderList.filter(function (data) {
+//                        return (true);
+//                    });
+//                    console.log("$scope.filterList");
+//                    console.log($scope.filterList);
+
+//                };
 
                 $scope.init();
+//                $scope.ui.filterMainList();
+
             });
 }());
 

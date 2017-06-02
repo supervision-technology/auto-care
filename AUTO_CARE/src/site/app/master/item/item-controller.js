@@ -1,7 +1,7 @@
 (function () {
     angular.module("itemModule", ['ui.bootstrap', 'ui-notification']);
     angular.module("itemModule")
-            .controller("itemController", function ($scope, itemModel, $timeout, Notification) {
+            .controller("itemController", function ($scope, itemModel, $timeout, Notification, ConfirmPane) {
                 $scope.model = new itemModel();
                 $scope.ui = {};
 
@@ -12,6 +12,8 @@
                         $scope.ui.saveMode = "ITEMS_UNITS";
                     } else if (functions === "PACKAGE_ITEMS") {
                         $scope.ui.saveMode = "PACKAGE_ITEMS";
+                    } else if (functions === "CONSUMABLE_ITEMS") {
+                        $scope.ui.saveMode = "CONSUMABLE_ITEMS";
                     }
                 };
 
@@ -56,6 +58,23 @@
                                 });
                     }
                 };
+                //save consumable item
+                $scope.ui.saveConsumable = function () {
+                    ConfirmPane.primaryConfirm("Save this Consumable Item !")
+                            .confirm(function () {
+                                $scope.model.saveConsumable()
+                                        .then(function () {
+                                            Notification.success("Consumable Item Save Success");
+                                        }, function () {
+                                            Notification.error("Consumable Item Save Fail");
+                                        });
+
+                            })
+                            .discard(function () {
+                                console.log('discard');
+                            });
+
+                };
 
                 //edit item
                 $scope.ui.editeItems = function (items, $index) {
@@ -86,7 +105,23 @@
                             && $scope.model.itemUnitData.salePriceNormal
                             && $scope.model.itemUnitData.salePriceRegister) {
                         $scope.model.saveItemUnit();
+                        $scope.itemType=null;
+                        $scope.itemUnit=null;
                     }
+                    
+                };
+                $scope.ui.showDetails=function (){
+                    var show=true;
+                    if (!$scope.itemType) {
+                        show=false;
+                    }
+                    if (!$scope.itemUnit) {
+                        show=false;
+                    }
+                    if (!$scope.model.itemUnitData.item) {
+                        show=false;
+                    }
+                    return show;
                 };
 
                 //edit item units
@@ -97,6 +132,7 @@
                 $scope.ui.getItemType = function (model) {
                     $scope.itemType = $scope.model.item(model).type;
                     $scope.itemUnit = $scope.model.item(model).unit;
+                    $scope.itemObject = $scope.model.item(model);
                     //item selected get item wise item units
                     $scope.model.loadItemUnitByItem(model);
                 };
@@ -121,6 +157,23 @@
                 //select package - get package item list
                 $scope.ui.getPackageItems = function (model) {
                     $scope.model.getPackageItems(model);
+                };
+
+                //consumable Item
+                $scope.ui.deleteConsumableItem = function (index) {
+                    ConfirmPane.dangerConfirm("Delete Selected Consumable Item !")
+                            .confirm(function () {
+                                $scope.model.deleteConsumableItem(index)
+                                        .then(function () {
+                                            Notification.success("Consumable Item Delete Success");
+                                        }, function () {
+                                            Notification.error("Consumable Item Delete Fail");
+                                        });
+
+                            })
+                            .discard(function () {
+                                console.log('discard fail');
+                            });
                 };
 
                 //init

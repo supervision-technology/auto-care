@@ -8,17 +8,19 @@
                         "name": null,
                         "barcode": null,
                         "printDescription": null,
-                        "unit": null,
-                        "costPrice": null,
+                        "unit": 0,
+                        "costPrice": 0,
                         "type": null,
                         "department": null,
                         "brand": null,
                         "category": null,
                         "sub_category": null,
-                        "salePriceNormal": null,
-                        "salePriceRegister": null,
+                        "salePriceNormal": 0,
+                        "salePriceRegister": 0,
                         "priceCategory": null,
-                        "branch": null
+                        "branch": null,
+                        "reOrderMax": null,
+                        "reOrderMin": null
                     };
                     return data;
                 };
@@ -29,9 +31,9 @@
                         "name": null,
                         "qty": null,
                         "priceCategory": null,
-                        "salePriceNormal": null,
-                        "salePriceRegister": null,
-                        "costPrice": null
+                        "salePriceNormal": 0,
+                        "salePriceRegister": 0,
+                        "costPrice": 0
                     };
                     return data;
                 };
@@ -41,6 +43,15 @@
                         "indexNo": null,
                         "packages": null,
                         "item": null
+                    };
+                    return data;
+                };
+                factory.newConsumableData = function () {
+                    var data = {
+                        "indexNo": null,
+                        "service": null,
+                        "consumable": null,
+                        "qty": null
                     };
                     return data;
                 };

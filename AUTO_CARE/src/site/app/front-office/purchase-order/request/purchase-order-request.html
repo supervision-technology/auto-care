@@ -49,8 +49,13 @@
                 </tbody>
             </table>
         </div>
-        <div class="row col-xs-1" style="margin-top: 10px">
+        <div class="row col-xs-1" style="margin-top: 10px;padding: 0px">
+            <div class="col-lg-8">
             <a class="btn btn-primary" ng-click="modalOpen();">STOCK</a>
+            </div>
+            <div class="col-lg-4">
+                <a class="btn btn-primary" ng-click="reOrderItemPopup();">+</a>
+            </div>
         </div>
 
         <div class="background-light">
@@ -209,71 +214,6 @@
             </tbody>
         </table>
     </div>
-</div>
-<div class="col-xs-4 col-xs-offset-3">
-    <script type="text/ng-template" id="branch-stock-popup.html"> 
-        <div class="modal-header">
-        <div class="col-xs-8">
-            <h3 class="modal-title text-center">STOCK QUANTIY IN BRANCHES</h3>
-            {{branchesStockList.length}}{{ui.mode}}
-        </div>
-        <div class="col-xs-4">
-           <div class="input-group">
-                <input type="text" class="form-control" placeholder="search" aria-describedby="basic-addon2"
-                ng-model="model.data.supplier" 
-                                   uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
-                                   typeahead-input-formatter="model.supplierLable($model)" 
-                                   typeahead-on-select="ui.loadItem(model.data.supplier)"
-                                   typeahead-editable="false">
-                <span class="input-group-addon" id="basic-addon2">search</span>
-            </div>
-        </div>
-        </div>
-        <div class="modal-body">
-            <table class="table-rounded ">
-                <col style="width: 10%"/>
-                <col style="width: 30%"/>
-                <col style="width: 20%"/>
-                <col style="width: 20%"/>
-                <col style="width: 20%"/>
-                <thead class="background-dark">
-                    <tr>
-                    <th><label class="">__</label></th>
-                    <th><label class="">Branch Name</label></th>
-                    <th><label class="">Total Stock</label></th>
-                    <th><label class="">Ordered Qty</label></th>
-                    <th><label class="">Net Qty</label></th>
-                    </tr>
-                </thead>
-            </table>
-            <div>
-                <table class="table-rounded control-table">
-                    <col style="width: 10%"/>
-                    <col style="width: 30%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 20%"/>
-                    <col style="width: 20%"/>
-                    <tbody>
-                        <tr>
-                            <td><label class="label label-primary">__</label></td>
-                            <td><label class="">111 kellapatha</label></td>
-                            <td><label class="">700</label></td>
-                            <td><label class="">50</label></td>
-                            <td><label class="">650</label></td>
-                        </tr>
-                       
-                        <tr ng-repeat=unit in branchesStockList>
-                            <td><label class="label" style="background-color: {{unit[0]}}">__</label></td>
-                            <td><label class="">{{unit[1] unit[2] }}</label></td>
-                            <td><label class="">{{unit[3]}}</label></td>
-                            <td><label class="">{{unit[4]}}</label></td>
-                            <td><label class="">{{unit[3]|number:2}}</label></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </script>
 </div>
 <div class="fab-container">
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>

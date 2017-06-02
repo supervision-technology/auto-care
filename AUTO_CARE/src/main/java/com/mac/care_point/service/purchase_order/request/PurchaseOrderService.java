@@ -62,5 +62,10 @@ public class PurchaseOrderService {
     List<Object[]> loadStockInBranches(Integer item) {
        return purchaseOrderRepository.getItemQtyByBranches(item);
     }
+   
+    List<Object[]> getOrderRequestItems() {
+        List<Object[]> list = purchaseOrderRepository.getOrderRequestItems();
+        return list;
+    }
 
 }

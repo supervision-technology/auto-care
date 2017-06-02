@@ -43,7 +43,7 @@
                     <col style="width: 100%"/>
                     <tbody>
                         <tr>
-                            <td>{{model.items.length}}<input class="form-control" placeholder="item" ng-model="model.data.searchItem" 
+                            <td><input class="form-control" placeholder="item" ng-model="model.data.searchItem" 
                                        uib-typeahead="item.indexNo as (item.barcode + ' - ' + item.name) for item in model.items |filter:$viewValue|limitTo:10" 
                                        typeahead-input-formatter="model.getItemLable($model)" 
                                        typeahead-editable="false"
@@ -58,7 +58,7 @@
                 <table class="table-rounded control-table table-hover">
                     <col style="width: 100%"/>
                     <tbody>
-                        <tr class="animation-fade" ng-repeat="order in model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier} | filter:model.data.searchItem===null?'':model.data.searchItem track by $index"
+                        <tr class="animation-fade" ng-repeat="order in model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier} track by $index"
                             ng-if="model.orderLengthCheck(order.purchaseOrderItemList);" ng-click="ui.selectPurchaseOrder(order.indexNo,order.number)" >
                             <td class="text-center" ng-class="model.selectedDetailIndex === order.indexNo ? 'selected' : ''">
                                 <b>{{model.getSupplier(order.supplier)}}</b>

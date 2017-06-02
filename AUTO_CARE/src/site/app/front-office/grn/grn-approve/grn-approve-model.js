@@ -44,11 +44,15 @@
                     }
                     , loadPendingGrnList: function () {
                         var that = this;
-                        that.mainList=[];
+                        that.mainList = [];
                         GrnService.loadPendingGrnList()
                                 .success(function (data) {
                                     angular.forEach(data, function (value) {
-                                        value.grnAmount = value.amount;
+                                        var amount = 0.00;
+                                        angular.forEach(value.grnItemList, function (subUnit) {
+                                            amount += subUnit.netValue;
+                                        });
+                                        value.grnAmount = amount;
                                         that.mainList.push(value);
                                     });
                                 });

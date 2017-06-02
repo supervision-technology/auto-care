@@ -1,5 +1,5 @@
 (function () {
-    var factory = function (itemFactory, itemService, $q, $filter) {
+    var factory = function (itemFactory, itemService, $q, $filter, Notification) {
         function itemModel() {
             this.constructor();
         }
@@ -10,6 +10,7 @@
             itemData: {},
             itemUnitData: {},
             packageData: {},
+            consumableData: {},
             //uib-typeahead
             items: [],
             itemunits: [],
@@ -18,10 +19,14 @@
             subCategorys: [],
             brands: [],
             priceCategory: [],
+            suppliers: [],
+            consumableItemList: [],
             //view table lists
             itemViewList: [],
             itemunitsViewList: [],
             packageViewList: [],
+            selectedConsumableItem: {},
+            consumableItemIsView: false,
             //constructor
             constructor: function () {
                 var that = this;
@@ -29,6 +34,7 @@
                 that.itemData = itemFactory.newItemData();
                 that.itemUnitData = itemFactory.newItemUnitData();
                 that.packageUnitData = itemFactory.newPackageData();
+                that.consumableData = itemFactory.newConsumableData();
 
                 itemService.loadItem()
                         .success(function (data) {
@@ -64,9 +70,24 @@
                         .success(function (data) {
                             that.priceCategory = data;
                         });
-            },
-            clear: function () {
+                itemService.loadSupplier()
+                        .success(function (data) {
+                            that.suppliers = data;
+                        });
 
+                this.loadConsumableItem();
+
+//                itemService.loadBranches()
+//                        .success(function (data) {
+//                            that.Branches = data;
+//                        });
+            },
+            loadConsumableItem: function () {
+                var that = this;
+                itemService.loadConsumableItem()
+                        .success(function (data) {
+                            that.consumableItemList = data;
+                        });
             },
             saveItem: function () {
                 var defer = $q.defer();
@@ -82,6 +103,45 @@
                         });
                 return defer.promise;
             },
+            saveConsumable: function () {
+                var confirmation = true;
+                if (!this.consumableData.service) {
+                    confirmation = false;
+                    Notification.error('Select a Service Item For Save !');
+                }
+                if (!this.consumableData.consumable) {
+                    confirmation = false;
+                    Notification.error('Select a Consumable Item For Save !');
+                }
+                if (this.consumableData.qty <= 0.0) {
+                    confirmation = false;
+                    Notification.error('Quantity less then 0 !');
+                }
+                if (confirmation) {
+
+                    var defer = $q.defer();
+                    var that = this;
+                    itemService.saveConsumableItem(JSON.stringify(this.consumableData))
+                            .success(function (data) {
+                                that.consumableData.consumable = null;
+                                that.consumableData.qty = 0.00;
+                                that.loadConsumableItem();
+                                this.consumableItemIsView = false;
+                                defer.resolve();
+                            })
+                            .error(function (data) {
+                                defer.reject();
+                            });
+                    return defer.promise;
+                }
+            },
+            selectCunsumableItel: function (index) {
+                var item = this.itemObject(index);
+                this.selectedConsumableItem = item;
+                this.consumableItemIsView = true;
+
+            }
+            ,
             saveItemUnit: function () {
                 var defer = $q.defer();
                 var that = this;
@@ -91,6 +151,7 @@
                         .success(function (data) {
                             that.itemunitsViewList.unshift(data);
                             that.itemUnitData = {};
+                            
                             defer.resolve();
                         })
                         .error(function (data) {
@@ -175,6 +236,21 @@
                         });
                 return defer.promise;
             },
+            deleteConsumableItem: function (index) {
+                var defer = $q.defer();
+                var that = this;
+                itemService.deleteConsumableItem(index)
+                        .success(function (data) {
+                            that.consumableData.consumable = null;
+                            that.consumableData.qty = 0.00;
+                            that.loadConsumableItem();
+                            defer.resolve();
+                        })
+                        .error(function (data) {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
             priceCategoryLable: function (indexNo) {
                 var item;
                 angular.forEach(this.priceCategory, function (value) {
@@ -195,11 +271,31 @@
                 });
                 return item;
             },
+            supplierLable: function (indexNo) {
+                var supplier;
+                angular.forEach(this.suppliers, function (value) {
+                    if (value.indexNo === parseInt(indexNo)) {
+                        supplier = value.name + " - " + value.contactNo;
+                        return;
+                    }
+                });
+                return supplier;
+            },
             itemLable: function (indexNo) {
                 var item;
                 angular.forEach(this.items, function (value) {
                     if (value.indexNo === parseInt(indexNo)) {
-                        item = value.indexNo + "-" + value.name;
+                        item = value.indexNo + " - " + value.name;
+                        return;
+                    }
+                });
+                return item;
+            },
+            itemObject: function (indexNo) {
+                var item;
+                angular.forEach(this.items, function (value) {
+                    if (value.indexNo === parseInt(indexNo)) {
+                        item = value;
                         return;
                     }
                 });

@@ -1,0 +1,101 @@
+<div class="modal-header">
+    <div class="col-xs-7">
+        <h3 class="modal-title text-center">RE ORDER ITEM LIST</h3>
+    </div>
+    <div class="col-xs-4">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="search" aria-describedby="basic-addon2"
+                   uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
+                   typeahead-input-formatter="model.supplierLable($model)" 
+                   typeahead-editable="false"
+                   ng-model="searchSupplier">
+            <span class="input-group-addon" id="basic-addon2">search</span>
+        </div>
+    </div>
+    <div class="col-xs-1">
+        <span class="btn btn-danger btn-xs glyphicon glyphicon-remove pull-right" ng-click="dismissAllModel()"></span>
+    </div>
+</div>
+<div class="modal-body">
+    <div class="smart-scroll-y" style="height: calc(100vh - 200px);" ng-show="reOrderItems.length">
+
+        <table class="table-rounded ">
+            <col style="width: 15%"/>
+                <col style="width: 20%"/>
+                <col style="width: 20%"/>
+                <col style="width: 15%"/>
+                <col style="width: 10%"/>
+                <col style="width: 5%"/>
+            <thead class="background-dark">
+                <tr>
+                    <th><label>#</label></th>
+                    <th><label>Item</label></th>
+                    <th><label>Supplier</label></th>
+                    <th><label >Required Qty</label></th>
+                    <th><label >Order Qty</label></th>
+                    <th></th>
+                </tr>
+            </thead>
+        </table>
+        <!--    <div class="col-xs-12 background-light">
+                <div class="row col-xs-12 nopadding">
+                    <table class="table-rounded control-table">
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <col style="width: 20%"/>
+                        <tbody>
+                            <tr>
+                                <td><input class="form-control" placeholder="number" ng-model="model.data.number" ng-disabled="ui.mode === 'NEW'" ></td>
+                                <td><input class="form-control" placeholder="number" ng-model="model.data.number" ng-disabled="ui.mode === 'NEW'" ></td>
+                                <td><input class="form-control" placeholder="number" ng-model="model.data.number" ng-disabled="ui.mode === 'NEW'" ></td>
+                                <td><input class="form-control" placeholder="number" ng-model="model.data.number" ng-disabled="ui.mode === 'NEW'" ></td>
+                                <td><input class="form-control" placeholder="number" ng-model="model.data.number" ng-disabled="ui.mode === 'NEW'" ></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>-->
+        <div>
+            <table class="table-rounded">
+                <col style="width: 15%"/>
+                <col style="width: 20%"/>
+                <col style="width: 20%"/>
+                <col style="width: 15%"/>
+                <col style="width: 10%"/>
+                <col style="width: 5%"/>
+                <tbody class="background-dark"  ng-repeat="(key, unit) in reOrderItems | unique: 'item' | filter:{supplierId:searchSupplier===null?'':searchSupplier} ">
+                    <tr class="table-rounded table-primary table-hover" ng-class="key===selectedIndex?'selected':''" ng-click='ui.selectReOrderItemIndex(key)'>
+                        <td><label class="label label-primary" >{{key+1}}</label></td>
+                        <td>{{unit.item+' - '+unit.itemName}}</td>
+                        <td >{{unit.supplierId===null?'Non Supplier':unit.supplierId+' - '+unit.supplierName}}</td>
+                        <td >{{unit.totalOrder|number:2}}</td>
+                        <td><input type="text" smart-input="decimal" style="margin-top: 4px" class="form-control" ng-model='unit.totalOrder'/></td>
+                        <td></td>
+                    </tr>
+                    <tr ng-show='selectedIndex===key'>
+                        <td><label>Branch</label></td>
+                        <td><label>Re Order Max</label></td>
+                        <td><label>Re Order Min</label></td>
+                        <td><label>Stock Qty</label></td>
+                        <td><label>Order Qty</label></td>
+                        <td></td>
+                    </tr>
+                    <tr ng-show='selectedIndex===key' ng-repeat="subDetail in reOrderItems | filter:{item:unit.item}">
+                        <td><label class="label" style="background-color: {{subDetail.branchColor}}">{{subDetail.branchId}}</label>{{' - '+subDetail.branch}}</td>
+                        <td>{{subDetail.maxReOrder}}</td> 
+                        <td>{{subDetail.minReOrder}}</td> 
+                        <td >{{subDetail.stockQty}}</td> 
+                        <td>{{subDetail.orderQty}} </td> 
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="true" ng-click="ui.selectReOrderItem(reOrderItems);"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

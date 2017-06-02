@@ -1,9 +1,10 @@
 (function () {
     angular.module("purchaseOrderRequestModule", ['ui.bootstrap']);
     angular.module("purchaseOrderRequestModule")
-            .controller("purchaseOrderRequestController", function ($scope, $rootScope, $uibModal, $uibModalStack, $filter, $timeout, purchaseOrderRequestModel, Notification, ConfirmPane, ModalDialog,optionPane) {
+            .controller("purchaseOrderRequestController", function ($scope, $rootScope, $uibModal, $uibModalStack, $filter, $timeout, purchaseOrderRequestModel, Notification, ConfirmPane, ModalDialog, optionPane) {
                 $scope.model = new purchaseOrderRequestModel();
                 $scope.ui = {};
+                $rootScope.selectedIndex = -1;
 
                 $scope.ui.new = function () {
                     $scope.ui.mode = 'NEW';
@@ -14,6 +15,15 @@
                     $scope.model.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.model.data.deliverDate = $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.ui.focus('#date');
+
+                    ConfirmPane.primaryConfirm("Load ReOrder Item !")
+                            .confirm(function () {
+                                $scope.reOrderItemPopup();
+                            })
+                            .discard(function () {
+                                Notification.info("New Purchase Order Request");
+                                console.log('fail');
+                            });
 
                 };
 
@@ -174,7 +184,6 @@
                         $scope.model.getBranchesStock();
                         $timeout(function () {
                             $rootScope.getBranchesStockList = $scope.model.branchesStockList;
-                            console.log($rootScope.getBranchesStockList);
                             $uibModal.open({
                                 animation: true,
                                 ariaLabelledBy: 'modal-title',
@@ -184,16 +193,56 @@
                                 size: 'lg'
                             });
                         }, 1000);
-                    }else{
-                        optionPane.defaultMessage("Select a Item for Viwe Branches Stock Quantity");
+                    } else {
+                        Notification.error("Select a Item for Viwe Branches Stock Quantity");
                     }
+                };
+
+                $scope.reOrderItemPopup = function () {
+                    $scope.model.loadReOrderItem();
+                    $timeout(function () {
+
+                        $rootScope.reOrderItems = $scope.model.reOrderItems;
+
+                        $uibModal.open({
+                            animation: true,
+                            ariaLabelledBy: 'modal-title',
+                            ariaDescribedBy: 'modal-body',
+                            templateUrl: 'app/front-office/popup-dialog/re-order-item-popup.html',
+                            controller: 'purchaseOrderRequestController',
+                            size: 'lg'
+                        });
+                    }, 1000);
                 };
                 $scope.dismissAllModel = function () {
                     $uibModalStack.dismissAll();
+
+                };
+                $scope.ui.selectReOrderItem = function (list) {
+
+                    if ($scope.searchSupplier) {
+                        
+                        $scope.model.selectReOrderItem(list,$scope.searchSupplier);
+                        Notification.success('ReOrder Item Add Success !');
+                        $scope.dismissAllModel();
+                        
+                    } else {
+                        Notification.error('Select a Supplier for add ReOrder Item !');
+                    }
+                };
+                $scope.ui.selectReOrderItemIndex = function (key){
+                    if ($rootScope.selectedIndex === key) {
+                        $rootScope.selectedIndex = -1;
+                    } else {
+                        $rootScope.selectedIndex = key;
+
+                    }
                 };
 
                 $scope.init = function () {
                     $scope.ui.mode = 'IDEAL';
+
+
                 };
 
                 $scope.init();

@@ -24,6 +24,10 @@
         this.loadPendingPurchaseOrderByNumber = function (number) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/load-pending-purchase-order/" + number);
         };
+        //load re order item
+        this.loadReOrderItem = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/getOrderRequestItems");
+        };
 
 
 //      APPROVE

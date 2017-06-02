@@ -1,0 +1,81 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body ">
+    <div class="col-xs-4 background-light">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+                <label>Item :</label>
+                <input class="form-control" ng-model="model.data.item" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="item.indexNo as (item.barcode +' - '+item.name) for item in model.items |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemLabel($model);">
+                <label>Branch :</label>
+                <input class="form-control" ng-model="model.data.branch" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="branch.indexNo as (branch.branchCode+' - '+branch.name) for branch in model.branches |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.branchLabel($model);">
+                <label>Max ReOrder Level :</label>
+                <input class="form-control" ng-model="model.data.reOrderMax" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                <label>Min ReOrder Level :</label>
+                <input class="form-control" ng-model="model.data.reOrderMin" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-8 background-dark">
+        <div class="row col-xs-5">
+            <input type="text" class="search-input" ng-model="model.data.search" placeholder="search">
+        </div>
+        <table class="table-rounded">
+            <col style="width: 10%">
+            <col style="width: 20%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 15%">
+            <col style="width: 10%">
+            <thead class="background-dark">
+                <tr> 
+
+                    <th>
+                        <label>#</label>
+                    </th>
+                    <th>
+                        <label>Item</label>
+                    </th>
+                    <th>
+                        <label>Branch</label>
+                    </th>
+                    <th>
+                        <label>Max ReOrder</label>
+                    </th>
+                    <th>
+                        <label>Min ReOrder</label>
+                    </th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+            <table class="table-rounded"> 
+
+                <col style="width: 10%">
+                <col style="width: 20%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 15%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr  ng-repeat="item in model.reOrderLevelList|filter:{branch:model.data.branch===null?'':model.data.branch}|filter:{item:model.data.item===null?'':model.data.item}">                      
+                        <td>{{item.indexNo}}</td>
+                        <td>{{model.itemLabel(item.item)}}</td>
+                        <td>{{model.branchLabel(item.branch)}}</td>
+                        <td class="text-center">{{item.reOrderMax}}</td>
+                        <td class="text-center">{{item.reOrderMin}}</td>
+                        <td class="text-right" style="padding-left: 5px;">
+                            <a class="btn btn-primary" ng-click="ui.edit(item.indexNo)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="ui.delete(item.indexNo)"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

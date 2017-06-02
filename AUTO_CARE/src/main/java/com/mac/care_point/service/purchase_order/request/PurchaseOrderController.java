@@ -6,6 +6,7 @@
 package com.mac.care_point.service.purchase_order.request;
 
 import com.mac.care_point.service.purchase_order.model.BranchStockModel;
+import com.mac.care_point.service.purchase_order.model.ReOrderItemModel;
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -75,6 +76,34 @@ public class PurchaseOrderController {
             count++;
         }
         return stockList;
+    }
+    @RequestMapping(value = "/getOrderRequestItems", method = RequestMethod.GET)
+    public List<ReOrderItemModel> loadStockInBranches() {
+        
+//        return purchaseOrderService.getOrderRequestItems();
+        
+         List<Object[]> list = purchaseOrderService.getOrderRequestItems();
+         List<ReOrderItemModel> reOrderList = new ArrayList<>();
+        for (Object[] objects : list) {
+            ReOrderItemModel reOrder = new ReOrderItemModel();
+            reOrder.setReOrderIndexNo(Integer.parseInt(objects[0].toString()));
+            reOrder.setItem(Integer.parseInt(objects[1].toString()));
+            reOrder.setMaxReOrder(new BigDecimal(objects[2].toString()));
+            reOrder.setMinReOrder(new BigDecimal(objects[3].toString()));
+            reOrder.setBranch(objects[4].toString());
+            reOrder.setBranchId(Integer.parseInt(objects[5].toString()));
+            reOrder.setItemName(objects[6].toString());
+            reOrder.setSupplierName(objects[7].toString());
+            reOrder.setSupplierId(Integer.parseInt(objects[8].toString()));
+            reOrder.setStockQty(new BigDecimal(objects[9].toString()));
+            reOrder.setOrderQty(new BigDecimal(objects[10].toString()));
+            reOrder.setTotalOrder(new BigDecimal(objects[11].toString()));
+            reOrder.setBranchColor(objects[12].toString());
+            
+            reOrderList.add(reOrder);
+                    
+        }
+        return reOrderList;
     }
 
 }

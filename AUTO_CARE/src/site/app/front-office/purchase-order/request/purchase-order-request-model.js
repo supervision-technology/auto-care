@@ -15,6 +15,7 @@
                     allItems: [],
                     supplierItems: [],
                     branchesStockList: [],
+                    reOrderItems: [],
 
                     constructor: function () {
                         var that = this;
@@ -105,7 +106,7 @@
                                     that.branchesStockList = data;
                                     console.log(data);
                                 });
-                               
+
                     }
                     , addData: function () {
                         var that = this;
@@ -156,6 +157,16 @@
                             }
                         });
                         return itemName;
+                    },
+                    getItem: function (indexNo) {
+                        var item = null;
+                        angular.forEach(this.allItems, function (value) {
+                            if (value.indexNo === indexNo) {
+                                item = value;
+                                return;
+                            }
+                        });
+                        return item;
                     },
                     summaryCalculator: function () {
                         var qty = 0;
@@ -263,6 +274,51 @@
                                     }
                                 });
                         return that.data.number;
+                    },
+                    loadReOrderItem: function () {
+//                        var defer = $q.defer();
+                        var that = this;
+                        PurchaseOrderRequestService.loadReOrderItem()
+                                .success(function (data) {
+                                    that.reOrderItems = data;
+//                                    defer.resolve();
+                                });
+//                                .error(function (data) {
+//                                    defer.reject();
+//                                });
+//                        return defer.promise;
+                    },
+                    selectReOrderItem: function (list, supplierId) {
+                        var that = this;
+                        console.log(list);
+                        console.log("list");
+
+                        angular.forEach(list, function (value) {
+                            if (supplierId === value.supplierId) {
+
+
+                                var item = that.getItem(value.item);
+                                var detail = {
+                                    "indexNo": null,
+                                    "purchaseOrder": null,
+                                    "item": value.item,
+                                    "price": item.costPrice,
+                                    "qty": value.orderQty,
+                                    "value": parseFloat(item.costPrice) * parseFloat(value.orderQty),
+                                    "discount": 0,
+                                    "discountValue": 0,
+                                    "netValue": parseFloat(item.costPrice) * parseFloat(value.orderQty),
+                                    "stockQty": value.stockQty,
+                                    "orderQty": value.orderQty,
+                                    "recieveQty": 0,
+                                    "balanceQty": value.orderQty,
+                                    "status": "PENDING"
+                                };
+                                that.data.purchaseOrderItemList.push(detail);
+                                console.log(that.data.purchaseOrderItemList);
+                                console.log("that.data.purchaseOrderItemList");
+                            }
+                        });
                     }
                 };
                 return purchaseOrderRequestModel;

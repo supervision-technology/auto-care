@@ -1,9 +1,10 @@
 {
-"name": "care-point",
+  "name": "care-point",
   "version": "1.0.0",
   "description": "tea factory management system",
   "author": "Channa Jayamuni <hjchanna@gmail.com>",
   "devDependencies": {
+    "bower-npm-resolver": "^0.8.1",
     "browser-sync": "^2.16.0",
     "gulp": "^3.9.1",
     "gulp-clean": "^0.3.2",
