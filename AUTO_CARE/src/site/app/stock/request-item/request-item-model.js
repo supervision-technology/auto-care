@@ -8,6 +8,7 @@
                 requestItemModel.prototype = {
                     data: {},
                     //master data lists
+                    bays: [],
                     items: [],
                     vehicles: [],
                     itemUnits: [],
@@ -18,16 +19,23 @@
                     pendingJobCards: [],
                     //select job card items
                     jobItemList: [],
+                    bayItemList: [],
                     //job card select filter items
                     filterItems: [],
                     //complited job items
-                    itemsByStockLeger: [],
+                    itemsByStockLegerStockItem: [],
+                    itemsByStockLegerNonStockItem: [],
                     complitedJobItem: [],
                     constructor: function () {
                         var that = this;
                         requestItemService.pendingJobCards()
                                 .success(function (data) {
                                     that.pendingJobCards = data;
+                                });
+
+                        requestItemService.loadBay()
+                                .success(function (data) {
+                                    that.bays = data;
                                 });
 
                         requestItemService.loadItems()
@@ -45,6 +53,7 @@
                                 });
 
                         this.findItemsForStockLeger();
+                        this.findByItemNonStockItmQty();
                     },
                     getJobItemHistory: function (jobCard) {
                         var defer = $q.defer();
@@ -61,35 +70,47 @@
                                 });
                         return  defer.promise;
                     },
+                    getBayIssueHistory: function (bay) {
+                        var defer = $q.defer();
+                        var that = this;
+                        requestItemService.getBayIssueHistory(bay)
+                                .success(function (data) {
+                                    that.bayItemList = [];
+                                    that.bayItemList = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.bayItemList = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
                     findItemsForStockLeger: function () {
                         var that = this;
                         var defer = $q;
                         requestItemService.findByItemStockItmQty()
                                 .success(function (data) {
-                                    that.itemsByStockLeger = [];
-                                    that.itemsByStockLeger = data;
+                                    that.itemsByStockLegerStockItem = [];
+                                    that.itemsByStockLegerStockItem = data;
                                     defer.resolve();
                                 })
                                 .error(function () {
-                                    that.itemsByStockLeger = [];
+                                    that.itemsByStockLegerStockItem = [];
                                     defer.reject();
                                 });
                         return defer.promise;
                     },
-                    findPackageStockItems: function (packageData) {
-                         
-                    },
-                    getPackageItems: function (indexNo) {
-                        var defer = $q.defer();
+                    findByItemNonStockItmQty: function () {
                         var that = this;
-                        requestItemService.getPackageItems(indexNo)
+                        var defer = $q;
+                        requestItemService.findByItemNonStockItmQty()
                                 .success(function (data) {
-                                    that.packageItemList = [];
-                                    that.packageItemList = data;
+                                    that.itemsByStockLegerNonStockItem = [];
+                                    that.itemsByStockLegerNonStockItem = data;
                                     defer.resolve();
                                 })
                                 .error(function () {
-                                    that.packageItemList = [];
+                                    that.itemsByStockLegerNonStockItem = [];
                                     defer.reject();
                                 });
                         return defer.promise;
@@ -126,7 +147,7 @@
                     },
                     findByStockFromItem: function (item) {
                         var data = 0.0;
-                        angular.forEach(this.itemsByStockLeger, function (values) {
+                        angular.forEach(this.itemsByStockLegerStockItem, function (values) {
                             if (values[0] === parseInt(item)) {
                                 data = values[1];
                                 return;
@@ -134,11 +155,21 @@
                         });
                         return data;
                     },
-                    checkItemComplite: function (itemData, selectedJobCardIndexNo) {
+                    findByNonStockFromItem: function (item) {
+                        var data = 0.0;
+                        angular.forEach(this.itemsByStockLegerNonStockItem, function (values) {
+                            if (values[0] === parseInt(item)) {
+                                data = values[1];
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    checkItemCompliteJobCard: function (itemData, selectedJobCardIndexNo) {
                         var defer = $q.defer();
                         var that = this;
                         var status = "COMPLITED";
-                        requestItemService.checkItem(itemData.indexNo, status, selectedJobCardIndexNo)
+                        requestItemService.checkItemJobCard(itemData.indexNo, status, selectedJobCardIndexNo)
                                 .success(function (data) {
                                     var id = -1;
                                     for (var i = 0; i < that.jobItemList.length; i++) {
@@ -156,11 +187,11 @@
                                 });
                         return defer.promise;
                     },
-                    checkItemPending: function (itemData, selectedJobCardIndexNo) {
+                    checkItemPendingJobCard: function (itemData, selectBayIndexNo) {
                         var defer = $q.defer();
                         var that = this;
                         var status = "PENDING";
-                        requestItemService.checkItem(itemData.indexNo, status, selectedJobCardIndexNo)
+                        requestItemService.checkItemJobCard(itemData.indexNo, status, selectBayIndexNo)
                                 .success(function (data) {
                                     var id = -1;
                                     for (var i = 0; i < that.jobItemList.length; i++) {
@@ -171,6 +202,50 @@
                                     that.jobItemList.splice(id, 1);
                                     that.jobItemList.push(data);
                                     that.findItemsForStockLeger();
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    checkItemCompliteBay: function (itemData) {
+                        var defer = $q.defer();
+                        var that = this;
+                        var status = "COMPLITED";
+                        requestItemService.checkItemBay(itemData.indexNo, status)
+                                .success(function (data) {
+                                    var id = -1;
+                                    for (var i = 0; i < that.bayItemList.length; i++) {
+                                        if (that.bayItemList[i].indexNo === itemData.indexNo) {
+                                            id = i;
+                                        }
+                                    }
+                                    that.bayItemList.splice(id, 1);
+                                    that.bayItemList.push(data);
+                                    that.findByNonStockFromItem()();
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    checkItemPendingBay: function (itemData) {
+                        var defer = $q.defer();
+                        var that = this;
+                        var status = "PENDING";
+                        requestItemService.checkItemBay(itemData.indexNo, status)
+                                .success(function (data) {
+                                    var id = -1;
+                                    for (var i = 0; i < that.bayItemList.length; i++) {
+                                        if (that.bayItemList[i].indexNo === itemData.indexNo) {
+                                            id = i;
+                                        }
+                                    }
+                                    that.bayItemList.splice(id, 1);
+                                    that.bayItemList.push(data);
+                                    that.findByNonStockFromItem();
                                     defer.resolve();
                                 })
                                 .error(function () {

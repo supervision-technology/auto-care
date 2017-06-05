@@ -16,6 +16,10 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit");
         };
 
+        this.loadBay = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/bay");
+        };
+
         //load pending jobcards
         this.pendingJobCards = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-pending-job-cards");
@@ -29,13 +33,26 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-by-job-card-items/" + indexNo);
         };
 
-        this.checkItem = function (item, status, selectedJobCardIndexNo) {
+        this.getBayIssueHistory = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/find-bay-item-issue/" + indexNo);
+        };
+        
+        this.checkItemJobCard = function (item, status, selectedJobCardIndexNo) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/check-item/" + item + "/" + status + "/" + selectedJobCardIndexNo);
+        };
+        
+        this.checkItemBay = function (bayIssueIndexNo, status) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/check-item/" + bayIssueIndexNo + "/" + status);
         };
 
         this.findByItemStockItmQty = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock");
         };
+
+        this.findByItemNonStockItmQty = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-non-stock-item-qty-by-stock");
+        };
+
     };
 
     angular.module("appModule")

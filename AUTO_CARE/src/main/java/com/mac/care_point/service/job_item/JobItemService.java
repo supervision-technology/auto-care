@@ -5,13 +5,10 @@
  */
 package com.mac.care_point.service.job_item;
 
-import com.mac.care_point.master.items.package_item.PackageItemRepository;
-import com.mac.care_point.master.items.package_item.model.MPackageItem;
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.grn.StockLedgerRepository;
 import com.mac.care_point.service.grn.model.TStockLedger;
 import com.mac.care_point.service.job_item.model.TJobItem;
-import com.mac.care_point.service.job_item.model.TPackageItemDetail;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,12 +31,6 @@ public class JobItemService {
 
     @Autowired
     private StockLedgerRepository stockLedgerRepository;
-
-//    @Autowired
-//    private PackageItemRepostory packageItemRepostory;
-//
-//    @Autowired
-//    private PackageItemRepository packageItemRepository;
 
     public TJobItem saveJobItem(TJobItem jobItem) {
         return jobItemRepository.save(jobItem);
@@ -84,6 +75,19 @@ public class JobItemService {
 
     public List<Object[]> getItemQtyByStockLeger(Integer branch) {
         List<Object[]> getDataList = jobItemRepository.getItemQtyByStockLeger(branch);
+        List<Object[]> sendDataList = new ArrayList<>();
+        for (Object[] objects : getDataList) {
+            BigDecimal qty = ((BigDecimal) objects[1]).subtract((BigDecimal) objects[2]);
+            if (qty.compareTo(BigDecimal.ZERO) != 0) {
+                Object[] dataList = new Object[]{objects[0], qty};
+                sendDataList.add(dataList);
+            }
+        }
+        return sendDataList;
+    }
+    
+    public List<Object[]> getNonStockItemQtyByStockLeger(Integer branch) {
+        List<Object[]> getDataList = jobItemRepository.getNonStockItemQtyByStockLeger(branch);
         List<Object[]> sendDataList = new ArrayList<>();
         for (Object[] objects : getDataList) {
             BigDecimal qty = ((BigDecimal) objects[1]).subtract((BigDecimal) objects[2]);
