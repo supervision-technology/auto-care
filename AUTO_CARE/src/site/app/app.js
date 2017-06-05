@@ -38,7 +38,8 @@
         "purchaseOrderRequestModule",
         "purchaseOrderApproveModule",
         "stockTransferInternalOutModule",
-        "stockTransferInternalInModule"
+        "stockTransferInternalInModule",
+        "bayItemIssueModule"
 
     ]);
 
@@ -63,6 +64,39 @@
                         .when("/login", {
                             templateUrl: "app/system/login/login.html"
                         })
+                        
+                        //service
+                        .when("/service/vehicle-entrance", {
+                            templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
+                            controller: "vehicleEntranceController"
+                        })
+                        .when("/service/service-selection", {
+                            templateUrl: "app/service/service-selection/service-selection.html",
+                            controller: "serviceSelectionController"
+                        })
+                        .when("/service/item-selection/:jobCardIndexNo", {
+                            templateUrl: "app/service/item-selection/item-selection.html",
+                            controller: "itemSelectionController"
+                        })
+                        .when("/service/service-selection/:jobCardIndexNo", {
+                            templateUrl: "app/service/service-selection/service-selection.html",
+                            controller: "serviceSelectionController"
+                        })
+
+                        //front-office
+                        .when("/front-office/invoice", {
+                            templateUrl: "app/front-office/invoice/invoice.html",
+                            controller: "invoiceController"
+                        })
+                        .when("/stock/request-item", {
+                            templateUrl: "app/stock/request-item/request-item.html",
+                            controller: "requestItemController"
+                        })
+                        .when("/front-office/bay-item-issue", {
+                            templateUrl: "app/front-office/bay-item-issue/bay-item-issue.html",
+                            controller: "bayItemIssueController"
+                        })
+
                         //daily-check-list
                         .when("/service/daily-check-list", {
                             templateUrl: "app/service/daily-check-list/daily-check-list.html",
@@ -74,45 +108,10 @@
                             templateUrl: "app/service/employee-assignment/employee-assignment.html",
                             controller: "employeeAssignmentController"
                         })
-
-                        //vehicle-entrance-test
-                        .when("/service/vehicle-entrance", {
-                            templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
-                            controller: "vehicleEntranceController"
-                        })
-
-                        //service-selection
-                        .when("/service/service-selection", {
-                            templateUrl: "app/service/service-selection/service-selection.html",
-                            controller: "serviceSelectionController"
-                        })
-
-                        .when("/service/item-selection", {
-                            templateUrl: "app/service/item-selection/item-selection.html",
-                            controller: "itemSelectionController"
-                        })
-
-                        //service-selection for job card entrance
-                        .when("/service/item-selection/:jobCardIndexNo", {
-                            templateUrl: "app/service/item-selection/item-selection.html",
-                            controller: "itemSelectionController"
-                        })
-
-
-                        .when("/service/service-selection/:jobCardIndexNo", {
-                            templateUrl: "app/service/service-selection/service-selection.html",
-                            controller: "serviceSelectionController"
-                        })
-
                         //bay-assignment
                         .when("/service/bay-assignment", {
                             templateUrl: "app/service/bay-assignment/bay-assignment.html",
                             controller: "bayAssignmentController"
-                        })
-                        //request-item
-                        .when("/stock/request-item", {
-                            templateUrl: "app/stock/request-item/request-item.html",
-                            controller: "requestItemController"
                         })
                         //supervisor-selection
                         .when("/service/supervisor-selection", {
@@ -123,12 +122,6 @@
                         .when("/front-office/service-dashboard", {
                             templateUrl: "app/front-office/service-dashboard/service-dashboard.html",
                             controller: "dashBoardController"
-                        })
-                        //front-office
-                        //invoice
-                        .when("/front-office/invoice", {
-                            templateUrl: "app/front-office/invoice/invoice.html",
-                            controller: "invoiceController"
                         })
                         //grn request
                         .when("/front-office/grn/grn-request", {
@@ -155,11 +148,8 @@
                             templateUrl: "app/front-office/purchase-order/approve/purchase-order-approve.html",
                             controller: "purchaseOrderApproveController"
                         })
-                        //stock item request 
-                        .when("/stock/request-item", {
-                            templateUrl: "app/stock/request-item/request-item.html",
-                            controller: "requestItemController"
-                        })
+                        
+                        
                         //master
                         .when("/master/item", {
                             templateUrl: "app/master/item/item.html",

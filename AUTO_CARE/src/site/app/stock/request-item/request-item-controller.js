@@ -21,17 +21,39 @@
                     $scope.model.getJobItemHistory(jobCard.indexNo);
                 };
 
-                $scope.ui.checkItemComplite = function (itemData) {
+                $scope.selectBayIndexNo = null;
+                $scope.ui.selectBay = function (data) {
+                    $scope.selectIemUnit = null;
+                    $scope.selectBayIndexNo = data.indexNo;
+                    $scope.model.getBayIssueHistory(data.indexNo);
+                };
+
+
+                $scope.ui.checkItemCompliteJobCard = function (itemData) {
                     ConfirmPane.successConfirm("Do you sure want to issue item")
                             .confirm(function () {
-                                $scope.model.checkItemComplite(itemData, $scope.selectedJobCardIndexNo);
+                                $scope.model.checkItemCompliteJobCard(itemData, $scope.selectedJobCardIndexNo);
                             });
                 };
 
-                $scope.ui.checkItemPending = function (itemData) {
+                $scope.ui.checkItemPendingJobCard = function (itemData) {
                     ConfirmPane.dangerConfirm("Do you sure want cansel item issue")
                             .confirm(function () {
-                                $scope.model.checkItemPending(itemData, $scope.selectedJobCardIndexNo);
+                                $scope.model.checkItemPendingJobCard(itemData, $scope.selectedJobCardIndexNo);
+                            });
+                };
+                
+                $scope.ui.checkItemCompliteBay = function (itemData) {
+                    ConfirmPane.successConfirm("Do you sure want to issue item")
+                            .confirm(function () {
+                                $scope.model.checkItemCompliteBay(itemData);
+                            });
+                };
+                
+                $scope.ui.checkItemPendingBay = function (itemData) {
+                    ConfirmPane.dangerConfirm("Do you sure want cansel item issue")
+                            .confirm(function () {
+                                $scope.model.checkItemPendingBay(itemData);
                             });
                 };
             });

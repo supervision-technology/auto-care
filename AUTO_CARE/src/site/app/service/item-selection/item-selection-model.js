@@ -459,9 +459,6 @@
                         var defer = $q;
                         ItemSelectionService.getLastJobCardVehicleAttenctions(jobCard)
                                 .success(function (data) {
-                                    console.log(data);
-                                    console.log(data);
-                                    console.log(data);
                                     that.lastJobCardVehicleAttenctionList = [];
                                     that.lastJobCardVehicleAttenctionList = data;
                                     defer.resolve();

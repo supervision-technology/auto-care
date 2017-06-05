@@ -29,6 +29,8 @@
     <class>com.mac.care_point.service.vehicle_attenctions.model.MVehicleAttenctionsCategory</class>
     <class>com.mac.care_point.service.vehicle_attenctions.model.MVehicleAttenctions</class>
     <class>com.mac.care_point.service.vehicle_attenctions.model.TJobVehicleAttenctions</class>
+    <class>com.mac.care_point.service.bay_item_issue.model.TBayStockLeger</class>
+    <class>com.mac.care_point.service.bay_item_issue.model.TBayIssue</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

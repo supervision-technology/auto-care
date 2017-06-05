@@ -1,0 +1,111 @@
+<div class="tile-list background-dark">
+    <div class="tile-list-title" style="margin-right: 5px;">
+        <h4>BAY</h4>
+    </div>
+    <div class="smart-scroll-y" style="height: calc(100vh - 40px);">
+        <div class="tile tile-128" style="animation: 0.5s zoomInLeft;" ng-repeat="details in model.bays" ng-class="{'selected':details.indexNo == selectBayIndexNo}" ng-click="ui.selectBay(details);"> 
+            <span style="margin-top: 50px;margin-left: -15px;">
+                <label style="font-weight: bold;">
+                    {{details.name}}
+                </label>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="index-content-body">
+    <div style="float: left; width: calc(100% - 133px);">
+        <div class="col-xs-7 background-light">
+            <div class="row full-height" style="display: flex; flex-flow: column;">
+                <div class="col-xs-7">
+                    <input type="text" class="search-input" placeholder="search" ng-model="searchItem">
+                </div>
+                <table class="square-table background-dark">
+                    <col style="width: 30%;"/>
+                    <col style="width: 40%;"/>
+                    <col style="width: 20%;"/>
+                    <col style="width: 10%;"/>
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>ITEM UNITS</th>
+                            <th class="text-center">QTY</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
+                    <table class="square-table">
+                        <col style="width: 30%;"/>
+                        <col style="width: 30%;"/>
+                        <col style="width: 20%;"/>
+                        <col style="width: 20%;"/>
+                        <tbody>
+                            <tr class="background-light" ng-repeat="detils in model.itemsByStockLeger">
+                                <td class="text-bold">{{model.itemData(detils[0]).name}} <span class="label label-primary">{{detils[1]}}</span></td>
+                                <td>
+                                    <select class="form-control form-group-lg" ng-model="selectIemUnit" style="margin-top: 8px;">
+                                        <option value="{{itemUnits.indexNo}}" ng-repeat="itemUnits in model.getItemUnits(detils[0])">
+                                            {{itemUnits.name}}  -  {{ itemUnits.salePriceNormal|number:2}} 
+                                        </option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <div range-spinner
+                                         range-min="1" 
+                                         range-step="1"  
+                                         range-max="15" 
+                                         range-default-value="0"
+                                         range-decimal-precision="1"				
+                                         range-model="qty"
+                                         accept-decimal="false"
+                                         name-of-field="rangeFieldName"
+                                         id-of-field="rangeFieldId">
+                                    </div>
+                                </td>
+                                <td>
+                                    <a class="btn btn-success" ng-click="ui.addItemUnit(selectIemUnit, qty);"><span class="glyphicon glyphicon-plus"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-5 background-dark">
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
+                <div style="height: 50px;">
+                    <table class="square-table table-rounded">
+                        <col style="width: 40%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 15%;"/>
+                        <col/>
+                        <thead>
+                            <tr>
+                                <th>SELECTIONS</th>
+                                <th class="text-right">QTY</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="smart-scroll-y" style="height: calc(100vh - 56px);padding-left: 5px;">
+                    <table class="square-table background-dark">
+                        <col style="width: 40%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 15%;"/>
+                        <tbody ng-repeat="selections in model.bayIssueItemLeger">
+                            <tr>
+                                <td>{{model.itemUnitData(selections.itemUnits).name}}</td>
+                                <td class="text-right">{{selections.quantity}}</td>
+                                <td><a class="btn btn-danger" ng-click="ui.deleteBayItemIssue($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fab-container pull-left">
+    <a class="fab fab-lg fab-success" ng-hide="ui.model === 'CATEGORY'" ng-click="ui.backToCategory();"><i class="glyphicon glyphicon-chevron-left"></i></a>
+</div>
