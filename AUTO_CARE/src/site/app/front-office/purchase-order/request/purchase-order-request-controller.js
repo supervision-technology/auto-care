@@ -4,7 +4,7 @@
             .controller("purchaseOrderRequestController", function ($scope, $rootScope, $uibModal, $uibModalStack, $filter, $timeout, purchaseOrderRequestModel, Notification, ConfirmPane, ModalDialog, optionPane) {
                 $scope.model = new purchaseOrderRequestModel();
                 $scope.ui = {};
-                $rootScope.selectedIndex = -1;
+                $scope.selectedIndex = -1;
 
                 $scope.ui.new = function () {
                     $scope.ui.mode = 'NEW';
@@ -15,16 +15,6 @@
                     $scope.model.data.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.model.data.deliverDate = $filter('date')(new Date(), 'yyyy-MM-dd');
                     $scope.ui.focus('#date');
-
-                    ConfirmPane.primaryConfirm("Load ReOrder Item !")
-                            .confirm(function () {
-                                $scope.reOrderItemPopup();
-                            })
-                            .discard(function () {
-                                Notification.info("New Purchase Order Request");
-                                console.log('fail');
-                            });
-
                 };
 
                 $scope.ui.edit = function (indexNo) {
@@ -80,7 +70,7 @@
 
                             $scope.model.validateBarcode($scope.model.tempData.barcode);
                             if ($scope.model.tempData.item) {
-                                $scope.ui.focus('#price');
+                                $scope.ui.focus('#qty');
                             } else {
                                 Notification.error("Item not found!");
                                 $scope.ui.focus('#barcode');
@@ -95,7 +85,7 @@
 
                         $scope.model.setItemDetail(indexNo);
                         if ($scope.model.tempData.item) {
-                            $scope.ui.focus('#price');
+                            $scope.ui.focus('#qty');
                         } else {
                             $scope.ui.focus('#item');
                         }
@@ -128,9 +118,11 @@
                 };
                 $scope.ui.calculatedValue = function () {
                     $scope.model.tempData.value = $scope.model.tempData.qty * $scope.model.tempData.price;
-                    $scope.model.tempData.discountValue = 0;
-                    $scope.model.tempData.discount = 0;
+//                    $scope.model.tempData.discountValue = 0;
+//                    $scope.model.tempData.discount = 0;
                     $scope.model.tempData.netValue = $scope.model.tempData.value;
+
+                    $scope.ui.calculateDiscountWithRate();
                 };
                 $scope.ui.calculateDiscountWithRate = function () {
                     $scope.model.tempData.discountValue = ($scope.model.tempData.value * $scope.model.tempData.discount) / 100;
@@ -198,51 +190,31 @@
                     }
                 };
 
-                $scope.reOrderItemPopup = function () {
-                    $scope.model.loadReOrderItem();
-                    $timeout(function () {
-
-                        $rootScope.reOrderItems = $scope.model.reOrderItems;
-
-                        $uibModal.open({
-                            animation: true,
-                            ariaLabelledBy: 'modal-title',
-                            ariaDescribedBy: 'modal-body',
-                            templateUrl: 'app/front-office/popup-dialog/re-order-item-popup.html',
-                            controller: 'purchaseOrderRequestController',
-                            size: 'lg'
-                        });
-                    }, 1000);
-                };
                 $scope.dismissAllModel = function () {
                     $uibModalStack.dismissAll();
 
                 };
-                $scope.ui.selectReOrderItem = function (list) {
+                $scope.ui.selectAllReOrderItem = function (reOrderIndexNo) {
+                    $scope.model.selectAllReOrderItem(reOrderIndexNo);
 
-                    if ($scope.searchSupplier) {
-                        
-                        $scope.model.selectReOrderItem(list,$scope.searchSupplier);
-                        Notification.success('ReOrder Item Add Success !');
-                        $scope.dismissAllModel();
-                        
+                };
+                $scope.ui.editReOrderItem = function (reOrderIndexNo) {
+                    $scope.model.editReOrderItem(reOrderIndexNo);
+
+                };
+                $scope.ui.setEditableReOrderItem = function () {
+                    $scope.model.setEditableReOrderItem();
+
+                };
+                $scope.ui.selectReOrderItemIndex = function (key) {
+                    if ($scope.selectedIndex === key) {
+                        $scope.selectedIndex = -1;
                     } else {
-                        Notification.error('Select a Supplier for add ReOrder Item !');
+                        $scope.selectedIndex = key;
                     }
                 };
-                $scope.ui.selectReOrderItemIndex = function (key){
-                    if ($rootScope.selectedIndex === key) {
-                        $rootScope.selectedIndex = -1;
-                    } else {
-                        $rootScope.selectedIndex = key;
-
-                    }
-                };
-
                 $scope.init = function () {
                     $scope.ui.mode = 'IDEAL';
-
-
                 };
 
                 $scope.init();

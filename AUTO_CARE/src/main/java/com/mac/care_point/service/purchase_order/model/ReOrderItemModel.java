@@ -12,8 +12,8 @@ import java.math.BigDecimal;
  *
  * @author L T430
  */
-public class ReOrderItemModel implements Serializable{
-    
+public class ReOrderItemModel implements Serializable {
+
     private Integer reOrderIndexNo;
     private Integer item;
     private BigDecimal maxReOrder;
@@ -27,11 +27,14 @@ public class ReOrderItemModel implements Serializable{
     private BigDecimal orderQty;
     private BigDecimal totalOrder;
     private String branchColor;
+    private BigDecimal purchasingQty;
+    private BigDecimal availableQty;
+    private BigDecimal netRequiredQty;
 
     public ReOrderItemModel() {
     }
 
-    public ReOrderItemModel(Integer reOrderIndexNo, Integer item, BigDecimal maxReOrder, BigDecimal minReOrder, String branch, Integer branchId, String itemName, String supplierName, Integer supplierId, BigDecimal stockQty, BigDecimal orderQty, BigDecimal totalOrder, String branchColor) {
+    public ReOrderItemModel(Integer reOrderIndexNo, Integer item, BigDecimal maxReOrder, BigDecimal minReOrder, String branch, Integer branchId, String itemName, String supplierName, Integer supplierId, BigDecimal stockQty, BigDecimal orderQty, BigDecimal totalOrder, String branchColor, BigDecimal purchasingQty, BigDecimal availableQty, BigDecimal netRequiredQty) {
         this.reOrderIndexNo = reOrderIndexNo;
         this.item = item;
         this.maxReOrder = maxReOrder;
@@ -45,6 +48,9 @@ public class ReOrderItemModel implements Serializable{
         this.orderQty = orderQty;
         this.totalOrder = totalOrder;
         this.branchColor = branchColor;
+        this.purchasingQty = purchasingQty;
+        this.availableQty = availableQty;
+        this.netRequiredQty = netRequiredQty;
     }
 
     public Integer getReOrderIndexNo() {
@@ -151,7 +157,29 @@ public class ReOrderItemModel implements Serializable{
         this.branchColor = branchColor;
     }
 
-   
+    public BigDecimal getPurchasingQty() {
+        return purchasingQty;
+    }
+
+    public void setPurchasingQty(BigDecimal purchasingQty) {
+        this.purchasingQty = purchasingQty;
+    }
+
+    public BigDecimal getAvailableQty() {
+        return availableQty;
+    }
+
+    public void setAvailableQty(BigDecimal availableQty) {
+        this.availableQty = availableQty;
+    }
+
+    public BigDecimal getNetRequiredQty() {
+        return netRequiredQty;
+    }
+
+    public void setNetRequiredQty(BigDecimal netRequiredQty) {
+        this.netRequiredQty = netRequiredQty;
+    }
 
   
 }

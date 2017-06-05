@@ -61,11 +61,14 @@ public class MBranch implements Serializable {
     @Size(max = 50)
     @Column(name = "telephone_number")
     private String telephoneNumber;
+   
+    @Column(name = "type")
+    private String type;
 
     public MBranch() {
     }
 
-    public MBranch(Integer indexNo, String branchCode, String regNumber, String name, String addressLine1, String addressLine2, String addressLine3, String telephoneNumber) {
+    public MBranch(Integer indexNo, String branchCode, String regNumber, String name, String addressLine1, String addressLine2, String addressLine3, String telephoneNumber, String type) {
         this.indexNo = indexNo;
         this.branchCode = branchCode;
         this.regNumber = regNumber;
@@ -74,6 +77,7 @@ public class MBranch implements Serializable {
         this.addressLine2 = addressLine2;
         this.addressLine3 = addressLine3;
         this.telephoneNumber = telephoneNumber;
+        this.type = type;
     }
 
     public Integer getIndexNo() {
@@ -140,5 +144,14 @@ public class MBranch implements Serializable {
         this.telephoneNumber = telephoneNumber;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+   
    
 }

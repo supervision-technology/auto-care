@@ -12,6 +12,7 @@ import com.mac.care_point.service.grn.StockLedgerRepository;
 import com.mac.care_point.service.grn.model.TStockLedger;
 import com.mac.care_point.service.job_item.model.TJobItem;
 import com.mac.care_point.service.job_item.model.TPackageItemDetail;
+import com.mac.care_point.service.stock.transfer.model.MStore;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,13 +35,15 @@ public class JobItemService {
 
     @Autowired
     private StockLedgerRepository stockLedgerRepository;
+    
+    @Autowired
+    private JobItemStockRepository storeRepository;
 
 //    @Autowired
 //    private PackageItemRepostory packageItemRepostory;
 //
 //    @Autowired
 //    private PackageItemRepository packageItemRepository;
-
     public TJobItem saveJobItem(TJobItem jobItem) {
         return jobItemRepository.save(jobItem);
     }
@@ -69,7 +72,17 @@ public class JobItemService {
             stockLedger.setItem(jobItem.getItem());
             stockLedger.setOutQty(jobItem.getStockRemoveQty());
             stockLedger.setItem(jobItem.getItem());
-            stockLedger.setStore(1);
+            stockLedger.setAvaragePriceIn(new BigDecimal(0));
+            
+            //set main store for branch
+            List<MStore> storeList = storeRepository.findByBranchAndType(branch, Constant.MAIN_STOCK);
+            if (!storeList.isEmpty()) {
+                stockLedger.setStore(storeList.get(0).getIndexNo());
+            }
+
+            //calculat avarage price
+            BigDecimal itemAvaragePrice = jobItemRepository.getItemAvaragePrice(branch, jobItem.getItem());
+            stockLedger.setAvaragePriceOut(itemAvaragePrice.multiply(jobItem.getStockRemoveQty()));
             stockLedgerRepository.save(stockLedger);
 
         } else {

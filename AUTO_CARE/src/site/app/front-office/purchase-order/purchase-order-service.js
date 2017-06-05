@@ -47,6 +47,10 @@
         this.getBranchesStock = function (item) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/load-stock-in-branches/"+item);
         };
+       //Branches stock
+        this.getMainBranchAvailableStock = function (item) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/purchase-order-request/get-main-branch-available-stock/"+item);
+        };
     };
 
     angular.module("appModule")

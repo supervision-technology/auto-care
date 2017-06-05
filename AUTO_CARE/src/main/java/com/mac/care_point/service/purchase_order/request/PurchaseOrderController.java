@@ -9,7 +9,6 @@ import com.mac.care_point.service.purchase_order.model.BranchStockModel;
 import com.mac.care_point.service.purchase_order.model.ReOrderItemModel;
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
 import java.math.BigDecimal;
-import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +61,7 @@ public class PurchaseOrderController {
         List<BranchStockModel> stockList = new ArrayList<>();
         List<Object[]> list = purchaseOrderService.loadStockInBranches(item);
 
-        Integer count=1;
+        Integer count = 1;
         for (Object[] object : list) {
             BranchStockModel model = new BranchStockModel();
             model.setIndexNo(count);
@@ -77,14 +76,14 @@ public class PurchaseOrderController {
         }
         return stockList;
     }
+
     @RequestMapping(value = "/getOrderRequestItems", method = RequestMethod.GET)
     public List<ReOrderItemModel> loadStockInBranches() {
-        
+
 //        return purchaseOrderService.getOrderRequestItems();
-        
-         List<Object[]> list = purchaseOrderService.getOrderRequestItems();
-         List<ReOrderItemModel> reOrderList = new ArrayList<>();
-        for (Object[] objects : list) {
+        List<Object[]> list = purchaseOrderService.getOrderRequestItems();
+        List<ReOrderItemModel> reOrderList = new ArrayList<>();
+        for(Object[] objects : list) {
             ReOrderItemModel reOrder = new ReOrderItemModel();
             reOrder.setReOrderIndexNo(Integer.parseInt(objects[0].toString()));
             reOrder.setItem(Integer.parseInt(objects[1].toString()));
@@ -99,11 +98,21 @@ public class PurchaseOrderController {
             reOrder.setOrderQty(new BigDecimal(objects[10].toString()));
             reOrder.setTotalOrder(new BigDecimal(objects[11].toString()));
             reOrder.setBranchColor(objects[12].toString());
+            reOrder.setAvailableQty(new BigDecimal(objects[13].toString()));
+            reOrder.setPurchasingQty(new BigDecimal(objects[14].toString())==null?new BigDecimal(0):new BigDecimal(objects[14].toString()));
             
+            BigDecimal netRequiredQty =reOrder.getTotalOrder().subtract(reOrder.getPurchasingQty());
+            reOrder.setNetRequiredQty(netRequiredQty.compareTo(reOrder.getPurchasingQty()) > 0==false?new BigDecimal(0):netRequiredQty);
+
             reOrderList.add(reOrder);
-                    
+
         }
         return reOrderList;
+    }
+
+    @RequestMapping(value = "/get-main-branch-available-stock/{item}", method = RequestMethod.GET)
+    public double mainBranchAvailableStock(@PathVariable Integer item) {
+        return purchaseOrderService.mainBranchAvailableStock(item);
     }
 
 }

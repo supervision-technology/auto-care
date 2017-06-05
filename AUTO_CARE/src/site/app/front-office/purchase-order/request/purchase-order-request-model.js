@@ -10,18 +10,23 @@
                     data: {},
                     tempData: {},
                     summaryData: {},
+                    reOrderData: {},
+                    reOrderTempData: {},
                     //master data lists
                     suppliers: [],
                     allItems: [],
                     supplierItems: [],
                     branchesStockList: [],
                     reOrderItems: [],
+                    mainBranchAvailableStock: 0.0,
 
                     constructor: function () {
                         var that = this;
                         this.data = PurchaseOrderRequestModelFactory.newData();
                         this.tempData = PurchaseOrderRequestModelFactory.tempData();
                         this.summaryData = PurchaseOrderRequestModelFactory.summaryData();
+                        this.reOrderData = PurchaseOrderRequestModelFactory.reOrderData();
+                        this.reOrderTempData = PurchaseOrderRequestModelFactory.reOrderTempData();
 
                         PurchaseOrderRequestService.loadSuppliers()
                                 .success(function (data) {
@@ -31,6 +36,7 @@
                                 .success(function (data) {
                                     that.allItems = data;
                                 });
+                        that.loadReOrderItem();
                     },
                     supplierLable: function (model) {
                         var label;
@@ -61,7 +67,8 @@
                         });
                         if (selectItem) {
                             this.tempData.item = selectItem.indexNo;
-                            this.tempData.price = selectItem.costPrice;
+                            this.tempData.price = selectItem.supplierPrice;
+                            this.tempData.discount = selectItem.discount;
                             this.getStockQty(selectItem.indexNo);
 
                         } else {
@@ -88,7 +95,8 @@
                         });
                         if (selectItem) {
                             this.tempData.barcode = selectItem.barcode;
-                            this.tempData.price = selectItem.costPrice;
+                            this.tempData.price = selectItem.supplierPrice;
+                            this.tempData.discount = selectItem.discount;
                             this.getStockQty(selectItem.indexNo);
 //                            this.getBranchesStock(selectItem.indexNo);
                         } else {
@@ -100,11 +108,9 @@
                     getBranchesStock: function () {
                         var that = this;
                         var item = this.tempData.item;
-                        console.log(item);
                         PurchaseOrderRequestService.getBranchesStock(item)
                                 .success(function (data) {
                                     that.branchesStockList = data;
-                                    console.log(data);
                                 });
 
                     }
@@ -281,6 +287,8 @@
                         PurchaseOrderRequestService.loadReOrderItem()
                                 .success(function (data) {
                                     that.reOrderItems = data;
+                                    console.log(data);
+                                    console.log("data");
 //                                    defer.resolve();
                                 });
 //                                .error(function (data) {
@@ -288,38 +296,95 @@
 //                                });
 //                        return defer.promise;
                     },
-                    selectReOrderItem: function (list, supplierId) {
+                    selectAllReOrderItem: function (reOrderIndexNo) {
                         var that = this;
-                        console.log(list);
-                        console.log("list");
-
-                        angular.forEach(list, function (value) {
-                            if (supplierId === value.supplierId) {
-
+                        angular.forEach(this.reOrderItems, function (value) {
+                            if (reOrderIndexNo === value.reOrderIndexNo) {
 
                                 var item = that.getItem(value.item);
+                                that.loadItem(value.supplierId);
+                                that.data.supplier = value.supplierId;
                                 var detail = {
                                     "indexNo": null,
                                     "purchaseOrder": null,
                                     "item": value.item,
-                                    "price": item.costPrice,
-                                    "qty": value.orderQty,
-                                    "value": parseFloat(item.costPrice) * parseFloat(value.orderQty),
-                                    "discount": 0,
-                                    "discountValue": 0,
-                                    "netValue": parseFloat(item.costPrice) * parseFloat(value.orderQty),
+                                    "barcode": item.barcode,
+                                    "price": item.supplierPrice,
+                                    "qty": value.netRequiredQty,
+                                    "value": parseFloat(item.supplierPrice) * parseFloat(value.netRequiredQty),
+                                    "discount": item.discount,
+                                    "discountValue": (parseFloat(value.netRequiredQty) * parseFloat(item.supplierPrice)) * parseFloat(item.discount) / 100,
+                                    "netValue": parseFloat(item.supplierPrice) * parseFloat(value.netRequiredQty) - (parseFloat(value.netRequiredQty) * parseFloat(item.supplierPrice)) * parseFloat(item.discount) / 100,
                                     "stockQty": value.stockQty,
-                                    "orderQty": value.orderQty,
+                                    "orderQty": value.netRequiredQty,
                                     "recieveQty": 0,
-                                    "balanceQty": value.orderQty,
+                                    "balanceQty": value.netRequiredQty,
                                     "status": "PENDING"
                                 };
                                 that.data.purchaseOrderItemList.push(detail);
-                                console.log(that.data.purchaseOrderItemList);
-                                console.log("that.data.purchaseOrderItemList");
+                                return;
                             }
                         });
+                        this.summaryCalculator();
+                    },
+                    editReOrderItem: function (reOrderIndexNo) {
+                        var that = this;
+
+                        angular.forEach(this.reOrderItems, function (value, key) {
+                            if (reOrderIndexNo === value.reOrderIndexNo) {
+                                console.log(key);
+                                that.reOrderTempData = value;
+//                                that.reOrderItems.splice(key, 1);
+                            }
+
+                            return;
+                        });
+                    },
+                    setEditableReOrderItem: function () {
+                        var confirmation = true;
+                        if (!this.reOrderTempData.item) {
+                            confirmation = false;
+                            Notification.error('Not Found ReOrder Editable Item !');
+                        }
+                        if (this.reOrderTempData.netRequiredQty < 0) {
+                            confirmation = false;
+                            Notification.error('Wrong Quantity !');
+                        }
+                        if (this.reOrderTempData.netRequiredQty > this.reOrderTempData.totalOrder) {
+                            Notification.error('Quantity Out of Range !');
+                            confirmation = false;
+                        }
+                        if (confirmation) {
+
+
+                            var that = this;
+                            var value = this.reOrderTempData;
+                            var item = that.getItem(value.item);
+                            that.loadItem(value.supplierId);
+                            that.data.supplier = value.supplierId;
+                            var detail = {
+                                "indexNo": null,
+                                "purchaseOrder": null,
+                                "item": value.item,
+                                "barcode": item.barcode,
+                                "price": item.supplierPrice,
+                                "qty": value.netRequiredQty,
+                                "value": parseFloat(item.supplierPrice) * parseFloat(value.netRequiredQty),
+                                "discount": item.discount,
+                                "discountValue": (parseFloat(value.netRequiredQty) * parseFloat(item.supplierPrice)) * parseFloat(item.discount) / 100,
+                                "netValue": parseFloat(item.supplierPrice) * parseFloat(value.netRequiredQty) - (parseFloat(value.netRequiredQty) * parseFloat(item.supplierPrice)) * parseFloat(item.discount) / 100,
+                                "stockQty": value.stockQty,
+                                "orderQty": value.netRequiredQty,
+                                "recieveQty": 0,
+                                "balanceQty": value.netRequiredQty,
+                                "status": "PENDING"
+                            };
+                            that.data.purchaseOrderItemList.push(detail);
+                            this.reOrderTempData = PurchaseOrderRequestModelFactory.reOrderTempData();
+                            this.summaryCalculator();
+                        }
                     }
+
                 };
                 return purchaseOrderRequestModel;
             });

@@ -54,7 +54,8 @@ public interface Constant {
     public static final String INTERNAL_TRANSFER_IN = "INTERNAL_TRANSFER_IN";
     public static final String INTERNAL_TRANSFER_OUT = "INTERNAL_TRANSFER_OUT";
     
-    
-    
-
+    //Btanch Type
+    public static final String MAIN_BRANCH = "MAIN_BRANCH";
+    public static final String OTHER_BRANCH = "OTHER_BRANCH";
+   
 }

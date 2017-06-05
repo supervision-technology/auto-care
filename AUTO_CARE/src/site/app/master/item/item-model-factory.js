@@ -20,7 +20,9 @@
                         "priceCategory": null,
                         "branch": null,
                         "reOrderMax": null,
-                        "reOrderMin": null
+                        "reOrderMin": null,
+                        "discount": null,
+                        "supplierPrice": null
                     };
                     return data;
                 };

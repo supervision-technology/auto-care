@@ -6,6 +6,7 @@
 package com.mac.care_point.service.job_item;
 
 import com.mac.care_point.service.job_item.model.TJobItem;
+import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -46,4 +47,13 @@ public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
     public List<Object[]> getItemQtyByStock(@Param("branch") Integer branch, @Param("item") Integer item);
 
     public List<TJobItem> findByJobCardAndItemType(Integer jobCard, String itemType);
+    
+     @Query(value = "select\n"
+            + "	(sum(t_stock_ledger.avarage_price_in)-sum(t_stock_ledger.avarage_price_out)) /\n"
+            + "	(sum(t_stock_ledger.in_qty)-sum(t_stock_ledger.out_qty)) \n"
+            + "	 as avarage_price\n"
+            + "from\n"
+            + "	t_stock_ledger\n"
+            + "where t_stock_ledger.item=:item and t_stock_ledger.branch=:branch", nativeQuery = true)
+    public BigDecimal getItemAvaragePrice(@Param("branch") Integer branch, @Param("item") Integer item);
 }

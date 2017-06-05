@@ -5,6 +5,9 @@
  */
 package com.mac.care_point.service.purchase_order.request;
 
+import com.mac.care_point.master.branch.BranchRepository;
+import com.mac.care_point.master.branch.model.MBranch;
+import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.purchase_order.PurchaseOrderRepository;
 import com.mac.care_point.service.purchase_order.PurchaseOrderStockLedgerRepositoy;
 import com.mac.care_point.service.purchase_order.model.TPurchaseOrder;
@@ -30,8 +33,11 @@ public class PurchaseOrderService {
     @Autowired
     private PurchaseOrderStockLedgerRepositoy stockLedgerRepositoy;
 
+    @Autowired
+    private BranchRepository branchRepository;
+
     @Transactional
-    TPurchaseOrder savePurchaseOrder(TPurchaseOrder purchaseOrder,String status) {
+    TPurchaseOrder savePurchaseOrder(TPurchaseOrder purchaseOrder, String status) {
 
         TPurchaseOrder findLastRow = purchaseOrderRepository.findFirst1ByOrderByIndexNoDesc();
 
@@ -40,6 +46,9 @@ public class PurchaseOrderService {
         } else {
             purchaseOrder.setNumber(1);
         }
+        System.out.println(purchaseOrder.getGrandTotal());
+        System.out.println(purchaseOrder.getGrandTotal());
+        System.out.println(purchaseOrder.getGrandTotal());
 
         for (TPurchaseOrderDetail detail : purchaseOrder.getPurchaseOrderItemList()) {
             detail.setPurchaseOrder(purchaseOrder);
@@ -56,16 +65,25 @@ public class PurchaseOrderService {
     }
 
     TPurchaseOrder loadPendingPurchaseOrder(Integer number, Integer branch) {
-        return purchaseOrderRepository.findByNumberAndBranchAndIsView(number,branch,true);
+        return purchaseOrderRepository.findByNumberAndBranchAndIsView(number, branch, true);
     }
 
     List<Object[]> loadStockInBranches(Integer item) {
-       return purchaseOrderRepository.getItemQtyByBranches(item);
+        return purchaseOrderRepository.getItemQtyByBranches(item);
     }
-   
+
     List<Object[]> getOrderRequestItems() {
         List<Object[]> list = purchaseOrderRepository.getOrderRequestItems();
         return list;
+    }
+
+    double mainBranchAvailableStock(Integer item) {
+        
+        MBranch branch = branchRepository.findByType(Constant.MAIN_BRANCH);
+        if (branch==null) {
+            return 0.00;
+        };
+        return purchaseOrderRepository.getMainBranchAvailableStock(branch.getIndexNo(), item);
     }
 
 }

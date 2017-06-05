@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.branch;
+package com.mac.care_point.service.job_item;
 
-import com.mac.care_point.master.branch.model.MBranch;
+import com.mac.care_point.service.stock.transfer.model.MStore;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,11 +13,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author L T430
  */
-public interface BranchRepository extends JpaRepository<MBranch, Integer>{
+public interface JobItemStockRepository extends JpaRepository<MStore, Integer> {
 
-    public List<MBranch> findAll();
-    
-    public MBranch findByType(String type);
-    
-    
+    public List<MStore> findByBranchAndType(int fromBranch, String MAIN_STOCK);
+
 }

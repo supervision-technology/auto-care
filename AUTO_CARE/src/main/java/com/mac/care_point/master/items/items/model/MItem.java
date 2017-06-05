@@ -96,10 +96,16 @@ public class MItem implements Serializable {
     @Column(name = "re_order_min")
     private BigDecimal reOrderMin;
 
+    @Column(name = "discount")
+    private BigDecimal discount;
+
+    @Column(name = "supplier_price")
+    private BigDecimal supplierPrice;
+
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, String type, Integer department, Integer brand, Integer category, Integer sub_category, BigDecimal costPrice, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Integer supplier, BigDecimal reOrderMax, BigDecimal reOrderMin) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, String type, Integer department, Integer brand, Integer category, Integer sub_category, BigDecimal costPrice, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Integer supplier, BigDecimal reOrderMax, BigDecimal reOrderMin, BigDecimal discount, BigDecimal supplierPrice) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -117,6 +123,8 @@ public class MItem implements Serializable {
         this.supplier = supplier;
         this.reOrderMax = reOrderMax;
         this.reOrderMin = reOrderMin;
+        this.discount = discount;
+        this.supplierPrice = supplierPrice;
     }
 
     public Integer getIndexNo() {
@@ -254,6 +262,23 @@ public class MItem implements Serializable {
     public void setReOrderMin(BigDecimal reOrderMin) {
         this.reOrderMin = reOrderMin;
     }
+
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
+    public BigDecimal getSupplierPrice() {
+        return supplierPrice;
+    }
+
+    public void setSupplierPrice(BigDecimal supplierPrice) {
+        this.supplierPrice = supplierPrice;
+    }
+
 
     
 }

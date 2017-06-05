@@ -2,7 +2,6 @@
     angular.module("appModule")
             .factory("PurchaseOrderRequestModelFactory", function () {
                 var factory = {};
-
                 factory.newData = function () {
                     var data = {
                         "indexNo": null,
@@ -22,7 +21,7 @@
                         "grandTotal": 0,
                         "returnStatus": null,
                         "purchaseOrderItemList": []
-                        
+
                     };
                     return data;
                 };
@@ -32,7 +31,7 @@
                         "purchaseOrder": null,
                         "item": null,
                         "price": 0,
-                        "qty": 0,
+                        "qty": null,
                         "value": 0,
                         "discount": 0,
                         "discountValue": 0,
@@ -42,7 +41,7 @@
                         "recieveQty": 0,
                         "balanceQty": 0,
                         "status": "PENDING"
-                        
+
                     };
                     return tempData;
                 };
@@ -51,11 +50,51 @@
                         "qty": null,
                         "value": null,
                         "discount": null
-                        
+
                     };
                     return summaryData;
                 };
-
+                factory.reOrderData = function () {
+                    var reOrderData = {
+                        "reOrderIndexNo": null,
+                        "item": null,
+                        "maxReOrder": null,
+                        "minReOrder": null,
+                        "branch": null,
+                        "branchId": null,
+                        "itemName": null,
+                        "supplierName": null,
+                        "supplierId": null,
+                        "stockQty": null,
+                        "orderQty": null,
+                        "totalOrder": null,
+                        "branchColor": null,
+                        "availableQty": null,
+                        "purchasingQty": null
+                    };
+                    return reOrderData;
+                };
+                factory.reOrderTempData = function () {
+                    var reOrderTempData = {
+                        "reOrderIndexNo": null,
+                        "item": null,
+                        "maxReOrder": null,
+                        "minReOrder": null,
+                        "branch": null,
+                        "branchId": null,
+                        "itemName": null,
+                        "supplierName": null,
+                        "supplierId": null,
+                        "stockQty": null,
+                        "orderQty": null,
+                        "totalOrder": null,
+                        "branchColor": null,
+                        "availableQty": null,
+                        "netRequiredQty": null,
+                        "purchasingQty": null
+                    };
+                    return reOrderTempData;
+                };
                 return factory;
             });
 }());
