@@ -21,6 +21,9 @@ public interface Constant {
     public static final String COMPLITED_STATUS = "COMPLITED";
     public static final String FINISHE_STATUS = "FINISHED";
     public static final String DLETED_STATUS = "DELETED";
+    
+    public static final String CHECK_STATUS = "CHECK";
+    public static final String NOT_CHECK_STATUS = "NOT_CHECK";
 
     //payment types
     public static final String CASH_PAYMENT = "CASH_PAYMENT";

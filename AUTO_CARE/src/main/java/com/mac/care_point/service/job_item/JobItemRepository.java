@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.job_item;
 
+import com.mac.care_point.service.final_check_list.model.TJobItemCheck;
 import com.mac.care_point.service.job_item.model.TJobItem;
 import java.math.BigDecimal;
 import java.util.List;
@@ -61,11 +62,23 @@ public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
     public List<TJobItem> findByJobCardAndItemType(Integer jobCard, String itemType);
     
      @Query(value = "select\n"
-            + "	(sum(t_stock_ledger.avarage_price_in)-sum(t_stock_ledger.avarage_price_out)) /\n"
-            + "	(sum(t_stock_ledger.in_qty)-sum(t_stock_ledger.out_qty)) \n"
+            + "	IFNULL((sum(t_stock_ledger.avarage_price_in)-sum(t_stock_ledger.avarage_price_out)) /\n"
+            + "	(sum(t_stock_ledger.in_qty)-sum(t_stock_ledger.out_qty)),0.00) \n"
             + "	 as avarage_price\n"
             + "from\n"
             + "	t_stock_ledger\n"
             + "where t_stock_ledger.item=:item and t_stock_ledger.branch=:branch", nativeQuery = true)
     public BigDecimal getItemAvaragePrice(@Param("branch") Integer branch, @Param("item") Integer item);
+    
+    //final check list
+    @Query(value = "select \n"
+            + "t_job_item.*\n"
+            + "from\n"
+            + "t_job_item\n"
+            + "inner join t_job_item_check\n"
+            + "on t_job_item_check.job_item = t_job_item.index_no\n"
+            + "where \n"
+            + "t_job_item_check.job_card = :jobCard\n"
+            + "group by job_item", nativeQuery = true)
+    public List<TJobItem> findByJobCardGetJobItemCheck(@Param("jobCard") Integer jobCard);
 }

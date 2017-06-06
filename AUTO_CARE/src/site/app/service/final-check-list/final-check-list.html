@@ -1,0 +1,90 @@
+<div class="tile-list background-dark">
+    <div class="tile-list-title" style="margin-right: 5px;">
+        <h4>VEHICLE</h4>
+    </div>
+    <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
+        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+            <span>
+                <img src="/img/01.png"/>  
+                <label>
+                    {{model.vehicleData(details.vehicle).vehicleNo}}
+                </label>
+                <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
+                <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="index-content-body">
+    <div style="float: left; width: calc(100% - 133px);">
+        <div class="col-xs-6 background-light-dark" style="height: calc(100vh-92px)">
+            <div class="row" style="display: flex; flex-flow: column;">
+                <div class="col-xs-6">
+                    <h4 class="text-primary">HAVE TO CHECK LIST</h4>
+                </div>
+                <table class="square-table background-dark" style="width: 99%">
+                    <col style="width: 80%;"/>
+                    <col style="width: 20%;"/>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
+                    <div ng-repeat="detils in model.jobItemList">
+                        <table class="square-table">
+                            <col style="width: 80%;"/>
+                            <col style="width: 20%;"/>
+                            <tbody>
+                                <tr class="background-light">
+                                    <td ng-click="ui.getCheckedItemDetailsPending($index, detils.indexNo);" class="text-bold">{{model.itemData(detils.item).name}}{{detils.item}}</td>
+                                    <td><a ng-show="detils.jobStatus === 'COMPLITED'" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a></td>
+                                    <td><a ng-show="detils.jobStatus === 'PENDING'" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="animation-v-grow background-dark" ng-show="selectItemCheckDetailsPending == $index">
+                            <table class="square-table">
+                                <col style="width: 70%;"/>
+                                <col style="width: 30%;"/>
+                                <tbody>
+                                    <tr class="background-dark" ng-repeat="details in model.itemCheckDetailsList">
+                                        <td><label>{{model.itemCheckDetail(details.itemCheckDetail).name}}</label></td>
+                                        <td><a ng-show="details.status === 'NOT_CHECK'" class="btn btn-danger" ng-click="ui.checkedItemPending(details.indexNo);"/><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td><a ng-show="details.status === 'CHECK'" class="btn btn-success" ng-click="ui.checkedItemComplite(details.indexNo);"/><span class="glyphicon glyphicon-ok"></span></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-6 background-dark">
+            <div class="row text-bold" style="display: flex; flex-flow: column;">
+                <div class="col-xs-6 background-dark">
+                    <h4 class="text-primary">JOB CARD SUMMRY</h4>
+                </div>
+                <div>
+                    <table class="square-table  background-dark">
+                        <col style="width: 60%;"/>
+                        <col style="width: 40%;"/>
+                        <tbody>
+                            <tr>
+                                <td>JOB CARD STATUS</td>
+                                <td>PENDING</td>
+                            </tr>
+                            <tr>
+                                <td>VEHICLE IN TIME</td>
+                                <td>PENDING</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

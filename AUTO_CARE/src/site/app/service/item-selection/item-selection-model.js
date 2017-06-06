@@ -305,11 +305,11 @@
                                 .success(function () {
                                     that.jobItemList.splice(index, 1);
                                     that.findItemsForStockLeger();
-                                    that.getSelectItemTotal();
+                                    that.getSelectItemAllItems();
                                     defer.resolve();
                                 })
                                 .error(function () {
-                                    that.getSelectItemTotal();
+                                    that.getSelectItemAllItems();
                                     defer.reject();
                                 });
                         return defer.promise;
