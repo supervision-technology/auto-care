@@ -111,7 +111,14 @@ public class JobItemService {
             }
 
             //calculat avarage price
+            System.out.println("Branch");
+            System.out.println(branch);
+            System.out.println("jobItem.getItem()");
+            System.out.println(jobItem.getItem());
+
             BigDecimal itemAvaragePrice = jobItemRepository.getItemAvaragePrice(branch, jobItem.getItem());
+            System.out.println("itemAvaragePrice");
+            System.out.println(itemAvaragePrice);
             stockLedger.setAvaragePriceOut(itemAvaragePrice.multiply(jobItem.getStockRemoveQty()));
             stockLedgerRepository.save(stockLedger);
 
