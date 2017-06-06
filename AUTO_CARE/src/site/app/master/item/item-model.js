@@ -11,6 +11,7 @@
             itemUnitData: {},
             packageData: {},
             consumableData: {},
+            itemCheckData: {},
             //uib-typeahead
             items: [],
             itemunits: [],
@@ -25,8 +26,11 @@
             itemViewList: [],
             itemunitsViewList: [],
             packageViewList: [],
+            itemCheckDetailList: [],
             selectedConsumableItem: {},
+            selectedItem: {},
             consumableItemIsView: false,
+            selectedItemIsView: false,
             //constructor
             constructor: function () {
                 var that = this;
@@ -35,6 +39,7 @@
                 that.itemUnitData = itemFactory.newItemUnitData();
                 that.packageUnitData = itemFactory.newPackageData();
                 that.consumableData = itemFactory.newConsumableData();
+                that.itemCheckData = itemFactory.newItemCheckData();
 
                 itemService.loadItem()
                         .success(function (data) {
@@ -75,7 +80,9 @@
                             that.suppliers = data;
                         });
 
+
                 this.loadConsumableItem();
+                this.loadItemCheckDetailList();
 
 //                itemService.loadBranches()
 //                        .success(function (data) {
@@ -87,6 +94,13 @@
                 itemService.loadConsumableItem()
                         .success(function (data) {
                             that.consumableItemList = data;
+                        });
+            },
+            loadItemCheckDetailList: function () {
+                var that = this;
+                itemService.loadItemCheckDetails()
+                        .success(function (data) {
+                            that.itemCheckDetailList = data;
                         });
             },
             saveItem: function () {
@@ -135,6 +149,32 @@
                     return defer.promise;
                 }
             },
+            saveItemChechDetail: function () {
+                var confirmation = true;
+                if (!this.itemCheckData.item) {
+                    confirmation = false;
+                    Notification.error('Select a Item For Save !');
+                }
+                if (!this.itemCheckData.name) {
+                    confirmation = false;
+                    Notification.error('Select a Check Description !');
+                }
+                if (confirmation) {
+
+                    var defer = $q.defer();
+                    var that = this;
+                    itemService.saveItemCheckDetail(JSON.stringify(this.itemCheckData))
+                            .success(function (data) {
+                                that.itemCheckData.name = null;
+                                that.loadItemCheckDetailList();
+                                defer.resolve();
+                            })
+                            .error(function (data) {
+                                defer.reject();
+                            });
+                    return defer.promise;
+                }
+            },
             selectCunsumableItel: function (index) {
                 var item = this.itemObject(index);
                 this.selectedConsumableItem = item;
@@ -151,7 +191,7 @@
                         .success(function (data) {
                             that.itemunitsViewList.unshift(data);
                             that.itemUnitData = {};
-                            
+
                             defer.resolve();
                         })
                         .error(function (data) {
@@ -251,6 +291,21 @@
                         });
                 return defer.promise;
             },
+            deleteItemCheckDetail: function (index) {
+                var defer = $q.defer();
+                var that = this;
+                itemService.deleteItemCheckDetail(index)
+                        .success(function (data) {
+                            that.itemCheckData.name = null;
+                            that.itemCheckData.item = null;
+                            that.loadItemCheckDetailList();
+                            defer.resolve();
+                        })
+                        .error(function (data) {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
             priceCategoryLable: function (indexNo) {
                 var item;
                 angular.forEach(this.priceCategory, function (value) {
@@ -340,6 +395,17 @@
                     }
                 });
                 return item;
+            },
+            selectedItemForCheckItem:function (indexNo){
+                 var item;
+                angular.forEach(this.items, function (value) {
+                    if (value.indexNo === parseInt(indexNo)) {
+                        item = value;
+                        return;
+                    }
+                });
+                this.selectedItem=item;
+                 this.selectedItemIsView = true;
             },
             loadItemUnitByItem: function (item) {
                 var that = this;
