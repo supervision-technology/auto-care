@@ -59,13 +59,13 @@ public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
     public List<Object[]> getItemQtyByStock(@Param("branch") Integer branch, @Param("item") Integer item);
 
     public List<TJobItem> findByJobCardAndItemType(Integer jobCard, String itemType);
-    
-     @Query(value = "select\n"
-            + "	(sum(t_stock_ledger.avarage_price_in)-sum(t_stock_ledger.avarage_price_out)) /\n"
-            + "	(sum(t_stock_ledger.in_qty)-sum(t_stock_ledger.out_qty)) \n"
-            + "	 as avarage_price\n"
-            + "from\n"
-            + "	t_stock_ledger\n"
-            + "where t_stock_ledger.item=:item and t_stock_ledger.branch=:branch", nativeQuery = true)
+
+    @Query(value = "select\n"
+            + "      IFNULL((sum(t_stock_ledger.avarage_price_in)-sum(t_stock_ledger.avarage_price_out)) /\n"
+            + "      (sum(t_stock_ledger.in_qty)-sum(t_stock_ledger.out_qty)),0.00) \n"
+            + "      as avarage_price\n"
+            + "      from\n"
+            + "      t_stock_ledger\n"
+            + "      where t_stock_ledger.item=:item and t_stock_ledger.branch=:branch", nativeQuery = true)
     public BigDecimal getItemAvaragePrice(@Param("branch") Integer branch, @Param("item") Integer item);
 }

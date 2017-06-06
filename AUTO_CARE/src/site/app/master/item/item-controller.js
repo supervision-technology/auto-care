@@ -14,6 +14,8 @@
                         $scope.ui.saveMode = "PACKAGE_ITEMS";
                     } else if (functions === "CONSUMABLE_ITEMS") {
                         $scope.ui.saveMode = "CONSUMABLE_ITEMS";
+                    } else if (functions === "ITEM_CHECK_DETAIL") {
+                        $scope.ui.saveMode = "ITEM_CHECK_DETAIL";
                     }
                 };
 
@@ -27,10 +29,19 @@
 
                 $scope.ui.selectStock = function (type) {
                     if (type === 'STOCK') {
-                        $scope.itemStockVisiblePriceCategory = true;
-                    } else {
-                        $scope.itemStockVisiblePriceCategory = false;
+                        $scope.textViewMode = 'STOCK';
                     }
+                    if (type === 'NON-STOCK') {
+                        $scope.textViewMode = 'NON-STOCK';
+                    }
+                    if (type === 'SERVICE') {
+                        $scope.textViewMode = 'SERVICE';
+                    }
+                    if (type === 'PACKAGE') {
+                        $scope.textViewMode = 'PACKAGE';
+                    }
+
+
                 };
 
                 //save item
@@ -75,6 +86,23 @@
                             });
 
                 };
+                //save item check detail
+                $scope.ui.saveItemCheckDetail = function () {
+                    ConfirmPane.primaryConfirm("Save this Detail !")
+                            .confirm(function () {
+                                $scope.model.saveItemChechDetail()
+                                        .then(function () {
+                                            Notification.success("Item Check detail Save Success");
+                                        }, function () {
+                                            Notification.error("Item Check detail Save Fail");
+                                        });
+
+                            })
+                            .discard(function () {
+                                console.log('discard');
+                            });
+
+                };
 
                 //edit item
                 $scope.ui.editeItems = function (items, $index) {
@@ -105,21 +133,21 @@
                             && $scope.model.itemUnitData.salePriceNormal
                             && $scope.model.itemUnitData.salePriceRegister) {
                         $scope.model.saveItemUnit();
-                        $scope.itemType=null;
-                        $scope.itemUnit=null;
+                        $scope.itemType = null;
+                        $scope.itemUnit = null;
                     }
-                    
+
                 };
-                $scope.ui.showDetails=function (){
-                    var show=true;
+                $scope.ui.showDetails = function () {
+                    var show = true;
                     if (!$scope.itemType) {
-                        show=false;
+                        show = false;
                     }
                     if (!$scope.itemUnit) {
-                        show=false;
+                        show = false;
                     }
                     if (!$scope.model.itemUnitData.item) {
-                        show=false;
+                        show = false;
                     }
                     return show;
                 };
@@ -168,6 +196,22 @@
                                             Notification.success("Consumable Item Delete Success");
                                         }, function () {
                                             Notification.error("Consumable Item Delete Fail");
+                                        });
+
+                            })
+                            .discard(function () {
+                                console.log('discard fail');
+                            });
+                };
+                //deleteItemCheckDetail
+                $scope.ui.deleteItemCheckDetail = function (index) {
+                    ConfirmPane.dangerConfirm("Delete Selected Item Chech Detail  !")
+                            .confirm(function () {
+                                $scope.model.deleteItemCheckDetail(index)
+                                        .then(function () {
+                                            Notification.success("Item Check Detail Delete Success");
+                                        }, function () {
+                                            Notification.error("Item Check Detail Delete Fail");
                                         });
 
                             })

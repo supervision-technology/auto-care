@@ -57,6 +57,14 @@
                     };
                     return data;
                 };
+                factory.newItemCheckData = function () {
+                    var itemCheckData = {
+                        "indexNo": null,
+                        "item": null,
+                        "name": null
+                    };
+                    return itemCheckData;
+                };
                 return factory;
             });
 }());

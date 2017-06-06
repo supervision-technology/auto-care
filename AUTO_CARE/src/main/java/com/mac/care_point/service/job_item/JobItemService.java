@@ -32,7 +32,7 @@ public class JobItemService {
 
     @Autowired
     private StockLedgerRepository stockLedgerRepository;
-    
+
     @Autowired
     private JobItemStockRepository storeRepository;
 
@@ -41,7 +41,6 @@ public class JobItemService {
 //
 //    @Autowired
 //    private PackageItemRepository packageItemRepository;
-
     public TJobItem saveJobItem(TJobItem jobItem) {
         return jobItemRepository.save(jobItem);
     }
@@ -71,7 +70,7 @@ public class JobItemService {
             stockLedger.setOutQty(jobItem.getStockRemoveQty());
             stockLedger.setItem(jobItem.getItem());
             stockLedger.setAvaragePriceIn(new BigDecimal(0));
-            
+
             //set main store for branch
             List<MStore> storeList = storeRepository.findByBranchAndType(branch, Constant.MAIN_STOCK);
             if (!storeList.isEmpty()) {
@@ -79,7 +78,14 @@ public class JobItemService {
             }
 
             //calculat avarage price
+            System.out.println("Branch");
+            System.out.println(branch);
+            System.out.println("jobItem.getItem()");
+            System.out.println(jobItem.getItem());
+
             BigDecimal itemAvaragePrice = jobItemRepository.getItemAvaragePrice(branch, jobItem.getItem());
+            System.out.println("itemAvaragePrice");
+            System.out.println(itemAvaragePrice);
             stockLedger.setAvaragePriceOut(itemAvaragePrice.multiply(jobItem.getStockRemoveQty()));
             stockLedgerRepository.save(stockLedger);
 
@@ -105,7 +111,7 @@ public class JobItemService {
         }
         return sendDataList;
     }
-    
+
     public List<Object[]> getNonStockItemQtyByStockLeger(Integer branch) {
         List<Object[]> getDataList = jobItemRepository.getNonStockItemQtyByStockLeger(branch);
         List<Object[]> sendDataList = new ArrayList<>();
