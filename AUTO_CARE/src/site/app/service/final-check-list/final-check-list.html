@@ -36,25 +36,29 @@
                 <div class="smart-scroll-y" style="height: calc(100vh - 204px);">
                     <div ng-repeat="detils in model.jobItemList">
                         <table class="square-table">
-                            <col style="width: 80%;"/>
+                            <col style="width: 75%;"/>
                             <col style="width: 20%;"/>
                             <tbody>
                                 <tr class="background-light">
                                     <td ng-click="ui.getCheckedItemDetailsPending($index, detils.indexNo);" class="text-bold">{{model.itemData(detils.item).name}}{{detils.item}}</td>
-                                    <td><a ng-show="detils.jobStatus === 'COMPLITED'" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a></td>
-                                    <td><a ng-show="detils.jobStatus === 'PENDING'" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    <td>
+                                        <a ng-show="detils.jobStatus === 'COMPLITED'" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a>
+                                        <a ng-show="detils.jobStatus === 'PENDING'" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="animation-v-grow background-dark" ng-show="selectItemCheckDetailsPending == $index">
                             <table class="square-table">
-                                <col style="width: 70%;"/>
+                                <col style="width: 75%;"/>
                                 <col style="width: 30%;"/>
                                 <tbody>
                                     <tr class="background-dark" ng-repeat="details in model.itemCheckDetailsList">
                                         <td><label>{{model.itemCheckDetail(details.itemCheckDetail).name}}</label></td>
-                                        <td><a ng-show="details.status === 'NOT_CHECK'" class="btn btn-danger" ng-click="ui.checkedItemPending(details.indexNo);"/><span class="glyphicon glyphicon-remove"></span></a></td>
-                                        <td><a ng-show="details.status === 'CHECK'" class="btn btn-success" ng-click="ui.checkedItemComplite(details.indexNo);"/><span class="glyphicon glyphicon-ok"></span></a></td>
+                                        <td>
+                                            <a ng-show="details.status === 'NOT_CHECK'" class="btn btn-danger" ng-click="ui.checkedItemCheck(details.indexNo);"/><span class="glyphicon glyphicon-remove"></span></a>
+                                            <a ng-show="details.status === 'CHECK'" class="btn btn-success" ng-click="ui.checkedItemNotCheck(details.indexNo);"/><span class="glyphicon glyphicon-ok"></span></a>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -65,7 +69,7 @@
         </div>
         <div class="col-xs-6 background-dark">
             <div class="row text-bold" style="display: flex; flex-flow: column;">
-                <div class="col-xs-6 background-dark">
+<!--                <div class="col-xs-6 background-dark">
                     <h4 class="text-primary">JOB CARD SUMMRY</h4>
                 </div>
                 <div>
@@ -83,7 +87,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>

@@ -51,11 +51,5 @@ public class PurchaseOrderApproveController {
          return purchaseOrderApproveService.deletePurchaseOrder(indexNo);
       
     }
-      // send appreciation mail and kaizen save
-    @RequestMapping(value = "/send-mail", method = RequestMethod.POST)
-    public int sendEmail() {
-        return purchaseOrderApproveService.sendMail();
-    }
     
-
 }

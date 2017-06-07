@@ -81,16 +81,6 @@
                         });
                         return data;
                     },
-                    duplicateItemUnitCheck: function (itemUnit) {
-                        var data;
-                        angular.forEach(this.bayIssueItemLeger, function (values) {
-                            if (values.itemUnits === parseInt(itemUnit)) {
-                                data = values;
-                                return;
-                            }
-                        });
-                        return data;
-                    },
                     addItemUnit: function (itemUnit, quantity, bay) {
                         var that = this;
                         var defer = $q;
@@ -136,7 +126,8 @@
                     getBayIssueHistory: function (bay) {
                         var defer = $q.defer();
                         var that = this;
-                        bayItemIssueService.getBayIssueHistory(bay)
+                        var status = "PENDING";
+                        bayItemIssueService.getBayIssueHistory(bay,status)
                                 .success(function (data) {
                                     that.bayIssueItemLeger = [];
                                     that.bayIssueItemLeger = data;

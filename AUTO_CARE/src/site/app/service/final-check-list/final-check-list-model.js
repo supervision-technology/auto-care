@@ -74,21 +74,33 @@
                                 });
                         return  defer.promise;
                     },
-                    checkedItem: function (indexNo,jobCard) {
+                    checkedItemCheck: function (indexNo, jobCard) {
                         var defer = $q.defer();
                         var that = this;
                         var status = "CHECK";
                         finalCheckListService.checkedItem(indexNo, status)
-                                .success(function (data) {
-                                    var id = -1;
-                                    for (var i = 0; i < that.itemCheckDetailsList.length; i++) {
-                                        if (that.itemCheckDetailsList[i].indexNo === indexNo) {
-                                            id = i;
+                                .success(function (getData) {
+                                    var data = "";
+                                    angular.forEach(that.itemCheckDetailsList, function (values) {
+                                        if (values.indexNo === getData.indexNo) {
+                                            data = values;
+                                            return;
                                         }
-                                    }
-                                    that.itemCheckDetailsList.splice(id, 1);
+                                    });
+                                    data.status = "CHECK";
                                     that.itemCheckDetailsList.push(data);
-                                    that.getJobItemHistory(jobCard);
+
+                                    var status = "CHECK";
+                                    angular.forEach(that.itemCheckDetailsList, function (values) {
+                                        if (values.status === "NOT_CHECK") {
+                                            status = "NOT_CHECK";
+                                        }
+                                    });
+
+                                    if (status === "CHECK") {
+                                        that.getJobItemHistory(jobCard);
+                                    }
+
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -96,7 +108,7 @@
                                 });
                         return  defer.promise;
                     },
-                    notCheckItem: function (indexNo,jobCard) {
+                    checkedItemNotCheck: function (indexNo, jobCard) {
                         var defer = $q.defer();
                         var that = this;
                         var status = "NOT_CHECK";

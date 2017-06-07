@@ -12,7 +12,6 @@
                     items: [],
                     vehicles: [],
                     itemUnits: [],
-                    packageItemList: [],
                     //select package items list
                     itemUnitList: [],
                     //pending job card list
@@ -20,6 +19,7 @@
                     //select job card items
                     jobItemList: [],
                     bayItemList: [],
+                    bayCompliteItemList: [],
                     //job card select filter items
                     filterItems: [],
                     //complited job items
@@ -73,7 +73,10 @@
                     getBayIssueHistory: function (bay) {
                         var defer = $q.defer();
                         var that = this;
-                        requestItemService.getBayIssueHistory(bay)
+                        var pendingSatatus = "PENDING";
+                        var complitedSatatus = "COMPLITED";
+
+                        requestItemService.getBayIssueHistory(bay, pendingSatatus)
                                 .success(function (data) {
                                     that.bayItemList = [];
                                     that.bayItemList = data;
@@ -81,6 +84,17 @@
                                 })
                                 .error(function () {
                                     that.bayItemList = [];
+                                    defer.reject();
+                                });
+
+                        requestItemService.getBayIssueHistory(bay, complitedSatatus)
+                                .success(function (data) {
+                                    that.bayCompliteItemList = [];
+                                    that.bayCompliteItemList = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.bayCompliteItemList = [];
                                     defer.reject();
                                 });
                         return defer.promise;
@@ -222,8 +236,9 @@
                                         }
                                     }
                                     that.bayItemList.splice(id, 1);
-                                    that.bayItemList.push(data);
-                                    that.findByNonStockFromItem()();
+                                    that.bayCompliteItemList.push(data);
+
+                                    that.findByItemNonStockItmQty()();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -238,14 +253,14 @@
                         requestItemService.checkItemBay(itemData.indexNo, status)
                                 .success(function (data) {
                                     var id = -1;
-                                    for (var i = 0; i < that.bayItemList.length; i++) {
-                                        if (that.bayItemList[i].indexNo === itemData.indexNo) {
+                                    for (var i = 0; i < that.bayCompliteItemList.length; i++) {
+                                        if (that.bayCompliteItemList[i].indexNo === itemData.indexNo) {
                                             id = i;
                                         }
                                     }
-                                    that.bayItemList.splice(id, 1);
+                                    that.bayCompliteItemList.splice(id, 1);
                                     that.bayItemList.push(data);
-                                    that.findByNonStockFromItem();
+                                    that.findByItemNonStockItmQty();
                                     defer.resolve();
                                 })
                                 .error(function () {

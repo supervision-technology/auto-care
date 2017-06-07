@@ -40,15 +40,15 @@ public class TBayIssueController {
         return bay;
     }
 
-    @RequestMapping(value = "/find-bay-item-issue/{bay}", method = RequestMethod.GET)
-    public List<TBayIssue> findBayItemIssueByBay(@PathVariable Integer bay) {
-        return tBayIssueService.findBayItemIssueByBay(bay);
+    @RequestMapping(value = "/find-bay-item-issue/{bay}/{status}", method = RequestMethod.GET)
+    public List<TBayIssue> findBayItemIssueByBay(@PathVariable Integer bay, @PathVariable String status) {
+        return tBayIssueService.findByBayAndOrderStatus(bay, status);
     }
 
     //for final check list(complited and pending)
     @RequestMapping(value = "/check-item/{bayIssueIndexNo}/{status}", method = RequestMethod.GET)
     public TBayIssue checkItem(@PathVariable Integer bayIssueIndexNo, @PathVariable String status) {
         //TODO:get login branch
-        return tBayIssueService.checkItem(bayIssueIndexNo, BRANCH,status);
+        return tBayIssueService.checkItem(bayIssueIndexNo, BRANCH, status);
     }
 }

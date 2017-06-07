@@ -20,7 +20,7 @@ import javax.validation.constraints.Size;
  *
  * @author kavish manjitha
  */
-@Entity
+@Entity(name = "com.mac.care_point.service.final_check_list.model.MItemCheckDetail")
 @Table(name = "m_item_check_detail")
 public class MItemCheckDetail implements Serializable {
 

@@ -135,7 +135,7 @@
                             </thead>
                         </table>
                         <div class="smart-scroll-y" style="height: calc(100vh - 131px);">
-                            <div ng-repeat="selections in model.bayItemList|filter:{orderStatus : 'PENDING'}">
+                            <div ng-repeat="selections in model.bayItemList">
                                 <table class="square-table">
                                     <col style="width: 20%;"/>
                                     <col style="width: 45%;"/>
@@ -172,7 +172,7 @@
                             </thead>
                         </table>
                         <div class="smart-scroll-y" style="height: calc(100vh - 131px);">
-                            <div ng-repeat="selections in model.bayItemList|filter:{orderStatus : 'COMPLITED'}">
+                            <div ng-repeat="selections in model.bayCompliteItemList">
                                 <table class="square-table">
                                     <col style="width: 75%;"/>
                                     <col style="width: 15%;"/>
