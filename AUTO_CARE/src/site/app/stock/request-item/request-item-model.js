@@ -74,8 +74,6 @@
                         var defer = $q.defer();
                         var that = this;
                         var pendingSatatus = "PENDING";
-                        var complitedSatatus = "COMPLITED";
-
                         requestItemService.getBayIssueHistory(bay, pendingSatatus)
                                 .success(function (data) {
                                     that.bayItemList = [];
@@ -86,8 +84,13 @@
                                     that.bayItemList = [];
                                     defer.reject();
                                 });
-
-                        requestItemService.getBayIssueHistory(bay, complitedSatatus)
+                        return defer.promise;
+                    },
+                    getBayIssueHistoryByDate: function (bay) {
+                        var defer = $q.defer();
+                        var that = this;
+                        var complitedSatatus = "COMPLITED";
+                        requestItemService.getBayIssueHistoryByDate(bay, complitedSatatus)
                                 .success(function (data) {
                                     that.bayCompliteItemList = [];
                                     that.bayCompliteItemList = data;
@@ -99,6 +102,7 @@
                                 });
                         return defer.promise;
                     },
+                    
                     findItemsForStockLeger: function () {
                         var that = this;
                         var defer = $q;

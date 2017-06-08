@@ -44,6 +44,10 @@ public class TBayIssueController {
     public List<TBayIssue> findBayItemIssueByBay(@PathVariable Integer bay, @PathVariable String status) {
         return tBayIssueService.findByBayAndOrderStatus(bay, status);
     }
+    @RequestMapping(value = "/find-bay-item-issue-by-date/{bay}/{status}", method = RequestMethod.GET)
+    public List<TBayIssue> getBayIssueHistoryByDate(@PathVariable Integer bay, @PathVariable String status) {
+        return tBayIssueService.findByBayAndOrderStatusAndDate(bay, status);
+    }
 
     //for final check list(complited and pending)
     @RequestMapping(value = "/check-item/{bayIssueIndexNo}/{status}", method = RequestMethod.GET)

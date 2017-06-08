@@ -133,34 +133,20 @@ public class JobItemService {
     }
 
     public List<Object[]> getItemQtyByStockLeger(Integer branch) {
-        List<Object[]> getDataList = jobItemRepository.getItemQtyByStockLeger(branch);
-        List<Object[]> sendDataList = new ArrayList<>();
-        for (Object[] objects : getDataList) {
-            BigDecimal qty = ((BigDecimal) objects[1]).subtract((BigDecimal) objects[2]);
-            if (qty.compareTo(BigDecimal.ZERO) > 0) {
-                Object[] dataList = new Object[]{objects[0], qty};
-                sendDataList.add(dataList);
-            }
-        }
-        return sendDataList;
+        return jobItemRepository.getItemQtyByStockLeger(branch);
     }
 
     public List<Object[]> getNonStockItemQtyByStockLeger(Integer branch) {
-        List<Object[]> getDataList = jobItemRepository.getNonStockItemQtyByStockLeger(branch);
-        List<Object[]> sendDataList = new ArrayList<>();
-        for (Object[] objects : getDataList) {
-            BigDecimal qty = ((BigDecimal) objects[1]).subtract((BigDecimal) objects[2]);
-            if (qty.compareTo(BigDecimal.ZERO) > 0) {
-                Object[] dataList = new Object[]{objects[0], qty};
-                sendDataList.add(dataList);
-            }
-        }
-        return sendDataList;
+        return jobItemRepository.getNonStockItemQtyByStockLeger(branch);
     }
 
     public BigDecimal findByItemStockItem(Integer branch, Integer item) {
         List<Object[]> getDataList = jobItemRepository.getItemQtyByStock(branch, item);
         return ((BigDecimal) getDataList.get(0)[1]).subtract((BigDecimal) getDataList.get(0)[2]);
+    }
+
+    public TJobItem findTJobItemByIndexNo(Integer indexNo) {
+        return jobItemRepository.findByIndexNo(indexNo);
     }
 
 }

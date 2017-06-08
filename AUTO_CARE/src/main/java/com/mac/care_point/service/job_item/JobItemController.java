@@ -83,4 +83,10 @@ public class JobItemController {
     public List<TJobItem> findByJobCard(@PathVariable Integer jobCard) {
         return jobItemService.findByJobCard(jobCard);
     }
+    
+    //service selections check item - final check status check and stock issue item
+    @RequestMapping(value = "/find-item-by-index-no/{indexNo}",method = RequestMethod.GET)
+    public TJobItem findTJobItemByIndexNo(@PathVariable Integer indexNo){
+        return jobItemService.findTJobItemByIndexNo(indexNo);
+    }
 }

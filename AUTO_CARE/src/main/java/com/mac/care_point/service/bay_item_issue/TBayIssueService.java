@@ -90,4 +90,8 @@ public class TBayIssueService {
         return tBayIssueRepository.save(bayIssue);
     }
 
+    public List<TBayIssue> findByBayAndOrderStatusAndDate(Integer bay, String status) {
+        return tBayIssueRepository.findByBayAndOrderStatusAndDate(bay, status, new Date());
+    }
+
 }

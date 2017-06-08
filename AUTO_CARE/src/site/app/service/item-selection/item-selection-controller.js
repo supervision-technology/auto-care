@@ -46,6 +46,7 @@
                             $scope.ui.model = "SERVICE";
                             $scope.model.filterItems = [];
                             $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
+
                         }
                     }
                 };
@@ -100,7 +101,11 @@
                                             $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
                                         });
                             } else {
-                                Notification.error("this item is allrday exsist");
+                                //Notification.error("this item is allrday exsist");
+                                ConfirmPane.successConfirm("This Ttem Is Allrday Exsist")
+                                        .confirm(function () {
+                                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
+                                        });
                             }
                         } else {
                             Notification.error("select item");

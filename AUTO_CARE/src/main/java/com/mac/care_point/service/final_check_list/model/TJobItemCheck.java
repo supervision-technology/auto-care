@@ -57,15 +57,6 @@ public class TJobItemCheck implements Serializable {
     public TJobItemCheck() {
     }
 
-    public TJobItemCheck(Integer indexNo, Date date, String status, Integer jobItem, Integer itemCheckDetail, Integer jobCard) {
-        this.indexNo = indexNo;
-        this.date = date;
-        this.status = status;
-        this.jobItem = jobItem;
-        this.itemCheckDetail = itemCheckDetail;
-        this.jobCard = jobCard;
-    }
-
     public Integer getIndexNo() {
         return indexNo;
     }
@@ -90,20 +81,20 @@ public class TJobItemCheck implements Serializable {
         this.status = status;
     }
 
-    public Integer getItemCheckDetail() {
-        return itemCheckDetail;
-    }
-
-    public void setItemCheckDetail(Integer itemCheckDetail) {
-        this.itemCheckDetail = itemCheckDetail;
-    }
-
     public Integer getJobItem() {
         return jobItem;
     }
 
     public void setJobItem(Integer jobItem) {
         this.jobItem = jobItem;
+    }
+
+    public Integer getItemCheckDetail() {
+        return itemCheckDetail;
+    }
+
+    public void setItemCheckDetail(Integer itemCheckDetail) {
+        this.itemCheckDetail = itemCheckDetail;
     }
 
     public Integer getJobCard() {

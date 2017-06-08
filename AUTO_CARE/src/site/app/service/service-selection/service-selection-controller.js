@@ -3,10 +3,10 @@
     angular.module("serviceSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("serviceSelectionController", function ($scope, $routeParams, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ItemSelectionModel();
-                $scope.ui = {};
 
+                $scope.ui = {};
                 $scope.ui.model = "CATEGORY";
                 $scope.selectVehicleType = null;
                 $scope.selectPackageItemPosition = null;
@@ -25,7 +25,7 @@
                     $scope.selectVehicleType = null;
                     $scope.model.findJobCardDetail(jobCardData.indexNo)
                             .then(function () {
-                                
+
                                 $scope.selectedJobCardIndexNo = jobCardData.indexNo;
                                 $scope.selectVehicleType = $scope.model.vehicleData(jobCardData.vehicle).type;
 
@@ -36,7 +36,7 @@
 
                     //job card select get customer reserved item list
                     $scope.model.findByJobCardCustomerReceiveItem(jobCardData.indexNo);
-                    
+
                     //get stock leger items
                     $scope.model.findItemsForStockLeger();
                     $scope.selectIemUnit = null;
@@ -44,7 +44,12 @@
                     $scope.ui.backToCategory();
                 };
 
-                //Category names = PACKAGE,SERVICE AND STOCK ITEMS
+                //back to category page
+                $scope.ui.backToCategory = function () {
+                    $scope.ui.model = "CATEGORY";
+                };
+
+                //Category Names = PACKAGE,SERVICE AND STOCK ITEMS
                 $scope.ui.categorySelections = function (data) {
                     //package or stock items
                     if (!$scope.selectedJobCardIndexNo) {
@@ -75,11 +80,6 @@
                             $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
                         }
                     }
-                };
-
-                //back to category page
-                $scope.ui.backToCategory = function () {
-                    $scope.ui.model = "CATEGORY";
                 };
 
                 $scope.ui.getPackageDetails = function ($index, package) {
@@ -127,7 +127,11 @@
                                             $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
                                         });
                             } else {
-                                Notification.error("this item is allrday exsist");
+                                // Notification.error("this item is allrday exsist");
+                                ConfirmPane.successConfirm("This Item Is Allrday Esxist")
+                                        .confirm(function () {
+                                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
+                                        });
                             }
                         } else {
                             Notification.error("select item");
@@ -138,12 +142,29 @@
                 };
 
                 //delete item
-                $scope.ui.deleteSelectDetails = function ($index) {
-                    ConfirmPane.dangerConfirm("Do you sure want to delete item")
-                            .confirm(function () {
-                                //delete job card details
-                                $scope.model.deleteSelectDetails($index);
-                            });
+                $scope.ui.deleteSelectDetails = function ($index, itemIndexNo) {
+//                    $scope.model.findJobItemByIndexNo(itemIndexNo)
+//                            .then(function (data) {
+//                                //TODO:complite delete functions for stock issue item,final check list
+//                                //check job status for final check list
+//                                if (data.jobStatus === 'PENDING') {
+//                                    if (data.itemType === 'STOCK_ITEM') {
+//                                        //check order status for item issue
+//                                        if (data.orderStatus === 'PENDING') {
+                                            ConfirmPane.dangerConfirm("Do you sure want to delete item")
+                                                    .confirm(function () {
+                                                        //delete job card details
+                                                        $scope.model.deleteSelectDetails($index);
+                                                    });
+//                                        } else {
+//                                        }
+//                                    } else {
+//
+//                                    }
+//                                } else {
+//
+//                                }
+//                            });
                 };
 
                 //add customer reserved items
@@ -166,6 +187,7 @@
                 };
 
 //------------------------------- vehicle attenctions -------------------------------  
+
                 $scope.ui.getVehicleAttenctionsData = function ($index, category) {
                     $scope.model.getSelectedVehicleAttenctionCategoryData(category, $scope.selectedJobCardIndexNo);
                     $scope.isVisible = $scope.isVisible === 0 ? true : false;
@@ -204,6 +226,20 @@
                         Notification.error("select vehicle");
                     }
                 };
-//------------------------------- /vehicle attenctions -------------------------------                 
+
+//------------------------------- /vehicle attenctions -------------------------------    
+
+                $scope.init = function () {
+                    //get routing paramiets job card index
+                    var jobCardIndexNo = parseInt($routeParams.jobCardIndexNo);
+                    if (jobCardIndexNo) {
+                        $scope.model.findJobCardDetail(jobCardIndexNo)
+                                .then(function (data) {
+                                    $scope.ui.selectedJobCardRow(data);
+                                });
+                    }
+                };
+
+                $scope.init();
             });
 }());

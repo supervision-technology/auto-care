@@ -181,7 +181,7 @@
                                     </tr>
                                     <tr class="background-dark animation-fade" ng-show="viewRemarkFeild === $index">
                                         <td colspan="4">
-                                           {{remark}}
+                                            {{remark}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -320,15 +320,19 @@
                                 <tbody>
                                     <tr ng-repeat="selections in model.jobItemList| filter:{itemType:'!SERVICE_CHARGERS'}" style="animation: 0.5s fadeIn">
                                         <td>
-                                            <label class="label label-danger"  style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
-                                            <label class="label label-primary" style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
-                                            <label class="label label-success" style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
+                                            <label class="label label-default"  style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
+                                            <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
+                                            <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
                                         </td>
                                         <td ng-show="selections.itemType != 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>
                                         <td ng-show="selections.itemType == 'STOCK_ITEM'"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>
                                         <td class="text-right"><small>{{selections.value|number:2}}</small></td>
-                                        <td><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index,selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
+                                                <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
+                                                <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -396,12 +400,16 @@
                                 <tbody ng-repeat="selections in model.jobItemList| filter:{itemType:'STOCK_ITEM'}">
                                     <tr>
                                         <td>
-                                            <label class="label label-success" style="display: inline-block; width: 20px;" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
+                                            <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
                                         </td>
                                         <td><small>{{model.itemUnitData(selections.itemUnit).name}}</small></td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>
                                         <td class="text-right"><small>{{selections.value|number:2}}</small></td>
-                                        <td><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index,selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
+                                                <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
+                                                <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -450,15 +458,20 @@
                                 <col style="width: 10%;"/>
                                 <col style="width: 35%;"/>
                                 <col style="width: 15%;"/>
-                                <tbody ng-repeat="selections in model.jobItemList| filter:{itemType:'SERVICE_ITEM'}">
+                                <tbody ng-repeat="selections in model.jobItemList| filter:{itemType: '!SERVICE_CHARGERS'}| filter:{itemType: '!STOCK_ITEM'}">
                                     <tr>
                                         <td>
-                                            <label class="label label-primary" style="display: inline-block; width: 20px;"  ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
+                                            <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}"  ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
+                                            <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}"  ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
                                         </td>
                                         <td>{{model.itemData(selections.item).name}}</td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>
                                         <td class="text-right"><small>{{selections.value|number:2}}</small></td>
-                                        <td><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index,selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
+                                                <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
+                                                <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -509,7 +522,7 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <a class="btn btn-success" ng-click="ui.addCustomerReservedItem();"><span class="glyphicon glyphicon-remove"></span></a>
+                                            <a class="btn btn-success" ng-click="ui.addCustomerReservedItem();"><span class="glyphicon glyphicon-plus"></span></a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -523,8 +536,8 @@
                                         <td></td>
                                         <td>
                                             <div class="btn-group">
-                                                <label class="btn btn-default" ng-model="model.jobCardData.serviceChagers" uib-btn-radio="false" ng-click="ui.setServiceChargers(model.jobCardData.serviceChagers)">SERVICE CHARGE NO</label>
-                                                <label class="btn btn-success" ng-model="model.jobCardData.serviceChagers" uib-btn-radio="true" ng-click="ui.setServiceChargers(model.jobCardData.serviceChagers)">SERVICE CHARGE YES</label>
+                                                <label class="btn" ng-class="model.jobCardData.serviceChagers === false ? 'btn-primary' : 'btn-default'" ng-model="model.jobCardData.serviceChagers" uib-btn-radio="false" ng-click="ui.setServiceChargers(model.jobCardData.serviceChagers)">SERVICE CHARGE NO</label>
+                                                <label class="btn" ng-class="model.jobCardData.serviceChagers !== true ? 'btn-default' : 'btn-primary'" ng-model="model.jobCardData.serviceChagers" uib-btn-radio="true" ng-click="ui.setServiceChargers(model.jobCardData.serviceChagers)">SERVICE CHARGE YES</label>
                                             </div>
                                         </td>
                                         <td></td>
