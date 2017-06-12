@@ -28,11 +28,7 @@
                     $scope.model.checkedList.push(subItem);
                     $scope.model.findItemList.splice(index, 1);
                 };
-
-//                $scope.ui.removeFromCheckList = function (){
-//                    $scope.model.checkedList.push
-//                };
-
+                
                 $scope.ui.findByItem = function (item) {
                     $scope.model.findByItem(item);
                 };

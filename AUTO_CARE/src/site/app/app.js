@@ -65,6 +65,11 @@
                             templateUrl: "app/system/login/login.html"
                         })
 
+                        .when("/reports/general/report-viewer", {
+                            templateUrl: "app/reports/report-viewer/report-viewer.html",
+                            controller: "ReportViewerController"
+                        })
+
                         //service
                         .when("/service/vehicle-entrance", {
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
