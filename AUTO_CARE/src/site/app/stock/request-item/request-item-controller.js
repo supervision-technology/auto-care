@@ -26,6 +26,7 @@
                     $scope.selectIemUnit = null;
                     $scope.selectBayIndexNo = data.indexNo;
                     $scope.model.getBayIssueHistory(data.indexNo);
+                    $scope.model.getBayIssueHistoryByDate(data.indexNo);
                 };
 
 

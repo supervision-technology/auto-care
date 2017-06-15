@@ -18,7 +18,7 @@ import javax.persistence.Table;
  *
  * @author L T430
  */
-@Entity
+@Entity(name = "com.mac.care_point.master.items.item_check_detail.model.MItemCheckDetail")
 @Table(name = "m_item_check_detail")
 public class MItemCheckDetail implements Serializable {
 

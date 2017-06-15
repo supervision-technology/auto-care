@@ -18,15 +18,10 @@
                 $scope.ui.addItemUnit = function (itemUnit, quantity) {
                     if ($scope.selectBayIndexNo) {
                         if (itemUnit) {
-                            var itemStatus = $scope.model.duplicateItemUnitCheck(itemUnit);
-                            if (angular.isUndefined(itemStatus)) {
-                                ConfirmPane.successConfirm("Do you sure want to add item")
-                                        .confirm(function () {
-                                            $scope.model.addItemUnit(itemUnit, quantity, $scope.selectBayIndexNo);
-                                        });
-                            } else {
-                                Notification.error("this item is allrday exsist");
-                            }
+                            ConfirmPane.successConfirm("Do you sure want to add item")
+                                    .confirm(function () {
+                                        $scope.model.addItemUnit(itemUnit, quantity, $scope.selectBayIndexNo);
+                                    });
                         } else {
                             Notification.error("select item");
                         }

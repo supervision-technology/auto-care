@@ -107,6 +107,17 @@
                                 });
                         return defer.promise;
                     },
+                    findJobItemByIndexNo: function (jobItem) {
+                        var defer = $q.defer();
+                        ItemSelectionService.findJobItemByIndexNo(jobItem)
+                                .success(function (data) {
+                                    defer.resolve(data);
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
                     findJobCardDetail: function (jobCard) {
                         var defer = $q.defer();
                         var that = this;
@@ -230,6 +241,16 @@
                         });
                         return data;
                     },
+                    categoryColours: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.category, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
 //------------------------------- add stock items,packages and servicee -------------------------------                     
                     addPackageAndServiceItem: function (item, type, jobCard, vehicleType) {
                         var defer = $q.defer();
@@ -305,11 +326,11 @@
                                 .success(function () {
                                     that.jobItemList.splice(index, 1);
                                     that.findItemsForStockLeger();
-                                    that.getSelectItemTotal();
+                                    that.getSelectItemAllItems();
                                     defer.resolve();
                                 })
                                 .error(function () {
-                                    that.getSelectItemTotal();
+                                    that.getSelectItemAllItems();
                                     defer.reject();
                                 });
                         return defer.promise;
@@ -320,7 +341,7 @@
                         var total = 0.0;
                         var that = this;
                         angular.forEach(this.jobItemList, function (values) {
-                            if (that.itemData(values.item).type === "SERVICE") {
+                            if (that.itemData(values.item).type === "SERVICE" || that.itemData(values.item).type === "PACKAGE") {
                                 total += values.value;
                                 return;
                             }

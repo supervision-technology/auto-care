@@ -6,9 +6,9 @@
 package com.mac.care_point.service.bay_item_issue;
 
 import com.mac.care_point.service.bay_item_issue.model.TBayIssue;
+import java.util.Date;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 /**
  *
@@ -16,6 +16,8 @@ import org.springframework.data.jpa.repository.Query;
  */
 public interface TBayIssueRepository extends JpaRepository<TBayIssue, Integer> {
 
-    public List<TBayIssue> findByBay(Integer bay);
+    public List<TBayIssue> findByBayAndOrderStatus(Integer bay, String status);
+
+    public List<TBayIssue> findByBayAndOrderStatusAndDate(Integer bay, String status, Date date);
 
 }

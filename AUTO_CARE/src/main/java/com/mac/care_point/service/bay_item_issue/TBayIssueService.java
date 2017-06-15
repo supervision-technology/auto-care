@@ -43,8 +43,8 @@ public class TBayIssueService {
         tBayIssueRepository.delete(indexNo);
     }
 
-    public List<TBayIssue> findBayItemIssueByBay(Integer bay) {
-        return tBayIssueRepository.findByBay(bay);
+    public List<TBayIssue> findByBayAndOrderStatus(Integer bay,String status) {
+        return tBayIssueRepository.findByBayAndOrderStatus(bay, status);
     }
 
     @Transactional
@@ -88,6 +88,10 @@ public class TBayIssueService {
         }
 
         return tBayIssueRepository.save(bayIssue);
+    }
+
+    public List<TBayIssue> findByBayAndOrderStatusAndDate(Integer bay, String status) {
+        return tBayIssueRepository.findByBayAndOrderStatusAndDate(bay, status, new Date());
     }
 
 }

@@ -40,8 +40,8 @@
         "purchaseOrderApproveModule",
         "stockTransferInternalOutModule",
         "stockTransferInternalInModule",
-        "bayItemIssueModule"
-
+        "bayItemIssueModule",
+        "finalCheckListModule"
     ]);
 
     //constants
@@ -65,7 +65,12 @@
                         .when("/login", {
                             templateUrl: "app/system/login/login.html"
                         })
-                        
+
+                        .when("/reports/general/report-viewer", {
+                            templateUrl: "app/reports/report-viewer/report-viewer.html",
+                            controller: "ReportViewerController"
+                        })
+
                         //service
                         .when("/service/vehicle-entrance", {
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
@@ -82,6 +87,10 @@
                         .when("/service/service-selection/:jobCardIndexNo", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
+                        })
+                        .when("/service/final-check-list", {
+                            templateUrl: "app/service/final-check-list/final-check-list.html",
+                            controller: "finalCheckListController"
                         })
 
                         //front-office
@@ -149,8 +158,8 @@
                             templateUrl: "app/front-office/purchase-order/approve/purchase-order-approve.html",
                             controller: "purchaseOrderApproveController"
                         })
-                        
-                        
+
+
                         //master
                         .when("/master/item", {
                             templateUrl: "app/master/item/item.html",

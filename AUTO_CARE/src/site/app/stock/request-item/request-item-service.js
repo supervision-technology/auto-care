@@ -33,8 +33,12 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-by-job-card-items/" + indexNo);
         };
 
-        this.getBayIssueHistory = function (indexNo) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/find-bay-item-issue/" + indexNo);
+        this.getBayIssueHistory = function (indexNo,status) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/find-bay-item-issue/" + indexNo + "/" + status);
+        };
+        
+        this.getBayIssueHistoryByDate = function (indexNo,status) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/find-bay-item-issue-by-date/" + indexNo + "/" + status);
         };
         
         this.checkItemJobCard = function (item, status, selectedJobCardIndexNo) {

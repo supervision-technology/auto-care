@@ -1,0 +1,133 @@
+<div class="index-content-body">
+    <div class="col-xs-4 background-dark border-dark-right">
+        <div class="row">
+
+            <uib-tabset active="activeTabIndex">
+                <uib-tab heading="ALL REPORTS" >
+                    <div class="col-xs-12 background-dark smart-scroll-y" style="padding-top: 5px; height: calc(100vh - 40px);">
+                        <div ng-repeat="reportGroup in model.reports">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="selected" ng-click="ui.selectReportGroup(reportGroup)">
+                                        <th>{{reportGroup.groupName.replace("_", " ")}}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                            <div class="animation-expand" ng-show="model.currentReportGroup === reportGroup">
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr class="select-default-row" ng-repeat="report in reportGroup.reports">
+                                            <td ng-click="ui.selectReport(report);" ng-class="report.fileName === model.currentReport.report.reportFile ? 'background-default' : ''">
+                                                {{report.reportName.replace("_", " ").replace(".jrxml", "") | uppercase}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+
+                <uib-tab heading="CURRENT REPORT">
+                    <div class="col-xs-12" >
+                        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+
+                            <table class="table table-success" style="margin-top: 10px;">
+                                <thead>
+                                    <tr class="select-default-row">
+                                        <th class="text-center">{{model.currentReport.report.reportName.replace("_", " ").replace(".jrxml", "") | uppercase}}</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                            <table class="control-table">
+                                <col style="width: 35%"/>
+                                <col style="width: 65%"/>
+
+                                <tbody>                   
+                                    <tr ng-show="ui.isParameterAvailable('FROM_DATE')">
+                                        <td><label class="control-label">FROM DATE</label></td>
+                                        <td><input smart-input="date" class="form-control" id="fromDate" ng-model="model.currentReport.parameterValues.FROM_DATE" ></td>
+                                    </tr>
+
+                                    <tr ng-show="ui.isParameterAvailable('TO_DATE')">
+                                        <td><label class="control-label">TO DATE</label></td>
+                                        <td><input smart-input="date" class="form-control" id="toDate" ng-model="model.currentReport.parameterValues.TO_DATE" ></td>
+                                    </tr>
+
+                                    <tr ng-show="ui.isParameterAvailable('CLIENT')">
+                                        <td><label class="control-label">CLIENT</label></td>
+                                        <td><input class="form-control" id="client" ng-model="model.currentReport.parameterValues.CLIENT" ></td>
+                                    </tr>
+
+                                    <tr ng-show="ui.isParameterAvailable('ROUTE')">
+                                        <td><label class="control-label">ROUTE</label></td>
+                                        <td><input class="form-control" id="route" ng-model="model.currentReport.parameterValues.ROUTE" ></td>
+                                    </tr>
+
+                                    <tr ng-show="ui.isParameterAvailable('ROUTE_OFFICER')">
+                                        <td><label class="control-label">ROUTE OFFICER</label></td>
+                                        <td><input class="form-control" id="routeOfficer" ng-model="model.currentReport.parameterValues.ROUTE_OFFICER" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('ROUTE_HELPER')">
+                                        <td><label class="control-label">ROUTE HELPER</label></td>
+                                        <td><input class="form-control" id="routeHelper" ng-model="model.currentReport.parameterValues.ROUTE_HELPER" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('DRIVER')">
+                                        <td><label class="control-label">DRIVER</label></td>
+                                        <td><input class="form-control" id="driver" ng-model="model.currentReport.parameterValues.DRIVER" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('VEHICLE')">
+                                        <td><label class="control-label">VEHICLE</label></td>
+                                        <td><input class="form-control" id="vehicle" ng-model="model.currentReport.parameterValues.VEHICLE" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('EMPLOYEE')">
+                                        <td><label class="control-label">EMPLOYEE</label></td>
+                                        <td><input class="form-control" id="employee" ng-model="model.currentReport.parameterValues.EMPLOYEE" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('STATUS')">
+                                        <td><label class="control-label">STATUS</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.STATUS" ></td>
+                                    </tr>
+                                </tbody>                 
+                            </table>
+
+                            <a class="btn btn-block btn-primary" ng-click="ui.viewCurrentReport();">VIEW</a>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+
+        </div>
+    </div>
+
+    <div class="col-xs-8 background-light">
+        <div class="row">
+
+            <div class="col-xs-12 background-ultra-dark" style="padding: 10px 0px 10px 0px; height: calc(100vh -10px);" ng-show="ui.status === 'LOADING'">
+                <div class="spinner">
+                    <div class="bounce1"></div>
+                    <div class="bounce2"></div>
+                    <div class="bounce3"></div>
+                </div>
+                <div class="text-center">
+                    <h2>LOADING REPORT...</h2>
+                </div>
+            </div>
+
+
+            <div class="col-xs-12 placeholder" style="padding: 10px 0px 10px 0px; height: calc(100vh - 17px);" ng-show="ui.status === 'PENDING'">
+                <h1>PREVIEW NOT AVAILABLE UNTIL VIEW THE REPORT :(</h1>
+            </div>
+
+            <div id="viewerContainer" class="col-xs-12" style="height: calc(100vh - 10px);"  ng-show="ui.status === 'LOADED'">
+                <div class="row" style="height: 100%;">
+                    <object data="{{content}}" class="smart-scroll-y smart-scroll-x"  type="application/pdf" style="width:100%;height:100%;">
+                    </object>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

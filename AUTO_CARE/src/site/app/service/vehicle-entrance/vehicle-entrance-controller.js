@@ -70,7 +70,7 @@
                                             $scope.imagemodelX = [];
                                         })
                                         .discard(function () {
-                                            $scope.ui.changeUi = 'ui4'
+                                            $scope.ui.changeUi = 'ui4';
                                         });
                             });
 
@@ -236,7 +236,7 @@
                 };
 
                 $scope.ui.goToItemSelection = function (data) {
-                    $window.location.href = systemConfig.apiUrl + "#/service/item-selection/" + data;
+                    $window.location.href = systemConfig.apiUrl + "#/service/service-selection/" + data;
                 };
 
                 $scope.ui.secondStep = function () {
@@ -251,7 +251,6 @@
                         $scope.ui.vehicleDisabled = false;
                     }
                 };
-
 
                 $scope.ui.init = function () {
                     $scope.ui.changeUi = 'ui1';

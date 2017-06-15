@@ -6,6 +6,10 @@
 package com.mac.care_point.service.job_item;
 
 import com.mac.care_point.service.common.Constant;
+import com.mac.care_point.service.final_check_list.MItemCheckDetailRepository;
+import com.mac.care_point.service.final_check_list.TJobItemCheckRepository;
+import com.mac.care_point.service.final_check_list.model.MItemCheckDetail;
+import com.mac.care_point.service.final_check_list.model.TJobItemCheck;
 import com.mac.care_point.service.grn.StockLedgerRepository;
 import com.mac.care_point.service.grn.model.TStockLedger;
 import com.mac.care_point.service.job_item.model.TJobItem;
@@ -36,16 +40,44 @@ public class JobItemService {
     @Autowired
     private JobItemStockRepository storeRepository;
 
-//    @Autowired
-//    private PackageItemRepostory packageItemRepostory;
-//
-//    @Autowired
-//    private PackageItemRepository packageItemRepository;
+    @Autowired
+    private TJobItemCheckRepository itemCheckRepository;
+
+    @Autowired
+    private MItemCheckDetailRepository itemCheckDetailRepository;
+
+    @Transactional
     public TJobItem saveJobItem(TJobItem jobItem) {
-        return jobItemRepository.save(jobItem);
+
+        TJobItem getSaveData = jobItemRepository.save(jobItem);
+        List<MItemCheckDetail> getFindJobItemList = itemCheckDetailRepository.findByItem(jobItem.getItem());
+
+        System.out.println();
+        if (!getFindJobItemList.isEmpty()) {
+            //save data from final check list
+            for (MItemCheckDetail mItemCheckDetail : getFindJobItemList) {
+                TJobItemCheck jobItemCheck = new TJobItemCheck();
+                jobItemCheck.setJobItem(getSaveData.getIndexNo());
+                jobItemCheck.setJobCard(getSaveData.getJobCard());
+                jobItemCheck.setDate(new Date());
+                jobItemCheck.setItemCheckDetail(mItemCheckDetail.getIndexNo());
+                jobItemCheck.setStatus(Constant.NOT_CHECK_STATUS);
+                itemCheckRepository.save(jobItemCheck);
+            }
+        }
+
+        return getSaveData;
+    }
+
+    public List<TJobItem> findByJobCard(Integer jobCard) {
+        return jobItemRepository.findByJobCardGetJobItemCheck(jobCard);
     }
 
     public void deleteJobItem(Integer indexNo) {
+        List<TJobItemCheck> getFindJobItemList = itemCheckRepository.findByJobItem(indexNo);
+        if (!getFindJobItemList.isEmpty()) {
+            itemCheckRepository.delete(getFindJobItemList);
+        }
         jobItemRepository.delete(indexNo);
     }
 
@@ -69,6 +101,7 @@ public class JobItemService {
             stockLedger.setItem(jobItem.getItem());
             stockLedger.setOutQty(jobItem.getStockRemoveQty());
             stockLedger.setItem(jobItem.getItem());
+            stockLedger.setStore(1);
             stockLedger.setAvaragePriceIn(new BigDecimal(0));
 
             //set main store for branch
@@ -100,34 +133,20 @@ public class JobItemService {
     }
 
     public List<Object[]> getItemQtyByStockLeger(Integer branch) {
-        List<Object[]> getDataList = jobItemRepository.getItemQtyByStockLeger(branch);
-        List<Object[]> sendDataList = new ArrayList<>();
-        for (Object[] objects : getDataList) {
-            BigDecimal qty = ((BigDecimal) objects[1]).subtract((BigDecimal) objects[2]);
-            if (qty.compareTo(BigDecimal.ZERO) != 0) {
-                Object[] dataList = new Object[]{objects[0], qty};
-                sendDataList.add(dataList);
-            }
-        }
-        return sendDataList;
+        return jobItemRepository.getItemQtyByStockLeger(branch);
     }
 
     public List<Object[]> getNonStockItemQtyByStockLeger(Integer branch) {
-        List<Object[]> getDataList = jobItemRepository.getNonStockItemQtyByStockLeger(branch);
-        List<Object[]> sendDataList = new ArrayList<>();
-        for (Object[] objects : getDataList) {
-            BigDecimal qty = ((BigDecimal) objects[1]).subtract((BigDecimal) objects[2]);
-            if (qty.compareTo(BigDecimal.ZERO) != 0) {
-                Object[] dataList = new Object[]{objects[0], qty};
-                sendDataList.add(dataList);
-            }
-        }
-        return sendDataList;
+        return jobItemRepository.getNonStockItemQtyByStockLeger(branch);
     }
 
     public BigDecimal findByItemStockItem(Integer branch, Integer item) {
         List<Object[]> getDataList = jobItemRepository.getItemQtyByStock(branch, item);
         return ((BigDecimal) getDataList.get(0)[1]).subtract((BigDecimal) getDataList.get(0)[2]);
+    }
+
+    public TJobItem findTJobItemByIndexNo(Integer indexNo) {
+        return jobItemRepository.findByIndexNo(indexNo);
     }
 
 }

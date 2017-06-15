@@ -24,8 +24,8 @@
             return $http.delete(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/delete-bay-item-issue/" + indexNo);
         };
 
-        this.getBayIssueHistory = function (indexNo) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/find-bay-item-issue/" + indexNo);
+        this.getBayIssueHistory = function (indexNo, status) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/find-bay-item-issue/" + indexNo + "/" + status);
         };
 
         this.findByItemStockItmQty = function () {
