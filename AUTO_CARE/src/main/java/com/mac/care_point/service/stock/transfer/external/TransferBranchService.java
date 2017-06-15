@@ -114,6 +114,9 @@ public class TransferBranchService {
     List<TStockTransfer> findPendingTransferOrders(Integer branch, Integer stock, String pending_status,String type) {
         return transferRepository.findByToBranchAndToStoreAndStatusAndType(branch, stock, pending_status,type);
     }
+    List<TStockTransfer> findPendingTransferOrders(Integer branch, String pending_status,String type) {
+        return transferRepository.findByFromBranchAndStatusAndType(branch, pending_status,type);
+    }
 
     Integer saveBranchTransferIn(TStockTransfer stockTransfer) {
         stockTransfer.setStatus(Constant.FINISHE_STATUS);
@@ -164,6 +167,14 @@ public class TransferBranchService {
 
     private Integer getNextInNumber(int fromBranch, String EXTERNAL_TRANSFER) {
         return transferRepository.getNextInNumber(fromBranch, EXTERNAL_TRANSFER);
+    }
+
+    Integer saveBranchTransferOutApprove(TStockTransfer stockTransfer) {
+        for (TStockTransferItem transferItem : stockTransfer.getTransferItemList()) {
+            transferItem.setStockTransfer(stockTransfer);
+        }
+        TStockTransfer saveObject = transferRepository.save(stockTransfer);
+        return saveObject.getIndexNo();
     }
 
 }

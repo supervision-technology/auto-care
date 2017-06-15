@@ -19,6 +19,8 @@ import org.springframework.data.repository.query.Param;
 public interface TransferRepository extends JpaRepository<TStockTransfer, Integer> {
 
     public List<TStockTransfer> findByToBranchAndToStoreAndStatusAndType(Integer branch, Integer stock, String pending_status,String type);
+    
+    public List<TStockTransfer> findByFromBranchAndStatusAndType(Integer branch, String pending_status,String type);
 
     @Query(value = "select\n"
             + "  m_item.index_no,\n"

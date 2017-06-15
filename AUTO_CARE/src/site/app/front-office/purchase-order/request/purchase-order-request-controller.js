@@ -186,7 +186,7 @@
                             });
                         }, 1000);
                     } else {
-                        Notification.error("Select a Item for Viwe Branches Stock Quantity");
+                        Notification.error("Select a Item for View Branches Stock Quantity");
                     }
                 };
 

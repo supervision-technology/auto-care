@@ -3,7 +3,7 @@
 <div class="index-content-body ">
 
     <uib-tabset>
-        <uib-tab index="0" heading="Purchase Order" select="ui.toggleType('CASH');">
+        <uib-tab index="0" heading="Purchase Order" >
             <div class="col-xs-12 background-light">
                 <div class="row col-xs-3 nopadding">
                     <table class="table-rounded control-table">
@@ -213,18 +213,28 @@
                 </table>
             </div>
         </uib-tab>
-        <uib-tab index="1" heading="Required Items" select="ui.toggleType('CASH');">
+        <uib-tab index="1" heading="Required Items" >
             <div class="modal-header">
-                <div class="col-xs-7">
+                <div class="col-xs-4">
                 </div>
-                <div class="col-xs-5">
+                <div class="col-xs-4">
                     <div class="input-group">
-                        <input type="text" class="form-control" placeholder="search" aria-describedby="basic-addon2"
+                        <input type="text" class="form-control" placeholder="search supplier" aria-describedby="basic-addon2"
                                uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
                                typeahead-input-formatter="model.supplierLable($model)" 
                                typeahead-editable="false"
                                ng-model="model.data.supplier">
-                        <span class="input-group-addon" id="basic-addon2">search</span>
+                        <span class="input-group-addon" id="basic-addon2">Search</span>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="search Item" aria-describedby="basic-addon2" ng-model="model.data.searchItem"
+                               uib-typeahead="item.indexNo as (item.barcode + ' - ' + item.name) for item in model.allItems |filter:$viewValue|limitTo:10" 
+                               typeahead-input-formatter="model.itemLableByAllItem($model)" 
+                               typeahead-editable="false"
+                               >
+                        <span class="input-group-addon" id="basic-addon2">Search</span>
                     </div>
                 </div>
             </div>
@@ -243,14 +253,22 @@
                             <tbody>
                                 <tr>
                                     <td><input class="form-control" placeholder="number" ng-model="model.reOrderTempData.reOrderIndexNo" ng-disabled="true" ></td>
-                                    <td><input class="form-control" placeholder="number" ng-model="model.reOrderTempData.item" ng-disabled="true" ></td>
-                                    <td><input class="form-control" placeholder="number" ng-model="model.reOrderTempData.supplierId" ng-disabled="true" ></td>
-                                    <td><input class="form-control" placeholder="number" ng-model="model.reOrderTempData.totalOrder" ng-disabled="true" ></td>
-                                    <td><input class="form-control" placeholder="number" ng-model="model.reOrderTempData.purchasingQty" ng-disabled="true" ></td>
-                                    <td><input class="form-control" placeholder="number" ng-model="model.reOrderTempData.availableQty" ng-disabled="true" ></td>
-                                    <td><input class="form-control" placeholder="number" ng-model="model.reOrderTempData.netRequiredQty" ng-disabled="ui.mode!=='NEW'" ></td>
+                                    <td><input class="form-control" placeholder="item" ng-model="model.reOrderTempData.item"
+                                               uib-typeahead="item.indexNo as (item.barcode + ' - ' + item.name) for item in model.allItems |filter:$viewValue|limitTo:10" 
+                                               typeahead-input-formatter="model.itemLableByAllItem($model)" 
+                                               typeahead-editable="false"
+                                               ng-disabled="true" ></td>
+                                    <td><input class="form-control" placeholder="supplier" ng-model="model.reOrderTempData.supplierId" 
+                                               uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
+                                               typeahead-input-formatter="model.supplierLable($model)" 
+                                               typeahead-editable="false"
+                                               ng-disabled="true" ></td>
+                                    <td><input class="form-control" placeholder="ordered" ng-model="model.reOrderTempData.totalOrder" ng-disabled="true" ></td>
+                                    <td><input class="form-control" placeholder="purchasing" ng-model="model.reOrderTempData.purchasingQty" ng-disabled="true" ></td>
+                                    <td><input class="form-control" placeholder="available" ng-model="model.reOrderTempData.availableQty" ng-disabled="true" ></td>
+                                    <td><input class="form-control" placeholder="netRequired" ng-model="model.reOrderTempData.netRequiredQty" ng-disabled="ui.mode!=='NEW'" ></td>
                                     <td class="text-center">
-                                         <button type="button" class="btn btn-primary" ng-click="ui.setEditableReOrderItem()" ng-disabled="ui.mode !== 'NEW'">
+                                        <button type="button" class="btn btn-primary" ng-click="ui.setEditableReOrderItem()" ng-disabled="ui.mode !== 'NEW'">
                                             <span class="glyphicon glyphicon-arrow-left"></span>
                                         </button>
                                     </td>
@@ -288,18 +306,18 @@
                     <div>
                         <table class="table-rounded">
                             <col style="width: 15%"/>
-                        <col style="width: 15%"/>
-                        <col style="width: 15%"/>
-                        <col style="width: 15%"/>
-                        <col style="width: 10%"/>
-                        <col style="width: 10%"/>
-                        <col style="width: 10%"/>
-                        <col style="width: 10%"/>
-                        <col style="width: 5%"/>
-                            <tbody class="background-dark"  ng-repeat="(key, unit) in model.reOrderItems | unique: 'item' | filter:{supplierId:model.data.supplier===null?'':model.data.supplier} ">
+                            <col style="width: 15%"/>
+                            <col style="width: 15%"/>
+                            <col style="width: 15%"/>
+                            <col style="width: 10%"/>
+                            <col style="width: 10%"/>
+                            <col style="width: 10%"/>
+                            <col style="width: 10%"/>
+                            <col style="width: 5%"/>
+                            <tbody class="background-dark"  ng-repeat="(key, unit) in model.reOrderItems | unique: 'item' | filter:{supplierId:model.data.supplier===null?'':model.data.supplier} | filter:{item:model.data.searchItem===null?'':model.data.searchItem}">
                                 <tr class="table-rounded table-primary table-hover" ng-class="key===selectedIndex?'selected':''" ng-click='ui.selectReOrderItemIndex(key)'>
                                     <td><label class="label label-primary" >{{key+1}}</label></td>
-                                    <td>{{unit.item+' - '+unit.itemName}}</td>
+                                    <td>{{model.itemLableByAllItem(unit.item)}}</td>
                                     <td>{{unit.supplierId===null?'Non Supplier':unit.supplierId+' - '+unit.supplierName}}</td>
                                     <td>{{unit.totalOrder|number:2}}</td>
                                     <td>{{unit.purchasingQty |number:2}}</td>

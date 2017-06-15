@@ -40,8 +40,6 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
             + "from\n"
             + "      m_item,m_branch\n"
             + "where\n"
-            + "      m_item.type = \"STOCK\"\n"
-            + "and \n"
             + "      m_item.index_no  =:item\n"
             + "group by\n"
             + "      m_branch.index_no", nativeQuery = true)

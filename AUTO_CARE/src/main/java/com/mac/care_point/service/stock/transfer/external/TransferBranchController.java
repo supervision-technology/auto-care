@@ -34,9 +34,14 @@ public class TransferBranchController {
         return transferBranchService.findAll();
     }
 
-    @RequestMapping(value = "/pending-transfer-order/{branch}/{stock}", method = RequestMethod.GET)
-    public List<TStockTransfer> findAllPendingTransfers(@PathVariable Integer branch, @PathVariable Integer stock) {
-        return transferBranchService.findPendingTransferOrders(branch, stock, Constant.PENDING_STATUS,Constant.EXTERNAL_TRANSFER);
+    @RequestMapping(value = "/approve-transfer-order/{branch}/{stock}", method = RequestMethod.GET)
+    public List<TStockTransfer> findAllPendingTransfersByBranchAndStock(@PathVariable Integer branch, @PathVariable Integer stock) {
+        return transferBranchService.findPendingTransferOrders(branch, stock, Constant.APPROVE_STATUS,Constant.EXTERNAL_TRANSFER);
+    }
+   
+    @RequestMapping(value = "/pending-transfer-order/{branch}", method = RequestMethod.GET)
+    public List<TStockTransfer> findAllPendingTransfers(@PathVariable Integer branch) {
+        return transferBranchService.findPendingTransferOrders(branch, Constant.PENDING_STATUS,Constant.EXTERNAL_TRANSFER);
     }
     
     @RequestMapping(value = "/get-item-qty/{branch}/{item}", method = RequestMethod.GET)
@@ -60,5 +65,11 @@ public class TransferBranchController {
     @RequestMapping(value = "/save-branch-transfer-in", method = RequestMethod.POST)
     public Integer saveBranchTransferIn(@RequestBody TStockTransfer stockTransfer) {
         return transferBranchService.saveBranchTransferIn(stockTransfer);
+    }
+    
+    @RequestMapping(value = "/save-branch-transfer-out-approve", method = RequestMethod.POST)
+    public Integer saveBranchTransferOutApprove(@RequestBody TStockTransfer stockTransfer) {
+        stockTransfer.setStatus(Constant.APPROVE_STATUS);
+        return transferBranchService.saveBranchTransferOutApprove(stockTransfer);
     }
 }

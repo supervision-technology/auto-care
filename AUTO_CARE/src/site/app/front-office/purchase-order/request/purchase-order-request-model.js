@@ -85,6 +85,16 @@
                         });
                         return label;
                     },
+                    itemLableByAllItem: function (index) {
+                        var label;
+                        angular.forEach(this.allItems, function (value) {
+                            if (value.indexNo === index) {
+                                label = value.barcode + ' - ' + value.name;
+                                return;
+                            }
+                        });
+                        return label;
+                    },
                     setItemDetail: function (indexNo) {
                         var selectItem = null;
                         angular.forEach(this.supplierItems, function (value) {

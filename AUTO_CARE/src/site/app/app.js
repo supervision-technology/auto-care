@@ -32,6 +32,7 @@
         "grnModule",
         "app",
         "stockTransferBranchInModule",
+        "stockTransferBranchOutApproveModule",
         "stockTransferBranchOutModule",
         "directGrnModule",
         "grnApproveModule",
@@ -209,6 +210,11 @@
                         .when("/stock/transfer/branch-transfer-out", {
                             templateUrl: "app/front-office/stock/branch-transfer/branch-transfer-out/branch-transfer-out.html",
                             controller: "stockTransferBranchOutController"
+                        })
+                        //branch-transfer-out-approve
+                        .when("/stock/transfer/branch-transfer-out-approve", {
+                            templateUrl: "app/front-office/stock/branch-transfer/branch-transfer-out-approve/branch-transfer-out-approve.html",
+                            controller: "stockTransferBranchOutApproveController"
                         })
                         //branch-transfer-in
                         .when("/stock/transfer/branch-transfer-in", {
