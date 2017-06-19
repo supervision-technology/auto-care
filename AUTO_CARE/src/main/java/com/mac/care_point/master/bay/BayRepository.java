@@ -16,6 +16,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface BayRepository extends JpaRepository<Bay, Integer>{
 
     public List<Bay> findByName(String name);
-    
-    
+
+    public List<Bay> findByBranchAndBayIsView(Integer branch, Integer view);
+       
 }

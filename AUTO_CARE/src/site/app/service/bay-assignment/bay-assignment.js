@@ -7,7 +7,7 @@
                 var factory = {};
                 //load Jobs
                 factory.loadJobs = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card";
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-not-finished-job-cards";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -18,7 +18,18 @@
                 };
                 //load Bays
                 factory.loadBays = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/bay";
+                    var url = systemConfig.apiUrl + "/api/care-point/master/bay/get-bays-by-branch-is-view";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+                //load Vehicles
+                factory.loadVehicles = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/vehicle";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -31,6 +42,19 @@
                 factory.insertDetail = function (detail, callback, errorcallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/transaction/vehicle-assignment/insert-detail";
                     $http.post(url, detail)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
+                            });
+                };
+                //get Bay Assign Vehicle Count
+                factory.getBayAssignVehicleCount = function (detail, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/vehicle-assignment/load_not_finished_vehicle_assignment/" + detail;
+                    $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
                             })
@@ -57,6 +81,8 @@
 
                 $scope.model.jobAssignmentList = [];
                 $scope.model.jobList = [];
+                $scope.model.vehicles = [];
+                $scope.dragableMode = true;
                 $scope.model.bayList = [
                     {
                         timeout: null
@@ -80,50 +106,73 @@
 //                };
 //
                 $scope.stop = function (bay) {
-                    console.log('stop');
-                    bay.timeout = 'canceled';
-                    $timeout.cancel(mytimeout);
+                    bay.timeout = '';
+//                    $timeout.cancel(mytimeout);
 
                 };
                 $scope.dragStart = function (element, model) {
-//                    console.log("AA");
-//                    console.log(model);
                 };
+
                 $scope.dragLeave = function (bay, job) {
-                    $scope.check = false;
-                    console.log(bay);
-                    console.log("bay");
-                    console.log(job);
-                    console.log("job");
-                    
-                    for (var i = 0; i < $scope.model.jobList.length; i++) {
-                        if ($scope.model.jobList[i].bay === bay.indexNo) {
-                            $scope.check = true;
+                    if ($scope.dragableMode) {
+
+                        $scope.dragableMode = false;
+                        var vehicleCount = 0;
+                        bayAssignmentFactory.getBayAssignVehicleCount(bay.indexNo,
+                                function (data) {
+                                    vehicleCount = data;
+
+                                    $scope.isSameBay = false;
+                                    for (var i = 0; i < $scope.model.jobList.length; i++) {
+                                        if ($scope.model.jobList[i].bay === bay.indexNo) {
+                                            if ($scope.model.jobList[i].vehicle === job.vehicle) {
+                                                $scope.isSameBay = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    if ($scope.isSameBay) {
+                                        $scope.model.jobAssignment.bay.timeout = '';
+                                        Notification.error('Same Bay Assignment fail !');
+                                    } else {
+
+                                        if (vehicleCount < bay.maxVehicle) {
+                                            $scope.model.jobAssignment.jobCard = job;
+                                            $scope.model.jobAssignment.bay = bay;
+                                            $scope.model.jobAssignment.bay.timeout = 5;
+                                            $scope.onTimeout($scope.model.jobAssignment.bay);
+
+                                        } else {
+                                            Notification.error('Max vehicle Assign for this bay !');
+                                        }
+                                    }
+                                });
+                    }
+                    $scope.dragableMode = true;
+//                    
+                };
+                $scope.getVehicle = function (vehicle) {
+                    for (var i = 0; i < $scope.model.vehicles.length; i++) {
+                        if ($scope.model.vehicles[i].indexNo === vehicle) {
+                            return $scope.model.vehicles[i];
                             break;
                         }
                     }
-                    if (!$scope.check) {
-                        $scope.model.jobAssignment.jobCard = job;
-                        $scope.model.jobAssignment.bay = bay;
-                        $scope.model.jobAssignment.bay.timeout = 5;
-                        $scope.onTimeout($scope.model.jobAssignment.bay);
-    
-                    }else{
-                        Notification.error('Already exsist !');
-                    }
-//                    
                 };
                 $scope.onTimeout = function (bay) {
-                    if ($scope.model.jobAssignment.bay.timeout !== 'canceled') {
+
+                    if ($scope.model.jobAssignment.bay.timeout !== '') {
                         var mytimeout = $timeout($scope.onTimeout, 1000);
                         $scope.model.jobAssignment.bay.timeout--;
+
                         if ($scope.model.jobAssignment.bay.timeout === 0) {
                             $timeout.cancel(mytimeout);
                             $scope.http.insertDetail();
                         }
                     } else {
-                        $scope.model.jobAssignment.bay.timeout = 'canceled';
+                        $scope.model.jobAssignment.bay.timeout = '';
                     }
+
                 };
 
                 $scope.http.insertDetail = function () {
@@ -139,7 +188,9 @@
                             bayAssignmentFactory.insertDetail(
                                     detailJSON,
                                     function (data) {
-                                        Notification.success(data.jobCard.vehicle.vehicleNo + ' Vehicle Assigned to ' + data.bay.name + ' successfully');
+                                        var vehicle = $scope.getVehicle(data.jobCard.vehicle);
+
+                                        Notification.success(vehicle.vehicleNo + ' Vehicle Assigned to ' + data.bay.name + ' successfully');
                                         $scope.model.jobAssignment = data;
                                         $scope.model.jobList = [];
                                         $scope.model.bayList = [];
@@ -149,8 +200,7 @@
                             , function (data) {
                                 Notification.error(data);
 
-                            }
-                            );
+                            });
                         } else {
                             Notification.error('Select a Bay to Transfer');
                         }
@@ -163,17 +213,18 @@
                 $scope.ui.init = function () {
 
                     bayAssignmentFactory.loadJobs(function (data) {
-                        if (data) {
-                            for (var i = 0; i < data.length; i++) {
-                                if (data[i].status !== "Complete") {
-                                    $scope.model.jobList.push(data[i]);
-                                }
-                            }
-                        }
+                        $scope.model.jobList = data;
                     });
+
                     bayAssignmentFactory.loadBays(function (data) {
                         $scope.model.bayList = data;
                     });
+
+                    bayAssignmentFactory.loadVehicles(function (data) {
+                        $scope.model.vehicles = data;
+                    });
+
+
                 };
                 $scope.ui.init();
             });

@@ -26,57 +26,73 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Bay implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "name")
     private String name;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "max_vehicle")
     private int maxVehicle;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "max_employee")
     private int maxEmployee;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "x")
     private int x;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "y")
     private int y;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "w")
     private int w;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "h")
     private int h;
+    
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "assign_employee")
     private boolean assignEmployee;
+    
     @Basic(optional = false)
     @NotNull
     @Column(name = "assign_vehicle")
     private boolean assignVehicle;
+    
     @Size(max = 25)
     @Column(name = "color")
     private String color;
+    
+    @Column(name = "branch")
+    private Integer branch;
+
+    @Column(name = "bay_is_view")
+    private Integer bayIsView;
 
     public Bay() {
     }
@@ -85,7 +101,7 @@ public class Bay implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle) {
+    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle, String color, Integer branch, Integer bayIsView) {
         this.indexNo = indexNo;
         this.name = name;
         this.maxVehicle = maxVehicle;
@@ -97,6 +113,9 @@ public class Bay implements Serializable {
         this.type = type;
         this.assignEmployee = assignEmployee;
         this.assignVehicle = assignVehicle;
+        this.color = color;
+        this.branch = branch;
+        this.bayIsView = bayIsView;
     }
 
     public Integer getIndexNo() {
@@ -171,7 +190,7 @@ public class Bay implements Serializable {
         this.type = type;
     }
 
-    public boolean getAssignEmployee() {
+    public boolean isAssignEmployee() {
         return assignEmployee;
     }
 
@@ -179,7 +198,7 @@ public class Bay implements Serializable {
         this.assignEmployee = assignEmployee;
     }
 
-    public boolean getAssignVehicle() {
+    public boolean isAssignVehicle() {
         return assignVehicle;
     }
 
@@ -195,29 +214,20 @@ public class Bay implements Serializable {
         this.color = color;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (indexNo != null ? indexNo.hashCode() : 0);
-        return hash;
+    public Integer getBranch() {
+        return branch;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Bay)) {
-            return false;
-        }
-        Bay other = (Bay) object;
-        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
-            return false;
-        }
-        return true;
+    public void setBranch(Integer branch) {
+        this.branch = branch;
     }
 
-    @Override
-    public String toString() {
-        return "com.mac.gl.master.model.bay.Bay[ indexNo=" + indexNo + " ]";
+    public Integer getBayIsView() {
+        return bayIsView;
     }
-    
+
+    public void setBayIsView(Integer bayIsView) {
+        this.bayIsView = bayIsView;
+    }
+
 }
