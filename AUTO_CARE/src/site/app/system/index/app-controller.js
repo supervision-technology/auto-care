@@ -22,7 +22,6 @@
                     }
                 });
 
-
                 $scope.toggleHamburger = function () {
                     $scope.hamburgerOpen = !$scope.hamburgerOpen;
 

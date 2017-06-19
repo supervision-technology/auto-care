@@ -52,7 +52,6 @@ public class JobItemService {
         TJobItem getSaveData = jobItemRepository.save(jobItem);
         List<MItemCheckDetail> getFindJobItemList = itemCheckDetailRepository.findByItem(jobItem.getItem());
 
-        System.out.println();
         if (!getFindJobItemList.isEmpty()) {
             //save data from final check list
             for (MItemCheckDetail mItemCheckDetail : getFindJobItemList) {

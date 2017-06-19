@@ -8,7 +8,6 @@ package com.mac.care_point.service.daily_check_list;
 import com.mac.care_point.service.daily_check_list.model.TDailyCheckList;
 import com.mac.care_point.service.daily_check_list.model.TSubItemCheckResult;
 import com.mac.care_point.system.exception.EntityNotFoundException;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,9 +61,5 @@ public class DailyCheckListService {
     List<TSubItemCheckResult> findAllCheckResults() {
         return subItemCheckResultRepository.findAll();
     }
-
-//    List<TSubItemCheckResult> findAllCheckResultsByDate(Date date) {
-//        return subItemCheckResultRepository.findAllCheckResultsByDate(date);
-//    }
 
 }

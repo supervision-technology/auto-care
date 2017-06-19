@@ -6,16 +6,11 @@
 package com.mac.care_point.service.daily_check_list;
 
 import com.mac.care_point.service.daily_check_list.model.TSubItemCheckResult;
-import java.util.Date;
-import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Kalum
  */
-public interface SubItemCheckResultRepository extends JpaRepository<TSubItemCheckResult, Integer>{
-
-//    public List<TSubItemCheckResult> findAllCheckResultsByDate(Date date);
-    
+public interface SubItemCheckResultRepository extends JpaRepository<TSubItemCheckResult, Integer>{    
 }

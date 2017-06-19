@@ -9,6 +9,7 @@ import com.mac.care_point.service.job_item.model.TJobItem;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -82,6 +83,10 @@ public interface JobItemRepository extends JpaRepository<TJobItem, Integer> {
             + "t_job_item_check.job_card = :jobCard\n"
             + "group by job_item", nativeQuery = true)
     public List<TJobItem> findByJobCardGetJobItemCheck(@Param("jobCard") Integer jobCard);
-    
+
     public TJobItem findByIndexNo(Integer indexNo);
+
+    @Modifying(clearAutomatically = true)
+    @Query(value = "delete from t_job_item where index_no = :indexNo", nativeQuery = true)
+    public void deleteFromIndex(@Param("indexNo") Integer indexNo);
 }

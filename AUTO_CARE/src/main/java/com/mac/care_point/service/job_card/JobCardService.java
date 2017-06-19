@@ -25,9 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class JobCardService {
 
-    final String PENDING_STATUS = "PENDING";
-    final String FINISHED_STATUS = "FINISHED";
-
     @Autowired
     private JobCardRepository jobCardRepository;
 
@@ -35,7 +32,7 @@ public class JobCardService {
     private JobItemRepository jobItemRepository;
 
     public List<JobCard> getPendingJobCard() {
-        return jobCardRepository.findByStatusOrderByIndexNoDesc(PENDING_STATUS);
+        return jobCardRepository.findByStatusOrderByIndexNoDesc(Constant.PENDING_STATUS);
     }
 
     public List<JobCard> getClientHistory(Integer indexNo) {
@@ -74,19 +71,20 @@ public class JobCardService {
             jobItem.setPrice(new BigDecimal("500.00"));
             jobItem.setQuantity(BigDecimal.ONE);
             jobItem.setValue(new BigDecimal("500.00"));
-            jobItem.setJobStatus(PENDING_STATUS);
-            jobItem.setOrderStatus(PENDING_STATUS);
+            jobItem.setJobStatus(Constant.PENDING_STATUS);
+            jobItem.setOrderStatus(Constant.PENDING_STATUS);
             jobItemRepository.save(jobItem);
+            jobCardRepository.save(getJobCardData);
+            
         } else {
+            
             //service chargers remove
             List<TJobItem> getItemDataList = jobItemRepository.findByJobCardAndItemType(getJobCardData.getIndexNo(), Constant.SERVICE_CHARGERS);
             for (TJobItem tJobItem : getItemDataList) {
-                //jobItemRepository.delete(tJobItem.getIndexNo());
-                System.out.println(tJobItem.getIndexNo() + "++++++++++++++++++++++++++++++++++++++ item delete");
+                jobItemRepository.deleteFromIndex(tJobItem.getIndexNo());
             }
         }
 
-        jobCardRepository.save(getJobCardData);
         return getJobCardData;
     }
 }

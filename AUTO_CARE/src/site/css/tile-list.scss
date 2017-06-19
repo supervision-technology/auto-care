@@ -1,6 +1,7 @@
 @import "mixins/variables.scss";
 
 .tile-list{
+    width: 128px;
     float: left;
     color: $default-color;
 
@@ -22,7 +23,6 @@
     .tile{
         border-bottom: $bg-dark-color-border solid 1px;
         border-right: $bg-dark-color-border solid 1px;
-
         cursor: pointer;
         align-items: center;
 

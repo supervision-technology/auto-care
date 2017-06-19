@@ -37,10 +37,6 @@ public class DailyCheckListController {
     public List<TSubItemCheckResult> findAllCheckResults() {
         return checkListService.findAllCheckResults();
     }
-//    @RequestMapping(value = "/loadByDate/{date}", method = RequestMethod.GET)
-//    public List<TSubItemCheckResult> findAllCheckResultsByDate(@PathVariable Date date) {
-//        return checkListService.findAllCheckResultsByDate(date);
-//    }
 
     @RequestMapping(value = "/save-check-list", method = RequestMethod.POST)
     public Integer saveCheckList(@RequestBody TDailyCheckList dailyCheckList) {

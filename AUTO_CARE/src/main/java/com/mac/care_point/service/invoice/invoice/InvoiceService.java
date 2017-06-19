@@ -76,6 +76,7 @@ public class InvoiceService {
         //client cledger save  - create invoice
         TCustomerLedger customerLedger = new TCustomerLedger();
         customerLedger.setCreditAmount(invoice.getNetAmount());
+        customerLedger.setDebitAmount(BigDecimal.ZERO);
         customerLedger.setDate(new Date());
         customerLedger.setInvoice(tInvoice.getIndexNo());
         customerLedger.setType(Constant.INVOICE_CREATE);
@@ -95,6 +96,7 @@ public class InvoiceService {
             if (!"OVER_PAYMENT_SETTLMENT".equals(tPaymentInformation.getType())) {
                 TCustomerLedger customerLedgerPaymnetSave = new TCustomerLedger();
                 customerLedgerPaymnetSave.setDebitAmount(tPaymentInformation.getAmount());
+                customerLedgerPaymnetSave.setCreditAmount(BigDecimal.ZERO);
                 customerLedgerPaymnetSave.setDate(new Date());
                 customerLedgerPaymnetSave.setInvoice(tInvoice.getIndexNo());
                 customerLedgerPaymnetSave.setType(Constant.INVOICE_PAYMENT);
