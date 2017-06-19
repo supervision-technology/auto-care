@@ -7,6 +7,8 @@ package com.mac.care_point.service.final_check_list;
 
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.final_check_list.model.TJobItemCheck;
+import com.mac.care_point.service.job_card.JobCardRepository;
+import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.service.job_item.JobItemRepository;
 import com.mac.care_point.service.job_item.model.TJobItem;
 import java.util.List;
@@ -28,6 +30,9 @@ public class TJobItemCheckService {
 
     @Autowired
     private JobItemRepository jobItemRepository;
+
+    @Autowired
+    private JobCardRepository jobCardRepository;
 
     public TJobItemCheck saveTJobItemCheck(TJobItemCheck itemCheck) {
         return itemCheckRepository.save(itemCheck);
@@ -53,8 +58,20 @@ public class TJobItemCheckService {
 
         TJobItem getTJobItem = jobItemRepository.getOne(getSaveItem.getJobItem());
         getTJobItem.setJobStatus(mainItemStatus);
-        jobItemRepository.save(getTJobItem);
 
+        //get job card final check list status update
+        JobCard getJobCardData = jobCardRepository.findOne(getTJobItem.getJobCard());
+
+        List<TJobItemCheck> compliteCheckList = itemCheckRepository.findByJobCardAndStatus(getTJobItem.getJobCard(), Constant.NOT_CHECK_STATUS);
+        if (compliteCheckList.isEmpty()) {
+            getJobCardData.setFinalCheck(Boolean.TRUE);
+        } else {
+            getJobCardData.setFinalCheck(Boolean.FALSE);
+        }
+        
+        jobCardRepository.save(getJobCardData);
+
+        jobItemRepository.save(getTJobItem);
         return itemCheckRepository.save(getSaveItem);
     }
 

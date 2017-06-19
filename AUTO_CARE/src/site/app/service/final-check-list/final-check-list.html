@@ -68,26 +68,90 @@
             </div>
         </div>
         <div class="col-xs-6 background-dark">
-            <div class="row text-bold" style="display: flex; flex-flow: column;">
-<!--                <div class="col-xs-6 background-dark">
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
+                <div class="col-xs-6 background-dark">
                     <h4 class="text-primary">JOB CARD SUMMRY</h4>
                 </div>
-                <div>
-                    <table class="square-table  background-dark">
-                        <col style="width: 60%;"/>
+                <div style="margin: 10px;">
+                    <table class="square-table  background-dark text-bold">
                         <col style="width: 40%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 20%;"/>
                         <tbody>
                             <tr>
                                 <td>JOB CARD STATUS</td>
-                                <td>PENDING</td>
+                                <td>
+                                    <span ng-show="model.jobCardData.status === 'FINISHED'" class="label label-success">FINISHED</span>
+                                    <span ng-show="model.jobCardData.status === 'PENDING'" class="label label-danger">PENDING</span>
+                                </td>
+                                <td>
+                                    <a ng-show="model.jobCardData.status === 'FINISHED'" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a>
+                                    <a ng-show="model.jobCardData.status === 'PENDING'" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
                             </tr>
                             <tr>
                                 <td>VEHICLE IN TIME</td>
-                                <td>PENDING</td>
+                                <td>{{model.jobCardData.inTime| date:'h:mma'}}</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>VEHICLE ATTENCTIONS</td>
+                                <td>
+                                    <span ng-show="model.jobCardData.attenctions === true" class="label label-success">COMPLITED</span>
+                                    <span ng-show="model.jobCardData.attenctions === false" class="label label-danger">PENDING</span>
+                                </td>
+                                <td>
+                                    <a ng-show="model.jobCardData.attenctions === true" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a>
+                                    <a ng-show="model.jobCardData.attenctions === false" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>VEHICLE SERVICE CHAGERS</td>
+                                <td>
+                                    <span ng-show="model.jobCardData.serviceChagers === true" class="label label-success">COMPLITED</span>
+                                    <span ng-show="model.jobCardData.serviceChagers === false" class="label label-danger">PENDING</span>
+                                </td>
+                                <td>
+                                    <a ng-show="model.jobCardData.serviceChagers === true" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a>
+                                    <a ng-show="model.jobCardData.serviceChagers === false" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>VEHICLE FINAL CHECK</td>
+                                <td>
+                                    <span ng-show="model.jobCardData.finalCheck === true" class="label label-success">COMPLITED</span>
+                                    <span ng-show="model.jobCardData.finalCheck === false" class="label label-danger">PENDING</span>
+                                </td>
+                                <td>
+                                    <a ng-show="model.jobCardData.finalCheck === true" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a>
+                                    <a ng-show="model.jobCardData.finalCheck === false" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>VEHICLE INVOICE</td>
+                                <td>
+                                    <span ng-show="model.jobCardData.invoice === true" class="label label-success">COMPLITED</span>
+                                    <span ng-show="model.jobCardData.invoice === false" class="label label-danger">PENDING</span>
+                                </td>
+                                <td>
+                                    <a ng-show="model.jobCardData.invoice === true" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a>
+                                    <a ng-show="model.jobCardData.invoice === false" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>VEHICLE IMAGES</td>
+                                <td>
+                                    <span ng-show="model.jobCardData.vehicleImages === true" class="label label-success">COMPLITED</span>
+                                    <span ng-show="model.jobCardData.vehicleImages === false" class="label label-danger">PENDING</span>
+                                </td>
+                                <td>
+                                    <a ng-show="model.jobCardData.vehicleImages === true" class="btn btn-success"/><span class="glyphicon glyphicon-ok"></span></a>
+                                    <a ng-show="model.jobCardData.vehicleImages === false" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>-->
+                </div>
             </div>
         </div>
     </div>

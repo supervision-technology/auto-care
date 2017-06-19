@@ -51,6 +51,11 @@ public class MVehicleAttenctionService {
 
     @Transactional
     public TJobVehicleAttenctions saveTJobVehicleAttenctions(TJobVehicleAttenctions jobVehicleAttenctions) {
+        
+        //update attenctions status true
+        JobCard getJobCard = jobCardRepository.getOne(jobVehicleAttenctions.getJobCard());
+        getJobCard.setAttenctions(Boolean.TRUE);
+        
         return jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
     }
 

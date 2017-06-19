@@ -143,28 +143,30 @@
 
                 //delete item
                 $scope.ui.deleteSelectDetails = function ($index, itemIndexNo) {
-//                    $scope.model.findJobItemByIndexNo(itemIndexNo)
-//                            .then(function (data) {
-//                                //TODO:complite delete functions for stock issue item,final check list
-//                                //check job status for final check list
-//                                if (data.jobStatus === 'PENDING') {
-//                                    if (data.itemType === 'STOCK_ITEM') {
-//                                        //check order status for item issue
-//                                        if (data.orderStatus === 'PENDING') {
-                                            ConfirmPane.dangerConfirm("Do you sure want to delete item")
-                                                    .confirm(function () {
-                                                        //delete job card details
-                                                        $scope.model.deleteSelectDetails($index);
-                                                    });
-//                                        } else {
-//                                        }
-//                                    } else {
-//
-//                                    }
-//                                } else {
-//
-//                                }
-//                            });
+                    $scope.model.findJobItemByIndexNo(itemIndexNo)
+                            .then(function (data) {
+                                if (data.itemType === 'STOCK_ITEM') {
+                                    if (data.orderStatus === 'PENDING') {
+                                        ConfirmPane.dangerConfirm("Do you sure want to delete item")
+                                                .confirm(function () {
+                                                    //delete job card details
+                                                    $scope.model.deleteSelectDetails($index);
+                                                });
+                                    } else {
+                                        optionPane.successMessage("THIS ITEM STOCK ISSE");
+                                    }
+                                } else {
+                                    if (data.jobStatus === 'PENDING') {
+                                        ConfirmPane.dangerConfirm("Do you sure want to delete item")
+                                                .confirm(function () {
+                                                    //delete job card details
+                                                    $scope.model.deleteSelectDetails($index);
+                                                });
+                                    } else {
+                                        optionPane.successMessage("THIS ITEM FINAL CHECK COMPLITE");
+                                    }
+                                }
+                            });
                 };
 
                 //add customer reserved items

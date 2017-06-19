@@ -3,7 +3,7 @@
     angular.module("finalCheckListModule", ['ui.bootstrap']);
     //controller
     angular.module("finalCheckListModule")
-            .controller("finalCheckListController", function ($scope, finalCheckListModel, ConfirmPane, Notification) {
+            .controller("finalCheckListController", function ($scope, $filter, finalCheckListModel, ConfirmPane, Notification) {
                 $scope.model = new finalCheckListModel();
                 $scope.ui = {};
 
@@ -11,6 +11,7 @@
                 $scope.selectItemCheckDetailsPending = null;
 
                 $scope.ui.selectedJobCardRow = function (jobCardData) {
+                    $scope.model.jobCardData = jobCardData;
                     $scope.selectItemCheckDetailsPending = null;
                     $scope.selectedJobCardIndexNo = jobCardData.indexNo;
                     $scope.model.getJobItemHistory(jobCardData.indexNo);

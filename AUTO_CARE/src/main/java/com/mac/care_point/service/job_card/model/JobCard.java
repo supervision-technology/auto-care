@@ -57,10 +57,12 @@ public class JobCard implements Serializable {
     private Integer priceCategory;
 
     @Column(name = "in_time")
-    private String inTime;
+    @Temporal(TemporalType.DATE)
+    private Date inTime;
 
     @Column(name = "out_time")
-    private String outTime;
+    @Temporal(TemporalType.DATE)
+    private Date outTime;
 
     @Column(name = "in_mileage")
     private Integer inMileage;
@@ -84,6 +86,18 @@ public class JobCard implements Serializable {
     @Column(name = "service_chagers")
     private Boolean serviceChagers;
 
+    @Column(name = "vehicle_images")
+    private Boolean vehicleImages;
+
+    @Column(name = "final_check")
+    private Boolean finalCheck;
+
+    @Column(name = "attenctions")
+    private Boolean attenctions;
+
+    @Column(name = "invoice")
+    private Boolean invoice;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCard", fetch = FetchType.EAGER)
     private List<TJobItem> tJobItemList;
@@ -91,7 +105,7 @@ public class JobCard implements Serializable {
     public JobCard() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, List<TJobItem> tJobItemList) {
+    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, Date inTime, Date outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -107,6 +121,10 @@ public class JobCard implements Serializable {
         this.client = client;
         this.vehicle = vehicle;
         this.serviceChagers = serviceChagers;
+        this.vehicleImages = vehicleImages;
+        this.finalCheck = finalCheck;
+        this.attenctions = attenctions;
+        this.invoice = invoice;
         this.tJobItemList = tJobItemList;
     }
 
@@ -218,22 +236,6 @@ public class JobCard implements Serializable {
         this.vehicle = vehicle;
     }
 
-    public String getInTime() {
-        return inTime;
-    }
-
-    public void setInTime(String inTime) {
-        this.inTime = inTime;
-    }
-
-    public String getOutTime() {
-        return outTime;
-    }
-
-    public void setOutTime(String outTime) {
-        this.outTime = outTime;
-    }
-
     public Boolean getServiceChagers() {
         return serviceChagers;
     }
@@ -242,4 +244,52 @@ public class JobCard implements Serializable {
         this.serviceChagers = serviceChagers;
     }
 
+    public Boolean getFinalCheck() {
+        return finalCheck;
+    }
+
+    public void setFinalCheck(Boolean finalCheck) {
+        this.finalCheck = finalCheck;
+    }
+
+    public Boolean getAttenctions() {
+        return attenctions;
+    }
+
+    public void setAttenctions(Boolean attenctions) {
+        this.attenctions = attenctions;
+    }
+
+    public Boolean getInvoice() {
+        return invoice;
+    }
+
+    public void setInvoice(Boolean invoice) {
+        this.invoice = invoice;
+    }
+
+    public Boolean getVehicleImages() {
+        return vehicleImages;
+    }
+
+    public void setVehicleImages(Boolean vehicleImages) {
+        this.vehicleImages = vehicleImages;
+    }
+
+    public Date getInTime() {
+        return inTime;
+    }
+
+    public void setInTime(Date inTime) {
+        this.inTime = inTime;
+    }
+
+    public Date getOutTime() {
+        return outTime;
+    }
+
+    public void setOutTime(Date outTime) {
+        this.outTime = outTime;
+    }
+    
 }

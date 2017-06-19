@@ -39,14 +39,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author Mohan
+  * @author Kavish Manjitha
  */
 @Service
 @Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 public class ReportViewerService {
 
-    private static final String REPORT_DIR = "reports";
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd yyyy");
+    public static final String REPORT_DIR = "reports";
+    public static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("MMM dd yyyy");
 
     @Autowired
     private DataSource dataSource;
@@ -146,7 +146,8 @@ public class ReportViewerService {
                 }
             }
         }
-        params.put("CURRENT_BRANCH", branch);
+        params.put("CURRENT_BRANCH", 1);
+//        params.put("INVOICE_NO", 1);
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, getConnection());
 

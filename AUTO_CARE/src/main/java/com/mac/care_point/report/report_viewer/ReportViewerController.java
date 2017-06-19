@@ -5,9 +5,10 @@
  */
 package com.mac.care_point.report.report_viewer;
 
-
+import static com.mac.care_point.report.report_viewer.ReportViewerService.REPORT_DIR;
 import com.mac.care_point.report.report_viewer.model.Report;
 import com.mac.care_point.report.report_viewer.model.ReportGroup;
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author Mohan
+ * @author Kavish Manjitha
  */
 @RestController
 @CrossOrigin
@@ -49,5 +51,16 @@ public class ReportViewerController {
     public void viewReport(HttpServletResponse httpServletResponse, @RequestParam HashMap<String, String> map) throws JRException, IOException, SQLException, ParseException {
         Integer branch = 1;
         reportViewerService.writePdfReport(httpServletResponse, map, branch);
+    }
+
+    @RequestMapping(value = "/invoice-report-data/{reportName}", method = RequestMethod.GET)
+    public Report viewInvoiceReport(@PathVariable String reportName) {
+
+        File reportDir = new File(REPORT_DIR, "reports\\" + reportName + ".jrxml");
+        Report report = new Report();
+        report.setFileName(reportDir.getAbsolutePath());
+        report.setReportName(reportDir.getName());
+        return report;
+
     }
 }

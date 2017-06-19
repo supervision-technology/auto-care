@@ -13,7 +13,7 @@
     </head>
     <body ng-app="appModule" ng-controller="appController">
         <!--side panel-->
-        <div class="side-bar-left background-ultra-dark" ng-class="hamburgerOpen ? 'side-bar-hidden' : ''">
+        <div class="side-bar-left background-ultra-dark smart-scroll-y" ng-class="hamburgerOpen ? 'side-bar-hidden' : ''">
             <div>
                 <div class="brand">
                     <div class="brand-image"></div>
@@ -30,9 +30,8 @@
 
 
                 <div class="user">
-                    <img src="img/avatar.jpg" class="avatar img-circle"/>
-                    <div class="name">
-                        <span>LOGIN USER</span>
+                    <div class="nameadmin">
+                        <span class="btn btn-default btn-sm" ng-click="logout();">LOGOUT</span>
                     </div>
                 </div>
 
@@ -100,17 +99,17 @@
                         <li> 
                             <a class="menu-header">REGISTRATION</a>
                             <ul>
-                                <li><a href="#/master/item">Item</a></li>
-                                <li><a href="#/master/sub-category">Sub Category</a></li>
-                                <li><a href="#/master/category">Category</a></li>
-                                <li><a href="#/master/item-department">Item Department</a></li>
-                                <li><a href="#/master/brand">Brand</a></li>
-                                <li><a href="#/master/price-category">Price Category</a></li>
-                                <li><a href="#/master/vehicle-type">Vehicle Type</a></li>
-                                <li><a href="#/master/client">Client</a></li>
-                                <li><a href="#/master/vehicle">Vehicle</a></li>
-                                <li><a href="#/master/sub_item">Sub Item</a></li>
-                                <li><a href="#/master/re-order-level">Re Order Level</a></li>
+                                <li><a href="#/master/item" ng-click="toggleHamburger();">Item</a></li>
+                                <li><a href="#/master/sub-category" ng-click="toggleHamburger();">Sub Category</a></li>
+                                <li><a href="#/master/category" ng-click="toggleHamburger();">Category</a></li>
+                                <li><a href="#/master/item-department" ng-click="toggleHamburger();">Item Department</a></li>
+                                <li><a href="#/master/brand" ng-click="toggleHamburger();">Brand</a></li>
+                                <li><a href="#/master/price-category" ng-click="toggleHamburger();">Price Category</a></li>
+                                <li><a href="#/master/vehicle-type" ng-click="toggleHamburger();">Vehicle Type</a></li>
+                                <li><a href="#/master/client" ng-click="toggleHamburger();">Client</a></li>
+                                <li><a href="#/master/vehicle" ng-click="toggleHamburger();">Vehicle</a></li>
+                                <li><a href="#/master/sub_item" ng-click="toggleHamburger();">Sub Item</a></li>
+                                <li><a href="#/master/re-order-level" ng-click="toggleHamburger();">Re Order Level</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -120,13 +119,42 @@
         <!--end side panel-->
 
         <div class="index-middle">
-
             <div ng-view>
                 <!--CONTENT OF THE APP-->
             </div>
         </div>
+
+
+        <!--index page loading animation-->		
+        <div id="page-loading" class="page-loading">		
+            <div class="spinner">		
+                <div class="bounce1"></div>		
+                <div class="bounce2"></div>		
+                <div class="bounce3"></div>		
+            </div>		
+        </div>		
+        <!--route loading animation-->		
+        <div class="route-loading" ng-show="routeLoading">		
+            <div class="spinner">		
+                <div class="bounce1"></div>		
+                <div class="bounce2"></div>		
+                <div class="bounce3"></div>		
+            </div>		
+        </div>
+
         <!--js dependencies-->
         <!-- inject:js -->
         <!-- endinject -->
+        <script type="text/javascript">
+                    document.addEventListener("DOMContentLoaded", function (event) {
+                        setTimeout(function () {
+                            var element = document.getElementById("page-loading");
+                            element.className += " exit";
+                            setTimeout(function () {
+                                element.parentNode.removeChild(element);
+                            }, 250);
+                        }, 1000);
+                    });
+        </script>
     </body>
 </html>

@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .controller("ReportViewerController", function ($scope, $timeout, $sce, ReportViewerService) {
+            .controller("ReportViewerController", function ($scope, $sce, ReportViewerService) {
                 $scope.model = {};
                 $scope.model.currentReportGroup = {};
                 $scope.model.currentReport = {};
@@ -20,7 +20,6 @@
                     ReportViewerService.listParameters(report)
                             .success(function (data) {
                                 $scope.model.currentReport.parameters = data;
-                                console.log(data);
                             });
 
                     $scope.activeTabIndex = 1;
@@ -30,7 +29,6 @@
                 $scope.ui.viewCurrentReport = function () {
                     if ($scope.model.currentReport.report) {
                         $scope.ui.status = "LOADING";
-
                         ReportViewerService.viewReport(
                                 $scope.model.currentReport.report,
                                 $scope.model.currentReport.parameters,
@@ -38,7 +36,6 @@
                                 )
                                 .success(function (response) {
                                     $scope.ui.status = "LOADED";
-
                                     var file = new Blob([response], {type: 'application/pdf'});
                                     var fileURL = URL.createObjectURL(file);
 
@@ -60,7 +57,7 @@
                     ReportViewerService.listReports()
                             .success(function (data) {
                                 $scope.model.reports = data;
-                                console.log(data);
+                                //console.log(data);
                             });
 
                     $scope.ui.status = "PENDING";

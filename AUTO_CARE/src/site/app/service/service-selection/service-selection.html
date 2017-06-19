@@ -93,13 +93,13 @@
         <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'ATTENCTIONS'">
             <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
                 <uib-tabset>
-                    <uib-tab heading="NEW ATTENCTIONS" index="0">
+                    <uib-tab heading="NEW OBSERVATION" index="0">
                         <table class="square-table background-dark">
                             <col style="width: 80%;"/>
                             <col style="width: 20%;"/>
                             <thead>
                                 <tr>
-                                    <th>ATTENCTION CATEGORY</th>
+                                    <th>OBSERVATION CATEGORY</th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
@@ -116,18 +116,18 @@
                                 </table>
                                 <div class="animation-v-grow background-dark" ng-show="selectCategoryPosition == $index">
                                     <table class="square-table">
-                                        <col style="width: 40%;"/>
-                                        <col style="width: 40%;"/>
-                                        <col style="width: 20%;"/>
+                                        <col style="width: 35%;"/>
+                                        <col style="width: 50%;"/>
+                                        <col style="width: 15%;"/>
                                         <tbody ng-repeat="details in model.vehicleAttenctionSelectedList">
                                             <tr class="background-dark" >
                                                 <td>{{model.vehicleAttenctions(details.vehicleAttenctions).name}}</td>
-                                                <td> 
-                                                    <select class="form-control form-group-lg"  ng-model="details.status" ng-change="ui.addJobVehicleAttenction(details);" style="margin-top: 8px;">
-                                                        <option class="N/A">N/A</option>
-                                                        <option class="REPALCE">REPALCE</option>
-                                                        <option class="MODIFICATION">MODIFICATION</option>
-                                                    </select>
+                                                <td>
+                                                    <div class="btn-group">
+                                                        <label class="btn" ng-class="details.status === 'N/A' ? 'btn-primary' : 'btn-default'" ng-model="details.status" uib-btn-radio="'N/A'" ng-click="ui.addJobVehicleAttenction(details)">N/A</label>
+                                                        <label class="btn" ng-class="details.status === 'REPALCE' ? 'btn-primary' : 'btn-default'" ng-model="details.status" uib-btn-radio="'REPALCE'" ng-click="ui.addJobVehicleAttenction(details)">REPALCE</label>
+                                                        <label class="btn" ng-class="details.status === 'MODIFICATION' ? 'btn-primary' : 'btn-default'" ng-model="details.status" uib-btn-radio="'MODIFICATION'" ng-click="ui.addJobVehicleAttenction(details)">MODIFICATION</label>
+                                                    </div>
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-primary" ng-click="ui.viewRemark($index);"><span class="glyphicon glyphicon-arrow-down"></span></a>
@@ -147,13 +147,13 @@
                             </div>
                         </div>
                     </uib-tab>
-                    <uib-tab heading="LAST JOB CARD ATTENCTIONS" index="1">
+                    <uib-tab heading="LAST JOB CARD OBSERVATION" index="1">
                         <table class="square-table background-dark">
                             <col style="width: 80%;"/>
                             <col style="width: 20%;"/>
                             <thead>
                                 <tr>
-                                    <th>ATTENCTIONS</th>
+                                    <th>OBSERVATION</th>
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
@@ -328,10 +328,10 @@
                                         <td ng-show="selections.itemType == 'STOCK_ITEM'"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>
                                         <td class="text-right"><small>{{selections.value|number:2}}</small></td>
-                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index,selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index, selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
-                                                <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
-                                                <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
+                                            <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
+                                            <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -405,10 +405,10 @@
                                         <td><small>{{model.itemUnitData(selections.itemUnit).name}}</small></td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>
                                         <td class="text-right"><small>{{selections.value|number:2}}</small></td>
-                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index,selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index, selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
-                                                <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
-                                                <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
+                                            <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
+                                            <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -467,10 +467,10 @@
                                         <td>{{model.itemData(selections.item).name}}</td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>
                                         <td class="text-right"><small>{{selections.value|number:2}}</small></td>
-                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index,selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index, selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
                                         <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
-                                                <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
-                                                <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
+                                            <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
+                                            <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
                                         </td>
                                     </tr>
                                 </tbody>

@@ -1,12 +1,13 @@
 (function () {
     angular.module("appModule")
-            .factory("finalCheckListModel", function (finalCheckListService, $q) {
+            .factory("finalCheckListModel", function (finalCheckListService,finalCheckListModelFactory, $q) {
                 function finalCheckListModel() {
                     this.constructor();
                 }
 
                 finalCheckListModel.prototype = {
                     data: {},
+                    jobCardData: {},
                     //master data lists
                     items: [],
                     vehicles: [],
@@ -19,6 +20,8 @@
                     itemCheckDetailsList: [],
                     constructor: function () {
                         var that = this;
+                        this.jobCardData =  finalCheckListModelFactory.newJobCardData();
+                        
                         finalCheckListService.pendingJobCards()
                                 .success(function (data) {
                                     that.pendingJobCards = data;

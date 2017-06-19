@@ -1,10 +1,16 @@
 (function () {
     angular.module("invoiceModule", ['ui.bootstrap']);
     angular.module("invoiceModule")
-            .controller("invoiceController", function ($scope, $filter, optionPane, invoiceModel, Notification, ConfirmPane) {
+            .controller("invoiceController", function ($scope, $sce, invoiceService, $uibModal, $filter, optionPane, invoiceModel, Notification, ConfirmPane) {
 
                 $scope.invoiceModel = new invoiceModel();
+                $scope.model = {};
                 $scope.ui = {};
+
+                $scope.model.currentReportGroup = {};
+                $scope.model.currentReport = {};
+                $scope.model.currentReport.parameterValues = {};
+
 
                 $scope.ui.new = function () {
                     $scope.ui.clear();
@@ -53,6 +59,50 @@
                     $scope.invoiceModel.employeeData = $scope.invoiceModel.employee(indexNo);
                 };
 
+                $scope.ui.modalOpen = function (indexNo) {
+
+//---------------------------------- invoice ----------------------------------
+                    var reportName = "Invoice";
+                    //get report details
+                    invoiceService.reportData(reportName)
+                            .success(function (data) {
+                                $scope.model.currentReport.report = data;
+
+                                //get report paramiters
+                                invoiceService.listParameters(data)
+                                        .success(function (data) {
+                                            $scope.model.currentReport.parameters = data;
+                                        });
+
+                                //set paramiters values
+                                $scope.model.currentReport.parameterValues.INVOICE_NO = indexNo;
+
+                                //view reports
+                                invoiceService.viewReport(
+                                        $scope.model.currentReport.report,
+                                        $scope.model.currentReport.parameters,
+                                        $scope.model.currentReport.parameterValues
+                                        )
+                                        .success(function (response) {
+                                            var file = new Blob([response], {type: 'application/pdf'});
+                                            var fileURL = URL.createObjectURL(file);
+
+                                            $scope.content = $sce.trustAsResourceUrl(fileURL);
+
+                                            $uibModal.open({
+                                                animation: true,
+                                                ariaLabelledBy: 'modal-title',
+                                                ariaDescribedBy: 'modal-body',
+                                                templateUrl: 'invoice_popup.html',
+                                                scope: $scope,
+                                                size: 'lg'
+                                            });
+
+                                        });
+                            });
+//---------------------------------- end invoice ----------------------------------
+                };
+
                 $scope.ui.saveInvoice = function () {
                     if ($scope.selectedJobCardIndexNo) {
                         if ($scope.invoiceModel.paymentData.chequeAmount > 0 || $scope.invoiceModel.paymentData.balance > 0) {
@@ -66,7 +116,11 @@
                                                     .then(function (data) {
                                                         $scope.ui.mode = "IDEAL";
                                                         $scope.ui.clear();
-                                                        optionPane.successMessage("Save Invoice" + data.number);
+                                                        ConfirmPane.successConfirm("Do You Want To Print Invoice")
+                                                                .confirm(function () {
+                                                                    console.log(data);
+                                                                    $scope.ui.modalOpen(data.indexNo);
+                                                                });
                                                     });
                                         });
                             }
@@ -77,7 +131,11 @@
                                                 .then(function (data) {
                                                     $scope.ui.mode = "IDEAL";
                                                     $scope.ui.clear();
-                                                    optionPane.successMessage("Save Invoice" + data.number);
+                                                    ConfirmPane.successConfirm("Do You Want To Print Invoice")
+                                                            .confirm(function () {
+                                                                console.log(data);
+                                                                $scope.ui.modalOpen(data.indexNo);
+                                                            });
                                                 });
                                     });
                         }

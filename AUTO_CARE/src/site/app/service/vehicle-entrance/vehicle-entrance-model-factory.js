@@ -51,7 +51,11 @@
                         "bay": null,
                         "client": null,
                         "vehicle": null,
-                        "serviceChagers": null
+                        "serviceChagers": false,
+                        "vehicleImages": false,
+                        "finalCheck": false,
+                        "attenctions": false,
+                        "invoice": false
                     };
                     return data;
                 };

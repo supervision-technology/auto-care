@@ -122,9 +122,7 @@
             saveJobCard: function () {
                 var that = this;
                 that.jobcard.transaction = 1;
-                that.jobcard.inTime = $filter('date')(new Date(), 'yyyy-MM-dd hh:mm:ss');
                 that.jobcard.status = "PENDING";
-                that.jobcard.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                 that.jobcard.bay = 1;
                 that.jobcard.serviceChagers = 0;
                 that.jobcard.priceCategory = that.vehicleData.priceCategory;

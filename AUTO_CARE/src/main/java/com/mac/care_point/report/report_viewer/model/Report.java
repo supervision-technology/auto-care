@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Mohan
+ * @author Kavish Manjitha
  */
 public class Report implements Serializable, Comparable<Report> {
 

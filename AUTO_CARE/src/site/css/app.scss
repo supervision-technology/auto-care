@@ -18,10 +18,8 @@ body{
     flex-flow: column;
     white-space: nowrap;
     overflow-x: hidden;
-    width: 300px;
+    width: 250px;
     transition: .25s ease-in-out;
-    position: absolute;
-    z-index: 10;
 
     .brand{
         padding: 16px 0 16px 16px;

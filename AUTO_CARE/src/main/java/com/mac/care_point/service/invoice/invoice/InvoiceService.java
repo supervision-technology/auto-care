@@ -57,6 +57,7 @@ public class InvoiceService {
 
         JobCard jobCard = jobCardRepository.getOne(invoice.getJobCard());
         jobCard.setStatus(Constant.FINISHE_STATUS);
+        jobCard.setInvoice(Boolean.TRUE);
 
         invoice.setBranch(1);
         //step 01

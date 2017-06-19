@@ -17,6 +17,8 @@ gulp.task('build-html', function () {
             .pipe(inject(gulp.src([
                 'src/main/resources/static/js/vendor.js',
                 'src/main/resources/static/js/app.min.js',
+                'src/main/resources/static/js/pdf.js',
+                'src/main/resources/static/js/pdf_viewer.js',
                 'src/main/resources/static/css/vendor.css',
                 'src/main/resources/static/css/app.min.css'
             ]),
@@ -35,12 +37,22 @@ gulp.task('build-js', function () {
             .pipe(uglify())
             .pipe(gulp.dest('src/main/resources/static/js'));
 
+    //pdf js
+    gulp.src([
+        "bower_components/pdfjs-dist/build/pdf.js",
+        "bower_components/pdfjs-dist/build/pdf.worker.js",
+        "bower_components/pdfjs-dist/web/pdf_viewer.js"
+    ])
+            .pipe(debug())
+            .pipe(gulp.dest('src/main/resources/static/js'));
+
     //vendor
     return gulp.src([
         "bower_components/angular/angular.min.js",
         "bower_components/angular-route/angular-route.min.js",
         "bower_components/angular-animate/angular-animate.min.js",
         "bower_components/angular-sanitize/angular-sanitize.min.js",
+        "bower_components/angular-cookies/angular-cookies.min.js",
         "bower_components/chart.js/dist/Chart.min.js",
         "bower_components/angular-chart.js/dist/angular-chart.min.js",
         "bower_components/angular-bootstrap/ui-bootstrap.min.js",
@@ -71,7 +83,8 @@ gulp.task('build-css', function () {
     return gulp.src([
         'bower_components/bootstrap/dist/css/bootstrap.min.css',
         'bower_components/animate.css/animate.min.css',
-        'bower_components/angular-ui-notification/dist/angular-ui-notification.min.css'
+        'bower_components/angular-ui-notification/dist/angular-ui-notification.min.css',
+        'bower_components/pdfjs-dist/web/pdf_viewer.css'
     ])
             .pipe(debug())
             .pipe(concat('vendor.css'))

@@ -2,21 +2,22 @@
     //index module
     angular.module("appModule", [
         "ngRoute",
+        "ngCookies",
         "ui.bootstrap",
-        "homeModule",
+        //service
         "dailyCheckListModule",
-        "employeeAssignmentModule",
         "serviceSelectionModule",
-        "itemSelectionModule",
-        "bayAssignmentModule",
-        "supervisorSelectionModule",
-        //stock
         "requestItemModule",
-        //front office
+        "invoiceModule",
+        "bayItemIssueModule",
+        "finalCheckListModule",
+        //pending
+        "employeeAssignmentModule",
+        "bayAssignmentModule",
         "dashBoardModule",
+        //master
         "itemModule",
         "reOrderLevelModule",
-        "invoiceModule",
         "subCategoryModule",
         "categoryModule",
         "itemDepartmentModule",
@@ -39,9 +40,7 @@
         "purchaseOrderRequestModule",
         "purchaseOrderApproveModule",
         "stockTransferInternalOutModule",
-        "stockTransferInternalInModule",
-        "bayItemIssueModule",
-        "finalCheckListModule"
+        "stockTransferInternalInModule"
     ]);
 
     //constants
@@ -53,7 +52,6 @@
                         : location.protocol + "//" + location.hostname + (location.port ? ":" + location.port : "")
             });
 
-
     //route config
     angular.module("appModule")
             .config(function ($routeProvider) {
@@ -63,12 +61,18 @@
                             redirectTo: "/service/vehicle-entrance"
                         })
                         .when("/login", {
-                            templateUrl: "app/system/login/login.html"
+                            templateUrl: "app/system/login/login.html",
+                            controller: "LoginController"
                         })
 
                         .when("/reports/general/report-viewer", {
                             templateUrl: "app/reports/report-viewer/report-viewer.html",
                             controller: "ReportViewerController"
+                        })
+               
+                        .when("/front-office/invoice/invoice_view/:invoiceIndexNo", {
+                            templateUrl: "app/front-office/invoice/invoice_view/invoice_view.html",
+                            controller: "InvoiceViewController"
                         })
 
                         //service
@@ -76,18 +80,17 @@
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
                             controller: "vehicleEntranceController"
                         })
+                        
                         .when("/service/service-selection", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
-                        .when("/service/item-selection/:jobCardIndexNo", {
-                            templateUrl: "app/service/item-selection/item-selection.html",
-                            controller: "itemSelectionController"
-                        })
+                        
                         .when("/service/service-selection/:jobCardIndexNo", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
+                        
                         .when("/service/final-check-list", {
                             templateUrl: "app/service/final-check-list/final-check-list.html",
                             controller: "finalCheckListController"
@@ -122,11 +125,6 @@
                         .when("/service/bay-assignment", {
                             templateUrl: "app/service/bay-assignment/bay-assignment.html",
                             controller: "bayAssignmentController"
-                        })
-                        //supervisor-selection
-                        .when("/service/supervisor-selection", {
-                            templateUrl: "app/service/supervisor-selection/supervisor-selection.html",
-                            controller: "supervisorSelectionController"
                         })
                         //dash-Board
                         .when("/front-office/service-dashboard", {
@@ -255,32 +253,4 @@
             .constant("systemConfig", {
                 apiUrl: "http://localhost:8080"
             });
-
-    angular.module("appModule")
-            .controller("appController", function ($scope, $timeout) {
-                $scope.hamburgerOpen = true;
-
-                $scope.toggleHamburger = function () {
-                    $scope.hamburgerOpen = !$scope.hamburgerOpen;
-
-                };
-            });
-
-    angular.module("appModule")
-            .filter('unique', function () {
-                return function (collection, keyname) {
-                    var output = [],
-                            keys = [];
-
-                    angular.forEach(collection, function (item) {
-                        var key = item[keyname];
-                        if (keys.indexOf(key) === -1) {
-                            keys.push(key);
-                            output.push(item);
-                        }
-                    });
-                    return output;
-                };
-            });
-
 }());

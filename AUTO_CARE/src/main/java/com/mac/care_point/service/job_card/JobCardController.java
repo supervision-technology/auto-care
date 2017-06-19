@@ -62,8 +62,11 @@ public class JobCardController {
         return jobCardService.setServiceChargers(jobCard, status);
     }
 
-    @RequestMapping(value = "/upload-image", method = RequestMethod.POST)//, consumes = "multipart/form-data"
+    @RequestMapping(value = "/upload-image", method = RequestMethod.POST)
     public void saveImage(@RequestParam("file") MultipartFile file) {
+        
+        //create images
+        //save files
         try {
             // System.out.println(file.getSize());
             String fileName = dateFormat.format(new Date());

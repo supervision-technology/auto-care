@@ -10,6 +10,7 @@ import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.service.job_item.JobItemRepository;
 import com.mac.care_point.service.job_item.model.TJobItem;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class JobCardService {
     private JobItemRepository jobItemRepository;
 
     public List<JobCard> getPendingJobCard() {
-        return jobCardRepository.findByStatus(PENDING_STATUS);
+        return jobCardRepository.findByStatusOrderByIndexNoDesc(PENDING_STATUS);
     }
 
     public List<JobCard> getClientHistory(Integer indexNo) {
@@ -49,6 +50,8 @@ public class JobCardService {
             }
             jobCard.setNumber(maxNo + 1);
         }
+        jobCard.setInTime(new Date());
+        jobCard.setDate(new Date());
         return jobCardRepository.save(jobCard);
     }
 

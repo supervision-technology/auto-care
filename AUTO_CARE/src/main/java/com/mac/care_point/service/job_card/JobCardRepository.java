@@ -19,7 +19,7 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
 
     public List<JobCard> findByBay(Integer indexNo);
     
-    public List<JobCard> findByStatus(String status);
+    public List<JobCard> findByStatusOrderByIndexNoDesc(String status);
 
     @Query(value = "SELECT MAX(number)FROM t_job_card WHERE branch=:branch" , nativeQuery = true)
     public  Integer getMaximumNumberByBranch (@Param("branch")Integer branch);

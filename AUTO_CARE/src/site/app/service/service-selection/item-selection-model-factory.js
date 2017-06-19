@@ -32,7 +32,7 @@
 
                 factory.newJobCardData = function () {
                     var data = {
-                        "indexNo": 0,
+                        "indexNo": null,
                         "number": null,
                         "branch": null,
                         "date": null,
@@ -46,7 +46,11 @@
                         "bay": null,
                         "client": null,
                         "vehicle": null,
-                        "serviceChagers": 0
+                        "serviceChagers": false,
+                        "vehicleImages": false,
+                        "finalCheck": false,
+                        "attenctions": false,
+                        "invoice": false
                     };
                     return data;
                 };

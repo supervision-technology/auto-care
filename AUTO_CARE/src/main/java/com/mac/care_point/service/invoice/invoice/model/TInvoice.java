@@ -56,7 +56,7 @@ public class TInvoice implements Serializable {
     private BigDecimal amount;
 
     @Column(name = "discount_rate")
-    private Integer discountRate;
+    private BigDecimal discountRate;
 
     @Column(name = "discount_amount")
     private BigDecimal discountAmount;
@@ -83,7 +83,7 @@ public class TInvoice implements Serializable {
     public TInvoice() {
     }
 
-    public TInvoice(Integer indexNo, Date date, int number, BigDecimal amount, Integer discountRate, BigDecimal discountAmount, BigDecimal netAmount, Integer branch, String status, Integer jobCard) {
+    public TInvoice(Integer indexNo, Date date, int number, BigDecimal amount, BigDecimal discountRate, BigDecimal discountAmount, BigDecimal netAmount, Integer branch, String status, Integer jobCard) {
         this.indexNo = indexNo;
         this.date = date;
         this.number = number;
@@ -128,14 +128,6 @@ public class TInvoice implements Serializable {
         this.amount = amount;
     }
 
-    public Integer getDiscountRate() {
-        return discountRate;
-    }
-
-    public void setDiscountRate(Integer discountRate) {
-        this.discountRate = discountRate;
-    }
-
     public BigDecimal getDiscountAmount() {
         return discountAmount;
     }
@@ -174,6 +166,14 @@ public class TInvoice implements Serializable {
 
     public void setJobCard(Integer jobCard) {
         this.jobCard = jobCard;
+    }
+
+    public BigDecimal getDiscountRate() {
+        return discountRate;
+    }
+
+    public void setDiscountRate(BigDecimal discountRate) {
+        this.discountRate = discountRate;
     }
 
 }
