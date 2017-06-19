@@ -75,9 +75,9 @@ public class JobCardService {
             jobItem.setOrderStatus(Constant.PENDING_STATUS);
             jobItemRepository.save(jobItem);
             jobCardRepository.save(getJobCardData);
-            
+
         } else {
-            
+
             //service chargers remove
             List<TJobItem> getItemDataList = jobItemRepository.findByJobCardAndItemType(getJobCardData.getIndexNo(), Constant.SERVICE_CHARGERS);
             for (TJobItem tJobItem : getItemDataList) {
@@ -86,5 +86,9 @@ public class JobCardService {
         }
 
         return getJobCardData;
+    }
+
+    List<JobCard> getNotFinishedJobCard() {
+        return jobCardRepository.findByStatusNotIn(Constant.FINISHE_STATUS);
     }
 }
