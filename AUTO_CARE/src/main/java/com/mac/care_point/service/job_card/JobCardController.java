@@ -50,6 +50,11 @@ public class JobCardController {
     public List<JobCard> getPendingJobCard() {
         return jobCardService.getPendingJobCard();
     }
+    
+    @RequestMapping(value = "/get-not-finished-job-cards", method = RequestMethod.GET)
+    public List<JobCard> getNotFinishedJobCard() {
+        return jobCardService.getNotFinishedJobCard();
+    }
 
     @RequestMapping(value = "/save-job-card", method = RequestMethod.POST)
     public Integer saveJovCard(@RequestBody JobCard jobCard) {

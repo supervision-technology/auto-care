@@ -82,11 +82,14 @@ public class JobCardService {
             List<TJobItem> getItemDataList = jobItemRepository.findByJobCardAndItemType(getJobCardData.getIndexNo(), Constant.SERVICE_CHARGERS);
             for (TJobItem tJobItem : getItemDataList) {
                 //jobItemRepository.delete(tJobItem.getIndexNo());
-                System.out.println(tJobItem.getIndexNo() + "++++++++++++++++++++++++++++++++++++++ item delete");
             }
         }
 
         jobCardRepository.save(getJobCardData);
         return getJobCardData;
+    }
+
+    List<JobCard> getNotFinishedJobCard() {
+        return jobCardRepository.findByStatusNotIn(FINISHED_STATUS);
     }
 }

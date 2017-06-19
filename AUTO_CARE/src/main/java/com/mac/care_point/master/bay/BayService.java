@@ -49,5 +49,9 @@ public class BayService {
     public void deleteBay(Integer indexNo) {
         repository.delete(indexNo);
     }
+
+    List<Bay> findByBranchAndBayIsView(Integer branch, Integer isView) {
+        return repository.findByBranchAndBayIsView(branch,isView);
+    }
     
 }

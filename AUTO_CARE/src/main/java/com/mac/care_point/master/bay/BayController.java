@@ -24,12 +24,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/care-point/master/bay")
 public class BayController {
 
+    Integer branch = 1;
+    
     @Autowired
     private BayService bayService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Bay> findAll() {
         return bayService.findAll();
+    }
+   
+    @RequestMapping(value = "/get-bays-by-branch-is-view",method = RequestMethod.GET)
+    public List<Bay> findByBranchIsView() {
+        return bayService.findByBranchAndBayIsView(branch,1);
     }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
@@ -39,7 +46,6 @@ public class BayController {
 
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
     public Integer deleteBay(@PathVariable Integer indexNo) {
-        System.out.println(indexNo + " index No to delete");
         bayService.deleteBay(indexNo);
         return indexNo;
     }

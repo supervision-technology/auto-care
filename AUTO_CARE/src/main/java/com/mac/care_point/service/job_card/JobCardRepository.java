@@ -26,4 +26,6 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
     
     public List<JobCard> findJobCardByClient(Integer indexNo);
 
+    public List<JobCard> findByStatusNotIn(String FINISHED_STATUS);
+
 }

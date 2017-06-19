@@ -8,6 +8,7 @@ package com.mac.care_point.master.vehicleAssignment;
 
 import com.mac.care_point.master.vehicle.VehicleRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
+import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.job_card.JobCardRepository;
 import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.system.exception.DuplicateEntityException;
@@ -37,9 +38,9 @@ public class VehicleAssignmentService {
     }
     
     public TVehicleAssignment saveDetail(TVehicleAssignment vehicleAssignment) {
-        List<JobCard> findByBay = jobCardRepository.findByBay(vehicleAssignment.getBay().getIndexNo());
-        if (findByBay.isEmpty()) {
-            vehicleAssignment.getJobCard().setStatus("On_Going");
+//        List<JobCard> findByBay = jobCardRepository.findByBay(vehicleAssignment.getBay().getIndexNo());
+//        if (findByBay.isEmpty()) {
+            vehicleAssignment.getJobCard().setStatus(Constant.ON_GOING);
             vehicleAssignment.getJobCard().setBay(vehicleAssignment.getBay().getIndexNo());
             jobCardRepository.save(vehicleAssignment.getJobCard());
             List<TVehicleAssignment> updatedObjects = vehicleAssignmentRepository.findTop1ByJobCardIndexNoOrderByInTimeDesc(vehicleAssignment.getJobCard().getIndexNo());
@@ -51,10 +52,9 @@ public class VehicleAssignmentService {
             vehicleAssignment.setIndexNo(0);
             return vehicleAssignmentRepository.save(vehicleAssignment);
             
-            
-        } else {
-            throw new DuplicateEntityException("Already exsisit " + vehicleAssignment.getBay().getIndexNo());
-        }
+//        } else {
+//            throw new DuplicateEntityException("Already exsisit " + vehicleAssignment.getBay().getIndexNo());
+//        }
         
     }
     
@@ -64,4 +64,13 @@ public class VehicleAssignmentService {
 //    public List<TVehicleAssignment> findAllByType() {
 //       return vehicleAssignmentRepository.findByJobCardStatusNotIn("complete");
 //    }
+
+    Integer getBayAssignVehicleCount(Integer bay, Integer branch) {
+        System.out.println("*********");
+        System.out.println("*********");
+        System.out.println(bay);
+        System.out.println(branch);
+        System.out.println("################");
+        return vehicleAssignmentRepository.getBayAssignVehicleCount(branch,Constant.FINISHE_STATUS,bay);
+    }
 }
