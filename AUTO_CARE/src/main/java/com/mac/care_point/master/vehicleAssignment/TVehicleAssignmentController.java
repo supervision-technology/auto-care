@@ -39,6 +39,11 @@ public class TVehicleAssignmentController {
         return vehicleAssignmentService.saveDetail(vehicleAssignment);
     }
 
+    @RequestMapping(value = "/job-finished", method = RequestMethod.POST)
+    public TVehicleAssignment jobFinished(@RequestBody TVehicleAssignment vehicleAssignment) {
+        return vehicleAssignmentService.jobFinished(vehicleAssignment);
+    }
+
     @RequestMapping(value = "/load_not_finished_vehicle_assignment/{bay}", method = RequestMethod.GET)
     public Integer getBayAssignVehicleCount(@PathVariable Integer bay) {
         return vehicleAssignmentService.getBayAssignVehicleCount(bay, branch);

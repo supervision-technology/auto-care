@@ -253,7 +253,7 @@
                         <td></td>
                         <td></td>
                         <td><input type="checkbox" ng-model="chxNBT" ng-disabled="model.data.isNbt" ng-change="ui.checkBoxNBTFunction();"/></td>
-                        <td><input class="form-control text-right" placeholder="nbt %" ng-model="model.data.nbt" ng-disabled="true"></td>
+                        <td><input class="form-control text-right" placeholder="nbt %" ng-model="model.data.nbt" ng-keyup="ui.calculateNBT()" ng-disabled="!chxNBT"></td>
                         <td><input class="form-control text-right" placeholder="nbt value" ng-model="model.data.nbtValue" ng-disabled="true"></td>
                         <td>&nbsp;</td>
                     </tr>
@@ -264,7 +264,7 @@
                         <td></td>
                         <td></td>
                         <td><input type="checkbox" ng-model="chxVAT" ng-disabled="model.data.isVat" checked="model.data.isVat" ng-change="ui.checkBoxVATFunction();"/></td>
-                        <td><input class="form-control text-right" placeholder="vat %" ng-model="model.data.vat" ng-disabled="true"></td>
+                        <td><input class="form-control text-right" placeholder="vat %" ng-model="model.data.vat" ng-keyup="ui.calculateVAT()" ng-disabled="!chxVAT"></td>
                         <td><input class="form-control text-right" placeholder="vat value" ng-model="model.data.vatValue" ng-disabled="true"></td>
                         <td>&nbsp;</td>
                     </tr>

@@ -14,12 +14,14 @@
         //pending
         "employeeAssignmentModule",
         "bayAssignmentModule",
+        "employeeAssignmentModule",
         "dashBoardModule",
         //master
         "itemModule",
         "reOrderLevelModule",
         "subCategoryModule",
         "categoryModule",
+        "ItemCategoryModule",
         "itemDepartmentModule",
         "brandModule",
         "bayModule",
@@ -126,6 +128,11 @@
                             templateUrl: "app/service/bay-assignment/bay-assignment.html",
                             controller: "bayAssignmentController"
                         })
+                        //employee-assignment
+                        .when("/service/employee-assignment", {
+                            templateUrl: "app/service/employee-assignment/employee-assignment.html",
+                            controller: "employeeAssignmentController"
+                        })
                         //dash-Board
                         .when("/front-office/service-dashboard", {
                             templateUrl: "app/front-office/service-dashboard/service-dashboard.html",
@@ -170,6 +177,10 @@
                         .when("/master/category", {
                             templateUrl: "app/master/category/category.html",
                             controller: "categoryController"
+                        })
+                        .when("/master/item-category", {
+                            templateUrl: "app/master/item-category/item-category.html",
+                            controller: "ItemCategoryController"
                         })
                         .when("/master/item-department", {
                             templateUrl: "app/master/item-department/item-department.html",

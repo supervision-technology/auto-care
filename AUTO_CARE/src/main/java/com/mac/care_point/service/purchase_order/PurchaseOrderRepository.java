@@ -71,10 +71,7 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
 "       t_job_card.index_no = t_job_item.job_card and\n" +
 "       t_job_item.order_status = \"PENDING\" and t_job_item.item_type = \"STOCK_ITEM\"  and t_job_item.item = m_item.index_no \n" +
 "       and t_job_item.item=m_re_order_level.item and t_job_card.branch=m_re_order_level.branch)) as net_stock_qty,\n" +
-"       \n" +
-"       if(\n" +
-"		 \n" +
-"		 if(\n" +
+"       if(if(\n" +
 "		 (m_re_order_level.re_order_min-((SELECT\n" +
 "       ifnull(sum(t_stock_ledger.in_qty-t_stock_ledger.out_qty), 0.0)\n" +
 "       from \n" +
@@ -82,7 +79,6 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
 "       where\n" +
 "       t_stock_ledger.branch = m_re_order_level.branch\n" +
 "       and t_stock_ledger.item = m_re_order_level.item) -\n" +
-"       \n" +
 "       (select \n" +
 "       ifnull(sum(t_job_item.stock_remove_qty) ,0.0)\n" +
 "       from \n" +
@@ -96,8 +92,7 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
 "       t_stock_ledger\n" +
 "       where\n" +
 "       t_stock_ledger.branch = m_re_order_level.branch\n" +
-"       and t_stock_ledger.item = m_re_order_level.item) -\n" +
-"       \n" +
+"       and t_stock_ledger.item = m_re_order_level.item) - \n" +
 "       (select\n" +
 "       ifnull(sum(t_job_item.stock_remove_qty) ,0.0)\n" +
 "       from \n" +
@@ -156,13 +151,12 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
 "       where \n" +
 "       t_job_card.index_no = t_job_item.job_card and\n" +
 "       t_job_item.order_status = \"PENDING\" and t_job_item.item_type = \"STOCK_ITEM\"  and t_job_item.item = m_item.index_no \n" +
-"       and t_job_item.item=m_re_order_level.item and t_job_card.branch=m_re_order_level.branch))\n" +
-"		 ))\n" +
+"       and t_job_item.item=m_re_order_level.item and t_job_card.branch=m_re_order_level.branch))))\n" +
 "		 from m_re_order_level\n" +
 "		 where m_re_order_level.item=m_item.index_no )\n" +
 "		   as total_order,\n" +
-"		   m_branch.color as branch_color,\n" +
-"		   (select\n" +
+"		   ifnull(m_branch.color,'#ccc') as branch_color,\n" +
+"		   ifnull((select\n" +
 " if ((ifnull((select sum(t_stock_ledger.in_qty) - sum(t_stock_ledger.out_qty) from t_stock_ledger where t_stock_ledger.branch = (select m_branch.index_no from m_branch where m_branch.`type`='MAIN_BRANCH') and t_stock_ledger.item = m_item.index_no), 0.0)\n" +
 "-ifnull((select sum(t_job_item.stock_remove_qty) from t_job_item where t_job_item.order_status = \"PENDING\" and t_job_item.item_type = \"STOCK_ITEM\"  and t_job_item.item = m_item.index_no), 0.0) )\n" +
 "-(select ifnull(m_re_order_level.re_order_min,0.0) FROM	m_re_order_level where	m_re_order_level.branch=(select m_branch.index_no from m_branch where m_branch.`type`='MAIN_BRANCH')	and m_re_order_level.item=m_item.index_no )<=0,0.00,\n" +
@@ -173,7 +167,7 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
 "from m_item \n" +
 "where \n" +
 "m_item.index_no  = m_re_order_level.item \n" +
-"group by m_item.index_no) as available_qty,\n" +
+"group by m_item.index_no),0.0) as available_qty,\n" +
 "(select \n" +
 "IFNULL(sum(t_purchase_order_detail.balance_qty),0) as purchasing_qty from\n" +
 " t_purchase_order_detail where \n" +

@@ -14,6 +14,7 @@
                         "department": null,
                         "brand": null,
                         "category": null,
+                        "itemCategory": null,
                         "sub_category": null,
                         "salePriceNormal": 0,
                         "salePriceRegister": 0,

@@ -5,6 +5,10 @@
         this.loadCategory = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/category");
         };
+        
+        this.loadItemCategory = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-category");
+        };
 
         this.loadSubCategory = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/sub-category");

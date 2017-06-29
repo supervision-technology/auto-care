@@ -17,6 +17,7 @@
             itemunits: [],
             itemDepartments: [],
             categorys: [],
+            itemCategorys: [],
             subCategorys: [],
             brands: [],
             priceCategory: [],
@@ -55,6 +56,11 @@
                 itemService.loadCategory()
                         .success(function (data) {
                             that.categorys = data;
+                        });
+                
+                itemService.loadItemCategory()
+                        .success(function (data) {
+                            that.itemCategorys = data;
                         });
 
                 itemService.loadSubCategory()
@@ -359,6 +365,16 @@
             categoryLable: function (indexNo) {
                 var item;
                 angular.forEach(this.categorys, function (value) {
+                    if (value.indexNo === parseInt(indexNo)) {
+                        item = value.indexNo + "-" + value.name;
+                        return;
+                    }
+                });
+                return item;
+            },
+            itemCategoryLable: function (indexNo) {
+                var item;
+                angular.forEach(this.itemCategorys, function (value) {
                     if (value.indexNo === parseInt(indexNo)) {
                         item = value.indexNo + "-" + value.name;
                         return;

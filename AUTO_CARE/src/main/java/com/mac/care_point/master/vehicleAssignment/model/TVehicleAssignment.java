@@ -5,20 +5,14 @@
  */
 package com.mac.care_point.master.vehicleAssignment.model;
 
-
-import com.mac.care_point.master.bay.model.Bay;
-import com.mac.care_point.service.job_card.model.JobCard;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -30,45 +24,45 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "t_vehicle_assignment")
 @XmlRootElement
 public class TVehicleAssignment implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Basic(optional = false)
     @Column(name = "in_time")
     private String inTime;
-    
+
     @Column(name = "out_time")
     private String outTime;
-    
+
     @Basic(optional = false)
     @Column(name = "branch")
     private Integer branch;
-    
+
     @Basic(optional = false)
     @Column(name = "date")
     private Date date;
-    
-    @JoinColumn(name = "job_card", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private JobCard jobCard;
-   
-    @JoinColumn(name = "bay", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Bay bay;
+
+    @Column(name = "job_card")
+    private Integer jobCard;
+
+    @Column(name = "bay")
+    private Integer bay;
 
     public TVehicleAssignment() {
     }
 
-    public TVehicleAssignment(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public TVehicleAssignment(Integer indexNo, String inTime) {
+    public TVehicleAssignment(Integer indexNo, String inTime, String outTime, Integer branch, Date date, Integer jobCard, Integer bay) {
         this.indexNo = indexNo;
         this.inTime = inTime;
+        this.outTime = outTime;
+        this.branch = branch;
+        this.date = date;
+        this.jobCard = jobCard;
+        this.bay = bay;
     }
 
     public Integer getIndexNo() {
@@ -95,22 +89,6 @@ public class TVehicleAssignment implements Serializable {
         this.outTime = outTime;
     }
 
-    public JobCard getJobCard() {
-        return jobCard;
-    }
-
-    public void setJobCard(JobCard jobCard) {
-        this.jobCard = jobCard;
-    }
-
-    public Bay getBay() {
-        return bay;
-    }
-
-    public void setBay(Bay bay) {
-        this.bay = bay;
-    }
-
     public Integer getBranch() {
         return branch;
     }
@@ -127,30 +105,20 @@ public class TVehicleAssignment implements Serializable {
         this.date = date;
     }
 
-    
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (indexNo != null ? indexNo.hashCode() : 0);
-        return hash;
+    public Integer getJobCard() {
+        return jobCard;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof TVehicleAssignment)) {
-            return false;
-        }
-        TVehicleAssignment other = (TVehicleAssignment) object;
-        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
-            return false;
-        }
-        return true;
+    public void setJobCard(Integer jobCard) {
+        this.jobCard = jobCard;
     }
 
-    @Override
-    public String toString() {
-        return "javaapplication2.TVehicleAssignment[ indexNo=" + indexNo + " ]";
+    public Integer getBay() {
+        return bay;
     }
+
+    public void setBay(Integer bay) {
+        this.bay = bay;
+    }
+
 }
-

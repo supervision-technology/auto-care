@@ -106,6 +106,7 @@
 
                 //edit item
                 $scope.ui.editeItems = function (items, $index) {
+                    $scope.textViewMode=items.type;
                     $scope.model.editeItem(items, $index);
                 };
 

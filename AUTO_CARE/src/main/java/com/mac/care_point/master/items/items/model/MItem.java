@@ -66,6 +66,10 @@ public class MItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "category")
     private Integer category;
+    
+    @Basic(optional = false)
+    @Column(name = "item_category")
+    private Integer itemCategory;
 
     @Basic(optional = false)
     @Column(name = "sub_category")
@@ -105,7 +109,7 @@ public class MItem implements Serializable {
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, String type, Integer department, Integer brand, Integer category, Integer sub_category, BigDecimal costPrice, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Integer supplier, BigDecimal reOrderMax, BigDecimal reOrderMin, BigDecimal discount, BigDecimal supplierPrice) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, String type, Integer department, Integer brand, Integer category, Integer itemCategory, Integer sub_category, BigDecimal costPrice, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Integer supplier, BigDecimal reOrderMax, BigDecimal reOrderMin, BigDecimal discount, BigDecimal supplierPrice) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -115,6 +119,7 @@ public class MItem implements Serializable {
         this.department = department;
         this.brand = brand;
         this.category = category;
+        this.itemCategory = itemCategory;
         this.sub_category = sub_category;
         this.costPrice = costPrice;
         this.salePriceNormal = salePriceNormal;
@@ -199,6 +204,14 @@ public class MItem implements Serializable {
         this.category = category;
     }
 
+    public Integer getItemCategory() {
+        return itemCategory;
+    }
+
+    public void setItemCategory(Integer itemCategory) {
+        this.itemCategory = itemCategory;
+    }
+
     public Integer getSub_category() {
         return sub_category;
     }
@@ -279,6 +292,5 @@ public class MItem implements Serializable {
         this.supplierPrice = supplierPrice;
     }
 
-
-    
+   
 }

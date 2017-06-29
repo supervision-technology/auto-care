@@ -174,6 +174,10 @@
                             saveConfirmation = false;
                             Notification.error("Can't be Approved this GRN without Supplier !");
                         }
+                        if (that.data.nbt>=3 || that.data.nbt<=-1 ) {
+                            saveConfirmation = false;
+                            Notification.error("NBT Out Of Range !");
+                        }
                         if (saveConfirmation) {
 
                             this.data.grandTotal = this.data.grandAmount;

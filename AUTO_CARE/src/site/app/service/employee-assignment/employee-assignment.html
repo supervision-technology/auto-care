@@ -1,65 +1,30 @@
-<div class="tile-list background-dark">
-    <div class="tile-list-title">
-        <h4>EMPLOYEE</h4>
-    </div>
-    <div class="smart-scroll-y" style="height: calc(100vh - 40px);width: 280px">
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td style="padding: 0px;">
-                        <div class="panel" ng-repeat="employee in employee" draggable="true" style="margin-bottom: 0px; border-bottom: 1px solid #cccccc; border-radius: 0px" >
-                            <div class="panel-body" style="height: 70px">
-                                <img src="{{employee.image}}" style="width: 40px; height: 40px; border-radius: 50px"/>  
-                                <div style="margin-left: 67px; margin-top: -40px;">
-                                    <label>
-                                        {{employee.name}}
-                                    </label><br>
-                                    <label style="font-size: 12px">
-                                        {{employee.role}}
-                                    </label>
-                                </div>
+<div class="index-content-body">
+    <div>
+        <div class="background-light full-height grid ">
+            <div class="grid-tile" grid="{{bay}}" ng-repeat="bay in model.bayList" ng-drop="true" ng-drop-success="dragLeave(bay,$data)">
+                <div class="col-lg-12 nopadding" >
+
+                    <div class="grid-tile-title" >
+                        <label class="pull-left label label-primary">Max Employee : {{bay.maxEmployee}}</label>
+                        <label class="h4" >{{bay.name}} </label> 
+                        <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
+                    </div>
+                    <!--<div class="nopadding" style="overflow: hidden;height: calc((86vh/(12/{{bay.y}})))" >-->
+                        <div ng-repeat="employee in model.employeesAttendanceList | filter :{currentBay:bay.indexNo}" 
+                             ng-drag="{{dragableMode}}" ng-drag-data="employee" 
+                             class="tile tile-128 col-lg-6" style="width: 150px;border-style: groove">
+                            <div>
+                                <center style="margin-top: 30px;" >
+                                    <a >
+                                        <img src="../../../img/c2.png"/>
+                                        <h5><p class="text-default" style="overflow: hidden ;height: 30px">{{getEmployee(employee.employee).name}}</p></h5>
+                                    </a>
+                                </center>
                             </div>
                         </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<div class="index-content-body">
-    <div style="float: left; width: calc(100% - 282px);">
-        <div class="background-light full-height grid">
-            <div class="grid-tile" grid="{{grid1}}">
-                <div class="grid-tile-title">
-                    <h4>BAY 01</h4>
+                    <!--</div>-->
                 </div>
             </div>
-            <div class="grid-tile" grid="{{grid2}}">
-                <div class="grid-tile-title">
-                    <h4>BAY 02</h4>
-                </div>
-            </div>
-            <div class="grid-tile" grid="{{grid3}}">
-                <div class="grid-tile-title">
-                    <h4>BAY 03</h4>
-                </div>
-            </div>
-            <div class="grid-tile" grid="{{grid4}}">
-                <div class="grid-tile-title">
-                    <h4>BAY 04</h4>
-                </div>
-            </div>
-            <div class="grid-tile" grid="{{grid5}}">
-                <div class="grid-tile-title">
-                    <h4>BAY 05</h4>
-                </div>
-            </div>
-            <!--            <div class="grid-tile" grid="{{grid6}}">
-                            <div class="grid-tile-title">
-                                <h4>BAY 06</h4>
-                            </div>
-                        </div>-->
         </div>
     </div>
 </div>

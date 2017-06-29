@@ -38,6 +38,11 @@ public class BayController {
     public List<Bay> findByBranchIsView() {
         return bayService.findByBranchAndBayIsView(branch,1);
     }
+   
+    @RequestMapping(value = "/get-bays-by-branch-employee-is-view",method = RequestMethod.GET)
+    public List<Bay> findByBranchEmployeeIsView() {
+        return bayService.findByBranchAndEmployeeIsView(branch,1);
+    }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public Bay insertBay(@RequestBody Bay bay) {
