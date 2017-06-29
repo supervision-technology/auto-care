@@ -18,6 +18,10 @@
         this.loadItemCheckDetails = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-check-details");
         };
+        
+        this.loadBays = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/bay/get-bays-by-branch-is-view");
+        };
 
         //load pending jobcards
         this.pendingJobCards = function () {
@@ -35,6 +39,27 @@
 
         this.checkedItem = function (indexNo, status) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item-check/checked-job-item/" + indexNo + "/" + status);
+        };
+
+        //load default final check list
+        this.loadDefaultFinalItemCheck = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item-check");
+        };
+
+        this.getDefaultFinalCheckList = function (jobCard) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item-check/find-by-default-final-check-list/" + jobCard);
+        };
+
+        this.getDefaultFinalCheckListChecked = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/job-item-check/default-final-check-list-check", data);
+        };
+
+        this.findJobCard = function (jobCard) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-job-card/" + jobCard);
+        };
+        
+        this.findByVehicleAssignmentDetails = function (jobCard) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/vehicle-assignment/find-by-job-card/" + jobCard);
         };
 
     };

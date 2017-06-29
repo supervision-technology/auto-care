@@ -46,11 +46,6 @@ public class MVehicleAttenctionController {
         return vehicleAttenctionService.findByJobCardAndVehicleAttenctionsCategory(category, jobCard);
     }
 
-    @RequestMapping(value = "/fill-job-vehicle-attenctions/{jobCard}", method = RequestMethod.GET)
-    public void fillTJobVehicleAttenctions(@PathVariable Integer jobCard) {
-        vehicleAttenctionService.fillTJobVehicleAttenctions(jobCard);
-    }
-
     @RequestMapping(value = "/save-job-vehicle-attenctions", method = RequestMethod.POST)
     public TJobVehicleAttenctions saveTJobVehicleAttenctions(@RequestBody TJobVehicleAttenctions jobVehicleAttenctions) {
         return vehicleAttenctionService.saveTJobVehicleAttenctions(jobVehicleAttenctions);

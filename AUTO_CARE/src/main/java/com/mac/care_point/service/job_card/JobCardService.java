@@ -6,9 +6,18 @@
 package com.mac.care_point.service.job_card;
 
 import com.mac.care_point.service.common.Constant;
+import com.mac.care_point.service.final_check_list.MFinalCheckListItemRepostory;
+import com.mac.care_point.service.final_check_list.TJobFinalCheckListRepository;
+import com.mac.care_point.service.final_check_list.model.MFinalCheckListItem;
+import com.mac.care_point.service.final_check_list.model.TJobFinalCheckList;
 import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.service.job_item.JobItemRepository;
 import com.mac.care_point.service.job_item.model.TJobItem;
+import com.mac.care_point.service.vehicle_attenctions.MVehicleAttenctionRepository;
+import com.mac.care_point.service.vehicle_attenctions.TJobVehicleAttenctionsRepository;
+import com.mac.care_point.service.vehicle_attenctions.model.MVehicleAttenctions;
+import com.mac.care_point.service.vehicle_attenctions.model.TJobVehicleAttenctions;
+import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -31,6 +40,18 @@ public class JobCardService {
     @Autowired
     private JobItemRepository jobItemRepository;
 
+    @Autowired
+    private MVehicleAttenctionRepository attenctionRepository;
+
+    @Autowired
+    private TJobVehicleAttenctionsRepository jobVehicleAttenctionsRepository;
+
+    @Autowired
+    private MFinalCheckListItemRepostory finalCheckListItemRepostory;
+
+    @Autowired
+    private TJobFinalCheckListRepository tJobFinalCheckListRepository;
+
     public List<JobCard> getPendingJobCard() {
         return jobCardRepository.findByStatusOrderByIndexNoDesc(Constant.PENDING_STATUS);
     }
@@ -49,7 +70,43 @@ public class JobCardService {
         }
         jobCard.setInTime(new Date());
         jobCard.setDate(new Date());
-        return jobCardRepository.save(jobCard);
+
+        JobCard getSaveData = jobCardRepository.save(jobCard);
+
+        //check allrady exsist data
+        List<TJobVehicleAttenctions> getJobCardData = jobVehicleAttenctionsRepository.findByJobCard(getSaveData.getIndexNo());
+        if (getJobCardData.isEmpty()) {
+            List< MVehicleAttenctions> vehicleAttenctionsList = attenctionRepository.findAll();
+            for (MVehicleAttenctions mVehicleAttenctions : vehicleAttenctionsList) {
+
+                TJobVehicleAttenctions jobVehicleAttenctions = new TJobVehicleAttenctions();
+                jobVehicleAttenctions.setJobCard(getSaveData.getIndexNo());
+                jobVehicleAttenctions.setVehicleAttenctions(mVehicleAttenctions.getIndexNo());
+                jobVehicleAttenctions.setVehicleAttenctionsCategory(mVehicleAttenctions.getCategory());
+                jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
+            }
+        } else {
+            throw new DuplicateEntityException("Duplicate Data");
+        }
+
+        //save final check list data
+        List<TJobFinalCheckList> getVehicleFinalCheckListData = tJobFinalCheckListRepository.findByJobCard(getSaveData.getIndexNo());
+        if (getVehicleFinalCheckListData.isEmpty()) {
+            List<MFinalCheckListItem> vehicleAttenctionsList = finalCheckListItemRepostory.findAll();
+            for (MFinalCheckListItem mFinalCheckListItem : vehicleAttenctionsList) {
+
+                TJobFinalCheckList jobFinalCheckList = new TJobFinalCheckList();
+                jobFinalCheckList.setFinalCheckListItem(mFinalCheckListItem.getIndexNo());
+                jobFinalCheckList.setVehicle(getSaveData.getVehicle());
+                jobFinalCheckList.setJobCard(getSaveData.getIndexNo());
+                jobFinalCheckList.setCheck(Constant.PENDING_STATUS);
+                tJobFinalCheckListRepository.save(jobFinalCheckList);
+                
+            }
+        } else {
+            throw new DuplicateEntityException("Duplicate Data");
+        }
+        return getSaveData;
     }
 
     public JobCard getJobCard(Integer indexNo) {

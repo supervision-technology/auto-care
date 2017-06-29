@@ -1,7 +1,8 @@
 (function () {
     angular.module("appModule")
-            .service("InvoiceViewService", function ($http, systemConfig) {
+            .service("IndividualViewService", function ($http, systemConfig) {
 
+                //invoice viewer and print
                 this.listParameters = function (report) {
                     return $http.post(systemConfig.apiUrl + "/api/v1/report/report-viewer/report-parameters", JSON.stringify(report));
                 };
@@ -26,5 +27,6 @@
                 this.viewReport = function (report, params, reportValues) {
                     return $http.get(this.getReportUrl(report, params, reportValues), {responseType: 'arraybuffer'});
                 };
+
             });
 }());

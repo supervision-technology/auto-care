@@ -6,11 +6,14 @@
 package com.mac.care_point.service.final_check_list;
 
 import com.mac.care_point.service.common.Constant;
+import com.mac.care_point.service.final_check_list.model.MFinalCheckListItem;
+import com.mac.care_point.service.final_check_list.model.TJobFinalCheckList;
 import com.mac.care_point.service.final_check_list.model.TJobItemCheck;
 import com.mac.care_point.service.job_card.JobCardRepository;
 import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.service.job_item.JobItemRepository;
 import com.mac.care_point.service.job_item.model.TJobItem;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,12 @@ public class TJobItemCheckService {
 
     @Autowired
     private JobCardRepository jobCardRepository;
+
+    @Autowired
+    private MFinalCheckListItemRepostory finalCheckListItemRepostory;
+
+    @Autowired
+    private TJobFinalCheckListRepository tJobFinalCheckListRepository;
 
     public TJobItemCheck saveTJobItemCheck(TJobItemCheck itemCheck) {
         return itemCheckRepository.save(itemCheck);
@@ -68,11 +77,45 @@ public class TJobItemCheckService {
         } else {
             getJobCardData.setFinalCheck(Boolean.FALSE);
         }
-        
+
         jobCardRepository.save(getJobCardData);
 
         jobItemRepository.save(getTJobItem);
         return itemCheckRepository.save(getSaveItem);
+    }
+
+    public TJobFinalCheckList saveTJobFinalCheckList(TJobFinalCheckList tJobFinalCheckList) {
+        if (tJobFinalCheckList.getCheck().equals(Constant.PENDING_STATUS)) {
+            tJobFinalCheckList.setDateTime(null);
+        } else {
+            tJobFinalCheckList.setDateTime(new Date());
+        }
+        
+        TJobFinalCheckList getSaveDate = tJobFinalCheckListRepository.save(tJobFinalCheckList);
+        
+        //get job card default final check list status update
+        JobCard getJobCardData = jobCardRepository.findOne(tJobFinalCheckList.getJobCard());
+        
+        List<TJobFinalCheckList> findPendingFinalCheckList = tJobFinalCheckListRepository.findByJobCardAndCheck(tJobFinalCheckList.getJobCard(),Constant.PENDING_STATUS);
+        if (findPendingFinalCheckList.isEmpty()) {
+            System.out.println("BOOLEAN TRUE");
+            getJobCardData.setDefaultFinalCheck(Boolean.TRUE);
+        } else {
+            System.out.println("BOOLEAN FALSE");
+            getJobCardData.setDefaultFinalCheck(Boolean.FALSE);
+        }
+
+        jobCardRepository.save(getJobCardData);
+        
+        return getSaveDate;
+    }
+
+    public List<TJobFinalCheckList> findByTJobFinalCheckList(Integer jobCard) {
+        return tJobFinalCheckListRepository.findByJobCard(jobCard);
+    }
+
+    public List<MFinalCheckListItem> allMFinalCheckListItem() {
+        return finalCheckListItemRepostory.findAll();
     }
 
 }

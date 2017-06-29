@@ -59,24 +59,24 @@ public class MVehicleAttenctionService {
         return jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
     }
 
-    @Transactional
-    public void fillTJobVehicleAttenctions(Integer jobCard) {
-        //check allrady exsist data
-        List<TJobVehicleAttenctions> getJobCardData = jobVehicleAttenctionsRepository.findByJobCard(jobCard);
-        if (getJobCardData.isEmpty()) {
-            List< MVehicleAttenctions> vehicleAttenctionsList = attenctionRepository.findAll();
-            for (MVehicleAttenctions mVehicleAttenctions : vehicleAttenctionsList) {
-
-                TJobVehicleAttenctions jobVehicleAttenctions = new TJobVehicleAttenctions();
-                jobVehicleAttenctions.setJobCard(jobCard);
-                jobVehicleAttenctions.setVehicleAttenctions(mVehicleAttenctions.getIndexNo());
-                jobVehicleAttenctions.setVehicleAttenctionsCategory(mVehicleAttenctions.getCategory());
-                jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
-            }
-        } else {
-            throw new DuplicateEntityException("Duplicate Data");
-        }
-    }
+//    @Transactional
+//    public void fillTJobVehicleAttenctions(Integer jobCard) {
+//        //check allrady exsist data
+//        List<TJobVehicleAttenctions> getJobCardData = jobVehicleAttenctionsRepository.findByJobCard(jobCard);
+//        if (getJobCardData.isEmpty()) {
+//            List< MVehicleAttenctions> vehicleAttenctionsList = attenctionRepository.findAll();
+//            for (MVehicleAttenctions mVehicleAttenctions : vehicleAttenctionsList) {
+//
+//                TJobVehicleAttenctions jobVehicleAttenctions = new TJobVehicleAttenctions();
+//                jobVehicleAttenctions.setJobCard(jobCard);
+//                jobVehicleAttenctions.setVehicleAttenctions(mVehicleAttenctions.getIndexNo());
+//                jobVehicleAttenctions.setVehicleAttenctionsCategory(mVehicleAttenctions.getCategory());
+//                jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
+//            }
+//        } else {
+//            throw new DuplicateEntityException("Duplicate Data");
+//        }
+//    }
 
     public List<TJobVehicleAttenctions> getLastJobCardVehicle(Integer vehicle) {
         Integer getLastJobCardIndexNo = jobVehicleAttenctionsRepository.getLastJobCardVehicle(vehicle);

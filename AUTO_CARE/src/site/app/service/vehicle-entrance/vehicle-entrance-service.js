@@ -48,8 +48,16 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/price-category");
         };
 
-        this.fillJobVehicleAttenctions = function (jobCard) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/fill-job-vehicle-attenctions/" + jobCard);
+        this.getLastJobCardVehicleAttenctions = function (vehicle) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/find-last-job-card/" + vehicle);
+        };
+
+        this.getVehicleAttenctionsCategory = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/vehicle-attenctions-category");
+        };
+
+        this.getVehicleAttenctions = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions");
         };
     };
     angular.module("appModule")

@@ -56,7 +56,7 @@ public class ReportViewerController {
     @RequestMapping(value = "/invoice-report-data/{reportName}", method = RequestMethod.GET)
     public Report viewInvoiceReport(@PathVariable String reportName) {
 
-        File reportDir = new File(REPORT_DIR, "reports\\" + reportName + ".jrxml");
+        File reportDir = new File(REPORT_DIR, "reports" + File.separator + reportName + ".jrxml");
         Report report = new Report();
         report.setFileName(reportDir.getAbsolutePath());
         report.setReportName(reportDir.getName());

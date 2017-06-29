@@ -181,7 +181,7 @@
                                 animation: true,
                                 ariaLabelledBy: 'modal-title',
                                 ariaDescribedBy: 'modal-body',
-                                templateUrl: 'app/front-office/purchase_order/popup-dialog/branch-stock-popup.html',
+                                templateUrl: 'app/front-office/purchase-order/popup-dialog/branch-stock-popup.html',
                                 controller: 'purchaseOrderRequestController',
                                 size: 'lg'
                             });

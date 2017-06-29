@@ -191,16 +191,19 @@
                                         .then(function () {
                                             Notification.success("New client added success !!!");
                                             $scope.ui.changeUi = 'ui3';
+                                            $scope.model.vehicleData.lastMilage = null;
                                         }, function () {
                                             Notification.error("New client added fail !!!");
+                                            $scope.model.vehicleData.lastMilage = null;
                                         });
                             }
                         } else {
                             $scope.ui.changeUi = 'ui3';
+                            $scope.model.vehicleData.lastMilage = null;
                             $scope.model.loadJobCardByClientIndexNo($scope.model.clientData.indexNo);
+                            $scope.model.getLastJobCardVehicleAttenctions($scope.model.vehicleData.indexNo);
                         }
                     }
-
                 };
 
                 $scope.ui.jobCardNsext = function () {

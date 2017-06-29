@@ -55,7 +55,8 @@
                         "vehicleImages": false,
                         "finalCheck": false,
                         "attenctions": false,
-                        "invoice": false
+                        "invoice": false,
+                        "defaultFinalCheck": false
                     };
                     return data;
                 };

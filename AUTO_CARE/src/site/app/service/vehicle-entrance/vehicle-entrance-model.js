@@ -17,7 +17,10 @@
             customerTypeList: [],
             vehicleTypeList: [],
             priceCategoryList: [],
+            vehicleAttenctionsCategoryList: [],
+            vehicleAttenctionsList: [],
             jobCardList: [],
+            lastJobCardVehicleAttenctionList: [],
             constructor: function () {
                 var that = this;
                 this.vehicleData = vehicleEntranceFactory.newVehicleData();
@@ -44,6 +47,16 @@
                 vehicleEntranceService.loadPriceCategory()
                         .success(function (data) {
                             that.priceCategoryList = data;
+                        });
+
+                vehicleEntranceService.getVehicleAttenctionsCategory()
+                        .success(function (data) {
+                            that.vehicleAttenctionsCategoryList = data;
+                        });
+
+                vehicleEntranceService.getVehicleAttenctions()
+                        .success(function (data) {
+                            that.vehicleAttenctionsList = data;
                         });
             },
             loadClient: function () {
@@ -105,20 +118,6 @@
                                     });
                         });
             },
-            fillJobVehicleAttenctions: function (jobCard) {
-                var defer = $q;
-                vehicleEntranceService.fillJobVehicleAttenctions(jobCard)
-                        .success(function (data) {
-                            console.log("+++++++++++++++++++++++++++++++++++++");
-                            console.log("+++++++++++++++++++++++++++++++++++++");
-                            console.log("+++++++++++++++++++++++++++++++++++++");
-                            defer.resolve();
-                        })
-                        .error(function () {
-                            defer.reject();
-                        });
-                return defer.promise;
-            },
             saveJobCard: function () {
                 var that = this;
                 that.jobcard.transaction = 1;
@@ -131,10 +130,9 @@
                 that.jobcard.vehicle = that.vehicleData.indexNo;
                 var defer = $q.defer();
                 vehicleEntranceService.saveJob(JSON.stringify(that.jobcard))
-                        .success(function (data) {                            
+                        .success(function (data) {
                             that.loadClient();
                             that.loadVehicle();
-                            that.fillJobVehicleAttenctions(data);
                             defer.resolve(data);
                         })
                         .error(function () {
@@ -233,6 +231,40 @@
                     }
                 });
                 return priceCategory;
+            },
+            vehicleAttenctions: function (indexNo) {
+                var data = "";
+                angular.forEach(this.vehicleAttenctionsList, function (values) {
+                    if (values.indexNo === indexNo) {
+                        data = values;
+                        return;
+                    }
+                });
+                return data;
+            },
+            vehicleAttenctionCategory: function (indexNo) {
+                var data = "";
+                angular.forEach(this.vehicleAttenctionsCategoryList, function (values) {
+                    if (values.indexNo === parseInt(indexNo)) {
+                        data = values;
+                        return;
+                    }
+                });
+                return data;
+            },
+            getLastJobCardVehicleAttenctions: function (jobCard) {
+                var that = this;
+                var defer = $q;
+                vehicleEntranceService.getLastJobCardVehicleAttenctions(jobCard)
+                        .success(function (data) {
+                            that.lastJobCardVehicleAttenctionList = [];
+                            that.lastJobCardVehicleAttenctionList = data;
+                            defer.resolve();
+                        })
+                        .error(function () {
+                            defer.reject();
+                        });
+                return defer.promise;
             }
         };
         return vehicleEntranceModel;

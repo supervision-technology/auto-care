@@ -583,4 +583,11 @@
 </div>
 <div class="fab-container pull-left">
     <a class="fab fab-lg fab-success" ng-hide="ui.model === 'CATEGORY'" ng-click="ui.backToCategory();"><i class="glyphicon glyphicon-chevron-left"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.model === 'CATEGORY' && model.jobItemList.length" ng-click="ui.printJobItemRequestAstimate();"><i class="glyphicon glyphicon-print"></i></a>
 </div>
+<script type="text/ng-template" id="actimate_popup.html"> 
+ <div class="col-lg-12">
+    <object data="{{content}}" class="smart-scroll-y" type="application/pdf" style="width:100%;height: calc(100vh - 69px);">
+    </object>
+ </div>
+</script>

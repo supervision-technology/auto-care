@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .factory("finalCheckListModel", function (finalCheckListService,finalCheckListModelFactory, $q) {
+            .factory("finalCheckListModel", function (finalCheckListService, finalCheckListModelFactory, $q) {
                 function finalCheckListModel() {
                     this.constructor();
                 }
@@ -9,19 +9,23 @@
                     data: {},
                     jobCardData: {},
                     //master data lists
+                    bays: [],
                     items: [],
                     vehicles: [],
                     itemUnits: [],
                     itemCheckDetails: [],
+                    defaultFinalCheckListItems: [],
                     //pending job card list
                     pendingJobCards: [],
                     //select job card items
                     jobItemList: [],
                     itemCheckDetailsList: [],
+                    defaultFinalCheckDetailsList: [],
+                    vehicleAssgnmentDetailsList: [],
                     constructor: function () {
                         var that = this;
-                        this.jobCardData =  finalCheckListModelFactory.newJobCardData();
-                        
+                        this.jobCardData = finalCheckListModelFactory.newJobCardData();
+
                         finalCheckListService.pendingJobCards()
                                 .success(function (data) {
                                     that.pendingJobCards = data;
@@ -30,6 +34,16 @@
                         finalCheckListService.loadItems()
                                 .success(function (data) {
                                     that.items = data;
+                                });
+
+                        finalCheckListService.loadBays()
+                                .success(function (data) {
+                                    that.bays = data;
+                                });
+
+                        finalCheckListService.loadDefaultFinalItemCheck()
+                                .success(function (data) {
+                                    that.defaultFinalCheckListItems = data;
                                 });
 
                         finalCheckListService.loadVehicles()
@@ -47,6 +61,44 @@
                                     that.itemCheckDetails = data;
                                 });
                     },
+                    setDefaultFinalCheckList: function (data) {
+                        var defer = $q.defer();
+                        var that = this;
+                        finalCheckListService.getDefaultFinalCheckListChecked(data)
+                                .success(function (data) {
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    findJobCard: function (jobCardIndexNo) {
+                        var defer = $q.defer();
+                        var that = this;
+                        finalCheckListService.findJobCard(jobCardIndexNo)
+                                .success(function (data) {
+                                    angular.extend(that.jobCardData, data);
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    findByVehicleAssignmentDetails: function (jobCardIndexNo) {
+                        var defer = $q.defer();
+                        var that = this;
+                        finalCheckListService.findByVehicleAssignmentDetails(jobCardIndexNo)
+                                .success(function (data) {
+                                    that.vehicleAssgnmentDetailsList = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
                     getJobItemHistory: function (jobCard) {
                         var defer = $q.defer();
                         var that = this;
@@ -60,7 +112,22 @@
                                     that.jobItemList = [];
                                     defer.reject();
                                 });
-                        return  defer.promise;
+                        return defer.promise;
+                    },
+                    getDefaultFinalCheckList: function (jobCard) {
+                        var that = this;
+                        var defer = $q.defer();
+                        finalCheckListService.getDefaultFinalCheckList(jobCard)
+                                .success(function (data) {
+                                    that.defaultFinalCheckDetailsList = [];
+                                    that.defaultFinalCheckDetailsList = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.defaultFinalCheckDetailsList = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
                     },
                     getItemCheckDetails: function (item) {
                         var defer = $q.defer();
@@ -166,6 +233,26 @@
                     itemUnitData: function (indexNo) {
                         var data = "";
                         angular.forEach(this.itemUnits, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    loadDefaultFinalItemCheck: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.defaultFinalCheckListItems, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    bay: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.bays, function (values) {
                             if (values.indexNo === parseInt(indexNo)) {
                                 data = values;
                                 return;

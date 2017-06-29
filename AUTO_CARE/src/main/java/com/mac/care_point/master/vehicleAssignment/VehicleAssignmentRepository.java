@@ -6,6 +6,7 @@
 package com.mac.care_point.master.vehicleAssignment;
 
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
+import com.mac.care_point.service.job_card.model.JobCard;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -32,5 +33,8 @@ public interface VehicleAssignmentRepository extends JpaRepository<TVehicleAssig
             + "	and t_vehicle_assignment.bay=:bay \n"
             + "	and t_job_card.`status` != :status\n"
             + "	and t_vehicle_assignment.out_time is null", nativeQuery = true)
-    public Integer getBayAssignVehicleCount(@Param("branch") Integer branch,@Param("status") String status,@Param("bay") Integer bay);
+    public Integer getBayAssignVehicleCount(@Param("branch") Integer branch, @Param("status") String status, @Param("bay") Integer bay);
+
+    @Query(value = "select * from t_vehicle_assignment where job_card = :jobCard", nativeQuery = true)
+    public List<TVehicleAssignment> findByJobCardOutTimeAsc(@Param("jobCard") Integer jobCard);
 }

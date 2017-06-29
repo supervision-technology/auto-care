@@ -86,8 +86,8 @@
             return $http.post(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/save-job-vehicle-attenctions", data);
         };
 
-        this.getLastJobCardVehicleAttenctions = function (jobCard) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/find-last-job-card/" + jobCard);
+        this.getLastJobCardVehicleAttenctions = function (vehicle) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/find-last-job-card/" + vehicle);
         };
         
         this.findJobItemByIndexNo = function (jobItem) {

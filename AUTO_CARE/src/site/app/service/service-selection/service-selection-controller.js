@@ -3,7 +3,7 @@
     angular.module("serviceSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, $routeParams, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("serviceSelectionController", function ($scope, $sce, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane, IndividualViewService) {
                 $scope.model = new ItemSelectionModel();
 
                 $scope.ui = {};
@@ -15,6 +15,10 @@
 
                 $scope.selectCategoryPosition = null;
                 $scope.viewRemarkFeild = null;
+
+                $scope.model.currentReportGroup = {};
+                $scope.model.currentReport = {};
+                $scope.model.currentReport.parameterValues = {};
 
                 $scope.ui.selectedJobCardRow = function (jobCardData) {
 
@@ -230,6 +234,50 @@
                 };
 
 //------------------------------- /vehicle attenctions -------------------------------    
+
+
+                $scope.ui.printJobItemRequestAstimate = function () {
+//---------------------------------- invoice ----------------------------------
+                    var reportName = "Estimate";
+                    //get report details
+                    IndividualViewService.reportData(reportName)
+                            .success(function (data) {
+                                $scope.model.currentReport.report = data;
+
+                                //get report paramiters
+                                IndividualViewService.listParameters(data)
+                                        .success(function (data) {
+                                            $scope.model.currentReport.parameters = data;
+                                        });
+
+                                //set paramiters values
+                                $scope.model.currentReport.parameterValues.INDEX_NO = $scope.selectedJobCardIndexNo;
+
+                                //view reports
+                                IndividualViewService.viewReport(
+                                        $scope.model.currentReport.report,
+                                        $scope.model.currentReport.parameters,
+                                        $scope.model.currentReport.parameterValues
+                                        )
+                                        .success(function (response) {
+                                            var file = new Blob([response], {type: 'application/pdf'});
+                                            var fileURL = URL.createObjectURL(file);
+
+                                            $scope.content = $sce.trustAsResourceUrl(fileURL);
+
+                                            $uibModal.open({
+                                                animation: true,
+                                                ariaLabelledBy: 'modal-title',
+                                                ariaDescribedBy: 'modal-body',
+                                                templateUrl: 'actimate_popup.html',
+                                                scope: $scope,
+                                                size: 'lg'
+                                            });
+
+                                        });
+                            });
+//---------------------------------- end invoice ----------------------------------
+                };
 
                 $scope.init = function () {
                     //get routing paramiets job card index

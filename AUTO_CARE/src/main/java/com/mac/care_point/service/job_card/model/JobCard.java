@@ -97,6 +97,9 @@ public class JobCard implements Serializable {
 
     @Column(name = "invoice")
     private Boolean invoice;
+    
+    @Column(name = "default_final_check")
+    private Boolean defaultFinalCheck;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCard", fetch = FetchType.EAGER)
@@ -105,7 +108,7 @@ public class JobCard implements Serializable {
     public JobCard() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, Date inTime, Date outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, List<TJobItem> tJobItemList) {
+    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, Date inTime, Date outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -125,6 +128,7 @@ public class JobCard implements Serializable {
         this.finalCheck = finalCheck;
         this.attenctions = attenctions;
         this.invoice = invoice;
+        this.defaultFinalCheck = defaultFinalCheck;
         this.tJobItemList = tJobItemList;
     }
 
@@ -290,6 +294,14 @@ public void setStatus(String status) {
 
     public void setOutTime(Date outTime) {
         this.outTime = outTime;
+    }
+
+    public Boolean getDefaultFinalCheck() {
+        return defaultFinalCheck;
+    }
+
+    public void setDefaultFinalCheck(Boolean defaultFinalCheck) {
+        this.defaultFinalCheck = defaultFinalCheck;
     }
     
 }
