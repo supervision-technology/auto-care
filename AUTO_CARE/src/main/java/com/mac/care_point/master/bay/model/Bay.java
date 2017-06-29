@@ -91,17 +91,16 @@ public class Bay implements Serializable {
     @Column(name = "branch")
     private Integer branch;
 
-    @Column(name = "bay_is_view")
+    @Column(name = "vehicle_is_view")
     private Integer bayIsView;
+    
+    @Column(name = "employee_is_view")
+    private Integer employeeIsView;
 
     public Bay() {
     }
 
-    public Bay(Integer indexNo) {
-        this.indexNo = indexNo;
-    }
-
-    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle, String color, Integer branch, Integer bayIsView) {
+    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle, String color, Integer branch, Integer bayIsView, Integer employeeIsView) {
         this.indexNo = indexNo;
         this.name = name;
         this.maxVehicle = maxVehicle;
@@ -116,6 +115,7 @@ public class Bay implements Serializable {
         this.color = color;
         this.branch = branch;
         this.bayIsView = bayIsView;
+        this.employeeIsView = employeeIsView;
     }
 
     public Integer getIndexNo() {
@@ -230,4 +230,11 @@ public class Bay implements Serializable {
         this.bayIsView = bayIsView;
     }
 
+    public Integer getEmployeeIsView() {
+        return employeeIsView;
+    }
+
+    public void setEmployeeIsView(Integer employeeIsView) {
+        this.employeeIsView = employeeIsView;
+    }
 }

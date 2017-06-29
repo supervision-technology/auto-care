@@ -53,5 +53,9 @@ public class BayService {
     List<Bay> findByBranchAndBayIsView(Integer branch, Integer isView) {
         return repository.findByBranchAndBayIsView(branch,isView);
     }
+
+    List<Bay> findByBranchAndEmployeeIsView(Integer branch, Integer isView) {
+         return repository.findByBranchAndEmployeeIsView(branch,isView);
+    }
     
 }

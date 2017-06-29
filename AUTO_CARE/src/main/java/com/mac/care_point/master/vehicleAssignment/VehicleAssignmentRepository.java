@@ -17,9 +17,9 @@ import org.springframework.data.repository.query.Param;
  */
 public interface VehicleAssignmentRepository extends JpaRepository<TVehicleAssignment, Integer> {
 
-    public List<TVehicleAssignment> findByBranchAndJobCardStatusNot(Integer branch, String status);
+//    public List<TVehicleAssignment> findByBranchAndJobCardStatusNot(Integer branch, String status);
 
-    public List<TVehicleAssignment> findTop1ByJobCardIndexNoOrderByInTimeDesc(Integer jobCardIndexNo);
+    public List<TVehicleAssignment> findTop1ByJobCardOrderByInTimeDesc(Integer jobCardIndexNo);
 
 //    public List<TVehicleAssignment> findByJobCardStatusNotIn(String status);
     public List<TVehicleAssignment> findByBranchAndBayAndOutTime(Integer branch, Integer bay, Object object);
@@ -33,4 +33,6 @@ public interface VehicleAssignmentRepository extends JpaRepository<TVehicleAssig
             + "	and t_job_card.`status` != :status\n"
             + "	and t_vehicle_assignment.out_time is null", nativeQuery = true)
     public Integer getBayAssignVehicleCount(@Param("branch") Integer branch,@Param("status") String status,@Param("bay") Integer bay);
+
+    public List<TVehicleAssignment> findByJobCard(Integer jobCard);
 }

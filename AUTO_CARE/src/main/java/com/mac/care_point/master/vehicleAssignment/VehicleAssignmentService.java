@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.master.vehicleAssignment;
 
-
 import com.mac.care_point.master.vehicle.VehicleRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.common.Constant;
@@ -26,51 +25,59 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class VehicleAssignmentService {
-    
+
     @Autowired
     private VehicleAssignmentRepository vehicleAssignmentRepository;
-    
+
     @Autowired
     private JobCardRepository jobCardRepository;
-    
+
     public List<TVehicleAssignment> findAll() {
         return vehicleAssignmentRepository.findAll();
     }
-    
+
     public TVehicleAssignment saveDetail(TVehicleAssignment vehicleAssignment) {
-//        List<JobCard> findByBay = jobCardRepository.findByBay(vehicleAssignment.getBay().getIndexNo());
-//        if (findByBay.isEmpty()) {
-            vehicleAssignment.getJobCard().setStatus(Constant.ON_GOING);
-            vehicleAssignment.getJobCard().setBay(vehicleAssignment.getBay().getIndexNo());
-            jobCardRepository.save(vehicleAssignment.getJobCard());
-            List<TVehicleAssignment> updatedObjects = vehicleAssignmentRepository.findTop1ByJobCardIndexNoOrderByInTimeDesc(vehicleAssignment.getJobCard().getIndexNo());
-            if (!updatedObjects.isEmpty()) {
-                TVehicleAssignment updateVehicleAssignment = updatedObjects.get(0);
-                updateVehicleAssignment.setOutTime(vehicleAssignment.getInTime());
-                vehicleAssignmentRepository.save(updatedObjects.get(0));
-            }
-            vehicleAssignment.setIndexNo(0);
-            return vehicleAssignmentRepository.save(vehicleAssignment);
-            
-//        } else {
-//            throw new DuplicateEntityException("Already exsisit " + vehicleAssignment.getBay().getIndexNo());
-//        }
-        
+
+        JobCard findOne = jobCardRepository.findOne(vehicleAssignment.getJobCard());
+        findOne.setBay(vehicleAssignment.getBay());
+        jobCardRepository.save(findOne);
+        System.out.println(vehicleAssignment.getJobCard());
+        System.out.println(vehicleAssignment.getJobCard());
+        System.out.println(vehicleAssignment.getJobCard());
+        System.out.println(vehicleAssignment.getJobCard());
+        System.out.println(vehicleAssignment.getJobCard());
+        System.out.println(vehicleAssignment.getJobCard());
+        System.out.println(vehicleAssignment.getJobCard());
+        List<TVehicleAssignment> updatedObjects = vehicleAssignmentRepository.findTop1ByJobCardOrderByInTimeDesc(vehicleAssignment.getJobCard());
+        if (!updatedObjects.isEmpty()) {
+            TVehicleAssignment updateVehicleAssignment = updatedObjects.get(0);
+            updateVehicleAssignment.setOutTime(vehicleAssignment.getInTime());
+            vehicleAssignmentRepository.save(updatedObjects.get(0));
+        }
+        vehicleAssignment.setIndexNo(0);
+        TVehicleAssignment save = vehicleAssignmentRepository.save(vehicleAssignment);
+        return save;
     }
-    
+
     public void deleteDetail(Integer indexNo) {
         vehicleAssignmentRepository.delete(indexNo);
     }
-//    public List<TVehicleAssignment> findAllByType() {
-//       return vehicleAssignmentRepository.findByJobCardStatusNotIn("complete");
-//    }
 
-    Integer getBayAssignVehicleCount(Integer bay, Integer branch) {
-        System.out.println("*********");
-        System.out.println("*********");
-        System.out.println(bay);
-        System.out.println(branch);
-        System.out.println("################");
-        return vehicleAssignmentRepository.getBayAssignVehicleCount(branch,Constant.FINISHE_STATUS,bay);
+    public Integer getBayAssignVehicleCount(Integer bay, Integer branch) {
+        return vehicleAssignmentRepository.getBayAssignVehicleCount(branch, Constant.FINISHE_STATUS, bay);
+    }
+
+    public TVehicleAssignment jobFinished(TVehicleAssignment vehicleAssignment) {
+        List<TVehicleAssignment> list = vehicleAssignmentRepository.findTop1ByJobCardOrderByInTimeDesc(vehicleAssignment.getIndexNo());
+        if (list.isEmpty()) {
+            return null;
+        }
+        TVehicleAssignment finishObject = list.get(0);
+        if (finishObject.getOutTime() == null) {
+            finishObject.setOutTime(vehicleAssignment.getInTime());
+            TVehicleAssignment save = vehicleAssignmentRepository.save(finishObject);
+            return save;
+        }
+        return null;
     }
 }

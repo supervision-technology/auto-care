@@ -25,14 +25,8 @@
                     <col style="width: 100%"/>
                     <tbody>
                         <tr>
-                            <td><input class="form-control" placeholder="supplier" ng-model="model.data.supplier" 
-                                       uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
-                                       typeahead-input-formatter="model.getSupplier($model)" 
-                                       typeahead-editable="false"
-                                       typeahead-on-select="ui.changeSupplier()"
-
-                                       ng-disabled="ui.mode !== 'NEW'"
-                                       >
+                            <td><input class="form-control" placeholder="PO number" ng-model="model.data.searchPONumber" 
+                                       ng-disabled="ui.mode !== 'NEW'">
                             </td>
                         </tr>
                     </tbody>
@@ -43,22 +37,23 @@
                     <col style="width: 100%"/>
                     <tbody>
                         <tr>
-                            <td><input class="form-control" placeholder="item" ng-model="model.data.searchItem" 
-                                       uib-typeahead="item.indexNo as (item.barcode + ' - ' + item.name) for item in model.items |filter:$viewValue|limitTo:10" 
-                                       typeahead-input-formatter="model.getItemLable($model)" 
+                            <td><input class="form-control" placeholder="supplier" ng-model="model.data.supplier" 
+                                       uib-typeahead="supplier.indexNo as (supplier.indexNo + ' - ' + supplier.name) for supplier in model.suppliers |filter:$viewValue|limitTo:10" 
+                                       typeahead-input-formatter="model.getSupplier($model)" 
                                        typeahead-editable="false"
-                                       ng-disabled="ui.mode !== 'NEW'"
-                                       >
+                                       typeahead-on-select="ui.changeSupplier()"
+                                       ng-disabled="ui.mode !== 'NEW'">
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+            
             <div class="smart-scroll-y" style="height: calc(100vh - 106px);" ng-show="model.pendingPurchaseOrderList.length" >
                 <table class="table-rounded control-table table-hover">
                     <col style="width: 100%"/>
                     <tbody>
-                        <tr class="animation-fade" ng-repeat="order in model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier} track by $index"
+                        <tr class="animation-fade" ng-repeat="order in model.pendingPurchaseOrderList|filter : {supplier : model.data.supplier===null?'':model.data.supplier} |filter : {number : model.data.searchPONumber===null?'':model.data.searchPONumber} track by $index"
                             ng-if="model.orderLengthCheck(order.purchaseOrderItemList);" ng-click="ui.selectPurchaseOrder(order.indexNo,order.number)" >
                             <td class="text-center" ng-class="model.selectedDetailIndex === order.indexNo ? 'selected' : ''">
                                 <b>{{model.getSupplier(order.supplier)}}</b>
@@ -91,7 +86,7 @@
                     </thead>
                 </table>
             </div>
-            <div class="placeholder col-md-12" ng-hide="model.pendingPurchaseOrderList.length" style="height: calc(100vh - 140px); padding: 0px 10px 10px 10px;">
+            <div class="placeholder col-md-12" ng-hide="model.pendingPurchaseOrderList.length" style="height: calc(100vh - 244px); padding: 0px 10px 10px 10px;">
                 <h1>PLEASE APPROVE PENDING PURCHASE ORDER TO DISPLAY :(</h1>
             </div>
         </div>

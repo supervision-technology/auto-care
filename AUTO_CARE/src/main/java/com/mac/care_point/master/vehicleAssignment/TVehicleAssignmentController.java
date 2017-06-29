@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 @RequestMapping("/api/care-point/transaction/vehicle-assignment")
 public class TVehicleAssignmentController {
 
-    Integer branch=1;
-    
+    Integer branch = 1;
+
     @Autowired
     private VehicleAssignmentService vehicleAssignmentService;
 
@@ -38,10 +38,15 @@ public class TVehicleAssignmentController {
     public TVehicleAssignment insertDetail(@RequestBody TVehicleAssignment vehicleAssignment) {
         return vehicleAssignmentService.saveDetail(vehicleAssignment);
     }
+
+    @RequestMapping(value = "/job-finished", method = RequestMethod.POST)
+    public TVehicleAssignment jobFinished(@RequestBody TVehicleAssignment vehicleAssignment) {
+        return vehicleAssignmentService.jobFinished(vehicleAssignment);
+    }
+
     @RequestMapping(value = "/load_not_finished_vehicle_assignment/{bay}", method = RequestMethod.GET)
     public Integer getBayAssignVehicleCount(@PathVariable Integer bay) {
-//        System.out.println("aaaaaaaaaaaaaa");
-        return vehicleAssignmentService.getBayAssignVehicleCount(bay,branch);
+        return vehicleAssignmentService.getBayAssignVehicleCount(bay, branch);
     }
 
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)
