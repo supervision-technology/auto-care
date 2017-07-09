@@ -29,6 +29,10 @@ public class SubCategoryService {
         return subCategoryRepository.findAll();
     }
 
+    public List<Object[]> findSubCategory(Integer category) {
+        return subCategoryRepository.findSubCubCategoryByCatrory(category);
+    }
+
     public MSubCategory findByname(String name) {
         List<MSubCategory> subCategoryList = subCategoryRepository.findByName(name);
 

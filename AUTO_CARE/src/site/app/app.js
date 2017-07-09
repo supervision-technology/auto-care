@@ -42,7 +42,8 @@
         "purchaseOrderRequestModule",
         "purchaseOrderApproveModule",
         "stockTransferInternalOutModule",
-        "stockTransferInternalInModule"
+        "stockTransferInternalInModule",
+        "itemSelectionModule"
     ]);
 
     //constants
@@ -86,6 +87,11 @@
                         .when("/service/service-selection", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
+                        })
+                        
+                        .when("/service/item-selection", {
+                            templateUrl: "app/service/service-selection/item-selection.html",
+                            controller: "itemSelectionController"
                         })
                         
                         .when("/service/service-selection/:jobCardIndexNo", {

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author L T430
+ * @author kavish manjitha
  */
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -25,7 +25,7 @@ public class ItemCategoryService {
     private ItemCategoryRepository categoryRepository;
 
     public List<MItemCategory> findAllCategory() {
-        return categoryRepository.findAll();
+        return categoryRepository.findByViewApprove(true);
     }
 
     private MItemCategory findByName(String name) {

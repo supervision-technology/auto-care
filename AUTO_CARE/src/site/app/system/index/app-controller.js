@@ -1,7 +1,7 @@
 (function () {
     angular.module("appModule")
             .controller("appController", function ($scope, $rootScope, $location, SecurityService) {
-                $scope.hamburgerOpen = false;
+                $scope.hamburgerOpen = true;
 
                 //route loading
                 $rootScope.$watch("layout.loading", function () {

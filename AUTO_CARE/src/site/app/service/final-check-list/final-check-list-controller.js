@@ -29,8 +29,8 @@
                     return $filter('date')(new Date(date), 'HH:mm:ss');
                 };
 
+                //vehicle assignment inTIme and outTime difarance
                 $scope.ui.dateDifarance = function (date01, date02) {
-
                     if (!date02) {
                         date02 = new Date();
                     }

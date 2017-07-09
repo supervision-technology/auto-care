@@ -57,12 +57,10 @@ public class JobCard implements Serializable {
     private Integer priceCategory;
 
     @Column(name = "in_time")
-    @Temporal(TemporalType.DATE)
-    private Date inTime;
+    private String inTime;
 
     @Column(name = "out_time")
-    @Temporal(TemporalType.DATE)
-    private Date outTime;
+    private String outTime;
 
     @Column(name = "in_mileage")
     private Integer inMileage;
@@ -97,7 +95,7 @@ public class JobCard implements Serializable {
 
     @Column(name = "invoice")
     private Boolean invoice;
-    
+
     @Column(name = "default_final_check")
     private Boolean defaultFinalCheck;
 
@@ -108,7 +106,7 @@ public class JobCard implements Serializable {
     public JobCard() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, Date inTime, Date outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, List<TJobItem> tJobItemList) {
+    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -204,7 +202,7 @@ public class JobCard implements Serializable {
         return status;
     }
 
-public void setStatus(String status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -280,19 +278,19 @@ public void setStatus(String status) {
         this.vehicleImages = vehicleImages;
     }
 
-    public Date getInTime() {
+    public String getInTime() {
         return inTime;
     }
 
-    public void setInTime(Date inTime) {
+    public void setInTime(String inTime) {
         this.inTime = inTime;
     }
 
-    public Date getOutTime() {
+    public String getOutTime() {
         return outTime;
     }
 
-    public void setOutTime(Date outTime) {
+    public void setOutTime(String outTime) {
         this.outTime = outTime;
     }
 
@@ -303,5 +301,5 @@ public void setStatus(String status) {
     public void setDefaultFinalCheck(Boolean defaultFinalCheck) {
         this.defaultFinalCheck = defaultFinalCheck;
     }
-    
+
 }

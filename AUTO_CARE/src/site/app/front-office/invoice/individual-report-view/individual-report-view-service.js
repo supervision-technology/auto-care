@@ -23,9 +23,26 @@
 
                     return url;
                 };
+                
+                this.getPrintReportReportUrl = function (report, params, reportValues) {
+                    var url = systemConfig.apiUrl + "/api/v1/report/report-viewer/print-report";
+
+                    var action = btoa(report.fileName);
+                    url = url + "?action=" + action;
+
+                    angular.forEach(reportValues, function (value, key) {
+                        url = url + "&" + key + "=" + value;
+                    });
+
+                    return url;
+                };
 
                 this.viewReport = function (report, params, reportValues) {
                     return $http.get(this.getReportUrl(report, params, reportValues), {responseType: 'arraybuffer'});
+                };
+                
+                this.printReport = function (report, params, reportValues) {
+                    return $http.get(this.getPrintReportReportUrl(report, params, reportValues));
                 };
 
             });

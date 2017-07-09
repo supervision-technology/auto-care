@@ -21,11 +21,8 @@
             <div class="row full-height" style="display: flex; flex-flow: column;">
                 <div class="smart-scroll-y" style="height: calc(100vh - 40px);">
                     <div class="tile-lists">
-                        <div class="tiles tile-200 col-xs-4" style="background: {{detils.colour}};" ng-repeat="detils in model.category|filter:{viewApprove : true}" ng-click="ui.categorySelections(detils);">
+                        <div class="tiles tile-200 col-xs-4" style="background: {{detils.color}};" ng-repeat="detils in model.itemCategory" ng-click="ui.findSubCateoryByCateory(detils.indexNo);">
                             <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
-                                <!--                                <div class="col-xs-4">
-                                                                    <img src="/img/{{detils.image}}"/>
-                                                                </div>-->
                                 <div class="col-xs-8" style="font-size: 19px;">
                                     {{detils.name}}
                                 </div>
@@ -36,200 +33,133 @@
             </div>
         </div>
 
-        <div class="col-xs-7 background-light" ng-show="ui.model === 'PACKAGE'">
+        <div class="col-xs-7 background-light" ng-show="ui.model === 'STOCK_ITEM'">
             <div class="row full-height" style="display: flex; flex-flow: column;">
+                <div class="col-xs-12">
+                    <input type="text" class="search-input" placeholder="search" ng-model="searchItem">
+                </div>
                 <table class="square-table background-dark">
-                    <col style="width: 50%;"/>
-                    <col style="width: 30%;"/>
+                    <col style="width: 80%;"/>
                     <col style="width: 20%;"/>
                     <thead>
                         <tr>
-                            <th>PACKAGE NAME</th>
-                            <th>PRICE</th>
+                            <th>SUB CATEHORY</th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
                 </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 105px);">
-                    <div ng-repeat="detils in model.filterItems">
-                        <table class="square-table">
-                            <col style="width: 50%;"/>
-                            <col style="width: 30%;"/>
-                            <col style="width: 20%;"/>
-                            <tbody>
-                                <tr class="background-light">
-                                    <td ng-click="ui.getPackageDetails($index, detils.indexNo);" class="text-bold">{{detils.name}}</td>
-                                    <td ng-click="ui.getPackageDetails($index, detils.indexNo);" ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
-                                    <td ng-click="ui.getPackageDetails($index, detils.indexNo);" ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
-                                    <td><a style="background-color: {{selectedCategoryColors}}" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'PACKAGE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="animation-v-grow background-dark" ng-show="selectPackageItemPosition == $index">
-                            <table class="square-table">
-                                <col style="width: 30%;"/>
-                                <col style="width: 70%;"/>
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>NAME</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="background-dark" ng-repeat="details in model.packageItemList">
-                                        <td><label>{{model.itemData(details.item).indexNo | fixedLength:5}}</label></td>
-                                        <td>{{model.itemData(details.item).name}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!------ attenctions selction ---->
-        <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'ATTENCTIONS'">
-            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
-                <uib-tabset>
-                    <uib-tab heading="NEW OBSERVATION" index="0">
-                        <table class="square-table background-dark">
-                            <col style="width: 80%;"/>
-                            <col style="width: 20%;"/>
-                            <thead>
-                                <tr>
-                                    <th>OBSERVATION CATEGORY</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 90px);">
-                            <div ng-repeat="detils in model.vehicleAttenctionsCategoryList">
-                                <table class="square-table">
-                                    <col style="width: 100%;"/>
-                                    <tbody>
-                                        <tr class="background-light" style="background: {{detils.color}} !important;">
-                                            <td ng-click="ui.getVehicleAttenctionsData($index, detils.indexNo);" class="text-bold">{{detils.name}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                <div class="animation-v-grow background-dark" ng-show="selectCategoryPosition == $index">
-                                    <table class="square-table">
-                                        <col style="width: 35%;"/>
-                                        <col style="width: 50%;"/>
-                                        <col style="width: 15%;"/>
-                                        <tbody ng-repeat="details in model.vehicleAttenctionSelectedList">
-                                            <tr class="background-dark" >
-                                                <td>{{model.vehicleAttenctions(details.vehicleAttenctions).name}}</td>
-                                                <td>
-                                                    <div class="btn-group">
-                                                        <label class="btn" ng-class="details.status === 'N/A' ? 'btn-primary' : 'btn-default'" ng-model="details.status" uib-btn-radio="'N/A'" ng-click="ui.addJobVehicleAttenction(details)">N/A</label>
-                                                        <label class="btn" ng-class="details.status === 'REPALCE' ? 'btn-primary' : 'btn-default'" ng-model="details.status" uib-btn-radio="'REPALCE'" ng-click="ui.addJobVehicleAttenction(details)">REPALCE</label>
-                                                        <label class="btn" ng-class="details.status === 'MODIFICATION' ? 'btn-primary' : 'btn-default'" ng-model="details.status" uib-btn-radio="'MODIFICATION'" ng-click="ui.addJobVehicleAttenction(details)">MODIFICATION</label>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <a class="btn btn-primary" ng-click="ui.viewRemark($index);"><span class="glyphicon glyphicon-arrow-down"></span></a>
-                                                </td>
-                                            </tr>
-                                            <tr class="animation-fade" ng-show="viewRemarkFeild === $index">
-                                                <td colspan="2">
-                                                    <input type="text" ng-model="remark" class="form-control"/>
-                                                </td>
-                                                <td>
-                                                    <a class="btn btn-success" ng-click="ui.addRemarkJobVehicleAttenction(remark);"><span class="glyphicon glyphicon-plus"></span></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>  
-                            </div>
-                        </div>
-                    </uib-tab>
-                    <uib-tab heading="LAST JOB CARD OBSERVATION" index="1">
-                        <table class="square-table background-dark">
-                            <col style="width: 80%;"/>
-                            <col style="width: 20%;"/>
-                            <thead>
-                                <tr>
-                                    <th>OBSERVATION</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 90px);">
-                            <table class="square-table">
-                                <col style="width: 30%;"/>
-                                <col style="width: 30%;"/>
-                                <col style="width: 30%;"/>
-                                <col style="width: 10%;"/>
-                                <tbody ng-repeat="details in model.lastJobCardVehicleAttenctionList">
-                                    <tr class="background-dark">
-                                        <td>{{model.vehicleAttenctionCategory(details.vehicleAttenctionsCategory).name}}</td>
-                                        <td>{{model.vehicleAttenctions(details.vehicleAttenctions).name}}</td>
-                                        <td> 
-                                            <select class="form-control form-group-lg"  ng-model="details.status" style="margin-top: 8px;" ng-readonly="true">
-                                                <option class="N/A">N/A</option>
-                                                <option class="REPALCE">REPALCE</option>
-                                                <option class="MODIFICATION">MODIFICATION</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <a ng-show="details.remark" class="btn btn-success" ng-click="ui.viewRemarkLastJobCard($index, details);"><span class="glyphicon glyphicon-arrow-down"></span></a>
-                                        </td>
-                                    </tr>
-                                    <tr class="background-dark animation-fade" ng-show="viewRemarkFeild === $index">
-                                        <td colspan="4">
-                                            {{remark}}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </uib-tab>
-                </uib-tabset>
-            </div>
-        </div>
-        <!------ /attenctions selction ---->
-
-        <div class="col-xs-7 background-light" ng-show="ui.model === 'SERVICE'">
-            <div class="row full-height" style="display: flex; flex-flow: column;">
-                <div class="col-xs-8">
-                    <input type="text" class="search-input" placeholder="search" ng-model="searchService">
-                </div>
                 <table class="square-table background-dark">
-                    <col style="width: 50%;"/>
+                    <col style="width: 70%;"/>
                     <col style="width: 30%;"/>
-                    <col style="width: 20%;"/>
-                    <col />
                     <thead>
                         <tr>
-                            <th>NAME</th>
-                            <th>PRICE</th>
+                            <th>
+                                <select class="form-control" ng-model="select" ng-change="ui.getStockItemByItemCategory(select, $index);">
+                                    <option ng-repeat="detils in model.subCategory" value="{{detils[0]}}">
+                                        {{detils[1]}}
+                                    </option>
+                                </select>
+                            </th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
                 </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 105px);">
+                <div class="smart-scroll-y" style="height: calc(100vh - 90px);" ng-show="showStockItemTable">
                     <table class="square-table">
-                        <col style="width: 50%;"/>
-                        <col style="width: 30%;"/>
+                        <col style="width: 70%;"/>
+                        <col style="width: 10%;"/>
                         <col style="width: 20%;"/>
+                        <thead>
+                            <tr>
+                                <th>NAME</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
                         <tbody>
-                            <tr class="background-light" ng-repeat="detils in model.filterItems|filter:{ name : searchService}">
-                                <td class="text-bold">{{detils.name}}</td>
-                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
-                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
-                                <td><a style="background-color: {{selectedCategoryColors}}" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                            <tr class="background-dark" ng-repeat="detils in model.itemsByStockLeger|filter:searchItem">
+                                <td class="text-bold"> {{detils[2]}}</td>
+                                <td> 
+                                    <span ng-class="selectVehicleType === 'REGISTER' ? 'label-success' : 'label-primary'" class="label">{{detils[1]}}</span>
+                                </td>
+                                <td><a class="btn btn-primary" ng-click="ui.getItemUnits(detils);"/><span class="glyphicon glyphicon-plus"></span></a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <div class="smart-scroll-y" style="height: calc(100vh - 90px);" ng-show="hideStockItemTable">
+                    <img src="/img/loader1.gif" width="550" height="400" alt="loader1"/>
+                </div>
             </div>
         </div>
+
         <div class="col-xs-5 background-dark">
             <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
-                <uib-tabset active="activeTab">
+                <uib-tabset>
+                    <!------ stock item total---->
+                    <uib-tab heading="ITEM" index="1">
+                        <div style="height: 50px;">
+                            <table class="square-table table-rounded">
+                                <col style="width: 10%;"/>
+                                <col style="width: 40%;"/>
+                                <col style="width: 10%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <col/>
+                                <thead>
+                                    <tr>
+                                        <th>&nbsp;</th>
+                                        <th>SELECTIONS</th>
+                                        <th class="text-right">QTY</th>
+                                        <th class="text-right">AMOUNT</th>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 140px);padding-left: 5px;">
+                            <table class="square-table background-dark">
+                                <col style="width: 10%;"/>
+                                <col style="width: 40%;"/>
+                                <col style="width: 10%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList| filter:{itemType:'STOCK_ITEM'}">
+                                    <tr style="border: none">
+                                        <td>
+                                            <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.itemCategoryColours(model.itemData(selections.item).itemCategory).color}}" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
+                                        </td>
+                                        <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType == 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>
+                                    </tr>
+                                    <tr style="border: none">
+                                        <td colspan="2"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                        <td class="text-right"><small>{{selections.quantity}}</small></td>
+                                        <td class="text-right"><small>{{selections.value|number:2}}</small></td>
+                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index, selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                        <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
+                                            <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
+                                            <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="background-dark">
+                            <table class="square-table">
+                                <col style="width: 50%;"/>
+                                <col style="width: 35%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody>
+                                    <tr class="text-bold">
+                                        <td>ITEM TOTAL</td>
+                                        <td class="text-right">{{model.getSelectItemTotalForItemAndItemUnits() | number:2}}</td>
+                                        <th>&nbsp;</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <!------ /stock item total---->
+
                     <!------ all total (package and service and stock items)---->
                     <uib-tab heading="ALL SELECTIONS" index="0">
                         <div style="height: 50px;">
@@ -313,70 +243,6 @@
                     </uib-tab>
                     <!------ /all total (package and service and stock items)---->
 
-                    <!------ stock item total---->
-                    <uib-tab heading="ITEM" index="1">
-                        <div style="height: 50px;">
-                            <table class="square-table table-rounded">
-                                <col style="width: 10%;"/>
-                                <col style="width: 40%;"/>
-                                <col style="width: 10%;"/>
-                                <col style="width: 35%;"/>
-                                <col style="width: 15%;"/>
-                                <col/>
-                                <thead>
-                                    <tr>
-                                        <th>&nbsp;</th>
-                                        <th>SELECTIONS</th>
-                                        <th class="text-right">QTY</th>
-                                        <th class="text-right">AMOUNT</th>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </thead>
-                            </table>
-                        </div>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 140px);padding-left: 5px;">
-                            <table class="square-table background-dark">
-                                <col style="width: 10%;"/>
-                                <col style="width: 40%;"/>
-                                <col style="width: 10%;"/>
-                                <col style="width: 35%;"/>
-                                <col style="width: 15%;"/>
-                                <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList| filter:{itemType:'STOCK_ITEM'}">
-                                    <tr style="border: none">
-                                        <td>
-                                            <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
-                                        </td>
-                                        <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType == 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>        
-                                    </tr>
-                                    <tr style="border: none">
-                                        <td colspan="2"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
-                                        <td class="text-right"><small>{{selections.quantity}}</small></td>
-                                        <td class="text-right"><small>{{selections.value|number:2}}</small></td>
-                                        <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index, selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                        <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
-                                            <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
-                                            <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="background-dark">
-                            <table class="square-table">
-                                <col style="width: 50%;"/>
-                                <col style="width: 35%;"/>
-                                <col style="width: 15%;"/>
-                                <tbody>
-                                    <tr class="text-bold">
-                                        <td>ITEM TOTAL</td>
-                                        <td class="text-right">{{model.getSelectItemTotalForItemAndItemUnits() | number:2}}</td>
-                                        <th>&nbsp;</th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </uib-tab>
-                    <!------ /stock item total---->
                     <!------ service total---->
                     <uib-tab heading="SERVICE" index="2">
                         <div style="height: 50px;">
@@ -528,16 +394,9 @@
                     </uib-tab>
                     <!------ /client reserved item---->
                     <!------ other ---->
-                    <uib-tab heading="OTHER" index="4" ng-click="ui.viewObservation();">
+                    <uib-tab heading="OTHER" index="4">
                         <div class="background-dark">
                             <div class="tile-lists">
-                                <div class="tiles tile-200 col-xs-4" style="background: #4CAF50;width: 300px;" ng-click="ui.goToObservations();" ng-show="model.checkObservation()">
-                                    <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
-                                        <div class="col-xs-10" style="font-size: 19px;margin-top: 15px;">
-                                            <i class="glyphicon glyphicon-ban-circle"></i> OBSERVATOIN
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="tiles tile-200 col-xs-4" style="background: #303F9F;width: 300px;" ng-show="model.jobItemList.length" ng-click="ui.printJobItemRequestAstimate();">
                                     <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
                                         <div class="col-xs-10" style="font-size: 19px;margin-top: 15px;">
@@ -594,7 +453,7 @@
     id-of-field="rangeFieldId">
     </div>
     </td>
-    <td><a style="background-color: {{selectedCategoryColors}}" class="btn" ng-click="ui.addItemUnit(itemUnits.indexNo, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+    <td><a class="btn btn-primary" ng-click="ui.addItemUnit(itemUnits.indexNo, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
     </tr>
     </tbody>
     </table>

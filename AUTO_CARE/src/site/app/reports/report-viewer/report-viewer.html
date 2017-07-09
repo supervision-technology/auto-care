@@ -50,6 +50,14 @@
                                         <td><label class="control-label">INVOICE_NO</label></td>
                                         <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.INVOICE_NO" ></td>
                                     </tr>
+                                    <tr ng-show="ui.isParameterAvailable('FROM_DATE')">
+                                        <td><label class="control-label">FROM DATE</label></td>
+                                        <td><input smart-input="date" class="form-control" id="status" ng-model="model.currentReport.parameterValues.FROM_DATE" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('TO_DATE')">
+                                        <td><label class="control-label">TO DATE</label></td>
+                                        <td><input smart-input="date" class="form-control" id="status" ng-model="model.currentReport.parameterValues.TO_DATE" ></td>
+                                    </tr>
                                 </tbody>                 
                             </table>
 
@@ -87,7 +95,7 @@
                     </object>
                 </div>
             </div>
-            
+
         </div>
     </div>
 </div>

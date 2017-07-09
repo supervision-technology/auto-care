@@ -5,6 +5,8 @@
  */
 package com.mac.care_point.service.job_card;
 
+import com.mac.care_point.master.vehicleAssignment.VehicleAssignmentRepository;
+import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.final_check_list.MFinalCheckListItemRepostory;
 import com.mac.care_point.service.final_check_list.TJobFinalCheckListRepository;
@@ -19,6 +21,7 @@ import com.mac.care_point.service.vehicle_attenctions.model.MVehicleAttenctions;
 import com.mac.care_point.service.vehicle_attenctions.model.TJobVehicleAttenctions;
 import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +55,9 @@ public class JobCardService {
     @Autowired
     private TJobFinalCheckListRepository tJobFinalCheckListRepository;
 
+    @Autowired
+    private VehicleAssignmentRepository vehicleAssignmentRepository;
+
     public List<JobCard> getPendingJobCard() {
         return jobCardRepository.findByStatusOrderByIndexNoDesc(Constant.PENDING_STATUS);
     }
@@ -68,7 +74,8 @@ public class JobCardService {
             }
             jobCard.setNumber(maxNo + 1);
         }
-        jobCard.setInTime(new Date());
+        String inTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        jobCard.setInTime(inTime);
         jobCard.setDate(new Date());
 
         JobCard getSaveData = jobCardRepository.save(jobCard);
@@ -101,11 +108,21 @@ public class JobCardService {
                 jobFinalCheckList.setJobCard(getSaveData.getIndexNo());
                 jobFinalCheckList.setCheck(Constant.PENDING_STATUS);
                 tJobFinalCheckListRepository.save(jobFinalCheckList);
-                
+
             }
         } else {
             throw new DuplicateEntityException("Duplicate Data");
         }
+
+        //save vehicle assignment wating bay -  set default washing bay
+        String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        TVehicleAssignment tVehicleAssignment = new TVehicleAssignment();
+        tVehicleAssignment.setBay(1);
+        tVehicleAssignment.setDate(new Date());
+        tVehicleAssignment.setInTime(currentTime);
+        tVehicleAssignment.setJobCard(getSaveData.getIndexNo());
+        vehicleAssignmentRepository.save(tVehicleAssignment);
+
         return getSaveData;
     }
 

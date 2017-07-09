@@ -33,7 +33,7 @@ public class MItem implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
 
@@ -41,7 +41,7 @@ public class MItem implements Serializable {
     @Column(name = "barcode")
     private String barcode;
 
-    @Size(max = 50)
+    @Size(max = 100)
     @Column(name = "print_description")
     private String printDescription;
 

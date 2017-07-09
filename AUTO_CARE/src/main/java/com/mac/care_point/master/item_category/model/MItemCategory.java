@@ -16,10 +16,10 @@ import javax.persistence.Table;
 
 /**
  *
- * @author L T430
+ * @author kavish manjitha
  */
 @Entity
-@Table(name = "m_item_category")
+@Table(name = "m_item_caregory")
 public class MItemCategory implements Serializable {
 
     @Id
@@ -30,13 +30,21 @@ public class MItemCategory implements Serializable {
     
     @Column(name = "name")
     private String name;
+    
+    @Column(name = "view_approve")
+    private Boolean viewApprove;
+    
+    @Column(name = "color")
+    private String color;
 
     public MItemCategory() {
     }
 
-    public MItemCategory(Integer indexNo, String name) {
+    public MItemCategory(Integer indexNo, String name, Boolean viewApprove, String color) {
         this.indexNo = indexNo;
         this.name = name;
+        this.viewApprove = viewApprove;
+        this.color = color;
     }
 
     public Integer getIndexNo() {
@@ -55,5 +63,19 @@ public class MItemCategory implements Serializable {
         this.name = name;
     }
 
-  
+    public Boolean getViewApprove() {
+        return viewApprove;
+    }
+
+    public void setViewApprove(Boolean viewApprove) {
+        this.viewApprove = viewApprove;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

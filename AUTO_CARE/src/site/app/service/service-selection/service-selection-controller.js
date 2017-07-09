@@ -3,11 +3,12 @@
     angular.module("serviceSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, $sce, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane, IndividualViewService) {
+            .controller("serviceSelectionController", function ($scope, $sce, $uibModalStack, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ItemSelectionModel();
 
                 $scope.ui = {};
                 $scope.ui.model = "CATEGORY";
+
                 $scope.selectVehicleType = null;
                 $scope.selectPackageItemPosition = null;
                 $scope.selectedJobCardIndexNo = null;
@@ -16,14 +17,7 @@
                 $scope.selectCategoryPosition = null;
                 $scope.viewRemarkFeild = null;
 
-                $scope.model.currentReportGroup = {};
-                $scope.model.currentReport = {};
-                $scope.model.currentReport.parameterValues = {};
-
                 $scope.ui.selectedJobCardRow = function (jobCardData) {
-
-                    //get last job card vehicle attenctions list
-                    $scope.model.getLastJobCardVehicleAttenctions(jobCardData.vehicle);
 
                     //find select job card history
                     $scope.selectVehicleType = null;
@@ -38,19 +32,46 @@
                     //view select job item history
                     $scope.model.getJobItemHistory(jobCardData.indexNo);
 
-                    //job card select get customer reserved item list
-                    $scope.model.findByJobCardCustomerReceiveItem(jobCardData.indexNo);
-
-                    //get stock leger items
-                    $scope.model.findItemsForStockLeger();
-                    $scope.selectIemUnit = null;
-
                     $scope.ui.backToCategory();
+                };
+
+                //job card select get customer reserved item list
+                $scope.ui.findClientRecevedItem = function () {
+                    $scope.model.findByJobCardCustomerReceiveItem($scope.selectedJobCardIndexNo);
+                };
+
+                $scope.ui.getItemUnits = function (details) {
+                    $scope.model.getItemUnits(details[0]);
+                    $scope.itemName = details[2];
+                    $scope.itemStockItemQty = details[1];
+                    $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'item_selection_popup.html',
+                        scope: $scope,
+                        size: 'lg'
+                    });
+                };
+
+                $scope.ui.dismissAllModel = function () {
+                    $scope.ui.backToCategory();
+                    $uibModalStack.dismissAll();
                 };
 
                 //back to category page
                 $scope.ui.backToCategory = function () {
+                    if ($scope.ui.model === "ATTENCTIONS") {
+                        $scope.activeTab = 0;
+                    }
+                    
                     $scope.ui.model = "CATEGORY";
+                };
+
+                $scope.ui.goToObservations = function () {
+                    $scope.ui.model = "ATTENCTIONS";
+                    //get last job card vehicle attenctions list
+                    $scope.model.getLastJobCardVehicleAttenctions($scope.model.jobCardData.vehicle);
                 };
 
                 //Category Names = PACKAGE,SERVICE AND STOCK ITEMS
@@ -66,18 +87,8 @@
                                 $scope.ui.model = "PACKAGE";
                                 $scope.model.filterItems = [];
                                 $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
-                            } else if (data.staticFeildName === 'STOCK') {
-
-                                $scope.ui.model = "STOCK";
-                                $scope.model.findItemsForStockLeger();
-                            } else if (data.staticFeildName === 'ATTENCTIONS') {
-
-                                $scope.ui.model = "ATTENCTIONS";
-                                $scope.model.filterItems = [];
-                                $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
                             }
                         } else {
-
                             //service -  lord items
                             $scope.ui.model = "SERVICE";
                             $scope.model.filterItems = [];
@@ -115,31 +126,6 @@
                                 .confirm(function () {
                                     $scope.model.setServiceChargers($scope.selectedJobCardIndexNo, checkd);
                                 });
-                    } else {
-                        Notification.error("select vehicle");
-                    }
-                };
-
-                //add stock item units
-                $scope.ui.addItemUnit = function (itemUnit, type) {
-                    if ($scope.selectedJobCardIndexNo) {
-                        if (itemUnit) {
-                            var itemStatus = $scope.model.duplicateItemUnitCheck(itemUnit);
-                            if (angular.isUndefined(itemStatus)) {
-                                ConfirmPane.successConfirm("Do you sure want to add item")
-                                        .confirm(function () {
-                                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
-                                        });
-                            } else {
-                                // Notification.error("this item is allrday exsist");
-                                ConfirmPane.successConfirm("This Item Is Allrday Esxist")
-                                        .confirm(function () {
-                                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
-                                        });
-                            }
-                        } else {
-                            Notification.error("select item");
-                        }
                     } else {
                         Notification.error("select vehicle");
                     }
@@ -236,48 +222,14 @@
 //------------------------------- /vehicle attenctions -------------------------------    
 
 
+//---------------------------------- estimate ----------------------------------
                 $scope.ui.printJobItemRequestAstimate = function () {
-//---------------------------------- invoice ----------------------------------
-                    var reportName = "Estimate";
-                    //get report details
-                    IndividualViewService.reportData(reportName)
-                            .success(function (data) {
-                                $scope.model.currentReport.report = data;
-
-                                //get report paramiters
-                                IndividualViewService.listParameters(data)
-                                        .success(function (data) {
-                                            $scope.model.currentReport.parameters = data;
-                                        });
-
-                                //set paramiters values
-                                $scope.model.currentReport.parameterValues.INDEX_NO = $scope.selectedJobCardIndexNo;
-
-                                //view reports
-                                IndividualViewService.viewReport(
-                                        $scope.model.currentReport.report,
-                                        $scope.model.currentReport.parameters,
-                                        $scope.model.currentReport.parameterValues
-                                        )
-                                        .success(function (response) {
-                                            var file = new Blob([response], {type: 'application/pdf'});
-                                            var fileURL = URL.createObjectURL(file);
-
-                                            $scope.content = $sce.trustAsResourceUrl(fileURL);
-
-                                            $uibModal.open({
-                                                animation: true,
-                                                ariaLabelledBy: 'modal-title',
-                                                ariaDescribedBy: 'modal-body',
-                                                templateUrl: 'actimate_popup.html',
-                                                scope: $scope,
-                                                size: 'lg'
-                                            });
-
-                                        });
+                    ConfirmPane.successConfirm("Print Estimate")
+                            .confirm(function () {
+                                $scope.model.printEstimate($scope.selectedJobCardIndexNo);
                             });
-//---------------------------------- end invoice ----------------------------------
                 };
+//---------------------------------- end estimate ----------------------------------
 
                 $scope.init = function () {
                     //get routing paramiets job card index

@@ -34,6 +34,11 @@ public class SubCategoryController {
     public List<MSubCategory> findAllCategory() {
         return subCategoryService.findAllSubCategory();
     }
+    
+    @RequestMapping(value = "/find-by-category/{indexNo}",method = RequestMethod.GET)
+    public List<Object[]> findByCategory(@PathVariable Integer indexNo) {
+        return subCategoryService.findSubCategory(indexNo);
+    }
 
     //Save subCategory
     @RequestMapping(value = "/save-subCategory", method = RequestMethod.POST)

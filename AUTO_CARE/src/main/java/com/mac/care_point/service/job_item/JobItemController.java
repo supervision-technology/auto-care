@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.job_item;
 
+import com.mac.care_point.master.items.items.model.MItemL;
 import com.mac.care_point.service.job_item.model.TJobItem;
 import java.math.BigDecimal;
 import java.util.List;
@@ -31,6 +32,11 @@ public class JobItemController {
     private final Integer BRANCH = 1;
 
     //for service selections
+    @RequestMapping(value = "/find-all-item", method = RequestMethod.GET)
+    public List<MItemL> findAllMItemL() {
+        return jobItemService.findAllMItemL();
+    }
+    
     @RequestMapping(value = "/save-job-items", method = RequestMethod.POST)
     public TJobItem saveJobItem(@RequestBody TJobItem jobItem) {
         return jobItemService.saveJobItem(jobItem);
@@ -58,10 +64,16 @@ public class JobItemController {
     }
 
     //get stock leger get item qty for item selection stock item qty
-    @RequestMapping(value = "/get-item-qty-by-stock", method = RequestMethod.GET)
-    public List<Object[]> getItemQtyByStockLeger() {
+    @RequestMapping(value = "/get-item-qty-by-stock/{indexNo}", method = RequestMethod.GET)
+    public List<Object[]> getItemQtyByStockLeger(@PathVariable Integer indexNo) {
         //TODO:get login branch
-        return jobItemService.getItemQtyByStockLeger(BRANCH);
+        return jobItemService.getItemQtyByStockLeger(indexNo,BRANCH);
+    }
+    
+    @RequestMapping(value = "/get-item-by-item-category/{indexNo}", method = RequestMethod.GET)
+    public List<MItemL> findByItemCategoryAndBranch(@PathVariable Integer indexNo) {
+        //TODO:get login branch
+        return jobItemService.findByItemCategoryAndBranch(indexNo);
     }
 
     //get stock leger get item qty for item selection non item qty
@@ -72,8 +84,8 @@ public class JobItemController {
     }
 
     //find by stock item qty from item
-    @RequestMapping(value = "/get-item-qty-by-stock/{item}", method = RequestMethod.GET)
-    public BigDecimal getItemQtyByStockLeger(@PathVariable Integer item) {
+    @RequestMapping(value = "/get-item-qty-by-stock1/{item}", method = RequestMethod.GET)
+    public BigDecimal getItemQtyByStockLegerQty(@PathVariable Integer item) {
         //TODO:get login branch
         return jobItemService.findByItemStockItem(BRANCH, item);
     }

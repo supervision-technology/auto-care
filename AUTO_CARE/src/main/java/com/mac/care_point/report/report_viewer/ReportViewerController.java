@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
+import javax.print.PrintException;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,5 +63,11 @@ public class ReportViewerController {
         report.setReportName(reportDir.getName());
         return report;
 
+    }
+    
+    @RequestMapping(value = "/print-report", method = RequestMethod.GET)
+    public void printReport(HttpServletResponse httpServletResponse, @RequestParam HashMap<String, String> map) throws JRException, IOException, SQLException, ParseException, PrintException {
+        Integer branch = 1;
+        reportViewerService.printReport(httpServletResponse, map, branch);
     }
 }

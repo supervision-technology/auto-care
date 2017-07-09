@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.job_item;
 
+import com.mac.care_point.master.items.items.model.MItemL;
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.final_check_list.MItemCheckDetailRepository;
 import com.mac.care_point.service.final_check_list.TJobItemCheckRepository;
@@ -46,6 +47,17 @@ public class JobItemService {
     @Autowired
     private MItemCheckDetailRepository itemCheckDetailRepository;
 
+    @Autowired
+    private MItemLRepository mItemLRepository;
+
+    public List<MItemL> findAllMItemL() {
+        return mItemLRepository.findAll();
+    }
+    
+    public List<MItemL> findByItemCategoryAndBranch(Integer itemCategory) {
+        return mItemLRepository.findByItemCategory(itemCategory);
+    }
+
     @Transactional
     public TJobItem saveJobItem(TJobItem jobItem) {
 
@@ -81,7 +93,7 @@ public class JobItemService {
     }
 
     public List<TJobItem> findByJobCardItems(Integer jobCardIndexNo) {
-        return jobItemRepository.findByJobCard(jobCardIndexNo);
+        return jobItemRepository.findByJobCardOrderByIndexNoDesc(jobCardIndexNo);
     }
 
     //for final check list
@@ -131,8 +143,8 @@ public class JobItemService {
         return jobItemRepository.save(jobItem);
     }
 
-    public List<Object[]> getItemQtyByStockLeger(Integer branch) {
-        return jobItemRepository.getItemQtyByStockLeger(branch);
+    public List<Object[]> getItemQtyByStockLeger(Integer itemCategory, Integer branch) {
+        return jobItemRepository.getItemQtyByStockLeger(itemCategory,branch);
     }
 
     public List<Object[]> getNonStockItemQtyByStockLeger(Integer branch) {
@@ -147,5 +159,4 @@ public class JobItemService {
     public TJobItem findTJobItemByIndexNo(Integer indexNo) {
         return jobItemRepository.findByIndexNo(indexNo);
     }
-
 }

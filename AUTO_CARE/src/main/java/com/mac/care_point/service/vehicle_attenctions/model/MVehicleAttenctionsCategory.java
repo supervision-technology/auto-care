@@ -35,14 +35,17 @@ public class MVehicleAttenctionsCategory implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
-  
+    
+    @Column(name = "color")
+    private String color;
 
     public MVehicleAttenctionsCategory() {
     }
 
-    public MVehicleAttenctionsCategory(Integer indexNo, String name) {
+    public MVehicleAttenctionsCategory(Integer indexNo, String name, String color) {
         this.indexNo = indexNo;
         this.name = name;
+        this.color = color;
     }
 
     public Integer getIndexNo() {
@@ -60,4 +63,13 @@ public class MVehicleAttenctionsCategory implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+   
 }

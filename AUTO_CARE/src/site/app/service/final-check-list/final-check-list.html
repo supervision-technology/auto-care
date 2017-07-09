@@ -141,7 +141,7 @@
                                             <a ng-show="model.jobCardData.attenctions === false" class="btn btn-danger"/><span class="glyphicon glyphicon-remove"></span></a>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <tr ng-show="model.jobCardData.serviceChagers">
                                         <td>VEHICLE SERVICE CHAGERS</td>
                                         <td>
                                             <span ng-show="model.jobCardData.serviceChagers === true" class="label label-success">COMPLITED</span>
@@ -234,7 +234,7 @@
                                 <col style="width: 30%;"/>
                                 <tbody ng-repeat="details in model.vehicleAssgnmentDetailsList">
                                     <tr>
-                                        <td class="text-bold" style="background-color: {{details.bay.color}}">{{details.bay.name}}</td>
+                                        <td class="text-bold" style="background: {{model.bay(details.bay).color}} !important;color: #ffffff;">{{model.bay(details.bay).name}}</td>
                                         <td class="text-bold">{{ui.formatDate(details.inTime)}}</td>
                                         <td class="text-bold">{{ui.formatDate(details.outTime)}}</td>
                                         <td class="text-bold">Hours : {{ui.dateDifarance(details.inTime, details.outTime).diffHrs}} | Minits {{ui.dateDifarance(details.inTime, details.outTime).diffMins}}</td>

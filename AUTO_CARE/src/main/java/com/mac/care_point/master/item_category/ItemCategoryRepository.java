@@ -11,10 +11,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
- * @author L T430
+ * @author kavish manjitha
  */
 public interface ItemCategoryRepository extends JpaRepository<MItemCategory, Integer> {
 
     public List<MItemCategory> findByName(String name);
+
+    public List<MItemCategory> findByViewApprove(boolean viewApprove);
 
 }

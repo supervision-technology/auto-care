@@ -11,6 +11,8 @@
                     customerReservedItemData: {},
                     //master data lists
                     items: [],
+                    itemCategory: [],
+                    stockTest: [],
                     vehicles: [],
                     itemUnits: [],
                     category: [],
@@ -38,6 +40,11 @@
                         ItemSelectionService.loadItems()
                                 .success(function (data) {
                                     that.items = data;
+                                });
+
+                        ItemSelectionService.loadItemsCategory()
+                                .success(function (data) {
+                                    that.itemCategory = data;
                                 });
 
                         ItemSelectionService.pendingJobCards()
@@ -92,10 +99,51 @@
                                 });
                         return defer.promise;
                     },
-                    findItemsForStockLeger: function () {
+                    printEstimate: function (jobCard) {
+                        var defer = $q;
+                        ItemSelectionService.printEstimate(jobCard)
+                                .success(function (data) {
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    findSubCateoryByCateory: function (category) {
                         var that = this;
                         var defer = $q;
-                        ItemSelectionService.findByItemStockItmQty()
+                        ItemSelectionService.findSubCateoryByCateory(category)
+                                .success(function (data) {
+                                    that.subCategory = [];
+                                    that.subCategory = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.subCategory = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    checkObservation: function () {
+                        var that = this;
+                        var status = false;
+                        angular.forEach(this.jobItemList, function (jobItemValues) {
+                            angular.forEach(that.items, function (itemValues) {
+                                if (jobItemValues.item === itemValues.indexNo) {
+                                    if (itemValues.category === 7) {
+                                        status = true;
+                                        return;
+                                    }
+                                }
+                            });
+                        });
+                        return status;
+                    },
+                    findItemsForStockLeger: function (itemCategory) {
+                        var that = this;
+                        var defer = $q.defer();
+                        ItemSelectionService.findByItemStockItmQty(itemCategory)
                                 .success(function (data) {
                                     that.itemsByStockLeger = [];
                                     that.itemsByStockLeger = data;
@@ -181,12 +229,14 @@
                     },
                     getItemUnits: function (item) {
                         var data = [];
+                        this.selectItemUnits = [];
                         angular.forEach(this.itemUnits, function (values) {
                             if (values.item === parseInt(item)) {
                                 data.push(values);
                                 return;
                             }
                         });
+                        this.selectItemUnits = data;
                         return data;
                     },
 //------------------------------- service,stock items,package duplicate check ------------------------------- 
@@ -244,6 +294,16 @@
                     categoryColours: function (indexNo) {
                         var data = "";
                         angular.forEach(this.category, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    itemCategoryColours: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.itemCategory, function (values) {
                             if (values.indexNo === parseInt(indexNo)) {
                                 data = values;
                                 return;
@@ -311,7 +371,6 @@
                                 .success(function (data) {
                                     that.jobItemList.unshift(data);
                                     that.data = ItemSelectionModelFactory.newData();
-                                    that.findItemsForStockLeger();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -325,7 +384,6 @@
                         ItemSelectionService.deleteJobItems(this.jobItemList[index].indexNo)
                                 .success(function () {
                                     that.jobItemList.splice(index, 1);
-                                    that.findItemsForStockLeger();
                                     that.getSelectItemAllItems();
                                     defer.resolve();
                                 })

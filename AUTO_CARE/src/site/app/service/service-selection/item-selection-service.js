@@ -9,7 +9,11 @@
         };
 
         this.loadItems = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item");
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-all-item");
+        };
+
+        this.loadItemsCategory = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-category");
         };
 
         this.loadVehicles = function () {
@@ -61,10 +65,14 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/client-received-item/" + jobCard);
         };
 
-        this.findByItemStockItmQty = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock");
+        this.findSubCateoryByCateory = function (category) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/sub-category/find-by-category/" + category);
         };
-
+        
+        this.findByItemStockItmQty = function (itemCategory) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock/" + itemCategory);
+        };
+        
         this.setServiceChargers = function (jobCard, status) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/service-charge/" + jobCard + "/" + status);
         };
@@ -89,9 +97,13 @@
         this.getLastJobCardVehicleAttenctions = function (vehicle) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions/find-last-job-card/" + vehicle);
         };
-        
+
         this.findJobItemByIndexNo = function (jobItem) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-item-by-index-no/" + jobItem);
+        };
+        
+        this.printEstimate = function (jobCard) {
+            return $http.get(systemConfig.apiUrl + "/api/v1/report/ditect-print/find-by-job-card-items/" + jobCard);
         };
 
 
