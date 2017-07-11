@@ -59,6 +59,14 @@
         this.getVehicleAttenctions = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/vehicle-attenctions");
         };
+
+        this.imageUpload = function () {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/job-card/upload-image");
+        };
+
+        this.imageDownloard = function (jobCard) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/image-names/" + jobCard);
+        };
     };
     angular.module("appModule")
             .service("vehicleEntranceService", service);

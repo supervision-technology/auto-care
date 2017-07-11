@@ -58,6 +58,34 @@
                                         <td><label class="control-label">TO DATE</label></td>
                                         <td><input smart-input="date" class="form-control" id="status" ng-model="model.currentReport.parameterValues.TO_DATE" ></td>
                                     </tr>
+                                    <tr ng-show="ui.isParameterAvailable('SUPPLIER')">
+                                        <td><label class="control-label">SUPPLIER</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.SUPPLIER" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('GRN_NO')">
+                                        <td><label class="control-label">GRN NUMBER</label></td>
+                                        <td><input  class="form-control" id="status" ng-model="model.currentReport.parameterValues.GRN_NO" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('PO_NUMBER')">
+                                        <td><label class="control-label">PO NUMBER</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.PO_NUMBER" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('STATUS')">
+                                        <td><label class="control-label">STATUS</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.STATUS" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('DELIVER_DATE')">
+                                        <td><label class="control-label">DELIVER DATE</label></td>
+                                        <td><input class="form-control" smart-input="date" id="status" ng-model="model.currentReport.parameterValues.DELIVER_DATE" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('BAY')">
+                                        <td><label class="control-label">BAY</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.BAY" ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('VEHICLE_NO')">
+                                        <td><label class="control-label">VEHICLE_NO</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.VEHICLE_NO" ></td>
+                                    </tr>
                                 </tbody>                 
                             </table>
 

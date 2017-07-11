@@ -162,7 +162,7 @@ public class JobCardService {
         return getJobCardData;
     }
 
-    List<JobCard> getNotFinishedJobCard() {
+    public List<JobCard> getNotFinishedJobCard() {
         return jobCardRepository.findByStatusNotIn(Constant.FINISHE_STATUS);
     }
 }

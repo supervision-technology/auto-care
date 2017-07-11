@@ -19,42 +19,29 @@
         </div>
         <div class="index-content-body">
             <div style="float: left; width: calc(100% - 133px);">
-                <div class="col-xs-6 background-light-dark" style="height: calc(100vh-133px)">
+                <div class="col-xs-6 background-light-dark" style="height: calc(100vh - 80px)">
                     <div class="row" style="display: flex; flex-flow: column;">
                         <div class="col-xs-6">
                             <h4 class="text-primary">HAVE TO CHECK LIST</h4>
                         </div>
-                        <table class="square-table background-dark" style="width: 99%">
-                            <col style="width: 20%;"/>
-                            <col style="width: 45%;"/>
-                            <col style="width: 15%;"/>
-                            <col style="width: 20%;"/>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Quantity</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                        </table>
                         <div class="smart-scroll-y" style="height: calc(100vh - 131px);">
-                            <div ng-repeat="selections in model.jobItemList|filter:{orderStatus : 'PENDING'}|filter:{itemType : 'STOCK_ITEM'}">
-                                <table class="square-table">
-                                    <col style="width: 20%;"/>
-                                    <col style="width: 45%;"/>
-                                    <col style="width: 15%;"/>
-                                    <col style="width: 20%;"/>
-                                    <tbody>
-                                        <tr class="background-light">
-                                            <td><span class="label label-success">{{model.findByStockFromItem(selections.item)}}</td>
-                                            <td>{{model.itemUnitData(selections.itemUnit).name}}</td>
-                                            <td>{{selections.quantity}}</td>
-                                            <td><a  ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.checkItemCompliteJobCard(selections);"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <table class="square-table background-dark">
+                                <col style="width: 20%;"/>
+                                <col style="width: 45%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 20%;"/>
+                                <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList|filter:{orderStatus : 'PENDING'}|filter:{itemType : 'STOCK_ITEM'}">
+                                    <tr style="border: none">
+                                        <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="4"><small>{{model.itemData(selections.item).name}}</small></td>        
+                                    </tr>
+                                    <tr style="border: none">
+                                        <td><span class="label label-success">{{model.findByStockFromItem(selections.item)}}</td>
+                                        <td>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                        <td>{{selections.quantity}}</td>
+                                        <td><a  ng-class="selectVehicleType === 'REGISTER' ? 'btn-success' : 'btn-primary'" class="btn" ng-click="ui.checkItemCompliteJobCard(selections);"><span class="glyphicon glyphicon-arrow-right"></span></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -64,33 +51,22 @@
                         <div class="col-xs-6">
                             <h4 class="text-primary">CHECKED LIST</h4>
                         </div>
-                        <table class="square-table background-dark">
-                            <col style="width: 15%;"/>
-                            <col style="width: 75%;"/>
-                            <col style="width: 10%;"/>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>NAME</th>
-                                    <th>&nbsp;</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 131px);">
-                            <div ng-repeat="selections in model.jobItemList|filter:{orderStatus : 'COMPLITED'}">
-                                <table class="square-table">
-                                    <col style="width: 75%;"/>
-                                    <col style="width: 15%;"/>
-                                    <col style="width: 10%;"/>
-                                    <tbody>
-                                        <tr class="background-light">
-                                            <td>{{model.itemUnitData(selections.itemUnit).name}}</td>
-                                            <td>{{selections.quantity}}</td>
-                                            <td><a class="btn btn-danger" ng-click="ui.checkItemPendingJobCard(selections);"><span class="glyphicon glyphicon-remove"></span></a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 80px);">
+                            <table class="square-table background-dark">
+                                <col style="width: 75%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 10%;"/>
+                                <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList|filter:{orderStatus : 'COMPLITED'}">
+                                    <tr style="border: none">
+                                        <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="3"><small>{{model.itemData(selections.item).name}}</small></td>        
+                                    </tr>
+                                    <tr style="border: none">
+                                        <td>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                        <td>{{selections.quantity}}</td>
+                                        <td><a class="btn btn-danger" ng-click="ui.checkItemPendingJobCard(selections);"><span class="glyphicon glyphicon-remove"></span></a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

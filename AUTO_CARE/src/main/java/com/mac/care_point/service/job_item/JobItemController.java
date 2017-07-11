@@ -82,9 +82,15 @@ public class JobItemController {
         //TODO:get login branch
         return jobItemService.getNonStockItemQtyByStockLeger(BRANCH);
     }
+    
+    @RequestMapping(value = "/get-stock-item-qty-by-stock", method = RequestMethod.GET)
+    public List<Object[]> getAllItemQtyByStockLeger() {
+        //TODO:get login branch
+        return jobItemService.getAllItemQtyByStockLeger(BRANCH);
+    }
 
     //find by stock item qty from item
-    @RequestMapping(value = "/get-item-qty-by-stock1/{item}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get-item-qty-by-stocks/{item}", method = RequestMethod.GET)
     public BigDecimal getItemQtyByStockLegerQty(@PathVariable Integer item) {
         //TODO:get login branch
         return jobItemService.findByItemStockItem(BRANCH, item);

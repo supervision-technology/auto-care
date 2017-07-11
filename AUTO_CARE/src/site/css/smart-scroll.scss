@@ -6,6 +6,7 @@
 
 .smart-scroll-y{
     overflow-y: scroll;
+    overflow-x:hidden;
 }
 
 .smart-scroll-x::-webkit-scrollbar, .smart-scroll-y::-webkit-scrollbar {

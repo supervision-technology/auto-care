@@ -155,6 +155,10 @@ public class JobItemService {
         List<Object[]> getDataList = jobItemRepository.getItemQtyByStock(branch, item);
         return ((BigDecimal) getDataList.get(0)[1]).subtract((BigDecimal) getDataList.get(0)[2]);
     }
+    
+    public List<Object[]> getAllItemQtyByStockLeger(Integer branch) {
+       return jobItemRepository.getAllItemQtyByStockLeger(branch);
+    }
 
     public TJobItem findTJobItemByIndexNo(Integer indexNo) {
         return jobItemRepository.findByIndexNo(indexNo);

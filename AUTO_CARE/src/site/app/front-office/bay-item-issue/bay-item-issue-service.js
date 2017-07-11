@@ -28,9 +28,9 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/bay-item-issue/find-bay-item-issue/" + indexNo + "/" + status);
         };
 
-        this.findByItemStockItmQty = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-non-stock-item-qty-by-stock");
-        };
+//        this.findByItemStockItmQty = function () {
+//            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-stock-item-qty-by-stock");
+//        };
     };
 
     angular.module("appModule")

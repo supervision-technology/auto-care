@@ -31,30 +31,35 @@
 
                     ConfirmPane.successConfirm("Do you want to Save Images ?")
                             .confirm(function () {
-                                for (var i = 0; i < $scope.imagemodel.length; i++) {
-                                    var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/upload-image";
-                                    var formData = new FormData();
-                                    formData.append("file", $scope.imagemodel[i]);
-
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.open("POST", url);
-                                    xhr.send(formData);
-                                    Notification.success("Image save success");
-                                }
                                 // save job card
                                 if ($scope.validateVehicleData) {
                                     $scope.model.updateClientFromVehicle()
                                             .then(function () {
                                                 Notification.success("Save vehicle and assing client Success !!!");
+
+                                                if ($scope.imagemodel.length) {
+                                                    console.log($scope.imagemodel.length);
+                                                    console.log("$scope.imagemodel.length");
+                                                    $scope.model.jobcard.vehicleImages = true;
+                                                }
+                                                
                                                 $scope.model.saveJobCard()
                                                         .then(function (data) {
-                                                            $scope.ui.goToItemSelection(data);
+                                                            for (var i = 0; i < $scope.imagemodel.length; i++) {
+                                                                var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/upload-image/" + data + "/" + i;
+                                                                var formData = new FormData();
+                                                                formData.append("file", $scope.imagemodel[i]);
 
+                                                                var xhr = new XMLHttpRequest();
+                                                                xhr.open("POST", url);
+                                                                xhr.send(formData);
+                                                            }
                                                             Notification.success("Save job-card success !!!");
                                                             $scope.model.clearModel();
                                                             $scope.vehicleNo = "";
                                                             $scope.ui.clientDisabled = true;
                                                             $scope.ui.vehicleDisabled = true;
+                                                            $scope.ui.goToItemSelection(data);
 
                                                         }, function () {
                                                             Notification.error("Save job-card fail !!!");

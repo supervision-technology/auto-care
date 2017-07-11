@@ -6,12 +6,18 @@
 package com.mac.care_point.service.job_card;
 
 import com.mac.care_point.service.job_card.model.JobCard;
+import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
-import java.util.Base64;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +40,10 @@ public class JobCardController {
     @Autowired
     private JobCardService jobCardService;
 
+    public static final String IMAGE_LOCATION = "./upload-image";
+    public static final String IMAGE_NAME_FILTER_TEMPLATE = "job-no-%s";
+    public static final String IMAGE_NAME_TEMPLATE = "job-no-%s-%s.jpg";
+
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-S");
 
     @RequestMapping(value = "/get-client-history/{indexNo}", method = RequestMethod.GET)
@@ -50,7 +60,7 @@ public class JobCardController {
     public List<JobCard> getPendingJobCard() {
         return jobCardService.getPendingJobCard();
     }
-    
+
     @RequestMapping(value = "/get-not-finished-job-cards", method = RequestMethod.GET)
     public List<JobCard> getNotFinishedJobCard() {
         return jobCardService.getNotFinishedJobCard();
@@ -67,29 +77,42 @@ public class JobCardController {
         return jobCardService.setServiceChargers(jobCard, status);
     }
 
-    @RequestMapping(value = "/upload-image", method = RequestMethod.POST)
-    public void saveImage(@RequestParam("file") MultipartFile file) {
-        
-        //create images
-        //save files
-        try {
-            // System.out.println(file.getSize());
-            String fileName = dateFormat.format(new Date());
-            fileName = Base64.getEncoder().encodeToString(fileName.getBytes()) + file.getOriginalFilename();
-
-            //System.out.println(fileName);
-            File uploadFile = new File("./files", fileName);
-            if (!uploadFile.getParentFile().exists()) {
-                uploadFile.getParentFile().mkdirs();
-            }
-
-            uploadFile.createNewFile();
-
-            FileOutputStream fileOutputStream = new FileOutputStream(uploadFile);
-            fileOutputStream.write(file.getBytes());
-
-        } catch (Exception a) {
-            a.printStackTrace();
+    @RequestMapping(value = "/upload-image/{jobCard}/{imageNo}", method = RequestMethod.POST)//, consumes = "multipart/form-data"
+    public void saveImage(@RequestParam("file") MultipartFile file, @PathVariable("jobCard") Integer jobCard, @PathVariable("imageNo") String imageNo) throws IOException {
+        File uploadFile = new File(IMAGE_LOCATION, String.format(IMAGE_NAME_TEMPLATE, jobCard, imageNo));
+        if (!uploadFile.getParentFile().exists()) {
+            uploadFile.getParentFile().mkdirs();
         }
+
+        BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+        ImageIO.write(bufferedImage, "JPG", uploadFile);
+    }
+
+    @RequestMapping(value = "/download-image/{fileName:.+}", method = RequestMethod.GET)
+    public void downloadImage(@PathVariable String fileName, HttpServletResponse response) throws FileNotFoundException, IOException {
+        InputStream inputStream = new FileInputStream(IMAGE_LOCATION + "/" + fileName);
+        OutputStream outputStream = response.getOutputStream();
+
+        byte[] bytes = new byte[10240];
+        while (inputStream.read(bytes) > 0) {
+            outputStream.write(bytes);
+        }
+        outputStream.flush();
+    }
+
+    @RequestMapping(value = "/image-names/{jobCard}", method = RequestMethod.GET)
+    public List<String> imageName(@PathVariable String jobCard) {
+        File imageDir = new File(IMAGE_LOCATION);
+
+        File[] imageFiles = imageDir.listFiles((File pathname) -> {
+            return pathname.getName().startsWith(String.format(IMAGE_NAME_FILTER_TEMPLATE, jobCard));
+        });
+
+        List<String> imageFileNames = new ArrayList<>();
+        for (File imageFile : imageFiles) {
+            imageFileNames.add(imageFile.getName());
+        }
+
+        return imageFileNames;
     }
 }

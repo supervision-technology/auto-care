@@ -50,7 +50,7 @@
         };
 
         this.findByItemStockItmQty = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock");
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-stock-item-qty-by-stock");
         };
 
         this.findByItemNonStockItmQty = function () {
