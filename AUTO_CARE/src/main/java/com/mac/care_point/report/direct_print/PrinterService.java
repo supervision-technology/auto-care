@@ -11,16 +11,19 @@ import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.print.Doc;
 import javax.print.DocFlavor;
 import javax.print.DocPrintJob;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
-import javax.print.attribute.Attribute;
-import javax.print.attribute.AttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
 
@@ -31,38 +34,38 @@ import javax.print.attribute.PrintRequestAttributeSet;
 public class PrinterService implements Printable {
 
     public String getDefaultPrinter() {
-//        try {
-//            Properties p = new Properties();
-//            p.load(new FileInputStream("settings.txt"));
-//            String printer = p.getProperty("default-printer");
-//
-//            System.out.println("DEFAULT PRINTER: " + printer);
-//
-//            return printer;
+        try {
+            Properties p = new Properties();
+            p.load(new FileInputStream("settings.txt"));
+            String printer = p.getProperty("default-printer");
 
-        PrintService printer = PrintServiceLookup.lookupDefaultPrintService();
-        String printerD = "";
+            System.out.println("DEFAULT PRINTER: " + printer);
 
-        if (printer != null) {
-            AttributeSet attributes = printer.getAttributes();
-            for (Attribute a : attributes.toArray()) {
-                String name = a.getName();
-                String value = attributes.get(a.getClass()).toString();
-                System.out.println(name + " : " + value);
-                if (name.equals("printer-name")) {
-                    printerD = value;
-                }
-            }
-        } else {
-            System.out.println("default printer not found");
-        }
-        
-        return printerD;
-//        } catch (IOException ex) {
-//            Logger.getLogger(PrinterService.class.getName()).log(Level.SEVERE, null, ex);
+            return printer;
+
+//        PrintService printer = PrintServiceLookup.lookupDefaultPrintService();
+//        String printerD = "";
+//
+//        if (printer != null) {
+//            AttributeSet attributes = printer.getAttributes();
+//            for (Attribute a : attributes.toArray()) {
+//                String name = a.getName();
+//                String value = attributes.get(a.getClass()).toString();
+//                System.out.println(name + " : " + value);
+//                if (name.equals("printer-name")) {
+//                    printerD = value;
+//                }
+//            }
+//        } else {
+//            System.out.println("default printer not found");
 //        }
-//
-//        return null;
+//        
+//        return printerD;
+        } catch (IOException ex) {
+            Logger.getLogger(PrinterService.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
     }
 
     public List<String> getPrinters() {

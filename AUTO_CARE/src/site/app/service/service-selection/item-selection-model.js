@@ -16,6 +16,7 @@
                     vehicles: [],
                     itemUnits: [],
                     category: [],
+                    filterQuickSeacrhItems: [],
                     packageItemList: [],
                     vehicleAttenctionsCategoryList: [],
                     vehicleAttenctionsList: [],
@@ -95,6 +96,21 @@
                                     defer.resolve();
                                 })
                                 .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    getQuickSeacrhItem: function (itemKey, priceCategory) {
+                        var that = this;
+                        var defer = $q;
+                        ItemSelectionService.getQuickSeacrhItem(itemKey, priceCategory)
+                                .success(function (data) {
+                                    that.filterQuickSeacrhItems = [];
+                                    that.filterQuickSeacrhItems = data;
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    that.filterQuickSeacrhItems = [];
                                     defer.reject();
                                 });
                         return defer.promise;

@@ -64,7 +64,7 @@
                     if ($scope.ui.model === "ATTENCTIONS") {
                         $scope.activeTab = 0;
                     }
-                    
+
                     $scope.ui.model = "CATEGORY";
                 };
 
@@ -72,6 +72,16 @@
                     $scope.ui.model = "ATTENCTIONS";
                     //get last job card vehicle attenctions list
                     $scope.model.getLastJobCardVehicleAttenctions($scope.model.jobCardData.vehicle);
+                };
+
+                $scope.ui.getQuickSeacrhItem = function (itemKey) {
+                    $scope.model.getQuickSeacrhItem(itemKey, $scope.model.jobCardData.priceCategory);
+                };
+
+                $scope.ui.quickSeacrh = function () {
+                    $scope.itemKey = null;
+                    $scope.model.filterQuickSeacrhItems = [];
+                    $scope.ui.model = "QUICK_SEARCH";
                 };
 
                 //Category Names = PACKAGE,SERVICE AND STOCK ITEMS
@@ -87,6 +97,7 @@
                                 $scope.ui.model = "PACKAGE";
                                 $scope.model.filterItems = [];
                                 $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
+
                             }
                         } else {
                             //service -  lord items

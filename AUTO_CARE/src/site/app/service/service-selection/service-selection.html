@@ -227,6 +227,51 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-xs-7 background-light" ng-show="ui.model === 'QUICK_SEARCH'">
+            <div class="row full-height" style="display: flex; flex-flow: column;">
+                <table class="square-table background-dark">
+                    <col style="width: 70%;"/>
+                    <col style="width: 30%;"/>
+                    <col />
+                    <thead>
+                        <tr>
+                            <th><input type="text" class="search-input input-sm" placeholder="search" ng-model="itemKey"></th>
+                            <th><a style="background-color: #009688;" class="btn" ng-click="ui.getQuickSeacrhItem(itemKey);"/>S</a></th>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="square-table background-dark">
+                    <col style="width: 50%;"/>
+                    <col style="width: 30%;"/>
+                    <col style="width: 20%;"/>
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>PRICE</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 105px);">
+                    <table class="square-table">
+                        <col style="width: 50%;"/>
+                        <col style="width: 30%;"/>
+                        <col style="width: 20%;"/>
+                        <tbody>
+                            <tr class="background-light" ng-repeat="detils in model.filterQuickSeacrhItems">
+                                <td class="text-bold">{{detils.name}}</td>
+                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                                <td><a style="background-color: #009688;font-weight: bold;" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div class="col-xs-5 background-dark">
             <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
                 <uib-tabset active="activeTab">
@@ -531,6 +576,13 @@
                     <uib-tab heading="OTHER" index="4" ng-click="ui.viewObservation();">
                         <div class="background-dark">
                             <div class="tile-lists">
+                                <div class="tiles tile-200 col-xs-4" style="background: #009688;width: 300px;" ng-click="ui.quickSeacrh();">
+                                    <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
+                                        <div class="col-xs-10" style="font-size: 19px;margin-top: 15px;">
+                                            <i class="glyphicon glyphicon-search"></i> QUICK SEARCH
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="tiles tile-200 col-xs-4" style="background: #4CAF50;width: 300px;" ng-click="ui.goToObservations();" ng-show="model.checkObservation()">
                                     <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
                                         <div class="col-xs-10" style="font-size: 19px;margin-top: 15px;">

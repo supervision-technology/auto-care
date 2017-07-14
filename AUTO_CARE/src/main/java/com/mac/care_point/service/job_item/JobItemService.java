@@ -16,7 +16,6 @@ import com.mac.care_point.service.grn.model.TStockLedger;
 import com.mac.care_point.service.job_item.model.TJobItem;
 import com.mac.care_point.service.stock.transfer.model.MStore;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +55,10 @@ public class JobItemService {
     
     public List<MItemL> findByItemCategoryAndBranch(Integer itemCategory) {
         return mItemLRepository.findByItemCategory(itemCategory);
+    }
+    
+    public List<MItemL> getQuickSeacrhItem(String itemKey,Integer priceCategory) {
+        return mItemLRepository.getQuickSeacrhItem(itemKey, priceCategory);
     }
 
     @Transactional

@@ -5,6 +5,11 @@
  */
 package com.mac.care_point.report.direct_print;
 
+import com.mac.care_point.master.client.ClientRepository;
+import com.mac.care_point.master.client.ClientService;
+import com.mac.care_point.master.client.model.Client;
+import com.mac.care_point.master.priceCategory.PriceCategoryRepository;
+import com.mac.care_point.master.priceCategory.model.PriceCategory;
 import com.mac.care_point.master.vehicle.VehicleRepository;
 import com.mac.care_point.master.vehicle.model.Vehicle;
 import com.mac.care_point.service.job_card.JobCardRepository;
@@ -35,12 +40,24 @@ public class DirectPrintService {
     @Autowired
     private VehicleRepository vehicleRepository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+    
+    @Autowired
+    private PriceCategoryRepository priceCategoryRepository;
+
     public Integer findByJobCard(Integer jobCard) {
+        
         JobCard getJobCardData = jobCardRepository.getOne(jobCard);
         Vehicle vehicleData = vehicleRepository.getOne(getJobCardData.getVehicle());
+        Client clientData = clientRepository.getOne(getJobCardData.getClient());
+        PriceCategory priceCategoryData = priceCategoryRepository.getOne(getJobCardData.getPriceCategory());
+       
         getJobCardData.getIndexNo();
         vehicleData.getIndexNo();
-
+        clientData.getIndexNo();
+        priceCategoryData.getIndexNo();
+        
         List<Object[]> serviceItemByJobCard = directPrintRepository.getServiceItemByJobCard(jobCard);
         List<Object[]> stockItemByJobCard = directPrintRepository.getStockItemByJobCard(jobCard);
         List<Object[]> itemTotalPriceByJobCard = directPrintRepository.getItemTotalPriceByJobCard(jobCard);
@@ -53,7 +70,10 @@ public class DirectPrintService {
         printerService.printString(defaultPrinter, "\n CARE POINT - NUGEGODA - Estimate \n");
         printerService.printString(defaultPrinter, "_______________________________________");
         printerService.printString(defaultPrinter, "\n VEHICLE NO  - " + vehicleData.getVehicleNo());
-        printerService.printString(defaultPrinter, "\n IN TIME  - " + getJobCardData.getInTime() + "\n");
+        printerService.printString(defaultPrinter, "\n IN TIME  - " + getJobCardData.getInTime());
+        printerService.printString(defaultPrinter, "\n IN MILEAGE  - " + getJobCardData.getInMileage() + " KM");
+        printerService.printString(defaultPrinter, "\n CUSTOMER  - " + clientData.getName());
+        printerService.printString(defaultPrinter, "\n VEHICLE TYPE  - " + priceCategoryData.getName() + "\n");
         printerService.printString(defaultPrinter, "\n");
 
         if (serviceItemByJobCard.size() > 0) {

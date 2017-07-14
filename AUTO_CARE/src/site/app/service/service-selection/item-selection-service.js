@@ -68,11 +68,11 @@
         this.findSubCateoryByCateory = function (category) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/sub-category/find-by-category/" + category);
         };
-        
+
         this.findByItemStockItmQty = function (itemCategory) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock/" + itemCategory);
         };
-        
+
         this.setServiceChargers = function (jobCard, status) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/service-charge/" + jobCard + "/" + status);
         };
@@ -101,12 +101,14 @@
         this.findJobItemByIndexNo = function (jobItem) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/find-item-by-index-no/" + jobItem);
         };
-        
+
         this.printEstimate = function (jobCard) {
             return $http.get(systemConfig.apiUrl + "/api/v1/report/ditect-print/find-by-job-card-items/" + jobCard);
         };
 
-
+        this.getQuickSeacrhItem = function (itemKey, priceCategory) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/quick-service-item/" + itemKey + "/" + priceCategory);
+        };
     };
 
     angular.module("appModule")

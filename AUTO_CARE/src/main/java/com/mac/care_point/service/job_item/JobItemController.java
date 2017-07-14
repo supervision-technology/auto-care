@@ -36,7 +36,13 @@ public class JobItemController {
     public List<MItemL> findAllMItemL() {
         return jobItemService.findAllMItemL();
     }
-    
+
+    //for service selections
+    @RequestMapping(value = "/quick-service-item/{itemKey}/{priceCategory}", method = RequestMethod.GET)
+    public List<MItemL> getQuickSeacrhItem(@PathVariable String itemKey, @PathVariable Integer priceCategory) {
+        return jobItemService.getQuickSeacrhItem(itemKey, priceCategory);
+    }
+
     @RequestMapping(value = "/save-job-items", method = RequestMethod.POST)
     public TJobItem saveJobItem(@RequestBody TJobItem jobItem) {
         return jobItemService.saveJobItem(jobItem);
@@ -67,9 +73,9 @@ public class JobItemController {
     @RequestMapping(value = "/get-item-qty-by-stock/{indexNo}", method = RequestMethod.GET)
     public List<Object[]> getItemQtyByStockLeger(@PathVariable Integer indexNo) {
         //TODO:get login branch
-        return jobItemService.getItemQtyByStockLeger(indexNo,BRANCH);
+        return jobItemService.getItemQtyByStockLeger(indexNo, BRANCH);
     }
-    
+
     @RequestMapping(value = "/get-item-by-item-category/{indexNo}", method = RequestMethod.GET)
     public List<MItemL> findByItemCategoryAndBranch(@PathVariable Integer indexNo) {
         //TODO:get login branch
@@ -82,7 +88,7 @@ public class JobItemController {
         //TODO:get login branch
         return jobItemService.getNonStockItemQtyByStockLeger(BRANCH);
     }
-    
+
     @RequestMapping(value = "/get-stock-item-qty-by-stock", method = RequestMethod.GET)
     public List<Object[]> getAllItemQtyByStockLeger() {
         //TODO:get login branch
@@ -101,10 +107,10 @@ public class JobItemController {
     public List<TJobItem> findByJobCard(@PathVariable Integer jobCard) {
         return jobItemService.findByJobCard(jobCard);
     }
-    
+
     //service selections check item - final check status check and stock issue item
-    @RequestMapping(value = "/find-item-by-index-no/{indexNo}",method = RequestMethod.GET)
-    public TJobItem findTJobItemByIndexNo(@PathVariable Integer indexNo){
+    @RequestMapping(value = "/find-item-by-index-no/{indexNo}", method = RequestMethod.GET)
+    public TJobItem findTJobItemByIndexNo(@PathVariable Integer indexNo) {
         return jobItemService.findTJobItemByIndexNo(indexNo);
     }
 }
