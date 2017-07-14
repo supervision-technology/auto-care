@@ -97,10 +97,8 @@
                 $scope.model = {};
                 $scope.http = {};
                 $scope.model.jobAssignment = {
-                    "bay": {
-                        timeout: null
-                    },
-                    "jobCard": {}
+                    "bay": null,
+                    "jobCard": null
                 };
 
                 $scope.model.jobAssignmentList = [];
@@ -108,11 +106,7 @@
                 $scope.model.vehicles = [];
                 $scope.model.vehicleTypes = [];
                 $scope.dragableMode = true;
-                $scope.model.bayList = [
-                    {
-                        timeout: null
-                    }
-                ];
+                $scope.model.bayList = [];
 //
                 $scope.stop = function (bay) {
                     bay.timeout = '';
@@ -148,7 +142,7 @@
                                             $scope.model.jobAssignment.jobCard = job;
                                             $scope.model.jobAssignment.bay = bay;
                                             $scope.model.jobAssignment.bay.timeout = 5;
-                                            $scope.onTimeout($scope.model.jobAssignment.bay);
+                                            $scope.onTimeout();
 
                                         } else {
                                             Notification.error('Max vehicle Assign for this bay !');
@@ -191,7 +185,6 @@
 
                     var detail = jobCard;
                     var detailJSON = JSON.stringify(detail);
-                    console.log(jobCard);
                     bayAssignmentFactory.finishJob(
                             detailJSON,
                             function (data) {
@@ -202,7 +195,7 @@
 
                     });
                 };
-                $scope.onTimeout = function (bay) {
+                $scope.onTimeout = function () {
 
                     if ($scope.model.jobAssignment.bay.timeout !== '') {
                         var mytimeout = $timeout($scope.onTimeout, 1000);
@@ -211,11 +204,41 @@
                         if ($scope.model.jobAssignment.bay.timeout === 0) {
                             $timeout.cancel(mytimeout);
                             $scope.http.insertDetail();
+                            $scope.timePeriodTimer($scope.model.jobAssignment.bay);
                         }
                     } else {
                         $scope.model.jobAssignment.bay.timeout = '';
                     }
 
+                };
+                $scope.timePeriodTimer = function (bay) {
+                    var selectBay = $scope.model.jobAssignment.bay;
+                    var bay=$scope.getBay(selectBay);
+                    
+                    console.log("bay");
+                    console.log("bay");
+                    console.log(selectBay);
+
+                    var timer = $timeout($scope.timePeriodTimer, 1000);
+                    bay.timePeriodSecond++;
+                    if (bay.timePeriodSecond === 60) {
+                        bay.timePeriodSecond=-1;
+                        $timeout.cancel(timer);
+                        $scope.timerMiniths(bay);
+                    }
+                };
+                $scope.timerMiniths=function (bay){
+                    if (bay.timePeriodMiniths+1 === bay.timePeriod) {
+                        Notification.error("Pass Time..");
+                    }
+                    var timer = $timeout($scope.timerMiniths, 1000);
+                    bay.timePeriodMiniths++;
+                    if (bay.timePeriodMiniths === 60) {
+//                        $scope.timerHour(bay);
+                    }else{
+                        $scope.timePeriodTimer(bay);
+                    }
+                    $timeout.cancel(timer);
                 };
 
                 $scope.http.insertDetail = function () {
@@ -233,7 +256,6 @@
                             bayAssignmentFactory.insertDetail(
                                     detailJSON,
                                     function (data) {
-                                        console.log(data);
                                         var vehId = $scope.getJobCard(data.jobCard).vehicle;
                                         Notification.success($scope.getVehicle(vehId).vehicleNo + ' Vehicle Assigned to ' + $scope.getBay(data.bay).name + ' successfully');
 
@@ -260,7 +282,11 @@
                     });
 
                     bayAssignmentFactory.loadBays(function (data) {
-                        $scope.model.bayList = data;
+                        for (var i = 0; i < data.length; i++) {
+                            data[i].timePeriodSecond = 0;
+                            data[i].timePeriodMiniths = 0;
+                            $scope.model.bayList.push(data[i]);
+                        }
                     });
 
                     bayAssignmentFactory.loadVehicles(function (data) {

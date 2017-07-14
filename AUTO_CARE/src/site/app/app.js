@@ -14,7 +14,6 @@
         //pending
         "employeeAssignmentModule",
         "bayAssignmentModule",
-        "employeeAssignmentModule",
         "dashBoardModule",
         //master
         "itemModule",

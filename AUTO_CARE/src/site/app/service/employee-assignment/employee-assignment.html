@@ -6,23 +6,17 @@
 
                     <div class="grid-tile-title" >
                         <label class="pull-left label label-primary">Max Employee : {{bay.maxEmployee}}</label>
-                        <label class="h4" >{{bay.name}} </label> 
+                        <label class="h4" >{{bay.name}}</label> 
                         <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
                     </div>
-                    <!--<div class="nopadding" style="overflow: hidden;height: calc((86vh/(12/{{bay.y}})))" >-->
-                        <div ng-repeat="employee in model.employeesAttendanceList | filter :{currentBay:bay.indexNo}" 
-                             ng-drag="{{dragableMode}}" ng-drag-data="employee" 
-                             class="tile tile-128 col-lg-6" style="width: 150px;border-style: groove">
-                            <div>
-                                <center style="margin-top: 30px;" >
-                                    <a >
-                                        <img src="../../../img/c2.png"/>
-                                        <h5><p class="text-default" style="overflow: hidden ;height: 30px">{{getEmployee(employee.employee).name}}</p></h5>
-                                    </a>
-                                </center>
-                            </div>
+                    <div ng-repeat="employee in model.employeeList | filter:{bay:bay.indexNo}" 
+                         ng-drag="{{dragableMode}}" ng-drag-data="employee" 
+                         class="tile tile-100 col-lg-6" style="border-style: groove">
+                        <div style="display: block;text-align: center;margin-top: 5px">
+                            <img src="{{employee.image}}"/>
+                            <h5><p style="overflow: hidden ;height: 30px;color: white">{{employee.name}}</p></h5>
                         </div>
-                    <!--</div>-->
+                    </div>
                 </div>
             </div>
         </div>

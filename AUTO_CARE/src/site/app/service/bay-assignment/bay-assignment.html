@@ -5,22 +5,32 @@
                 <div class="col-lg-12 nopadding">
 
                     <div class="grid-tile-title" >
-                        <label class="pull-left label label-primary">Max Vehicle : {{bay.maxVehicle}}</label>
-                        <label class="h4" >{{bay.name}} </label> 
-                        <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
+                        <div class="col-xs-7 nopadding">
+                            <label class="h4 pull-left" >{{bay.name}} </label> 
+                        </div>
+                        <div class="col-xs-4 nopadding">
+                            <div class="col-xs-12 " style="margin-top: 5px">
+                                <label class="pull-left label text-primary">Bay Time : {{bay.timePeriod}}.min</label>
+                            </div>
+                            <div class="col-xs-12 " style="margin-top: 3px">
+                                <label class="pull-left label text-primary">Time : {{bay.timePeriodMiniths}}.min {{bay.timePeriodSecond}}.sec</label>
+                            </div>
+                        </div>
+                        <div class="col-xs-1 nopadding">
+                            <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
+                        </div>
                     </div>
-                    <div ng-repeat="job in model.jobList|filter:{bay:bay.indexNo}" ng-drag="{{dragableMode}}" ng-drag-data="job" class="tile tile-135 col-lg-6" style="border-style: groove">
+                    <div ng-repeat="job in model.jobList|filter:{bay:bay.indexNo}" 
+                         ng-drag="{{dragableMode}}" ng-drag-data="job" class="tile tile-135 col-lg-6" style="border-style: groove">
                         <span uib-dropdown style="display: block;text-align: center;margin-top: 5px">
                             <i  id="simple-dropdown" uib-dropdown-toggle>
-                                <!--{{getVehicleType(job.vehicle)}}-->
-                                <!--<img ng-show="getVehicleType(getVehicle(job.vehicle).vehicleType==='cars'" src="../../../img/05.png"/>-->
                                 <img src="../../../img/05.png"/>
                                 <h4><b class="text-default">{{getVehicle(job.vehicle).vehicleNo}}</b></h4>
                             </i>
                             <ul class="dropdown-menu" style="margin-left: -17px;min-width: 130px !important"
-                                uib-dropdown-menu aria-labelledby="simple-dropdown" ng-click="doJobFinish(job)">
-                                <li>
-                                    <a>JOB FINISHED</a>
+                                uib-dropdown-menu aria-labelledby="simple-dropdown" >
+                                <li ng-click="doJobFinish(job)">
+                                    <a>DO JOB FINISH</a>
                                 </li>
                             </ul>
                         </span>

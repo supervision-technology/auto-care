@@ -29,42 +29,34 @@ public class Employee implements Serializable {
     private Integer indexNo;
 
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 100)
     @Column(name = "address_line1")
     private String addressLine1;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "address_line2")
     private String addressLine2;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "address_line3")
     private String addressLine3;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "mobile")
     private String mobile;
 
     @Basic(optional = false)
-    @NotNull
     @Column(name = "branch")
     private int branch;
 
     @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
@@ -79,10 +71,13 @@ public class Employee implements Serializable {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "bay")
+    private Integer bay;
+
     public Employee() {
     }
 
-    public Employee(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String rol, String image) {
+    public Employee(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String type, String rol, String image, Integer bay) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -93,6 +88,7 @@ public class Employee implements Serializable {
         this.type = type;
         this.rol = rol;
         this.image = image;
+        this.bay = bay;
     }
 
     public Integer getIndexNo() {
@@ -174,4 +170,13 @@ public class Employee implements Serializable {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public Integer getBay() {
+        return bay;
+    }
+
+    public void setBay(Integer bay) {
+        this.bay = bay;
+    }
+
 }

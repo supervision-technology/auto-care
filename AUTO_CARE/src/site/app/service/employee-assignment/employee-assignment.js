@@ -50,7 +50,7 @@
                 };
                 //insert 
                 factory.insertDetail = function (detail, callback, errorcallback) {
-                    
+
                     var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/insert-detail";
                     $http.post(url, detail)
                             .success(function (data, status, headers) {
@@ -63,8 +63,8 @@
                             });
                 };
                 //get Bay Assign Vehicle Count
-                factory.getBayAssignVehicleCount = function (detail, callback, errorcallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/vehicle-assignment/load_not_finished_vehicle_assignment/" + detail;
+                factory.getBayAssignEmployeeCount = function (detail, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/bay-employee-count/" + detail;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -114,36 +114,39 @@
 //                    if ($scope.dragableMode) {
 //
 //                        $scope.dragableMode = false;
-//                        var vehicleCount = 0;
-//                        employeeAssignmentFactory.getBayAssignVehicleCount(bay.indexNo,
-//                                function (data) {
-//                                    vehicleCount = data;
+                    var vehicleCount = 0;
+                    employeeAssignmentFactory.getBayAssignEmployeeCount(bay.indexNo,
+                            function (data) {
+                                vehicleCount = data;
+                                console.log(vehicleCount);
 //
-//                                    $scope.isSameBay = false;
-//                                    for (var i = 0; i < $scope.model.jobList.length; i++) {
-//                                        if ($scope.model.jobList[i].bay === bay.indexNo) {
-//                                            if ($scope.model.jobList[i].vehicle === job.vehicle) {
-//                                                $scope.isSameBay = true;
-//                                                break;
-//                                            }
-//                                        }
-//                                    }
-//                                    if ($scope.isSameBay) {
-//                                        $scope.model.jobAssignment.bay.timeout = '';
-//                                        Notification.error('Same Bay Assignment fail !');
-//                                    } else {
+                                $scope.isSameBay = false;
+                                for (var i = 0; i < $scope.model.employeeList.length; i++) {
+                                    if ($scope.model.employeeList[i].bay === bay.indexNo) {
+                                        if ($scope.model.employeeList[i].indexNo === emp.indexNo) {
+                                            $scope.isSameBay = true;
+                                            break;
+                                        }
+                                    }
+                                }
+                                if ($scope.isSameBay) {
+                                    $scope.model.jobAssignment.bay.timeout = '';
+                                } else {
 //
-//                                        if (vehicleCount < bay.maxVehicle) {
-                    $scope.model.employeeAssignment.employee = emp;
-                    $scope.model.employeeAssignment.bay = bay;
-                    $scope.model.employeeAssignment.bay.timeout = 5;
-                    $scope.onTimeout($scope.model.employeeAssignment.bay);
+                                    if (vehicleCount < bay.maxEmployee) {
+                                        $scope.model.employeeAssignment.employee = emp.indexNo;
+                                        $scope.model.employeeAssignment.bay = bay;
+                                        $scope.model.employeeAssignment.bay.timeout = 5;
+
+                                        $scope.onTimeout($scope.model.employeeAssignment.bay);
+                                    } else {
+                                        Notification.error('Max Employee Assign for '+bay.name+'  !');
+                                    }
+                                }
+                            });
+
 //
-//                                        } else {
-//                                            Notification.error('Max vehicle Assign for this bay !');
-//                                        }
-//                                    }
-//                                });
+
 //                    }
 //                    $scope.dragableMode = true;
 //                    
@@ -156,18 +159,31 @@
                         }
                     }
                 };
+                $scope.getBay = function (bay) {
+                    for (var i = 0; i < $scope.model.bayList.length; i++) {
+                        if ($scope.model.bayList[i].indexNo === bay) {
+                            return $scope.model.bayList[i];
+                            break;
+                        }
+                    }
+                };
                 $scope.onTimeout = function (bay) {
+                    if ($scope.model.employeeAssignment.bay.timeout !== null) {
 
-                    if ($scope.model.employeeAssignment.bay.timeout !== '') {
-                        var mytimeout = $timeout($scope.onTimeout, 1000);
-                        $scope.model.employeeAssignment.bay.timeout--;
+                        if ($scope.model.employeeAssignment.bay.timeout !== '') {
+                            var mytimeout = $timeout($scope.onTimeout, 1000);
+                            $scope.model.employeeAssignment.bay.timeout--;
 
-                        if ($scope.model.employeeAssignment.bay.timeout === 0) {
-                            $timeout.cancel(mytimeout);
-                            $scope.http.insertDetail();
+                            console.log($scope.model.employeeAssignment.bay.timeout);
+                            if ($scope.model.employeeAssignment.bay.timeout === 0) {
+                                $timeout.cancel(mytimeout);
+                                $scope.http.insertDetail();
+                            }
+                        } else {
+                            $scope.model.employeeAssignment.bay.timeout = '';
                         }
                     } else {
-                        $scope.model.employeeAssignment.bay.timeout = '';
+                        Notification.error('Some Error. Please Refresh this Window.. !');
                     }
 
                 };
@@ -176,25 +192,22 @@
                     console.log('save method');
                     $scope.model.employeeAssignment.inTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                     $scope.model.employeeAssignment.outTime = null;
+                    $scope.model.employeeAssignment.bay = $scope.model.employeeAssignment.bay.indexNo;
                     var detail = $scope.model.employeeAssignment;
                     var detailJSON = JSON.stringify(detail);
                     //save detail dirrectly
                     if ($scope.model.employeeAssignment.bay) {
                         if ($scope.model.employeeAssignment.employee) {
-                            $scope.model.employeeAssignment.employee=$scope.model.employeeAssignment.employee.indexNo;
-                            $scope.model.employeeAssignment.bay=$scope.model.employeeAssignment.bay.indexNo;
                             console.log($scope.model.employeeAssignment);
                             employeeAssignmentFactory.insertDetail(
                                     detailJSON,
                                     function (data) {
-//                                        var vehicle = $scope.getVehicle(data.jobCard.vehicle);
-//
-//                                        Notification.success(vehicle.vehicleNo + ' Vehicle Assigned to ' + data.bay.name + ' successfully');
-//                                        $scope.model.employeeAssignment = data;
-//                                        $scope.model.jobList = [];
-//                                        $scope.model.bayList = [];
 
-                                        $scope.ui.init();
+                                        var employee = $scope.getEmployee(data.employee);
+                                        employee.bay = data.bay;
+                                        var bay = $scope.getBay(data.bay);
+
+                                        Notification.success("Employee " + " " + employee.name + " " + "Assign" + "  " + bay.name + "  " + "Success !");
                                     }
                             , function (data) {
                                 Notification.error(data);

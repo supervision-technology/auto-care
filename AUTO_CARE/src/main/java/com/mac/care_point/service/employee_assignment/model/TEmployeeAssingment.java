@@ -5,22 +5,15 @@
  */
 package com.mac.care_point.service.employee_assignment.model;
 
-import com.mac.care_point.master.bay.model.Bay;
-import com.mac.care_point.master.employee.model.Employee;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -47,13 +40,11 @@ public class TEmployeeAssingment implements Serializable {
     @Column(name = "status")
     private String status;
 
-    @JoinColumn(name = "employee", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Employee employee;
+    @Column(name = "employee")
+    private Integer employee;
 
-    @JoinColumn(name = "bay", referencedColumnName = "index_no")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private Bay bay;
+    @Column(name = "bay")
+    private Integer bay;
 
     @Column(name = "date")
     private Date date;
@@ -61,7 +52,7 @@ public class TEmployeeAssingment implements Serializable {
     public TEmployeeAssingment() {
     }
 
-    public TEmployeeAssingment(Integer indexNo, String inTime, String outTime, String status, Employee employee, Bay bay, Date date) {
+    public TEmployeeAssingment(Integer indexNo, String inTime, String outTime, String status, Integer employee, Integer bay, Date date) {
         this.indexNo = indexNo;
         this.inTime = inTime;
         this.outTime = outTime;
@@ -103,19 +94,19 @@ public class TEmployeeAssingment implements Serializable {
         this.status = status;
     }
 
-    public Employee getEmployee() {
+    public Integer getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(Integer employee) {
         this.employee = employee;
     }
 
-    public Bay getBay() {
+    public Integer getBay() {
         return bay;
     }
 
-    public void setBay(Bay bay) {
+    public void setBay(Integer bay) {
         this.bay = bay;
     }
 
@@ -127,5 +118,5 @@ public class TEmployeeAssingment implements Serializable {
         this.date = date;
     }
 
- 
+    
 }

@@ -5,6 +5,9 @@
  */
 package com.mac.care_point.service.employee_assignment;
 
+import com.mac.care_point.master.employee.EmployeeRepository;
+import com.mac.care_point.master.employee.model.Employee;
+import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.employee_assignment.model.TEmployeeAssingment;
 import com.mac.care_point.service.employee_attendance.TEmployeeAttendanceRepository;
 import com.mac.care_point.service.employee_attendance.model.TEmployeeAttendance;
@@ -27,26 +30,31 @@ public class EmployeeAssignmentService {
     private EmployeeAssignmentRepository employeeAssignmentRepository;
 
     @Autowired
-    private TEmployeeAttendanceRepository attendanceRepository;
+    private EmployeeRepository employeeRepository;
 
     List<TEmployeeAssingment> findAll() {
         return employeeAssignmentRepository.findAll();
     }
 
-    TEmployeeAssingment saveDetail(TEmployeeAssingment employeeAssingment) {
-        System.out.println("aaaaaaaaaaa");
-        System.out.println(employeeAssingment.getEmployee().getIndexNo());
-        
-        List<TEmployeeAttendance> attendances = attendanceRepository.findByDateAndEmployee(new Date(), employeeAssingment.getEmployee().getIndexNo());
-        System.out.println(attendances.size());
-        if (attendances.isEmpty()) {
-            return null;
-        } else {
-            TEmployeeAttendance editObject = attendances.get(0);
-            editObject.setCurrentBay(employeeAssingment.getBay().getIndexNo());
-            TEmployeeAttendance save = attendanceRepository.save(editObject);
-            return employeeAssingment;
+    public TEmployeeAssingment saveDetail(TEmployeeAssingment employeeAssingment) {
+        Employee findOne = employeeRepository.findOne(employeeAssingment.getEmployee());
+        findOne.setBay(employeeAssingment.getBay());
+
+        //update out time
+        List<TEmployeeAssingment> updatedObjects = employeeAssignmentRepository.findTop1ByEmployeeOrderByInTimeDesc(employeeAssingment.getEmployee());
+
+        if (!updatedObjects.isEmpty()) {
+            TEmployeeAssingment updateEmployeeAssignment = updatedObjects.get(0);
+            updateEmployeeAssignment.setOutTime(employeeAssingment.getInTime());
+            updateEmployeeAssignment.setStatus(Constant.FINISHE_STATUS);
+            employeeAssignmentRepository.save(updateEmployeeAssignment);
         }
+
+        employeeRepository.save(findOne);
+        return employeeAssignmentRepository.save(employeeAssingment);
+    }
+     public Integer getBayAssignEmployeeCount(Integer bay, Integer branch) {
+        return employeeAssignmentRepository.getBayAssignEmployeeCount(branch, bay);
     }
 
 }

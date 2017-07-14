@@ -96,11 +96,14 @@ public class Bay implements Serializable {
     
     @Column(name = "employee_is_view")
     private Integer employeeIsView;
+    
+    @Column(name = "time_period")
+    private String timePeriod;
 
     public Bay() {
     }
 
-    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle, String color, Integer branch, Integer bayIsView, Integer employeeIsView) {
+    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle, String color, Integer branch, Integer bayIsView, Integer employeeIsView, String timePeriod) {
         this.indexNo = indexNo;
         this.name = name;
         this.maxVehicle = maxVehicle;
@@ -116,6 +119,7 @@ public class Bay implements Serializable {
         this.branch = branch;
         this.bayIsView = bayIsView;
         this.employeeIsView = employeeIsView;
+        this.timePeriod = timePeriod;
     }
 
     public Integer getIndexNo() {
@@ -237,4 +241,13 @@ public class Bay implements Serializable {
     public void setEmployeeIsView(Integer employeeIsView) {
         this.employeeIsView = employeeIsView;
     }
+
+    public String getTimePeriod() {
+        return timePeriod;
+    }
+
+    public void setTimePeriod(String timePeriod) {
+        this.timePeriod = timePeriod;
+    }
+    
 }
