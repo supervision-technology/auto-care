@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.master.vehicleAssignment;
 
-
 import com.mac.care_point.master.vehicle.VehicleRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.common.Constant;
@@ -43,7 +42,9 @@ public class VehicleAssignmentService {
 
         if (!updatedObjects.isEmpty()) {
             TVehicleAssignment updateVehicleAssignment = updatedObjects.get(0);
-            updateVehicleAssignment.setOutTime(vehicleAssignment.getInTime());
+            if (updateVehicleAssignment.getOutTime() == null) {
+                updateVehicleAssignment.setOutTime(vehicleAssignment.getInTime());
+            }
             vehicleAssignmentRepository.save(updatedObjects.get(0));
         }
         vehicleAssignment.setIndexNo(0);
