@@ -1,0 +1,47 @@
+<div>
+    <!--tile list start-->
+    <div class="tile-list background-dark">
+        <div class="tile-list-title" style="margin-right: 5px;">
+            <h4>VEHICLE</h4>
+        </div>
+        <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);">
+            <div class="tile tile-128" style="animation: 0.5s zoomInLeft" >
+                <span>
+                    <img src="/img/01.png"/>  
+                    <label>
+                        KR 8755 {{model.pendingJobCards.length}}
+                    </label>
+                    <label class="label label-primary">NORMAL</label>
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--tile list end-->
+
+    <!--customer satisfaction start-->
+    <div class="index-content-body" style="width: calc(100% - 133px);float: left;">
+        <div class="row col-xs-12" style="height: 100vh; padding-top: 0px;">
+            <div class="col-xs-offset-2 col-xs-8" style="height:calc(100vh - 100px);margin-top: 52px;">
+                <div class="col-xs-offset-2 col-xs-8" style="margin-top: 20%;" >
+                    <center>
+                        <img ng-show="range<20" style="text-align: center" src="../../../img/satisfaction_icon/1.png" alt="not found"/>
+                        <img ng-show="range>=20 && range<40" style="text-align: center" src="../../../img/satisfaction_icon/2.png" alt="not found"/>
+                        <img ng-show="range>=40 && range<60" style="text-align: center" src="../../../img/satisfaction_icon/3.png" alt="not found"/>
+                        <img ng-show="range>=60 && range<80" style="text-align: center" src="../../../img/satisfaction_icon/4.png" alt="not found"/>
+                        <img ng-show="range>=80 " style="text-align: center" src="../../../img/satisfaction_icon/5.png" alt="not found"/>
+                    </center><br>
+                    <div>
+                        <input type="range" ng-model="range" ng-disabled="ui.mode === 'IDEAL'">
+                        {{range}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--customer satisfaction end-->
+</div>
+
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

@@ -11,6 +11,7 @@
         "invoiceModule",
         "bayItemIssueModule",
         "finalCheckListModule",
+        "customerSatisfactionModule",
         //pending
         "employeeAssignmentModule",
         "bayAssignmentModule",
@@ -101,6 +102,11 @@
                         .when("/service/final-check-list", {
                             templateUrl: "app/service/final-check-list/final-check-list.html",
                             controller: "finalCheckListController"
+                        })
+                       
+                        .when("/service/customer-satisfaction", {
+                            templateUrl: "app/service/customer-satisfaction/customer-satisfaction.html",
+                            controller: "customerSatisfactionController"
                         })
 
                         //front-office
