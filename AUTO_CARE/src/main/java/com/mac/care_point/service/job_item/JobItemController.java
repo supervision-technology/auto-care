@@ -42,6 +42,11 @@ public class JobItemController {
     public List<MItemL> getQuickSeacrhItem(@PathVariable String itemKey, @PathVariable Integer priceCategory) {
         return jobItemService.getQuickSeacrhItem(itemKey, priceCategory);
     }
+    
+    @RequestMapping(value = "/quick-stock-item/{itemKey}", method = RequestMethod.GET)
+    public List<Object[]> getQuickSeacrhItemStockItem(@PathVariable String itemKey) {
+        return jobItemService.getQuickSeacrhItemStockItem(itemKey, BRANCH);
+    }
 
     @RequestMapping(value = "/save-job-items", method = RequestMethod.POST)
     public TJobItem saveJobItem(@RequestBody TJobItem jobItem) {

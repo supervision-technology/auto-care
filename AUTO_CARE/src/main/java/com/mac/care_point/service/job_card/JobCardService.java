@@ -117,7 +117,7 @@ public class JobCardService {
         //save vehicle assignment wating bay -  set default washing bay
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         TVehicleAssignment tVehicleAssignment = new TVehicleAssignment();
-        tVehicleAssignment.setBay(1);
+        tVehicleAssignment.setBay(2);
         tVehicleAssignment.setDate(new Date());
         tVehicleAssignment.setInTime(currentTime);
         tVehicleAssignment.setJobCard(getSaveData.getIndexNo());

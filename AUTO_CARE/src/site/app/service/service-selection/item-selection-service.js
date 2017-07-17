@@ -109,6 +109,10 @@
         this.getQuickSeacrhItem = function (itemKey, priceCategory) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/quick-service-item/" + itemKey + "/" + priceCategory);
         };
+        
+        this.getQuickSeacrhStockItem = function (itemKey) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/quick-stock-item/" + itemKey);
+        };
     };
 
     angular.module("appModule")

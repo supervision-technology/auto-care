@@ -17,6 +17,7 @@
                     itemUnits: [],
                     category: [],
                     filterQuickSeacrhItems: [],
+                    filterQuickSeacrhStockItems:[],
                     packageItemList: [],
                     vehicleAttenctionsCategoryList: [],
                     vehicleAttenctionsList: [],
@@ -111,6 +112,21 @@
                                 })
                                 .error(function () {
                                     that.filterQuickSeacrhItems = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    getQuickSeacrhStockItem: function (itemKey) {
+                        var that = this;
+                        var defer = $q.defer();
+                        ItemSelectionService.getQuickSeacrhStockItem(itemKey)
+                                .success(function (data) {
+                                    that.filterQuickSeacrhStockItems = [];
+                                    that.filterQuickSeacrhStockItems = data;
+                                    defer.resolve(data);
+                                })
+                                .error(function () {
+                                    that.filterQuickSeacrhStockItems = [];
                                     defer.reject();
                                 });
                         return defer.promise;

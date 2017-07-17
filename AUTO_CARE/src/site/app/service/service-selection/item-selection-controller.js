@@ -37,15 +37,32 @@
                     $scope.selectStockItemPosition = null;
                     $scope.model.subCategory = [];
                     $scope.model.itemsByStockLeger = [];
-                    $scope.select =  null;
+                    $scope.select = null;
                 };
 
                 $scope.ui.findSubCateoryByCateory = function (category) {
                     $scope.model.subCategory = [];
                     $scope.model.itemsByStockLeger = [];
-                    $scope.select =  null;
+                    $scope.select = null;
                     $scope.model.findSubCateoryByCateory(category);
                     $scope.ui.model = "STOCK_ITEM";
+                };
+
+                $scope.ui.getQuickSeacrhItem = function (itemKey) {
+                    $scope.showStockItemTableQuickSeacrh = false;
+                    $scope.hideStockItemTableQuickSeacrh = true;
+                    $scope.model.getQuickSeacrhStockItem(itemKey, $scope.model.jobCardData.priceCategory)
+                            .then(function () {
+                                $scope.showStockItemTableQuickSeacrh = true;
+                                $scope.hideStockItemTableQuickSeacrh = false;
+
+                            });
+                };
+
+                $scope.ui.quickSeacrh = function () {
+                    $scope.itemKey = null;
+                    $scope.model.filterQuickSeacrhStockItems = [];
+                    $scope.ui.model = "QUICK_SEARCH";
                 };
 
                 $scope.ui.getStockItemByItemCategory = function (itemCategory, $index) {

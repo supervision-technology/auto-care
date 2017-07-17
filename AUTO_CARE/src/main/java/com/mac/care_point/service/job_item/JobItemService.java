@@ -60,6 +60,9 @@ public class JobItemService {
     public List<MItemL> getQuickSeacrhItem(String itemKey,Integer priceCategory) {
         return mItemLRepository.getQuickSeacrhItem(itemKey, priceCategory);
     }
+    public List<Object[]> getQuickSeacrhItemStockItem(String itemKey,Integer priceCategory) {
+        return mItemLRepository.getQuickSeacrhItemStockItem(itemKey, priceCategory);
+    }
 
     @Transactional
     public TJobItem saveJobItem(TJobItem jobItem) {

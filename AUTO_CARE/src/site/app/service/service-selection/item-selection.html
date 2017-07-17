@@ -32,6 +32,51 @@
                 </div>
             </div>
         </div>
+        <div class="col-xs-7 background-light" ng-show="ui.model === 'QUICK_SEARCH'">
+            <div class="row full-height" style="display: flex; flex-flow: column;">
+                <table class="square-table background-dark">
+                    <col style="width: 70%;"/>
+                    <col style="width: 30%;"/>
+                    <col />
+                    <thead>
+                        <tr>
+                            <th><input type="text" class="search-input input-sm" placeholder="search" ng-model="itemKey"></th>
+                            <th><a style="background-color: #009688;" class="btn" ng-click="ui.getQuickSeacrhItem(itemKey);"/>S</a></th>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="square-table background-dark">
+                    <col style="width: 70%;"/>
+                    <col style="width: 10%;"/>
+                    <col style="width: 20%;"/>
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 105px);" ng-show="showStockItemTableQuickSeacrh">
+                    <table class="square-table">
+                        <col style="width: 70%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 20%;"/>
+                        <tbody>
+                            <tr class="background-dark" ng-repeat="detils in model.filterQuickSeacrhStockItems">
+                                <td class="text-bold"> {{detils[2]}}</td>
+                                <td> 
+                                    <span ng-class="selectVehicleType === 'REGISTER' ? 'label-success' : 'label-primary'" class="label">{{detils[1]}}</span>
+                                </td>
+                                <td><a class="btn btn-primary" ng-click="ui.getItemUnits(detils);"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="smart-scroll-y" style="height: calc(100vh - 105px);" ng-show="hideStockItemTableQuickSeacrh">
+                    <img src="/img/loader1.gif" width="550" height="400" alt="loader1"/>
+                </div>
+            </div>
+        </div>
 
         <div class="col-xs-7 background-light" ng-show="ui.model === 'STOCK_ITEM'">
             <div class="row full-height" style="display: flex; flex-flow: column;">
@@ -397,6 +442,13 @@
                     <uib-tab heading="OTHER" index="4">
                         <div class="background-dark">
                             <div class="tile-lists">
+                                <div class="tiles tile-200 col-xs-4" style="background: #009688;width: 300px;" ng-click="ui.quickSeacrh();">
+                                    <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
+                                        <div class="col-xs-10" style="font-size: 19px;margin-top: 15px;">
+                                            <i class="glyphicon glyphicon-search"></i> QUICK SEARCH
+                                        </div>
+                                    </div>
+                                </div> 
                                 <div class="tiles tile-200 col-xs-4" style="background: #303F9F;width: 300px;" ng-show="model.jobItemList.length" ng-click="ui.printJobItemRequestAstimate();">
                                     <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
                                         <div class="col-xs-10" style="font-size: 19px;margin-top: 15px;">
