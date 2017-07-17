@@ -20,7 +20,7 @@
                             <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
                         </div>
                     </div>
-                    <div ng-repeat="job in model.jobList|filter:{bay:bay.indexNo}" 
+                    <div ng-repeat="job in model.jobList" ng-if="job.bay==bay.indexNos" 
                          ng-drag="{{dragableMode}}" ng-drag-data="job" class="tile tile-135 col-lg-6" style="border-style: groove">
                         <span uib-dropdown style="display: block;text-align: center;margin-top: 5px">
                             <i  id="simple-dropdown" uib-dropdown-toggle>

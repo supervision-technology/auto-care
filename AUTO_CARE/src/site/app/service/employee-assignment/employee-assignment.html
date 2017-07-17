@@ -9,7 +9,7 @@
                         <label class="h4" >{{bay.name}}</label> 
                         <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
                     </div>
-                    <div ng-repeat="employee in model.employeeList | filter:{bay:bay.indexNo}" 
+                    <div ng-repeat="employee in model.employeeList " ng-if="employee.bay==bay.indexNos" 
                          ng-drag="{{dragableMode}}" ng-drag-data="employee" 
                          class="tile tile-100 col-lg-6" style="border-style: groove">
                         <div style="display: block;text-align: center;margin-top: 5px">
