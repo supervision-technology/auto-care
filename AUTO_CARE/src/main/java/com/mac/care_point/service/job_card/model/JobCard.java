@@ -99,6 +99,12 @@ public class JobCard implements Serializable {
     @Column(name = "default_final_check")
     private Boolean defaultFinalCheck;
 
+    @Column(name = "rate")
+    private Integer rate;
+    
+    @Column(name = "rate_reason")
+    private String rateReason;
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCard", fetch = FetchType.EAGER)
     private List<TJobItem> tJobItemList;
@@ -106,7 +112,7 @@ public class JobCard implements Serializable {
     public JobCard() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, List<TJobItem> tJobItemList) {
+    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, Integer rate, String rateReason, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -127,9 +133,12 @@ public class JobCard implements Serializable {
         this.attenctions = attenctions;
         this.invoice = invoice;
         this.defaultFinalCheck = defaultFinalCheck;
+        this.rate = rate;
+        this.rateReason = rateReason;
         this.tJobItemList = tJobItemList;
     }
 
+   
     public JobCard(Integer indexNo) {
         this.indexNo = indexNo;
     }
@@ -300,6 +309,22 @@ public class JobCard implements Serializable {
 
     public void setDefaultFinalCheck(Boolean defaultFinalCheck) {
         this.defaultFinalCheck = defaultFinalCheck;
+    }
+
+    public Integer getRate() {
+        return rate;
+    }
+
+    public void setRate(Integer rate) {
+        this.rate = rate;
+    }
+
+    public String getRateReason() {
+        return rateReason;
+    }
+
+    public void setRateReason(String rateReason) {
+        this.rateReason = rateReason;
     }
 
 }

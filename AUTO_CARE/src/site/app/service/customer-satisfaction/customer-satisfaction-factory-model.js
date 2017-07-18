@@ -6,10 +6,8 @@
                 factory.customerSatisfactionData = function () {
                     var customerSatisfactionData = {
                         "indexNo": null,
-                        "number": null,
-                        "branch": null,
-                        "date": null,
-                        "transaction": null,
+                        "rate": 0,
+                        "rateReason": null
                         
                     };
                     return customerSatisfactionData;
