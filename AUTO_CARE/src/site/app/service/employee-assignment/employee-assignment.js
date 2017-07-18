@@ -136,7 +136,7 @@
                                     if (vehicleCount < bay.maxEmployee) {
                                         $scope.model.employeeAssignment.employee = emp.indexNo;
                                         $scope.model.employeeAssignment.bay = bay;
-                                        $scope.model.employeeAssignment.bay.timeout = 5;
+                                        $scope.model.employeeAssignment.bay.timeout = 1;
 
                                         $scope.onTimeout($scope.model.employeeAssignment.bay);
                                     } else {
