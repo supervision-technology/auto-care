@@ -56,7 +56,9 @@
                         "finalCheck": false,
                         "attenctions": false,
                         "invoice": false,
-                        "defaultFinalCheck": false
+                        "defaultFinalCheck": false,
+                        "rate": 0,
+                        "rateReason": null
                     };
                     return data;
                 };

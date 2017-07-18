@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.service.job_card.model;
+package com.mac.care_point.service.customer_satisfaction.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mac.care_point.service.job_item.model.TJobItem;
@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "t_job_card")
 @XmlRootElement
-public class JobCard implements Serializable {
+public class CustomerSatisfaction implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -109,10 +109,10 @@ public class JobCard implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCard", fetch = FetchType.EAGER)
     private List<TJobItem> tJobItemList;
 
-    public JobCard() {
+    public CustomerSatisfaction() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, Integer rate, String rateReason, List<TJobItem> tJobItemList) {
+    public CustomerSatisfaction(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, Integer rate, String rateReason, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -139,7 +139,7 @@ public class JobCard implements Serializable {
     }
 
    
-    public JobCard(Integer indexNo) {
+    public CustomerSatisfaction(Integer indexNo) {
         this.indexNo = indexNo;
     }
 

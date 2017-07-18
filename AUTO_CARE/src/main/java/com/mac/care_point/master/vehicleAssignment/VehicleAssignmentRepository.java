@@ -30,8 +30,7 @@ public interface VehicleAssignmentRepository extends JpaRepository<TVehicleAssig
             + "where t_job_card.index_no=t_vehicle_assignment.job_card\n"
             + "	and t_vehicle_assignment.branch=:branch \n"
             + "	and t_vehicle_assignment.bay=:bay \n"
-            + "	and t_job_card.`status` != :status\n"
-            + "	and t_vehicle_assignment.out_time is null", nativeQuery = true)
+            + "	and t_job_card.`status` != :status\n", nativeQuery = true)
     public Integer getBayAssignVehicleCount(@Param("branch") Integer branch, @Param("status") String status, @Param("bay") Integer bay);
 
     @Query(value = "select * from t_vehicle_assignment where job_card = :jobCard", nativeQuery = true)

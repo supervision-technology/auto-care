@@ -36,6 +36,7 @@ public class TVehicleAssignmentController {
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public TVehicleAssignment insertDetail(@RequestBody TVehicleAssignment vehicleAssignment) {
+        vehicleAssignment.setBranch(branch);
         return vehicleAssignmentService.saveDetail(vehicleAssignment);
     }
 
