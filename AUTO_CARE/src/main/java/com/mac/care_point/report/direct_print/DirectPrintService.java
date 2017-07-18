@@ -42,22 +42,22 @@ public class DirectPrintService {
 
     @Autowired
     private ClientRepository clientRepository;
-    
+
     @Autowired
     private PriceCategoryRepository priceCategoryRepository;
 
     public Integer findByJobCard(Integer jobCard) {
-        
+
         JobCard getJobCardData = jobCardRepository.getOne(jobCard);
         Vehicle vehicleData = vehicleRepository.getOne(getJobCardData.getVehicle());
         Client clientData = clientRepository.getOne(getJobCardData.getClient());
         PriceCategory priceCategoryData = priceCategoryRepository.getOne(getJobCardData.getPriceCategory());
-       
+
         getJobCardData.getIndexNo();
         vehicleData.getIndexNo();
         clientData.getIndexNo();
         priceCategoryData.getIndexNo();
-        
+
         List<Object[]> serviceItemByJobCard = directPrintRepository.getServiceItemByJobCard(jobCard);
         List<Object[]> stockItemByJobCard = directPrintRepository.getStockItemByJobCard(jobCard);
         List<Object[]> itemTotalPriceByJobCard = directPrintRepository.getItemTotalPriceByJobCard(jobCard);
@@ -105,19 +105,15 @@ public class DirectPrintService {
 
         printerService.printString(defaultPrinter, "--------------------------------------- \n");
         printerService.printString(defaultPrinter, "TOTAL AMOUNT : " + total + "\n");
-        printerService.printString(defaultPrinter, "---------------------------------------");
-
-        printerService.printString(defaultPrinter, "\n \n \n ");
+        printerService.printString(defaultPrinter, "--------------------------------------- \n");
+        printerService.printString(defaultPrinter, "Please remove all your valuble belonging such as money,jewellery, mobile phones etc..,from the vehicle before handing over for services, Carepoint (PVT) Ltd, holds no responsibility whatsoever for any losses of such items. \n \n \n");
+        printerService.printString(defaultPrinter, "");
         printerService.printString(defaultPrinter, "\n ------------------");
-        printerService.printString(defaultPrinter, "\n Signature ");
-
-        printerService.printString(defaultPrinter, "\n Print Time @ " + formatDate);
-        printerService.printString(defaultPrinter, "\n");
-        printerService.printString(defaultPrinter, "---------------------------------------");
-        printerService.printString(defaultPrinter, "\n");
-        printerService.printString(defaultPrinter, "\n");
-        printerService.printString(defaultPrinter, "\n");
-        printerService.printString(defaultPrinter, "\n");
+        printerService.printString(defaultPrinter, "\n Signature");
+        printerService.printString(defaultPrinter, "\n Print Time @ " + formatDate +"\n");
+        printerService.printString(defaultPrinter, "--------------------------------------- \n");
+        printerService.printString(defaultPrinter, "Software By Supervision Technology \n");
+        printerService.printString(defaultPrinter, "0777871144 / 0382246330 \n");
         printerService.printString(defaultPrinter, "\n");
         printerService.printString(defaultPrinter, "\n");
         printerService.printString(defaultPrinter, "\n");

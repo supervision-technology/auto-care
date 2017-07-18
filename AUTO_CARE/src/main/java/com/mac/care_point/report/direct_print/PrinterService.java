@@ -133,7 +133,7 @@ public class PrinterService implements Printable {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        System.out.print(text);
     }
 
     public void printBytes(String printerName, byte[] bytes) {

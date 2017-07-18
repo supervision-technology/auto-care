@@ -204,42 +204,42 @@
                         if ($scope.model.jobAssignment.bay.timeout === 0) {
                             $timeout.cancel(mytimeout);
                             $scope.http.insertDetail();
-                            $scope.timePeriodTimer($scope.model.jobAssignment.bay);
+                            //$scope.timePeriodTimer($scope.model.jobAssignment.bay);
                         }
                     } else {
                         $scope.model.jobAssignment.bay.timeout = '';
                     }
 
                 };
-                $scope.timePeriodTimer = function (bay) {
-                    var selectBay = $scope.model.jobAssignment.bay;
-                    var bay=$scope.getBay(selectBay);
-                    
-                    console.log("bay");
-                    console.log("bay");
-                    console.log(selectBay);
-
-                    var timer = $timeout($scope.timePeriodTimer, 1000);
-                    bay.timePeriodSecond++;
-                    if (bay.timePeriodSecond === 60) {
-                        bay.timePeriodSecond=-1;
-                        $timeout.cancel(timer);
-                        $scope.timerMiniths(bay);
-                    }
-                };
-                $scope.timerMiniths=function (bay){
-                    if (bay.timePeriodMiniths+1 === bay.timePeriod) {
-                        Notification.error("Pass Time..");
-                    }
-                    var timer = $timeout($scope.timerMiniths, 1000);
-                    bay.timePeriodMiniths++;
-                    if (bay.timePeriodMiniths === 60) {
-//                        $scope.timerHour(bay);
-                    }else{
-                        $scope.timePeriodTimer(bay);
-                    }
-                    $timeout.cancel(timer);
-                };
+//                $scope.timePeriodTimer = function (bay) {
+//                    var selectBay = $scope.model.jobAssignment.bay;
+//                    var bay=$scope.getBay(selectBay);
+//                    
+//                    console.log("bay");
+//                    console.log("bay");
+//                    console.log(selectBay);
+//
+//                    var timer = $timeout($scope.timePeriodTimer, 1000);
+//                    bay.timePeriodSecond++;
+//                    if (bay.timePeriodSecond === 60) {
+//                        bay.timePeriodSecond=-1;
+//                        $timeout.cancel(timer);
+//                        $scope.timerMiniths(bay);
+//                    }
+//                };
+//                $scope.timerMiniths=function (bay){
+//                    if (bay.timePeriodMiniths+1 === bay.timePeriod) {
+//                        Notification.error("Pass Time..");
+//                    }
+//                    var timer = $timeout($scope.timerMiniths, 1000);
+//                    bay.timePeriodMiniths++;
+//                    if (bay.timePeriodMiniths === 60) {
+////                        $scope.timerHour(bay);
+//                    }else{
+//                        $scope.timePeriodTimer(bay);
+//                    }
+//                    $timeout.cancel(timer);
+//                };
 
                 $scope.http.insertDetail = function () {
                     $scope.model.jobAssignment.inTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
