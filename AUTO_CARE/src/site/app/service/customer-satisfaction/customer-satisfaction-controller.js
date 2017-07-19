@@ -14,7 +14,7 @@
 
                     $scope.ui.mode = 'IDEAL';
                     if ($scope.model.data.indexNo) {
-                        if ($scope.model.data.rate >= 40) {
+                        if ($scope.model.data.rate >= 3) {
 
                             ConfirmPane.successConfirm("Are you sure want to save this customer satisfaction Rate ? !")
                                     .confirm(function () {

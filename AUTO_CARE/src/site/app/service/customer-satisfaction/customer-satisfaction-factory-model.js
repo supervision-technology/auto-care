@@ -25,9 +25,9 @@
                         "attenctions": false,
                         "invoice": false,
                         "defaultFinalCheck": false,
-                        "rate": 50,
+                        "rate": 3,
                         "rateReason": null
-                        
+
                     };
                     return customerSatisfactionData;
                 };
