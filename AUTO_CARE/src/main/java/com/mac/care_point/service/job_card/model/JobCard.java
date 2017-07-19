@@ -104,6 +104,12 @@ public class JobCard implements Serializable {
     
     @Column(name = "rate_reason")
     private String rateReason;
+    
+    @Column(name = "carepet_original")
+    private Integer carepetOriginal;
+    
+    @Column(name = "carepet_other")
+    private Integer carepetOther;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCard", fetch = FetchType.EAGER)
@@ -112,7 +118,7 @@ public class JobCard implements Serializable {
     public JobCard() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, Integer rate, String rateReason, List<TJobItem> tJobItemList) {
+    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, Integer rate, String rateReason, Integer carepetOriginal, Integer carepetOther, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -135,9 +141,10 @@ public class JobCard implements Serializable {
         this.defaultFinalCheck = defaultFinalCheck;
         this.rate = rate;
         this.rateReason = rateReason;
+        this.carepetOriginal = carepetOriginal;
+        this.carepetOther = carepetOther;
         this.tJobItemList = tJobItemList;
     }
-
    
     public JobCard(Integer indexNo) {
         this.indexNo = indexNo;
@@ -325,6 +332,22 @@ public class JobCard implements Serializable {
 
     public void setRateReason(String rateReason) {
         this.rateReason = rateReason;
+    }
+
+    public Integer getCarepetOriginal() {
+        return carepetOriginal;
+    }
+
+    public void setCarepetOriginal(Integer carepetOriginal) {
+        this.carepetOriginal = carepetOriginal;
+    }
+
+    public Integer getCarepetOther() {
+        return carepetOther;
+    }
+
+    public void setCarepetOther(Integer carepetOther) {
+        this.carepetOther = carepetOther;
     }
 
 }

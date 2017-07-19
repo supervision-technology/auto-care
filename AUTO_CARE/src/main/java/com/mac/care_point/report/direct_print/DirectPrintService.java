@@ -74,6 +74,13 @@ public class DirectPrintService {
         printerService.printString(defaultPrinter, "\n IN MILEAGE  - " + getJobCardData.getInMileage() + " KM");
         printerService.printString(defaultPrinter, "\n CUSTOMER  - " + clientData.getName());
         printerService.printString(defaultPrinter, "\n VEHICLE TYPE  - " + priceCategoryData.getName() + "\n");
+        
+        if (getJobCardData.getCarepetOriginal() > 0) {
+            printerService.printString(defaultPrinter, " CARPET ORIGINAL  - " + getJobCardData.getCarepetOriginal() + "\n");
+        }
+        if (getJobCardData.getCarepetOther() > 0) {
+            printerService.printString(defaultPrinter, " CARPET OTHER  - " + getJobCardData.getCarepetOther()+ "\n");
+        }
         printerService.printString(defaultPrinter, "\n");
 
         if (serviceItemByJobCard.size() > 0) {
@@ -110,7 +117,7 @@ public class DirectPrintService {
         printerService.printString(defaultPrinter, "");
         printerService.printString(defaultPrinter, "\n ------------------");
         printerService.printString(defaultPrinter, "\n Signature");
-        printerService.printString(defaultPrinter, "\n Print Time @ " + formatDate +"\n");
+        printerService.printString(defaultPrinter, "\n Print Time @ " + formatDate + "\n");
         printerService.printString(defaultPrinter, "--------------------------------------- \n");
         printerService.printString(defaultPrinter, "Software By Supervision Technology \n");
         printerService.printString(defaultPrinter, "0777871144 / 0382246330 \n");

@@ -93,7 +93,7 @@ public class JobCardController {
         InputStream inputStream = new FileInputStream(IMAGE_LOCATION + "/" + fileName);
         OutputStream outputStream = response.getOutputStream();
 
-        byte[] bytes = new byte[10240];
+        byte[] bytes = new byte[20480];
         while (inputStream.read(bytes) > 0) {
             outputStream.write(bytes);
         }

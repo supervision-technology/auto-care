@@ -78,6 +78,9 @@ public class JobCardService {
         jobCard.setInTime(inTime);
         jobCard.setDate(new Date());
 
+        System.out.println(jobCard.getCarepetOriginal());
+        System.out.println(jobCard.getCarepetOther());
+
         JobCard getSaveData = jobCardRepository.save(jobCard);
 
         //check allrady exsist data

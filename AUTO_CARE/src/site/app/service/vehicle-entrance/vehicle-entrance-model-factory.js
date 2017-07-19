@@ -58,7 +58,9 @@
                         "invoice": false,
                         "defaultFinalCheck": false,
                         "rate": 0,
-                        "rateReason": null
+                        "rateReason": null,
+                        "carepetOriginal": 0,
+                        "carepetOther": 0
                     };
                     return data;
                 };
