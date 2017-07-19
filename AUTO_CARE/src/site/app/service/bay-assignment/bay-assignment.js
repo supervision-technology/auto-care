@@ -138,7 +138,7 @@
                                         $scope.model.jobAssignment.bay.timeout = '';
                                     } else {
 
-                                        if (vehicleCount < bay.maxVehicle) {
+                                        if (true) {
                                             $scope.model.jobAssignment.jobCard = job;
                                             $scope.model.jobAssignment.bay = bay;
                                             $scope.model.jobAssignment.bay.timeout = 5;

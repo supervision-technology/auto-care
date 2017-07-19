@@ -45,7 +45,7 @@ public class VehicleAssignmentService {
             if (updateVehicleAssignment.getOutTime() == null) {
                 updateVehicleAssignment.setOutTime(vehicleAssignment.getInTime());
             }
-            vehicleAssignmentRepository.save(updatedObjects.get(0));
+            vehicleAssignmentRepository.save(updateVehicleAssignment);
         }
         vehicleAssignment.setIndexNo(0);
 
