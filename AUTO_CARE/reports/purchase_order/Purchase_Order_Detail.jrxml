@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-07-09T20:42:28 -->
+<!-- 2017-07-12T14:08:45 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Purchase_Order_Detail" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="16845284-359d-490a-a4da-a3950511c97a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="care_point"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -14,6 +14,7 @@
 		<![CDATA[select
 	t_purchase_order_detail.price,
 	t_purchase_order_detail.qty,
+	t_purchase_order_detail.balance_qty,
 	t_purchase_order_detail.value,
 	t_purchase_order_detail.discount,
 	t_purchase_order_detail.discount_value,
@@ -39,12 +40,11 @@ where
 	and t_purchase_order.is_view=1
 	and ( $P{STATUS}  is null or t_purchase_order.`status`= $P{STATUS} )
 	and ( $P{DELIVER_DATE}  is null or t_purchase_order.deliver_date= $P{DELIVER_DATE} )
-	and  ( $P{PO_NUMBER} is NULL or t_purchase_order.index_no= $P{PO_NUMBER} )
-	
-	]]>
+	and  ( $P{PO_NUMBER} is NULL or t_purchase_order.index_no= $P{PO_NUMBER} )]]>
 	</queryString>
 	<field name="price" class="java.math.BigDecimal"/>
 	<field name="qty" class="java.math.BigDecimal"/>
+	<field name="balance_qty" class="java.math.BigDecimal"/>
 	<field name="value" class="java.math.BigDecimal"/>
 	<field name="discount" class="java.math.BigDecimal"/>
 	<field name="discount_value" class="java.math.BigDecimal"/>
@@ -124,7 +124,7 @@ where
 					<textFieldExpression><![CDATA[$F{supplier_name}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="26" y="25" width="60" height="20" uuid="b731ec1e-e930-4adf-be4b-0a6cfcb052e7"/>
+					<reportElement x="16" y="25" width="60" height="20" uuid="b731ec1e-e930-4adf-be4b-0a6cfcb052e7"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
 					</box>
@@ -134,7 +134,7 @@ where
 					<text><![CDATA[BARCODE]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="86" y="25" width="174" height="20" uuid="941d4fb9-4ebd-4439-b5e3-2a534807a083"/>
+					<reportElement x="76" y="25" width="154" height="20" uuid="941d4fb9-4ebd-4439-b5e3-2a534807a083"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
 					</box>
@@ -144,14 +144,14 @@ where
 					<text><![CDATA[ITEM]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="260" y="25" width="60" height="20" uuid="beafd549-092d-4c8f-9759-28b9f8e944ac"/>
+					<reportElement x="275" y="25" width="45" height="20" uuid="beafd549-092d-4c8f-9759-28b9f8e944ac"/>
 					<box>
 						<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
 					</box>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[UNIT PRICE]]></text>
+					<text><![CDATA[PRICE]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="320" y="25" width="30" height="20" uuid="2abb5f2f-fe78-4f5a-bc3f-2af97e5af700"/>
@@ -202,10 +202,22 @@ where
 					<textElement textAlignment="Left" verticalAlignment="Middle"/>
 					<textFieldExpression><![CDATA[$F{status}.equals( "PENDING" )?"NOT APPROVED":"APPROVED"]]></textFieldExpression>
 				</textField>
+				<staticText>
+					<reportElement x="230" y="25" width="45" height="20" uuid="9261502e-d073-4066-92d1-e3491b55725f">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box>
+						<bottomPen lineWidth="1.0" lineStyle="Dashed"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[BALANCE]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="39">
+			<band height="30">
 				<textField pattern="#,###.00">
 					<reportElement x="478" y="6" width="72" height="15" uuid="1928d38e-f482-472d-bd03-1bc2490bdccc"/>
 					<box rightPadding="6">
@@ -236,7 +248,7 @@ where
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="142" splitType="Stretch">
+		<band height="132" splitType="Stretch">
 			<staticText>
 				<reportElement x="2" y="52" width="278" height="25" uuid="036aae35-ff4b-4cca-a13a-432b6f3a1dce"/>
 				<box>
@@ -296,14 +308,74 @@ where
 				<text><![CDATA[TO_DATE :]]></text>
 			</staticText>
 			<textField pattern="MMM-dd-yyyy">
-				<reportElement x="89" y="90" width="100" height="18" uuid="dac2c685-b72c-47de-b87c-fc04c82b3648"/>
+				<reportElement x="89" y="90" width="65" height="18" uuid="dac2c685-b72c-47de-b87c-fc04c82b3648"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{FROM_DATE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MMM-dd-yyyy">
-				<reportElement x="89" y="110" width="100" height="18" uuid="c4dd6f5c-3479-4b6a-ad7e-a632d9d9e350"/>
+				<reportElement x="89" y="110" width="65" height="18" uuid="c4dd6f5c-3479-4b6a-ad7e-a632d9d9e350"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{TO_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="162" y="90" width="76" height="18" uuid="6e73578c-2951-4bc3-93c4-2744bacedd7e">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="162" y="110" width="76" height="18" uuid="ed3d9e5b-dcf9-4d94-8ad1-bed9364daef1">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OP_Number :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="90" width="76" height="18" uuid="a4492f4e-1a0c-4a83-89bd-0356582212e6">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Deliver_Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="382" y="110" width="76" height="18" uuid="2e149e0d-c5b5-438b-be5e-9390286a122c">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="241" y="90" width="121" height="18" uuid="6aac020e-e485-40f8-ad23-6e53f1fae095"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[EQUALS($P{SUPPLIER},null)?"All":$F{supplier_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="110" width="100" height="18" uuid="92496a93-e3e9-4014-93d8-23a38286d437"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[EQUALS($P{PO_NUMBER},null)?"All":$P{PO_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="461" y="110" width="89" height="18" uuid="64d4b1ac-2e91-4219-a2a7-176f3eff9558"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[EQUALS($P{STATUS},null)?"- - -":$P{STATUS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMM-dd-yyyy">
+				<reportElement x="461" y="90" width="89" height="18" uuid="6b17c3d5-6ac2-4dc7-9513-9d52f09de42a"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[EQUALS($P{DELIVER_DATE},null)?"- - -":$P{DELIVER_DATE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>
@@ -332,7 +404,7 @@ where
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PREP. DATE]]></text>
+				<text><![CDATA[PRE. DATE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="120" y="0" width="90" height="20" uuid="6ecc176e-8371-4507-9a3a-279023cc5b78"/>
@@ -343,7 +415,7 @@ where
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[APPR. DATE]]></text>
+				<text><![CDATA[APP. DATE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="210" y="0" width="90" height="20" uuid="e07604fd-39ad-4556-9f37-91e70ecc4884"/>
@@ -354,7 +426,7 @@ where
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[DELIV. DATE]]></text>
+				<text><![CDATA[DEL. DATE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="300" y="0" width="178" height="20" uuid="f35be878-90e1-4bd8-bf3e-92d88985c0f7"/>
@@ -383,7 +455,7 @@ where
 	<detail>
 		<band height="21" splitType="Stretch">
 			<textField pattern="#,###.00">
-				<reportElement x="260" y="2" width="59" height="15" uuid="1ff03650-1409-4a01-9ba5-848d2849250b">
+				<reportElement x="270" y="2" width="49" height="15" uuid="1ff03650-1409-4a01-9ba5-848d2849250b">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
@@ -403,7 +475,7 @@ where
 			<textField pattern="##.00">
 				<reportElement x="409" y="2" width="28" height="15" uuid="c1af9c81-6581-40ac-bcb0-b72c0f69850c"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{discount}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{discount}+"%"]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,###.00">
 				<reportElement x="437" y="2" width="43" height="15" uuid="c1a16e6f-c36f-4749-b54d-684fc21e17e2"/>
@@ -417,12 +489,20 @@ where
 				<textFieldExpression><![CDATA[$F{net_value}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="86" y="2" width="174" height="15" uuid="c1cb0d0a-1f9b-43d4-bfb5-ab18405da6a5"/>
+				<reportElement x="76" y="2" width="154" height="15" uuid="c1cb0d0a-1f9b-43d4-bfb5-ab18405da6a5"/>
 				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="26" y="2" width="60" height="15" uuid="464dd061-6db9-4eb5-88f2-a871cd4255ca"/>
+				<reportElement x="16" y="2" width="60" height="15" uuid="464dd061-6db9-4eb5-88f2-a871cd4255ca"/>
 				<textFieldExpression><![CDATA[$F{barcode}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###">
+				<reportElement x="230" y="2" width="40" height="15" uuid="b6b8b815-201a-41b4-8b3c-a874e0c583d5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box rightPadding="5"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{balance_qty}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

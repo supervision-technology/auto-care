@@ -5,6 +5,8 @@
  */
 package com.mac.care_point.service.invoice.invoice;
 
+import com.mac.care_point.master.vehicleAssignment.VehicleAssignmentRepository;
+import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.invoice.invoice.model.TInvoice;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,7 @@ import com.mac.care_point.service.job_card.JobCardRepository;
 import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.system.exception.EntityNotFoundException;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -44,7 +47,10 @@ public class InvoiceService {
 
     @Autowired
     private JobCardRepository jobCardRepository;
-    
+
+    @Autowired
+    private VehicleAssignmentRepository vehicleAssignmentRepository;
+
     public List<TInvoice> findByJobCard(Integer jobCard) {
         return invoiceRepository.findByJobCard(jobCard);
     }
@@ -56,7 +62,9 @@ public class InvoiceService {
         List<TPaymentInformation> paymentInformationList = invoicePayment.getPaymentInformationsList();
 
         JobCard jobCard = jobCardRepository.getOne(invoice.getJobCard());
-        jobCard.setStatus(Constant.FINISHE_STATUS);
+        if (jobCard.getDefaultFinalCheck()) {
+            jobCard.setStatus(Constant.FINISHE_STATUS);
+        }
         jobCard.setInvoice(Boolean.TRUE);
 
         invoice.setBranch(1);
@@ -110,6 +118,18 @@ public class InvoiceService {
         //job card finished status
         jobCardRepository.save(jobCard);
 
+        //vehicle asignment
+        if (jobCard.getDefaultFinalCheck()) {
+
+            List<TVehicleAssignment> updatedObjects = vehicleAssignmentRepository.findTop1ByJobCardOrderByInTimeDesc(jobCard.getIndexNo());
+            if (!updatedObjects.isEmpty()) {
+                TVehicleAssignment updateVehicleAssignment = updatedObjects.get(0);
+                if (updateVehicleAssignment.getOutTime() == null) {
+                    updateVehicleAssignment.setOutTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+                }
+                vehicleAssignmentRepository.save(updatedObjects.get(0));
+            }
+        }
         return tInvoice;
     }
 

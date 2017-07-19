@@ -7,6 +7,9 @@ package com.mac.care_point.service.employee_assignment;
 
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.employee_assignment.model.TEmployeeAssingment;
+import static com.mac.care_point.service.job_card.JobCardController.IMAGE_LOCATION;
+import static com.mac.care_point.service.job_card.JobCardController.IMAGE_NAME_FILTER_TEMPLATE;
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,25 +34,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeAssignmentController {
 
     Integer branch = 1;
-    
+
     @Autowired
     EmployeeAssignmentService employeeAssignmentService;
-    
+
     @RequestMapping(method = RequestMethod.GET)
     public List<TEmployeeAssingment> findAll() {
         return employeeAssignmentService.findAll();
     }
-    
+
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public TEmployeeAssingment insertDetail(@RequestBody TEmployeeAssingment employeeAssingment) {
         employeeAssingment.setDate(new Date());
         employeeAssingment.setStatus(Constant.PENDING_STATUS);
         return employeeAssignmentService.saveDetail(employeeAssingment);
     }
-     @RequestMapping(value = "/bay-employee-count/{bay}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/bay-employee-count/{bay}", method = RequestMethod.GET)
     public Integer getBayAssignEmployeeCount(@PathVariable Integer bay) {
         return employeeAssignmentService.getBayAssignEmployeeCount(bay, branch);
     }
 
-    
+    @RequestMapping(value = "/file-absalute-path", method = RequestMethod.GET)
+    public String fileAbsalutePath() {
+        File imageDir = new File("./employee-images");
+        String val=imageDir.getAbsolutePath();
+        return val;
+    }
+
 }

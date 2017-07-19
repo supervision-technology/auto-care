@@ -16,6 +16,19 @@
 
                             });
                 };
+
+                factory.employeeImageAbsalutePath = function (callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/file-absalute-path";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                errorcallback(data);
+
+                            });
+                };
+
                 factory.employeesAttendance = function (callback) {
                     var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-attendance";
                     $http.get(url)
@@ -140,7 +153,7 @@
 
                                         $scope.onTimeout($scope.model.employeeAssignment.bay);
                                     } else {
-                                        Notification.error('Max Employee Assign for '+bay.name+'  !');
+                                        Notification.error('Max Employee Assign for ' + bay.name + '  !');
                                     }
                                 }
                             });
@@ -224,6 +237,15 @@
                 };
                 $scope.ui.init = function () {
 
+                    console.log("data");
+                    console.log("data");
+                    employeeAssignmentFactory.employeeImageAbsalutePath(function (data) {
+                        console.log("test");
+                        console.log(data[0]);
+                        console.log("test");
+                        console.log("test");
+                    });
+
                     employeeAssignmentFactory.loadEmployees(function (data) {
                         $scope.model.employeeList = data;
                     });
@@ -238,7 +260,6 @@
                     employeeAssignmentFactory.loadVehicles(function (data) {
                         $scope.model.vehicles = data;
                     });
-
 
                 };
                 $scope.ui.init();

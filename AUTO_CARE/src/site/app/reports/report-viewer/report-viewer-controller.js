@@ -5,7 +5,8 @@
                 $scope.model.currentReportGroup = {};
                 $scope.model.currentReport = {};
                 $scope.model.currentReport.parameterValues = {};
-
+                $scope.model.bayList = [];
+                
                 $scope.ui = {};
 
                 $scope.report = "#";
@@ -51,7 +52,7 @@
 
                     return $scope.model.currentReport.parameters.indexOf(param) >= 0;
                 };
-
+                
 
                 $scope.init = function () {
                     ReportViewerService.listReports()
