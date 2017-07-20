@@ -1,11 +1,11 @@
 (function () {
     angular.module("appModule")
-            .controller("ReportViewerController", function ($scope, $sce, ReportViewerService) {
+            .controller("ReportViewerController", function ($scope, $sce,reportViewerModel, ReportViewerService) {
                 $scope.model = {};
+                $scope.newModel = new reportViewerModel();
                 $scope.model.currentReportGroup = {};
                 $scope.model.currentReport = {};
                 $scope.model.currentReport.parameterValues = {};
-                $scope.model.bayList = [];
                 
                 $scope.ui = {};
 

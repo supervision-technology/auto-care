@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-07-09T20:20:31 -->
+<!-- 2017-07-19T20:59:57 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Purchase_Order_Summary" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="b2b7c826-c957-46df-9c56-48487330a0e2">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="care_point"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="FROM_DATE" class="java.util.Date"/>
 	<parameter name="TO_DATE" class="java.util.Date"/>
 	<parameter name="SUPPLIER" class="java.lang.Integer"/>
-	<parameter name="PO_NUMBER" class="java.lang.Integer"/>
+	<parameter name="PO_NO" class="java.lang.Integer"/>
 	<parameter name="STATUS" class="java.lang.String"/>
 	<parameter name="DELIVER_DATE" class="java.util.Date"/>
 	<queryString>
@@ -28,14 +28,9 @@ where
 	t_purchase_order.approved_date BETWEEN  $P{FROM_DATE} and  $P{TO_DATE} 
 	and t_purchase_order.is_view=1
 	and  ($P{SUPPLIER} is null or m_supplier.index_no= $P{SUPPLIER})
-	and  ( $P{PO_NUMBER}  is null or t_purchase_order.index_no= $P{PO_NUMBER}  )
+	and  ( $P{PO_NO}  is null or t_purchase_order.number= $P{PO_NO}  )
 	and ( $P{STATUS}  is null or t_purchase_order.`status`= $P{STATUS} )
-	and ( $P{DELIVER_DATE}  is null or t_purchase_order.deliver_date= $P{DELIVER_DATE} )
-	
-	
-	
-	
-	]]>
+	and ( $P{DELIVER_DATE}  is null or t_purchase_order.deliver_date= $P{DELIVER_DATE} )]]>
 	</queryString>
 	<field name="PO_number" class="java.lang.Integer"/>
 	<field name="prepared_date" class="java.sql.Date"/>
@@ -117,11 +112,73 @@ where
 			</staticText>
 			<textField pattern="MMM-dd-yyyy">
 				<reportElement x="90" y="90" width="100" height="18" uuid="32a7487e-450c-49e3-bd1c-d56023e7086e"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{FROM_DATE}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MMM-dd-yyyy">
 				<reportElement x="90" y="110" width="100" height="18" uuid="96ee4a9e-4a6a-4287-b5dc-c78f8ee0d9e8"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$P{TO_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="90" width="55" height="18" uuid="2b080b36-fcbe-4f90-8852-55bb115f60a5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Supplier :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="110" width="70" height="18" uuid="b8ce0c76-691f-460d-9018-c0956f6b6016">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PO_Number :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="90" width="70" height="18" uuid="b85b8bb7-18bf-45a1-aa53-bd405303166d">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Deliver Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="398" y="110" width="70" height="18" uuid="16b14b63-ce6d-4f8f-bc9d-ec00c6d1d291">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status :]]></text>
+			</staticText>
+			<textField pattern="">
+				<reportElement x="260" y="90" width="100" height="18" uuid="c2a68e10-37dc-4ac5-be1f-d0b9974b4596"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{SUPPLIER}==null?"All":$F{supplier_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="270" y="110" width="100" height="18" uuid="37e1d409-d5c4-4cab-91e1-c4bfc6b1a13f"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{PO_NO}==null?"All":$P{PO_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMM-dd-yyyy">
+				<reportElement x="472" y="90" width="100" height="18" uuid="e52f0fd0-e2f0-4f41-9d6f-f4dfbd420493"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{DELIVER_DATE}==null?"All":$P{DELIVER_DATE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="">
+				<reportElement x="472" y="110" width="100" height="18" uuid="1cf9f121-d490-48e3-bd20-c55e269e6039"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{STATUS}==null?"All":$P{STATUS}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

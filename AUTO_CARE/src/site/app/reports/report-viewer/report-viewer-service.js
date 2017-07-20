@@ -34,7 +34,35 @@
                         "client": "K W Chaminda"
                     };
                     return $http.post(systemConfig.apiUrl + "/api/v1/report/report-viewer/report", JSON.stringify(x), {responseType: 'arraybuffer'});
-
+                };
+                
+                
+                //text field master data list
+                this.getBayList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/bay/get-bays-by-branch-is-view");
+                };
+                
+                this.getVehicleList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/vehicle");
+                };
+               
+                this.getVehicleCategoryList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/priceCategory");
+                };
+                
+                this.getClientList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/client");
+                };
+                
+                this.getSupplierList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
+                };
+                
+                this.getBranchList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/branch");
+                };
+                this.getItemCateoryList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-category");
                 };
             });
 }());
