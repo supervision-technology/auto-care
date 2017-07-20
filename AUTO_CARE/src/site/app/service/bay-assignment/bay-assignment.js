@@ -121,37 +121,37 @@
 
                         $scope.dragableMode = false;
                         var vehicleCount = 0;
-                        bayAssignmentFactory.getBayAssignVehicleCount(bay.indexNo,
-                                function (data) {
-                                    vehicleCount = data;
 
-                                    $scope.isSameBay = false;
-                                    for (var i = 0; i < $scope.model.jobList.length; i++) {
-                                        if ($scope.model.jobList[i].bay === bay.indexNo) {
-                                            if ($scope.model.jobList[i].vehicle === job.vehicle) {
-                                                $scope.isSameBay = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    if ($scope.isSameBay) {
-                                        $scope.model.jobAssignment.bay.timeout = '';
-                                    } else {
+                        for (var i = 0; i < $scope.model.jobList.length; i++) {
+                            if ($scope.model.jobList[i].bay === bay.indexNo) {
+                                vehicleCount++;
+                            }
+                        }
+                        $scope.isSameBay = false;
+                        for (var i = 0; i < $scope.model.jobList.length; i++) {
+                            if ($scope.model.jobList[i].bay === bay.indexNo) {
+                                if ($scope.model.jobList[i].vehicle === job.vehicle) {
+                                    $scope.isSameBay = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if ($scope.isSameBay) {
+                            $scope.model.jobAssignment.bay.timeout = '';
+                        } else {
 
-                                        if (true) {
-                                            $scope.model.jobAssignment.jobCard = job;
-                                            $scope.model.jobAssignment.bay = bay;
-                                            $scope.model.jobAssignment.bay.timeout = 5;
-                                            $scope.onTimeout();
+                            if (vehicleCount < bay.maxVehicle) {
+                                $scope.model.jobAssignment.jobCard = job;
+                                $scope.model.jobAssignment.bay = bay;
+                                $scope.model.jobAssignment.bay.timeout = 5;
+                                $scope.onTimeout();
 
-                                        } else {
-                                            Notification.error('Max vehicle Assign for this bay !');
-                                        }
-                                    }
-                                });
+                            } else {
+                                Notification.error('Max vehicle Assign for this bay !');
+                            }
+                        }
                     }
                     $scope.dragableMode = true;
-//                    
                 };
                 $scope.getVehicle = function (vehicle) {
                     for (var i = 0; i < $scope.model.vehicles.length; i++) {

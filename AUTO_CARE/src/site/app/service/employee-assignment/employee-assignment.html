@@ -1,8 +1,9 @@
 <div class="index-content-body">
     <div>
         <div class="background-light full-height grid ">
-            <div class="grid-tile" grid="{{bay}}" ng-repeat="bay in model.bayList" ng-drop="true" ng-drop-success="dragLeave(bay,$data)">
-                <div class="col-lg-12 nopadding" >
+            <div class="grid-tile" grid="{{bay}}" ng-repeat="bay in model.bayList" ng-drop="true" 
+                 ng-drop-success="dragLeave(bay,$data)">
+                <div class="col-lg-12 nopadding" style="height: 100%;display: block" >
 
                     <div class="grid-tile-title" >
                         <label class="pull-left label label-primary">Max Employee : {{bay.maxEmployee}}</label>
@@ -11,12 +12,12 @@
                     </div>
                     <div ng-repeat="employee in model.employeeList " ng-if="employee.bay==bay.indexNo" 
                          ng-drag="{{dragableMode}}" ng-drag-data="employee" 
-                         class="tile tile-100 col-lg-6" style="border-style: groove">
-                        <div style="display: block;text-align: center;margin-top: 5px">
-                            <img src="{{employee.image}}" style="width: 67px;height: 60px"/>
+                         class="tile tile-100 col-lg-6 nopadding" style="border-style: groove;">
+                        <div style="display: block;text-align: center;" class="nopadding">
+                            <img src="{{employee.image}}" class="img-rounded" alt="non" width="70" height="70"/>
                             <!--<img src="file:///E:/s_vision/care_point/auto-care/AUTO_CARE/./employee-images/1-kasun.jpg" style="width: 67px;height: 60px"/>-->
                             
-                            <h5><p style="overflow: hidden ;height: 30px;color: white">{{employee.name}}</p></h5>
+                            <h5 class="nopadding"><p style="overflow: hidden ;height: 15px;color: white">{{employee.name}}</p></h5>
                         </div>
                     </div>
                 </div>

@@ -77,6 +77,7 @@ public class JobCardService {
         String inTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         jobCard.setInTime(inTime);
         jobCard.setDate(new Date());
+        jobCard.setBay(2);//branch default bay
 
         JobCard getSaveData = jobCardRepository.save(jobCard);
 
@@ -117,7 +118,10 @@ public class JobCardService {
         //save vehicle assignment wating bay -  set default washing bay
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         TVehicleAssignment tVehicleAssignment = new TVehicleAssignment();
-        tVehicleAssignment.setBay(2);
+        tVehicleAssignment.setBay(2); //branch default bay
+//        tVehicleAssignment.setIndexNo(0);//auto incerment
+        tVehicleAssignment.setOutTime(null);//no out time yet 
+        tVehicleAssignment.setBranch(jobCard.getBranch());
         tVehicleAssignment.setDate(new Date());
         tVehicleAssignment.setInTime(currentTime);
         tVehicleAssignment.setJobCard(getSaveData.getIndexNo());
