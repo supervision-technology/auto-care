@@ -31,7 +31,6 @@ public class CustomerSatisfactionService {
 
     }
     List<CustomerSatisfaction> getFinishedJobCard() {
-        return satisfactionRepository.findByFinalCheckAndInvoiceAndRateAndRateReason(true,true,0,null);
+        return satisfactionRepository.findByDefaultFinalCheckAndInvoiceAndRateAndRateReason(true,true,0,null);
     }
-
 }

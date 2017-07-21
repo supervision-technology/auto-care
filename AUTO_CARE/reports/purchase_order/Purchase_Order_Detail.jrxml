@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-07-12T14:08:45 -->
+<!-- 2017-07-19T20:45:30 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Purchase_Order_Detail" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="16845284-359d-490a-a4da-a3950511c97a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="care_point"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="FROM_DATE" class="java.util.Date"/>
 	<parameter name="TO_DATE" class="java.util.Date"/>
 	<parameter name="SUPPLIER" class="java.lang.Integer"/>
-	<parameter name="PO_NUMBER" class="java.lang.Integer"/>
+	<parameter name="PO_NO" class="java.lang.Integer"/>
 	<parameter name="STATUS" class="java.lang.String"/>
 	<parameter name="DELIVER_DATE" class="java.util.Date"/>
 	<queryString>
@@ -40,7 +40,7 @@ where
 	and t_purchase_order.is_view=1
 	and ( $P{STATUS}  is null or t_purchase_order.`status`= $P{STATUS} )
 	and ( $P{DELIVER_DATE}  is null or t_purchase_order.deliver_date= $P{DELIVER_DATE} )
-	and  ( $P{PO_NUMBER} is NULL or t_purchase_order.index_no= $P{PO_NUMBER} )]]>
+	and  ( $P{PO_NO} is NULL or t_purchase_order.index_no= $P{PO_NO} )]]>
 	</queryString>
 	<field name="price" class="java.math.BigDecimal"/>
 	<field name="qty" class="java.math.BigDecimal"/>
@@ -360,22 +360,22 @@ where
 			<textField>
 				<reportElement x="241" y="90" width="121" height="18" uuid="6aac020e-e485-40f8-ad23-6e53f1fae095"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{SUPPLIER},null)?"All":$F{supplier_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{SUPPLIER}==null?"All":$F{supplier_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="240" y="110" width="100" height="18" uuid="92496a93-e3e9-4014-93d8-23a38286d437"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{PO_NUMBER},null)?"All":$P{PO_NUMBER}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{PO_NO}==null?"All":$P{PO_NO}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="461" y="110" width="89" height="18" uuid="64d4b1ac-2e91-4219-a2a7-176f3eff9558"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{STATUS},null)?"- - -":$P{STATUS}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{STATUS}==null?"- - -":$P{STATUS}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MMM-dd-yyyy">
 				<reportElement x="461" y="90" width="89" height="18" uuid="6b17c3d5-6ac2-4dc7-9513-9d52f09de42a"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{DELIVER_DATE},null)?"- - -":$P{DELIVER_DATE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{DELIVER_DATE}==null?"- - -":$P{DELIVER_DATE}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

@@ -127,7 +127,7 @@ public class InvoiceService {
                 if (updateVehicleAssignment.getOutTime() == null) {
                     updateVehicleAssignment.setOutTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
                 }
-                vehicleAssignmentRepository.save(updatedObjects.get(0));
+                vehicleAssignmentRepository.save(updateVehicleAssignment);
             }
         }
         return tInvoice;

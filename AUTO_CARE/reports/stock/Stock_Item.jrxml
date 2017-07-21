@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-07-11T17:22:10 -->
+<!-- 2017-07-19T21:51:07 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Stock_Item" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8fb35ffe-627d-44e4-9622-7d6c896bcd0a">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="care_point"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -62,10 +62,7 @@ where
 	and ( $P{PURCHASING_QTY} is null or purchasing_qty>= $P{PURCHASING_QTY} ) 
 	and ( $P{OVER_QTY} is null or over_qty>=  $P{OVER_QTY}  )
 	and ( $P{PENDING_QTY} is null or pending>= $P{PENDING_QTY} )
-order by m_item.supplier, m_item_caregory.name,m_item.name 
-
-
-]]>
+order by m_item.supplier, m_item_caregory.name,m_item.name]]>
 	</queryString>
 	<field name="barcode" class="java.lang.String"/>
 	<field name="item_name" class="java.lang.String"/>
@@ -228,7 +225,7 @@ order by m_item.supplier, m_item_caregory.name,m_item.name
 				<text><![CDATA[Care Point,]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="-20" y="10" width="270" height="40" uuid="bc90344d-5a97-4f74-a40f-570e1b0570c8"/>
+				<reportElement x="10" y="10" width="240" height="40" uuid="bc90344d-5a97-4f74-a40f-570e1b0570c8"/>
 				<box leftPadding="10">
 					<bottomPen lineWidth="1.0"/>
 				</box>
@@ -250,7 +247,7 @@ order by m_item.supplier, m_item_caregory.name,m_item.name
 				<text><![CDATA[Nugegoda.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="-20" y="52" width="270" height="25" uuid="4c3c9a94-d45b-4a3c-a7a2-2e1d2cc3b04d"/>
+				<reportElement x="10" y="52" width="240" height="25" uuid="4c3c9a94-d45b-4a3c-a7a2-2e1d2cc3b04d"/>
 				<box>
 					<bottomPen lineWidth="0.5"/>
 				</box>
@@ -334,52 +331,52 @@ order by m_item.supplier, m_item_caregory.name,m_item.name
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{ITEM},null)?"ALL":$F{item_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ITEM}==null?"ALL":$F{item_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="68" y="100" width="112" height="15" uuid="fef0b07c-20a0-4638-b7af-08d1bafb3783"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{SUPPLIER},null)?"ALL":$F{supplier_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{SUPPLIER}==null?"ALL":$F{supplier_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="241" y="85" width="70" height="15" uuid="c5355a98-f963-4d04-8bd7-445bfdef4732"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{ITEM_TYPE},null)?"ALL":$P{ITEM_TYPE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ITEM_TYPE}==null?"ALL":$P{ITEM_TYPE}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="241" y="100" width="70" height="15" uuid="26130a5e-1851-4a8e-81eb-2a079edee982"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{ITEM_UNIT},null)?"ALL":$P{ITEM_UNIT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ITEM_UNIT}==null?"ALL":$P{ITEM_UNIT}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="395" y="86" width="75" height="15" uuid="4d62402f-e2e6-4033-945f-0e576306dd86"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{BRANCH},null)?"ALL":$F{branch_name}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{BRANCH}==null?"ALL":$F{branch_name}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="395" y="101" width="75" height="15" uuid="67749f5d-f4df-4376-b945-f5e1326f80a4"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{ITEM_CATEGORY},null)?"ALL":$F{item_category}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{ITEM_CATEGORY}==null?"ALL":$F{item_category}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="555" y="84" width="45" height="15" uuid="ae7bb2d4-d76f-48c0-aa35-fdd6ddee44c8"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{PENDING_QTY},null)?"0":$P{PENDING_QTY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{PENDING_QTY}==null?"0":$P{PENDING_QTY}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="555" y="100" width="45" height="15" uuid="2c17830c-bde0-42ff-a829-58970929c6e2"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{NET_STOCK},null)?"0":$P{NET_STOCK}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{NET_STOCK}==null?"0":$P{NET_STOCK}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="710" y="85" width="42" height="15" uuid="6d0c90e9-7a57-4903-84ab-8e21805c5be2"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{PURCHASING_QTY},null)?"0":$P{PURCHASING_QTY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{PURCHASING_QTY}==null?"0":$P{PURCHASING_QTY}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="710" y="100" width="42" height="15" uuid="f7f5aa36-2717-43a1-aed1-e27f965bdf5a"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[EQUALS($P{OVER_QTY},null)?"0":$P{OVER_QTY}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{OVER_QTY}==null?"0":$P{OVER_QTY}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -390,60 +387,62 @@ order by m_item.supplier, m_item_caregory.name,m_item.name
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="18" splitType="Stretch">
+		<band height="16" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement x="25" y="2" width="55" height="15" uuid="e72f9467-c527-4596-9778-e99f3515cc9e"/>
+				<reportElement x="25" y="2" width="55" height="13" uuid="e72f9467-c527-4596-9778-e99f3515cc9e"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{barcode}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="80" y="2" width="176" height="15" uuid="19293689-d5a1-44f2-b258-6f23d7be85c7"/>
+				<reportElement x="80" y="2" width="176" height="13" uuid="19293689-d5a1-44f2-b258-6f23d7be85c7"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="256" y="2" width="74" height="15" uuid="cb02cb1f-1643-45f4-84c6-026be421c928">
+				<reportElement x="256" y="2" width="74" height="13" uuid="cb02cb1f-1643-45f4-84c6-026be421c928">
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{branch_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="330" y="2" width="60" height="15" uuid="a87d9437-b544-481d-85eb-edb78a7b6fd5"/>
+				<reportElement x="330" y="2" width="60" height="13" uuid="a87d9437-b544-481d-85eb-edb78a7b6fd5"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{item_type}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="390" y="2" width="50" height="15" uuid="694a699e-309c-491d-a2e6-4202c26227f2"/>
+				<reportElement x="390" y="2" width="50" height="13" uuid="694a699e-309c-491d-a2e6-4202c26227f2"/>
+				<box leftPadding="5"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{item_unit}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###">
-				<reportElement x="440" y="2" width="40" height="15" uuid="a01a53ca-c0ee-4d4a-8a1c-e3f4c05c37c7"/>
-				<box rightPadding="5"/>
+				<reportElement x="440" y="2" width="40" height="13" uuid="a01a53ca-c0ee-4d4a-8a1c-e3f4c05c37c7"/>
+				<box leftPadding="7" rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{re_order_max}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###">
-				<reportElement x="480" y="2" width="40" height="15" uuid="c2551cdf-65e7-4c3c-8cac-443e47e25194"/>
+				<reportElement x="480" y="2" width="40" height="13" uuid="c2551cdf-65e7-4c3c-8cac-443e47e25194"/>
 				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{re_order_min}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###">
-				<reportElement x="520" y="2" width="40" height="15" uuid="e48b8611-d846-4fcb-aee4-54386c47ed46"/>
+				<reportElement x="520" y="2" width="40" height="13" uuid="e48b8611-d846-4fcb-aee4-54386c47ed46"/>
 				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###">
-				<reportElement x="560" y="2" width="60" height="15" uuid="4b5a0300-8dd4-494b-b144-0f5d14c533da"/>
+				<reportElement x="560" y="2" width="60" height="13" uuid="4b5a0300-8dd4-494b-b144-0f5d14c533da"/>
 				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{pending}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###">
-				<reportElement x="620" y="2" width="52" height="15" uuid="e9a8bdc4-9188-4a07-9201-79a47442c25b"/>
+				<reportElement x="620" y="2" width="52" height="13" uuid="e9a8bdc4-9188-4a07-9201-79a47442c25b"/>
 				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
@@ -451,13 +450,15 @@ order by m_item.supplier, m_item_caregory.name,m_item.name
 				<textFieldExpression><![CDATA[$F{net_stock}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###">
-				<reportElement x="674" y="2" width="46" height="15" uuid="f386c0c8-af95-4887-9c25-a843f3d728f7"/>
+				<reportElement x="674" y="2" width="46" height="13" uuid="f386c0c8-af95-4887-9c25-a843f3d728f7"/>
 				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{purchasing_qty}]]></textFieldExpression>
 			</textField>
 			<textField pattern="###">
-				<reportElement x="720" y="2" width="32" height="15" uuid="82864630-836b-4828-b54d-9b4b9553f76a"/>
+				<reportElement x="720" y="2" width="32" height="13" uuid="82864630-836b-4828-b54d-9b4b9553f76a">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<box rightPadding="5"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{over_qty}]]></textFieldExpression>
