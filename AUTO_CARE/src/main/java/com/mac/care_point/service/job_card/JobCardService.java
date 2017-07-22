@@ -58,10 +58,6 @@ public class JobCardService {
     @Autowired
     private VehicleAssignmentRepository vehicleAssignmentRepository;
 
-    public List<JobCard> getPendingJobCard() {
-        return jobCardRepository.findByStatusOrderByIndexNoDesc(Constant.PENDING_STATUS);
-    }
-
     public List<JobCard> getClientHistory(Integer indexNo) {
         return jobCardRepository.findJobCardByClient(indexNo);
     }
@@ -78,9 +74,6 @@ public class JobCardService {
         jobCard.setInTime(inTime);
         jobCard.setDate(new Date());
         jobCard.setBay(2);//branch default bay
-
-        System.out.println(jobCard.getCarepetOriginal());
-        System.out.println(jobCard.getCarepetOther());
 
         JobCard getSaveData = jobCardRepository.save(jobCard);
 
@@ -172,4 +165,20 @@ public class JobCardService {
     public List<JobCard> getNotFinishedJobCard() {
         return jobCardRepository.findByStatusNotIn(Constant.FINISHE_STATUS);
     }
+
+    //service selection or stock selection
+    public List<JobCard> findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc() {
+        return jobCardRepository.findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(Constant.PENDING_STATUS, false, false);
+    }
+
+    //invoice
+    public List<JobCard> findByStatusAndInvoiceOrderByIndexNoDesc() {
+        return jobCardRepository.findByStatusAndInvoiceOrderByIndexNoDesc(Constant.PENDING_STATUS, false);
+    }
+
+    //final check list
+    public List<JobCard> findByStatusAndDefaultFinalCheckOrderByIndexNoDesc() {
+        return jobCardRepository.findByStatusAndDefaultFinalCheckOrderByIndexNoDesc(Constant.PENDING_STATUS, false);
+    }
+
 }

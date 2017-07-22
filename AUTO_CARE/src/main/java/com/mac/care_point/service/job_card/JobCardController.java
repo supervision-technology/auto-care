@@ -56,9 +56,19 @@ public class JobCardController {
         return jobCardService.getJobCard(indexNo);
     }
 
-    @RequestMapping(value = "/get-pending-job-cards", method = RequestMethod.GET)
-    public List<JobCard> getPendingJobCard() {
-        return jobCardService.getPendingJobCard();
+    @RequestMapping(value = "/get-invoice-pending-job-card", method = RequestMethod.GET)
+    public List<JobCard> findByStatusAndInvoiceOrderByIndexNoDesc() {
+        return jobCardService.findByStatusAndInvoiceOrderByIndexNoDesc();
+    }
+    
+    @RequestMapping(value = "/get-default-check-list-pending-job-card", method = RequestMethod.GET)
+    public List<JobCard> findByStatusAndDefaultFinalCheckOrderByIndexNoDesc() {
+        return jobCardService.findByStatusAndDefaultFinalCheckOrderByIndexNoDesc();
+    }
+    
+    @RequestMapping(value = "/get-service-and-stock-pending-job-card", method = RequestMethod.GET)
+    public List<JobCard> findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc() {
+        return jobCardService.findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc();
     }
 
     @RequestMapping(value = "/get-not-finished-job-cards", method = RequestMethod.GET)

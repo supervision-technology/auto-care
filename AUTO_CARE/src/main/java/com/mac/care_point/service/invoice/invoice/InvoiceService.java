@@ -62,9 +62,9 @@ public class InvoiceService {
         List<TPaymentInformation> paymentInformationList = invoicePayment.getPaymentInformationsList();
 
         JobCard jobCard = jobCardRepository.getOne(invoice.getJobCard());
-        if (jobCard.getDefaultFinalCheck()) {
+//        if (jobCard.getDefaultFinalCheck()) {
             jobCard.setStatus(Constant.FINISHE_STATUS);
-        }
+//        }
         jobCard.setInvoice(Boolean.TRUE);
 
         invoice.setBranch(1);

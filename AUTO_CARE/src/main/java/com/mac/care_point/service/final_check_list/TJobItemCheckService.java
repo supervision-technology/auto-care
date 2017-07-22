@@ -104,19 +104,17 @@ public class TJobItemCheckService {
 
         List<TJobFinalCheckList> findPendingFinalCheckList = tJobFinalCheckListRepository.findByJobCardAndCheck(tJobFinalCheckList.getJobCard(), Constant.PENDING_STATUS);
         if (findPendingFinalCheckList.isEmpty()) {
-            System.out.println("BOOLEAN TRUE");
             getJobCardData.setDefaultFinalCheck(Boolean.TRUE);
         } else {
-            System.out.println("BOOLEAN FALSE");
             getJobCardData.setDefaultFinalCheck(Boolean.FALSE);
         }
-        if (getJobCardData.getInvoice()) {
-            getJobCardData.setStatus(Constant.FINISHE_STATUS);
-        }
+//        if (getJobCardData.getInvoice()) {
+//            getJobCardData.setStatus(Constant.FINISHE_STATUS);
+//        }
         getJobCardData.setRate(0);//default Rate
 
         jobCardRepository.save(getJobCardData);
-       
+
         // vehicle asignment
         if (getJobCardData.getInvoice()) {
 

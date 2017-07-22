@@ -25,7 +25,7 @@
 
         //load pending jobcards
         this.pendingJobCards = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-pending-job-cards");
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-default-check-list-pending-job-card");
         };
 
         this.getJobItemHistory = function (indexNo) {
