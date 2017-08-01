@@ -154,15 +154,13 @@
                             $scope.model.jobAssignment.bay.timeout = '';
                         } else {
                             if ($scope.model.refershTime<20) {
-                                $scope.model.refershTime=30;
-//                                :TODO refershTime bay assignment
+                                $scope.model.refershTime+=10;
                             }
                             if (vehicleCount < bay.maxVehicle) {
                                 $scope.model.jobAssignment.jobCard = job;
                                 $scope.model.jobAssignment.bay = bay;
                                 $scope.model.jobAssignment.bay.timeout = 5;
                                 $scope.onTimeout();
-
                             } else {
                                 Notification.error('Max vehicle Assign for this bay !');
                             }
@@ -295,11 +293,6 @@
 
                 };
                 $scope.ui.init = function () {
-
-                    bayAssignmentFactory.loadJobs(function (data) {
-                        $scope.model.jobList = data;
-                    });
-
                     bayAssignmentFactory.loadBays(function (data) {
                         for (var i = 0; i < data.length; i++) {
                             data[i].timePeriodSecond = 0;
@@ -308,6 +301,9 @@
                         }
                     });
 
+                    bayAssignmentFactory.loadJobs(function (data) {
+                        $scope.model.jobList = data;
+                    });
                     bayAssignmentFactory.loadVehicles(function (data) {
                         $scope.model.vehicles = data;
                     });
@@ -315,26 +311,33 @@
                         $scope.model.vehicleTypes = data;
                     });
                 };
-                $scope.reload = function () {
-                    $scope.reload2();
-                    if ($scope.model.refershTime===0) {
-                        
-                    $timeout(function () {
-                        $window.location.reload();
-                        $scope.reload();
-                    }, 1000);
-                    }
-                };
+
                 $scope.reload2 = function () {
                     $timeout(function () {
                         $scope.model.refershTime -= 1;
                         console.log($scope.model.refershTime);
-                        $scope.reload2();
-                    }, 1000);
+                        if ($scope.model.refershTime === 0) {
+                            $timeout(function () {
+                                $timeout.cancel(refreshTime);
+                                $scope.model.refershTime = 60;
+
+                                bayAssignmentFactory.loadJobs(function (data) {
+                                    $scope.model.jobList = data;
+                                });
+                                bayAssignmentFactory.loadVehicles(function (data) {
+                                    $scope.model.vehicles = data;
+                                });
+                                bayAssignmentFactory.loadVehicleTypes(function (data) {
+                                    $scope.model.vehicleTypes = data;
+                                });
+                                $scope.reload2();
+                            }, 800);
+                        }
+                        var refreshTime = $timeout($scope.reload2, 1000);
+                    });
                 };
-
-                $scope.reload();
-
+                $scope.reload2();
                 $scope.ui.init();
+
             });
 }());
