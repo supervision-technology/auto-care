@@ -9,15 +9,16 @@
                         <label class="pull-left label label-primary">Max Employee : {{bay.maxEmployee}}</label>
                         <label class="h4" >{{bay.name}}</label> 
                         <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
+                    <!--{{model.imageAbsalutePath}}\\1-kasun.jpg-->
                     </div>
                     <div ng-repeat="employee in model.employeeList " ng-if="employee.bay==bay.indexNo" 
                          ng-drag="{{dragableMode}}" ng-drag-data="employee" 
                          class="tile tile-100 col-lg-6 nopadding" style="border-style: groove;">
                         <div style="display: block;text-align: center;" class="nopadding">
                             <img src="{{employee.image}}" class="img-rounded" alt="non" width="70" height="70"/>
-                            <!--<img src="file:///E:/s_vision/care_point/auto-care/AUTO_CARE/./employee-images/1-kasun.jpg" style="width: 67px;height: 60px"/>-->
-                            
-                            <h5 class="nopadding"><p style="overflow: hidden ;height: 15px;color: white">{{employee.name}}</p></h5>
+                            <!--<img ng-src="{{model.imageAbsalutePath}}\\1-kasun.jpg" class="img-rounded" style="width: 70px;height: 70px"/>-->
+                            <h6 class="nopadding"><p style="overflow: hidden ;height: 15px;color: white">{{employee.name}}</p></h6>
+                            <!--<h6 class="nopadding"><p style="overflow: hidden ;height: 15px;color: white">{{model.imageAbsalutePath}}</p></h6>-->
                         </div>
                     </div>
                 </div>

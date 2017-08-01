@@ -8,7 +8,7 @@
                         <div class="col-xs-3 nopadding">
                             <label class="label label-primary">Max :{{bay.maxVehicle}}</label>
                         </div>
-                        <div class="col-xs-8 nopadding">
+                        <div class="col-xs-8 nopadding" ng-click="ui.selectBay(bay)">
                             <label class="h5 pull-left" >{{bay.name}} </label> 
                         </div>
                         <div class="col-xs-1 nopadding">
@@ -16,8 +16,8 @@
                         </div>
                     </div>
                     <div ng-repeat="job in model.jobList" ng-if="job.bay==bay.indexNo" 
-                         ng-drag="{{dragableMode}}" ng-drag-data="job" class="tile tile-135 col-lg-6 nopadding" 
-                         style="border-style: groove;">
+                         ng-drag="{{dragableMode}}" ng-drag-data="job" class="tile tile-135 col-lg-6 nopadding" ng-click="ui.selectJob(job)" 
+                         style="border-style: groove;" ng-class="{'selected':job.indexNo == model.selectJob.indexNo}">
                         <span uib-dropdown style="display: block;text-align: center;">
                             <i  id="simple-dropdown" uib-dropdown-toggle>
                                 <img src="../../../img/05.png"/>
