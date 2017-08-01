@@ -92,7 +92,7 @@
             });
     //controller
     angular.module("bayAssignmentModule")
-            .controller("bayAssignmentController", function ($scope, $timeout, $filter, bayAssignmentFactory, Notification) {
+            .controller("bayAssignmentController", function ($scope, $window, $timeout, $filter, bayAssignmentFactory, Notification) {
                 $scope.ui = {};
                 $scope.model = {};
                 $scope.http = {};
@@ -106,9 +106,10 @@
                 $scope.model.vehicles = [];
                 $scope.model.vehicleTypes = [];
                 $scope.dragableMode = true;
-                $scope.model.selectJob=null;
-                $scope.model.selectBay=null;
+                $scope.model.selectJob = null;
+                $scope.model.selectBay = null;
                 $scope.model.bayList = [];
+                $scope.model.refershTime = 60;
 //
                 $scope.stop = function (bay) {
                     bay.timeout = '';
@@ -117,19 +118,17 @@
                 };
                 $scope.dragStart = function (element, model) {
                 };
-                
-                $scope.ui.selectJob=function (job){
-                    console.log('job');
-                    $scope.model.selectJob=job;
-                    console.log($scope.model.selectJob);
+
+                $scope.ui.selectJob = function (job) {
+                    $scope.model.selectJob = job;
                 };
-                $scope.ui.selectBay=function (bay){
-                    $scope.model.selectBay=bay;
+                $scope.ui.selectBay = function (bay) {
+                    $scope.model.selectBay = bay;
                     if ($scope.model.selectBay && $scope.model.selectJob) {
-                        $scope.dragLeave($scope.model.selectBay,$scope.model.selectJob);
+                        $scope.dragLeave($scope.model.selectBay, $scope.model.selectJob);
                     }
                 };
-                
+
 
                 $scope.dragLeave = function (bay, job) {
                     if ($scope.dragableMode) {
@@ -154,7 +153,10 @@
                         if ($scope.isSameBay) {
                             $scope.model.jobAssignment.bay.timeout = '';
                         } else {
-
+                            if ($scope.model.refershTime<20) {
+                                $scope.model.refershTime=30;
+//                                :TODO refershTime bay assignment
+                            }
                             if (vehicleCount < bay.maxVehicle) {
                                 $scope.model.jobAssignment.jobCard = job;
                                 $scope.model.jobAssignment.bay = bay;
@@ -279,8 +281,8 @@
                                                 $scope.model.jobList[i].bay = data.bay;
                                             }
                                         }
-                                        $scope.model.selectJob=null;
-                                        $scope.model.selectBay=null;
+                                        $scope.model.selectJob = null;
+                                        $scope.model.selectBay = null;
                                     }
                             );
                         } else {
@@ -312,9 +314,27 @@
                     bayAssignmentFactory.loadVehicleTypes(function (data) {
                         $scope.model.vehicleTypes = data;
                     });
-
-
                 };
+                $scope.reload = function () {
+                    $scope.reload2();
+                    if ($scope.model.refershTime===0) {
+                        
+                    $timeout(function () {
+                        $window.location.reload();
+                        $scope.reload();
+                    }, 1000);
+                    }
+                };
+                $scope.reload2 = function () {
+                    $timeout(function () {
+                        $scope.model.refershTime -= 1;
+                        console.log($scope.model.refershTime);
+                        $scope.reload2();
+                    }, 1000);
+                };
+
+                $scope.reload();
+
                 $scope.ui.init();
             });
 }());
