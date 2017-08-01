@@ -42,7 +42,7 @@
                                                     console.log("$scope.imagemodel.length");
                                                     $scope.model.jobcard.vehicleImages = true;
                                                 }
-                                                
+
                                                 $scope.model.saveJobCard()
                                                         .then(function (data) {
                                                             for (var i = 0; i < $scope.imagemodel.length; i++) {
@@ -86,8 +86,6 @@
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
                         $scope.imagemodel.push(file);
-
-
                         var reader = new FileReader();
                         reader.onload = $scope.imageIsLoaded;
                         reader.readAsDataURL(file);
@@ -106,6 +104,10 @@
                 };
                 $scope.ui.edit = function () {
                     $scope.ui.clientDisabled = false;
+                };
+
+                $scope.ui.backToSelectCustomer = function () {
+                    $scope.ui.changeUi = 'ui2';
                 };
 
                 $scope.ui.saveJobCard = function () {

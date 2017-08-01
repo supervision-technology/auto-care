@@ -144,7 +144,6 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
                             </div>
 
                             <div class="col-xs-6">
@@ -159,7 +158,8 @@
                                     </select>
                                 </div>
                                 <div style="padding-top: 50px;">
-                                    <button class="btn btn-primary" style="width: 250px; height: 50px" ng-click="ui.jobCardNsext()">GET VEHICLE IMAGE</button>
+                                    <button  class="btn btn-success btn-lg" ng-click="ui.backToSelectCustomer();" >BACK</button>
+                                    <button class="btn btn-primary btn-lg" style="width: 250px; height: 50px" ng-click="ui.jobCardNsext()">GET VEHICLE IMAGE</button>
                                 </div>
                             </div>
                         </div>
@@ -219,19 +219,26 @@
                 </div>
                 <div class="col-xs-12">
                     <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px; border: solid;">
-                        <img src="{{imagemodelX[0]}}" id="tableBanner" style="width: 100%; height: 100%">
+                        <input ng-show="imagemodelX.length === 0" type="file"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/jpeg, image/png">
+                        <img src="{{imagemodelX[0]}}" id="tableBanner" style="width: 100%;">
                     </div>
                     <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px; border: solid;">
-                        <img src="{{imagemodelX[1]}}" style="width: 100%; height: 100%">
+                        <input ng-show="imagemodelX.length === 1" type="file" id="bannerImg"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/jpeg, image/png">
+                        <img src="{{imagemodelX[1]}}" style="width: 100%;">
                     </div>
                     <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px; border: solid;">
+                        <input ng-show="imagemodelX.length === 2" type="file" id="bannerImg"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/jpeg, image/png">
                         <img src="{{imagemodelX[2]}}" style="width: 100%; height: 100%">
                     </div>
                     <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px; border: solid;">
+                        <input ng-show="imagemodelX.length === 3" type="file" id="bannerImg"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/jpeg, image/png">
                         <img src="{{imagemodelX[3]}}" style="width: 100%; height: 100%">
                     </div>
-                    <input type="file" id="bannerImg" class="btn-info"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">     
-                    <button  class="btn btn-success btn-lg" ng-click="ui.uploadForm();" >Next</button>
+                </div>
+                <div class="col-xs-12">
+                    <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px;">
+                        <button  class="btn btn-success btn-lg" ng-click="ui.uploadForm();" >Next</button>
+                    </div>
                 </div>
                 <div id="res"></div>
             </div>   

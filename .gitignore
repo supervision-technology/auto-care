@@ -2,6 +2,7 @@
 /AUTO_CARE/node_modules/
 /AUTO_CARE/bower_components/
 /AUTO_CARE/src/main/resources/static/
-AUTO_CARE/debug.log
-AUTO_CARE/src/main/resources/META-INF/persistence.xml
-AUTO_CARE/src/site/index.html
+/AUTO_CARE/debug.log
+/AUTO_CARE/src/main/resources/META-INF/persistence.xml
+/AUTO_CARE/src/site/index.html
+/AUTO_CARE/upload-image
