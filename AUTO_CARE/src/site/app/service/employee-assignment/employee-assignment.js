@@ -21,11 +21,14 @@
                     var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/file-absalute-path";
                     $http.get(url)
                             .success(function (data, status, headers) {
+                                console.log("data");
+                                console.log(data);
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
+                                console.log("error data");
+                                console.log(data);
                                 errorcallback(data);
-
                             });
                 };
 
@@ -108,6 +111,7 @@
                 $scope.model.employeesAttendanceList = [];
                 $scope.model.vehicles = [];
                 $scope.dragableMode = true;
+                $scope.model.imageAbsalutePath;
                 $scope.model.bayList = [
                     {
                         timeout: null
@@ -237,14 +241,6 @@
                 };
                 $scope.ui.init = function () {
 
-                    console.log("data");
-                    console.log("data");
-                    employeeAssignmentFactory.employeeImageAbsalutePath(function (data) {
-                        console.log("test");
-                        console.log(data[0]);
-                        console.log("test");
-                        console.log("test");
-                    });
 
                     employeeAssignmentFactory.loadEmployees(function (data) {
                         $scope.model.employeeList = data;
@@ -259,6 +255,10 @@
 
                     employeeAssignmentFactory.loadVehicles(function (data) {
                         $scope.model.vehicles = data;
+                    });
+                    employeeAssignmentFactory.employeeImageAbsalutePath(function (data) {
+                        $scope.model.imageAbsalutePath = data.imagePath;
+                        console.log("imageAbsalutePath");
                     });
 
                 };

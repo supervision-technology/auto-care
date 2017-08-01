@@ -106,6 +106,8 @@
                 $scope.model.vehicles = [];
                 $scope.model.vehicleTypes = [];
                 $scope.dragableMode = true;
+                $scope.model.selectJob=null;
+                $scope.model.selectBay=null;
                 $scope.model.bayList = [];
 //
                 $scope.stop = function (bay) {
@@ -115,6 +117,19 @@
                 };
                 $scope.dragStart = function (element, model) {
                 };
+                
+                $scope.ui.selectJob=function (job){
+                    console.log('job');
+                    $scope.model.selectJob=job;
+                    console.log($scope.model.selectJob);
+                };
+                $scope.ui.selectBay=function (bay){
+                    $scope.model.selectBay=bay;
+                    if ($scope.model.selectBay && $scope.model.selectJob) {
+                        $scope.dragLeave($scope.model.selectBay,$scope.model.selectJob);
+                    }
+                };
+                
 
                 $scope.dragLeave = function (bay, job) {
                     if ($scope.dragableMode) {
@@ -264,6 +279,8 @@
                                                 $scope.model.jobList[i].bay = data.bay;
                                             }
                                         }
+                                        $scope.model.selectJob=null;
+                                        $scope.model.selectBay=null;
                                     }
                             );
                         } else {

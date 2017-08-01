@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.customer_satisfaction;
 
+import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.customer_satisfaction.model.CustomerSatisfaction;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,6 @@ public class CustomerSatisfactionService {
 
     }
     List<CustomerSatisfaction> getFinishedJobCard() {
-        return satisfactionRepository.findByDefaultFinalCheckAndInvoiceAndRateAndRateReason(true,true,0,null);
+        return satisfactionRepository.findByDefaultFinalCheckAndInvoiceAndRateAndRateReasonAndStatus(true,true,0,null,Constant.FINISHE_STATUS);
     }
 }
