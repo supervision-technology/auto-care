@@ -180,9 +180,7 @@
                                 $scope.invoiceModel.getInsertCardAndChequePayment(paymentInformation, type);
                             }
                         } else if (type === "CARD") {
-                            if (!paymentInformation.number) {
-                                Notification.error("please enter number");
-                            } else if (!paymentInformation.cardType) {
+                            if (!paymentInformation.cardType) {
                                 Notification.error("please enter card type");
                             } else if (!paymentInformation.amount) {
                                 Notification.error("please enter card amount");

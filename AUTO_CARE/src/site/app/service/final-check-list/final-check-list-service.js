@@ -18,7 +18,7 @@
         this.loadItemCheckDetails = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-check-details");
         };
-        
+
         this.loadBays = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/bay/get-bays-by-branch-is-view");
         };
@@ -45,7 +45,11 @@
         this.loadDefaultFinalItemCheck = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item-check");
         };
-
+        
+        this.loadVehicleImages = function (jobCard) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/image-names/" + jobCard);
+        };
+       
         this.getDefaultFinalCheckList = function (jobCard) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item-check/find-by-default-final-check-list/" + jobCard);
         };
@@ -57,7 +61,7 @@
         this.findJobCard = function (jobCard) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-job-card/" + jobCard);
         };
-        
+
         this.findByVehicleAssignmentDetails = function (jobCard) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/vehicle-assignment/find-by-job-card/" + jobCard);
         };

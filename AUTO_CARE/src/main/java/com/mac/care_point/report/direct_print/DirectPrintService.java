@@ -73,13 +73,14 @@ public class DirectPrintService {
         printerService.printString(defaultPrinter, "\n IN TIME  - " + getJobCardData.getInTime());
         printerService.printString(defaultPrinter, "\n IN MILEAGE  - " + getJobCardData.getInMileage() + " KM");
         printerService.printString(defaultPrinter, "\n CUSTOMER  - " + clientData.getName());
+        printerService.printString(defaultPrinter, "\n CUSTOMER CONTACT  - " + clientData.getMobile());
         printerService.printString(defaultPrinter, "\n VEHICLE TYPE  - " + priceCategoryData.getName() + "\n");
-        
+
         if (getJobCardData.getCarepetOriginal() > 0) {
-            printerService.printString(defaultPrinter, " CARPET ORIGINAL  - " + getJobCardData.getCarepetOriginal() + "\n");
+            printerService.printString(defaultPrinter, " CARPETS ORIGINAL  - " + getJobCardData.getCarepetOriginal() + "\n");
         }
         if (getJobCardData.getCarepetOther() > 0) {
-            printerService.printString(defaultPrinter, " CARPET OTHER  - " + getJobCardData.getCarepetOther()+ "\n");
+            printerService.printString(defaultPrinter, " CARPETS OTHER  - " + getJobCardData.getCarepetOther() + "\n");
         }
         printerService.printString(defaultPrinter, "\n");
 
@@ -97,7 +98,7 @@ public class DirectPrintService {
             printerService.printString(defaultPrinter, "-------------- STOCK ITEM -------------");
             for (Object[] objects : stockItemByJobCard) {
                 printerService.printString(defaultPrinter, "\n" + objects[0]);
-                printerService.printString(defaultPrinter, "\n" + objects[1] + " - " + objects[2] + " x  [" + objects[3] + "]" + "\n");
+                printerService.printString(defaultPrinter, "\n" + objects[1] + " - " + objects[2] + " x " + objects[3] + " =  [" + objects[4] + "]" + "\n");
                 printerService.printString(defaultPrinter, "_______________________________________");
             }
             printerService.printString(defaultPrinter, "\n");
@@ -119,8 +120,6 @@ public class DirectPrintService {
         printerService.printString(defaultPrinter, "\n Signature");
         printerService.printString(defaultPrinter, "\n Print Time @ " + formatDate + "\n");
         printerService.printString(defaultPrinter, "--------------------------------------- \n");
-        printerService.printString(defaultPrinter, "Software By Supervision Technology \n");
-        printerService.printString(defaultPrinter, "0777871144 / 0382246330 \n");
         printerService.printString(defaultPrinter, "\n");
         printerService.printString(defaultPrinter, "\n");
         printerService.printString(defaultPrinter, "\n");

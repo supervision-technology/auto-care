@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.job_card;
 
+import com.mac.care_point.service.job_card.model.FileAbsalutePath;
 import com.mac.care_point.service.job_card.model.JobCard;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -60,12 +61,12 @@ public class JobCardController {
     public List<JobCard> findByStatusAndInvoiceOrderByIndexNoDesc() {
         return jobCardService.findByStatusAndInvoiceOrderByIndexNoDesc();
     }
-    
+
     @RequestMapping(value = "/get-default-check-list-pending-job-card", method = RequestMethod.GET)
     public List<JobCard> findByStatusAndDefaultFinalCheckOrderByIndexNoDesc() {
         return jobCardService.findByStatusAndDefaultFinalCheckOrderByIndexNoDesc();
     }
-    
+
     @RequestMapping(value = "/get-service-and-stock-pending-job-card", method = RequestMethod.GET)
     public List<JobCard> findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc() {
         return jobCardService.findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc();
@@ -103,7 +104,7 @@ public class JobCardController {
         InputStream inputStream = new FileInputStream(IMAGE_LOCATION + "/" + fileName);
         OutputStream outputStream = response.getOutputStream();
 
-        byte[] bytes = new byte[20480];
+        byte[] bytes = new byte[1024];
         while (inputStream.read(bytes) > 0) {
             outputStream.write(bytes);
         }
@@ -113,7 +114,6 @@ public class JobCardController {
     @RequestMapping(value = "/image-names/{jobCard}", method = RequestMethod.GET)
     public List<String> imageName(@PathVariable String jobCard) {
         File imageDir = new File(IMAGE_LOCATION);
-
         File[] imageFiles = imageDir.listFiles((File pathname) -> {
             return pathname.getName().startsWith(String.format(IMAGE_NAME_FILTER_TEMPLATE, jobCard));
         });
@@ -124,5 +124,11 @@ public class JobCardController {
         }
 
         return imageFileNames;
+    }
+
+    //@RequestMapping(value = "/file-absalute-path", method = RequestMethod.GET)
+    public String fileAbsalutePath() {
+        File imageDir = new File(IMAGE_LOCATION);
+        return imageDir.getAbsolutePath();
     }
 }

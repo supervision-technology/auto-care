@@ -66,7 +66,22 @@
                         var that = this;
                         finalCheckListService.getDefaultFinalCheckListChecked(data)
                                 .success(function (data) {
+                                    that.vehicleImagesList = [];
+                                    that.vehicleImagesList = data;
                                     defer.resolve();
+                                })
+                                .error(function () {
+                                    that.vehicleImagesList = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    loadVehicleImages: function (jobCard) {
+                        var defer = $q.defer();
+                        var that = this;
+                        finalCheckListService.loadVehicleImages(jobCard)
+                                .success(function (data) {
+                                    defer.resolve(data);
                                 })
                                 .error(function () {
                                     defer.reject();
