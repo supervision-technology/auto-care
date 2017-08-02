@@ -152,6 +152,13 @@
                                                    typeahead-input-formatter="newModel.bayLable(model.currentReport.parameterValues.BAY)"
                                                    ></td>
                                     </tr>
+                                    <tr ng-show="ui.isParameterAvailable('EMPLOYEE')">
+                                        <td><label class="control-label">EMPLOYEE</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.EMPLOYEE"
+                                                   uib-typeahead="employee.indexNo as (employee.indexNo+ ' - ' +employee.name) for employee in newModel.employeeList |filter:$viewValue |filter :{type:'worker'}|limitTo:10" 
+                                                   typeahead-input-formatter="newModel.employeeLable(model.currentReport.parameterValues.EMPLOYEE)"
+                                                   ></td>
+                                    </tr>
                                     <tr ng-show="ui.isParameterAvailable('VEHICLE_NO')">
                                         <td><label class="control-label">VEHICL NO</label></td>
                                         <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.VEHICLE_NO" 
@@ -161,7 +168,7 @@
                                     </tr>
                                 </tbody>                 
                             </table>
-
+                            
                             <a class="btn btn-block btn-primary" ng-click="ui.viewCurrentReport();">VIEW</a>
                         </div>
                     </div>

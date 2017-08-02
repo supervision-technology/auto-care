@@ -6,6 +6,7 @@
 package com.mac.care_point.service.employee_bay_detail;
 
 import com.mac.care_point.service.employee_bay_detail.model.TEmployeeBayDetail;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -13,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author L T430
  */
 public interface TEmployeeBayRepository extends JpaRepository<TEmployeeBayDetail, Integer>{
+
+    public List<TEmployeeBayDetail> findByJobCardAndStatusAndBranch(Integer jobCard, String PENDING_STATUS, Integer branch);
      
 }

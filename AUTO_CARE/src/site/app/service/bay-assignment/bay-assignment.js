@@ -75,9 +75,9 @@
                                 }
                             });
                 };
-                //get Bay Assign Vehicle Count
-                factory.getBayAssignVehicleCount = function (detail, callback, errorcallback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/transaction/vehicle-assignment/load_not_finished_vehicle_assignment/" + detail;
+
+                factory.checkEmployeAssign = function (detail, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/vehicle-assignment/check-employe-assign/" + detail;
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -132,6 +132,7 @@
 
                 $scope.dragLeave = function (bay, job) {
                     if ($scope.dragableMode) {
+                        console.log(bay.employeeIsView);
 
                         $scope.dragableMode = false;
                         var vehicleCount = 0;
@@ -153,16 +154,38 @@
                         if ($scope.isSameBay) {
                             $scope.model.jobAssignment.bay.timeout = '';
                         } else {
-                            if ($scope.model.refershTime<20) {
-                                $scope.model.refershTime+=10;
-                            }
-                            if (vehicleCount < bay.maxVehicle) {
-                                $scope.model.jobAssignment.jobCard = job;
-                                $scope.model.jobAssignment.bay = bay;
-                                $scope.model.jobAssignment.bay.timeout = 5;
-                                $scope.onTimeout();
+                            // check employee assing selected bay
+                            if (bay.employeeIsView) {
+                                bayAssignmentFactory.checkEmployeAssign(bay.indexNo, function (data) {
+                                    if (data) {
+                                        if ($scope.model.refershTime < 20) {
+                                            $scope.model.refershTime += 10;
+                                        }
+                                        if (vehicleCount < bay.maxVehicle) {
+                                            $scope.model.jobAssignment.jobCard = job;
+                                            $scope.model.jobAssignment.bay = bay;
+                                            $scope.model.jobAssignment.bay.timeout = 5;
+                                            $scope.onTimeout();
+                                        } else {
+                                            Notification.error('Max vehicle Assign for this bay !');
+                                        }
+                                    } else {
+                                        Notification.error('Nothing Employee Assign for this Bay !');
+                                        return;
+                                    }
+                                });
                             } else {
-                                Notification.error('Max vehicle Assign for this bay !');
+                                if ($scope.model.refershTime < 20) {
+                                    $scope.model.refershTime += 10;
+                                }
+                                if (vehicleCount < bay.maxVehicle) {
+                                    $scope.model.jobAssignment.jobCard = job;
+                                    $scope.model.jobAssignment.bay = bay;
+                                    $scope.model.jobAssignment.bay.timeout = 5;
+                                    $scope.onTimeout();
+                                } else {
+                                    Notification.error('Max vehicle Assign for this bay !');
+                                }
                             }
                         }
                     }
@@ -315,7 +338,6 @@
                 $scope.reload2 = function () {
                     $timeout(function () {
                         $scope.model.refershTime -= 1;
-                        console.log($scope.model.refershTime);
                         if ($scope.model.refershTime === 0) {
                             $timeout(function () {
                                 $timeout.cancel(refreshTime);
