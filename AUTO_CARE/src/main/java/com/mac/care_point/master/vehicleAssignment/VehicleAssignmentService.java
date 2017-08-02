@@ -5,11 +5,20 @@
  */
 package com.mac.care_point.master.vehicleAssignment;
 
+import com.mac.care_point.master.bay.BayRepository;
+import com.mac.care_point.master.bay.model.Bay;
+import com.mac.care_point.master.employee.EmployeeRepository;
 import com.mac.care_point.master.vehicle.VehicleRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.common.Constant;
+import com.mac.care_point.service.employee_assignment.EmployeeAssignmentRepository;
+import com.mac.care_point.service.employee_assignment.model.TEmployeeAssingment;
+import com.mac.care_point.service.employee_bay_detail.TEmployeeBayService;
+import com.mac.care_point.service.employee_bay_detail.model.TEmployeeBayDetail;
 import com.mac.care_point.service.job_card.JobCardRepository;
 import com.mac.care_point.service.job_card.model.JobCard;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +39,15 @@ public class VehicleAssignmentService {
     @Autowired
     private JobCardRepository jobCardRepository;
 
+    @Autowired
+    private TEmployeeBayService employeeBayService;
+
+    @Autowired
+    private EmployeeAssignmentRepository employeeAssignmentRepository;
+
+    @Autowired
+    private BayRepository bayRepository;
+
     public List<TVehicleAssignment> findAll() {
         return vehicleAssignmentRepository.findAll();
     }
@@ -39,6 +57,11 @@ public class VehicleAssignmentService {
         findOne.setBay(vehicleAssignment.getBay());
         jobCardRepository.save(findOne);
         List<TVehicleAssignment> updatedObjects = vehicleAssignmentRepository.findTop1ByJobCardOrderByInTimeDesc(vehicleAssignment.getJobCard());
+
+        System.out.println(vehicleAssignment.getBay());
+        System.out.println(vehicleAssignment.getJobCard());
+
+        saveEmployeeBayDetails(vehicleAssignment);
 
         if (!updatedObjects.isEmpty()) {
             TVehicleAssignment updateVehicleAssignment = updatedObjects.get(0);
@@ -77,5 +100,36 @@ public class VehicleAssignmentService {
             return save;
         }
         return null;
+    }
+
+    private void saveEmployeeBayDetails(TVehicleAssignment vehicleAssignment) {
+        Bay bay = bayRepository.findOne(vehicleAssignment.getBay());
+
+        if (bay.getEmployeeIsView() == 1) {
+            SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            System.out.println(dt1.format(new Date()));
+            TEmployeeBayDetail employeeBayDetail = new TEmployeeBayDetail();
+            employeeBayDetail.setBay(vehicleAssignment.getBay());
+            employeeBayDetail.setDate(new Date());
+            employeeBayDetail.setInTime(dt1.format(new Date()));
+            employeeBayDetail.setIndexNo(0);//auto increment
+            employeeBayDetail.setJobCard(vehicleAssignment.getJobCard());
+            employeeBayDetail.setOutTime(null);
+            employeeBayDetail.setStatus("PENDING");
+            employeeBayDetail.setType(null);
+            employeeBayDetail.setTypeDesc(null);
+
+            List<TEmployeeAssingment> employeeList = employeeAssignmentRepository.findByBayAssignEmployee(vehicleAssignment.getBay(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            System.out.println(vehicleAssignment.getBay());
+            System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            System.out.println(new Date());
+            
+            for (TEmployeeAssingment employee : employeeList) {
+                employeeBayDetail.setEmployee(employee.getEmployee());
+                employeeBayService.save(employeeBayDetail);
+            }
+        } else {
+            //nothing to do
+        }
     }
 }
