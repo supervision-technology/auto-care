@@ -5,7 +5,7 @@
         this.loadCategory = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/category");
         };
-        
+
         this.loadItemCategory = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-category");
         };
@@ -30,7 +30,7 @@
         this.loadItem = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item");
         };
-        
+
         this.loadSupplier = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
         };
@@ -46,11 +46,11 @@
         this.loadItemUnitByItem = function (item) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit/find-by-item/" + item);
         };
-       
+
         this.loadConsumableItem = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/consumable-item");
         };
-       
+
         this.loadItemCheckDetails = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-check-detail");
         };
@@ -58,7 +58,11 @@
         this.getPackageItems = function (indexNo) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/package-item/get-package-items/" + indexNo);
         };
-        
+
+        this.loadPriceCategoryDetailByItem = function (item) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/price-categiry-details/find-by-item/" + item);
+        };
+
         //save functions
         this.saveItem = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/master/item/save-item", data);
@@ -71,17 +75,19 @@
         this.savePackageItem = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/master/package-item/save-package", data);
         };
-       
+
         this.saveConsumableItem = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/master/consumable-item/save-consumable", data);
         };
-       
+
         this.saveItemCheckDetail = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/master/item-check-detail/save-item-check-detail", data);
         };
-        
-        
-        
+
+        this.saveMPriceCategoryDetails = function (data) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/master/price-categiry-details/insert-detail", data);
+        };
+
 
         //delete functions
         this.deleteItem = function (indexNo) {
@@ -95,14 +101,20 @@
         this.deletePackageItem = function (indexNo) {
             return $http.delete(systemConfig.apiUrl + "/api/care-point/master/package-item/delete-package/" + indexNo);
         };
-        
+
         this.deleteConsumableItem = function (indexNo) {
             return $http.delete(systemConfig.apiUrl + "/api/care-point/master/consumable-item/delete-consumable/" + indexNo);
         };
-       
+
         this.deleteItemCheckDetail = function (indexNo) {
             return $http.delete(systemConfig.apiUrl + "/api/care-point/master/item-check-detail/delete-item-check-detail/" + indexNo);
         };
+
+        this.deleteMPriceCategoryDetails = function (indexNo) {
+            return $http.delete(systemConfig.apiUrl + "/api/care-point/master/price-categiry-details/delete-detail/" + indexNo);
+        };
+
+
     };
 
     angular.module("appModule")

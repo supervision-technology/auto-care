@@ -22,7 +22,7 @@ public interface Constant {
     public static final String FINISHE_STATUS = "FINISHED";
     public static final String DLETED_STATUS = "DELETED";
     public static final String ON_GOING = "ON_GOING";
-    
+
     public static final String CHECK_STATUS = "CHECK";
     public static final String NOT_CHECK_STATUS = "NOT_CHECK";
 
@@ -64,4 +64,9 @@ public interface Constant {
     public static final String OTHER_BRANCH = "OTHER_BRANCH";
 
     public static final String BAY_ISSUE = "BAY_ISSUE";
+
+    //sms message details
+    public static final String INVOICE_MESSAGE = "INVOICE_MESSAGE";
+    public static final String ESTIMATE_MESSAGE = "ESTIMATE_MESSAGE";
+    public static final String CUSTOMER_SATISFACTION_MESSAGE = "CUSTOMER_SATISFACTION_MESSAGE";
 }

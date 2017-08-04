@@ -12,6 +12,7 @@
             packageData: {},
             consumableData: {},
             itemCheckData: {},
+            priceCategoryDetails: {},
             //uib-typeahead
             items: [],
             itemunits: [],
@@ -28,6 +29,7 @@
             itemunitsViewList: [],
             packageViewList: [],
             itemCheckDetailList: [],
+            priceCategoryDetailsList: [],
             selectedConsumableItem: {},
             selectedItem: {},
             consumableItemIsView: false,
@@ -41,6 +43,7 @@
                 that.packageUnitData = itemFactory.newPackageData();
                 that.consumableData = itemFactory.newConsumableData();
                 that.itemCheckData = itemFactory.newItemCheckData();
+                that.priceCategoryDetails = itemFactory.newPriceCategoryDetails();
 
                 itemService.loadItem()
                         .success(function (data) {
@@ -57,7 +60,7 @@
                         .success(function (data) {
                             that.categorys = data;
                         });
-                
+
                 itemService.loadItemCategory()
                         .success(function (data) {
                             that.itemCategorys = data;
@@ -185,9 +188,7 @@
                 var item = this.itemObject(index);
                 this.selectedConsumableItem = item;
                 this.consumableItemIsView = true;
-
-            }
-            ,
+            },
             saveItemUnit: function () {
                 var defer = $q.defer();
                 var that = this;
@@ -412,16 +413,16 @@
                 });
                 return item;
             },
-            selectedItemForCheckItem:function (indexNo){
-                 var item;
+            selectedItemForCheckItem: function (indexNo) {
+                var item;
                 angular.forEach(this.items, function (value) {
                     if (value.indexNo === parseInt(indexNo)) {
                         item = value;
                         return;
                     }
                 });
-                this.selectedItem=item;
-                 this.selectedItemIsView = true;
+                this.selectedItem = item;
+                this.selectedItemIsView = true;
             },
             loadItemUnitByItem: function (item) {
                 var that = this;
@@ -437,6 +438,53 @@
                             defer.reject();
                         });
                 return defer.promise;
+            },
+            // ------------ price category details ------------
+            loadPriceCategoryDetailByItem: function (item) {
+                var that = this;
+                var defer = $q.defer();
+                itemService.loadPriceCategoryDetailByItem(item)
+                        .success(function (data) {
+                            that.priceCategoryDetailsList = [];
+                            that.priceCategoryDetailsList = data;
+                            defer.resolve();
+                        })
+                        .error(function () {
+                            that.priceCategoryDetailsList = [];
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
+            savePriceCategoryDetail: function () {
+                var that = this;
+                var defer = $q.defer();
+                itemService.saveMPriceCategoryDetails(this.priceCategoryDetail)
+                        .success(function (data) {
+                            that.priceCategoryDetailsList.unshift(data);
+                            that.priceCategoryDetail = {};
+                            defer.resolve();
+                        })
+                        .error(function () {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
+            deletePriceCategoryDetail: function ($index, indexNo) {
+                var that = this;
+                var defer = $q.defer();
+                itemService.deleteMPriceCategoryDetails(indexNo)
+                        .success(function (data) {
+                            that.priceCategoryDetailsList.splice($index, 1);
+                            defer.resolve();
+                        })
+                        .error(function () {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
+            editePriceCategoryDetail: function (priceCategoryDetail, $index) {
+                this.priceCategoryDetail = priceCategoryDetail;
+                this.priceCategoryDetailsList.splice($index, 1);
             }
         };
         return itemModel;

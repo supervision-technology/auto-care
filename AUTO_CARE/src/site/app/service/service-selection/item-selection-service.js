@@ -50,6 +50,8 @@
         };
 
         this.findByCategoryAndPriceCategory = function (category, priceCategory) {
+            console.log(systemConfig.apiUrl + "/api/care-point/master/item/find-item-by-category/" + category + "/" + priceCategory);
+            console.log(systemConfig.apiUrl + "/api/care-point/master/item/find-item-by-category/" + category + "/" + priceCategory);
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/find-item-by-category/" + category + "/" + priceCategory);
         };
 
@@ -109,7 +111,7 @@
         this.getQuickSeacrhItem = function (itemKey, priceCategory) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/quick-service-item/" + itemKey + "/" + priceCategory);
         };
-        
+
         this.getQuickSeacrhStockItem = function (itemKey) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/quick-stock-item/" + itemKey);
         };

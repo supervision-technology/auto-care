@@ -6,12 +6,14 @@
 package com.mac.care_point.report.direct_print;
 
 import com.mac.care_point.master.client.ClientRepository;
-import com.mac.care_point.master.client.ClientService;
 import com.mac.care_point.master.client.model.Client;
 import com.mac.care_point.master.priceCategory.PriceCategoryRepository;
 import com.mac.care_point.master.priceCategory.model.PriceCategory;
+import com.mac.care_point.master.sms_message.MSmsDetailsRepository;
+import com.mac.care_point.master.sms_message.model.MSmsDetails;
 import com.mac.care_point.master.vehicle.VehicleRepository;
 import com.mac.care_point.master.vehicle.model.Vehicle;
+import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.job_card.JobCardRepository;
 import com.mac.care_point.service.job_card.model.JobCard;
 import java.math.BigDecimal;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -62,6 +65,15 @@ public class DirectPrintService {
         List<Object[]> stockItemByJobCard = directPrintRepository.getStockItemByJobCard(jobCard);
         List<Object[]> itemTotalPriceByJobCard = directPrintRepository.getItemTotalPriceByJobCard(jobCard);
         String formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+
+//        //send sms
+//        String contactNo = "94714303339";
+//        String customerName = clientData.getName();
+//        String branch = "NUGEGODA";
+//        String vehicelNo = vehicleData.getVehicleNo();
+//        String amount = "8000.00";
+//        String branchContactNo = "0112816262";
+//        sendEstimateSms(contactNo, customerName, branch, vehicelNo, amount, branchContactNo);
 
         PrinterService printerService = new PrinterService();
         String defaultPrinter = printerService.getDefaultPrinter();
@@ -132,4 +144,16 @@ public class DirectPrintService {
         printerService.printBytes(defaultPrinter, cutP);
         return 0;
     }
+
+//    private String sendEstimateSms(String contactNo, String customerName, String branch, String vehicelNo, String amount, String branchContactNo) {
+//        final String message
+//                = "Dear " + customerName + "\n"
+//                + "Thank you for comming CAREPOINT " + branch + ". Vehicle No " + vehicelNo + " Estimated amout is Rs." + amount + "\n"
+//                + "For any clarification please contact us on " + branchContactNo + "";
+//
+//        final String uri = "http://smsserver.svisiontec.com/send_sms.php?api_key=6560957308&number=" + contactNo + "&message=" + message;
+//        RestTemplate restTemplate = new RestTemplate();
+//        String result = restTemplate.getForObject(uri, String.class);
+//        return result;
+//    }
 }

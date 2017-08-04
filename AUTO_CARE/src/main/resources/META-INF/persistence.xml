@@ -35,6 +35,8 @@
     <class>com.mac.care_point.service.final_check_list.model.MItemCheckDetail</class>
     <class>com.mac.care_point.service.final_check_list.model.MFinalCheckListItem</class>
     <class>com.mac.care_point.service.final_check_list.model.TJobFinalCheckList</class>
+    <class>com.mac.care_point.master.items.item_price_category_details.model.MPriceCategoryDetails</class>
+    <class>com.mac.care_point.master.sms_message.model.MSmsDetails</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/care_point?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

@@ -16,6 +16,8 @@
                         $scope.ui.saveMode = "CONSUMABLE_ITEMS";
                     } else if (functions === "ITEM_CHECK_DETAIL") {
                         $scope.ui.saveMode = "ITEM_CHECK_DETAIL";
+                    } else if (functions === "PRICE_CATEGORY_DETAIL") {
+                        $scope.ui.saveMode = "PRICE_CATEGORY_DETAIL";
                     }
                 };
 
@@ -69,6 +71,50 @@
                                 });
                     }
                 };
+
+                $scope.ui.savePriceCategoryDetail = function () {
+                    if (!$scope.model.priceCategoryDetail.item) {
+                        Notification.error("enter item type");
+                    } else if (!$scope.model.priceCategoryDetail.priceCategory) {
+                        Notification.error("enter item name");
+                    } else if (!$scope.model.priceCategoryDetail.normalPrice) {
+                        Notification.error("enter item sale price normal");
+                    } else if (!$scope.model.priceCategoryDetail.registerPrice) {
+                        Notification.error("enter item sale price register");
+                    } else if ($scope.model.priceCategoryDetail.item
+                            && $scope.model.priceCategoryDetail.priceCategory
+                            && $scope.model.priceCategoryDetail.normalPrice
+                            && $scope.model.priceCategoryDetail.registerPrice) {
+                        ConfirmPane.primaryConfirm("Save price categiry details !")
+                                .confirm(function () {
+                                    $scope.model.savePriceCategoryDetail()
+                                            .then(function () {
+                                                Notification.success("save price categiry details");
+                                                $scope.model.priceCategoryDetail.item = $scope.selectNextPriceCategoryDetails;
+                                            }, function () {
+                                                Notification.error("save price categiry details fail");
+                                            });
+                                })
+                                .discard(function () {
+                                    console.log('discard');
+                                });
+                    }
+                };
+
+                $scope.ui.editePriceCategoryDetail = function (priceCategoryDetail, $index) {
+                    $scope.model.editePriceCategoryDetail(priceCategoryDetail, $index);
+                };
+
+                $scope.ui.selectNextPriceCategoryDetails = function (value) {
+                    if (value) {
+                        $scope.selectNextPriceCategoryDetails = $scope.model.priceCategoryDetail.item;
+                    } else {
+                        $scope.selectNextPriceCategoryDetails = null;
+                    }
+                };
+
+
+
                 //save consumable item
                 $scope.ui.saveConsumable = function () {
                     ConfirmPane.primaryConfirm("Save this Consumable Item !")
@@ -84,8 +130,8 @@
                             .discard(function () {
                                 console.log('discard');
                             });
-
                 };
+
                 //save item check detail
                 $scope.ui.saveItemCheckDetail = function () {
                     ConfirmPane.primaryConfirm("Save this Detail !")
@@ -106,13 +152,25 @@
 
                 //edit item
                 $scope.ui.editeItems = function (items, $index) {
-                    $scope.textViewMode=items.type;
+                    $scope.textViewMode = items.type;
                     $scope.model.editeItem(items, $index);
                 };
 
                 //delete item
                 $scope.ui.deleteItems = function (items, $index) {
                     $scope.model.deleteItem(items, $index);
+                };
+
+                //delete item
+                $scope.ui.deletePriceCategoryDetail = function (items, $index) {
+                    ConfirmPane.dangerConfirm("Delete Price Category Detail !")
+                            .confirm(function () {
+                                $scope.model.deletePriceCategoryDetail(items, $index);
+                            })
+                            .discard(function () {
+                                console.log('discard fail');
+                            });
+
                 };
 
                 //---------------------item unit ---------------------

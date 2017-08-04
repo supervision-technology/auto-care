@@ -5,6 +5,8 @@
  */
 package com.mac.care_point.service.invoice.invoice;
 
+import com.mac.care_point.master.sms_message.MSmsDetailsRepository;
+import com.mac.care_point.master.sms_message.model.MSmsDetails;
 import com.mac.care_point.master.vehicleAssignment.VehicleAssignmentRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.invoice.invoice.model.TInvoice;
@@ -24,6 +26,7 @@ import com.mac.care_point.system.exception.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.springframework.web.client.RestTemplate;
 
 /**
  *
@@ -51,6 +54,9 @@ public class InvoiceService {
     @Autowired
     private VehicleAssignmentRepository vehicleAssignmentRepository;
 
+    @Autowired
+    private MSmsDetailsRepository mSmsDetailsRepository;
+
     public List<TInvoice> findByJobCard(Integer jobCard) {
         return invoiceRepository.findByJobCard(jobCard);
     }
@@ -63,9 +69,11 @@ public class InvoiceService {
 
         JobCard jobCard = jobCardRepository.getOne(invoice.getJobCard());
 //        if (jobCard.getDefaultFinalCheck()) {
-            jobCard.setStatus(Constant.FINISHE_STATUS);
+        jobCard.setStatus(Constant.FINISHE_STATUS);
 //        }
         jobCard.setInvoice(Boolean.TRUE);
+        String outTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        jobCard.setOutTime(outTime);
 
         invoice.setBranch(1);
         //step 01
@@ -167,4 +175,13 @@ public class InvoiceService {
             return invoicePayment;
         }
     }
+
+//    private String sendIvoiceSms(String contactNo) {
+//        List<MSmsDetails> findByStaticNames = mSmsDetailsRepository.findByStaticName(Constant.INVOICE_MESSAGE);
+//        MSmsDetails mSmsDetails = findByStaticNames.get(0);
+//        final String uri = "http://smsserver.svisiontec.com/send_sms.php?api_key=" + mSmsDetails.getApKey() + "&number=" + contactNo + "&message=" + mSmsDetails.getMessage();
+//        RestTemplate restTemplate = new RestTemplate();
+//        String result = restTemplate.getForObject(uri, String.class);
+//        return result;
+//    }
 }

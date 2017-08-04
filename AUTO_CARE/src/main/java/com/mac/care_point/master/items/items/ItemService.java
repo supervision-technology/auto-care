@@ -114,7 +114,15 @@ public class ItemService {
     }
 
     public List<MItem> findByCategoryAndPriceCategory(Integer category, Integer packageCategory) {
-        return itemRepository.findByCategoryAndPriceCategory(category, packageCategory);
+        List<Object[]> getItemData = itemRepository.findByCategoryAndPriceCategorys(category, packageCategory);
+        List<MItem> returnItemData = new ArrayList<>();
+        for (Object[] objects : getItemData) {
+            MItem itemModifyOb = itemRepository.findOne(Integer.parseInt(objects[0].toString()));
+            itemModifyOb.setSalePriceNormal((BigDecimal)objects[1]);
+            itemModifyOb.setSalePriceRegister((BigDecimal)objects[2]);
+            returnItemData.add(itemModifyOb);
+        }
+        return returnItemData;
     }
 
     public List<MItem> findItemsByTypeAndQty(String TYPE) {

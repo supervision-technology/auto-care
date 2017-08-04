@@ -66,6 +66,17 @@
                     };
                     return itemCheckData;
                 };
+                
+                factory.newPriceCategoryDetails = function () {
+                    var priceCategoryDetail = {
+                        "indexNo": null,
+                        "item": null,
+                        "priceCategory": null,
+                        "normalPrice": null,
+                        "registerPrice": null
+                    };
+                    return priceCategoryDetail;
+                };
                 return factory;
             });
 }());

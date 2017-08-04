@@ -16,6 +16,7 @@ import com.mac.care_point.service.grn.model.TStockLedger;
 import com.mac.care_point.service.job_item.model.TJobItem;
 import com.mac.care_point.service.stock.transfer.model.MStore;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,15 +53,24 @@ public class JobItemService {
     public List<MItemL> findAllMItemL() {
         return mItemLRepository.findAll();
     }
-    
+
     public List<MItemL> findByItemCategoryAndBranch(Integer itemCategory) {
         return mItemLRepository.findByItemCategory(itemCategory);
     }
-    
-    public List<MItemL> getQuickSeacrhItem(String itemKey,Integer priceCategory) {
-        return mItemLRepository.getQuickSeacrhItem(itemKey, priceCategory);
+
+    public List<MItemL> getQuickSeacrhItem(String itemKey, Integer priceCategory) {
+        List<Object[]> getItemData = mItemLRepository.getQuickSeacrhItem(itemKey, priceCategory);
+        List<MItemL> returnItemData = new ArrayList<>();
+        for (Object[] objects : getItemData) {
+            MItemL itemModifyOb = mItemLRepository.findOne(Integer.parseInt(objects[0].toString()));
+            itemModifyOb.setSalePriceNormal((BigDecimal) objects[1]);
+            itemModifyOb.setSalePriceRegister((BigDecimal) objects[2]);
+            returnItemData.add(itemModifyOb);
+        }
+        return returnItemData;
     }
-    public List<Object[]> getQuickSeacrhItemStockItem(String itemKey,Integer priceCategory) {
+
+    public List<Object[]> getQuickSeacrhItemStockItem(String itemKey, Integer priceCategory) {
         return mItemLRepository.getQuickSeacrhItemStockItem(itemKey, priceCategory);
     }
 
@@ -150,7 +160,7 @@ public class JobItemService {
     }
 
     public List<Object[]> getItemQtyByStockLeger(Integer itemCategory, Integer branch) {
-        return jobItemRepository.getItemQtyByStockLeger(itemCategory,branch);
+        return jobItemRepository.getItemQtyByStockLeger(itemCategory, branch);
     }
 
     public List<Object[]> getNonStockItemQtyByStockLeger(Integer branch) {
@@ -161,9 +171,9 @@ public class JobItemService {
         List<Object[]> getDataList = jobItemRepository.getItemQtyByStock(branch, item);
         return ((BigDecimal) getDataList.get(0)[1]).subtract((BigDecimal) getDataList.get(0)[2]);
     }
-    
+
     public List<Object[]> getAllItemQtyByStockLeger(Integer branch) {
-       return jobItemRepository.getAllItemQtyByStockLeger(branch);
+        return jobItemRepository.getAllItemQtyByStockLeger(branch);
     }
 
     public TJobItem findTJobItemByIndexNo(Integer indexNo) {
