@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-07-09T20:01:51 -->
+<!-- 2017-08-04T16:10:39 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Bay_Assignment" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6bd76cd3-929e-4c18-8c17-916bff4003e2">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="care_point"/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
@@ -17,10 +17,12 @@
 	m_vehicle.vehicle_no,
 	t_vehicle_assignment.in_time,
 	IFNULL(t_vehicle_assignment.out_time,'Pending') as out_time,
-	IFNULL(DATE_FORMAT((TIMEDIFF(t_vehicle_assignment.out_time, t_vehicle_assignment.in_time)), '%T'),'Pending') as spend_time ,
 	m_branch.name as branch_name,
 	t_job_card.in_time as job_in_time,
 	IFNULL(t_job_card.out_time,'Pending') as job_out_time,
+	IFNULL(DATE_FORMAT((TIMEDIFF(t_vehicle_assignment.out_time, t_vehicle_assignment.in_time)), '%T'),'Pending') as spend_time ,
+	if(m_bay.time_period='00:00:00','- - -',m_bay.time_period) as time_period,
+	IF(if(m_bay.time_period='00:00:00','- - -',m_bay.time_period)='- - -','- - -',ifnull(TIMEDIFF(m_bay.time_period,DATE_FORMAT((TIMEDIFF(t_vehicle_assignment.out_time, t_vehicle_assignment.in_time)), '%T')),'Pending')) as timediff,
 	IFNULL((TIMEDIFF(t_job_card.out_time,t_job_card.in_time)),"Penging")as total_time ,
 	IFNULL((SELECT SEC_TO_TIME(SUM( TIME_TO_SEC((TIMEDIFF(v.out_time, v.in_time))))) AS timeSum  
 		FROM t_vehicle_assignment v,m_bay b
@@ -43,18 +45,20 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 	<field name="vehicle_no" class="java.lang.String"/>
 	<field name="in_time" class="java.sql.Timestamp"/>
 	<field name="out_time" class="java.lang.String"/>
-	<field name="spend_time" class="java.lang.String"/>
 	<field name="branch_name" class="java.lang.String"/>
 	<field name="job_in_time" class="java.sql.Timestamp"/>
 	<field name="job_out_time" class="java.lang.String"/>
+	<field name="spend_time" class="java.lang.String"/>
+	<field name="time_period" class="java.lang.String"/>
+	<field name="timediff" class="java.lang.String"/>
 	<field name="total_time" class="java.lang.String"/>
 	<field name="waiting_bay_time" class="java.lang.String"/>
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{vehicle_no}]]></groupExpression>
 		<groupHeader>
-			<band height="62">
+			<band height="65">
 				<textField>
-					<reportElement x="30" y="20" width="87" height="20" uuid="46d63962-cac5-4932-939a-3df7da851c03">
+					<reportElement x="10" y="20" width="97" height="20" uuid="46d63962-cac5-4932-939a-3df7da851c03">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -67,17 +71,17 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 					<textFieldExpression><![CDATA[$F{vehicle_no}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="90" y="40" width="100" height="20" uuid="30d2ab50-e41d-4d11-ad17-bd9e7eeae82a"/>
+					<reportElement x="52" y="40" width="100" height="20" uuid="30d2ab50-e41d-4d11-ad17-bd9e7eeae82a"/>
 					<box>
 						<bottomPen lineWidth="0.5" lineStyle="Dashed"/>
 					</box>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Vehicle No]]></text>
+					<text><![CDATA[Bay]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="192" y="40" width="130" height="20" uuid="d9be35ca-2eb6-469a-9cfa-60d4c8b58e41"/>
+					<reportElement x="152" y="40" width="118" height="20" uuid="d9be35ca-2eb6-469a-9cfa-60d4c8b58e41"/>
 					<box>
 						<bottomPen lineWidth="0.5" lineStyle="Dashed"/>
 					</box>
@@ -87,7 +91,7 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 					<text><![CDATA[In Time]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="322" y="40" width="130" height="20" uuid="369a0242-d276-47ea-8748-298e48b1a2fc"/>
+					<reportElement x="270" y="40" width="120" height="20" uuid="369a0242-d276-47ea-8748-298e48b1a2fc"/>
 					<box>
 						<bottomPen lineWidth="0.5" lineStyle="Dashed"/>
 					</box>
@@ -97,17 +101,17 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 					<text><![CDATA[Out Time]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="452" y="40" width="100" height="20" uuid="82dab220-64de-499e-b9c4-676f4466d2a0"/>
+					<reportElement x="390" y="40" width="60" height="20" uuid="82dab220-64de-499e-b9c4-676f4466d2a0"/>
 					<box>
 						<bottomPen lineWidth="0.5" lineStyle="Dashed"/>
 					</box>
 					<textElement verticalAlignment="Middle">
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Spend Time]]></text>
+					<text><![CDATA[Used Time]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="-20" y="20" width="50" height="20" uuid="41af292a-3f3f-413d-a50f-9b1a78bde040">
+					<reportElement x="-20" y="20" width="30" height="20" uuid="41af292a-3f3f-413d-a50f-9b1a78bde040">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -119,7 +123,7 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 					</textElement>
 				</textField>
 				<textField pattern="yyyy-MM-dd h:mm a">
-					<reportElement x="117" y="20" width="123" height="20" uuid="54f2022e-1dd7-4f64-98ff-26c6d935fbf6">
+					<reportElement x="107" y="20" width="133" height="20" uuid="54f2022e-1dd7-4f64-98ff-26c6d935fbf6">
 						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
@@ -168,7 +172,7 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 					<textFieldExpression><![CDATA[$F{waiting_bay_time}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="30" y="0" width="87" height="19" uuid="2926d0dc-fd5f-4352-b424-5261266084d8"/>
+					<reportElement x="10" y="0" width="97" height="19" uuid="2926d0dc-fd5f-4352-b424-5261266084d8"/>
 					<box>
 						<pen lineWidth="1.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -181,7 +185,7 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 					<text><![CDATA[Vehicle No :]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="117" y="0" width="123" height="19" uuid="7bb5ee16-375a-4e90-b79a-8b4b3ded7cad"/>
+					<reportElement x="107" y="0" width="133" height="19" uuid="7bb5ee16-375a-4e90-b79a-8b4b3ded7cad"/>
 					<box>
 						<pen lineWidth="1.0"/>
 						<leftPen lineWidth="0.0"/>
@@ -233,7 +237,7 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 					<text><![CDATA[Waiting Time :]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="-20" y="0" width="50" height="19" uuid="1d8096f6-713e-4c9c-a6f3-82c99bf59a9b">
+					<reportElement x="-20" y="0" width="30" height="19" uuid="1d8096f6-713e-4c9c-a6f3-82c99bf59a9b">
 						<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					</reportElement>
 					<box>
@@ -246,6 +250,26 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 						<font size="16" isBold="true"/>
 					</textElement>
 				</textField>
+				<staticText>
+					<reportElement x="450" y="40" width="60" height="20" uuid="a0f0b070-ab8e-4d80-8a05-598fefb69d87"/>
+					<box>
+						<bottomPen lineWidth="0.5" lineStyle="Dashed"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[BayTime]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="510" y="40" width="60" height="20" uuid="48cf5994-f924-421f-b687-89e6c8b4567b"/>
+					<box>
+						<bottomPen lineWidth="0.5" lineStyle="Dashed"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Time Diff]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
@@ -358,7 +382,7 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 		<band height="20" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement x="90" y="2" width="102" height="15" uuid="84355826-fb9a-4a83-8e5a-6ca0681ef417">
+				<reportElement x="52" y="2" width="100" height="15" uuid="84355826-fb9a-4a83-8e5a-6ca0681ef417">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
@@ -366,21 +390,35 @@ order by m_vehicle.vehicle_no,t_vehicle_assignment.in_time,m_bay.index_no]]>
 				<textFieldExpression><![CDATA[$F{bay_name}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy-MM-dd h:mm:ss a">
-				<reportElement x="192" y="2" width="130" height="15" uuid="1e6805ef-56cb-435b-aadf-93f4e00775df"/>
+				<reportElement x="152" y="2" width="118" height="15" uuid="1e6805ef-56cb-435b-aadf-93f4e00775df"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{in_time}]]></textFieldExpression>
 			</textField>
 			<textField pattern="yyyy-MM-dd h:mm:ss a">
-				<reportElement x="322" y="2" width="130" height="15" uuid="36e4167a-b1ec-4878-9645-e6f00dd7c1fb">
+				<reportElement x="270" y="2" width="120" height="15" uuid="36e4167a-b1ec-4878-9645-e6f00dd7c1fb">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{out_time}==null?"Pending":$F{out_time}]]></textFieldExpression>
 			</textField>
 			<textField pattern="">
-				<reportElement x="452" y="2" width="100" height="15" uuid="3c9749bb-6bda-4f36-a400-49a987c240fc"/>
+				<reportElement x="390" y="2" width="60" height="15" uuid="3c9749bb-6bda-4f36-a400-49a987c240fc"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{spend_time}==null?"Pending":$F{spend_time}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="2" width="60" height="15" uuid="d7629247-60aa-43eb-8f4e-9b5cb54eaafd">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{time_period}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="510" y="2" width="60" height="15" uuid="ec85ea02-b102-42db-82bf-1d302196c75f">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{timediff}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

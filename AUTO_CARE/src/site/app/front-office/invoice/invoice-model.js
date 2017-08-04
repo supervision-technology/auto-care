@@ -215,7 +215,11 @@
                         var that = this;
                         invoiceService.pendingJobCards()
                                 .success(function (data) {
-                                    that.pendingJobCards = data;
+                                    that.pendingJobCards = [];
+                                    angular.forEach(data, function (job) {
+                                        job.vehicleNo = that.vehicle(job.vehicle).vehicleNo;
+                                        that.pendingJobCards.push(job);
+                                    });
                                 });
                     },
                     saveInvoice: function () {

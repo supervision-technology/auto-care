@@ -2,8 +2,11 @@
     <div class="tile-list-title" style="margin-right: 5px;">
         <h4>VEHICLE</h4>
     </div>
+    <div style="margin-right: 5px;">
+        <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
+    </div>
     <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 40px);" ng-class="{'disabled-tiles': ui.mode !== 'NEW'}" ng-disabled="ui.mode !== 'NEW'">
-        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in invoiceModel.pendingJobCards" ng-class="{'select-default-row':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in invoiceModel.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'select-default-row':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
             <span>
                 <img src="/img/01.png"/>  
                 <label>
@@ -302,8 +305,8 @@
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.saveInvoice()"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
 <script type="text/ng-template" id="invoice_popup.html"> 
- <div class="col-lg-12">
+    <div class="col-lg-12">
     <object data="{{content}}" class="smart-scroll-y" type="application/pdf" style="width:100%;height: calc(100vh - 69px);">
     </object>
- </div>
+    </div>
 </script>

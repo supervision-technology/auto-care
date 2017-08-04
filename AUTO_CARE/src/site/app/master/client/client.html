@@ -33,6 +33,14 @@
                             <td><label>Address 03 :</label></td>
                             <td><input class="form-control" ng-model="model.client.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
                         </tr>
+                        <tr>
+                            <td><label>Customer Type :</label></td>
+                            <td><input class="form-control" ng-model="model.client.customerType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"
+                                       uib-typeahead="customerType.indexNo as (customerType.indexNo+ ' - ' +customerType.name) for customerType in model.customerTypeList |filter:$viewValue |limitTo:10" 
+                                       typeahead-input-formatter="ui.customerTypeLable(model.client.customerType)"
+
+                                       ></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -46,7 +54,8 @@
                 </div>
                 <table class="table-rounded">
                     <col style="width: 15%">
-                    <col style="width: 40%">
+                    <col style="width: 20%">
+                    <col style="width: 20%">
                     <col style="width: 15%">
                     <col style="width: 20%">
                     <col style="width: 10%">
@@ -54,7 +63,9 @@
                         <tr>
                             <th> <label>#</label> </th>
                             <th> <label>Name</label></th>
+                            <th> <label>Mobile</label></th>
                             <th> <label>Nic</label></th>
+                            <th> <label>Customer Type</label></th>
                             <th>&nbsp;</th>
                         </tr>
                     </thead>
@@ -62,7 +73,8 @@
                 <div class="smart-scroll-y" style="height: calc(100vh - 128px);">
                     <table class="table-rounded">
                         <col style="width: 15%">
-                        <col style="width: 40%">
+                        <col style="width: 20%">
+                        <col style="width: 20%">
                         <col style="width: 15%">
                         <col style="width: 20%">
                         <col style="width: 10%">
@@ -70,10 +82,10 @@
                             <tr ng-repeat="client in model.clientList| filter:model.search.name | orderBy:'indexNo'">
                                 <td><label class="label label-default">{{client.indexNo|fixedLength:5}}</label></td>
                                 <td>{{client.name}}</td>
-                                <td>{{client.nic}}</td>
-                                <td ng-show="client.type === 'REGISTER'"><label class="label label-primary">REGISTER</label></td>
-                                <td ng-show="client.type === 'NORMAL'"><label class="label label-success">NORMAL</label></td>
-                                <td ng-show="client.type === 'NEW'"><label class="label label-danger">NEW</label></td>
+                                <td>{{client.mobile}}</td>
+                                <td>{{client.nic==null?'- - -':client.nic}}</td>
+                                <td><label class="label label-primary">{{ui.customerTypeLable(client.customerType)}}</label></td>
+                                
                                 <td class="text-right" style="padding-left: 5px;">
                                     <a class="btn btn-primary" ng-click="ui.edit(client, $index)"><span class="glyphicon glyphicon-edit"></span></a>
                                     <a class="btn btn-danger" ng-click="http.deleteClient(client.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>

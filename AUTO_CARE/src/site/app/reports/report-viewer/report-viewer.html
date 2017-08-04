@@ -43,7 +43,8 @@
 
                             <table class="control-table">
                                 <col style="width: 35%"/>
-                                <col style="width: 65%"/>
+                                <col style="width: 60%"/>
+                                <col style="width: 5%"/>
 
                                 <tbody>                   
                                     <tr ng-show="ui.isParameterAvailable('INVOICE_NO')">
@@ -52,16 +53,19 @@
                                     </tr>
                                     <tr ng-show="ui.isParameterAvailable('FROM_DATE')">
                                         <td><label class="control-label">FROM DATE</label></td>
-                                        <td><input smart-input="date" class="form-control" id="status" ng-model="model.currentReport.parameterValues.FROM_DATE" ></td>
+                                        <td>
+                                            <input type="date" class="form-control" id="status" ng-model="model.currentReport.parameterValues.FROM_DATE " >
+                                        </td>
                                     </tr>
                                     <tr ng-show="ui.isParameterAvailable('TO_DATE')">
                                         <td><label class="control-label">TO DATE</label></td>
-                                        <td><input smart-input="date" class="form-control" id="status" ng-model="model.currentReport.parameterValues.TO_DATE" ></td>
+                                        <td>
+                                            <input type="date" class="form-control" id="status" ng-model="model.currentReport.parameterValues.TO_DATE " >
+                                        </td>
                                     </tr>
                                     <tr ng-show="ui.isParameterAvailable('ITEM')">
                                         <td><label class="control-label">Item</label></td>
-                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.ITEM" 
-                                                   ></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.ITEM" ></td>
                                     </tr>
                                     <tr ng-show="ui.isParameterAvailable('SUPPLIER')">
                                         <td><label class="control-label">SUPPLIER</label></td>
