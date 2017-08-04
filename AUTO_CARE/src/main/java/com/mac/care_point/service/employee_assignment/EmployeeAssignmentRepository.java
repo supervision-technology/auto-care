@@ -33,6 +33,18 @@ public interface EmployeeAssignmentRepository extends JpaRepository<TEmployeeAss
             + "from \n"
             + "	t_employee_assingment a\n"
             + "WHERE a.bay=:bay and a.date=:date and a.`status`='PENDING'", nativeQuery = true)
-    public List<TEmployeeAssingment> findByBayAssignEmployee(@Param("bay")Integer bay, @Param("date")String date);
+    public List<TEmployeeAssingment> findByBayAssignEmployee(@Param("bay") Integer bay, @Param("date") String date);
+
+    @Query(value = "select\n"
+            + "	count(t_employee_assingment.index_no)\n"
+            + "from\n"
+            + "	t_employee_assingment,m_bay\n"
+            + "where \n"
+            + "	m_bay.index_no=t_employee_assingment.bay\n"
+            + "	and t_employee_assingment.bay=:bay \n"
+            + "	and t_employee_assingment.`status`=:status \n"
+            + "	and t_employee_assingment.date=:date\n"
+            + "	and m_bay.branch=:branch", nativeQuery = true)
+    public Integer checkEmployeAssign(@Param("bay") Integer bay, @Param("branch") Integer branch, @Param("date") String date, @Param("status") String status);
 
 }

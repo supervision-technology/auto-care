@@ -4,8 +4,11 @@
             <div class="tile-list-title" style="margin-right: 5px;">
                 <h4>VEHICLE</h4>
             </div>
+            <div style="margin-right: 5px;">
+                <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
+            </div>
             <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 80px);">
-                <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+                <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
                     <span>
                         <img src="/img/01.png"/>  
                         <label>

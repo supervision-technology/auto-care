@@ -6,6 +6,7 @@
 package com.mac.care_point.master.bay.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -98,12 +101,13 @@ public class Bay implements Serializable {
     private Integer employeeIsView;
     
     @Column(name = "time_period")
-    private String timePeriod;
+    @Temporal(TemporalType.TIME)
+    private Date timePeriod;
 
     public Bay() {
     }
 
-    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle, String color, Integer branch, Integer bayIsView, Integer employeeIsView, String timePeriod) {
+    public Bay(Integer indexNo, String name, int maxVehicle, int maxEmployee, int x, int y, int w, int h, String type, boolean assignEmployee, boolean assignVehicle, String color, Integer branch, Integer bayIsView, Integer employeeIsView, Date timePeriod) {
         this.indexNo = indexNo;
         this.name = name;
         this.maxVehicle = maxVehicle;
@@ -242,12 +246,13 @@ public class Bay implements Serializable {
         this.employeeIsView = employeeIsView;
     }
 
-    public String getTimePeriod() {
+    public Date getTimePeriod() {
         return timePeriod;
     }
 
-    public void setTimePeriod(String timePeriod) {
+    public void setTimePeriod(Date timePeriod) {
         this.timePeriod = timePeriod;
     }
-    
+
+      
 }

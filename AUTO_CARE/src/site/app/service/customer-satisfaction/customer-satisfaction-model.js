@@ -25,7 +25,10 @@
                         customerSatisfactionService.finishedJobCards()
                                 .success(function (data) {
                                     that.finishedJobCards = [];
-                                    that.finishedJobCards = data;
+                                    angular.forEach(data, function (job) {
+                                        job.vehicleNo = that.vehicleData(job.vehicle).vehicleNo;
+                                        that.finishedJobCards.push(job);
+                                    });
                                 });
                     },
                     vehicleData: function (indexNo) {

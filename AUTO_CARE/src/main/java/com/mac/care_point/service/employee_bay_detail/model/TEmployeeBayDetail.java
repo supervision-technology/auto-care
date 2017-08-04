@@ -30,15 +30,15 @@ public class TEmployeeBayDetail implements Serializable {
     @Basic(optional = false)
     @Column(name = "index_no")
     private Integer indexNo;
-    
+
     @Basic(optional = false)
     @Column(name = "job_card")
     private Integer jobCard;
-    
+
     @Basic(optional = false)
     @Column(name = "bay")
     private Integer bay;
-    
+
     @Basic(optional = false)
     @Column(name = "employee")
     private Integer employee;
@@ -65,10 +65,13 @@ public class TEmployeeBayDetail implements Serializable {
     @Column(name = "type_desc")
     private String typeDesc;
 
+    @Column(name = "branch")
+    private Integer branch;
+
     public TEmployeeBayDetail() {
     }
 
-    public TEmployeeBayDetail(Integer indexNo, Integer jobCard, Integer bay, Integer employee, Date date, String status, String inTime, String outTime, String type, String typeDesc) {
+    public TEmployeeBayDetail(Integer indexNo, Integer jobCard, Integer bay, Integer employee, Date date, String status, String inTime, String outTime, String type, String typeDesc, Integer branch) {
         this.indexNo = indexNo;
         this.jobCard = jobCard;
         this.bay = bay;
@@ -79,6 +82,7 @@ public class TEmployeeBayDetail implements Serializable {
         this.outTime = outTime;
         this.type = type;
         this.typeDesc = typeDesc;
+        this.branch = branch;
     }
 
     public Integer getIndexNo() {
@@ -161,7 +165,13 @@ public class TEmployeeBayDetail implements Serializable {
         this.typeDesc = typeDesc;
     }
 
-   
-  
+    public Integer getBranch() {
+        return branch;
+    }
+
+    public void setBranch(Integer branch) {
+        this.branch = branch;
+    }
+
 
 }

@@ -4,7 +4,7 @@
                 function reportViewer() {
                     this.constructor();
                 }
-
+                
                 reportViewer.prototype = {
 
                     bayList: [],
@@ -15,6 +15,7 @@
                     branchList: [],
                     itemTypeList: [],
                     itemCateoryList: [],
+                    employeeList: [],
 
                     constructor: function () {
                         var that = this;
@@ -46,6 +47,10 @@
                         ReportViewerService.getItemCateoryList()
                                 .success(function (data) {
                                     that.itemCateoryList = data;
+                                });
+                        ReportViewerService.getEmployeeList()
+                                .success(function (data) {
+                                    that.employeeList = data;
                                 });
                         this.itemTypeList = [
                             {indexNo: 1, name: 'STOCK'},
@@ -127,6 +132,16 @@
                         angular.forEach(this.itemCateoryList, function (itemCateory) {
                             if (itemCateory.indexNo === parseInt(id)) {
                                 lable = itemCateory.indexNo + " - " + itemCateory.name;
+                                return;
+                            }
+                        });
+                        return lable;
+                    }
+                    , employeeLable: function (id) {
+                        var lable = '';
+                        angular.forEach(this.employeeList, function (employee) {
+                            if (employee.indexNo === parseInt(id)) {
+                                lable = employee.indexNo + " - " + employee.name;
                                 return;
                             }
                         });

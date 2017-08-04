@@ -13,6 +13,7 @@ import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.employee_assignment.EmployeeAssignmentRepository;
 import com.mac.care_point.service.employee_assignment.model.TEmployeeAssingment;
+import com.mac.care_point.service.employee_bay_detail.TEmployeeBayRepository;
 import com.mac.care_point.service.employee_bay_detail.TEmployeeBayService;
 import com.mac.care_point.service.employee_bay_detail.model.TEmployeeBayDetail;
 import com.mac.care_point.service.job_card.JobCardRepository;
@@ -40,13 +41,15 @@ public class VehicleAssignmentService {
     private JobCardRepository jobCardRepository;
 
     @Autowired
-    private TEmployeeBayService employeeBayService;
+    private TEmployeeBayRepository employeeBayRepository;
 
     @Autowired
     private EmployeeAssignmentRepository employeeAssignmentRepository;
 
     @Autowired
     private BayRepository bayRepository;
+
+    private final Integer branch = 1;
 
     public List<TVehicleAssignment> findAll() {
         return vehicleAssignmentRepository.findAll();
@@ -58,8 +61,7 @@ public class VehicleAssignmentService {
         jobCardRepository.save(findOne);
         List<TVehicleAssignment> updatedObjects = vehicleAssignmentRepository.findTop1ByJobCardOrderByInTimeDesc(vehicleAssignment.getJobCard());
 
-        System.out.println(vehicleAssignment.getBay());
-        System.out.println(vehicleAssignment.getJobCard());
+        updateEmployeeBayDetails(vehicleAssignment);
 
         saveEmployeeBayDetails(vehicleAssignment);
 
@@ -78,10 +80,6 @@ public class VehicleAssignmentService {
 
     public void deleteDetail(Integer indexNo) {
         vehicleAssignmentRepository.delete(indexNo);
-    }
-
-    public Integer getBayAssignVehicleCount(Integer bay, Integer branch) {
-        return vehicleAssignmentRepository.getBayAssignVehicleCount(branch, Constant.FINISHE_STATUS, bay);
     }
 
     public List<TVehicleAssignment> findByJobCard(Integer indexNo) {
@@ -118,18 +116,38 @@ public class VehicleAssignmentService {
             employeeBayDetail.setStatus("PENDING");
             employeeBayDetail.setType(null);
             employeeBayDetail.setTypeDesc(null);
+            employeeBayDetail.setBranch(branch);
 
             List<TEmployeeAssingment> employeeList = employeeAssignmentRepository.findByBayAssignEmployee(vehicleAssignment.getBay(), new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             System.out.println(vehicleAssignment.getBay());
             System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             System.out.println(new Date());
-            
+
             for (TEmployeeAssingment employee : employeeList) {
                 employeeBayDetail.setEmployee(employee.getEmployee());
-                employeeBayService.save(employeeBayDetail);
+                employeeBayRepository.save(employeeBayDetail);
             }
         } else {
             //nothing to do
         }
+    }
+
+    boolean checkEmployeAssign(Integer bay, Integer branch, Date date) {
+        Integer empCount = employeeAssignmentRepository.checkEmployeAssign(bay, branch, new SimpleDateFormat("yyyy-MM-dd").format(date), Constant.PENDING_STATUS);
+        System.out.println(bay);
+        System.out.println(branch);
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(date));
+        System.out.println(Constant.PENDING_STATUS);
+        return empCount != 0;
+    }
+
+    private void updateEmployeeBayDetails(TVehicleAssignment vehicleAssignment) {
+        List<TEmployeeBayDetail> list = employeeBayRepository.findByJobCardAndStatusAndBranch(vehicleAssignment.getJobCard(), Constant.PENDING_STATUS, branch);
+        for (TEmployeeBayDetail employeeBay : list) {
+            employeeBay.setStatus(Constant.FINISHE_STATUS);
+            employeeBay.setOutTime(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date()));
+            employeeBayRepository.save(employeeBay);
+        }
+
     }
 }

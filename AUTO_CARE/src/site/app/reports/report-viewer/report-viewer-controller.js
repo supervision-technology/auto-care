@@ -1,15 +1,20 @@
 (function () {
     angular.module("appModule")
-            .controller("ReportViewerController", function ($scope, $sce,reportViewerModel, ReportViewerService) {
+            .controller("ReportViewerController", function ($scope, $filter, $sce, reportViewerModel, ReportViewerService) {
                 $scope.model = {};
                 $scope.newModel = new reportViewerModel();
                 $scope.model.currentReportGroup = {};
                 $scope.model.currentReport = {};
                 $scope.model.currentReport.parameterValues = {};
-                
+
                 $scope.ui = {};
 
                 $scope.report = "#";
+
+//                $scope.model.currentReport.parameterValues.FROM_DATE = new Date();
+//                $scope.model.currentReport.parameterValues.TO_DATE = new Date();
+                $scope.model.currentReport.parameterValues.FROM_DATE = $filter('date')(new Date(), 'dd-MM-yyyy');
+                $scope.model.currentReport.parameterValues.TO_DATE = $filter('date')(new Date(), 'dd-MM-yyyy');
 
                 $scope.ui.selectReportGroup = function (reportGroup) {
                     $scope.model.currentReportGroup = reportGroup;
@@ -52,7 +57,7 @@
 
                     return $scope.model.currentReport.parameters.indexOf(param) >= 0;
                 };
-                
+
 
                 $scope.init = function () {
                     ReportViewerService.listReports()

@@ -30,7 +30,10 @@
                         var that = this;
                         requestItemService.pendingJobCards()
                                 .success(function (data) {
-                                    that.pendingJobCards = data;
+                                    angular.forEach(data, function (job) {
+                                        job.vehicleNo = that.vehicleData(job.vehicle).vehicleNo;
+                                        that.pendingJobCards.push(job);
+                                    });
                                 });
 
                         requestItemService.loadBay()
@@ -102,7 +105,7 @@
                                 });
                         return defer.promise;
                     },
-                    
+
                     findItemsForStockLeger: function () {
                         var that = this;
                         var defer = $q;

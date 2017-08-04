@@ -28,7 +28,10 @@
 
                         finalCheckListService.pendingJobCards()
                                 .success(function (data) {
-                                    that.pendingJobCards = data;
+                                    angular.forEach(data, function (job) {
+                                        job.vehicleNo = that.vehicleData(job.vehicle).vehicleNo;
+                                        that.pendingJobCards.push(job);
+                                    });
                                 });
 
                         finalCheckListService.loadItems()

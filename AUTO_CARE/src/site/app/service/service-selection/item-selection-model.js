@@ -17,7 +17,7 @@
                     itemUnits: [],
                     category: [],
                     filterQuickSeacrhItems: [],
-                    filterQuickSeacrhStockItems:[],
+                    filterQuickSeacrhStockItems: [],
                     packageItemList: [],
                     vehicleAttenctionsCategoryList: [],
                     vehicleAttenctionsList: [],
@@ -51,7 +51,12 @@
 
                         ItemSelectionService.pendingJobCards()
                                 .success(function (data) {
-                                    that.pendingJobCards = data;
+                                    angular.forEach(data, function (job) {
+                                        console.log(job.vehicle);
+                                        job.vehicleNo = that.vehicleData(job.vehicle).vehicleNo;
+                                        that.pendingJobCards.push(job);
+                                    });
+                                    console.log(that.pendingJobCards);
                                 });
 
                         ItemSelectionService.loadCategory()
@@ -78,7 +83,22 @@
                                 .success(function (data) {
                                     that.vehicleAttenctionsList = data;
                                 });
+//                        that.pendingJobCardSetVehicleNo();
                     },
+//                    pendingJobCardSetVehicleNo: function () {
+//                        var that = this;
+//                        var newPendingList = [];
+//                        console.log(that.pendingJobCards);
+//                        console.log(this.pendingJobCards);
+//                        angular.forEach(that.pendingJobCards, function (job) {
+//                            job.vehicleNo = that.vehicleData(job.vehicle).vehicleNo;
+//                            newPendingList.push(job);
+//                        });
+//                        that.pendingJobCards = [];
+//                        that.pendingJobCards = newPendingList;
+//
+//                    }
+//                    ,
                     clear: function () {
                         this.data = ItemSelectionModelFactory.newData();
                         this.jobCardData = ItemSelectionModelFactory.newJobCardData();

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
+import java.util.Date;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /**
@@ -45,9 +46,9 @@ public class TVehicleAssignmentController {
         return vehicleAssignmentService.jobFinished(vehicleAssignment);
     }
 
-    @RequestMapping(value = "/load_not_finished_vehicle_assignment/{bay}", method = RequestMethod.GET)
-    public Integer getBayAssignVehicleCount(@PathVariable Integer bay) {
-        return vehicleAssignmentService.getBayAssignVehicleCount(bay, branch);
+    @RequestMapping(value = "/check-employe-assign/{bay}", method = RequestMethod.GET)
+    public boolean checkEmployeAssign(@PathVariable Integer bay) {
+        return vehicleAssignmentService.checkEmployeAssign(bay, branch,new Date());
     }
 
     @RequestMapping(value = "/delete-detail/{indexNo}", method = RequestMethod.DELETE)

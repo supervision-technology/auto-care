@@ -18,6 +18,17 @@
                                 callback(data);
                             });
                 };
+                factory.getCustomerTypes = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/service/zmaster/customer-type";
+
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                callback(data);
+                            });
+                };
 
                 factory.saveClientFactory = function (summary, callback, errorCallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/client/insert-client";
@@ -146,6 +157,16 @@
                         Notification.error("Please input detail");
                     }
                 };
+                $scope.ui.customerTypeLable=function(customerType){
+                    var lable = "";
+                    angular.forEach($scope.model.customerTypeList, function (value) {
+                        if (value.indexNo === customerType) {
+                            lable = value.indexNo+" - "+value.name;
+                            return;
+                        }
+                    });
+                    return lable;
+                };
 
                 //focus
                 $scope.ui.focus = function () {
@@ -263,8 +284,13 @@
 
                     //reset mdel
                     $scope.model.reset();
+                    
                     clientFactory.lordClientFactory(function (data) {
                         $scope.model.clientList = data;
+                    });
+                   
+                    clientFactory.getCustomerTypes(function (data) {
+                        $scope.model.customerTypeList = data;
                     });
                 };
 
