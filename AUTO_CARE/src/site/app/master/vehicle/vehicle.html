@@ -5,20 +5,27 @@
 
 <div class="index-content-body">
     <div class="col-xs-4 background-light">
-        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+        <div style="display: flex; flex-flow: column; height: calc(100vh - 2px);">
 
-            <div class="col-xs-12" style="margin-top: 25px;">
+            <div class="col-xs-12 smart-scroll-y" style="margin-top: 25px;">
                 <label>Client </label>
                 <input id="clientText" type="text" class="form-control" ng-model="model.vehicle.client" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="client.indexNo as (client.indexNo + ' - ' + client.name) for client in model.clientList |filter:$viewValue|limitTo:10" typeahead-input-formatter="clientLable($model)" />
                 <label>Vehicle No</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.vehicleNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Vehicle Type</label>
-                <input type="text" class="form-control" ng-model="model.vehicle.vehicleType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="vehicleType.indexNo as (vehicleType.indexNo + ' - ' +vehicleType.type) for vehicleType in model.vehicleTypeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="vehicleTypeLabel($model)"/>
+                <input type="text" class="form-control" ng-model="model.vehicle.vehicleType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="vehicleType.indexNo as (vehicleType.indexNo + ' - ' +vehicleType.model) for vehicleType in model.vehicleTypeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="vehicleTypeLabel($model)"/>
+                <label>Price Category</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory.indexNo as (priceCategory.indexNo + ' - ' + priceCategory.name) for priceCategory in model.priceCategoryList | filter:$viewValue|limitTo:10" typeahead-input-formatter = "priceCategoryLabel($model)"/>        
+                <label>Type</label>
+                <select class="form-control" ng-model="model.vehicle.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
+                    <option value="REGISTERED"> REGISTERED </option>
+                    <option value="NORMAL" > NORMAL </option>
+                </select>
                 <label>Year</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.year" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Engine No</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.engineNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
-                <label>Chasis No</label>
+                <label>Chassis No</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.chasisNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Insurance Expiry Date</label>
                 <input smart-input='date' class="form-control" ng-model="model.vehicle.insuranceExpiryDate" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
@@ -28,22 +35,15 @@
                 <input type="text" class="form-control" ng-model="model.vehicle.lastMilage" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
                 <label>Next Milage</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.nextMilage" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
-                <label>Colour</label>
+                <label>Color</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.colour" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
-                <label>Price Category</label>
-                <input type="text" class="form-control" ng-model="model.vehicle.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory.indexNo as (priceCategory.indexNo + ' - ' + priceCategory.name) for priceCategory in model.priceCategoryList | filter:$viewValue|limitTo:10" typeahead-input-formatter = "priceCategoryLabel($model)"/>        
-                <label>Type</label>
-                <select class="form-control" ng-model="model.vehicle.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'">
-                    <option value="REGISTERED"> REGISTERED </option>
-                    <option value="NORMAL" > NORMAL </option>
-                </select>
             </div>
         </div>
     </div>
 
     <div class="col-xs-8 background-dark">
         <div class="row col-xs-5">
-            <input type="text" class="search-input" ng-model="model.vehicle.name" placeholder="search">
+            <input type="text" class="search-input" ng-model="model.vehicle.search" placeholder="search">
         </div>
         <table class="table-rounded">
             <col style="width: 20%">
@@ -56,9 +56,9 @@
                 <tr>
                     <th>Client</th>
                     <th>Vehicle</th>
-                    <th>Eng No</th>
+                    <th>Type</th>
                     <th>Last Milage</th>
-                    <th>Next Milage</th>
+                    <th>P.Category</th>
                     <th>&nbsp;</th>
                 </tr>
             </thead>
@@ -72,12 +72,12 @@
                 <col style="width: 15%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr ng-repeat="vehicle in model.vehicleList|filter :{name:model.search.name}">
+                    <tr ng-repeat="vehicle in model.vehicleList|filter :model.vehicle.search">
                         <td>{{clientData(vehicle.client).name}}</td>
                         <td>{{vehicle.vehicleNo}}</td>
-                        <td>{{vehicle.engineNo}}</td>
+                        <td>{{vehicle.type}}</td>
                         <td>{{vehicle.lastMilage}}</td>
-                        <td>{{vehicle.nextMilage}}</td>
+                        <td>{{priceCategoryLabel(vehicle.priceCategory)}}</td>
                         <td class="text-right" style="padding-left: 5px;">
                             <a class="btn btn-primary" ng-click="ui.edit(vehicle, $index)"><span class="glyphicon glyphicon-edit"></span></a>
                             <a class="btn btn-danger" ng-click="http.deleteVehicle(vehicle.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>

@@ -25,7 +25,7 @@
                         "attenctions": false,
                         "invoice": false,
                         "defaultFinalCheck": false,
-                        "rate": 3,
+                        "rate": "12",
                         "rateReason": null
 
                     };

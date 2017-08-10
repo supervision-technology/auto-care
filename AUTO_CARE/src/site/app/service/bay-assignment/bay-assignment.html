@@ -20,17 +20,11 @@
                         <div ng-repeat="job in model.jobList" ng-if="job.bay==bay.indexNo" 
                              ng-drag="{{dragableMode}}" ng-drag-data="job" class="tile tile-100-65 col-lg-6 nopadding" ng-click="ui.selectJob(job)" 
                              style="border-style: groove;" ng-class="{'selected':job.indexNo == model.selectJob.indexNo}">
-                            <span uib-dropdown style="display: block;text-align: center;">
+                            <span  style="display: block;text-align: center;">
                                 <i  id="simple-dropdown" uib-dropdown-toggle>
                                     <img src="../../../img/05.png"/>
                                     <h5 class="nopadding"><b class="text-default">{{getVehicle(job.vehicle).vehicleNo}}</b></h5>
                                 </i>
-                                <ul class="dropdown-menu" style="margin-left: -17px;min-width: 130px !important;"
-                                    uib-dropdown-menu aria-labelledby="simple-dropdown" >
-                                    <li ng-click="doJobFinish(job)">
-                                        <a>DO JOB FINISH</a>
-                                    </li>
-                                </ul>
                             </span>
                         </div>
                     </div>
