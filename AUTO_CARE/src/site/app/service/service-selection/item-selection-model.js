@@ -51,12 +51,11 @@
 
                         ItemSelectionService.pendingJobCards()
                                 .success(function (data) {
+                                    that.pendingJobCards=[];
                                     angular.forEach(data, function (job) {
-                                        console.log(job.vehicle);
                                         job.vehicleNo = that.vehicleData(job.vehicle).vehicleNo;
                                         that.pendingJobCards.push(job);
                                     });
-                                    console.log(that.pendingJobCards);
                                 });
 
                         ItemSelectionService.loadCategory()
