@@ -92,6 +92,7 @@
                 $scope.ui.mode = null;
 
                 $scope.model.vehicle = [];
+                $scope.model.vehicleList = [];
 
 
                 //----------- data models ------------------
@@ -166,14 +167,16 @@
                 $scope.clientData = function (indexNo) {
                     var client = "";
                     angular.forEach($scope.model.clientList, function (value) {
-                        if (value.indexNo === indexNo) {
+                        console.log(indexNo);
+                        console.log(value.indexNo+" - "+value.name);
+                        if (value.indexNo === parseInt(indexNo)) {
                             client = value;
                             return;
                         }
                     });
                     return client;
                 };
-                
+
                 $scope.clientLable = function (indexNo) {
                     var client;
                     angular.forEach($scope.model.clientList, function (value) {
@@ -184,24 +187,24 @@
                     });
                     return client;
                 };
-                
-                $scope.vehicleTypeLabel = function (indexNo){
+
+                $scope.vehicleTypeLabel = function (indexNo) {
                     var vehicleType;
-                    angular.forEach($scope.model.vehicleTypeList, function (value){
+                    angular.forEach($scope.model.vehicleTypeList, function (value) {
                         if (value.indexNo === indexNo) {
-                            vehicleType = value.type;
-                            return ;
+                            vehicleType = value.indexNo+' - '+value.model;
+                            return;
                         }
                     });
                     return vehicleType;
                 };
-                
-                $scope.priceCategoryLabel = function (indexNo){
+
+                $scope.priceCategoryLabel = function (indexNo) {
                     var priceCategory;
-                    angular.forEach($scope.model.priceCategoryList, function (value){
+                    angular.forEach($scope.model.priceCategoryList, function (value) {
                         if (value.indexNo === indexNo) {
                             priceCategory = value.name;
-                            return ;
+                            return;
                         }
                     });
                     return priceCategory;
@@ -227,7 +230,12 @@
                     $scope.model.reset();
                     //load SubItem
                     vehicleFactory.loadVehicle(function (data) {
-                        $scope.model.vehicleList = data;
+                        $scope.model.vehicleList = [];
+                        angular.forEach(data, function (vehicle) {
+                            vehicle.clientName = $scope.clientData(vehicle.client).name;
+                            $scope.model.vehicleList.push(vehicle);
+
+                        });
                     });
                     vehicleFactory.lordClient(function (data) {
                         $scope.model.clientList = data;

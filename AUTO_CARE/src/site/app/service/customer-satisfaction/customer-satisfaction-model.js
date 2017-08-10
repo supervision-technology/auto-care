@@ -51,6 +51,7 @@
                         customerSatisfactionService.save(that.data)
                                 .success(function (data) {
                                     that.reset();
+                                    this.finishedJobCard();
                                     defer.resolve();
                                 })
                                 .error(function () {
@@ -59,7 +60,7 @@
                         return defer.promise;
 
                     },
-                    reset:function (){
+                    reset: function () {
                         this.data = customerSatisfactionModelFactory.customerSatisfactionData();
                     }
                 };

@@ -134,10 +134,6 @@ public class VehicleAssignmentService {
 
     boolean checkEmployeAssign(Integer bay, Integer branch, Date date) {
         Integer empCount = employeeAssignmentRepository.checkEmployeAssign(bay, branch, new SimpleDateFormat("yyyy-MM-dd").format(date), Constant.PENDING_STATUS);
-        System.out.println(bay);
-        System.out.println(branch);
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(date));
-        System.out.println(Constant.PENDING_STATUS);
         return empCount != 0;
     }
 
