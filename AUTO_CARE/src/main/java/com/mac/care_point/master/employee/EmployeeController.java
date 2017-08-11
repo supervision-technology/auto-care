@@ -21,12 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin
 @RequestMapping("/api/care-point/master/employee")
 public class EmployeeController {
-
+    
+    final String employeeType="worker";
+    
     @Autowired
     private EmployeeService employeeService;
 
     @RequestMapping(method = RequestMethod.GET)
     public List<Employee> findAll() {
         return employeeService.findAll();
+    }
+    @RequestMapping(value = "/worker",method = RequestMethod.GET)
+    public List<Employee> findByType() {
+        return employeeService.findByType(employeeType);
     }
 }

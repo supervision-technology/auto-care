@@ -59,7 +59,7 @@
                 <col style="width: 15%">
                 <col style="width: 10%">
                 <tbody>
-                    <tr  ng-repeat="item in model.reOrderLevelList|filter:{branch:model.data.branch===null?'':model.data.branch}|filter:{item:model.data.item===null?'':model.data.item}">                      
+                    <tr ng-repeat="item in model.reOrderLevelList|filter:{branch:model.data.branch===null?'':model.data.branch}|filter:{item:model.data.item===null?'':model.data.item }">                      
                         <td>{{item.indexNo}}</td>
                         <td>{{model.itemLabel(item.item)}}</td>
                         <td>{{model.branchLabel(item.branch)}}</td>
