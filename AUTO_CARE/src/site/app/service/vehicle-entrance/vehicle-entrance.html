@@ -38,13 +38,23 @@
             </div>
             <div class="form-group col-xs-12">
                 <div class="row">
-                    <div class="col-xs-4">
-                        <input ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" maxlength="10" placeholder="MOBILE NO.">
+                    <div class="col-xs-2">
+                        <h3>Mobile No</h3>
+                        <input type="number" ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" maxlength="10" placeholder="MOBILE NO.">
+                    </div>
+                    <div class="col-xs-1">
+                        <h3>Resident</h3>
+                        <select style="padding-left: 1px;" class="form-control input-lg" ng-disabled="ui.clientDisabled" ng-model="model.clientData.resident">
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Miss">Miss</option>
+                        </select>
                     </div>
                     <div class="col-xs-5">
+                        <h3 style="padding-left: 10px">Client Name</h3>
                         <input type="text" ng-model="model.clientData.name" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="NAME">
                     </div>
-                    <div class="col-xs-3 text-bold">
+                    <div class="col-xs-3 text-bold" style="padding-top: 50px">
                         <button class="btn btn-primary" style="width: 50px; height: 50px;"  ng-click="ui.edit()">EDIT</button>
                         <button class="btn btn-primary" style="width: 50px; height: 50px"  ng-click="ui.new()">NEW</button>
                         <button class="btn btn-success" style="width: 80px; height: 50px" ng-click="ui.clientAssingNext()">NEXT</button>
@@ -102,7 +112,7 @@
                                 <input type="text" class="form-control input-lg"  ng-model="model.vehicleData.chasisNo" ng-disabled="ui.vehicleDisabled" ><br>
 
                                 <label style="font-size: 20px">Current Milage :</label>
-                                <input type="text" class="form-control input-lg" ng-model="model.vehicleData.lastMilage" ><br>
+                                <input type="number" class="form-control input-lg" ng-model="model.vehicleData.lastMilage" ><br>
                                 <table class="square-table">
                                     <col style="width: 50%;"/>
                                     <col style="width: 50%;"/>
@@ -136,6 +146,22 @@
                                                      range-default-value="0"
                                                      range-decimal-precision="1"				
                                                      range-model="model.jobcard.carepetOther"
+                                                     accept-decimal="false"
+                                                     name-of-field="rangeFieldName"
+                                                     id-of-field="rangeFieldId">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr class="text-bold">
+                                            <td>3M CARPET</td>
+                                            <td>
+                                                <div range-spinner
+                                                     range-min="0" 
+                                                     range-step="1"  
+                                                     range-max="30" 
+                                                     range-default-value="0"
+                                                     range-decimal-precision="1"				
+                                                     range-model="model.jobcard.carepet3M"
                                                      accept-decimal="false"
                                                      name-of-field="rangeFieldName"
                                                      id-of-field="rangeFieldId">
@@ -212,36 +238,76 @@
                 </uib-tab>
             </uib-tabset>
         </div>
-        <div class="col-xs-8 col-xs-offset-2 background-light" ng-show="ui.changeUi === 'ui4'">
-            <div class="form-group col-xs-12">
-                <div class="col-xs-12">
-                    <h1 class="text-center">Vehicle No : {{vehicleNo}}</h1>
+        <div class="screen col-xs-12 background-dark" style="position: absolute; height: 100vh;" ng-show="ui.changeUi === 'ui4'">
+            <div class="row smart-scroll-y" style="height: 100vh;">
+                <div class="image-tile" style="background-color:#DE4E71;" ng-show="ui.imageShowMode1 === 'NotAvalable'">
+                    <label class="image-tile-browse" for="file">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
+                    </label>
                 </div>
-                <div class="col-xs-12">
-                    <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px; border: solid;">
-                        <input ng-show="imagemodelX.length === 0" type="file"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/jpeg, image/png">
-                        <img src="{{imagemodelX[0]}}" id="tableBanner" style="width: 100%;">
-                    </div>
-                    <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px; border: solid;">
-                        <input ng-show="imagemodelX.length === 1" type="file" id="bannerImg"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/jpeg, image/png">
-                        <img src="{{imagemodelX[1]}}" style="width: 100%;">
-                    </div>
-                    <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px; border: solid;">
-                        <input ng-show="imagemodelX.length === 2" type="file" id="bannerImg"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/jpeg, image/png">
-                        <img src="{{imagemodelX[2]}}" style="width: 100%; height: 100%">
-                    </div>
-                    <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px; border: solid;">
-                        <input ng-show="imagemodelX.length === 3" type="file" id="bannerImg"  ng-model="imgSrc" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/jpeg, image/png">
-                        <img src="{{imagemodelX[3]}}" style="width: 100%; height: 100%">
-                    </div>
+                <div class="image-tile" style="background-color:#E9967A; height: 46vh; text-align: center;" ng-show="ui.imageShowMode1 === 'Avalable'" >
+                    <img src="{{imagemodelX[0]}}" id="tableBanner" style="width: 100%; height: 100%"> 
                 </div>
-                <div class="col-xs-12">
-                    <div class="col-xs-6 nopadding" style=" width: 350px; height: 250px;">
-                        <button  class="btn btn-success btn-lg" ng-click="ui.uploadForm();" >Next</button>
-                    </div>
+
+
+                <div class="image-tile" style="background-color: #FFD236;" ng-show="ui.imageShowMode2 === 'NotAvalable'">
+                    <label class="image-tile-browse" for="file">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
+
+                    </label>
                 </div>
-                <div id="res"></div>
-            </div>   
+                <div class="image-tile" style="background-color: #FFF8DC; height: 46vh; text-align: center;" ng-show="ui.imageShowMode2 === 'Avalable'" >
+                    <img src="{{imagemodelX[1]}}" id="tableBanner" style="width: 100%; height: 100%"> 
+                </div>
+
+
+                <div class="image-tile" style="background-color: #A5C43A;" ng-show="ui.imageShowMode3 === 'NotAvalable'">
+                    <label class="image-tile-browse" for="file">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
+                    </label>
+                </div>
+                <div class="image-tile" style="background-color: #00d9ff; height: 46vh; text-align: center;" ng-show="ui.imageShowMode3 === 'Avalable'" >
+                    <img src="{{imagemodelX[2]}}" id="tableBanner" style="width: 100%; height: 100%"> 
+                </div>
+
+
+                <div class="image-tile" style="background-color: #F28A2E;" ng-show="ui.imageShowMode4 === 'NotAvalable'">
+                    <label class="image-tile-browse" for="file">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
+                    </label>
+                </div>
+                <div class="image-tile" style="background-color: #00d9ff; height: 46vh; text-align: center;" ng-show="ui.imageShowMode4 === 'Avalable'" >
+                    <img src="{{imagemodelX[3]}}" id="tableBanner" style="width: 100%; height: 100%"> 
+                </div>
+                
+                <div class="image-tile" style="background-color: #009688;" ng-show="ui.imageShowMode5 === 'NotAvalable'">
+                    <label class="image-tile-browse" for="file">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
+                    </label>
+                </div>
+                <div class="image-tile" style="background-color: #009688; height: 46vh; text-align: center;" ng-show="ui.imageShowMode5 === 'Avalable'" >
+                    <img src="{{imagemodelX[4]}}" id="tableBanner" style="width: 100%; height: 100%"> 
+                </div>
+                
+                <div class="image-tile" style="background-color: #FFD236;" ng-show="ui.imageShowMode6 === 'NotAvalable'">
+                    <label class="image-tile-browse" for="file">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
+                    </label>
+                </div>
+                <div class="image-tile" style="background-color: #FFF8DC; height: 46vh; text-align: center;" ng-show="ui.imageShowMode6 === 'Avalable'" >
+                    <img src="{{imagemodelX[5]}}" id="tableBanner" style="width: 100%; height: 100%"> 
+                </div>
+                <div class="col-xs-6 nopadding" style=" width: 350px;">
+                    <button  class="btn btn-success btn-lg" ng-click="ui.backToSelectVehicleDetail();" >BACK</button>
+                    <button  class="btn btn-success btn-lg" ng-click="ui.uploadForm();" >Next</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

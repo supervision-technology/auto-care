@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.service.job_card;
 
-import com.mac.care_point.service.job_card.model.FileAbsalutePath;
 import com.mac.care_point.service.job_card.model.JobCard;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -55,6 +54,11 @@ public class JobCardController {
     @RequestMapping(value = "/get-job-card/{indexNo}", method = RequestMethod.GET)
     public JobCard getJobCard(@PathVariable Integer indexNo) {
         return jobCardService.getJobCard(indexNo);
+    }
+    
+    @RequestMapping(value = "/get-job-detail-by-vehicle-no/{VehicleNo}", method = RequestMethod.GET)
+    public List<JobCard> getJobCardByVehicleNo(@PathVariable String VehicleNo) {
+        return jobCardService.getJobCardByVehicleNo(VehicleNo);
     }
 
     @RequestMapping(value = "/get-invoice-pending-job-card", method = RequestMethod.GET)

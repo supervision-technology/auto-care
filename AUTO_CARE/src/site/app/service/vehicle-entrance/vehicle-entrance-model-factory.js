@@ -31,7 +31,8 @@
                         "mobile": null,
                         "branch": null,
                         "type": null,
-                        "nic": null
+                        "nic": null,
+                        "resident": null
                     };
                     return data;
                 };
@@ -60,7 +61,8 @@
                         "rate": 0,
                         "rateReason": null,
                         "carepetOriginal": 0,
-                        "carepetOther": 0
+                        "carepetOther": 0,
+                        "carepet3M": 0
                     };
                     return data;
                 };
