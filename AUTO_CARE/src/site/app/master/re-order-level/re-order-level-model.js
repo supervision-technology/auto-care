@@ -37,7 +37,12 @@
                 var that=this;
                  reOrderLevelService.loadReOrderLevel()
                         .success(function (data) {
-                            that.reOrderLevelList = data;
+                            that.reOrderLevelList = [];
+                            angular.forEach(data,function (reOrder){
+                                reOrder.itemName=that.itemLabel(reOrder.item);
+                                that.reOrderLevelList.push(reOrder);
+                            });
+                            
                         });
             },
 

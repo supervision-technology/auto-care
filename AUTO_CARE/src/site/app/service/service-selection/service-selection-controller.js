@@ -3,11 +3,13 @@
     angular.module("serviceSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, $sce, $uibModalStack, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("serviceSelectionController", function ($scope, $uibModalStack, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ItemSelectionModel();
 
                 $scope.ui = {};
                 $scope.ui.model = "CATEGORY";
+
+                $scope.tempItem = {};
 
                 $scope.selectVehicleType = null;
                 $scope.selectPackageItemPosition = null;
@@ -131,6 +133,32 @@
                     }
                 };
 
+                //------------- qty wise service ---------------
+
+                $scope.ui.viewQtyWiseServiceItem = function (item) {
+                    $scope.tempItem = item;
+                    $uibModal.open({
+                        animation: true,
+                        ariaLabelledBy: 'modal-title',
+                        ariaDescribedBy: 'modal-body',
+                        templateUrl: 'qty_wise_item_popup.html',
+                        scope: $scope,
+                        size: 'lg'
+                    });
+
+                };
+
+                $scope.ui.addQtyWiseServiceItem = function (item, qty) {
+                    ConfirmPane.successConfirm("Do you sure want to add item")
+                            .confirm(function () {
+                                $scope.model.addQtyWiseServiceItem(item, qty, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
+                                $scope.ui.dismissAllModel();
+                            });
+                };
+                
+                //------------- qty wise service ---------------
+                
+                
                 $scope.ui.setServiceChargers = function (checkd) {
                     if ($scope.selectedJobCardIndexNo) {
                         ConfirmPane.successConfirm("Select Service Chargers")

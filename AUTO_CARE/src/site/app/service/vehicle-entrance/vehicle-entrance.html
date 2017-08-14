@@ -38,9 +38,14 @@
             </div>
             <div class="form-group col-xs-12">
                 <div class="row">
-                    <div class="col-xs-2">
+                    <div class="col-xs-3">
+                        <div class="form-inline">
                         <h3>Mobile No</h3>
-                        <input type="number" ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" maxlength="10" placeholder="MOBILE NO.">
+                        <div class="form-group">
+                            <lable for="email">+94 &nbsp;</lable>
+                            <input id="email" type="number" ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" maxlength="10" placeholder="MOBILE NO.">
+                        </div>
+                        </div>
                     </div>
                     <div class="col-xs-1">
                         <h3>Resident</h3>
@@ -50,11 +55,11 @@
                             <option value="Miss">Miss</option>
                         </select>
                     </div>
-                    <div class="col-xs-5">
-                        <h3 style="padding-left: 10px">Client Name</h3>
+                    <div class="col-xs-4">
+                        <h3>Client Name</h3>
                         <input type="text" ng-model="model.clientData.name" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="NAME">
                     </div>
-                    <div class="col-xs-3 text-bold" style="padding-top: 50px">
+                    <div class="col-xs-4 text-bold" style="padding-top: 50px">
                         <button class="btn btn-primary" style="width: 50px; height: 50px;"  ng-click="ui.edit()">EDIT</button>
                         <button class="btn btn-primary" style="width: 50px; height: 50px"  ng-click="ui.new()">NEW</button>
                         <button class="btn btn-success" style="width: 80px; height: 50px" ng-click="ui.clientAssingNext()">NEXT</button>
@@ -283,7 +288,7 @@
                 <div class="image-tile" style="background-color: #00d9ff; height: 46vh; text-align: center;" ng-show="ui.imageShowMode4 === 'Avalable'" >
                     <img src="{{imagemodelX[3]}}" id="tableBanner" style="width: 100%; height: 100%"> 
                 </div>
-                
+
                 <div class="image-tile" style="background-color: #009688;" ng-show="ui.imageShowMode5 === 'NotAvalable'">
                     <label class="image-tile-browse" for="file">
                         <span class="glyphicon glyphicon-camera"></span>
@@ -293,7 +298,7 @@
                 <div class="image-tile" style="background-color: #009688; height: 46vh; text-align: center;" ng-show="ui.imageShowMode5 === 'Avalable'" >
                     <img src="{{imagemodelX[4]}}" id="tableBanner" style="width: 100%; height: 100%"> 
                 </div>
-                
+
                 <div class="image-tile" style="background-color: #FFD236;" ng-show="ui.imageShowMode6 === 'NotAvalable'">
                     <label class="image-tile-browse" for="file">
                         <span class="glyphicon glyphicon-camera"></span>

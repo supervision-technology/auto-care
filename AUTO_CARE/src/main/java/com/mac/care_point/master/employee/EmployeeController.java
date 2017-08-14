@@ -38,7 +38,9 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin
 @RequestMapping("/api/care-point/master/employee")
 public class EmployeeController {
-
+    
+    final String employeeType="worker";
+    
     @Autowired
     private EmployeeService employeeService;
 
@@ -106,6 +108,11 @@ public class EmployeeController {
         }
 
         return imageFileNames;
+    }
+
+    @RequestMapping(value = "/worker",method = RequestMethod.GET)
+    public List<Employee> findByType() {
+        return employeeService.findByType(employeeType);
     }
 
 }

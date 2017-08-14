@@ -51,7 +51,7 @@
 
                         ItemSelectionService.pendingJobCards()
                                 .success(function (data) {
-                                    that.pendingJobCards=[];
+                                    that.pendingJobCards = [];
                                     angular.forEach(data, function (job) {
                                         job.vehicleNo = that.vehicleData(job.vehicle).vehicleNo;
                                         that.pendingJobCards.push(job);
@@ -361,6 +361,37 @@
                             }
                         });
                         return data;
+                    },
+                    addQtyWiseServiceItem: function (item, qty, jobCard, vehicleType) {
+                        var defer = $q.defer();
+                        var that = this;
+
+                        this.data = ItemSelectionModelFactory.newData();
+
+                        if (vehicleType === "REGISTER") {
+                            that.data.quantity = qty;
+                            that.data.price = item.salePriceRegister;
+                            that.data.value = parseFloat(qty * item.salePriceRegister);
+                        } else {
+                            that.data.quantity = qty;
+                            that.data.price = item.salePriceNormal;
+                            that.data.value = parseFloat(qty * item.salePriceNormal);
+                        }
+
+                        that.data.itemType = "SERVICE_ITEM_QTY_WISE";
+                        that.data.jobCard = jobCard;
+                        that.data.item = item.indexNo;
+
+                        ItemSelectionService.saveJobItems(this.data)
+                                .success(function (data) {
+                                    that.jobItemList.unshift(data);
+                                    that.data = ItemSelectionModelFactory.newData();
+                                    defer.resolve();
+                                })
+                                .error(function () {
+                                    defer.reject();
+                                });
+                        return defer.promise;
                     },
 //------------------------------- add stock items,packages and servicee -------------------------------                     
                     addPackageAndServiceItem: function (item, type, jobCard, vehicleType) {
