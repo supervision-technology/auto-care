@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.job_card;
 
+import com.mac.care_point.master.vehicle.model.Vehicle;
 import com.mac.care_point.service.job_card.model.JobCard;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,5 +32,7 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
     public List<JobCard> findJobCardByClient(Integer indexNo);
 
     public List<JobCard> findByStatusNotIn(String FINISHED_STATUS);
+
+    public List<JobCard>  findByVehicleAndStatus(Integer indexNo, String status);
 
 }

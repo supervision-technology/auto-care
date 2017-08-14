@@ -26,34 +26,27 @@
                 this.vehicleData = vehicleEntranceFactory.newVehicleData();
                 this.clientData = vehicleEntranceFactory.newClientData();
                 this.jobcard = vehicleEntranceFactory.newJobCardData();
-//                this.jobcard = vehicleEntranceFactory.getJobCard();
                 this.vehicleTypeData = vehicleEntranceFactory.newVehicleTypeData();
                 this.priceCategoryData = vehicleEntranceFactory.newPriceCategoryData();
 
                 this.loadClient();
-
                 this.loadVehicle();
-
                 vehicleEntranceService.loadVehicleType()
                         .success(function (data) {
                             that.vehicleTypeList = data;
                         });
-
                 vehicleEntranceService.loadCustomerType()
                         .success(function (data) {
                             that.customerTypeList = data;
                         });
-
                 vehicleEntranceService.loadPriceCategory()
                         .success(function (data) {
                             that.priceCategoryList = data;
                         });
-
                 vehicleEntranceService.getVehicleAttenctionsCategory()
                         .success(function (data) {
                             that.vehicleAttenctionsCategoryList = data;
                         });
-
                 vehicleEntranceService.getVehicleAttenctions()
                         .success(function (data) {
                             that.vehicleAttenctionsList = data;
@@ -115,8 +108,24 @@
                             vehicleEntranceService.getClientByIndexNo(that.vehicleData.client)
                                     .success(function (data) {
                                         that.clientData = data;
+                                        var mobile = parseInt(data.mobile);
+                                        that.clientData.mobile = mobile;
+
+
                                     });
                         });
+            },
+            searchPendingJobCard: function (VehicleNo) {
+                var that = this;
+                var defer = $q.defer();
+                vehicleEntranceService.searchPendingJobCard(VehicleNo)
+                        .success(function (data) {
+                            defer.resolve(data);
+                        })
+                        .error(function () {
+                            defer.reject();
+                        });
+                return defer.promise;
             },
             saveJobCard: function () {
                 var that = this;

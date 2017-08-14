@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.job_card;
 
+import com.mac.care_point.master.vehicle.model.Vehicle;
 import com.mac.care_point.master.vehicleAssignment.VehicleAssignmentRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.common.Constant;
@@ -19,6 +20,8 @@ import com.mac.care_point.service.vehicle_attenctions.MVehicleAttenctionReposito
 import com.mac.care_point.service.vehicle_attenctions.TJobVehicleAttenctionsRepository;
 import com.mac.care_point.service.vehicle_attenctions.model.MVehicleAttenctions;
 import com.mac.care_point.service.vehicle_attenctions.model.TJobVehicleAttenctions;
+import com.mac.care_point.service.zmaster.vehicle.SVVehicleRepository;
+import com.mac.care_point.service.zmaster.vehicle.model.MVehicle;
 import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -57,6 +60,9 @@ public class JobCardService {
 
     @Autowired
     private VehicleAssignmentRepository vehicleAssignmentRepository;
+    
+    @Autowired
+    private SVVehicleRepository sVVehicleRepository;
 
     public List<JobCard> getClientHistory(Integer indexNo) {
         return jobCardRepository.findJobCardByClient(indexNo);
@@ -179,6 +185,15 @@ public class JobCardService {
     //final check list
     public List<JobCard> findByStatusAndDefaultFinalCheckOrderByIndexNoDesc() {
         return jobCardRepository.findByStatusAndDefaultFinalCheckOrderByIndexNoDesc(Constant.PENDING_STATUS, false);
+    }
+
+    public List<JobCard> getJobCardByVehicleNo(String vehicleNo) {
+        List<MVehicle> vehiclelist = sVVehicleRepository.findByVehicleNo(vehicleNo);
+        Integer indexNo = vehiclelist.get(0).getIndexNo();
+//        Integer indexNo = vehiclelist.get(1).getIndexNo();
+        System.out.println(indexNo);
+        String status = "PENDING";
+        return jobCardRepository.findByVehicleAndStatus(indexNo,status);
     }
 
 }

@@ -51,4 +51,8 @@ public class EmployeeService {
     public void deleteItemDepartment(Integer indexNo) {
         employeeRepository.delete(indexNo);
     }
+
+    List<Employee> findByType(String employeeType) {
+        return employeeRepository.findByType(employeeType);
+    }
 }

@@ -110,6 +110,9 @@ public class JobCard implements Serializable {
     
     @Column(name = "carepet_other")
     private Integer carepetOther;
+    
+    @Column(name = "carepet_3m")
+    private Integer carepet3M;
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "jobCard", fetch = FetchType.EAGER)
@@ -118,7 +121,7 @@ public class JobCard implements Serializable {
     public JobCard() {
     }
 
-    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, Integer rate, String rateReason, Integer carepetOriginal, Integer carepetOther, List<TJobItem> tJobItemList) {
+    public JobCard(Integer indexNo, Integer number, Integer branch, Date date, Integer transaction, Integer priceCategory, String inTime, String outTime, Integer inMileage, Integer nextMileage, String status, Integer bay, Integer client, Integer vehicle, Boolean serviceChagers, Boolean vehicleImages, Boolean finalCheck, Boolean attenctions, Boolean invoice, Boolean defaultFinalCheck, Integer rate, String rateReason, Integer carepetOriginal, Integer carepetOther, Integer carepet3M, List<TJobItem> tJobItemList) {
         this.indexNo = indexNo;
         this.number = number;
         this.branch = branch;
@@ -143,9 +146,10 @@ public class JobCard implements Serializable {
         this.rateReason = rateReason;
         this.carepetOriginal = carepetOriginal;
         this.carepetOther = carepetOther;
+        this.carepet3M = carepet3M;
         this.tJobItemList = tJobItemList;
     }
-   
+
     public JobCard(Integer indexNo) {
         this.indexNo = indexNo;
     }
@@ -348,6 +352,14 @@ public class JobCard implements Serializable {
 
     public void setCarepetOther(Integer carepetOther) {
         this.carepetOther = carepetOther;
+    } 
+
+    public Integer getCarepet3M() {
+        return carepet3M;
+    }
+
+    public void setCarepet3M(Integer carepet3M) {
+        this.carepet3M = carepet3M;
     }
 
 }

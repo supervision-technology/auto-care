@@ -35,6 +35,10 @@
         this.getJobCard = function (indexNo) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-client-history/" + indexNo);
         };
+        
+        this.searchPendingJobCard = function (VehicleNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-job-detail-by-vehicle-no/" + VehicleNo);
+        };
 
         this.updateVehicle = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/save-vehicle", data);
