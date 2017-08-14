@@ -66,7 +66,7 @@ public class MItem implements Serializable {
     @Basic(optional = false)
     @Column(name = "category")
     private Integer category;
-    
+
     @Basic(optional = false)
     @Column(name = "item_category")
     private Integer itemCategory;
@@ -93,10 +93,10 @@ public class MItem implements Serializable {
 
     @Column(name = "supplier")
     private Integer supplier;
-    
+
     @Column(name = "re_order_max")
     private BigDecimal reOrderMax;
-    
+
     @Column(name = "re_order_min")
     private BigDecimal reOrderMin;
 
@@ -106,10 +106,13 @@ public class MItem implements Serializable {
     @Column(name = "supplier_price")
     private BigDecimal supplierPrice;
 
+    @Column(name = "qty_wise")
+    private Boolean qtyWise;
+
     public MItem() {
     }
 
-    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, String type, Integer department, Integer brand, Integer category, Integer itemCategory, Integer sub_category, BigDecimal costPrice, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Integer supplier, BigDecimal reOrderMax, BigDecimal reOrderMin, BigDecimal discount, BigDecimal supplierPrice) {
+    public MItem(Integer indexNo, String name, String barcode, String printDescription, String unit, String type, Integer department, Integer brand, Integer category, Integer itemCategory, Integer sub_category, BigDecimal costPrice, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Integer supplier, BigDecimal reOrderMax, BigDecimal reOrderMin, BigDecimal discount, BigDecimal supplierPrice, Boolean qtyWise) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -130,6 +133,7 @@ public class MItem implements Serializable {
         this.reOrderMin = reOrderMin;
         this.discount = discount;
         this.supplierPrice = supplierPrice;
+        this.qtyWise = qtyWise;
     }
 
     public Integer getIndexNo() {
@@ -292,5 +296,12 @@ public class MItem implements Serializable {
         this.supplierPrice = supplierPrice;
     }
 
-   
+    public Boolean getQtyWise() {
+        return qtyWise;
+    }
+
+    public void setQtyWise(Boolean qtyWise) {
+        this.qtyWise = qtyWise;
+    }
+
 }

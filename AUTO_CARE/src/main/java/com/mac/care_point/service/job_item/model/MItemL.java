@@ -50,7 +50,7 @@ public class MItemL implements Serializable {
     @Basic(optional = false)
     @Column(name = "category")
     private Integer category;
-    
+
     @Basic(optional = false)
     @Column(name = "item_category")
     private Integer itemCategory;
@@ -68,10 +68,13 @@ public class MItemL implements Serializable {
     @Column(name = "price_category")
     private Integer priceCategory;
 
+    @Column(name = "qty_wise")
+    private Boolean qtyWise;
+
     public MItemL() {
     }
 
-    public MItemL(Integer indexNo, String name, String barcode, String type, Integer category, Integer itemCategory, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory) {
+    public MItemL(Integer indexNo, String name, String barcode, String type, Integer category, Integer itemCategory, BigDecimal salePriceNormal, BigDecimal salePriceRegister, Integer priceCategory, Boolean qtyWise) {
         this.indexNo = indexNo;
         this.name = name;
         this.barcode = barcode;
@@ -81,6 +84,7 @@ public class MItemL implements Serializable {
         this.salePriceNormal = salePriceNormal;
         this.salePriceRegister = salePriceRegister;
         this.priceCategory = priceCategory;
+        this.qtyWise = qtyWise;
     }
 
     public Integer getIndexNo() {
@@ -153,6 +157,14 @@ public class MItemL implements Serializable {
 
     public void setPriceCategory(Integer priceCategory) {
         this.priceCategory = priceCategory;
+    }
+
+    public Boolean getQtyWise() {
+        return qtyWise;
+    }
+
+    public void setQtyWise(Boolean qtyWise) {
+        this.qtyWise = qtyWise;
     }
 
 }

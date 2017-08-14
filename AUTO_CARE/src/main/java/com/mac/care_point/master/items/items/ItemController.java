@@ -34,6 +34,7 @@ public class ItemController {
     public List<MItem> findAllItems() {
         return itemService.findAllItems();
     }
+    
     @RequestMapping(value = "/stock-item",method = RequestMethod.GET)
     public List<MItem> findItemsByTypeAndQty() {
         return itemService.findItemsByTypeAndQty(STOCK);
@@ -42,6 +43,11 @@ public class ItemController {
     @RequestMapping(value = "/save-item", method = RequestMethod.POST)
     public MItem saveItem(@RequestBody MItem item) {
         return itemService.saveItem(item);
+    }
+    
+    @RequestMapping(value = "/find-by-item-type/{type}", method = RequestMethod.GET)
+    public List<MItem> findItemByItemType(@PathVariable String type) {
+        return itemService.findItemByItemType(type);
     }
 
     @RequestMapping(value = "/delete-item/{indexNo}", method = RequestMethod.DELETE)
