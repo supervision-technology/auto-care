@@ -109,30 +109,30 @@ public class PrinterService implements Printable {
     public void printString(String printerName, String text) {
 
         // find the printService of name printerName
-        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-
-        PrintService printService[] = PrintServiceLookup.lookupPrintServices(
-                flavor, pras);
-        PrintService service = findPrintService(printerName, printService);
-
-        DocPrintJob job = service.createPrintJob();
-
-        try {
-
-            byte[] bytes;
-
-            // important for umlaut chars
-            bytes = text.getBytes("CP437");
-
-            Doc doc = new SimpleDoc(bytes, flavor, null);
-
-            job.print(doc, null);
-
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+//        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+//        PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+//
+//        PrintService printService[] = PrintServiceLookup.lookupPrintServices(
+//                flavor, pras);
+//        PrintService service = findPrintService(printerName, printService);
+//
+//        DocPrintJob job = service.createPrintJob();
+//
+//        try {
+//
+//            byte[] bytes;
+//
+//            // important for umlaut chars
+//            bytes = text.getBytes("CP437");
+//
+//            Doc doc = new SimpleDoc(bytes, flavor, null);
+//
+//            job.print(doc, null);
+//
+//        } catch (Exception e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
         System.out.print(text);
     }
 
