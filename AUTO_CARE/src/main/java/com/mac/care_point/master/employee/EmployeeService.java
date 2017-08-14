@@ -51,4 +51,8 @@ public class EmployeeService {
     public void deleteItemDepartment(Integer indexNo) {
         employeeRepository.delete(indexNo);
     }
+
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
 }

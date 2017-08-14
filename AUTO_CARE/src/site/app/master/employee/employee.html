@@ -1,0 +1,112 @@
+<div class="index-content-body ">
+    <div class="col-xs-4 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 0px);">
+            <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+                <table class="table-rounded control-table">
+                    <col style="width: 35%"/>
+                    <col style="width: 65%"/>
+                    <tbody>
+                        <tr>
+                            <td><label>Name :</label></td>
+                            <td><input class="form-control" id="name" ng-model="model.employeeData.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                        </tr>
+                        <tr>
+                            <td><label>Mobile :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Address 01 :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.addressLine1" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Address 02 :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.addressLine2" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Address 03 :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Type :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr>
+                            <td><label>Rol :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.rol" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr> 
+                    </tbody>
+                </table>
+                <div class="image-tile-employee" style="background-color:#ffffff;" ng-show="ui.imageShowMode1 === 'NotAvalable'">
+                    <label class="image-tile-browse" for="file">
+                        <span class="glyphicon glyphicon-camera"></span>
+                        <input ng-model="imgSrc" style="display: none" type="file" id="file" onchange="angular.element(this).scope().ui.changeFunction(event)" accept="image/gif, image/jpeg, image/png">
+                    </label>    
+                </div>
+                <div class="image-tile-employee" ng-show="ui.imageShowMode1 === 'Avalable'" >
+                    <img src="{{imagemodelX[0]}}" id="tableBanner" style="width: 100%; height: 100%"> 
+                </div>
+                <button class="btn btn-danger" ng-click="ui.clearImage()">Clear Image</button>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-8 background-light">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 10px);">
+            <div class="col-xs-12">
+                <div class="row col-xs-5">
+                    <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
+                </div>
+                <table class="table-rounded">
+                    <col style="width: 10%">
+                    <col style="width: 20%">
+                    <col style="width: 15%">
+                    <col style="width: 15%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <col style="width: 10%">
+                    <thead class="background-dark">
+                        <tr>
+                            <th> <label>#</label> </th>
+                            <th> <label>Name</label></th>
+                            <th> <label>Mobile</label></th>
+                            <th> <label>Nic</label></th>
+                            <th> <label>Type</label></th>
+                            <th> <label>Rol</label></th>
+                            <th> <label>Bay</label></th>
+                            <th>&nbsp;</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="smart-scroll-y" style="height: calc(100vh - 128px);">
+                    <table class="table-rounded">
+                        <col style="width: 15%">
+                        <col style="width: 20%">
+                        <col style="width: 20%">
+                        <col style="width: 15%">
+                        <col style="width: 20%">
+                        <col style="width: 10%">
+                        <tbody>
+                            <tr ng-repeat="emolyee in model.employeeList| filter:model.search.name | orderBy:'indexNo'">
+                                <td><label class="label label-default">{{emolyee.indexNo|fixedLength:5}}</label></td>
+                                <td>{{emolyee.name}}</td>
+                                <td>{{emolyee.mobile}}</td>
+                                <td>{{client.nic==null?'- - -':client.nic}}</td>
+                                <td><label class="label label-primary">{{ui.customerTypeLable(emolyee.customerType)}}</label></td>
+
+                                <td class="text-right" style="padding-left: 5px;">
+                                    <a class="btn btn-primary" ng-click="ui.edit(emolyee, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="btn btn-danger" ng-click="http.deleteClient(emolyee.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

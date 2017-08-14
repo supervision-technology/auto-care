@@ -4,7 +4,7 @@
     //http factory
     angular.module("employeeAssignmentModule")
             .factory("employeeAssignmentFactory", function ($http, systemConfig) {
-                var factory = {};
+                var factory = [];
                 //load Jobs
                 factory.loadEmployees = function (callback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/employee";
@@ -91,14 +91,27 @@
                                 }
                             });
                 };
+                factory.getImageByNameAndIndexNO = function (name, indexNo, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/employee/image-names/" + name + "/" + indexNo;
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
+                            });
+                };
                 return factory;
             });
     //controller
     angular.module("employeeAssignmentModule")
-            .controller("employeeAssignmentController", function ($scope, $timeout, $filter, employeeAssignmentFactory, Notification) {
+            .controller("employeeAssignmentController", function ($scope, $timeout, $filter, employeeAssignmentFactory, Notification, systemConfig) {
                 $scope.ui = {};
                 $scope.model = {};
                 $scope.http = {};
+                $scope.imagemodelX = [];
                 $scope.model.employeeAssignment = {
                     "bay": {
                         timeout: null
@@ -239,12 +252,23 @@
 
 
                 };
-                $scope.ui.init = function () {
-
-
+                $scope.ui.downloardImage = function () {
+                    for (var i = 0; i < $scope.model.employeeList.length; i++) {
+                        $scope.model.employeeList[i].imageData = systemConfig.apiUrl + "/api/care-point/master/employee/download-image/" + $scope.model.employeeList[i].image;
+                    }
+                };
+                
+                $scope.ui.loadEmployees = function () {
                     employeeAssignmentFactory.loadEmployees(function (data) {
                         $scope.model.employeeList = data;
+                        $scope.ui.downloardImage();
                     });
+                };
+
+                $scope.ui.init = function () {
+
+                    $scope.ui.loadEmployees();
+
                     employeeAssignmentFactory.employeesAttendance(function (data) {
                         $scope.model.employeesAttendanceList = data;
                     });
