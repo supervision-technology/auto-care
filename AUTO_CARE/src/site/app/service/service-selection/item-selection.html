@@ -6,14 +6,15 @@
         <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
     </div>
     <div class="smart-scroll-y" style="height: calc(100vh - 74px);">
-        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
-            <span>
+        <div class="tile tile-155" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards|filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+            <span> 
                 <img src="/img/01.png"/>  
-                <label>
-                    {{model.vehicleData(details.vehicle).vehicleNo}}
-                </label>
+                <label>{{model.vehicleData(details.vehicle).vehicleNo}}</label>
                 <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
                 <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
+                <label class="label" style="background: {{model.priceCategoryData(details.priceCategory).colour}};">{{model.priceCategoryData(details.priceCategory).name}}</label>
+                <label class="label label-default">{{details.date}}</label>
+                <label class="label label-default">{{details.indexNo}}</label>
             </span>
         </div>
     </div>
@@ -44,7 +45,7 @@
                     <thead>
                         <tr>
                             <th><input type="text" class="search-input input-sm" placeholder="search" ng-model="itemKey"></th>
-                            <th><a style="background-color: #009688;" class="btn" ng-click="ui.getQuickSeacrhItem(itemKey);"/>S</a></th>
+                            <th><a style="background-color: #009688;" class="btn" ng-click="ui.getQuickSeacrhItem(itemKey);"/><span class="glyphicon glyphicon-search"></span></a></th>
                         </tr>
                     </thead>
                 </table>

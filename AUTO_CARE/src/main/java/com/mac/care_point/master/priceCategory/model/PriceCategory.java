@@ -37,6 +37,12 @@ public class PriceCategory implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "name")
     private String name;
+    
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "colour")
+    private String colour;
 
     public PriceCategory() {
     }
@@ -66,29 +72,12 @@ public class PriceCategory implements Serializable {
         this.name = name;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (indexNo != null ? indexNo.hashCode() : 0);
-        return hash;
+    public String getColour() {
+        return colour;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof PriceCategory)) {
-            return false;
-        }
-        PriceCategory other = (PriceCategory) object;
-        if ((this.indexNo == null && other.indexNo != null) || (this.indexNo != null && !this.indexNo.equals(other.indexNo))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "com.mac.gl.master.controller.priceCategory.PriceCategory[ indexNo=" + indexNo + " ]";
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
 }

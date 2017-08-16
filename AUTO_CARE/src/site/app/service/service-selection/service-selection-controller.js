@@ -95,7 +95,7 @@
                         $scope.selectedCategoryColors = data.colour;
                         if (data.staticFeild) {
                             if (data.staticFeildName === 'PACKAGE') {
-
+                                
                                 $scope.ui.model = "PACKAGE";
                                 $scope.model.filterItems = [];
                                 $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);

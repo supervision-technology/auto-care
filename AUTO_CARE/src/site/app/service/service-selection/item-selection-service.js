@@ -24,6 +24,10 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-unit");
         };
 
+        this.loadPriceCategory = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/priceCategory");
+        };
+
         //load pending jobcards
         this.pendingJobCards = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/get-invoice-pending-job-card");

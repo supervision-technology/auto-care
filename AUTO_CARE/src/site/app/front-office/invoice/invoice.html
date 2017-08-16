@@ -301,6 +301,7 @@
     </div>
 </div>
 <div class="fab-container">
+    <a class="fab fab-lg fab-warning" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.invoiceViewer()"><i class="glyphicon glyphicon-adjust"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.saveInvoice()"><i class="glyphicon glyphicon-ok"></i></a>
 </div>

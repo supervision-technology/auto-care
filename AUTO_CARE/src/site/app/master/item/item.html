@@ -16,7 +16,7 @@
                                     <select class="form-control" ng-model="model.itemData.type" ng-change="ui.selectStock(model.itemData.type);">
                                         <option value="STOCK" selected>STOCK ITEM</option>
                                         <option value="SERVICE">SERVICE ACTIVITY</option>
-                                        <option value="NON-STOCK">NON-STOCK (CONSUMABLE)</option>
+                                        <option value="NON STOCK">NON-STOCK (CONSUMABLE)</option>
                                         <option value="PACKAGE">PACKAGE</option>
                                     </select>
                                 </td>
@@ -127,7 +127,7 @@
                                 <option value="" selected></option>
                                 <option value="STOCK">STOCK ITEM</option>
                                 <option value="SERVICE">SERVICE ACTIVITY</option>
-                                <option value="NON-STOCK">NON-STOCK (CONSUMABLE)</option>
+                                <option value="NON STOCK">NON-STOCK (CONSUMABLE)</option>
                                 <option value="PACKAGE">PACKAGE</option>
                             </select>
                         </div>
@@ -166,7 +166,7 @@
                                     <td><label class="label label-default">{{items.indexNo|fixedLength:5}}</label></td>
                                     <td>{{items.name}}</td>
                                     <td ng-show="items.type === 'STOCK'"><label class="label label-default">STOCK</label></td>
-                                    <td ng-show="items.type === 'NON-STOCK'"><label class="label label-primary">NON-STOCK</label></td>
+                                    <td ng-show="items.type === 'NON STOCK'"><label class="label label-primary">NON-STOCK</label></td>
                                     <td ng-show="items.type === 'SERVICE'"><label class="label label-success">SERVICE</label></td>
                                     <td ng-show="items.type === 'PACKAGE'"><label class="label label-warning">PACKAGE</label></td>
                                     <td class="text-right" ng-disabled="ui.mode !== 'EDIT'">

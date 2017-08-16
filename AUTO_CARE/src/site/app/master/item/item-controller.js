@@ -43,7 +43,7 @@
                     if (type === 'STOCK') {
                         $scope.textViewMode = 'STOCK';
                     }
-                    if (type === 'NON-STOCK') {
+                    if (type === 'NON STOCK') {
                         $scope.textViewMode = 'NON-STOCK';
                     }
                     if (type === 'SERVICE') {
