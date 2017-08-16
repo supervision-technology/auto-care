@@ -19,10 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class SVClientService {
-    
+
     @Autowired
     private SVClientRepository clientRepository;
-    
+
     public List<MClient> getAllClient() {
         return clientRepository.findAll();
     }
@@ -33,7 +33,8 @@ public class SVClientService {
 
     public MClient saveClient(MClient client) {
         client.setBranch(1);
-        return  clientRepository.save(client);
+        client.setMobile("94"+client.getMobile());
+        return clientRepository.save(client);
     }
-    
+
 }

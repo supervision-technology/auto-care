@@ -6,6 +6,7 @@
                 $scope.model = new vehicleEntranceModel();
 
                 $scope.ui = {};
+                $scope.ui.maxlength = 10;
                 $scope.imagemodel = [];
                 $scope.imagemodelX = [];
                 $scope.ui.imageShowMode1 = 'NotAvalable';//or IMAGE VIEW
@@ -150,13 +151,20 @@
                 };
 
                 $scope.validateClient = function () {
+
                     if (!$scope.model.clientData.mobile) {
                         Notification.error("please Input Mobile No");
+                        return false;
+                    } else if (($scope.model.clientData.mobile+'').length !== 9) {
+                        Notification.error("please Input Valid Mobile No ");
+                        return false;
+                    } else if (!$scope.model.clientData.resident) {
+                        Notification.error("please Input Resident");
                         return false;
                     } else if (!$scope.model.clientData.name) {
                         Notification.error("please Input Name");
                         return false;
-                    } else if ($scope.model.clientData.mobile && $scope.model.clientData.name) {
+                    } else if ($scope.model.clientData.mobile && $scope.model.clientData.name && $scope.model.clientData.resident && ($scope.model.clientData.mobile+'').length === 9) {
                         return true;
                     }
                 };
@@ -197,6 +205,8 @@
                         //vehicle 1th nathi rejisted nathi client kenek
                         var vehicleNo = $scope.vehicleNo;
                         if (angular.isUndefined($scope.model.clientData.indexNo)) {
+                            console.log(($scope.model.clientData.mobile+'').length);
+                            console.log($scope.model.clientData.mobile);
                             if ($scope.validateClient()) {
                                 console.log($scope.model.clientData.resident);
                                 $scope.model.newClient()
@@ -212,6 +222,7 @@
                             }
                             //vehicle 1th nathuwa rejisted client kenek
                         } else {
+                            $scope.model.updateClient();
                             $scope.model.vehicleData = {};
                             $scope.model.vehicleData.vehicleNo = vehicleNo;
                             $scope.ui.changeUi = 'ui3';
@@ -231,6 +242,7 @@
                                         });
                             }
                         } else {
+                            $scope.model.updateClient();
                             $scope.ui.changeUi = 'ui3';
                             $scope.model.vehicleData.lastMilage = null;
                             $scope.model.loadJobCardByClientIndexNo($scope.model.clientData.indexNo);

@@ -32,6 +32,22 @@
                             defer.reject();
                         });
                 return defer.promise;
+            },
+            editEmployee: function (index) {
+                this.employeeList.splice(index, 1);
+            },
+            deleteEmployee: function (indexno, $index) {
+                var that = this;
+                var defer = $q.defer();
+                employeeService.deleteEmployee(indexno)
+                        .success(function (data) {
+                            that.employeeList.splice($index, 1);
+                            defer.resolve(data);
+                        })
+                        .error(function (data) {
+                            defer.reject(data);
+                        });
+                return defer.promise;
             }
         };
         return employeeModel;

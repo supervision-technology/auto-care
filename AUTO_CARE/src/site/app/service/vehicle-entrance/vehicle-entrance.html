@@ -40,11 +40,10 @@
                 <div class="row">
                     <div class="col-xs-3">
                         <div class="form-inline">
-                        <h3>Mobile No</h3>
-                        <div class="form-group">
-                            <lable for="email">+94 &nbsp;</lable>
-                            <input id="email" type="number" ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" maxlength="10" placeholder="MOBILE NO.">
-                        </div>
+                            <h3>Mobile No</h3>
+                            <div class="form-group"> 
+                                <input ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="MOBILE NO." name="somename" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "9"/>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xs-1">

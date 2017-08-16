@@ -44,6 +44,21 @@
                         xhr.send(formData);
                     }
                 };
+
+                $scope.ui.clearImage = function () {
+                    $scope.imagemodel = [];
+                    $scope.imagemodelX = [];
+                    $scope.imagemodels = {};
+                    $scope.ui.imageShowMode1 = 'NotAvalable';
+                };
+
+                $scope.ui.downloardImage = function (employee) {
+                    $scope.imagemodelX[0] = systemConfig.apiUrl + "/api/care-point/master/employee/download-image/" + employee.image;
+                    $scope.ui.imageShowMode1 = 'Avalable';
+                };
+// </Image-upload>-----------------------------Image Upload-----------------------------------
+
+                //Save
                 $scope.ui.save = function () {
                     $scope.model.saveEmployee()
                             .then(function (data) {
@@ -57,13 +72,23 @@
 
                             });
                 };
-                $scope.ui.clearImage = function () {
-                    console.log("sdsdsd");
-                    $scope.imagemodel = [];
-                    $scope.imagemodelX = [];
-                    $scope.ui.imageShowMode1 = 'NotAvalable';
+
+                //Delete
+                $scope.ui.deleteEmployee = function (indexno, $index) {
+                    $scope.model.deleteEmployee(indexno, $index)
+                            .then(function (data) {
+                                Notification.success("Delete Success...!!");
+                            }, function (data) {
+                                Notification.error(data);
+                            });
                 };
-// </Image-upload>-----------------------------Image Upload-----------------------------------
+
+                //Edit
+                $scope.ui.edit = function (employee, index) {
+                    $scope.model.employeeData = employee;
+                    $scope.ui.downloardImage(employee);
+                    $scope.model.editEmployee(index);
+                };
 
                 //focus
                 $scope.ui.focus = function () {
@@ -76,7 +101,6 @@
                     $scope.ui.mode = "NEW";
                     $scope.ui.focus();
                 };
-
 
                 $scope.ui.init = function () {
                     $scope.ui.mode = "IDEAL";

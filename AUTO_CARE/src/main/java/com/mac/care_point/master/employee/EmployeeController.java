@@ -38,9 +38,9 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin
 @RequestMapping("/api/care-point/master/employee")
 public class EmployeeController {
-    
-    final String employeeType="worker";
-    
+
+    final String employeeType = "worker";
+
     @Autowired
     private EmployeeService employeeService;
 
@@ -59,7 +59,7 @@ public class EmployeeController {
         employee.setBranch(1);
         employee.setBay(11);
         Employee employee1 = employeeService.saveEmployee(employee);
-        employee1.setImage(String.format(IMAGE_NAME_TEMPLATE,employee1.getName(),employee1.getIndexNo()));
+        employee1.setImage(String.format(IMAGE_NAME_TEMPLATE, employee1.getName(), employee1.getIndexNo()));
         return employeeService.saveEmployee(employee1);
     }
 
@@ -78,6 +78,7 @@ public class EmployeeController {
     @RequestMapping(value = "/download-image/{fileName:.+}", method = RequestMethod.GET)
     public void downloadImage(@PathVariable String fileName, HttpServletResponse response) throws FileNotFoundException, IOException {
         InputStream inputStream = new FileInputStream(IMAGE_LOCATION + "/" + fileName);
+
         OutputStream outputStream = response.getOutputStream();
 
         byte[] bytes = new byte[1024];
@@ -87,6 +88,16 @@ public class EmployeeController {
         outputStream.flush();
     }
 
+   @RequestMapping(value = "/delete-image/{fileName:.+}", method = RequestMethod.GET)
+    public boolean deleteImage(@PathVariable String fileName, HttpServletResponse response) throws FileNotFoundException, IOException {
+        File file = new File(IMAGE_LOCATION + "/" + fileName);
+        return file.delete();
+    }
+    
+    public boolean deleteImages(@PathVariable String fileName) throws FileNotFoundException, IOException {
+        File file = new File(IMAGE_LOCATION + "/" + fileName);
+        return file.delete();
+    }
 //    @RequestMapping(value = "/image-names/{name}/{indexNo}", method = RequestMethod.GET)
 //    public String imageName(@PathVariable String name, @PathVariable String indexNo) {
 //        File imageDir = new File(IMAGE_LOCATION);
@@ -95,8 +106,9 @@ public class EmployeeController {
 //        });  
 //           return  imageFiles[0].getName();    
 //    }
+
     @RequestMapping(value = "/image-names/{name}/{indexNo}", method = RequestMethod.GET)
-    public List<String> imageName(@PathVariable("name") String name, @PathVariable("indexNo")String indexNo) {
+    public List<String> imageName(@PathVariable("name") String name, @PathVariable("indexNo") String indexNo) {
         File imageDir = new File(IMAGE_LOCATION);
         File[] imageFiles = imageDir.listFiles((File pathname) -> {
             return pathname.getName().startsWith(String.format(IMAGE_NAME_FILTER_TEMPLATE, name, indexNo));
@@ -110,7 +122,15 @@ public class EmployeeController {
         return imageFileNames;
     }
 
-    @RequestMapping(value = "/worker",method = RequestMethod.GET)
+    @RequestMapping(value = "/delete-employee/{indexNo}", method = RequestMethod.DELETE)
+    public Integer deleteEmployee(@PathVariable("indexNo") Integer indexNo) throws IOException {
+        Employee employee = employeeService.findByIndexNo(indexNo);
+        deleteImages(employee.getImage());
+        employeeService.deleteEmployee(indexNo);
+        return indexNo;
+    }
+
+    @RequestMapping(value = "/worker", method = RequestMethod.GET)
     public List<Employee> findByType() {
         return employeeService.findByType(employeeType);
     }

@@ -181,6 +181,19 @@
                         });
                 return defer.promise;
             },
+            updateClient: function () {
+                var that = this;
+                var defer = $q.defer();  
+                vehicleEntranceService.newClient(JSON.stringify(that.clientData))
+                        .success(function (data) {
+                            that.clientData = data;
+                            defer.resolve();
+                        })
+                        .error(function () {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
             vehicleLabel: function (indexNo) {
                 var vehicle = "";
                 angular.forEach(this.vehicleList, function (value) {
