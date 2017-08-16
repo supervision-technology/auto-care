@@ -181,6 +181,10 @@
                             templateUrl: "app/master/item/item.html",
                             controller: "itemController"
                         })
+                        .when("/master/employee", {
+                            templateUrl: "app/master/employee/employee.html",
+                            controller: "employeeController"
+                        })
                         .when("/master/sub-category", {
                             templateUrl: "app/master/sub-category/sub-category.html",
                             controller: "subCategoryController"

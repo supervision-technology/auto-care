@@ -46,12 +46,11 @@ public class ClientService {
             }
             throw new DuplicateEntityException("Duplicate NIC");
         }
-    }    
-    
+    }
 
     public void deleteDetail(Integer indexNo) {
         try {
-        clientRepository.delete(indexNo);
+            clientRepository.delete(indexNo);
         } catch (Exception e) {
             throw new RuntimeException("Cannot delete this client because there are details in other transaction");
         }
