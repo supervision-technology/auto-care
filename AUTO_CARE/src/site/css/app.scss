@@ -70,7 +70,7 @@ body{
         }
         .name{
             display: inline;
-            margin-left: 16px;
+            margin-left: 60px;
 
             opacity: 1;
             transition: .25s ease-in-out;
@@ -95,7 +95,7 @@ body{
 }
 
 .side-bar-hidden{
-    width: 48px !important;
+    width: 0px !important;
 
     .brand{
         .brand-image{
@@ -184,7 +184,6 @@ body{
     height: 100vh;
     display: flex;
     flex-flow: column;
-    margin-left: 48px;
 }
 
 .index-header{

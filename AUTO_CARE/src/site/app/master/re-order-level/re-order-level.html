@@ -3,7 +3,7 @@
 
 <div class="index-content-body ">
     <div class="col-xs-4 background-light">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
             <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
                 <label>Item :</label>
                 <input class="form-control" ng-model="model.data.item" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="item.indexNo as (item.barcode +' - '+item.name) for item in model.items |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemLabel($model);">
@@ -22,10 +22,10 @@
         </div>
         <table class="table-rounded">
             <col style="width: 10%">
-            <col style="width: 20%">
-            <col style="width: 15%">
-            <col style="width: 15%">
-            <col style="width: 15%">
+            <col style="width: 35%">
+            <col style="width: 10%">
+            <col style="width: 10%">
+            <col style="width: 10%">
             <col style="width: 10%">
             <thead class="background-dark">
                 <tr> 
@@ -49,14 +49,14 @@
                 </tr>
             </thead>
         </table>
-        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
             <table class="table-rounded"> 
 
                 <col style="width: 10%">
-                <col style="width: 20%">
-                <col style="width: 15%">
-                <col style="width: 15%">
-                <col style="width: 15%">
+                <col style="width: 35%">
+                <col style="width: 10%">
+                <col style="width: 10%">
+                <col style="width: 10%">
                 <col style="width: 10%">
                 <tbody>
                     <tr ng-repeat="item in model.reOrderLevelList|filter:{branch:model.data.branch===null?'':model.data.branch}|filter:{item:model.data.item===null?'':model.data.item }">                      

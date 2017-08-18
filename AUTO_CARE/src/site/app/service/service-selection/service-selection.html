@@ -1,28 +1,30 @@
-<div class="tile-list background-dark">
-    <div class="tile-list-title" style="margin-right: 5px;">
-        <h4>VEHICLE</h4>
-    </div>
-    <div style="margin-right: 5px;">
-        <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
-    </div>
-    <div class="smart-scroll-y" style="height: calc(100vh - 74px);">
-        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
-            <span> 
-                <img src="/img/01.png"/>  
-                <label>
-                    {{model.vehicleData(details.vehicle).vehicleNo}}
-                </label>
-                <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
-                <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
-            </span>
+<div class="index-content-header"></div>
+
+<div class="index-content-body">
+    <div class="tile-list background-dark">
+        <div class="tile-list-title" style="margin-right: 5px;">
+            <h4>VEHICLE</h4>
+        </div>
+        <div style="margin-right: 5px;">
+            <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
+        </div>
+        <div class="smart-scroll-y" style="height: calc(100vh - 126px);">
+            <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+                <span> 
+                    <img src="/img/01.png"/>  
+                    <label>
+                        {{model.vehicleData(details.vehicle).vehicleNo}}
+                    </label>
+                    <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
+                    <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
+                </span>
+            </div>
         </div>
     </div>
-</div>
-<div class="index-content-body">
     <div style="float: left; width: calc(100% - 133px);">
         <div class="col-xs-7 background-light" ng-show="ui.model === 'CATEGORY'">
             <div class="row full-height" style="display: flex; flex-flow: column;">
-                <div class="smart-scroll-y" style="height: calc(100vh - 40px);">
+                <div class="smart-scroll-y" style="height: calc(100vh - 55px);">
                     <div class="tile-lists">
                         <div class="tiles tile-200 col-xs-4" style="background: {{detils.colour}};" ng-repeat="detils in model.category|filter:{viewApprove : true}" ng-click="ui.categorySelections(detils);">
                             <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   

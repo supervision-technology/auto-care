@@ -13,26 +13,21 @@
     </head>
     <body ng-app="appModule" ng-controller="appController">
         <!--side panel-->
-        <div class="side-bar-left background-ultra-dark smart-scroll-y" ng-class="hamburgerOpen ? 'side-bar-hidden' : ''">
+        <div class="side-bar-left background-ultra-dark" ng-class="hamburgerOpen ? 'side-bar-hidden' : ''">
             <div>
                 <div class="brand">
-                    <div class="brand-image"></div>
+                    
                     <div class="brand-text">CARE POINT</div>
-
-                    <div class="hamburger" ng-click="toggleHamburger();">
-                        <div ng-class="hamburgerOpen ? '' : 'open'">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                    </div>
                 </div>
 
-                <button class="btn btn-default btn-sm" ng-click="logout();">
-                    <span class="glyphicon glyphicon-off"></span> LOGOUT
-                </button>
-
-                <div class="index-sidebar-navigation">
+                <div class="user">
+                    <!--<img src="img/avatar.jpg" class="avatar img-circle"/>-->
+                    <div class="name">
+                        <span>LOGIN USER</span>
+                    </div>
+                </div>
+                
+                <div class="index-sidebar-navigation smart-scroll-y" style="height: calc(100vh - 100px)">
                     <ul>
 
                         <li> 
@@ -52,7 +47,7 @@
                             <ul>
                                 <li><a href="#/stock/request-item" ng-click="toggleHamburger();">Request Item</a></li>    
                                 <li><a href="#/front-office/invoice" ng-click="toggleHamburger();">Invoice</a></li>           
-<!--                                <li><a href="#/front-office/bay-item-issue" ng-click="toggleHamburger();">Bay Item Issue</a></li>    -->
+                                <!--                                <li><a href="#/front-office/bay-item-issue" ng-click="toggleHamburger();">Bay Item Issue</a></li>    -->
                             </ul>
                         </li>
                         <li>
@@ -106,7 +101,7 @@
                                 <li><a href="#/master/vehicle-type" ng-click="toggleHamburger();">Vehicle Type</a></li>
                                 <li><a href="#/master/client" ng-click="toggleHamburger();">Client</a></li>
                                 <li><a href="#/master/vehicle" ng-click="toggleHamburger();">Vehicle</a></li>
-                                <li><a href="#/master/sub_item" ng-click="toggleHamburger();">Sub Item</a></li>
+                                <li><a href="#/master/sub-item" ng-click="toggleHamburger();">Sub Item</a></li>
                                 <li><a href="#/master/re-order-level" ng-click="toggleHamburger();">Re Order Level</a></li>
                             </ul>
                         </li>
@@ -116,8 +111,61 @@
         </div>
         <!--end side panel-->
 
+
         <div class="index-middle">
-            <div ng-view>
+            <div class="index-header  background-light">
+                
+                <div class="hamburger" ng-click="toggleHamburger();">
+                    <div ng-class="hamburgerOpen ? '' : 'open'">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-xs-1">
+                    <!--//space for hambager-->
+                </div>
+                <div class="col-xs-3">
+                    <span class="text-primary">
+                        CARE POINT
+                    </span>
+                    <span class="text-default">
+                        |
+                    </span>
+                    <span class="text-default">
+                        FINAL CHECK LIST
+                    </span>
+                </div>
+                <div class="col-xs-5 text-center">
+                    <span class="text-primary text-capitalize" style="font-weight: 300; font-size: 18px;">LOGIN BRANCH GOES HERE</span>
+                    |
+                    2017-08-01
+
+                </div>
+
+                <div class="col-xs-2">
+                    <table  style="width: auto; float: right;">
+                        <tbody>
+                            <tr>
+                                <td><a class="btn btn-primary"><span class="glyphicon glyphicon-bell"></span></a></td>
+                                <td><a class="btn btn-primary"><span class="glyphicon glyphicon-envelope"></span></a></td>
+                                <td><a class="btn btn-primary" ng-click="logout();"><span class="glyphicon glyphicon-user"></span></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <ul class="nav nav-tabs" ng-show="homepageUrls.length && isHomepage()">
+                    <li ng-repeat="url in homepageUrls">
+                        <a href="{{url.url}}">{{url.name}}</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <div class="index-content" ng-view>
                 <!--CONTENT OF THE APP-->
             </div>
         </div>
@@ -144,15 +192,15 @@
         <!-- inject:js -->
         <!-- endinject -->
         <script type="text/javascript">
-                    document.addEventListener("DOMContentLoaded", function (event) {
-                        setTimeout(function () {
-                            var element = document.getElementById("page-loading");
-                            element.className += " exit";
-                            setTimeout(function () {
-                                element.parentNode.removeChild(element);
-                            }, 250);
-                        }, 1000);
-                    });
+            document.addEventListener("DOMContentLoaded", function (event) {
+                setTimeout(function () {
+                    var element = document.getElementById("page-loading");
+                    element.className += " exit";
+                    setTimeout(function () {
+                        element.parentNode.removeChild(element);
+                    }, 250);
+                }, 1000);
+            });
         </script>
     </body>
 </html>

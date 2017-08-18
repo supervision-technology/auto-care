@@ -1,28 +1,32 @@
-<uib-tabset>
-    <uib-tab index="0" heading="JOB CARD ITEM ISSUE">
-        <div class="tile-list background-dark">
-            <div class="tile-list-title" style="margin-right: 5px;">
-                <h4>VEHICLE</h4>
-            </div>
-            <div style="margin-right: 5px;">
-                <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
-            </div>
-            <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 80px);">
-                <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
-                    <span>
-                        <img src="/img/01.png"/>  
-                        <label>
-                            {{model.vehicleData(details.vehicle).vehicleNo}}
-                        </label>
-                        <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
-                        <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
-                    </span>
+<div class="index-content-header">
+
+</div>  
+<div class="index-content-body">
+    <uib-tabset>
+        <uib-tab index="0" heading="JOB CARD ITEM ISSUE">
+            <div class="tile-list background-dark">
+                <div class="tile-list-title" style="margin-right: 5px;">
+                    <h4>VEHICLE</h4>
+                </div>
+                <div style="margin-right: 5px;">
+                    <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
+                </div>
+                <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 165px);">
+                    <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+                        <span>
+                            <img src="/img/01.png"/>  
+                            <label>
+                                {{model.vehicleData(details.vehicle).vehicleNo}}
+                            </label>
+                            <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
+                            <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="index-content-body">
-            <div style="float: left; width: calc(100% - 133px);">
-                <div class="col-xs-6 background-light-dark" style="height: calc(100vh - 80px)">
+
+            <div style="float: left; width: calc(100% - 132px);">
+                <div class="col-xs-6 background-light-dark" style="height: calc(100vh - 132px)">
                     <div class="row" style="display: flex; flex-flow: column;">
                         <div class="col-xs-6">
                             <h4 class="text-primary">HAVE TO CHECK LIST</h4>
@@ -54,7 +58,7 @@
                         <div class="col-xs-6">
                             <h4 class="text-primary">CHECKED LIST</h4>
                         </div>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 80px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 132px);">
                             <table class="square-table background-dark">
                                 <col style="width: 75%;"/>
                                 <col style="width: 15%;"/>
@@ -74,27 +78,25 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </uib-tab>
-    <uib-tab index="1" heading="Bay ITEM ISSUE">
-        <div class="tile-list background-dark">
-            <div class="tile-list-title select-success-row" style="margin-right: 5px;">
-                <h4>BAY</h4>
-            </div>
-            <div class="smart-scroll-y" style="height: calc(100vh - 80px);">
-                <div class="tile tile-128" style="animation: 0.5s zoomInLeft;" ng-repeat="details in model.bays" ng-class="{'select-success-row':details.indexNo == selectBayIndexNo}" ng-click="ui.selectBay(details);"> 
-                    <span style="margin-top: 50px;margin-left: -15px;">
-                        <label style="font-weight: bold;">
-                            {{details.name}}
-                        </label>
-                    </span>
+        </uib-tab>
+        <uib-tab index="1" heading="Bay ITEM ISSUE">
+            <div class="tile-list background-dark">
+                <div class="tile-list-title select-success-row" style="margin-right: 5px;">
+                    <h4>BAY</h4>
+                </div>
+                <div class="smart-scroll-y" style="height: calc(100vh - 132px);">
+                    <div class="tile tile-128" style="animation: 0.5s zoomInLeft;" ng-repeat="details in model.bays" ng-class="{'select-success-row':details.indexNo == selectBayIndexNo}" ng-click="ui.selectBay(details);"> 
+                        <span style="margin-top: 50px;margin-left: -15px;">
+                            <label style="font-weight: bold;">
+                                {{details.name}}
+                            </label>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="index-content-body">
-            <div style="float: left; width: calc(100% - 133px);">
-                <div class="col-xs-6 background-light-dark" style="height: calc(100vh-133px)">
+            <div style="float: left; width: calc(100% - 132px);">
+                <div class="col-xs-6 background-light-dark" style="height: calc(100vh-185px)">
                     <div class="row" style="display: flex; flex-flow: column;">
                         <div class="col-xs-6">
                             <h4 class="text-primary">HAVE TO CHECK LIST</h4>
@@ -113,7 +115,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 131px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 183px);">
                             <div ng-repeat="selections in model.bayItemList">
                                 <table class="square-table">
                                     <col style="width: 20%;"/>
@@ -150,7 +152,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 131px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 183px);">
                             <div ng-repeat="selections in model.bayCompliteItemList">
                                 <table class="square-table">
                                     <col style="width: 75%;"/>
@@ -169,7 +171,7 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-    </uib-tab>
-</uib-tabset>
+        </uib-tab>
+    </uib-tabset>
+</div>
