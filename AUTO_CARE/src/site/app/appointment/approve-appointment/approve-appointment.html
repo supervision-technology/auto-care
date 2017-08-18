@@ -1,0 +1,152 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <uib-tabset>
+        <uib-tab heading="Pending Appointment" index="0" select="ui.toggleType('PENDING');">
+            <div class="col-xs-12 background-light">
+                <div class="row col-xs-12">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                        <div class="col-md-6">
+                            <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem">
+                        </div>
+                        <table class="table-rounded">
+                            <col style="width: 10%">
+                            <col style="width: 10%">
+                            <col style="width: 10%">
+                            <col style="width: 15%">
+                            <col style="width: 15%">
+                            <col style="width: 30%">
+                            <col style="width: 10%">
+                            <thead class="background-dark">
+                                <tr>
+                                    <th>
+                                        <label>Vehicle</label>
+                                    </th>
+                                    <th>
+                                        <label>Client</label>
+                                    </th>
+                                    <th>
+                                        <label>Contact No</label>
+                                    </th>
+                                    <th>
+                                        <label>Start Date/Time</label>
+                                    </th>
+                                    <th>
+                                        <label>Received Date/Time</label>
+                                    </th>
+                                    <th>
+                                        <label>Job</label>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                            <table class="table-rounded">
+                                <col style="width: 10%">
+                                <col style="width: 10%">
+                                <col style="width: 10%">
+                                <col style="width: 15%">
+                                <col style="width: 15%">
+                                <col style="width: 30%">
+                                <col style="width: 10%">
+                                <tbody>
+                                    <tr ng-repeat="appointment in model.pendingAppointmentList|filter:{'vehicleNo' : searchItem}">
+                                        <!--<td><label class="label label-default">{{$index +1}}</label></td>-->
+                                        <td><label class="label label-default">{{appointment.vehicleNo}}</label></td>
+                                        <td>{{appointment.clientName}}</td>
+                                        <td>{{appointment.contactNo}}</td>
+                                        <td>{{appointment.appointmentDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                        <td>{{appointment.receivedDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                        <td>{{model.jobLable(appointment.item)}}</td>
+                                        <td>
+                                            <button class="btn btn-warning">
+                                                <span class="glyphicon glyphicon-warning-sign"> Approve</span>
+                                            </button>
+                                            <!--<a class="btn btn-primary" ng-click="ui.approve(appointment)"><span class="glyphicon glyphicon-edit"></span>Approve</a>-->
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab heading="Approved Appointment" index="1" select="ui.toggleType('APPROVED');">
+            <div class="col-xs-12 background-light">
+                <div class="row col-xs-12">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                        <div class="col-md-6">
+                            <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem">
+                        </div>
+                        <table class="table-rounded">
+                            <col style="width: 10%">
+                            <col style="width: 10%">
+                            <col style="width: 10%">
+                            <col style="width: 15%">
+                            <col style="width: 15%">
+                            <col style="width: 30%">
+                            <col style="width: 10%">
+                            <thead class="background-dark">
+                                <tr>
+                                    <th>
+                                        <label>Vehicle</label>
+                                    </th>
+                                    <th>
+                                        <label>Client</label>
+                                    </th>
+                                    <th>
+                                        <label>Contact No</label>
+                                    </th>
+                                    <th>
+                                        <label>Start Date/Time</label>
+                                    </th>
+                                    <th>
+                                        <label>Received Date/Time</label>
+                                    </th>
+                                    <th>
+                                        <label>Job</label>
+                                    </th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                            <table class="table-rounded">
+                                <col style="width: 10%">
+                                <col style="width: 10%">
+                                <col style="width: 10%">
+                                <col style="width: 15%">
+                                <col style="width: 15%">
+                                <col style="width: 30%">
+                                <col style="width: 10%">
+                                <tbody>
+                                    <tr ng-repeat="appointment in model.approvedAppointmentList|filter:{'vehicleNo' : searchItem}">
+                                        <!--<td><label class="label label-default">{{$index +1}}</label></td>-->
+                                        <td><label class="label label-default">{{appointment.vehicleNo}}</label></td>
+                                        <td>{{appointment.clientName}}</td>
+                                        <td>{{appointment.contactNo}}</td>
+                                        <td>{{appointment.appointmentDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                        <td>{{appointment.receivedDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                        <td>{{model.jobLable(appointment.item)}}</td>
+                                        <td class="text-right" ng-disabled="ui.mode !== 'EDIT'">
+                                            <a class="btn btn-primary" ng-click="ui.editeItems(items, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a class="btn btn-danger" ng-click="ui.deleteItems(items, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+    <!--    <div class="fab-container">
+            <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEMS'" ng-click="ui.saveItems()"><i class="glyphicon glyphicon-floppy-save"></i></a>
+            <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'PRICE_CATEGORY_DETAIL'" ng-click="ui.savePriceCategoryDetail()"><i class="glyphicon glyphicon-floppy-save"></i></a>
+            <a class="fab fab-lg fab-primary" fab-show="ui.mode ==='IDEAL'" ng-click="ui.new()"><i class="glyphicon glyphicon-plus"></i></a>
+        </div>-->
+</div>
