@@ -29,11 +29,21 @@
                     }, 10);
                 };
 
+                $scope.ui.clear = function () {
+                    ConfirmPane.dangerConfirm("Clear !")
+                            .confirm(function () {
+                                $scope.model.clear();
+                            })
+                            .discard(function () {
+                                console.log('discard');
+                            });
+                };
+
                 $scope.ui.selectStock = function (type) {
                     if (type === 'STOCK') {
                         $scope.textViewMode = 'STOCK';
                     }
-                    if (type === 'NON-STOCK') {
+                    if (type === 'NON STOCK') {
                         $scope.textViewMode = 'NON-STOCK';
                     }
                     if (type === 'SERVICE') {
@@ -42,8 +52,11 @@
                     if (type === 'PACKAGE') {
                         $scope.textViewMode = 'PACKAGE';
                     }
+                };
 
-
+                //find item by item type
+                $scope.ui.findItemByItemType = function (searchItemType) {
+                    $scope.model.findItemByItemType(searchItemType);
                 };
 
                 //save item
@@ -52,22 +65,19 @@
                         Notification.error("enter item type");
                     } else if (!$scope.model.itemData.name) {
                         Notification.error("enter item name");
-                    } else if (!$scope.model.itemData.salePriceNormal) {
-                        Notification.error("enter item sale price normal");
-                    } else if (!$scope.model.itemData.salePriceRegister) {
-                        Notification.error("enter item sale price register");
-                    } else if (!$scope.model.itemData.costPrice) {
-                        Notification.error("enter item cost price");
                     } else if ($scope.model.itemData.type
-                            && $scope.model.itemData.name
-                            && $scope.model.itemData.salePriceNormal
-                            && $scope.model.itemData.salePriceRegister
-                            && $scope.model.itemData.costPrice) {
-                        $scope.model.saveItem()
-                                .then(function () {
-                                    Notification.success("Item save Success");
-                                }, function () {
-                                    Notification.error("Item save Fail");
+                            && $scope.model.itemData.name) {
+                        ConfirmPane.primaryConfirm("Save Item !")
+                                .confirm(function () {
+                                    $scope.model.saveItem()
+                                            .then(function () {
+                                                Notification.success("Item save Success");
+                                            }, function () {
+                                                Notification.error("Item save Fail");
+                                            });
+                                })
+                                .discard(function () {
+                                    console.log('discard');
                                 });
                     }
                 };
@@ -85,19 +95,24 @@
                             && $scope.model.priceCategoryDetail.priceCategory
                             && $scope.model.priceCategoryDetail.normalPrice
                             && $scope.model.priceCategoryDetail.registerPrice) {
-                        ConfirmPane.primaryConfirm("Save price categiry details !")
-                                .confirm(function () {
-                                    $scope.model.savePriceCategoryDetail()
-                                            .then(function () {
-                                                Notification.success("save price categiry details");
-                                                $scope.model.priceCategoryDetail.item = $scope.selectNextPriceCategoryDetails;
-                                            }, function () {
-                                                Notification.error("save price categiry details fail");
-                                            });
-                                })
-                                .discard(function () {
-                                    console.log('discard');
-                                });
+                        var requestData = $scope.model.duplicateCheckPriceCategoryDetails($scope.model.priceCategoryDetail.item, $scope.model.priceCategoryDetail.priceCategory);
+                        if (angular.isUndefined(requestData)) {
+                            ConfirmPane.primaryConfirm("Save price categiry details !")
+                                    .confirm(function () {
+                                        $scope.model.savePriceCategoryDetail()
+                                                .then(function () {
+                                                    Notification.success("save price categiry details");
+                                                    $scope.model.priceCategoryDetail.item = $scope.selectNextPriceCategoryDetails;
+                                                }, function () {
+                                                    Notification.error("save price categiry details fail");
+                                                });
+                                    })
+                                    .discard(function () {
+                                        console.log('discard');
+                                    });
+                        } else {
+                            Notification.error("This Item Price Category Details Allrady Exists !");
+                        }
                     }
                 };
 
@@ -112,8 +127,6 @@
                         $scope.selectNextPriceCategoryDetails = null;
                     }
                 };
-
-
 
                 //save consumable item
                 $scope.ui.saveConsumable = function () {

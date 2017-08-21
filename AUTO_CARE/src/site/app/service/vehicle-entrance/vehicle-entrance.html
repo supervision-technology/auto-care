@@ -11,7 +11,7 @@
                 </center>
             </div>
         </div> 
-        <div class="col-xs-12 background-light" ng-show="ui.changeUi === 'ui2'">
+        <div class="col-xs-12 background-light nopadding" ng-show="ui.changeUi === 'ui2'" style="height:calc(100vh - 52px);">
             <div class="form-group col-xs-12">
                 <div class="col-xs-12">
                     <table> 
@@ -41,11 +41,10 @@
                 <div class="row">
                     <div class="col-xs-3">
                         <div class="form-inline">
-                        <h3>Mobile No</h3>
-                        <div class="form-group">
-                            <lable for="email">+94 &nbsp;</lable>
-                            <input id="email" type="number" ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" maxlength="10" placeholder="MOBILE NO.">
-                        </div>
+                            <h3>Mobile No</h3>
+                            <div class="form-group"> 
+                                <input ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="MOBILE NO." name="somename" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "9"/>
+                            </div>
                         </div>
                     </div>
                     <div class="col-xs-1">
@@ -54,6 +53,8 @@
                             <option value="Mr">Mr</option>
                             <option value="Mrs">Mrs</option>
                             <option value="Miss">Miss</option>
+                            <option value="Rev">Rev</option>
+                            <option value="Dr">Dr</option>
                         </select>
                     </div>
                     <div class="col-xs-4">
@@ -84,7 +85,7 @@
                             </thead>
                         </table>
                     </div>
-                    <div class="smart-scroll-y" style="height: calc(100vh - 295px);">
+                    <div class="smart-scroll-y" style="height: calc(100vh - 366px);">
                         <table class="square-table table-hover background-light-dark">
                             <col style="width: 25%">
                             <col style="width: 35%">
@@ -105,7 +106,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xs-offset-2 col-xs-8 background-light" style="height:calc(100vh)" ng-show="ui.changeUi === 'ui3'">
+        <div class="col-xs-offset-2 col-xs-8 background-light" style="height:calc(100vh - 52px)" ng-show="ui.changeUi === 'ui3'">
             <uib-tabset>
                 <uib-tab heading="DETAILS" index="0">
                     <div class="form-group col-xs-12" style="margin-top: 40px">
@@ -210,7 +211,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <div class="smart-scroll-y" style="height: calc(100vh - 104px);">
+                            <div class="smart-scroll-y" style="height: calc(100vh - 156px);">
                                 <table class="square-table">
                                     <col style="width: 30%;"/>
                                     <col style="width: 30%;"/>
@@ -244,8 +245,8 @@
                 </uib-tab>
             </uib-tabset>
         </div>
-        <div class="screen col-xs-12 background-dark" style="position: absolute; height: 100vh;" ng-show="ui.changeUi === 'ui4'">
-            <div class="row smart-scroll-y" style="height: 100vh;">
+        <div class="col-xs-12 background-dark" style="height: calc(100vh - 52px);" ng-show="ui.changeUi === 'ui4'">
+            <div class="row smart-scroll-y nopadding" style="width: 100%">
                 <div class="image-tile" style="background-color:#DE4E71;" ng-show="ui.imageShowMode1 === 'NotAvalable'">
                     <label class="image-tile-browse" for="file">
                         <span class="glyphicon glyphicon-camera"></span>
@@ -309,9 +310,13 @@
                 <div class="image-tile" style="background-color: #FFF8DC; height: 46vh; text-align: center;" ng-show="ui.imageShowMode6 === 'Avalable'" >
                     <img src="{{imagemodelX[5]}}" id="tableBanner" style="width: 100%; height: 100%"> 
                 </div>
-                <div class="col-xs-6 nopadding" style=" width: 350px;">
-                    <button  class="btn btn-success btn-lg" ng-click="ui.backToSelectVehicleDetail();" >BACK</button>
-                    <button  class="btn btn-success btn-lg" ng-click="ui.uploadForm();" >Next</button>
+                <!--                <div class="col-xs-6 nopadding" style=" width: 350px;">
+                                    <button  class="btn btn-success btn-lg" ng-click="ui.backToSelectVehicleDetail();" >BACK</button>
+                                    <button  class="btn btn-success btn-lg" ng-click="ui.uploadForm();" >Next</button>
+                                </div>-->
+                <div class="fab-container pull-left">
+                    <a class="fab fab-lg fab-success" ng-click="ui.backToSelectVehicleDetail();"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                    <a class="fab fab-lg fab-primary" ng-click="ui.uploadForm();"><i class="glyphicon glyphicon-ok"></i></a>
                 </div>
             </div>
         </div>

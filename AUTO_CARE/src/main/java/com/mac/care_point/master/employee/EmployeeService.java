@@ -8,6 +8,7 @@ package com.mac.care_point.master.employee;
 import com.mac.care_point.master.employee.model.Employee;
 import com.mac.care_point.system.exception.DuplicateEntityException;
 import java.util.List;
+import org.hibernate.validator.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -52,7 +53,23 @@ public class EmployeeService {
         employeeRepository.delete(indexNo);
     }
 
-    List<Employee> findByType(String employeeType) {
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+    
+    public List<Employee> findByType(String employeeType) {
         return employeeRepository.findByType(employeeType);
+    }
+
+    public void deleteEmployee(Integer indexNo) {
+        try {
+            employeeRepository.delete(indexNo);
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot delete this Employee because there are details in other transaction");
+        }
+    }
+
+    public Employee findByIndexNo(Integer indexNo) {
+        return employeeRepository.findOne(indexNo);
     }
 }

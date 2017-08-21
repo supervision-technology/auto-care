@@ -103,6 +103,49 @@
 //---------------------------------- end invoice ----------------------------------
                 };
 
+                $scope.ui.invoiceViewer = function () {
+                    console.log("Invoice_From_Job_Card");
+                    console.log("Invoice_From_Job_Card");
+                    var reportName = "Invoice_From_Job_Card";
+                    //get report details
+                    invoiceService.reportData(reportName)
+                            .success(function (data) {
+                                $scope.model.currentReport.report = data;
+
+                                //get report paramiters
+                                invoiceService.listParameters(data)
+                                        .success(function (data) {
+                                            $scope.model.currentReport.parameters = data;
+                                        });
+
+                                //set paramiters values
+                                $scope.model.currentReport.parameterValues.JOB_CARD = $scope.selectedJobCardIndexNo;
+
+                                //view reports
+                                invoiceService.viewReport(
+                                        $scope.model.currentReport.report,
+                                        $scope.model.currentReport.parameters,
+                                        $scope.model.currentReport.parameterValues
+                                        )
+                                        .success(function (response) {
+                                            var file = new Blob([response], {type: 'application/pdf'});
+                                            var fileURL = URL.createObjectURL(file);
+
+                                            $scope.content = $sce.trustAsResourceUrl(fileURL);
+
+                                            $uibModal.open({
+                                                animation: true,
+                                                ariaLabelledBy: 'modal-title',
+                                                ariaDescribedBy: 'modal-body',
+                                                templateUrl: 'invoice_popup.html',
+                                                scope: $scope,
+                                                size: 'lg'
+                                            });
+
+                                        });
+                            });
+                };
+
                 $scope.ui.saveInvoice = function () {
                     if ($scope.selectedJobCardIndexNo) {
                         if ($scope.invoiceModel.paymentData.chequeAmount > 0 || $scope.invoiceModel.paymentData.balance > 0) {

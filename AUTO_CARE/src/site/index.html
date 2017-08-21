@@ -4,6 +4,7 @@
         <title>Care Point</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="img/care-point-logo.png">
 
         <!--css-->
         <!-- inject:css -->
@@ -33,76 +34,77 @@
                         <li> 
                             <a class="menu-header">SERVICE</a>
                             <ul>
-                                <li><a href="#/service/vehicle-entrance" ng-click="toggleHamburger();">Vehicle Entrance</a></li> 
-                                <li><a href="#/service/service-selection" ng-click="toggleHamburger();">Service Selections</a></li>
-                                <li><a href="#/service/item-selection" ng-click="toggleHamburger();">Stock Item Selections</a></li>
-                                <li><a href="#/service/final-check-list" ng-click="toggleHamburger();">Final Check List</a></li>           
-                                <li><a href="#/service/bay-assignment" ng-click="toggleHamburger();">Bay Assignment</a></li>           
-                                <li><a href="#/service/employee-assignment" ng-click="toggleHamburger();">Employee Assignment</a></li>           
-                                <li><a href="#/service/customer-satisfaction" ng-click="toggleHamburger();">Customer Satisfaction</a></li>           
+                                <li><a href="#/service/vehicle-entrance" ng-click="toggleHamburger('Vehicle Entrance');">Vehicle Entrance</a></li> 
+                                <li><a href="#/service/service-selection" ng-click="toggleHamburger('Service Selections');">Service Selections</a></li>
+                                <li><a href="#/service/item-selection" ng-click="toggleHamburger('Stock Item Selections');">Stock Item Selections</a></li>
+                                <li><a href="#/service/final-check-list" ng-click="toggleHamburger('Final Check List');">Final Check List</a></li>           
+                                <li><a href="#/service/bay-assignment" ng-click="toggleHamburger('Bay Assignment');">Bay Assignment</a></li>           
+                                <li><a href="#/service/employee-assignment" ng-click="toggleHamburger('Employee Assignment');">Employee Assignment</a></li>           
+                                <li><a href="#/service/customer-satisfaction" ng-click="toggleHamburger('Customer Satisfaction');">Customer Satisfaction</a></li>           
                             </ul>
                         </li>
                         <li> 
                             <a class="menu-header">FRONT OFFICE</a>
                             <ul>
-                                <li><a href="#/stock/request-item" ng-click="toggleHamburger();">Request Item</a></li>    
-                                <li><a href="#/front-office/invoice" ng-click="toggleHamburger();">Invoice</a></li>           
-                                <!--                                <li><a href="#/front-office/bay-item-issue" ng-click="toggleHamburger();">Bay Item Issue</a></li>    -->
+                                <li><a href="#/stock/request-item" ng-click="toggleHamburger('Request Item');">Request Item</a></li>    
+                                <li><a href="#/front-office/invoice" ng-click="toggleHamburger('Invoice');">Invoice</a></li>           
+                                <!--                                <li><a href="#/front-office/bay-item-issue" ng-click="toggleHamburger('Bay Item Issue');">Bay Item Issue</a></li>    -->
                             </ul>
                         </li>
                         <li>
                             <a class="menu-header">REPORTS</a>
                             <ul>
-                                <li><a href="#/reports/general/report-viewer" ng-click="toggleHamburger();">REPORTS</a></li>
+                                <li><a href="#/reports/general/report-viewer" ng-click="toggleHamburger('REPORTS');">REPORTS</a></li>
                             </ul>
                         </li>
                         <li> 
                             <a class="menu-header">STOCK TRANSFER</a>
                             <ul>
-                                <li><a href="#/stock/transfer/branch-transfer-out" ng-click="toggleHamburger();">Branch Transfer Out</a></li> 
-                                <li><a href="#/stock/transfer/branch-transfer-out-approve" ng-click="toggleHamburger();">Branch Transfer Out Approve</a></li> 
-                                <li><a href="#/stock/transfer/branch-transfer-in" ng-click="toggleHamburger();">Branch Transfer In</a></li>
-                                <li><a href="#/stock/transfer/internal-transfer-out" ng-click="toggleHamburger();">Internal Transfer Out</a></li>
-                                <li><a href="#/stock/transfer/internal-transfer-in" ng-click="toggleHamburger();">Internal Transfer In</a></li>    
+                                <li><a href="#/stock/transfer/branch-transfer-out" ng-click="toggleHamburger('Branch Transfer Out');">Branch Transfer Out</a></li> 
+                                <li><a href="#/stock/transfer/branch-transfer-out-approve" ng-click="toggleHamburger('Branch Transfer Out Approve');">Branch Transfer Out Approve</a></li> 
+                                <li><a href="#/stock/transfer/branch-transfer-in" ng-click="toggleHamburger('Branch Transfer In');">Branch Transfer In</a></li>
+                                <li><a href="#/stock/transfer/internal-transfer-out" ng-click="toggleHamburger(Internal Transfer Out);">Internal Transfer Out</a></li>
+                                <li><a href="#/stock/transfer/internal-transfer-in" ng-click="toggleHamburger('Internal Transfer In');">Internal Transfer In</a></li>    
                             </ul>
                         </li>
                         <li>
                             <a class="menu-header">PURCHASE ORDER</a>
                             <ul>
-                                <li><a href="#/front-office/purchase-order/request" ng-click="toggleHamburger();">Purchase Order Request</a></li>
-                                <li><a href="#/front-office/purchase-order/approve" ng-click="toggleHamburger();">Purchase Order Approve</a></li>
+                                <li><a href="#/front-office/purchase-order/request" ng-click="toggleHamburger('Purchase Order Request');">Purchase Order Request</a></li>
+                                <li><a href="#/front-office/purchase-order/approve" ng-click="toggleHamburger('Purchase Order Approve');">Purchase Order Approve</a></li>
                             </ul>
                         </li>
                         <li>
                             <a class="menu-header">GOODS RECEIVED NOTE</a>
                             <ul>
-                                <li><a href="#/front-office/grn/grn-request" ng-click="toggleHamburger();">GRN Receive</a></li>
-                                <li><a href="#/front-office/grn/grn-approve" ng-click="toggleHamburger();">GRN Approve</a></li>
-                                <li><a href="#/front-office/grn/grn-direct" ng-click="toggleHamburger();">Direct GRN</a></li>
+                                <li><a href="#/front-office/grn/grn-request" ng-click="toggleHamburger('GRN Receive');">GRN Receive</a></li>
+                                <li><a href="#/front-office/grn/grn-approve" ng-click="toggleHamburger('GRN Approve');">GRN Approve</a></li>
+                                <li><a href="#/front-office/grn/grn-direct" ng-click="toggleHamburger('Direct GRN');">Direct GRN</a></li>
                             </ul>
                         </li>
 
                         <li>
                             <a class="menu-header">SUPPLIER PAYMENT</a>
                             <ul>
-                                <li><a href="#/supplier-payment/supplier-payment" ng-click="toggleHamburger();">Supplier Payment</a></li>
+                                <li><a href="#/supplier-payment/supplier-payment" ng-click="toggleHamburger('Supplier Payment');">Supplier Payment</a></li>
                             </ul>
                         </li>
                         <li> 
                             <a class="menu-header">REGISTRATION</a>
                             <ul>
-                                <li><a href="#/master/item" ng-click="toggleHamburger();">Item</a></li>
-                                <li><a href="#/master/sub-category" ng-click="toggleHamburger();">Sub Category</a></li>
-                                <li><a href="#/master/category" ng-click="toggleHamburger();">Category</a></li>
-                                <li><a href="#/master/item-category" ng-click="toggleHamburger();">Item Category</a></li>
-                                <li><a href="#/master/item-department" ng-click="toggleHamburger();">Item Department</a></li>
-                                <li><a href="#/master/brand" ng-click="toggleHamburger();">Brand</a></li>
-                                <li><a href="#/master/price-category" ng-click="toggleHamburger();">Price Category</a></li>
-                                <li><a href="#/master/vehicle-type" ng-click="toggleHamburger();">Vehicle Type</a></li>
-                                <li><a href="#/master/client" ng-click="toggleHamburger();">Client</a></li>
-                                <li><a href="#/master/vehicle" ng-click="toggleHamburger();">Vehicle</a></li>
-                                <li><a href="#/master/sub-item" ng-click="toggleHamburger();">Sub Item</a></li>
-                                <li><a href="#/master/re-order-level" ng-click="toggleHamburger();">Re Order Level</a></li>
+                                <li><a href="#/master/item" ng-click="toggleHamburger('Item');">Item</a></li>
+                                <li><a href="#/master/sub-category" ng-click="toggleHamburger('Sub Category');">Sub Category</a></li>
+                                <li><a href="#/master/category" ng-click="toggleHamburger('Category');">Category</a></li>
+                                <li><a href="#/master/item-category" ng-click="toggleHamburger('Item Category');">Item Category</a></li>
+                                <li><a href="#/master/item-department" ng-click="toggleHamburger('Item Department');">Item Department</a></li>
+                                <li><a href="#/master/brand" ng-click="toggleHamburger('Brand');">Brand</a></li>
+                                <li><a href="#/master/price-category" ng-click="toggleHamburger('Price Category');">Price Category</a></li>
+                                <li><a href="#/master/vehicle-type" ng-click="toggleHamburger('Vehicle Type');">Vehicle Type</a></li>
+                                <li><a href="#/master/client" ng-click="toggleHamburger('Client');">Client</a></li>
+                                <li><a href="#/master/vehicle" ng-click="toggleHamburger('Vehicle');">Vehicle</a></li>
+                                <li><a href="#/master/sub-item" ng-click="toggleHamburger('Sub Item');">Sub Item</a></li>
+                                <li><a href="#/master/re-order-level" ng-click="toggleHamburger('Re Order Level');">Re Order Level</a></li>
+                                <li><a href="#/master/employee" ng-click="toggleHamburger('Employee');">Employee</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -133,13 +135,13 @@
                         |
                     </span>
                     <span class="text-default">
-                        FINAL CHECK LIST
+                        {{currentPageName}}
                     </span>
                 </div>
                 <div class="col-xs-5 text-center">
                     <span class="text-primary text-capitalize" style="font-weight: 300; font-size: 18px;">LOGIN BRANCH GOES HERE</span>
                     |
-                    2017-08-01
+                    {{date}}
 
                 </div>
 
@@ -156,13 +158,13 @@
                 </div>
             </div>
 
-            <div>
+<!--            <div>
                 <ul class="nav nav-tabs" ng-show="homepageUrls.length && isHomepage()">
                     <li ng-repeat="url in homepageUrls">
                         <a href="{{url.url}}">{{url.name}}</a>
                     </li>
                 </ul>
-            </div>
+            </div>-->
 
 
             <div class="index-content" ng-view>

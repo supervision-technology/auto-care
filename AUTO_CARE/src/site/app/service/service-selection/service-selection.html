@@ -9,28 +9,26 @@
             <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
         </div>
         <div class="smart-scroll-y" style="height: calc(100vh - 126px);">
-            <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+            <div class="tile tile-155" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards|filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
                 <span> 
                     <img src="/img/01.png"/>  
-                    <label>
-                        {{model.vehicleData(details.vehicle).vehicleNo}}
-                    </label>
+                    <label>{{model.vehicleData(details.vehicle).vehicleNo}}</label>
                     <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
                     <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
+                    <label class="label" style="background: {{model.priceCategoryData(details.priceCategory).colour}};">{{model.priceCategoryData(details.priceCategory).name}}</label>
+                    <label class="label label-default">{{details.date}}</label>
+                    <label class="label label-default">{{details.indexNo}}</label>
                 </span>
             </div>
         </div>
     </div>
     <div style="float: left; width: calc(100% - 133px);">
         <div class="col-xs-7 background-light" ng-show="ui.model === 'CATEGORY'">
-            <div class="row full-height" style="display: flex; flex-flow: column;">
+            <div class="row" style="display: flex; flex-flow: column;height: calc(100vh -  52px)">
                 <div class="smart-scroll-y" style="height: calc(100vh - 55px);">
                     <div class="tile-lists">
                         <div class="tiles tile-200 col-xs-4" style="background: {{detils.colour}};" ng-repeat="detils in model.category|filter:{viewApprove : true}" ng-click="ui.categorySelections(detils);">
                             <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
-                                <!--                                <div class="col-xs-4">
-                                                                    <img src="/img/{{detils.image}}"/>
-                                                                </div>-->
                                 <div class="col-xs-8" style="font-size: 19px;">
                                     {{detils.name}}
                                 </div>
@@ -42,7 +40,7 @@
         </div>
 
         <div class="col-xs-7 background-light" ng-show="ui.model === 'PACKAGE'">
-            <div class="row full-height" style="display: flex; flex-flow: column;">
+            <div class="row " style="display: flex; flex-flow: column;height: calc(100vh -  52px)">
                 <table class="square-table background-dark">
                     <col style="width: 50%;"/>
                     <col style="width: 30%;"/>
@@ -95,7 +93,7 @@
 
         <!------ attenctions selction ---->
         <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'ATTENCTIONS'">
-            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);" >
                 <uib-tabset>
                     <uib-tab heading="NEW OBSERVATION" index="0">
                         <table class="square-table background-dark">
@@ -108,7 +106,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 90px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 142px);">
                             <div ng-repeat="detils in model.vehicleAttenctionsCategoryList">
                                 <table class="square-table">
                                     <col style="width: 100%;"/>
@@ -215,17 +213,19 @@
                         </tr>
                     </thead>
                 </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 105px);">
+                <div class="smart-scroll-y" style="height: calc(100vh - 157px);">
                     <table class="square-table">
                         <col style="width: 50%;"/>
                         <col style="width: 30%;"/>
                         <col style="width: 20%;"/>
                         <tbody>
                             <tr class="background-light" ng-repeat="detils in model.filterItems|filter:{ name : searchService}">
-                                <td class="text-bold">{{detils.name}}</td>
+                                <td class="text-bold" ng-hide="detils.qtyWise">{{detils.name}}</td>
+                                <td class="text-bold" ng-show="detils.qtyWise">{{detils.name}} &nbsp;&nbsp;<label class="label label-warning">QTY WISE</label></td>
                                 <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
                                 <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
-                                <td><a style="background-color: {{selectedCategoryColors}}" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                                <td ng-hide="detils.qtyWise"><a style="background-color: #009688;font-weight: bold;" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                                <td ng-show="detils.qtyWise"><a style="background-color: #F5A623;font-weight: bold;" class="btn" ng-click="ui.viewQtyWiseServiceItem(detils);"/><span class="glyphicon glyphicon-plus"></span></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -242,7 +242,7 @@
                     <thead>
                         <tr>
                             <th><input type="text" class="search-input input-sm" placeholder="search" ng-model="itemKey"></th>
-                            <th><a style="background-color: #009688;" class="btn" ng-click="ui.getQuickSeacrhItem(itemKey);"/>S</a></th>
+                            <th><a style="background-color: #009688;" class="btn" ng-click="ui.getQuickSeacrhItem(itemKey);"/><span class="glyphicon glyphicon-search"></span></a></th>
                         </tr>
                     </thead>
                 </table>
@@ -259,17 +259,19 @@
                         </tr>
                     </thead>
                 </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 105px);">
+                <div class="smart-scroll-y" style="height: calc(100vh - 157px);">
                     <table class="square-table">
                         <col style="width: 50%;"/>
                         <col style="width: 30%;"/>
                         <col style="width: 20%;"/>
                         <tbody>
                             <tr class="background-light" ng-repeat="detils in model.filterQuickSeacrhItems">
-                                <td class="text-bold">{{detils.name}}</td>
+                                <td class="text-bold" ng-hide="detils.qtyWise">{{detils.name}}</td>
+                                <td class="text-bold" ng-show="detils.qtyWise">{{detils.name}} &nbsp;&nbsp;<label class="label label-warning">QTY WISE</label></td>
                                 <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
                                 <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
-                                <td><a style="background-color: #009688;font-weight: bold;" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                                <td ng-hide="detils.qtyWise"><a style="background-color: #009688;font-weight: bold;" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
+                                <td ng-show="detils.qtyWise"><a style="background-color: #F5A623;font-weight: bold;" class="btn" ng-click="ui.viewQtyWiseServiceItem(detils);"/><span class="glyphicon glyphicon-plus"></span></a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -278,7 +280,7 @@
         </div>
 
         <div class="col-xs-5 background-dark">
-            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
                 <uib-tabset active="activeTab">
                     <!------ all total (package and service and stock items)---->
                     <uib-tab heading="ALL SELECTIONS" index="0">
@@ -301,7 +303,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 287px);padding-left: 5px;">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 339px);padding-left: 5px;">
                             <table class="square-table background-dark">
                                 <col style="width: 10%;"/>
                                 <col style="width: 40%;"/>
@@ -319,7 +321,11 @@
                                         <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType == 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>        
                                     </tr>
                                     <tr style="border: none">
-                                        <td colspan="2"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
+                                        <td colspan="2" ng-show="selections.itemType === 'STOCK_ITEM'"><small>{{model.itemUnitData(selections.itemUnit).name}} &nbsp; {{selections.price}}</td>
+                                        <td colspan="2" ng-show="selections.itemType === 'SERVICE_ITEM'"><small>{{selections.price}}&nbsp; x &nbsp;</small> </td>
+                                        <td colspan="2" ng-show="selections.itemType === 'PACKAGE_ITEM'"><small>{{selections.price}}&nbsp; x &nbsp;</small> </td>
+                                        <td colspan="2" ng-show="selections.itemType === 'SERVICE_ITEM_QTY_WISE'"><label class="label label-default" style="display: inline-block; width: 100px;background-color: #F5A623;">SERVICE ITEM QTY WISE</label><small>{{selections.price}}&nbsp; x &nbsp;</small> </td>
+
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>
                                         <td class="text-right"><small>{{selections.value|number:2}}</small></td>
                                         <td ng-hide="selections.itemUnit && selections.orderStatus === 'COMPLITED'"><a class="btn btn-danger" ng-click="ui.deleteSelectDetails($index, selections.indexNo);"><span class="glyphicon glyphicon-remove"></span></a></td>
@@ -384,7 +390,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 140px);padding-left: 5px;">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 192px);padding-left: 5px;">
                             <table class="square-table background-dark">
                                 <col style="width: 10%;"/>
                                 <col style="width: 40%;"/>
@@ -448,7 +454,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 140px);padding-left: 5px;">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 192px);padding-left: 5px;">
                             <table class="square-table background-dark">
                                 <col style="width: 10%;"/>
                                 <col style="width: 40%;"/>
@@ -560,7 +566,7 @@
                                     </thead>
                                 </table>
                             </div>
-                            <div class="smart-scroll-y" style="height: calc(100vh - 239px);padding-left: 5px;">
+                            <div class="smart-scroll-y" style="height: calc(100vh - 291px);padding-left: 5px;">
                                 <table class="square-table background-dark">
                                     <col style="width: 70%;"/>
                                     <col style="width: 10%;"/>
@@ -614,13 +620,13 @@
 <div class="fab-container pull-left">
     <a class="fab fab-lg fab-success" ng-hide="ui.model === 'CATEGORY'" ng-click="ui.backToCategory();"><i class="glyphicon glyphicon-chevron-left"></i></a>
 </div>
-<script type="text/ng-template" id="item_selection_popup.html">
+<script type="text/ng-template" id="qty_wise_item_popup.html">
     <div class="col-lg-12 background-light">
     <div class="row">
-    <div class="modal-header bg-primary">
+    <div class="modal-header" style="background-color: #F5A623;">
     <div class="col-lg-12">
     <center>
-    <label> {{itemName}}</label>
+    <label> {{tempItem.name}}</label>
     </center>
     </div>
     </div>
@@ -631,13 +637,9 @@
     <col style="width: 20%;"/>
     <col style="width: 10%;"/>
     <tbody>
-    <tr class="background-light" ng-repeat="itemUnits in model.selectItemUnits">
-    <td> 
-    {{itemUnits.name}}  
-    </td>
-    <td>
-    {{itemUnits.salePriceNormal|number:2}}
-    </td>
+    <tr class="background-light">
+    <td ng-show="selectVehicleType === 'REGISTER'">{{tempItem.salePriceRegister|number:2}}</td>
+    <td ng-show="selectVehicleType === 'NORMAL'">{{tempItem.salePriceNormal|number:2}}</td>
     <td>
     <div range-spinner
     range-min="1" 
@@ -651,15 +653,19 @@
     id-of-field="rangeFieldId">
     </div>
     </td>
-    <td><a style="background-color: {{selectedCategoryColors}}" class="btn" ng-click="ui.addItemUnit(itemUnits.indexNo, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
+    <td> 
+    <td ng-show="selectVehicleType === 'REGISTER'">{{tempItem.salePriceRegister * qty |number:2}}</td>
+    <td ng-show="selectVehicleType === 'NORMAL'">{{tempItem.salePriceNormal * qty |number:2}}</td>
+    <td><a style="background-color: #F5A623;" class="btn" ng-click="ui.addQtyWiseServiceItem(tempItem, qty);"><span class="glyphicon glyphicon-plus"></span></a></td>
     </tr>
     </tbody>
     </table>
     </div>
-    <div class="modal-footer bg-primary">
+    <div class="modal-footer" style="background-color: #F5A623;">
     <div class="col-lg-12">
     <center>
-    <label class=""> ITEM STOCK  QTY - {{itemStockItemQty}}</label>
+    <label ng-show="selectVehicleType === 'REGISTER'"> SERVICE AMOUNT - {{tempItem.salePriceRegister * qty|number:2}}</label>
+    <label ng-show="selectVehicleType === 'NORMAL'"> SERVICE AMOUNT - {{tempItem.salePriceNormal * qty|number:2}}</label>
     </center>
     </div>
     </div>
