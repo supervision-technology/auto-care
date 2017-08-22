@@ -4,9 +4,27 @@
         <div class="col-xs-offset-2 col-xs-8 background-light" style="height:calc(100vh - 100px);margin-top: 52px;" ng-show="ui.changeUi === 'ui1'" >
             <div class="col-xs-offset-2 col-xs-8 background-light" style="margin-top: 20%;" >
                 <center><img class="img-responsive" src="../../../img/care-point-logo.png" alt=""/></center><br>
-                <input type="text" ng-model="vehicleNo" class="form-control input-lg" placeholder="VEHICLE NO" style="font-size: 25px;text-align: center" ng-keypress="ui.keyEvent($event);"><br>
+                <!--<input type="text" ng-model="vehicleNo" class="form-control input-lg" placeholder="VEHICLE NO" style="font-size: 25px;text-align: center" ng-keypress="ui.keyEvent($event);"><br>-->
+
+                <div class="input-group input-group-lg">
+                    <input type="text" style="text-transform: uppercase;font-size: 25px;text-align: center" class="form-control" placeholder="Search vehicles..."
+                           ng-model="model.searchKeyword">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                    </span>
+                </div>
+                <div class="list-group" style="padding-top: 5px; position: absolute; z-index: 5; width: calc(100% - 30px); margin-bottom: 0px;"
+                     ng-show="model.showSuggestions">
+                    <a class="list-group-item" ng-repeat="vehicle in model.searchSuggestions|limitTo:5" ng-click="ui.setVehicleData(vehicle);">
+                        <i class="glyphicon glyphicon-cd"></i>&nbsp; 
+                        <b ng-bind="vehicle.vehicleNo">[VEHICLE NUMBER]</b>&nbsp;<small ng-bind="'(' + vehicle.indexNo + ')'"></small>&nbsp;<small ng-bind="'(' + vehicle.client + ')'"></small>
+                    </a>
+                    <a class="list-group-item active" ng-click="ui.secondStep();">
+                        <b><i>(ADD NEW VEHICLE)</i></b>
+                    </a>
+                </div>
                 <center>
-                    <input type="submit" class="btn btn-lg btn-default" ng-click="ui.secondStep()" style="width: 150px" value="Search"/>
+                    <input type="submit" class="btn btn-lg btn-default" ng-click="ui.secondStep()" style="width: 150px; margin-top: 10px" value="Search"/>
                 </center>
             </div>
         </div> 
@@ -19,7 +37,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <h1 class="text-center">Vehicle No : {{vehicleNo}}</h1>
+                                    <h1 class="text-center">Vehicle No : {{model.searchKeyword}}</h1>
                                 </td>
                                 <td rowspan="2" >
                         <center>
@@ -47,7 +65,7 @@
                         </div>
                     </div>
                     <div class="col-xs-1">
-                        <h3>Resident</h3>
+                        <h3>Title</h3>
                         <select style="padding-left: 1px;" class="form-control input-lg" ng-disabled="ui.clientDisabled" ng-model="model.clientData.resident">
                             <option value="Mr">Mr</option>
                             <option value="Mrs">Mrs</option>
@@ -69,36 +87,60 @@
                 <div class="row">
                     <div> 
                         <table class="square-table table-hover background-light-dark">
-                            <col style="width: 25%">
+                            <col style="width: 15%">
+                            <col style="width: 10%">
                             <col style="width: 35%">
                             <col style="width: 35%">
                             <col style="width: 5%">
                             <thead class="background-dark">
                                 <tr>
                                     <th style="font-size: 20px"><label>Mobile</label></th>
+                                    <th style="font-size: 20px"><label>Title</label></th>
                                     <th style="font-size: 20px"><label>Name</label></th>
-                                    <th style="font-size: 20px"><label>City</label> </th>
+                                    <th style="font-size: 20px"><label>Vehicles</label> </th>
+                                    <th style="font-size: 20px"><label>&nbsp;</label> </th>
                                 </tr>
                             </thead>
                         </table>
                     </div>
-                    <div class="smart-scroll-y" style="height: calc(100vh - 295px);">
-                        <table class="square-table table-hover background-light-dark">
-                            <col style="width: 25%">
+                    <div class="smart-scroll-y" style="height: calc(100vh - 410px);">
+                        <table class="square-table table-hover background-dark">
+                            <col style="width: 15%">
+                            <col style="width: 10%">
                             <col style="width: 35%">
                             <col style="width: 35%">
                             <col style="width: 5%">
                             <tbody>
-                                <tr ng-repeat="client in model.clientList| filter:model.clientData.mobile || model.clientData.name | orderBy:'indexNo'">
+                                <tr ng-repeat="client in model.clientList| filter:{mobile:model.clientData.mobile === null?'':model.clientData.mobile} | filter:{name:model.clientData.name === null?'':model.clientData.name} | orderBy:'indexNo'">
                                     <td style="font-size: 20px">{{client.mobile}}</td>
+                                    <td style="font-size: 20px">{{client.resident}}</td>
                                     <td style="font-size: 20px">{{client.name}}</td>
-                                    <td style="font-size: 20px">{{client.address1}}</td>
+                                    <td style="font-size: 20px">{{client.vehicles}}</td>
                                     <td class="text-right" style="padding-left: 5px;">
                                         <button class="btn btn-default" ng-click="ui.setParam(client)"><span class="glyphicon glyphicon-check"></span></button>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="col-xs-1 text-bold" class="input-group">
+                        <h3>&nbsp;</h3><input type="checkbox" ng-model="isDriverChange" style="width: 40px; height: 40px" />
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <div class="form-inline">
+                                <h3>Mobile No</h3>
+                                <div class="form-group"> 
+                                    <input ng-model="model.jobcard.driverMobile" ng-disabled="!isDriverChange" class="form-control input-lg" placeholder="MOBILE NO." name="somename" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "9"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <h3>Driver Name</h3>
+                            <input type="text" ng-model="model.jobcard.driverName" ng-disabled="!isDriverChange" class="form-control input-lg" placeholder="NAME">
+                        </div>
+                        <!--                        <div class="col-xs-4">
+                                                </div>-->
                     </div>
                 </div>
             </div>
@@ -237,6 +279,50 @@
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab heading="VEHICLE HISTORY" index="2">
+                    <div class="col-xs-12">
+                        <div>
+                            <table class="square-table background-dark">
+                                <col style="width: 10%;"/>
+                                <col style="width: 25%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 17%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 15%;"/>
+                                <thead>
+                                    <tr>
+                                        <th>Job No</th>
+                                        <th>Client</th>
+                                        <th>Millage</th>
+                                        <th>Millage Different</th>
+                                        <th>Date</th>
+                                        <th>Date Different</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                        <div>
+                            <table class="square-table">
+                                <col style="width: 10%;"/>
+                                <col style="width: 25%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 17%;"/>
+                                <col style="width: 15%;"/>
+                                <col style="width: 15%;"/>
+                                <tbody ng-repeat="history in model.jobCardHistryList">
+                                    <tr>
+                                        <td>{{history.indexNo}}</td>
+                                        <td>{{history.client}}</td>
+                                        <td>{{history.inMileage}}</td>
+                                        <td>&nbsp;</td>
+                                        <td>{{history.date}}</td>
+                                        <td>&nbsp;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </uib-tab>

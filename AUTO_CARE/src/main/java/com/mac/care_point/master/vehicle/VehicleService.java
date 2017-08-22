@@ -38,4 +38,15 @@ public class VehicleService {
             throw new RuntimeException("Cannot delete this vehicle because there are details in other transaction");
         }
     }
+
+    public List<Vehicle> findByVehicleNo(String vehicleNo) {
+        //default user input ex:KR8755
+        String vehicleNo1 = vehicleNo;
+        //add separator at 2nd index, ex:KR-8755
+        String vehicleNo2 = vehicleNo.length() > 2 ? vehicleNo.substring(0, 2) + "-" + vehicleNo.substring(2) : vehicleNo;
+        //add separator at 3r index, ex:KR8-755, 250-8466
+        String vehicleNo3 = vehicleNo.length() > 3 ? vehicleNo.substring(0, 3) + "-" + vehicleNo.substring(3) : vehicleNo;
+
+        return vehicleRepository.findByVehicleNoLikeLimit10(vehicleNo1, vehicleNo2, vehicleNo3);
+    }
 }

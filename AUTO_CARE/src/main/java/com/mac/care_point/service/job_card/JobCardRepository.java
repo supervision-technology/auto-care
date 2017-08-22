@@ -34,5 +34,8 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
     public List<JobCard> findByStatusNotIn(String FINISHED_STATUS);
 
     public List<JobCard>  findByVehicleAndStatus(Integer indexNo, String status);
+    
+    @Query(value = "select * from t_job_card job where job.vehicle =:vehicleIndexNo order by job.date desc" , nativeQuery = true)
+    public List<JobCard> findJobHistory(@Param("vehicleIndexNo") Integer vehicleIndexNo);
 
 }

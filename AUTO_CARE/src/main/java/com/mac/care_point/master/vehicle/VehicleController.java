@@ -31,6 +31,10 @@ public class VehicleController {
     public List<Vehicle> findAll() {
         return vehicleService.findAll();
     }
+    @RequestMapping(value = "/find-by-vehicle-no/{vehicleNo}",method = RequestMethod.GET)
+    public List<Vehicle> findByVehicleNo(@PathVariable String vehicleNo) {
+        return vehicleService.findByVehicleNo(vehicleNo);
+    }
 
     @RequestMapping(value = "/insert-detail", method = RequestMethod.POST)
     public Vehicle insertPriceCategory(@RequestBody Vehicle vehicle) {

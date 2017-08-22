@@ -7,6 +7,16 @@
             .factory("vehicleFactory", function ($http, systemConfig) {
                 var factory = {};
 
+                factory.findByVehicleNumber = function (vehicleNo, callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/vehicle/find-by-vehicle-no/" + vehicleNo;
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
                 factory.loadVehicle = function (callback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/vehicle";
                     $http.get(url)
@@ -79,20 +89,17 @@
     angular.module("vehicleModule")
             .controller("vehicleController", function ($scope, $log, vehicleFactory, Notification) {
 
-                //data models 
                 $scope.model = {};
-
-                //ui models
                 $scope.ui = {};
-
-                //http models
                 $scope.http = {};
-
                 //current ui mode IDEAL, SELECTED, NEW, EDIT
                 $scope.ui.mode = null;
-
-                $scope.model.vehicle = [];
+                $scope.model.vehicle = {};
                 $scope.model.vehicleList = [];
+
+                $scope.model.searchKeyword = null;
+                $scope.model.showSuggestions = false;
+                $scope.model.searchSuggestions = [];
 
 
                 //----------- data models ------------------
@@ -133,8 +140,6 @@
                     );
                 };
 
-
-
                 //save function 
                 $scope.http.saveVehicle = function () {
                     var detail = $scope.model.vehicle;
@@ -168,7 +173,7 @@
                     var client = "";
                     angular.forEach($scope.model.clientList, function (value) {
                         console.log(indexNo);
-                        console.log(value.indexNo+" - "+value.name);
+                        console.log(value.indexNo + " - " + value.name);
                         if (value.indexNo === parseInt(indexNo)) {
                             client = value;
                             return;
@@ -192,7 +197,7 @@
                     var vehicleType;
                     angular.forEach($scope.model.vehicleTypeList, function (value) {
                         if (value.indexNo === indexNo) {
-                            vehicleType = value.indexNo+' - '+value.model;
+                            vehicleType = value.indexNo + ' - ' + value.model;
                             return;
                         }
                     });
@@ -213,6 +218,7 @@
                 //new function
                 $scope.ui.new = function () {
                     $scope.ui.mode = "NEW";
+                    $scope.model.reset();
                     $scope.ui.focus();
                 };
 
@@ -222,21 +228,34 @@
                     $scope.model.vehicle = vehicles;
                     $scope.model.vehicleList.splice(index, 1);
                 };
+                $scope.model.loadAllVehicles = function () {
+                    vehicleFactory.loadVehicle(function (data) {
+                        $scope.model.vehicleList = data;
+                    }, function (data) {
+                        Notification.error(data.message);
+                    });
+                };
 
+
+                $scope.model.findByVehicleNumber = function () {
+                    vehicleFactory.findByVehicleNumber($scope.model.searchKeyword, function (data) {
+                        $scope.model.searchSuggestions = data;
+                        console.log(data);
+                    }, function () {
+                        $scope.mode.searchSuggestions = [];
+                    });
+                };
+                $scope.ui.setVehicleData = function (vehicle) {
+                    $scope.model.vehicle = vehicle;
+                    $scope.ui.mode = "EDIT";
+                    $scope.model.searchKeyword = null;
+                };
                 $scope.ui.init = function () {
                     //set ideal mode
                     $scope.ui.mode = "IDEAL";
                     //rest model data
                     $scope.model.reset();
-                    //load SubItem
-                    vehicleFactory.loadVehicle(function (data) {
-                        $scope.model.vehicleList = [];
-                        angular.forEach(data, function (vehicle) {
-                            vehicle.clientName = $scope.clientData(vehicle.client).name;
-                            $scope.model.vehicleList.push(vehicle);
 
-                        });
-                    });
                     vehicleFactory.lordClient(function (data) {
                         $scope.model.clientList = data;
                     });
@@ -246,6 +265,32 @@
                     vehicleFactory.lordPriceCategory(function (data) {
                         $scope.model.priceCategoryList = data;
                     });
+
+                    $scope.$watch('model.searchKeyword', function (newV, oldV) {
+                        $scope.model.showSuggestions = newV && newV.length;
+
+                        if (newV && newV.length >= 2) {
+                            //load from server
+                            $scope.model.findByVehicleNumber();
+                        }
+                    });
+
+                    $scope.$watch('model.vehicle', function (newVal) {
+                        if (newVal) {
+                            $scope.model.showSuggestions = !$scope.model.vehicle;
+                        }
+                    });
+
+//                    $scope.model.loadAllVehicles();
+//                    vehicleFactory.loadVehicle(function (data) {
+//                        $scope.model.vehicleList = [];
+//                        angular.forEach(data, function (vehicle) {
+//                            vehicle.clientName = $scope.clientData(vehicle.client).name;
+//                            $scope.model.vehicleList.push(vehicle);
+//
+//                        });
+//                    });
+
                 };
                 $scope.ui.init();
 

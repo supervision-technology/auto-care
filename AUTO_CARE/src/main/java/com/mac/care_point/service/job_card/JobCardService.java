@@ -195,5 +195,9 @@ public class JobCardService {
         String status = "PENDING";
         return jobCardRepository.findByVehicleAndStatus(indexNo,status);
     }
+    public List<JobCard> findJobHistory(String vehicleNo) {
+        MVehicle vehicle = sVVehicleRepository.findVehicleByVehicleNo(vehicleNo);
+        return jobCardRepository.findJobHistory(vehicle.getIndexNo());
+    }
 
 }

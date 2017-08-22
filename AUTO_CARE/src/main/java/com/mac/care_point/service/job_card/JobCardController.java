@@ -129,6 +129,10 @@ public class JobCardController {
 
         return imageFileNames;
     }
+    @RequestMapping(value = "/find-job-history/{vehicleNo}", method = RequestMethod.GET)
+    public List<JobCard> findJobHistory(@PathVariable("vehicleNo") String vehicleNo) {
+        return jobCardService.findJobHistory(vehicleNo);
+    }
 
     //@RequestMapping(value = "/file-absalute-path", method = RequestMethod.GET)
     public String fileAbsalutePath() {
