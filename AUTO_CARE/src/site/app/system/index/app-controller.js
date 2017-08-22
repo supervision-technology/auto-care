@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .controller("appController", function ($scope, $rootScope, $location, SecurityService) {
+            .controller("appController", function ($scope, $rootScope,$filter, $location, SecurityService) {
                 $scope.hamburgerOpen = true;
 
                 //route loading
@@ -11,6 +11,10 @@
                 $scope.userRoles = $rootScope.userRoles;
 
                 $scope.homepageUrls = [];
+                
+                $scope.currentPageName = '';
+                
+                $scope.date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
                 //init homepage urls
                 angular.forEach($scope.userRoles, function (value) {
@@ -22,8 +26,9 @@
                     }
                 });
 
-                $scope.toggleHamburger = function () {
+                $scope.toggleHamburger = function (value) {
                     $scope.hamburgerOpen = !$scope.hamburgerOpen;
+                    $scope.currentPageName = value;
 
                     if ($scope.hamburgerOpen) {
                         $timeout(function () {

@@ -21,6 +21,7 @@
                     packageItemList: [],
                     vehicleAttenctionsCategoryList: [],
                     vehicleAttenctionsList: [],
+                    priceCategoryList: [],
                     //pending job card list
                     pendingJobCards: [],
                     //select job card items
@@ -81,6 +82,11 @@
                         ItemSelectionService.getVehicleAttenctions()
                                 .success(function (data) {
                                     that.vehicleAttenctionsList = data;
+                                });
+                                
+                        ItemSelectionService.loadPriceCategory()
+                                .success(function (data) {
+                                    that.priceCategoryList = data;
                                 });
 //                        that.pendingJobCardSetVehicleNo();
                     },
@@ -335,6 +341,16 @@
                     itemUnitData: function (indexNo) {
                         var data = "";
                         angular.forEach(this.itemUnits, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values;
+                                return;
+                            }
+                        });
+                        return data;
+                    },
+                    priceCategoryData: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.priceCategoryList, function (values) {
                             if (values.indexNo === parseInt(indexNo)) {
                                 data = values;
                                 return;

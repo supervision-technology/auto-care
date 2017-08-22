@@ -1,28 +1,32 @@
-<div class="tile-list background-dark">
-    <div class="tile-list-title" style="margin-right: 5px;">
-        <h4>VEHICLE</h4>
-    </div>
-    <div style="margin-right: 5px;">
-        <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
-    </div>
-    <div class="smart-scroll-y" style="height: calc(100vh - 74px);">
-        <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards|filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
-            <span> 
-                <img src="/img/01.png"/>  
-                <label>
-                    {{model.vehicleData(details.vehicle).vehicleNo}}
-                </label>
-                <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
-                <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
-            </span>
+<div class="index-content-header"></div>
+
+<div class="index-content-body">
+
+    <div class="tile-list background-dark">
+        <div class="tile-list-title" style="margin-right: 5px;">
+            <h4>VEHICLE</h4>
+        </div>
+        <div style="margin-right: 5px;">
+            <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
+        </div>
+        <div class="smart-scroll-y" style="height: calc(100vh - 126px);">
+            <div class="tile tile-155" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards|filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+                <span> 
+                    <img src="/img/01.png"/>  
+                    <label>{{model.vehicleData(details.vehicle).vehicleNo}}</label>
+                    <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
+                    <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
+                    <label class="label" style="background: {{model.priceCategoryData(details.priceCategory).colour}};">{{model.priceCategoryData(details.priceCategory).name}}</label>
+                    <label class="label label-default">{{details.date}}</label>
+                    <label class="label label-default">{{details.indexNo}}</label>
+                </span>
+            </div>
         </div>
     </div>
-</div>
-<div class="index-content-body">
     <div style="float: left; width: calc(100% - 133px);">
         <div class="col-xs-7 background-light" ng-show="ui.model === 'CATEGORY'">
-            <div class="row full-height" style="display: flex; flex-flow: column;">
-                <div class="smart-scroll-y" style="height: calc(100vh - 40px);">
+            <div class="row" style="display: flex; flex-flow: column;height: calc(100vh -  52px)">
+                <div class="smart-scroll-y" style="height: calc(100vh - 55px);">
                     <div class="tile-lists">
                         <div class="tiles tile-200 col-xs-4" style="background: {{detils.colour}};" ng-repeat="detils in model.category|filter:{viewApprove : true}" ng-click="ui.categorySelections(detils);">
                             <div style="margin-top: 21px; color: #fff;font-weight: bold;">                   
@@ -37,7 +41,7 @@
         </div>
 
         <div class="col-xs-7 background-light" ng-show="ui.model === 'PACKAGE'">
-            <div class="row full-height" style="display: flex; flex-flow: column;">
+            <div class="row " style="display: flex; flex-flow: column;height: calc(100vh -  52px)">
                 <table class="square-table background-dark">
                     <col style="width: 50%;"/>
                     <col style="width: 30%;"/>
@@ -90,7 +94,7 @@
 
         <!------ attenctions selction ---->
         <div class="col-xs-7 background-light-dark" ng-show="ui.model === 'ATTENCTIONS'">
-            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);" >
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);" >
                 <uib-tabset>
                     <uib-tab heading="NEW OBSERVATION" index="0">
                         <table class="square-table background-dark">
@@ -103,7 +107,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 90px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 142px);">
                             <div ng-repeat="detils in model.vehicleAttenctionsCategoryList">
                                 <table class="square-table">
                                     <col style="width: 100%;"/>
@@ -193,7 +197,7 @@
         <!------ /attenctions selction ---->
 
         <div class="col-xs-7 background-light" ng-show="ui.model === 'SERVICE'">
-            <div class="row full-height" style="display: flex; flex-flow: column;">
+            <div class="row" style="display: flex; flex-flow: column;">
                 <div class="col-xs-8">
                     <input type="text" class="search-input" placeholder="search" ng-model="searchService">
                 </div>
@@ -210,7 +214,7 @@
                         </tr>
                     </thead>
                 </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 105px);">
+                <div class="smart-scroll-y" style="height: calc(100vh - 157px);">
                     <table class="square-table">
                         <col style="width: 50%;"/>
                         <col style="width: 30%;"/>
@@ -231,7 +235,7 @@
         </div>
 
         <div class="col-xs-7 background-light" ng-show="ui.model === 'QUICK_SEARCH'">
-            <div class="row full-height" style="display: flex; flex-flow: column;">
+            <div class="row" style="display: flex; flex-flow: column; ">
                 <table class="square-table background-dark">
                     <col style="width: 70%;"/>
                     <col style="width: 30%;"/>
@@ -239,7 +243,7 @@
                     <thead>
                         <tr>
                             <th><input type="text" class="search-input input-sm" placeholder="search" ng-model="itemKey"></th>
-                            <th><a style="background-color: #009688;" class="btn" ng-click="ui.getQuickSeacrhItem(itemKey);"/>S</a></th>
+                            <th><a style="background-color: #009688;" class="btn" ng-click="ui.getQuickSeacrhItem(itemKey);"/><span class="glyphicon glyphicon-search"></span></a></th>
                         </tr>
                     </thead>
                 </table>
@@ -256,7 +260,7 @@
                         </tr>
                     </thead>
                 </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 105px);">
+                <div class="smart-scroll-y" style="height: calc(100vh - 157px);">
                     <table class="square-table">
                         <col style="width: 50%;"/>
                         <col style="width: 30%;"/>
@@ -277,7 +281,7 @@
         </div>
 
         <div class="col-xs-5 background-dark">
-            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh);">
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
                 <uib-tabset active="activeTab">
                     <!------ all total (package and service and stock items)---->
                     <uib-tab heading="ALL SELECTIONS" index="0">
@@ -300,7 +304,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 287px);padding-left: 5px;">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 339px);padding-left: 5px;">
                             <table class="square-table background-dark">
                                 <col style="width: 10%;"/>
                                 <col style="width: 40%;"/>
@@ -387,7 +391,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 140px);padding-left: 5px;">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 192px);padding-left: 5px;">
                             <table class="square-table background-dark">
                                 <col style="width: 10%;"/>
                                 <col style="width: 40%;"/>
@@ -451,7 +455,7 @@
                                 </thead>
                             </table>
                         </div>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 140px);padding-left: 5px;">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 192px);padding-left: 5px;">
                             <table class="square-table background-dark">
                                 <col style="width: 10%;"/>
                                 <col style="width: 40%;"/>
@@ -563,7 +567,7 @@
                                     </thead>
                                 </table>
                             </div>
-                            <div class="smart-scroll-y" style="height: calc(100vh - 239px);padding-left: 5px;">
+                            <div class="smart-scroll-y" style="height: calc(100vh - 291px);padding-left: 5px;">
                                 <table class="square-table background-dark">
                                     <col style="width: 70%;"/>
                                     <col style="width: 10%;"/>

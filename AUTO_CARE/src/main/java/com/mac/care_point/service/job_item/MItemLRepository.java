@@ -50,7 +50,7 @@ public interface MItemLRepository extends JpaRepository<MItemL, Integer> {
             + " from\n"
             + "m_item\n"
             + " where\n"
-            + "m_item.type = \"STOCK\" and \n"
+            + "m_item.type = \"STOCK\" and\n"
             + "m_item.name\n"
             + " like\n"
             + "CONCAT('%',:itemKey,'%') \n"

@@ -5,7 +5,9 @@
     <uib-tabset>
         <uib-tab heading="ITEMS" index="0" select="ui.toggleType('ITEMS');">
             <div class="col-xs-4 background-dark">
-                <div class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 52px);padding-right: 20px;">
+
+                <div class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 104px);padding-right: 20px;">
+
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -16,7 +18,7 @@
                                     <select class="form-control" ng-model="model.itemData.type" ng-change="ui.selectStock(model.itemData.type);">
                                         <option value="STOCK" selected>STOCK ITEM</option>
                                         <option value="SERVICE">SERVICE ACTIVITY</option>
-                                        <option value="NON-STOCK">NON-STOCK (CONSUMABLE)</option>
+                                        <option value="NON STOCK">NON-STOCK (CONSUMABLE)</option>
                                         <option value="PACKAGE">PACKAGE</option>
                                     </select>
                                 </td>
@@ -120,20 +122,22 @@
                 </div>
             </div>
             <div class="col-xs-8 background-light">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 194px);">
+
                     <div class="col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
                         <div class="col-xs-6">
                             <select class="form-control" ng-model="searchItemType" ng-change="ui.findItemByItemType(searchItemType)">
                                 <option value="" selected></option>
                                 <option value="STOCK">STOCK ITEM</option>
                                 <option value="SERVICE">SERVICE ACTIVITY</option>
-                                <option value="NON-STOCK">NON-STOCK (CONSUMABLE)</option>
+                                <option value="NON STOCK">NON-STOCK (CONSUMABLE)</option>
                                 <option value="PACKAGE">PACKAGE</option>
                             </select>
                         </div>
                         <div class="col-xs-6">
                             <input class="form-control" type="text" placeholder="search" ng-model="searchItem">
                         </div>
+
                     </div>
                     <table class="table-rounded">
                         <col style="width: 10%">
@@ -155,7 +159,9 @@
                             </tr>
                         </thead>
                     </table>
-                    <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+
+                    <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
+
                         <table class="table-rounded">
                             <col style="width: 10%">
                             <col style="width: 60%">
@@ -166,7 +172,7 @@
                                     <td><label class="label label-default">{{items.indexNo|fixedLength:5}}</label></td>
                                     <td>{{items.name}}</td>
                                     <td ng-show="items.type === 'STOCK'"><label class="label label-default">STOCK</label></td>
-                                    <td ng-show="items.type === 'NON-STOCK'"><label class="label label-primary">NON-STOCK</label></td>
+                                    <td ng-show="items.type === 'NON STOCK'"><label class="label label-primary">NON-STOCK</label></td>
                                     <td ng-show="items.type === 'SERVICE'"><label class="label label-success">SERVICE</label></td>
                                     <td ng-show="items.type === 'PACKAGE'"><label class="label label-warning">PACKAGE</label></td>
                                     <td class="text-right" ng-disabled="ui.mode !== 'EDIT'">
@@ -182,7 +188,7 @@
         </uib-tab>
         <uib-tab heading="ITEMS PRICE CATEGORY ADD" index="5" select="ui.toggleType('PRICE_CATEGORY_DETAIL');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -241,7 +247,7 @@
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItemUnit" >
                         </div>
@@ -269,7 +275,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 30%">
@@ -296,7 +302,7 @@
         </uib-tab>
         <uib-tab heading="ITEMS UNITS" index="1" select="ui.toggleType('ITEMS_UNITS');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -362,7 +368,7 @@
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItemUnit" >
                         </div>
@@ -394,7 +400,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 30%">
@@ -424,7 +430,7 @@
         </uib-tab>
         <uib-tab heading="PACKAGE ITEMS" index="2" select="ui.toggleType('PACKAGE_ITEMS');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -443,7 +449,7 @@
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem" >
                         </div>
@@ -467,7 +473,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 35%">
@@ -491,7 +497,7 @@
         </uib-tab>
         <uib-tab heading="CONSUMABLE ITEMS" index="3" select="ui.toggleType('CONSUMABLE_ITEMS');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -563,7 +569,7 @@
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem" >
                         </div>
@@ -591,7 +597,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 30%">
@@ -617,7 +623,7 @@
         </uib-tab>
         <uib-tab heading="ITEM CHECK DETAIL" index="4" select="ui.toggleType('ITEM_CHECK_DETAIL');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -687,7 +693,7 @@
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="checkItemSearch">
                         </div>
@@ -711,7 +717,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 40%">

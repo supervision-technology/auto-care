@@ -24,8 +24,6 @@
         border-bottom: $bg-dark-color-border solid 1px;
         border-right: $bg-dark-color-border solid 1px;
         cursor: pointer;
-        align-items: center;
-
 
         span{
             display:inline-block;
@@ -38,7 +36,8 @@
 
             label{
                 display: block;
-                font-weight: 400;
+                font-weight: 450;
+                margin-bottom: 2px;
             }
         }
     }
@@ -50,6 +49,19 @@
     width: 128px;
     height: 128px;
 }
+
+.tile-155{
+    width: 128px;
+    height: 155px;
+}
+
+.tile-155{
+    span{
+        margin-top: -40px;
+        margin-left: -10px;
+    }
+}
+
 .tile-135{
     width: 108px;
     height: 70px;

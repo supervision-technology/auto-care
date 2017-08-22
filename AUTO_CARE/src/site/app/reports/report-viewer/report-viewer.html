@@ -1,10 +1,13 @@
+<div class="index-content-header">
+    
+</div>
 <div class="index-content-body">
     <div class="col-xs-4 background-dark border-dark-right">
         <div class="row">
 
             <uib-tabset active="activeTabIndex">
                 <uib-tab heading="ALL REPORTS" >
-                    <div class="col-xs-12 background-dark smart-scroll-y" style="padding-top: 5px; height: calc(100vh - 40px);">
+                    <div class="col-xs-12 background-dark smart-scroll-y" style="padding-top: 5px; height: calc(100vh - 92px);">
                         <div ng-repeat="reportGroup in model.reports">
                             <table class="table table-striped">
                                 <thead>
@@ -31,7 +34,7 @@
 
                 <uib-tab heading="CURRENT REPORT">
                     <div class="col-xs-12" >
-                        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                        <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
 
                             <table class="table table-success" style="margin-top: 10px;">
                                 <thead>
@@ -185,7 +188,7 @@
     <div class="col-xs-8 background-light">
         <div class="row">
 
-            <div class="col-xs-12 background-ultra-dark" style="padding: 10px 0px 10px 0px; height: calc(100vh -10px);" ng-show="ui.status === 'LOADING'">
+            <div class="col-xs-12 background-ultra-dark" style="padding: 10px 0px 10px 0px; height: calc(100vh - 62px);" ng-show="ui.status === 'LOADING'">
                 <div class="spinner">
                     <div class="bounce1"></div>
                     <div class="bounce2"></div>
@@ -197,11 +200,11 @@
             </div>
 
 
-            <div class="col-xs-12 placeholder" style="padding: 10px 0px 10px 0px; height: calc(100vh - 17px);" ng-show="ui.status === 'PENDING'">
+            <div class="col-xs-12 placeholder" style="padding: 10px 0px 10px 0px; height: calc(100vh - 69px);" ng-show="ui.status === 'PENDING'">
                 <h1>PREVIEW NOT AVAILABLE UNTIL VIEW THE REPORT :(</h1>
             </div>
 
-            <div id="viewerContainer" class="col-xs-12" style="height: calc(100vh - 10px);"  ng-show="ui.status === 'LOADED'">
+            <div id="viewerContainer" class="col-xs-12" style="height: calc(100vh - 60px);"  ng-show="ui.status === 'LOADED'">
                 <div class="row" style="height: 100%;">
                     <object data="{{content}}" class="smart-scroll-y smart-scroll-x"  type="application/pdf" style="width:100%;height:100%;">
                     </object>
