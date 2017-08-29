@@ -43,7 +43,8 @@
         "purchaseOrderApproveModule",
         "stockTransferInternalOutModule",
         "stockTransferInternalInModule",
-        "itemSelectionModule"
+        "itemSelectionModule",
+        "jobCardEditModule"
     ]);
 
     //constants
@@ -107,6 +108,11 @@
                         .when("/service/customer-satisfaction", {
                             templateUrl: "app/service/customer-satisfaction/customer-satisfaction.html",
                             controller: "customerSatisfactionController"
+                        })
+                        
+                        .when("/service/job-card-edit", {
+                            templateUrl: "app/service/job-card-edit/job-card-edit.html",
+                            controller: "jobCardEditController"
                         })
 
                         //front-office

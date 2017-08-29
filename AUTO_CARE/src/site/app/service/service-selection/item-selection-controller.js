@@ -3,7 +3,7 @@
     angular.module("itemSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("itemSelectionModule")
-            .controller("itemSelectionController", function ($scope, $uibModalStack, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("itemSelectionController", function ($scope, $http, optionPane, $uibModalStack, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ItemSelectionModel();
 
                 $scope.ui = {};
@@ -192,7 +192,14 @@
                 $scope.ui.printJobItemRequestAstimate = function () {
                     ConfirmPane.successConfirm("Print Estimate")
                             .confirm(function () {
-                                $scope.model.printEstimate($scope.selectedJobCardIndexNo);
+                                var url = "http://localhost:8094/api/care-point/print-service/print-estimate/1/" + $scope.selectedJobCardIndexNo;
+                                $http.get(url)
+                                        .success(function (data) {
+                                            optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
+                                        })
+                                        .error(function (data) {
+                                            optionPane.dangerMessage("ERROR!");
+                                        });
                             });
                 };
             });

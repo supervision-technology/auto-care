@@ -178,7 +178,7 @@ public class DirectPrintService {
                 + "Thank you for comming CAREPOINT " + branch + ". Vehicle No " + vehicelNo + " Estimated amout is Rs." + amount + "\n"
                 + "For any clarification please contact us on " + branchContactNo + "";
 
-        final String uri = "http://smsserver.svisiontec.com/send_sms.php?api_key=6560957308&number=94" + contactNo + "&message=" + message;
+        final String uri = "http://smsserver.svisiontec.com/send_sms.php?api_key=6560957308&number=" + contactNo + "&message=" + message;
         System.out.println(uri);
         RestTemplate restTemplate = new RestTemplate();
         String result = restTemplate.getForObject(uri, String.class);

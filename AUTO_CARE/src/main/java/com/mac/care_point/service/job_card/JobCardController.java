@@ -6,6 +6,7 @@
 package com.mac.care_point.service.job_card;
 
 import com.mac.care_point.service.job_card.model.JobCard;
+import com.mac.care_point.service.job_card.model.TPriceCategoryChangeDetails;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -55,7 +56,7 @@ public class JobCardController {
     public JobCard getJobCard(@PathVariable Integer indexNo) {
         return jobCardService.getJobCard(indexNo);
     }
-    
+
     @RequestMapping(value = "/get-job-detail-by-vehicle-no/{VehicleNo}", method = RequestMethod.GET)
     public List<JobCard> getJobCardByVehicleNo(@PathVariable String VehicleNo) {
         return jobCardService.getJobCardByVehicleNo(VehicleNo);
@@ -129,14 +130,14 @@ public class JobCardController {
 
         return imageFileNames;
     }
+
     @RequestMapping(value = "/find-job-history/{vehicleNo}", method = RequestMethod.GET)
     public List<JobCard> findJobHistory(@PathVariable("vehicleNo") String vehicleNo) {
         return jobCardService.findJobHistory(vehicleNo);
     }
 
-    //@RequestMapping(value = "/file-absalute-path", method = RequestMethod.GET)
-    public String fileAbsalutePath() {
-        File imageDir = new File(IMAGE_LOCATION);
-        return imageDir.getAbsolutePath();
+    @RequestMapping(value = "/update-price-category-details/{employee}", method = RequestMethod.POST)
+    public JobCard updateJobCardDetailsAndVehicleDetails(@RequestBody JobCard jobCard,@PathVariable Integer employee) {
+        return jobCardService.updateJobCardDetailsAndVehicleDetails(jobCard,employee);
     }
 }

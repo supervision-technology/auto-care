@@ -118,4 +118,10 @@ public class JobItemController {
     public TJobItem findTJobItemByIndexNo(@PathVariable Integer indexNo) {
         return jobItemService.findTJobItemByIndexNo(indexNo);
     }
+    
+    @RequestMapping(value = "/change-vehicle-price-category/{jobCard}",method = RequestMethod.GET)
+       public List<TJobItem> changeVehiclePriceCategory(@PathVariable Integer jobCard) {
+        return jobItemService.changeVehiclePriceCategory(jobCard);
+    }
+    
 }
