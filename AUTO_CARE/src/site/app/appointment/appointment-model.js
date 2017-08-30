@@ -206,7 +206,7 @@
                 this.temp.date = this.appointmentData.appointmentDate;
 
                 this.appointmentData.bayDetails.push(this.temp);
-//                console.log(this.appointmentData.bayDetails)
+                console.log(this.appointmentData.bayDetails)
                 this.temp = {};
             },
 
@@ -478,19 +478,6 @@
                         var time2 = "00:15:00";
                         var time = that.formatTime(that.timestrToSec(bay.time) + that.timestrToSec(time2));
                         if (!value.vehicle && value.time > time) {
-                            if (data === null) {
-                                data = value;
-                                that.ui.selectedBayBwIndex = value.time;
-                                //set value save obejct
-                                that.tempdata.appointmentBay = value.indexNo;
-                                that.getBay(value);
-                            }
-                        }
-                    });
-                }
-                if (type === "interior" || type === "exterior") {
-                    angular.forEach(that.bw, function (value) {
-                        if (!value.vehicle) {
                             if (data === null) {
                                 data = value;
                                 that.ui.selectedBayBwIndex = value.time;
