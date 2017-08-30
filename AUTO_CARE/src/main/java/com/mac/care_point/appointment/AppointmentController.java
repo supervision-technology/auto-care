@@ -5,8 +5,12 @@
  */
 package com.mac.care_point.appointment;
 
+import com.mac.care_point.appointment.model.MAppointmentBay;
 import com.mac.care_point.appointment.model.MAppointmentItem;
 import com.mac.care_point.appointment.model.TAppointment;
+import com.mac.care_point.appointment.model.TBayDetails;
+import com.mac.care_point.appointment.model.mix.AppointmentDetails;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -50,18 +54,34 @@ public class AppointmentController {
         return appointmentService.ApprovedAppointmentByBranch(status, branch);
     }
 
+//    @RequestMapping(value = "/save", method = RequestMethod.POST)
+//    public TAppointment save(@RequestBody TAppointment appointment) {
+//        appointment.setBranch(branch);
+//        appointment.setStatus(0);
+//        System.out.println(appointment.toString());
+////        return appointmentService.save(appointment);
+//        return null;
+//    }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public TAppointment save(@RequestBody TAppointment appointment) {
-        appointment.setBranch(branch);
-        appointment.setStatus(0);
-        System.out.println(appointment.toString());
-        return appointmentService.save(appointment);
+    public TBayDetails save(@RequestBody AppointmentDetails appointmentDetails) {
+        System.out.println(appointmentDetails.toString());
+        return appointmentService.save(appointmentDetails);
     }
 
     // appointment item
     @RequestMapping(value = "/item", method = RequestMethod.GET)
     public List<MAppointmentItem> findAllItem() {
         return appointmentService.findAllItem();
+    }
+
+    @RequestMapping(value = "/all-bay/{indexNo}", method = RequestMethod.GET)
+    public MAppointmentBay AllBay(@PathVariable int indexNo) {
+        return appointmentService.allBay(indexNo);
+    }
+
+    @RequestMapping(value = "/bay-details/{branch}/{date}", method = RequestMethod.GET)
+    public List<TBayDetails> bayDetails(@PathVariable int branch, @PathVariable Date date) {
+        return appointmentService.bayDetails(branch, date);
     }
 
 }

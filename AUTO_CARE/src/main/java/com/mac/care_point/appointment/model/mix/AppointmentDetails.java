@@ -3,93 +3,52 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.appointment.model;
+package com.mac.care_point.appointment.model.mix;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mac.care_point.appointment.model.TBayDetails;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author my
  */
-@Entity
-@Table(name = "t_appointment")
-public class TAppointment implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "index_no")
-    @Basic(optional = false)
+public class AppointmentDetails implements Serializable{
+    
     private Integer indexNo;
-
-    @Basic(optional = false)
-    @Column(name = "m_appointment_item")
     private Integer item;
-   
-    @Basic(optional = false)
-    @Column(name = "price_category")
     private Integer priceCategory;
-
-    @Basic(optional = false)
-    @Column(name = "vehicle")
     private Integer vehicle;
-
-    @Basic(optional = false)
-    @Column(name = "branch")
     private int branch;
-
-    @Basic(optional = false)
-    @Column(name = "received_date")
     private Date receivedDate;
-
-    @Basic(optional = false)
-    @Column(name = "appointment_date")
     private Date appointmentDate;
-
-    @Basic(optional = false)
-    @Column(name = "in_time")
     private String inTime;
-
-    @Basic(optional = false)
-    @Size(min = 1, max = 50)
-    @Column(name = "client_name")
     private String clientName;
-
-    @Basic(optional = false)
-    @Size(min = 1, max = 25)
-    @Column(name = "contact_no")
     private String contactNo;
-
-    @Basic(optional = false)
-    @Size(min = 1, max = 25)
-    @Column(name = "vehicle_no")
     private String vehicleNo;
-
-    @Basic(optional = false)
-    @Size(min = 1, max = 50)
-    @Column(name = "vehicle_model")
     private String vehicleModel;
-
-    @Basic(optional = false)
-    @Column(name = "status")
     private int status;
- 
+    private List<TBayDetails> bayDetails;
 
-    public TAppointment() {
+    public AppointmentDetails() {
+    }
+
+    public AppointmentDetails(Integer indexNo, Integer item, Integer priceCategory, Integer vehicle, int branch, Date receivedDate, Date appointmentDate, String inTime, String clientName, String contactNo, String vehicleNo, String vehicleModel, int status, List<TBayDetails> bayDetails) {
+        this.indexNo = indexNo;
+        this.item = item;
+        this.priceCategory = priceCategory;
+        this.vehicle = vehicle;
+        this.branch = branch;
+        this.receivedDate = receivedDate;
+        this.appointmentDate = appointmentDate;
+        this.inTime = inTime;
+        this.clientName = clientName;
+        this.contactNo = contactNo;
+        this.vehicleNo = vehicleNo;
+        this.vehicleModel = vehicleModel;
+        this.status = status;
+        this.bayDetails = bayDetails;
     }
 
     public Integer getIndexNo() {
@@ -194,6 +153,23 @@ public class TAppointment implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
-    }  
+    }
 
+    public List<TBayDetails> getBayDetails() {
+        return bayDetails;
+    }
+
+    public void setBayDetails(List<TBayDetails> bayDetails) {
+        this.bayDetails = bayDetails;
+    }
+
+    @Override
+    public String toString() {
+        return "AppointmentDetails{" + "indexNo=" + indexNo + ", item=" + item + ", priceCategory=" + priceCategory + ", vehicle=" + vehicle + ", branch=" + branch + ", receivedDate=" + receivedDate + ", appointmentDate=" + appointmentDate + ", inTime=" + inTime + ", clientName=" + clientName + ", contactNo=" + contactNo + ", vehicleNo=" + vehicleNo + ", vehicleModel=" + vehicleModel + ", status=" + status + ", bayDetails=" + bayDetails + '}';
+    }
+    
+    
+    
+
+    
 }

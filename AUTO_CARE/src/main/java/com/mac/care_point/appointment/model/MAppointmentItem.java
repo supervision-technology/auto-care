@@ -46,6 +46,14 @@ public class MAppointmentItem implements Serializable {
     @Column(name = "time")
     private String time;
     
+    @Basic(optional = false)
+    @Column(name = "type")
+    private String type;
+    
+    @Basic(optional = false)
+    @Column(name = "other_name")
+    private String otherName;
+    
     public MAppointmentItem() {
     }
 
@@ -79,6 +87,22 @@ public class MAppointmentItem implements Serializable {
 
     public void setColourCode(String colourCode) {
         this.colourCode = colourCode;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getOtherName() {
+        return otherName;
+    }
+
+    public void setOtherName(String otherName) {
+        this.otherName = otherName;
     }
     
     
