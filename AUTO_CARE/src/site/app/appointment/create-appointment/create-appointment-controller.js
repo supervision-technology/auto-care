@@ -6,7 +6,9 @@
 
                 $scope.ui = {};
 
+
                 //bays list
+                $scope.ui.times = [];
 //                $scope.lube = [];
 //                $scope.uw = [];
 //                $scope.bw = [];
@@ -19,20 +21,35 @@
                 };
 
 
+                $scope.ui.getNextTime = function (time) {
+                    var arr = [];
+                    var time2 = "00:15:00";
+                    var value = $scope.model.formatTime($scope.model.timestrToSec(time + ":" + "00") + $scope.model.timestrToSec(time2));
+                    arr = value.split(':');
+                    var hour = arr[0];
+                    var min = arr[1];
+                    return  hour + ":" + min;
+                };
+
+
                 //save appointment
                 $scope.ui.saveAppointment = function () {
-                    $scope.model.saveAppointment()
-                            .then(function () {
-                                $scope.model.getBayVehicle($rootScope.branch, $rootScope.appointmentDate);
-                                $scope.ui.selectedIndex = {};
-                                $scope.model.ui.selectedBayLubeIndex = {};
-                                $scope.model.ui.selectedBayUwIndex = {};
-                                $scope.model.ui.selectedBayBwIndex = {};
-                                $scope.model.ui.selectedBayQdIndex = {};
-                                Notification.success("Appointment save Success");
-                            }, function () {
-                                Notification.error("Appointment save Fail");
-                            });
+                    if ($scope.ui.validation()) {
+                        $scope.model.saveAppointment()
+                                .then(function () {
+                                    $scope.ui.mode = "IDEAL";
+                                    $scope.model.getBayVehicle($rootScope.branch, $rootScope.appointmentDate);
+                                    $scope.model.ui.selectedIndex = {};
+                                    $scope.ui.selectedDataIndex = {};
+                                    $scope.model.ui.selectedBayLubeIndex = {};
+                                    $scope.model.ui.selectedBayUwIndex = {};
+                                    $scope.model.ui.selectedBayBwIndex = {};
+                                    $scope.model.ui.selectedBayQdIndex = {};
+                                    Notification.success("Appointment save Success");
+                                }, function () {
+                                    Notification.error("Appointment save Fail");
+                                });
+                    }
                 };
 
                 //edit appointment
@@ -63,7 +80,7 @@
                     $scope.model.categoryDetailLabel(item.item);
 
                     // when have branch and date
-                    if ($rootScope.branch && $rootScope.appointmentDate) {
+                    if ($scope.model.appointmentData.branch && $scope.model.appointmentData.appointmentDate) {
                         $scope.model.ui.selectedBayLubeIndex = {};
                         $scope.model.ui.selectedBayUwIndex = {};
                         $scope.model.ui.selectedBayBwIndex = {};
@@ -77,58 +94,65 @@
                 $scope.ui.selectPriceCategory = function (category) {
                     //set value save obejct
                     $scope.model.appointmentData.priceCategory = category.priceCategory;
-                    $scope.ui.selectedIndex = category.indexNo;
+                    $scope.model.ui.selectedIndex = category.priceCategory;
                 };
 
                 //bay select lube
                 $scope.ui.selectBayLube = function (bay, index) {
-                    if (!bay.vehicle && $scope.itemType === 'full_service') {
-                        $scope.model.appointmentData.bayDetails = [];
-                        $scope.model.ui.selectedBayLubeIndex = bay.time;
-                        //set value save obejct
-                        $scope.model.tempdata.appointmentBay = bay.indexNo;
-                        $scope.model.getBay(bay);
-                        //manul assing bay
-                        $scope.model.setManualAssing(bay, $scope.itemType);
-                    } else {
-                        Notification.error("not available");
-                    }
-                };
-
-                //bay select under wash
-                $scope.ui.selectBayUw = function (bay, index) {
-                    if (!bay.vehicle && bay.time > '08:00:00' && $scope.itemType === 'full_detailing') {
-                        $scope.model.appointmentData.bayDetails = [];
-                        $scope.model.ui.selectedBayUwIndex = bay.time;
-                        //set value save obejct
-                        $scope.model.tempdata.appointmentBay = bay.indexNo;
-                        $scope.model.getBay(bay);
-                        //manul assing bay
-                        $scope.model.setManualAssing(bay, $scope.itemType);
-                    } else {
-                        Notification.error("not available");
-                    }
-                };
-
-                //bay select body wash
-                $scope.ui.selectBayBw = function (bay, index) {
-                    if (!bay.vehicle) {
-                        if ($scope.itemType === 'wash_vacum'
-                                || $scope.itemType === 'quick_detailing' || $scope.itemType === 'express_detailing'
-                                || $scope.itemType === 'interior' || $scope.itemType === 'exterior') {
+                    if ($scope.ui.validation()) {
+                        if (!bay.vehicle && $scope.itemType === 'full_service') {
                             $scope.model.appointmentData.bayDetails = [];
-                            $scope.model.ui.selectedBayBwIndex = bay.time;
+                            $scope.model.ui.selectedBayLubeIndex = bay.time;
                             //set value save obejct
                             $scope.model.tempdata.appointmentBay = bay.indexNo;
                             $scope.model.getBay(bay);
-
                             //manul assing bay
                             $scope.model.setManualAssing(bay, $scope.itemType);
                         } else {
                             Notification.error("not available");
                         }
-                    } else {
-                        Notification.error("not available");
+                    }
+
+                };
+
+                //bay select under wash
+                $scope.ui.selectBayUw = function (bay, index) {
+                    if ($scope.ui.validation()) {
+                        if (!bay.vehicle && bay.time > '08:00:00' && $scope.itemType === 'full_detailing') {
+                            $scope.model.appointmentData.bayDetails = [];
+                            $scope.model.ui.selectedBayUwIndex = bay.time;
+                            //set value save obejct
+                            $scope.model.tempdata.appointmentBay = bay.indexNo;
+                            $scope.model.getBay(bay);
+                            //manul assing bay
+                            $scope.model.setManualAssing(bay, $scope.itemType);
+                        } else {
+                            Notification.error("not available");
+                        }
+                    }
+                };
+
+                //bay select body wash
+                $scope.ui.selectBayBw = function (bay, index) {
+                    if ($scope.ui.validation()) {
+                        if (!bay.vehicle) {
+                            if ($scope.itemType === 'wash_vacum'
+                                    || $scope.itemType === 'quick_detailing' || $scope.itemType === 'express_detailing'
+                                    || $scope.itemType === 'interior' || $scope.itemType === 'exterior') {
+                                $scope.model.appointmentData.bayDetails = [];
+                                $scope.model.ui.selectedBayBwIndex = bay.time;
+                                //set value save obejct
+                                $scope.model.tempdata.appointmentBay = bay.indexNo;
+                                $scope.model.getBay(bay);
+
+                                //manul assing bay
+                                $scope.model.setManualAssing(bay, $scope.itemType);
+                            } else {
+                                Notification.error("not available");
+                            }
+                        } else {
+                            Notification.error("not available");
+                        }
                     }
 
 //                    if (!bay.vehicle) {
@@ -167,8 +191,13 @@
                 };
 
                 $scope.ui.selectDate = function (date) {
-                    $rootScope.appointmentDate = date;
-                    $scope.ui.getBayDetails($rootScope.branch, date);
+                    if ($rootScope.branch) {
+                        $rootScope.appointmentDate = date;
+                        $scope.ui.getBayDetails($rootScope.branch, date);
+                    } else {
+                        $scope.model.appointmentData.appointmentDate = null;
+                        Notification.error("please select branch");
+                    }
                 };
 
                 $scope.ui.getBayDetails = function (branch, date) {
@@ -196,6 +225,26 @@
                     });
                     //get vehicles to bay
                     $scope.model.getBayVehicle(branch, date, $scope.itemType);
+                };
+
+                $scope.ui.validation = function () {
+                    if ($scope.model.tempdata.appointmentItem) {
+                        if ($scope.model.tempdata.vehicle) {
+                            if ($scope.model.appointmentData.branch) {
+                                if ($scope.model.appointmentData.appointmentDate) {
+                                    return true;
+                                } else {
+                                    Notification.error("please select date");
+                                }
+                            } else {
+                                Notification.error("please select branch");
+                            }
+                        } else {
+                            Notification.error("please select vehicle");
+                        }
+                    } else {
+                        Notification.error("please select a job");
+                    }
                 };
 
                 $scope.ui.filterValue = function (obj) {
@@ -275,7 +324,7 @@
                     }
 
                     // add time to BW
-                    for (var i = 0; i < 41; i++) {
+                    for (var i = 0; i < 42; i++) {
                         var hr = {};
                         var bay = {
                             indexNo: 3,
@@ -303,7 +352,7 @@
                     }
 
                     // add time to QD
-                    for (var i = 0; i < 41; i++) {
+                    for (var i = 0; i < 42; i++) {
                         var hr = {};
                         var bay = {
                             indexNo: 4,
@@ -331,13 +380,34 @@
                     }
 
 
+                    // time set
+                    for (var i = 0; i < 42; i++) {
+                        var hr = {};
+
+                        // add hour 4th iteration
+                        now.setHours(8 + parseInt(i / 4));
+
+                        //start at 8.00 am
+                        if (check === false) {
+                            now.setMinutes((i % 2));
+                            hr.txt = pad(now.getHours(), 2) + ':' + pad(now.getMinutes(), 2);
+                            check = true;
+                        }
+
+                        // add 30 minutes 
+                        now.setMinutes((i % 4) * 15);
+                        hr.txt = pad(now.getHours(), 2) + ':' + pad(now.getMinutes(), 2);
+                        hr.val = hr.txt;
+                        $scope.ui.times.push(hr.val);
+                    }
+
+
                 };
 
 
                 //init
                 $scope.ui.init = function () {
                     $scope.ui.bayTime();
-
                     $scope.ui.mode = "IDEAL";
                     $scope.ui.type = "NORMAL";
                 };

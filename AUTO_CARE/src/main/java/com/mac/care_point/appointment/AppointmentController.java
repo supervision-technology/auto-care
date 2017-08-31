@@ -83,5 +83,11 @@ public class AppointmentController {
     public List<TBayDetails> bayDetails(@PathVariable int branch, @PathVariable Date date) {
         return appointmentService.bayDetails(branch, date);
     }
+    
+    //price category
+     @RequestMapping(value = "/vehicle-price-category/{vehicle}", method = RequestMethod.GET)
+    public Integer getPriceCategoryByVehicle(@PathVariable Integer vehicle) {
+        return appointmentService.getPriceCategory(vehicle);
+    }
 
 }

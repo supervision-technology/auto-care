@@ -10,6 +10,7 @@ import com.mac.care_point.appointment.model.MAppointmentItem;
 import com.mac.care_point.appointment.model.TAppointment;
 import com.mac.care_point.appointment.model.TBayDetails;
 import com.mac.care_point.appointment.model.mix.AppointmentDetails;
+import com.mac.care_point.service.job_card.JobCardRepository;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class AppointmentService {
     @Autowired
     private AppointmentBayRepository appointmentBayRepository;
 
+    @Autowired
+    private JobCardRepository jobCardRepository;
+
     public List<TAppointment> findAll() {
         return appointmentRepository.findAllByOrderByInTimeDesc();
     }
@@ -60,6 +64,7 @@ public class AppointmentService {
         tAppointment.setItem(appointmentDetails.getItem());
         tAppointment.setPriceCategory(appointmentDetails.getPriceCategory());
         tAppointment.setBranch(appointmentDetails.getBranch());
+        tAppointment.setInTime(appointmentDetails.getInTime());
         tAppointment.setStatus(0);
         tAppointment.setVehicle(appointmentDetails.getVehicle());
         tAppointment.setVehicleNo(appointmentDetails.getVehicleNo());
@@ -95,6 +100,11 @@ public class AppointmentService {
 
     public MAppointmentBay allBay(int index) {
         return appointmentBayRepository.findOne(index);
+    }
+
+    //price category
+    public Integer getPriceCategory(Integer vehicle) {
+        return jobCardRepository.getPriceCategory(vehicle);
     }
 
 }

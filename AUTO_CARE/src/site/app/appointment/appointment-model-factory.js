@@ -11,6 +11,7 @@
                         "branch": null,
                         "receivedDate": null,
                         "appointmentDate": null,
+                        "inTime": null,
                         "clientName": null,
                         "contactNo": null,
                         "vehicleNo": null,

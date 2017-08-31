@@ -53,6 +53,11 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/price-categiry-details/find-by-item/" + item);
         };
 
+        //price category by vehicle
+        this.getPriceCategoryByVehicle = function (vehicle) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment/vehicle-price-category/" + vehicle);
+        };
+
         //vehicle
         this.loadVehicle = function (item) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/vehicle");
@@ -69,15 +74,17 @@
         };
 
         //load bay details
-        this.loadBayDetails = function (branch,date) {
+        this.loadBayDetails = function (branch, date) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment/bay-details/" + branch + "/" + date);
         };
-        
+
         //load bay
         this.loadBay = function (indexNo) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment/all-bay/" + indexNo);
         };
-   
+
+
+
 
     };
 

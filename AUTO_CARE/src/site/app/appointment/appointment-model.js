@@ -96,6 +96,7 @@
                 var defer = $q.defer();
                 var that = this;
 
+                console.log(this.appointmentData)
                 appointmentService.saveAppointment(JSON.stringify(this.appointmentData))
                         .success(function (data) {
 //                            that.appointmentList.unshift(data);
@@ -172,6 +173,14 @@
             vehicleLabel: function (model) {
                 var that = this;
                 that.tempdata.vehicle = model;
+
+                appointmentService.getPriceCategoryByVehicle(model.indexNo)
+                        .success(function (data) {
+                            console.log(data)
+                            that.appointmentData.priceCategory = data;
+                            that.ui.selectedIndex = data;
+                        });
+
                 that.appointmentData.vehicle = model.indexNo;
                 angular.forEach(that.vehicleTypeList, function (value) {
                     if (value.indexNo === model.vehicleType) {
@@ -277,6 +286,7 @@
             },
             //end time sum
 
+
             //auto assing bay
             setAutoAssing: function (type) {
                 var that = this;
@@ -293,6 +303,7 @@
                                 that.ui.selectedBayLubeIndex = value.time;
                                 //set value save obejct
                                 $rootScope.lubeTime = value.time;
+                                that.appointmentData.inTime = value.time;
                                 that.tempdata.appointmentBay = value.indexNo;
                                 that.getBay(value);
                             }
@@ -348,6 +359,7 @@
                                 that.ui.selectedBayBwIndex = value.time;
                                 //set value save obejct
                                 $rootScope.bodyWashTime = value.time;
+                                that.appointmentData.inTime = value.time;
                                 that.tempdata.appointmentBay = value.indexNo;
                                 that.getBay(value);
                             }
@@ -375,6 +387,7 @@
                                 that.ui.selectedBayUwIndex = value.time;
                                 //set value save obejct
                                 $rootScope.underWashTime = value.time;
+                                that.appointmentData.inTime = value.time;
                                 that.tempdata.appointmentBay = value.indexNo;
                                 that.getBay(value);
                             }
@@ -403,6 +416,7 @@
                                 data = value;
                                 that.ui.selectedBayBwIndex = value.time;
                                 //set value save obejct
+                                that.appointmentData.inTime = value.time;
                                 that.tempdata.appointmentBay = value.indexNo;
                                 that.getBay(value);
                             }
