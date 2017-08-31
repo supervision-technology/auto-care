@@ -8,14 +8,15 @@
             <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
         </div>
         <div class="tile-list-content smart-scroll-y" style="height: calc(100vh - 126px);" ng-class="{'disabled-tiles': ui.mode !== 'NEW'}" ng-disabled="ui.mode !== 'NEW'">
-            <div class="tile tile-128" style="animation: 0.5s zoomInLeft" ng-repeat="details in invoiceModel.pendingJobCards |filter:{vehicleNo:search}" ng-class="{'select-default-row':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
-                <span>
+            <div class="tile tile-155" style="animation: 0.5s zoomInLeft" ng-repeat="details in invoiceModel.pendingJobCards|filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+                <span> 
                     <img src="/img/01.png"/>  
-                    <label>
-                        {{invoiceModel.vehicle(details.vehicle).vehicleNo}}
-                    </label>
+                    <label>{{invoiceModel.vehicle(details.vehicle).vehicleNo}}</label>
                     <label ng-show="invoiceModel.vehicle(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
                     <label ng-show="invoiceModel.vehicle(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
+                    <label class="label" style="background: {{invoiceModel.priceCategoryData(details.priceCategory).colour}};">{{invoiceModel.priceCategoryData(details.priceCategory).name}}</label>
+                    <label class="label label-default">{{details.date}}</label>
+                    <label class="label label-default">{{details.indexNo}}</label>
                 </span>
             </div>
         </div>

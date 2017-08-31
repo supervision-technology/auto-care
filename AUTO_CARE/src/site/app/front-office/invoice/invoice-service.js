@@ -27,8 +27,13 @@
         this.loadCardType = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/card_type");
         };
+
         this.loadBranch = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/branch");
+        };
+
+        this.loadPriceCategory = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/priceCategory");
         };
 
         this.loadBranchByBank = function (bank) {

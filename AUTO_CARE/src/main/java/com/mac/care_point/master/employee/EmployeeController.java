@@ -9,6 +9,7 @@ import com.mac.care_point.master.employee.model.Employee;
 import static com.mac.care_point.service.job_card.JobCardController.IMAGE_LOCATION;
 import static com.mac.care_point.service.job_card.JobCardController.IMAGE_NAME_FILTER_TEMPLATE;
 import static com.mac.care_point.service.job_card.JobCardController.IMAGE_NAME_TEMPLATE;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -56,7 +57,7 @@ public class EmployeeController {
 
     @RequestMapping(value = "/save-employee", method = RequestMethod.POST)
     public Employee saveEmployee(@RequestBody Employee employee) {
-        employee.setBranch(1);
+        employee.setBranch(SecurityUtil.getCurrentUser().getBranch());
         employee.setBay(11);
         Employee employee1 = employeeService.saveEmployee(employee);
         employee1.setImage(String.format(IMAGE_NAME_TEMPLATE, employee1.getName(), employee1.getIndexNo()));
@@ -98,14 +99,6 @@ public class EmployeeController {
         File file = new File(IMAGE_LOCATION + "/" + fileName);
         return file.delete();
     }
-//    @RequestMapping(value = "/image-names/{name}/{indexNo}", method = RequestMethod.GET)
-//    public String imageName(@PathVariable String name, @PathVariable String indexNo) {
-//        File imageDir = new File(IMAGE_LOCATION);
-//        File[] imageFiles = imageDir.listFiles((File pathname) -> {
-//            return pathname.getName().startsWith(String.format(IMAGE_NAME_FILTER_TEMPLATE, name, indexNo));
-//        });  
-//           return  imageFiles[0].getName();    
-//    }
 
     @RequestMapping(value = "/image-names/{name}/{indexNo}", method = RequestMethod.GET)
     public List<String> imageName(@PathVariable("name") String name, @PathVariable("indexNo") String indexNo) {

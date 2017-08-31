@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .controller("appController", function ($scope, $rootScope,$filter, $location, SecurityService) {
+            .controller("appController", function ($scope, $cookies, $rootScope, $filter, $location, SecurityService) {
                 $scope.hamburgerOpen = true;
 
                 //route loading
@@ -11,9 +11,14 @@
                 $scope.userRoles = $rootScope.userRoles;
 
                 $scope.homepageUrls = [];
-                
+
                 $scope.currentPageName = '';
                 
+                $scope.loginUser = "";
+                $scope.currentBranch = "";
+                $scope.loginUser = $cookies.get("nick-name");
+                $scope.currentBranch = $cookies.get("branch-name");
+
                 $scope.date = $filter('date')(new Date(), 'yyyy-MM-dd');
 
                 //init homepage urls
@@ -40,6 +45,8 @@
                 };
 
                 $scope.isHomepage = function () {
+                    $scope.loginUser = $cookies.get("nick-name");
+                    $scope.currentBranch = $cookies.get("branch-name");
                     return $location.path() === "/";
                 };
 

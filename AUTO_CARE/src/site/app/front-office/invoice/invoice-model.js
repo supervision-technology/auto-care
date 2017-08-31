@@ -9,6 +9,7 @@
                     vehicleList: [],
                     employeeList: [],
                     clientList: [],
+                    priceCategoryList: [],
                     pendingJobCards: [],
                     bankList: [],
                     branchList: [],
@@ -61,6 +62,11 @@
                         invoiceService.loadCardType()
                                 .success(function (data) {
                                     that.cardTypeList = data;
+                                });
+
+                        invoiceService.loadPriceCategory()
+                                .success(function (data) {
+                                    that.priceCategoryList = data;
                                 });
                     },
                     clear: function () {
@@ -328,6 +334,15 @@
                                 that.getPaymentDetails();
                             }
                         });
+                    }, priceCategoryData: function (indexNo) {
+                        var data = "";
+                        angular.forEach(this.priceCategoryList, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                data = values;
+                                return;
+                            }
+                        });
+                        return data;
                     }
 
                 };

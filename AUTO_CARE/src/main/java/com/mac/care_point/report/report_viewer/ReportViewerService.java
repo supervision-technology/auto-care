@@ -7,9 +7,9 @@ package com.mac.care_point.report.report_viewer;
 
 import com.mac.care_point.report.report_viewer.model.Report;
 import com.mac.care_point.report.report_viewer.model.ReportGroup;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.Connection;
@@ -23,12 +23,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.print.Doc;
-import javax.print.DocFlavor;
-import javax.print.PrintException;
-import javax.print.PrintService;
-import javax.print.PrintServiceLookup;
-import javax.print.SimpleDoc;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -37,7 +31,6 @@ import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.util.JRLoader;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -146,16 +139,11 @@ public class ReportViewerService {
 
                 String value = map.get(name);
                 if (value != null) {
-                    System.out.println(type);
-                    System.out.println(value);
-                    System.out.println(getTypedValue(value, type));
-                    System.out.println("-----------------");
                     params.put(name, getTypedValue(value, type));
                 }
             }
         }
-        params.put("CURRENT_BRANCH", 1);
-//        params.put("INVOICE_NO", 1);
+        params.put("CURRENT_BRANCH", SecurityUtil.getCurrentUser().getBranch());
 
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, getConnection());
 
@@ -192,60 +180,6 @@ public class ReportViewerService {
 
     public Connection getConnection() throws SQLException {
         return dataSource.getConnection();
-    }
-
-    public void printReport(HttpServletResponse response, HashMap<String, String> map, Integer branch) throws JRException, IOException, SQLException, ParseException, PrintException {
-        String action = (String) map.get("action");
-
-        String reportFile = new String(Base64.getDecoder().decode(action));
-
-        String compiledFilePath = reportFile.replace(".jrxml", ".jasper");
-        File compiledFile = new File(compiledFilePath);
-
-        if (!compiledFile.exists()) {
-            compileReport(reportFile, compiledFilePath);
-        }
-
-        Map<String, Object> params = new HashMap<>();
-
-        JasperReport jasperReport = (JasperReport) JRLoader.loadObject(compiledFile);
-        JRParameter[] jRParameters = jasperReport.getParameters();
-        for (JRParameter jRParameter : jRParameters) {
-            if (!jRParameter.isSystemDefined()) {
-                String name = jRParameter.getName();
-                Class type = jRParameter.getValueClass();
-
-                String value = map.get(name);
-                if (value != null) {
-                    params.put(name, getTypedValue(value, type));
-                }
-            }
-        }
-
-        params.put("CURRENT_BRANCH", 1);
-
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, getConnection());
-
-        String path = System.getProperty("user.dir");
-        JasperExportManager.exportReportToPdfFile(jasperPrint, path + "/reports/Report.pdf");
-        
-        
-          FileInputStream in = new FileInputStream(path + "/reports/Report.pdf");
-            Doc doc = new SimpleDoc(in, DocFlavor.INPUT_STREAM.AUTOSENSE, null);
-        PrintService service = PrintServiceLookup.lookupDefaultPrintService();
-
-        service.createPrintJob().print(doc, null);
-        
-//        System.out.println(compiledFilePath);
-//          String printFileName = JasperFillManager.fillReportToFile(compiledFilePath, params, getConnection());
-//         if(printFileName != null){
-//            JasperPrintManager.printReport( printFileName, true);
-//         }else{
-//             System.out.println("print file not found");
-//         }
-         
-         
-        JasperPrintManager.printReport(jasperPrint, true);
     }
 
 }

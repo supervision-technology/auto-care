@@ -171,23 +171,23 @@ public class JobCardService {
         return getJobCardData;
     }
 
-    public List<JobCard> getNotFinishedJobCard() {
-        return jobCardRepository.findByStatusNotIn(Constant.FINISHE_STATUS);
+    public List<JobCard> getNotFinishedJobCard(Integer branch) {
+        return jobCardRepository.findByBranchAndStatusNotIn(branch, Constant.FINISHE_STATUS);
     }
 
     //service selection or stock selection
-    public List<JobCard> findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc() {
-        return jobCardRepository.findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(Constant.PENDING_STATUS, false, false);
+    public List<JobCard> findByBranchAndStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(Integer branch) {
+        return jobCardRepository.findByBranchAndStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(branch, Constant.PENDING_STATUS, false, false);
     }
 
     //invoice
-    public List<JobCard> findByStatusAndInvoiceOrderByIndexNoDesc() {
-        return jobCardRepository.findByStatusAndInvoiceOrderByIndexNoDesc(Constant.PENDING_STATUS, false);
+    public List<JobCard> findByBranchAndStatusAndInvoiceOrderByIndexNoDesc(Integer branch) {
+        return jobCardRepository.findByBranchAndStatusAndInvoiceOrderByIndexNoDesc(branch, Constant.PENDING_STATUS, false);
     }
 
     //final check list
-    public List<JobCard> findByStatusAndDefaultFinalCheckOrderByIndexNoDesc() {
-        return jobCardRepository.findByStatusAndDefaultFinalCheckOrderByIndexNoDesc(Constant.PENDING_STATUS, false);
+    public List<JobCard> findByBranchAndStatusAndDefaultFinalCheckOrderByIndexNoDesc(Integer branch) {
+        return jobCardRepository.findByBranchAndStatusAndDefaultFinalCheckOrderByIndexNoDesc(branch, Constant.PENDING_STATUS, false);
     }
 
     public List<JobCard> getJobCardByVehicleNo(String vehicleNo) {

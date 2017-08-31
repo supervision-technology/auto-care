@@ -6,7 +6,7 @@
 package com.mac.care_point.service.job_card;
 
 import com.mac.care_point.service.job_card.model.JobCard;
-import com.mac.care_point.service.job_card.model.TPriceCategoryChangeDetails;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -63,28 +63,28 @@ public class JobCardController {
     }
 
     @RequestMapping(value = "/get-invoice-pending-job-card", method = RequestMethod.GET)
-    public List<JobCard> findByStatusAndInvoiceOrderByIndexNoDesc() {
-        return jobCardService.findByStatusAndInvoiceOrderByIndexNoDesc();
+    public List<JobCard> findByBranchAndStatusAndInvoiceOrderByIndexNoDesc() {
+        return jobCardService.findByBranchAndStatusAndInvoiceOrderByIndexNoDesc(SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/get-default-check-list-pending-job-card", method = RequestMethod.GET)
-    public List<JobCard> findByStatusAndDefaultFinalCheckOrderByIndexNoDesc() {
-        return jobCardService.findByStatusAndDefaultFinalCheckOrderByIndexNoDesc();
+    public List<JobCard> findByBranchAndStatusAndDefaultFinalCheckOrderByIndexNoDesc() {
+        return jobCardService.findByBranchAndStatusAndDefaultFinalCheckOrderByIndexNoDesc(SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/get-service-and-stock-pending-job-card", method = RequestMethod.GET)
-    public List<JobCard> findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc() {
-        return jobCardService.findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc();
+    public List<JobCard> findByBranchAndStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc() {
+        return jobCardService.findByBranchAndStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/get-not-finished-job-cards", method = RequestMethod.GET)
     public List<JobCard> getNotFinishedJobCard() {
-        return jobCardService.getNotFinishedJobCard();
+        return jobCardService.getNotFinishedJobCard(SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/save-job-card", method = RequestMethod.POST)
     public Integer saveJovCard(@RequestBody JobCard jobCard) {
-        jobCard.setBranch(1);
+        jobCard.setBranch(SecurityUtil.getCurrentUser().getBranch());
         return jobCardService.saveJobCard(jobCard).getIndexNo();
     }
 

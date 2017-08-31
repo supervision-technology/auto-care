@@ -7,6 +7,7 @@ package com.mac.care_point.service.invoice.invoice;
 
 import com.mac.care_point.service.invoice.invoice.model.InvoicePayment;
 import com.mac.care_point.service.invoice.invoice.model.TInvoice;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class InvoiceController {
     
     @RequestMapping(value = "/get-invoice-details/{invoiceNumber}", method = RequestMethod.GET)
     public InvoicePayment loadInvoiceDetails(@PathVariable Integer invoiceNumber) {
-        return invoiceService.loadInvoiceDetails(invoiceNumber, 1);
+        return invoiceService.loadInvoiceDetails(invoiceNumber, SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/find-by-job-card/{jobCard}", method = RequestMethod.GET)

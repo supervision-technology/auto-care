@@ -17,7 +17,7 @@
         <div class="side-bar-left background-ultra-dark" ng-class="hamburgerOpen ? 'side-bar-hidden' : ''">
             <div>
                 <div class="brand">
-                    
+
                     <div class="brand-text">CARE POINT</div>
                 </div>
 
@@ -27,7 +27,7 @@
                         <span>LOGIN USER</span>
                     </div>
                 </div>
-                
+
                 <div class="index-sidebar-navigation smart-scroll-y" style="height: calc(100vh - 100px)">
                     <ul>
 
@@ -41,7 +41,7 @@
                                 <li><a href="#/service/bay-assignment" ng-click="toggleHamburger('Bay Assignment');">Bay Assignment</a></li>           
                                 <li><a href="#/service/employee-assignment" ng-click="toggleHamburger('Employee Assignment');">Employee Assignment</a></li>           
                                 <li><a href="#/service/customer-satisfaction" ng-click="toggleHamburger('Customer Satisfaction');">Customer Satisfaction</a></li>           
-                                <li><a href="#/service/job-card-edit" ng-click="toggleHamburger('JOB CARD EDIT');">JOB CARD EDIT</a></li>           
+                                <li><a href="#/service/job-card-edit" ng-click="toggleHamburger('JOB CARD EDIT');">JobCard Edit</a></li>           
                             </ul>
                         </li>
                         <li> 
@@ -118,7 +118,7 @@
 
         <div class="index-middle">
             <div class="index-header  background-light">
-                
+
                 <div class="hamburger" ng-click="toggleHamburger();">
                     <div ng-class="hamburgerOpen ? '' : 'open'">
                         <span></span>
@@ -141,12 +141,13 @@
                     </span>
                 </div>
                 <div class="col-xs-5 text-center">
-                    <span class="text-primary text-capitalize" style="font-weight: 300; font-size: 18px;">LOGIN BRANCH GOES HERE</span>
+                    <span class="text-primary text-capitalize" style="font-weight: 300; font-size: 18px;">{{currentBranch}} Branch</span>
                     |&nbsp;{{date}}
 
                 </div>
 
                 <div class="col-xs-2">
+                    <td><span class="text-primary text-capitalize text-bold">{{loginUser}}</span>
                     <table  style="width: auto; float: right;">
                         <tbody>
                             <tr>
@@ -159,13 +160,13 @@
                 </div>
             </div>
 
-<!--            <div>
-                <ul class="nav nav-tabs" ng-show="homepageUrls.length && isHomepage()">
-                    <li ng-repeat="url in homepageUrls">
-                        <a href="{{url.url}}">{{url.name}}</a>
-                    </li>
-                </ul>
-            </div>-->
+            <!--            <div>
+                            <ul class="nav nav-tabs" ng-show="homepageUrls.length && isHomepage()">
+                                <li ng-repeat="url in homepageUrls">
+                                    <a href="{{url.url}}">{{url.name}}</a>
+                                </li>
+                            </ul>
+                        </div>-->
 
 
             <div class="index-content" ng-view>
@@ -195,15 +196,15 @@
         <!-- inject:js -->
         <!-- endinject -->
         <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", function (event) {
-                setTimeout(function () {
-                    var element = document.getElementById("page-loading");
-                    element.className += " exit";
-                    setTimeout(function () {
-                        element.parentNode.removeChild(element);
-                    }, 250);
-                }, 1000);
-            });
+                    document.addEventListener("DOMContentLoaded", function (event) {
+                        setTimeout(function () {
+                            var element = document.getElementById("page-loading");
+                            element.className += " exit";
+                            setTimeout(function () {
+                                element.parentNode.removeChild(element);
+                            }, 250);
+                        }, 1000);
+                    });
         </script>
     </body>
 </html>

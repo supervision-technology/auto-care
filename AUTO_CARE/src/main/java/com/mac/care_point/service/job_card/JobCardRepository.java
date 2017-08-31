@@ -19,18 +19,18 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
 
     public List<JobCard> findByBay(Integer indexNo);
 
-    public List<JobCard> findByStatusAndInvoiceOrderByIndexNoDesc(String status, Boolean invoice);
+    public List<JobCard> findByBranchAndStatusAndInvoiceOrderByIndexNoDesc(Integer branch, String status, Boolean invoice);
 
-    public List<JobCard> findByStatusAndDefaultFinalCheckOrderByIndexNoDesc(String status, Boolean defaultInvoice);
+    public List<JobCard> findByBranchAndStatusAndDefaultFinalCheckOrderByIndexNoDesc(Integer branch, String status, Boolean defaultInvoice);
 
-    public List<JobCard> findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(String status, Boolean invoice, Boolean defaultInvoice);
+    public List<JobCard> findByBranchAndStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(Integer branch, String status, Boolean invoice, Boolean defaultInvoice);
 
     @Query(value = "SELECT MAX(number)FROM t_job_card WHERE branch=:branch", nativeQuery = true)
     public Integer getMaximumNumberByBranch(@Param("branch") Integer branch);
 
     public List<JobCard> findJobCardByClient(Integer indexNo);
 
-    public List<JobCard> findByStatusNotIn(String FINISHED_STATUS);
+    public List<JobCard> findByBranchAndStatusNotIn(Integer branch, String FINISHED_STATUS);
 
     public List<JobCard> findByVehicleAndStatus(Integer indexNo, String status);
 

@@ -54,7 +54,7 @@ public class JobItemService {
         return mItemLRepository.findAll();
     }
     
-    public List<MItemL> findByItemCategoryAndBranch(Integer itemCategory) {
+    public List<MItemL> findByItemCategory(Integer itemCategory) {
         return mItemLRepository.findByItemCategory(itemCategory);
     }
     

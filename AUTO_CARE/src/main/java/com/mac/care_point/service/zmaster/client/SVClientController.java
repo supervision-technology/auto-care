@@ -7,6 +7,7 @@ package com.mac.care_point.service.zmaster.client;
 
 import com.mac.care_point.service.zmaster.client.model.MClient;
 import com.mac.care_point.service.zmaster.client.model.MClientDTO;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,6 +35,7 @@ public class SVClientController {
     
     @RequestMapping(value = "/save-client", method = RequestMethod.POST)
     public MClient saveClient(@RequestBody MClient client){
+        client.setBranch(SecurityUtil.getCurrentUser().getBranch());
         return clientService.saveClient(client);
     }
     
