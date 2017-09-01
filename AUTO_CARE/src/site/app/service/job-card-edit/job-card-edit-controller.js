@@ -1,7 +1,7 @@
 (function () {
     angular.module("jobCardEditModule", ['ui.bootstrap', 'ui-notification']);
     angular.module("jobCardEditModule")
-            .controller("jobCardEditController", function ($scope, jobCardEditModel, optionPane, ConfirmPane, Notification) {
+            .controller("jobCardEditController", function ($scope, jobCardEditModel, optionPane, ConfirmPane) {
                 $scope.model = new jobCardEditModel();
 
                 $scope.ui = {};

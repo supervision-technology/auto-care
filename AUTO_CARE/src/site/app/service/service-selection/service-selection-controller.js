@@ -95,7 +95,6 @@
                         $scope.selectedCategoryColors = data.colour;
                         if (data.staticFeild) {
                             if (data.staticFeildName === 'PACKAGE') {
-
                                 $scope.ui.model = "PACKAGE";
                                 $scope.model.filterItems = [];
                                 $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
@@ -124,6 +123,7 @@
                             ConfirmPane.successConfirm("Do you sure want to add item")
                                     .confirm(function () {
                                         $scope.model.addPackageAndServiceItem(item, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
+                                        $scope.serviceBeforValue = "";
                                     });
                         } else {
                             Notification.error("this item is allrday exsist");

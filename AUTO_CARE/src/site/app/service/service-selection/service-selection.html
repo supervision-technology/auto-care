@@ -223,8 +223,16 @@
                             <tr class="background-light" ng-repeat="detils in model.filterItems|filter:{ name : searchService}">
                                 <td class="text-bold" ng-hide="detils.qtyWise">{{detils.name}}</td>
                                 <td class="text-bold" ng-show="detils.qtyWise">{{detils.name}} &nbsp;&nbsp;<label class="label label-warning">QTY WISE</label></td>
-                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
-                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                                <!--                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>-->
+                                <!--                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>-->
+                                <td ng-show="selectVehicleType === 'REGISTER'">    
+                                    <input id="servicePriceChange" class="form-control form-group-lg text-bold text-right" type="text" ng-model="detils.salePriceRegister">
+                                </td>
+                                <td ng-show="selectVehicleType === 'NORMAL'">    
+                                    <input id="servicePriceChange" class="form-control form-group-lg text-bold text-right" type="text" ng-model="detils.salePriceNormal"/>
+                                </td>
                                 <td ng-hide="detils.qtyWise"><a style="background-color: #009688;font-weight: bold;" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
                                 <td ng-show="detils.qtyWise"><a style="background-color: #F5A623;font-weight: bold;" class="btn" ng-click="ui.viewQtyWiseServiceItem(detils);"/><span class="glyphicon glyphicon-plus"></span></a></td>
                             </tr>
