@@ -6,6 +6,7 @@
 package com.mac.care_point.master.client;
 
 import com.mac.care_point.master.client.model.Client;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -34,7 +35,7 @@ public class clientController {
 
     @RequestMapping(value = "/insert-client", method = RequestMethod.POST)
     public Client insertDetail(@RequestBody Client client) {
-        client.setBranch(1);
+        client.setBranch(SecurityUtil.getCurrentUser().getBranch());
         return clientService.saveDetail(client);
     }
 

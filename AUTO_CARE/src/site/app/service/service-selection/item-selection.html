@@ -244,7 +244,7 @@
                                 <col style="width: 35%;"/>
                                 <col style="width: 15%;"/>
                                 <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList| filter:{itemType:'!SERVICE_CHARGERS'}" style="animation: 0.5s fadeIn">
-                                    <tr style="border: none">
+                                    <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
                                         <td>
                                             <label class="label label-default"  style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
                                             <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
@@ -253,7 +253,7 @@
                                         <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType != 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>
                                         <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType == 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>        
                                     </tr>
-                                    <tr style="border: none">
+                                    <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
                                         <td colspan="2"><small>{{model.itemUnitData(selections.itemUnit).name}}</td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>
                                         <td class="text-right"><small>{{selections.value|number:2}}</small></td>
@@ -327,14 +327,14 @@
                                 <col style="width: 35%;"/>
                                 <col style="width: 15%;"/>
                                 <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList| filter:{itemType: '!SERVICE_CHARGERS'}| filter:{itemType: '!STOCK_ITEM'}">
-                                    <tr style="border: none">
+                                    <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
                                         <td>
                                             <label class="label label-default"  style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
                                             <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
                                         </td>
                                         <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType != 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>        
                                     </tr>
-                                    <tr style="border: none">
+                                    <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>

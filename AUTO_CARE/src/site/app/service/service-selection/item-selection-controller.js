@@ -1,9 +1,9 @@
 (function () {
 //module
-    angular.module("itemSelectionModule", ['ui.bootstrap']);
+    angular.module("itemSelectionModule", ['ui.bootstrap', 'ngCookies']);
     //controller
     angular.module("itemSelectionModule")
-            .controller("itemSelectionController", function ($scope, $uibModalStack, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("itemSelectionController", function ($scope, $http, $cookies, optionPane, $uibModalStack, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ItemSelectionModel();
 
                 $scope.ui = {};
@@ -190,9 +190,21 @@
                 };
 
                 $scope.ui.printJobItemRequestAstimate = function () {
+                    var currentBranch = $cookies.get("branch-index-no");
+                    if (!currentBranch) {
+                        optionPane.dangerMessage("PLEASE LOGOUT AND LOGIN USER!");
+                    }
+
                     ConfirmPane.successConfirm("Print Estimate")
                             .confirm(function () {
-                                $scope.model.printEstimate($scope.selectedJobCardIndexNo);
+                                var url = "http://localhost:8094/api/care-point/print-service/print-estimate/" + currentBranch + "/" + $scope.selectedJobCardIndexNo;
+                                $http.get(url)
+                                        .success(function (data) {
+                                            optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
+                                        })
+                                        .error(function (data) {
+                                            optionPane.dangerMessage("ERROR!");
+                                        });
                             });
                 };
             });

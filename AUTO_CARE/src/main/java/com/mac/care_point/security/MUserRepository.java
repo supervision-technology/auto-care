@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mac.care_point.master.sms_message;
+package com.mac.care_point.security;
 
-import com.mac.care_point.master.sms_message.model.MSmsDetails;
+import com.mac.care_point.security.model.MUser;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author kavish manjitha
  */
-public interface MSmsDetailsRepository extends JpaRepository<MSmsDetails, Integer> {
+public interface MUserRepository extends JpaRepository<MUser, Integer> {
 
-    public List<MSmsDetails> findByStaticName(String name);
+    public List<MUser> findByUsername(String userName);
 }

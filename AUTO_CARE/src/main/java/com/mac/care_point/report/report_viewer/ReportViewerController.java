@@ -8,6 +8,7 @@ package com.mac.care_point.report.report_viewer;
 import static com.mac.care_point.report.report_viewer.ReportViewerService.REPORT_DIR;
 import com.mac.care_point.report.report_viewer.model.Report;
 import com.mac.care_point.report.report_viewer.model.ReportGroup;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -50,8 +51,7 @@ public class ReportViewerController {
 
     @RequestMapping(value = "/report", method = RequestMethod.GET)
     public void viewReport(HttpServletResponse httpServletResponse, @RequestParam HashMap<String, String> map) throws JRException, IOException, SQLException, ParseException {
-        Integer branch = 1;
-        reportViewerService.writePdfReport(httpServletResponse, map, branch);
+        reportViewerService.writePdfReport(httpServletResponse, map, SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/invoice-report-data/{reportName}", method = RequestMethod.GET)
@@ -63,11 +63,5 @@ public class ReportViewerController {
         report.setReportName(reportDir.getName());
         return report;
 
-    }
-    
-    @RequestMapping(value = "/print-report", method = RequestMethod.GET)
-    public void printReport(HttpServletResponse httpServletResponse, @RequestParam HashMap<String, String> map) throws JRException, IOException, SQLException, ParseException, PrintException {
-        Integer branch = 1;
-        reportViewerService.printReport(httpServletResponse, map, branch);
     }
 }

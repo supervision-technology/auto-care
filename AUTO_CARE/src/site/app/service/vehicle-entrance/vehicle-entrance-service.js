@@ -23,6 +23,9 @@
         this.vehicleSerachByVehicleNo = function (vehicleNo) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/search-vehicle-vehicleNo/" + vehicleNo);
         };
+        this.findByVehicleNo = function (vehicleNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/vehicle/find-by-vehicle-no/" + vehicleNo);
+        };
 
         this.getClientByIndexNo = function (client) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/client/search-client/" + client);
@@ -70,6 +73,12 @@
 
         this.imageDownloard = function (jobCard) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/image-names/" + jobCard);
+        };
+        this.vehicleSearchByClient = function (indexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/search-vehicle-client/" + indexNo);
+        };
+        this.getVehicleHistory = function (vehicleNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/find-job-history/" + vehicleNo);
         };
     };
     angular.module("appModule")

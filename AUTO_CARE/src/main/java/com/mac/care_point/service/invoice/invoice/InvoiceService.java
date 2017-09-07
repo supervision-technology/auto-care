@@ -5,7 +5,7 @@
  */
 package com.mac.care_point.service.invoice.invoice;
 
-import com.mac.care_point.master.sms_message.MSmsDetailsRepository;
+
 import com.mac.care_point.master.vehicleAssignment.VehicleAssignmentRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.invoice.invoice.model.TInvoice;
@@ -23,6 +23,7 @@ import com.mac.care_point.service.job_card.JobCardRepository;
 import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.service.payment_voucher.PaymentVoucherRepository;
 import com.mac.care_point.system.exception.EntityNotFoundException;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -55,9 +56,6 @@ public class InvoiceService {
     private VehicleAssignmentRepository vehicleAssignmentRepository;
 
     @Autowired
-    private MSmsDetailsRepository mSmsDetailsRepository;
-
-    @Autowired
     public PaymentVoucherRepository paymentVoucherRepository;
 
     public List<TInvoice> findByJobCard(Integer jobCard) {
@@ -78,7 +76,7 @@ public class InvoiceService {
         String outTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         jobCard.setOutTime(outTime);
 
-        invoice.setBranch(1);
+        invoice.setBranch(SecurityUtil.getCurrentUser().getBranch());
         //step 01
         //invoice save
         if (invoice.getIndexNo() == null) {
@@ -269,6 +267,7 @@ public class InvoiceService {
             return invoicePayment;
         }
     }
+
 
     private List<Object[]> getFIFOList(int client) {
         return paymentVoucherRepository.getFIFOList(client);

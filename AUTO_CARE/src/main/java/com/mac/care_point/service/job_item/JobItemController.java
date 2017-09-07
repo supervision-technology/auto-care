@@ -7,6 +7,7 @@ package com.mac.care_point.service.job_item;
 
 import com.mac.care_point.master.items.items.model.MItemL;
 import com.mac.care_point.service.job_item.model.TJobItem;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +46,7 @@ public class JobItemController {
     
     @RequestMapping(value = "/quick-stock-item/{itemKey}", method = RequestMethod.GET)
     public List<Object[]> getQuickSeacrhItemStockItem(@PathVariable String itemKey) {
-        return jobItemService.getQuickSeacrhItemStockItem(itemKey, BRANCH);
+        return jobItemService.getQuickSeacrhItemStockItem(itemKey, SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/save-job-items", method = RequestMethod.POST)
@@ -70,41 +71,35 @@ public class JobItemController {
     //for final check list(complited and pending)
     @RequestMapping(value = "/check-item/{item}/{status}/{jobCard}", method = RequestMethod.GET)
     public TJobItem checkItem(@PathVariable Integer item, @PathVariable String status, @PathVariable Integer jobCard) {
-        //TODO:get login branch
-        return jobItemService.checkItem(item, BRANCH, jobCard, status);
+        return jobItemService.checkItem(item, SecurityUtil.getCurrentUser().getBranch(), jobCard, status);
     }
 
     //get stock leger get item qty for item selection stock item qty
     @RequestMapping(value = "/get-item-qty-by-stock/{indexNo}", method = RequestMethod.GET)
     public List<Object[]> getItemQtyByStockLeger(@PathVariable Integer indexNo) {
-        //TODO:get login branch
-        return jobItemService.getItemQtyByStockLeger(indexNo, BRANCH);
+        return jobItemService.getItemQtyByStockLeger(indexNo, SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/get-item-by-item-category/{indexNo}", method = RequestMethod.GET)
-    public List<MItemL> findByItemCategoryAndBranch(@PathVariable Integer indexNo) {
-        //TODO:get login branch
-        return jobItemService.findByItemCategoryAndBranch(indexNo);
+    public List<MItemL> findByItemCategory(@PathVariable Integer indexNo) {
+        return jobItemService.findByItemCategory(indexNo);
     }
 
     //get stock leger get item qty for item selection non item qty
     @RequestMapping(value = "/get-non-stock-item-qty-by-stock", method = RequestMethod.GET)
     public List<Object[]> getNonStockItemQtyByStockLeger() {
-        //TODO:get login branch
-        return jobItemService.getNonStockItemQtyByStockLeger(BRANCH);
+        return jobItemService.getNonStockItemQtyByStockLeger(SecurityUtil.getCurrentUser().getBranch());
     }
 
     @RequestMapping(value = "/get-stock-item-qty-by-stock", method = RequestMethod.GET)
     public List<Object[]> getAllItemQtyByStockLeger() {
-        //TODO:get login branch
-        return jobItemService.getAllItemQtyByStockLeger(BRANCH);
+        return jobItemService.getAllItemQtyByStockLeger(SecurityUtil.getCurrentUser().getBranch());
     }
 
     //find by stock item qty from item
     @RequestMapping(value = "/get-item-qty-by-stocks/{item}", method = RequestMethod.GET)
     public BigDecimal getItemQtyByStockLegerQty(@PathVariable Integer item) {
-        //TODO:get login branch
-        return jobItemService.findByItemStockItem(BRANCH, item);
+        return jobItemService.findByItemStockItem(SecurityUtil.getCurrentUser().getBranch(), item);
     }
 
     //final check list
@@ -118,4 +113,10 @@ public class JobItemController {
     public TJobItem findTJobItemByIndexNo(@PathVariable Integer indexNo) {
         return jobItemService.findTJobItemByIndexNo(indexNo);
     }
+    
+    @RequestMapping(value = "/change-vehicle-price-category/{jobCard}",method = RequestMethod.GET)
+       public List<TJobItem> changeVehiclePriceCategory(@PathVariable Integer jobCard) {
+        return jobItemService.changeVehiclePriceCategory(jobCard);
+    }
+    
 }

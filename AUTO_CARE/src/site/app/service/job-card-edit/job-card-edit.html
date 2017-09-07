@@ -1,0 +1,166 @@
+<div class="index-content-header"></div>
+<div class="index-content-body" style="height: calc(100vh - 52px)">
+
+    <div class="tile-list background-dark">
+        <div class="tile-list-title" style="margin-right: 5px;">
+            <h4>VEHICLE</h4>
+        </div>
+        <div style="margin-right: 5px;">
+            <input type="text" class="form-control" placeholder="search . . " ng-model="search"/>
+        </div>
+        <div class="smart-scroll-y" style="height: calc(100vh - 126px);">
+            <div class="tile tile-155" style="animation: 0.5s zoomInLeft" ng-repeat="details in model.pendingJobCards|filter:{vehicleNo:search}" ng-class="{'selected':details.indexNo == selectedJobCardIndexNo}" ng-click="ui.selectedJobCardRow(details);">
+                <span> 
+                    <img src="/img/01.png"/>  
+                    <label>{{model.vehicleData(details.vehicle).vehicleNo}}</label>
+                    <label ng-show="model.vehicleData(details.vehicle).type === 'NORMAL'" class="label label-primary">NORMAL</label>
+                    <label ng-show="model.vehicleData(details.vehicle).type === 'REGISTER'" class="label label-success">REGISTER</label>
+                    <label class="label" style="background: {{model.priceCategoryData(details.priceCategory).colour}};">{{model.priceCategoryData(details.priceCategory).name}}</label>
+                    <label class="label label-default">{{details.date}}</label>
+                    <label class="label label-default">{{details.indexNo}}</label>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div style="float: left; width: calc(100% - 133px);">
+        <div class="col-xs-6 background-light-dark" style="height: calc(100vh-140px)">
+            <table class="table-rounded control-table">
+                <col style="width: 35%"/>
+                <col style="width: 65%"/>
+                <tbody>
+                    <tr class="select-default-row text-bold">
+                        <td colspan="2">VEHICLE DETAILS</td>
+                    </tr>
+                    <tr>
+                        <td><label>OLD VEHICLE PRICE CATEGORY</label></td>
+                        <td>
+                            <select class="form-control" ng-options="priceCategory.indexNo as priceCategory.name for priceCategory in model.priceCategoryList" ng-model="model.jobCardEditData.oldPriceCategory" ng-disabled="ui.mode !== 'NEW'">
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>NEW VEHICLE PRICE CATEGORY</label></td>
+                        <td>
+                            <select class="form-control" ng-options="priceCategory.indexNo as priceCategory.name for priceCategory in model.priceCategoryList" ng-model="model.jobCardEditData.newPriceCategory" ng-disabled="ui.mode !== 'NEW'">
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table-rounded control-table">
+                <col style="width: 35%"/>
+                <col style="width: 65%"/>
+                <tbody>
+                    <tr class="select-default-row text-bold">
+                        <td colspan="2">RESPONSIBILITY EMPLOYEE DETAILS</td>
+                    </tr>
+                    <tr>
+                        <td><label>Name</label></td>
+                        <td><input class="form-control text-right" ng-model="model.jobCardEditData.reponcebleEmployee" uib-typeahead="employee.indexNo as (employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.employeeLable($model)" typeahead-editable="false" typeahead-on-select="model.getRepEmployeeData($model);" ng-disabled="ui.mode !== 'NEW'"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Contact</label></td>
+                        <td><input class="form-control text-right" ng-model="model.employeeData.mobile" ng-disabled="true"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Type</label></td>
+                        <td><input class="form-control text-right" ng-model="model.employeeData.type" ng-disabled="true"></td>
+                    </tr>
+                    <tr>
+                        <td><label>Rol</label></td>
+                        <td><input class="form-control text-right" ng-model="model.jobCardEditData.rol" ng-disabled="true"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xs-6 background-dark">
+            <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="height: 50px;">
+                    <table class="square-table table-rounded">
+                        <col style="width: 10%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <col/>
+                        <thead>
+                            <tr>
+                                <th>&nbsp;</th>
+                                <th>SELECTIONS</th>
+                                <th class="text-right">QTY</th>
+                                <th class="text-right">AMOUNT</th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="smart-scroll-y" style="height: calc(100vh - 339px);padding-left: 5px;">
+                    <table class="square-table background-dark">
+                        <col style="width: 10%;"/>
+                        <col style="width: 40%;"/>
+                        <col style="width: 10%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList| filter:{itemType:'!SERVICE_CHARGERS'}" style="animation: 0.5s fadeIn">
+                            <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
+                                <td>
+                                    <label class="label label-default"  style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
+                                    <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
+                                    <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'STOCK_ITEM'">I</label>
+                                </td>
+                                <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType != 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>
+                                <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType == 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>        
+                            </tr>
+                            <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
+                                <td colspan="2" ng-show="selections.itemType === 'STOCK_ITEM'"><small>{{model.itemUnitData(selections.itemUnit).name}} &nbsp; {{selections.price}}</td>
+                                <td colspan="2" ng-show="selections.itemType === 'SERVICE_ITEM'"><small>{{selections.price}}&nbsp; x &nbsp;</small> </td>
+                                <td colspan="2" ng-show="selections.itemType === 'PACKAGE_ITEM'"><small>{{selections.price}}&nbsp; x &nbsp;</small> </td>
+                                <td colspan="2" ng-show="selections.itemType === 'SERVICE_ITEM_QTY_WISE'"><label class="label label-default" style="display: inline-block; width: 100px;background-color: #F5A623;">SERVICE ITEM QTY WISE</label><small>{{selections.price}}&nbsp; x &nbsp;</small> </td>
+
+                                <td class="text-right"><small>{{selections.quantity}}</small></td>
+                                <td class="text-right"><small>{{selections.value|number:2}}</small></td>
+                                <td style="height: 50px;" ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'">
+                                    <span ng-show="selections.itemUnit && selections.orderStatus === 'COMPLITED'" class="label label-success">STOCK ISSUE</span>
+                                    <span ng-show="selections.orderStatus === 'COMPLITED' && selections.jobStatus === 'COMPLITED'" class="label label-primary">FINAL CHECK</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="background-light-dark" style="margin-left: 5px;margin-right: 5px;">
+                    <table class="square-table">
+                        <col style="width: 50%;"/>
+                        <col style="width: 35%;"/>
+                        <col style="width: 15%;"/>
+                        <tbody>
+                            <tr class="text-bold ">
+                                <td>SERVICE TOTAL</td>
+                                <td class="text-right">{{model.getSelectItemTotalForService() | number:2}}</td>
+                                <th>&nbsp;</th>
+                            </tr>
+                            <tr class="text-bold">
+                                <td>ITEM TOTAL</td>
+                                <td class="text-right">{{model.getSelectItemTotalForItemAndItemUnits() | number:2}}</td>
+                                <th>&nbsp;</th>
+                            </tr>
+                            <tr class="text-bold" ng-show="model.jobCardData.serviceChagers">
+                                <td>SERVICE CHARGES</td>
+                                <td class="text-right">500.00</td>
+                                <th>&nbsp;</th>
+                            </tr>
+                            <tr class="text-bold">
+                                <td>ALL TOTAL</td>
+                                <td class="text-right">{{model.getSelectItemAllItems() | number:2}}</td>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fab-container pull-left">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.changeJobCardDetails();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

@@ -11,6 +11,10 @@
             jobcard: {},
             vehicleTypeData: {},
             priceCategoryData: {},
+            //searchBox
+            searchKeyword: null,
+            showSuggestions: false,
+            searchSuggestions: [],
             //uib-typeHead
             vehicleList: [],
             clientList: [],
@@ -20,6 +24,7 @@
             vehicleAttenctionsCategoryList: [],
             vehicleAttenctionsList: [],
             jobCardList: [],
+            jobCardHistryList: [],
             lastJobCardVehicleAttenctionList: [],
             constructor: function () {
                 var that = this;
@@ -100,19 +105,23 @@
                             console.log("error search");
                         });
             },
-            vehicleSerachByVehicleNo: function (vehicleNo) {
+            findByVehicleNo: function () {
                 var that = this;
-                vehicleEntranceService.vehicleSerachByVehicleNo(vehicleNo)
+                vehicleEntranceService.findByVehicleNo(this.searchKeyword)
                         .success(function (data) {
-                            that.vehicleData = data;
-                            vehicleEntranceService.getClientByIndexNo(that.vehicleData.client)
-                                    .success(function (data) {
-                                        that.clientData = data;
-                                        var mobile = parseInt(data.mobile);
-                                        that.clientData.mobile = mobile;
-
-
-                                    });
+                            that.searchSuggestions = data;
+                        })
+                        .error(function () {
+                            that.searchSuggestions = [];
+                        });
+            },
+            clientSearchByClientNo: function () {
+                var that = this;
+                vehicleEntranceService.getClientByIndexNo(this.vehicleData.client)
+                        .success(function (data) {
+                            that.clientData = data;
+                            var mobile = parseInt(data.mobile);
+                            that.clientData.mobile = mobile;
                         });
             },
             searchPendingJobCard: function (VehicleNo) {
@@ -138,6 +147,7 @@
                 that.jobcard.client = that.clientData.indexNo;
                 that.jobcard.vehicle = that.vehicleData.indexNo;
                 var defer = $q.defer();
+                console.log(that.jobcard);
                 vehicleEntranceService.saveJob(JSON.stringify(that.jobcard))
                         .success(function (data) {
                             that.loadClient();
@@ -183,7 +193,7 @@
             },
             updateClient: function () {
                 var that = this;
-                var defer = $q.defer();  
+                var defer = $q.defer();
                 vehicleEntranceService.newClient(JSON.stringify(that.clientData))
                         .success(function (data) {
                             that.clientData = data;
@@ -287,6 +297,27 @@
                             defer.reject();
                         });
                 return defer.promise;
+            },
+            clientVehicles: function (indexNo) {
+                var defer = $q;
+                vehicleEntranceService.vehicleSearchByClient(indexNo)
+                        .success(function (data) {
+                            defer.resolve(data);
+                        })
+                        .error(function () {
+                            defer.reject();
+                        });
+                return defer.promise;
+            },
+            getVehicleHistory: function (vehicleNo){
+                var that = this;
+                vehicleEntranceService.getVehicleHistory(vehicleNo)
+                .success(function (data) {
+                           that.jobCardHistryList = data;
+                        })
+                        .error(function () {
+                           
+                        });
             }
         };
         return vehicleEntranceModel;

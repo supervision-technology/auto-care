@@ -223,8 +223,16 @@
                             <tr class="background-light" ng-repeat="detils in model.filterItems|filter:{ name : searchService}">
                                 <td class="text-bold" ng-hide="detils.qtyWise">{{detils.name}}</td>
                                 <td class="text-bold" ng-show="detils.qtyWise">{{detils.name}} &nbsp;&nbsp;<label class="label label-warning">QTY WISE</label></td>
-                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
-                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>
+                                <!--                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>-->
+                                <!--                                <td ng-show="selectVehicleType === 'REGISTER'">{{detils.salePriceRegister|number:2}}</td>
+                                                                <td ng-show="selectVehicleType === 'NORMAL'">{{detils.salePriceNormal|number:2}}</td>-->
+                                <td ng-show="selectVehicleType === 'REGISTER'">    
+                                    <input id="servicePriceChange" class="form-control form-group-lg text-bold text-right" type="text" ng-model="detils.salePriceRegister">
+                                </td>
+                                <td ng-show="selectVehicleType === 'NORMAL'">    
+                                    <input id="servicePriceChange" class="form-control form-group-lg text-bold text-right" type="text" ng-model="detils.salePriceNormal"/>
+                                </td>
                                 <td ng-hide="detils.qtyWise"><a style="background-color: #009688;font-weight: bold;" class="btn" ng-click="ui.addPackageAndServiceItem(detils, 'SERVICE_ITEM');"/><span class="glyphicon glyphicon-plus"></span></a></td>
                                 <td ng-show="detils.qtyWise"><a style="background-color: #F5A623;font-weight: bold;" class="btn" ng-click="ui.viewQtyWiseServiceItem(detils);"/><span class="glyphicon glyphicon-plus"></span></a></td>
                             </tr>
@@ -312,7 +320,7 @@
                                 <col style="width: 35%;"/>
                                 <col style="width: 15%;"/>
                                 <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList| filter:{itemType:'!SERVICE_CHARGERS'}" style="animation: 0.5s fadeIn">
-                                    <tr style="border: none">
+                                    <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
                                         <td>
                                             <label class="label label-default"  style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
                                             <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
@@ -321,7 +329,7 @@
                                         <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType != 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>
                                         <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType == 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>        
                                     </tr>
-                                    <tr style="border: none">
+                                    <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
                                         <td colspan="2" ng-show="selections.itemType === 'STOCK_ITEM'"><small>{{model.itemUnitData(selections.itemUnit).name}} &nbsp; {{selections.price}}</td>
                                         <td colspan="2" ng-show="selections.itemType === 'SERVICE_ITEM'"><small>{{selections.price}}&nbsp; x &nbsp;</small> </td>
                                         <td colspan="2" ng-show="selections.itemType === 'PACKAGE_ITEM'"><small>{{selections.price}}&nbsp; x &nbsp;</small> </td>
@@ -463,14 +471,14 @@
                                 <col style="width: 35%;"/>
                                 <col style="width: 15%;"/>
                                 <tbody class="border-top border-bottom text-bold" ng-repeat="selections in model.jobItemList| filter:{itemType: '!SERVICE_CHARGERS'}| filter:{itemType: '!STOCK_ITEM'}">
-                                    <tr style="border: none">
+                                    <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
                                         <td>
                                             <label class="label label-default"  style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'PACKAGE_ITEM'">P</label>
                                             <label class="label label-default" style="display: inline-block; width: 20px;background-color: {{model.categoryColours(model.itemData(selections.item).category).colour}}" ng-show="selections.itemType === 'SERVICE_ITEM'">S</label>
                                         </td>
                                         <td style="max-width: 100px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap" colspan="5" ng-show="selections.itemType != 'STOCK_ITEM'"><small>{{model.itemData(selections.item).name}}</small></td>        
                                     </tr>
-                                    <tr style="border: none">
+                                    <tr style="border: none" ng-style="selections.isChange === true && {'background-color':'#f48fb1'}">
                                         <td>&nbsp;</td>
                                         <td>&nbsp;</td>
                                         <td class="text-right"><small>{{selections.quantity}}</small></td>

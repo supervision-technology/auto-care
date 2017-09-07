@@ -32,7 +32,9 @@
                         "branch": null,
                         "type": null,
                         "nic": null,
-                        "resident": null
+                        "resident": null,
+                        "vehicles":null
+                        
                     };
                     return data;
                 };
@@ -62,7 +64,9 @@
                         "rateReason": null,
                         "carepetOriginal": 0,
                         "carepetOther": 0,
-                        "carepet3M": 0
+                        "carepet3M": 0,
+                        "driverName":null,
+                        "driverMobile":null
                     };
                     return data;
                 };

@@ -3,7 +3,7 @@
     angular.module("serviceSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, $uibModalStack, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("serviceSelectionController", function ($scope, $http, $cookies, optionPane, $uibModalStack, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ItemSelectionModel();
 
                 $scope.ui = {};
@@ -95,7 +95,6 @@
                         $scope.selectedCategoryColors = data.colour;
                         if (data.staticFeild) {
                             if (data.staticFeildName === 'PACKAGE') {
-                                
                                 $scope.ui.model = "PACKAGE";
                                 $scope.model.filterItems = [];
                                 $scope.model.findByCategoryAndPriceCategory(data, $scope.model.jobCardData.priceCategory);
@@ -124,6 +123,7 @@
                             ConfirmPane.successConfirm("Do you sure want to add item")
                                     .confirm(function () {
                                         $scope.model.addPackageAndServiceItem(item, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
+                                        $scope.serviceBeforValue = "";
                                     });
                         } else {
                             Notification.error("this item is allrday exsist");
@@ -155,10 +155,10 @@
                                 $scope.ui.dismissAllModel();
                             });
                 };
-                
+
                 //------------- qty wise service ---------------
-                
-                
+
+
                 $scope.ui.setServiceChargers = function (checkd) {
                     if ($scope.selectedJobCardIndexNo) {
                         ConfirmPane.successConfirm("Select Service Chargers")
@@ -263,9 +263,22 @@
 
 //---------------------------------- estimate ----------------------------------
                 $scope.ui.printJobItemRequestAstimate = function () {
+                    var currentBranch = $cookies.get("branch-index-no");
+                    if (!currentBranch) {
+                        optionPane.dangerMessage("PLEASE LOGOUT AND LOGIN USER!");
+                    }
+
+
                     ConfirmPane.successConfirm("Print Estimate")
                             .confirm(function () {
-                                $scope.model.printEstimate($scope.selectedJobCardIndexNo);
+                                var url = "http://localhost:8094/api/care-point/print-service/print-estimate/" + currentBranch + "/" + $scope.selectedJobCardIndexNo;
+                                $http.get(url)
+                                        .success(function (data) {
+                                            optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
+                                        })
+                                        .error(function (data) {
+                                            optionPane.dangerMessage("ERROR!");
+                                        });
                             });
                 };
 //---------------------------------- end estimate ----------------------------------

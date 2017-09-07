@@ -63,6 +63,9 @@ public class TJobItem {
 
     @Column(name = "job_card")
     private Integer jobCard;
+    
+    @Column(name = "is_change")
+    private Boolean isChange;
 
 
     public TJobItem() {
@@ -170,4 +173,13 @@ public class TJobItem {
         this.stockRemoveQty = stockRemoveQty;
     }
 
+    public Boolean getIsChange() {
+        return isChange;
+    }
+
+    public void setIsChange(Boolean isChange) {
+        this.isChange = isChange;
+    }
+
+    
 }

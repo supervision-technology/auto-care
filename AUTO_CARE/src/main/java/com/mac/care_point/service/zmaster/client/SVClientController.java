@@ -6,6 +6,8 @@
 package com.mac.care_point.service.zmaster.client;
 
 import com.mac.care_point.service.zmaster.client.model.MClient;
+import com.mac.care_point.service.zmaster.client.model.MClientDTO;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,17 +29,18 @@ public class SVClientController {
     private SVClientService clientService;
     
     @RequestMapping(method = RequestMethod.GET)
-    public List<MClient> getAllClient(){
+    public List<MClientDTO> getAllClient(){
         return clientService.getAllClient();
     }
     
     @RequestMapping(value = "/save-client", method = RequestMethod.POST)
     public MClient saveClient(@RequestBody MClient client){
+        client.setBranch(SecurityUtil.getCurrentUser().getBranch());
         return clientService.saveClient(client);
     }
     
     @RequestMapping(value = "/search-client/{indexNo}",method = RequestMethod.GET)
-    public MClient getClientByIndex(@PathVariable Integer indexNo ){
+    public MClientDTO getClientByIndex(@PathVariable Integer indexNo ){
         return clientService.getClientByIndexNo(indexNo);
     }
     

@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.service.job_card;
 
-import com.mac.care_point.master.vehicle.model.Vehicle;
 import com.mac.care_point.master.vehicleAssignment.VehicleAssignmentRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.common.Constant;
@@ -14,6 +13,7 @@ import com.mac.care_point.service.final_check_list.TJobFinalCheckListRepository;
 import com.mac.care_point.service.final_check_list.model.MFinalCheckListItem;
 import com.mac.care_point.service.final_check_list.model.TJobFinalCheckList;
 import com.mac.care_point.service.job_card.model.JobCard;
+import com.mac.care_point.service.job_card.model.TPriceCategoryChangeDetails;
 import com.mac.care_point.service.job_item.JobItemRepository;
 import com.mac.care_point.service.job_item.model.TJobItem;
 import com.mac.care_point.service.vehicle_attenctions.MVehicleAttenctionRepository;
@@ -60,9 +60,12 @@ public class JobCardService {
 
     @Autowired
     private VehicleAssignmentRepository vehicleAssignmentRepository;
-    
+
     @Autowired
     private SVVehicleRepository sVVehicleRepository;
+
+    @Autowired
+    private TPriceCategoryChangeDetailsRepository tPriceCategoryChangeDetailsRepository;
 
     public List<JobCard> getClientHistory(Integer indexNo) {
         return jobCardRepository.findJobCardByClient(indexNo);
@@ -168,23 +171,23 @@ public class JobCardService {
         return getJobCardData;
     }
 
-    public List<JobCard> getNotFinishedJobCard() {
-        return jobCardRepository.findByStatusNotIn(Constant.FINISHE_STATUS);
+    public List<JobCard> getNotFinishedJobCard(Integer branch) {
+        return jobCardRepository.findByBranchAndStatusNotIn(branch, Constant.FINISHE_STATUS);
     }
 
     //service selection or stock selection
-    public List<JobCard> findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc() {
-        return jobCardRepository.findByStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(Constant.PENDING_STATUS, false, false);
+    public List<JobCard> findByBranchAndStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(Integer branch) {
+        return jobCardRepository.findByBranchAndStatusAndInvoiceAndDefaultFinalCheckOrderByIndexNoDesc(branch, Constant.PENDING_STATUS, false, false);
     }
 
     //invoice
-    public List<JobCard> findByStatusAndInvoiceOrderByIndexNoDesc() {
-        return jobCardRepository.findByStatusAndInvoiceOrderByIndexNoDesc(Constant.PENDING_STATUS, false);
+    public List<JobCard> findByBranchAndStatusAndInvoiceOrderByIndexNoDesc(Integer branch) {
+        return jobCardRepository.findByBranchAndStatusAndInvoiceOrderByIndexNoDesc(branch, Constant.PENDING_STATUS, false);
     }
 
     //final check list
-    public List<JobCard> findByStatusAndDefaultFinalCheckOrderByIndexNoDesc() {
-        return jobCardRepository.findByStatusAndDefaultFinalCheckOrderByIndexNoDesc(Constant.PENDING_STATUS, false);
+    public List<JobCard> findByBranchAndStatusAndDefaultFinalCheckOrderByIndexNoDesc(Integer branch) {
+        return jobCardRepository.findByBranchAndStatusAndDefaultFinalCheckOrderByIndexNoDesc(branch, Constant.PENDING_STATUS, false);
     }
 
     public List<JobCard> getJobCardByVehicleNo(String vehicleNo) {
@@ -193,7 +196,55 @@ public class JobCardService {
 //        Integer indexNo = vehiclelist.get(1).getIndexNo();
         System.out.println(indexNo);
         String status = "PENDING";
-        return jobCardRepository.findByVehicleAndStatus(indexNo,status);
+        return jobCardRepository.findByVehicleAndStatus(indexNo, status);
+    }
+
+    public List<JobCard> findJobHistory(String vehicleNo) {
+        MVehicle vehicle = sVVehicleRepository.findVehicleByVehicleNo(vehicleNo);
+        return jobCardRepository.findJobHistory(vehicle.getIndexNo());
+    }
+
+    @Transactional
+    public JobCard updateJobCardDetailsAndVehicleDetails(JobCard jobCard, Integer employee) {
+
+        Integer newPriceCategory = jobCard.getPriceCategory();
+        Integer oldPriceCategory = jobCardRepository.findOne(jobCard.getIndexNo()).getPriceCategory();
+        String vehicleType = "";
+
+        //save price category change details
+        TPriceCategoryChangeDetails priceCategoryChangeDetails = new TPriceCategoryChangeDetails();
+        priceCategoryChangeDetails.setJobCard(jobCard.getIndexNo());
+        priceCategoryChangeDetails.setNewPriceCategory(newPriceCategory);
+        priceCategoryChangeDetails.setOldPriceCategory(oldPriceCategory);
+        priceCategoryChangeDetails.setReponcebleEmployee(employee);
+        priceCategoryChangeDetails.setVehicel(jobCard.getVehicle());
+        tPriceCategoryChangeDetailsRepository.save(priceCategoryChangeDetails);
+
+        //update vehicle details
+        MVehicle mVehicleDetails = sVVehicleRepository.getOne(jobCard.getVehicle());
+        vehicleType = mVehicleDetails.getType();
+        mVehicleDetails.setPriceCategory(newPriceCategory);
+        sVVehicleRepository.save(mVehicleDetails);
+
+        List<TJobItem> findByJobCardOrderByIndexNoDesc = jobItemRepository.findByJobCardOrderByIndexNoDesc(jobCard.getIndexNo());
+        for (TJobItem tJobItem : findByJobCardOrderByIndexNoDesc) {
+            if (!"STOCK_ITEM".equals(tJobItem.getItemType())) {
+                List<Object[]> itemPriceDetails = jobCardRepository.getItemPriceDetails(tJobItem.getItem(), newPriceCategory);
+                if (itemPriceDetails.size() > 0) {
+                    BigDecimal price;
+                    if ("NORMAL".equals(vehicleType)) {
+                        price = (BigDecimal) itemPriceDetails.get(0)[0];
+                    } else {
+                        price = (BigDecimal) itemPriceDetails.get(0)[1];
+                    }
+                    tJobItem.setPrice(price);
+                    tJobItem.setValue(price.multiply(tJobItem.getQuantity()));
+                    tJobItem.setIsChange(Boolean.TRUE);
+                    jobItemRepository.save(tJobItem);
+                }
+            }
+        }
+        return jobCardRepository.save(jobCard);
     }
 
 }
