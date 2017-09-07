@@ -26,7 +26,8 @@
                         "cashAmount": 0.0,
                         "chequeAmount": 0.0,
                         "cardAmount": 0.0,
-                        "respEmployee": null
+                        "respEmployee": null,
+                        "overPaymentAmount": 0.00
                     };
                     return data;
                 };

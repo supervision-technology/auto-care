@@ -45,8 +45,15 @@
         };
 
         //get client over payments
-        this.getClientOverPayment = function (cllient) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/client-get-over-payment/" + cllient);
+        this.getClientOverPayment = function (client) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/payment-voucher/get-client-over-payment/" + client);
+//            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/jobcard-invoice/client-get-over-payment/" + client);
+        };
+
+        //get client balance
+        this.getClientBalance = function (client) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/payment-voucher/get-client-balance/" + client);
+
         };
 
         this.loadInvoiceData = function (invoiceNumber) {
