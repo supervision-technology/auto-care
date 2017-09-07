@@ -32,17 +32,27 @@ public interface Constant {
     public static final String CARD_PAYMENT = "CARD_PAYMENT";
 
     //invoice payment
-    public static final String INVOICE_CREATE = "INVOICE_CREATE";
+    public static final String INVOICE_CREATE = "INVOICE";
     public static final String INVOICE_PAYMENT = "INVOICE_PAYMENT";
     public static final String CUSTOMER_PAYMENT = "CUSTOMER_PAYMENT";
+    public static final String PAYMENT_VOUCHER = "PAYMENT_VOUCHER";
     public static final String GRN_PAYMENT = "GRN_PAYMENT";
     public static final String SUPPLIER_PAYMENT = "SUPPLIER_PAYMENT";
+
+    // payment voucher advance paynemt and balance payment
+//    public static final String INVOICE_CREATE = "INVOICE";
+    public static final String PAYMENT = "PAYMENT";
+    public static final String OVER_PAYMENT = "OVER_PAYMENT";
+    public static final String ADVANCE = "ADVANCE";
 
     //t_payment information table - form names
     public static final String INVOICE_FORM = "INVOICE_FORM";
     public static final String GRN_APPROVE_FORM = "GRN_APPROVE_FORM";
     public static final String DIRECT_GRN_FORM = "DIRECT_GRN_FORM";
     public static final String STOCK_FORM = "STOCK_FORM";
+    public static final String PAYMENT_VOUCHER_FORM = "PAYMENT_VOUCHER_FORM";
+    public static final String PAYMENT_FORM = "PAYMENT_FORM";
+    public static final String ADVANCE_FORM = "ADVANCE_FORM";
 
 //  store name
     public static final String MAIN_STOCK = "MAIN_STOCK";

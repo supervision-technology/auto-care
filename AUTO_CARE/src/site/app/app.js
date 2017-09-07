@@ -44,6 +44,7 @@
         "stockTransferInternalOutModule",
         "stockTransferInternalInModule",
         "itemSelectionModule",
+        "paymentVoucherModule",
         "jobCardEditModule"
     ]);
 
@@ -119,6 +120,10 @@
                         .when("/front-office/invoice", {
                             templateUrl: "app/front-office/invoice/invoice.html",
                             controller: "invoiceController"
+                        })
+                        .when("/front-office/payment-voucher", {
+                            templateUrl: "app/front-office/payment-voucher/payment-voucher.html",
+                            controller: "paymentVoucherController"
                         })
                         .when("/stock/request-item", {
                             templateUrl: "app/stock/request-item/request-item.html",

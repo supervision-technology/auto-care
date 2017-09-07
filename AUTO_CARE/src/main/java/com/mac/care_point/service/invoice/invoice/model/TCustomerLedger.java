@@ -57,11 +57,17 @@ public class TCustomerLedger implements Serializable {
     
     @Column(name = "payment")
     private Integer payment;
+    
+    @Column(name = "ref_number")
+    private Integer refNumber;
+   
+    @Column(name = "form_name")
+    private String formName;
 
     public TCustomerLedger() {
     }
 
-    public TCustomerLedger(Integer indexNo, Date date, BigDecimal debitAmount, BigDecimal creditAmount, String type, int client, Integer invoice, Integer payment) {
+    public TCustomerLedger(Integer indexNo, Date date, BigDecimal debitAmount, BigDecimal creditAmount, String type, int client, Integer invoice, Integer payment, Integer refNumber, String formName) {
         this.indexNo = indexNo;
         this.date = date;
         this.debitAmount = debitAmount;
@@ -70,6 +76,8 @@ public class TCustomerLedger implements Serializable {
         this.client = client;
         this.invoice = invoice;
         this.payment = payment;
+        this.refNumber = refNumber;
+        this.formName = formName;
     }
 
     public Integer getIndexNo() {
@@ -136,4 +144,24 @@ public class TCustomerLedger implements Serializable {
         this.payment = payment;
     }
 
+    public Integer getRefNumber() {
+        return refNumber;
+    }
+
+    public void setRefNumber(Integer refNumber) {
+        this.refNumber = refNumber;
+    }
+
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+    
+    
+
+    
+   
 }

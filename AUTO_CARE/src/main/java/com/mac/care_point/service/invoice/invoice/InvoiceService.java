@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.invoice.invoice;
 
+
 import com.mac.care_point.master.vehicleAssignment.VehicleAssignmentRepository;
 import com.mac.care_point.master.vehicleAssignment.model.TVehicleAssignment;
 import com.mac.care_point.service.invoice.invoice.model.TInvoice;
@@ -20,10 +21,12 @@ import com.mac.care_point.service.invoice.invoice.model.TPayment;
 import com.mac.care_point.service.invoice.invoice.model.TPaymentInformation;
 import com.mac.care_point.service.job_card.JobCardRepository;
 import com.mac.care_point.service.job_card.model.JobCard;
+import com.mac.care_point.service.payment_voucher.PaymentVoucherRepository;
 import com.mac.care_point.system.exception.EntityNotFoundException;
 import com.mac.care_point.zutil.SecurityUtil;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -51,6 +54,9 @@ public class InvoiceService {
 
     @Autowired
     private VehicleAssignmentRepository vehicleAssignmentRepository;
+
+    @Autowired
+    public PaymentVoucherRepository paymentVoucherRepository;
 
     public List<TInvoice> findByJobCard(Integer jobCard) {
         return invoiceRepository.findByJobCard(jobCard);
@@ -86,36 +92,127 @@ public class InvoiceService {
 
         //client cledger save  - create invoice
         TCustomerLedger customerLedger = new TCustomerLedger();
-        customerLedger.setCreditAmount(invoice.getNetAmount());
-        customerLedger.setDebitAmount(BigDecimal.ZERO);
-        customerLedger.setDate(new Date());
-        customerLedger.setInvoice(tInvoice.getIndexNo());
-        customerLedger.setType(Constant.INVOICE_CREATE);
         customerLedger.setClient(jobCard.getClient());
+        customerLedger.setCreditAmount(invoice.getNetAmount());
+        customerLedger.setDate(new Date());
+        customerLedger.setDebitAmount(BigDecimal.ZERO);
+        customerLedger.setFormName(Constant.INVOICE_FORM);
+        customerLedger.setPayment(null);
+        customerLedger.setInvoice(tInvoice.getIndexNo());
+        customerLedger.setRefNumber(tInvoice.getIndexNo());
+        customerLedger.setType(Constant.INVOICE_CREATE);
         clientLegerRepository.save(customerLedger);
 
         //step 02
         //payment save
-        TPayment savePaymentData = paymentRepository.save(payment);
+        TPayment savePaymentData = new TPayment();
+        if (paymentInformationList.size() > 0) {
+            savePaymentData = paymentRepository.save(payment);
+        }
 
         //payment informations
-        for (TPaymentInformation tPaymentInformation : paymentInformationList) {
-            tPaymentInformation.setFormName(Constant.INVOICE_FORM);
-            tPaymentInformation.setPayment(savePaymentData.getIndexNo());
+        //client cledger save  - payment invoice
+        double overPaymentSettlementAmount = 0.00;
 
-            //client cledger save  - payment invoice
-            if (!"OVER_PAYMENT_SETTLMENT".equals(tPaymentInformation.getType())) {
-                TCustomerLedger customerLedgerPaymnetSave = new TCustomerLedger();
-                customerLedgerPaymnetSave.setDebitAmount(tPaymentInformation.getAmount());
-                customerLedgerPaymnetSave.setCreditAmount(BigDecimal.ZERO);
-                customerLedgerPaymnetSave.setDate(new Date());
-                customerLedgerPaymnetSave.setInvoice(tInvoice.getIndexNo());
-                customerLedgerPaymnetSave.setType(Constant.INVOICE_PAYMENT);
-                customerLedgerPaymnetSave.setPayment(savePaymentData.getIndexNo());
-                customerLedgerPaymnetSave.setClient(jobCard.getClient());
-                clientLegerRepository.save(customerLedgerPaymnetSave);
+        for (TPaymentInformation paymentInformation : paymentInformationList) {
+            if ("OVER_PAYMENT_SETTLEMENT".equals(paymentInformation.getType())) {
+                overPaymentSettlementAmount = paymentInformation.getAmount().doubleValue();
             }
-            paymentInformationRepostory.save(tPaymentInformation);
+            if (!"OVER_PAYMENT_SETTLEMENT".equals(paymentInformation.getType())) {
+                paymentInformation.setFormName(Constant.INVOICE_FORM);
+                paymentInformation.setPayment(savePaymentData.getIndexNo());
+                paymentInformationRepostory.save(paymentInformation);
+            }
+        }
+
+//            default payment save
+        if (paymentInformationList.size() > 0) {
+
+            TCustomerLedger customerLedgerSavePayment = new TCustomerLedger();
+            customerLedgerSavePayment.setClient(jobCard.getClient());
+            customerLedgerSavePayment.setCreditAmount(new BigDecimal(0));
+            customerLedgerSavePayment.setDate(tInvoice.getDate());
+            double debitAmount = savePaymentData.getTotalAmount().doubleValue();
+            if (savePaymentData.getTotalAmount().doubleValue() > tInvoice.getNetAmount().doubleValue()) {
+                debitAmount = tInvoice.getNetAmount().doubleValue();
+            }
+            customerLedgerSavePayment.setDebitAmount(new BigDecimal(debitAmount));
+            customerLedgerSavePayment.setFormName(Constant.PAYMENT_FORM);
+            customerLedgerSavePayment.setInvoice(tInvoice.getIndexNo());
+            customerLedgerSavePayment.setPayment(savePaymentData.getIndexNo());
+            customerLedgerSavePayment.setRefNumber(savePaymentData.getIndexNo());
+            customerLedgerSavePayment.setType(Constant.PAYMENT);
+            clientLegerRepository.save(customerLedgerSavePayment);
+        }
+
+        //save  is over payment
+        if (paymentInformationList.size() > 0) {
+
+            if (tInvoice.getNetAmount().doubleValue() < savePaymentData.getTotalAmount().doubleValue()) {
+                double overPaymentAmount = savePaymentData.getTotalAmount().doubleValue() - tInvoice.getNetAmount().doubleValue();
+                TCustomerLedger customerLedgerOverPayment = new TCustomerLedger();
+                customerLedgerOverPayment.setClient(jobCard.getClient());
+                customerLedgerOverPayment.setCreditAmount(BigDecimal.ZERO);
+                customerLedgerOverPayment.setDate(tInvoice.getDate());
+                customerLedgerOverPayment.setDebitAmount(new BigDecimal(overPaymentAmount));
+                customerLedgerOverPayment.setFormName(Constant.PAYMENT_FORM);
+                customerLedgerOverPayment.setInvoice(null);
+                customerLedgerOverPayment.setPayment(savePaymentData.getIndexNo());
+                customerLedgerOverPayment.setRefNumber(savePaymentData.getIndexNo());
+                customerLedgerOverPayment.setType(Constant.ADVANCE);
+                clientLegerRepository.save(customerLedgerOverPayment);
+            }
+        }
+        //fifo save
+        if (overPaymentSettlementAmount > 0.00) {
+//                    save over payment
+            List<Object[]> fifoList = new ArrayList<>();
+
+            while (overPaymentSettlementAmount > 0.00) {
+                fifoList = getFIFOList(jobCard.getClient());
+                for (int i = 0; i < fifoList.size(); i++) {
+                    Object[] selectFirst = fifoList.get(i);
+                    Integer paymentIndex = Integer.parseInt(selectFirst[0].toString());
+                    Double overAmount = Double.parseDouble(selectFirst[1].toString());
+
+                    String type = selectFirst[2].toString();
+
+                    if (overPaymentSettlementAmount > overAmount) {
+                        //save over payment settlement
+
+                        TCustomerLedger customerLedgerNew = new TCustomerLedger();
+                        customerLedgerNew.setClient(jobCard.getClient());
+                        customerLedgerNew.setCreditAmount(new BigDecimal(overAmount));
+                        customerLedgerNew.setDate(tInvoice.getDate());
+                        customerLedgerNew.setDebitAmount(new BigDecimal(0));
+                        customerLedgerNew.setFormName(Constant.PAYMENT_FORM);
+                        customerLedgerNew.setInvoice(null);
+                        customerLedgerNew.setPayment(paymentIndex);
+                        customerLedgerNew.setRefNumber(savePaymentData.getIndexNo());
+                        customerLedgerNew.setType(type);
+                        clientLegerRepository.save(customerLedgerNew);
+                        overPaymentSettlementAmount -= overAmount;
+
+//                          
+                    } else {
+                        //save over payment settlement
+                        if (overPaymentSettlementAmount > 0.00) {
+                            TCustomerLedger customerLedgerNew2 = new TCustomerLedger();
+                            customerLedgerNew2.setClient(jobCard.getClient());
+                            customerLedgerNew2.setCreditAmount(new BigDecimal(overPaymentSettlementAmount));
+                            customerLedgerNew2.setDate(tInvoice.getDate());
+                            customerLedgerNew2.setDebitAmount(new BigDecimal(0));
+                            customerLedgerNew2.setFormName(Constant.PAYMENT_FORM);
+                            customerLedgerNew2.setInvoice(null);
+                            customerLedgerNew2.setPayment(paymentIndex);
+                            customerLedgerNew2.setRefNumber(savePaymentData.getIndexNo());
+                            customerLedgerNew2.setType(type);
+                            clientLegerRepository.save(customerLedgerNew2);
+                        }
+                        overPaymentSettlementAmount = 0.00;
+                    }
+                }
+            }
         }
         //step 03
         //job card finished status
@@ -170,4 +267,18 @@ public class InvoiceService {
             return invoicePayment;
         }
     }
+
+
+    private List<Object[]> getFIFOList(int client) {
+        return paymentVoucherRepository.getFIFOList(client);
+    }
+
+//    private String sendIvoiceSms(String contactNo) {
+//        List<MSmsDetails> findByStaticNames = mSmsDetailsRepository.findByStaticName(Constant.INVOICE_MESSAGE);
+//        MSmsDetails mSmsDetails = findByStaticNames.get(0);
+//        final String uri = "http://smsserver.svisiontec.com/send_sms.php?api_key=" + mSmsDetails.getApKey() + "&number=" + contactNo + "&message=" + mSmsDetails.getMessage();
+//        RestTemplate restTemplate = new RestTemplate();
+//        String result = restTemplate.getForObject(uri, String.class);
+//        return result;
+//    }
 }

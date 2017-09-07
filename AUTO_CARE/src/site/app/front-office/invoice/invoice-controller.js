@@ -33,6 +33,7 @@
                     $scope.invoiceModel.getJobItemHistory(jobCard.indexNo);
 
                     $scope.invoiceModel.getClientOverPayment(jobCard.client);
+                    $scope.invoiceModel.getClientBalance(jobCard.client);
 
                     $scope.selectJobCardServiceChagers = jobCard.serviceChagers;
                 };
@@ -239,9 +240,9 @@
 
                 $scope.ui.insertClientOverPaymentSettlment = function (overPayment, amount) {
                     if ($scope.selectedJobCardIndexNo) {
-                        if (0.0 === parseFloat($scope.invoiceModel.getTotalPaymentTypeWise('OVER_PAYMENT_SETTLMENT'))) {
+                        if (0.0 === parseFloat($scope.invoiceModel.getTotalPaymentTypeWise('OVER_PAYMENT_SETTLEMENT'))) {
                             if (overPayment >= amount) {
-                                $scope.invoiceModel.insertClientOverPaymentSettlment(amount, 'OVER_PAYMENT_SETTLMENT');
+                                $scope.invoiceModel.insertClientOverPaymentSettlment(amount, 'OVER_PAYMENT_SETTLEMENT');
                             } else {
                                 Notification.error("plase enter valid amount");
                             }
