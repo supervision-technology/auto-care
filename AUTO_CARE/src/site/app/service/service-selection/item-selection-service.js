@@ -54,8 +54,6 @@
         };
 
         this.findByCategoryAndPriceCategory = function (category, priceCategory) {
-            console.log(systemConfig.apiUrl + "/api/care-point/master/item/find-item-by-category/" + category + "/" + priceCategory);
-            console.log(systemConfig.apiUrl + "/api/care-point/master/item/find-item-by-category/" + category + "/" + priceCategory);
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/find-item-by-category/" + category + "/" + priceCategory);
         };
 
@@ -75,8 +73,12 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/sub-category/find-by-category/" + category);
         };
 
-        this.findByItemStockItmQty = function (itemCategory) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stock/" + itemCategory);
+        this.findByNonStockItemAndStockItem = function (itemCategory) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/all-non-stock-and-stock-item/" + itemCategory);
+        };
+        
+        this.findByAvailableStockQty = function (itemIndexNo) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/get-item-qty-by-stocks/" + itemIndexNo);
         };
 
         this.setServiceChargers = function (jobCard, status) {
@@ -109,15 +111,15 @@
         };
 
         this.printEstimate = function (jobCard) {
-            return $http.get(systemConfig.apiUrl + "/api/v1/report/ditect-print/find-by-job-card-items/" + jobCard);
+            return $http.get(systemConfig.apiUrl + "/api/care-point/print-service/print-estimate/" + jobCard);
         };
 
         this.getQuickSeacrhItem = function (itemKey, priceCategory) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/quick-service-item/" + itemKey + "/" + priceCategory);
         };
 
-        this.getQuickSeacrhStockItem = function (itemKey) {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/quick-stock-item/" + itemKey);
+        this.getQuickSeacrhStockItemAndNonStockItem = function (itemKey) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-item/quick-stock-item-non-stock-item/" + itemKey);
         };
     };
 

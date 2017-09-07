@@ -3,7 +3,7 @@
     angular.module("itemSelectionModule", ['ui.bootstrap', 'ngCookies']);
     //controller
     angular.module("itemSelectionModule")
-            .controller("itemSelectionController", function ($scope, $http, $cookies, optionPane, $uibModalStack, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("itemSelectionController", function ($scope, optionPane, $uibModalStack, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ItemSelectionModel();
 
                 $scope.ui = {};
@@ -51,7 +51,7 @@
                 $scope.ui.getQuickSeacrhItem = function (itemKey) {
                     $scope.showStockItemTableQuickSeacrh = false;
                     $scope.hideStockItemTableQuickSeacrh = true;
-                    $scope.model.getQuickSeacrhStockItem(itemKey, $scope.model.jobCardData.priceCategory)
+                    $scope.model.getQuickSeacrhStockItemAndNonStockItem(itemKey)
                             .then(function () {
                                 $scope.showStockItemTableQuickSeacrh = true;
                                 $scope.hideStockItemTableQuickSeacrh = false;
@@ -70,27 +70,44 @@
                     $scope.hideStockItemTable = true;
                     $scope.isVisible = $scope.isVisible === 0 ? true : false;
                     $scope.selectStockItemPosition = $scope.selectStockItemPosition === $index ? -1 : $index;
-                    $scope.model.findItemsForStockLeger(itemCategory)
+                    $scope.model.findByNonStockItemAndStockItem(itemCategory)
                             .then(function () {
-
                                 $scope.showStockItemTable = true;
                                 $scope.hideStockItemTable = false;
 
                             });
                 };
 
-                $scope.ui.getItemUnits = function (details) {
+                $scope.ui.getItemUnitsDetails = function (details) {
                     $scope.model.getItemUnits(details[0]);
-                    $scope.itemName = details[2];
-                    $scope.itemStockItemQty = details[1];
-                    $uibModal.open({
-                        animation: true,
-                        ariaLabelledBy: 'modal-title',
-                        ariaDescribedBy: 'modal-body',
-                        templateUrl: 'item_selection_popup.html',
-                        scope: $scope,
-                        size: 'lg'
-                    });
+
+                    $scope.itemName = details[1];
+                    $scope.itemType = details[2];
+
+                    $scope.itemStockItemQty = 0;
+
+                    $scope.model.findByAvailableStockQty(details[0])
+                            .then(function (data) {
+                                $scope.itemStockItemQty = data;
+                                console.log($scope.itemStockItemQty);
+                            });
+
+                    if ($scope.model.getItemUnits(details[0]).length === 0) {
+                        optionPane.dangerMessage("ITEM UNITS NOT FOUND!");
+                    } else {
+                        if ($scope.itemStockItemQty > 0) {
+                            optionPane.dangerMessage("ITEM HAVE NO QTY!");
+                        } else {
+                            $uibModal.open({
+                                animation: true,
+                                ariaLabelledBy: 'modal-title',
+                                ariaDescribedBy: 'modal-body',
+                                templateUrl: 'item_selection_popup.html',
+                                scope: $scope,
+                                size: 'lg'
+                            });
+                        }
+                    }
                 };
 
                 $scope.ui.dismissAllModel = function () {
@@ -116,23 +133,26 @@
                 };
 
                 //add stock item units
-                $scope.ui.addItemUnit = function (itemUnit, type) {
+                $scope.ui.addItemUnit = function (itemUnit, qty) {
                     if ($scope.selectedJobCardIndexNo) {
                         if (itemUnit) {
-                            var itemStatus = $scope.model.duplicateItemUnitCheck(itemUnit);
-                            if (angular.isUndefined(itemStatus)) {
-                                ConfirmPane.successConfirm("Do you sure want to add item")
-                                        .confirm(function () {
-                                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
-                                            $scope.ui.dismissAllModel();
-                                        });
+                            if (qty > $scope.itemStockItemQty) {
+                                optionPane.dangerMessage("NO QTY!");
                             } else {
-                                // Notification.error("this item is allrday exsist");
-                                ConfirmPane.successConfirm("This Item Is Allrday Esxist")
-                                        .confirm(function () {
-                                            $scope.model.addItemUnit(itemUnit, type, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
-                                            $scope.ui.dismissAllModel();
-                                        });
+                                var itemStatus = $scope.model.duplicateItemUnitCheck(itemUnit);
+                                if (angular.isUndefined(itemStatus)) {
+                                    ConfirmPane.successConfirm("Do you sure want to add item")
+                                            .confirm(function () {
+                                                $scope.model.addItemUnit(itemUnit, qty, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
+                                                $scope.ui.dismissAllModel();
+                                            });
+                                } else {
+                                    ConfirmPane.successConfirm("This Item Is Allrday Esxist")
+                                            .confirm(function () {
+                                                $scope.model.addItemUnit(itemUnit, qty, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
+                                                $scope.ui.dismissAllModel();
+                                            });
+                                }
                             }
                         } else {
                             Notification.error("select item");
@@ -190,20 +210,11 @@
                 };
 
                 $scope.ui.printJobItemRequestAstimate = function () {
-                    var currentBranch = $cookies.get("branch-index-no");
-                    if (!currentBranch) {
-                        optionPane.dangerMessage("PLEASE LOGOUT AND LOGIN USER!");
-                    }
-
                     ConfirmPane.successConfirm("Print Estimate")
                             .confirm(function () {
-                                var url = "http://localhost:8094/api/care-point/print-service/print-estimate/" + currentBranch + "/" + $scope.selectedJobCardIndexNo;
-                                $http.get(url)
-                                        .success(function (data) {
+                                $scope.model.printEstimate($scope.selectedJobCardIndexNo)
+                                        .then(function () {
                                             optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
-                                        })
-                                        .error(function (data) {
-                                            optionPane.dangerMessage("ERROR!");
                                         });
                             });
                 };

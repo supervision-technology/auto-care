@@ -7,6 +7,7 @@ package com.mac.care_point.service.job_card;
 
 import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.zutil.SecurityUtil;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -137,7 +138,7 @@ public class JobCardController {
     }
 
     @RequestMapping(value = "/update-price-category-details/{employee}", method = RequestMethod.POST)
-    public JobCard updateJobCardDetailsAndVehicleDetails(@RequestBody JobCard jobCard,@PathVariable Integer employee) {
-        return jobCardService.updateJobCardDetailsAndVehicleDetails(jobCard,employee);
+    public JobCard updateJobCardDetailsAndVehicleDetails(@RequestBody JobCard jobCard, @PathVariable Integer employee) {
+        return jobCardService.updateJobCardDetailsAndVehicleDetails(jobCard, employee);
     }
 }

@@ -8,16 +8,22 @@
                 $scope.ui.toggleType = function (functions) {
                     if (functions === "ITEMS") {
                         $scope.ui.saveMode = "ITEMS";
+                        
                     } else if (functions === "ITEMS_UNITS") {
                         $scope.ui.saveMode = "ITEMS_UNITS";
+                        
                     } else if (functions === "PACKAGE_ITEMS") {
                         $scope.ui.saveMode = "PACKAGE_ITEMS";
+                        
                     } else if (functions === "CONSUMABLE_ITEMS") {
                         $scope.ui.saveMode = "CONSUMABLE_ITEMS";
+                        
                     } else if (functions === "ITEM_CHECK_DETAIL") {
                         $scope.ui.saveMode = "ITEM_CHECK_DETAIL";
+                        
                     } else if (functions === "PRICE_CATEGORY_DETAIL") {
                         $scope.ui.saveMode = "PRICE_CATEGORY_DETAIL";
+                        
                     }
                 };
 
@@ -30,13 +36,8 @@
                 };
 
                 $scope.ui.clear = function () {
-                    ConfirmPane.dangerConfirm("Clear !")
-                            .confirm(function () {
-                                $scope.model.clear();
-                            })
-                            .discard(function () {
-                                console.log('discard');
-                            });
+                    Notification.success("all details clear");
+                    $scope.model.clear();
                 };
 
                 $scope.ui.selectStock = function (type) {
@@ -44,7 +45,7 @@
                         $scope.textViewMode = 'STOCK';
                     }
                     if (type === 'NON STOCK') {
-                        $scope.textViewMode = 'NON-STOCK';
+                        $scope.textViewMode = 'NON STOCK';
                     }
                     if (type === 'SERVICE') {
                         $scope.textViewMode = 'SERVICE';
@@ -85,18 +86,23 @@
                 $scope.ui.savePriceCategoryDetail = function () {
                     if (!$scope.model.priceCategoryDetail.item) {
                         Notification.error("enter item type");
+                        
                     } else if (!$scope.model.priceCategoryDetail.priceCategory) {
                         Notification.error("enter item name");
+                        
                     } else if (!$scope.model.priceCategoryDetail.normalPrice) {
                         Notification.error("enter item sale price normal");
+                        
                     } else if (!$scope.model.priceCategoryDetail.registerPrice) {
                         Notification.error("enter item sale price register");
+                        
                     } else if ($scope.model.priceCategoryDetail.item
                             && $scope.model.priceCategoryDetail.priceCategory
                             && $scope.model.priceCategoryDetail.normalPrice
                             && $scope.model.priceCategoryDetail.registerPrice) {
                         var requestData = $scope.model.duplicateCheckPriceCategoryDetails($scope.model.priceCategoryDetail.item, $scope.model.priceCategoryDetail.priceCategory);
-                        if (angular.isUndefined(requestData)) {
+                        if (angular.isUndefined(requestData)) 
+                            
                             ConfirmPane.primaryConfirm("Save price categiry details !")
                                     .confirm(function () {
                                         $scope.model.savePriceCategoryDetail()
@@ -110,10 +116,10 @@
                                     .discard(function () {
                                         console.log('discard');
                                     });
+                                    
                         } else {
                             Notification.error("This Item Price Category Details Allrady Exists !");
                         }
-                    }
                 };
 
                 $scope.ui.editePriceCategoryDetail = function (priceCategoryDetail, $index) {

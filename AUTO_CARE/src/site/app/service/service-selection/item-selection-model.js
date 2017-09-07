@@ -83,7 +83,7 @@
                                 .success(function (data) {
                                     that.vehicleAttenctionsList = data;
                                 });
-                                
+
                         ItemSelectionService.loadPriceCategory()
                                 .success(function (data) {
                                     that.priceCategoryList = data;
@@ -141,10 +141,10 @@
                                 });
                         return defer.promise;
                     },
-                    getQuickSeacrhStockItem: function (itemKey) {
+                    getQuickSeacrhStockItemAndNonStockItem: function (itemKey) {
                         var that = this;
                         var defer = $q.defer();
-                        ItemSelectionService.getQuickSeacrhStockItem(itemKey)
+                        ItemSelectionService.getQuickSeacrhStockItemAndNonStockItem(itemKey)
                                 .success(function (data) {
                                     that.filterQuickSeacrhStockItems = [];
                                     that.filterQuickSeacrhStockItems = data;
@@ -160,7 +160,7 @@
                         var defer = $q;
                         ItemSelectionService.printEstimate(jobCard)
                                 .success(function (data) {
-                                    defer.resolve();
+                                    defer.resolve(data);
                                 })
                                 .error(function () {
                                     defer.reject();
@@ -197,10 +197,10 @@
                         });
                         return status;
                     },
-                    findItemsForStockLeger: function (itemCategory) {
+                    findByNonStockItemAndStockItem: function (itemCategory) {
                         var that = this;
                         var defer = $q.defer();
-                        ItemSelectionService.findByItemStockItmQty(itemCategory)
+                        ItemSelectionService.findByNonStockItemAndStockItem(itemCategory)
                                 .success(function (data) {
                                     that.itemsByStockLeger = [];
                                     that.itemsByStockLeger = data;
@@ -208,6 +208,17 @@
                                 })
                                 .error(function () {
                                     that.itemsByStockLeger = [];
+                                    defer.reject();
+                                });
+                        return defer.promise;
+                    },
+                    findByAvailableStockQty: function (itemIndexNo) {
+                        var defer = $q.defer();
+                        ItemSelectionService.findByAvailableStockQty(itemIndexNo)
+                                .success(function (data) {
+                                    defer.resolve(data);
+                                })
+                                .error(function () {
                                     defer.reject();
                                 });
                         return defer.promise;
@@ -275,7 +286,7 @@
                         ItemSelectionService.getJobItemHistory(jobCard)
                                 .success(function (data) {
                                     that.jobItemList = [];
-                                    angular.extend(that.jobItemList, data);
+                                    that.jobItemList = data;
                                     defer.resolve();
                                 })
                                 .error(function () {

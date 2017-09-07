@@ -2,7 +2,7 @@
 //module
     angular.module("vehicleEntranceModule", ['ui.bootstrap', 'ui-notification']);
     angular.module("vehicleEntranceModule")
-            .controller("vehicleEntranceController", function ($scope, optionPane, ConfirmPane, systemConfig, $window, Notification, $filter, $location, vehicleEntranceModel, $timeout) {
+            .controller("vehicleEntranceController", function ($scope, $cookies, optionPane, ConfirmPane, systemConfig, $window, Notification, $filter, $location, vehicleEntranceModel, $timeout) {
                 $scope.model = new vehicleEntranceModel();
 
                 $scope.ui = {};
@@ -53,15 +53,25 @@
                                                 }
                                                 $scope.model.saveJobCard()
                                                         .then(function (data) {
+                                                            
                                                             for (var i = 0; i < $scope.imagemodel.length; i++) {
                                                                 var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/upload-image/" + data + "/" + i;
                                                                 var formData = new FormData();
                                                                 formData.append("file", $scope.imagemodel[i]);
-
+                                                                
+                                                                var token = $cookies.get('XSRF-TOKEN');
+                                                                
+                                                                console.log(token);
+                                                                
+                                                                
                                                                 var xhr = new XMLHttpRequest();
                                                                 xhr.open("POST", url);
+                                                                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                                                                xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                                                                xhr.setRequestHeader("X-XSRF-TOKEN", token);
                                                                 xhr.send(formData);
                                                             }
+                                                            
                                                             Notification.success("Save job-card success !!!");
                                                             $scope.model.clearModel();
                                                             $scope.vehicleNo = "";

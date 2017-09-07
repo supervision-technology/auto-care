@@ -28,7 +28,7 @@ public class ItemController {
     private ItemService itemService;
 
     final String STOCK = "STOCK";
-    final String NON_STOCK = "NON-STOCK";
+    final String NON_STOCK = "NON STOCK";
 
     @RequestMapping(method = RequestMethod.GET)
     public List<MItem> findAllItems() {

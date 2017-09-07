@@ -14,8 +14,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
@@ -31,60 +29,42 @@ public class MItem implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
 
-    @Size(max = 25)
     @Column(name = "barcode")
     private String barcode;
 
-    @Size(max = 100)
     @Column(name = "print_description")
     private String printDescription;
 
-    @Size(max = 25)
     @Column(name = "unit")
     private String unit;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
     @Column(name = "type")
     private String type;
 
-    @Basic(optional = false)
     @Column(name = "department")
     private Integer department;
 
-    @Basic(optional = false)
     @Column(name = "brand")
     private Integer brand;
 
-    @Basic(optional = false)
     @Column(name = "category")
     private Integer category;
 
-    @Basic(optional = false)
     @Column(name = "item_category")
     private Integer itemCategory;
 
-    @Basic(optional = false)
     @Column(name = "sub_category")
     private Integer sub_category;
 
     @Column(name = "cost_price")
     private BigDecimal costPrice;
 
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "sale_price_normal")
     private BigDecimal salePriceNormal;
 
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "sale_price_register")
     private BigDecimal salePriceRegister;
 
