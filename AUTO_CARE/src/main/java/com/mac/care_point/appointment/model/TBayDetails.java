@@ -35,16 +35,16 @@ public class TBayDetails implements Serializable{
     @Basic(optional = false)
     private int indexNo;
 
-    @NotNull
-    @Basic(optional = false)
-    @JoinColumn(name = "m_vehicle")
-    @ManyToOne(fetch = FetchType.EAGER)
-    private MVehicle vehicle;
     
     @NotNull
     @Basic(optional = false)
     @Column(name = "m_appointment_item")
     private int appointmentItem;
+
+    @NotNull
+    @Basic(optional = false)
+    @Column(name = "t_appointment")
+    private int appointment;
    
     @NotNull
     @Basic(optional = false)
@@ -64,6 +64,10 @@ public class TBayDetails implements Serializable{
     @Column(name = "date")
     private Date date;
 
+    @Basic(optional = false)
+    @Column(name = "vehicle_no")
+    private String vehicleNo;
+
     public TBayDetails() {
     }
 
@@ -75,20 +79,20 @@ public class TBayDetails implements Serializable{
         this.indexNo = indexNo;
     }
 
-    public MVehicle getVehicle() {
-        return vehicle;
-    }
-
-    public void setVehicle(MVehicle vehicle) {
-        this.vehicle = vehicle;
-    }
-
     public int getAppointmentItem() {
         return appointmentItem;
     }
 
     public void setAppointmentItem(int appointmentItem) {
         this.appointmentItem = appointmentItem;
+    }
+
+    public int getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(int appointment) {
+        this.appointment = appointment;
     }
 
     public MAppointmentBay getAppointmentBay() {
@@ -123,12 +127,25 @@ public class TBayDetails implements Serializable{
         this.date = date;
     }
 
-    @Override
-    public String toString() {
-        return "TBayDetails{" + "indexNo=" + indexNo + ", vehicle=" + vehicle + ", appointmentItem=" + appointmentItem + ", appointmentBay=" + appointmentBay + ", inTime=" + inTime + ", branch=" + branch + ", date=" + date + '}';
+    public String getVehicleNo() {
+        return vehicleNo;
     }
 
-    
-   
-    
+    public void setVehicleNo(String vehicleNo) {
+        this.vehicleNo = vehicleNo;
+    }
+
+    @Override
+    public String toString() {
+        return "TBayDetails{" +
+                "indexNo=" + indexNo +
+                ", appointmentItem=" + appointmentItem +
+                ", appointment=" + appointment +
+                ", appointmentBay=" + appointmentBay +
+                ", inTime='" + inTime + '\'' +
+                ", branch=" + branch +
+                ", date=" + date +
+                ", vehicleNo='" + vehicleNo + '\'' +
+                '}';
+    }
 }

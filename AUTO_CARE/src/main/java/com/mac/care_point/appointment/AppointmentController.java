@@ -68,6 +68,11 @@ public class AppointmentController {
         return appointmentService.save(appointmentDetails);
     }
 
+    @RequestMapping(value = "/delete-appointment/{indexNo}", method = RequestMethod.POST)
+    public TAppointment deleteAppointment(@PathVariable int indexNo) {
+        return appointmentService.deleteAppointment(indexNo);
+    }
+
     // appointment item
     @RequestMapping(value = "/item", method = RequestMethod.GET)
     public List<MAppointmentItem> findAllItem() {

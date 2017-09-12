@@ -8,24 +8,14 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment");
         };
 
-        //load not approved appointment
-        this.loadPendingAppointment = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment/pending/" + "0");
-        };
-
-        //load not approved appointment by branch
-        this.loadPendingAppointmentByBranch = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment/pending-appointment/" + "0");
-        };
-
-        //load approved appointment by branch
-        this.loadApprovedAppointment = function () {
-            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment/approved-appointment/" + "1");
-        };
-
         //save appointment
         this.saveAppointment = function (data) {
             return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/appointment/save", data);
+        };
+
+        //delete appointment
+        this.deleteAppointment = function (indexNo) {
+            return $http.post(systemConfig.apiUrl + "/api/care-point/transaction/appointment/delete-appointment/" + indexNo);
         };
 
         //item

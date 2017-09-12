@@ -64,7 +64,7 @@
                 $routeProvider
                         //system
                         .when("/", {
-                            redirectTo: "/service/vehicle-entrance"
+                            redirectTo: "/appointment/create-appointment"
                         })
                         .when("/login", {
                             templateUrl: "app/system/login/login.html",

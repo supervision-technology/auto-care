@@ -3,7 +3,7 @@
 
 <div class="index-content-body">
     <uib-tabset>
-        <uib-tab heading="Pending Appointment" index="0" select="ui.toggleType('PENDING');">
+        <uib-tab heading="Approved Appointment" index="0" select="ui.toggleType('PENDING');">
             <div class="col-xs-12 background-light">
                 <div class="row col-xs-12">
                     <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
@@ -30,10 +30,10 @@
                                         <label>Contact No</label>
                                     </th>
                                     <th>
-                                        <label>Start Date/Time</label>
+                                        <label>Date</label>
                                     </th>
                                     <th>
-                                        <label>Received Date/Time</label>
+                                        <label>Time</label>
                                     </th>
                                     <th>
                                         <label>Job</label>
@@ -52,17 +52,20 @@
                                 <col style="width: 30%">
                                 <col style="width: 10%">
                                 <tbody>
-                                    <tr ng-repeat="appointment in model.pendingAppointmentList|filter:{'vehicleNo' : searchItem}">
+                                    <tr ng-repeat="appointment in model.appointmentList | filter:{'status':'0'} |filter:{'vehicleNo' : searchItem}">
                                         <!--<td><label class="label label-default">{{$index +1}}</label></td>-->
                                         <td><label class="label label-default">{{appointment.vehicleNo}}</label></td>
                                         <td>{{appointment.clientName}}</td>
                                         <td>{{appointment.contactNo}}</td>
-                                        <td>{{appointment.appointmentDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
-                                        <td>{{appointment.receivedDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                        <td>{{appointment.appointmentDate| date:"yyyy/MM/dd"}}</td>
+                                        <td>{{appointment.inTime}}</td>
                                         <td>{{model.jobLable(appointment.item)}}</td>
                                         <td>
-                                            <button class="btn btn-warning">
-                                                <span class="glyphicon glyphicon-warning-sign"> Approve</span>
+                                            <!--<button class="btn btn-success" ng-click="ui.approve(appointment)">-->
+                                                <!--<span class="glyphicon glyphicon-ok"></span>-->
+                                            <!--</button>-->
+                                            <button class="btn btn-danger" ng-click="ui.deleteAppointment(appointment,$index)">
+                                                <span class="glyphicon glyphicon-remove"></span>
                                             </button>
                                             <!--<a class="btn btn-primary" ng-click="ui.approve(appointment)"><span class="glyphicon glyphicon-edit"></span>Approve</a>-->
                                         </td>
@@ -74,7 +77,7 @@
                 </div>
             </div>
         </uib-tab>
-        <uib-tab heading="Approved Appointment" index="1" select="ui.toggleType('APPROVED');">
+        <uib-tab heading="Reject Appointment" index="1" select="ui.toggleType('APPROVED');">
             <div class="col-xs-12 background-light">
                 <div class="row col-xs-12">
                     <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
@@ -101,10 +104,10 @@
                                         <label>Contact No</label>
                                     </th>
                                     <th>
-                                        <label>Start Date/Time</label>
+                                        <label>Date</label>
                                     </th>
                                     <th>
-                                        <label>Received Date/Time</label>
+                                        <label>Time</label>
                                     </th>
                                     <th>
                                         <label>Job</label>
@@ -123,17 +126,16 @@
                                 <col style="width: 30%">
                                 <col style="width: 10%">
                                 <tbody>
-                                    <tr ng-repeat="appointment in model.approvedAppointmentList|filter:{'vehicleNo' : searchItem}">
+                                    <tr ng-repeat="appointment in model.appointmentList | filter:{'status':'1'} |filter:{'vehicleNo' : searchItem}">
                                         <!--<td><label class="label label-default">{{$index +1}}</label></td>-->
                                         <td><label class="label label-default">{{appointment.vehicleNo}}</label></td>
                                         <td>{{appointment.clientName}}</td>
                                         <td>{{appointment.contactNo}}</td>
-                                        <td>{{appointment.appointmentDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
-                                        <td>{{appointment.receivedDate| date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                                        <td>{{appointment.appointmentDate| date:"yyyy/MM/dd"}}</td>
+                                        <td>{{appointment.inTime}}</td>
                                         <td>{{model.jobLable(appointment.item)}}</td>
                                         <td class="text-right" ng-disabled="ui.mode !== 'EDIT'">
-                                            <a class="btn btn-primary" ng-click="ui.editeItems(items, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-                                            <a class="btn btn-danger" ng-click="ui.deleteItems(items, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+
                                         </td>
                                     </tr>
                                 </tbody>

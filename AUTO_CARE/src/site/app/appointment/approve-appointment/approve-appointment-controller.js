@@ -27,17 +27,18 @@
                     $scope.model.editAppointment(items, $index);
                 };
 
+
                 //delete appointment
-                $scope.ui.deleteAppointment = function (items, $index) {
-                    ConfirmPane.dangerConfirm("Delete Appointment!")
+                $scope.ui.deleteAppointment = function (appointment, $index) {
+                    ConfirmPane.dangerConfirm("reject Appointment!")
                             .confirm(function () {
-                                $scope.model.deleteAppointment(items, $index);
+                                $scope.model.deleteAppointment(appointment, $index);
                             })
                             .discard(function () {
                                 console.log('discard fail');
                             });
-
                 };
+
 
                 //init
                 $scope.ui.init = function () {

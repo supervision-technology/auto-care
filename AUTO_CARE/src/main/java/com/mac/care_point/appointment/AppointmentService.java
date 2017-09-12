@@ -48,18 +48,7 @@ public class AppointmentService {
     @Transactional
     public TBayDetails save(AppointmentDetails appointmentDetails) {
         TBayDetails details = new TBayDetails();
-        List<TBayDetails> bayDetails = appointmentDetails.getBayDetails();
-        for (TBayDetails bayDetail : bayDetails) {
-            TBayDetails tBayDetails = new TBayDetails();
-            tBayDetails.setVehicle(bayDetail.getVehicle());
-            tBayDetails.setAppointmentItem(bayDetail.getAppointmentItem());
-            tBayDetails.setAppointmentBay(bayDetail.getAppointmentBay());
-            tBayDetails.setInTime(bayDetail.getInTime());
-            tBayDetails.setBranch(bayDetail.getBranch());
-            tBayDetails.setDate(bayDetail.getDate());
 
-            details = appointmentBayDetailsRepository.save(tBayDetails);
-        }
         TAppointment tAppointment = new TAppointment();
         tAppointment.setItem(appointmentDetails.getItem());
         tAppointment.setPriceCategory(appointmentDetails.getPriceCategory());
@@ -72,9 +61,35 @@ public class AppointmentService {
         tAppointment.setAppointmentDate(appointmentDetails.getAppointmentDate());
         tAppointment.setClientName(appointmentDetails.getClientName());
         tAppointment.setContactNo(appointmentDetails.getContactNo());
-        appointmentRepository.save(tAppointment);
+        TAppointment appointment = appointmentRepository.save(tAppointment);
+
+        List<TBayDetails> bayDetails = appointmentDetails.getBayDetails();
+        for (TBayDetails bayDetail : bayDetails) {
+            TBayDetails tBayDetails = new TBayDetails();
+            tBayDetails.setAppointment(appointment.getIndexNo());
+            tBayDetails.setVehicleNo(bayDetail.getVehicleNo());
+            tBayDetails.setAppointmentItem(bayDetail.getAppointmentItem());
+            tBayDetails.setAppointmentBay(bayDetail.getAppointmentBay());
+            tBayDetails.setInTime(bayDetail.getInTime());
+            tBayDetails.setBranch(bayDetail.getBranch());
+            tBayDetails.setDate(bayDetail.getDate());
+
+            details = appointmentBayDetailsRepository.save(tBayDetails);
+        }
 
         return details;
+    }
+
+    @Transactional
+    public TAppointment deleteAppointment(int indexNo) {
+        List<TBayDetails> bayDetailsList = appointmentBayDetailsRepository.findAllByAppointment(indexNo);
+        for (TBayDetails bayDetails: bayDetailsList) {
+            appointmentBayDetailsRepository.delete(bayDetails.getIndexNo());
+        }
+
+        TAppointment appointment = appointmentRepository.findOne(indexNo);
+        appointment.setStatus(1);
+       return appointmentRepository.save(appointment);
     }
 
     public List<TAppointment> pendingAppointment(int status) {
@@ -106,5 +121,6 @@ public class AppointmentService {
     public Integer getPriceCategory(Integer vehicle) {
         return jobCardRepository.getPriceCategory(vehicle);
     }
+
 
 }

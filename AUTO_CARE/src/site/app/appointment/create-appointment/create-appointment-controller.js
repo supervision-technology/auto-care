@@ -57,17 +57,6 @@
                     $scope.model.editAppointment(items, $index);
                 };
 
-                //delete appointment
-                $scope.ui.deleteAppointment = function (items, $index) {
-                    ConfirmPane.dangerConfirm("Delete Appointment!")
-                            .confirm(function () {
-                                $scope.model.deleteAppointment(items, $index);
-                            })
-                            .discard(function () {
-                                console.log('discard fail');
-                            });
-
-                };
 
                 // select job item 
                 $scope.ui.selectItem = function (item) {
@@ -102,6 +91,7 @@
                     if ($scope.ui.validation()) {
                         if (!bay.vehicle && $scope.itemType === 'full_service') {
                             $scope.model.appointmentData.bayDetails = [];
+                            $scope.model.tempdata.inTime = bay.time;
                             $scope.model.ui.selectedBayLubeIndex = bay.time;
                             //set value save obejct
                             $scope.model.tempdata.appointmentBay = bay.indexNo;
@@ -120,6 +110,7 @@
                     if ($scope.ui.validation()) {
                         if (!bay.vehicle && bay.time > '08:00:00' && $scope.itemType === 'full_detailing') {
                             $scope.model.appointmentData.bayDetails = [];
+                            $scope.model.tempdata.inTime = bay.time;
                             $scope.model.ui.selectedBayUwIndex = bay.time;
                             //set value save obejct
                             $scope.model.tempdata.appointmentBay = bay.indexNo;
@@ -140,6 +131,10 @@
                                     || $scope.itemType === 'quick_detailing' || $scope.itemType === 'express_detailing'
                                     || $scope.itemType === 'interior' || $scope.itemType === 'exterior') {
                                 $scope.model.appointmentData.bayDetails = [];
+                                $scope.model.tempdata.inTime = bay.time;
+                                var time2 = "00:15:00";
+                                var time = $scope.model.formatTime($scope.model.timestrToSec(bay.time) + $scope.model.timestrToSec(time2));
+                                $scope.model.tempdata.outTime = time;
                                 $scope.model.ui.selectedBayBwIndex = bay.time;
                                 //set value save obejct
                                 $scope.model.tempdata.appointmentBay = bay.indexNo;
@@ -229,7 +224,7 @@
 
                 $scope.ui.validation = function () {
                     if ($scope.model.tempdata.appointmentItem) {
-                        if ($scope.model.tempdata.vehicle) {
+                        if ($scope.model.appointmentData.vehicleNo) {
                             if ($scope.model.appointmentData.branch) {
                                 if ($scope.model.appointmentData.appointmentDate) {
                                     return true;
@@ -246,6 +241,8 @@
                         Notification.error("please select a job");
                     }
                 };
+
+
 
                 $scope.ui.filterValue = function (obj) {
                     return $filter('date')(obj.appointmentDate, 'MM/dd/yyyy') === $filter('date')($rootScope.appointmentDate, 'MM/dd/yyyy');
@@ -407,9 +404,17 @@
 
                 //init
                 $scope.ui.init = function () {
+                    //bay list
+                    $scope.model.lube =[];
+                    $scope.model.uw= [];
+                    $scope.model.bw= [];
+                    $scope.model.qd=[];
+
                     $scope.ui.bayTime();
                     $scope.ui.mode = "IDEAL";
                     $scope.ui.type = "NORMAL";
+
+
                 };
                 $scope.ui.init();
             });

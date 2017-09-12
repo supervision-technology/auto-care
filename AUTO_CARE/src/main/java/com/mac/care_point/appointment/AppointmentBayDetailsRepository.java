@@ -17,5 +17,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface AppointmentBayDetailsRepository extends JpaRepository<TBayDetails, Integer>{
 
     public List<TBayDetails> findByBranchAndDate(int branch, Date date);
-    
+
+    public List<TBayDetails> findAllByAppointment(int indexNo);
 }

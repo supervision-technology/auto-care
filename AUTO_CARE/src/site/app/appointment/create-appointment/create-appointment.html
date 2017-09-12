@@ -41,7 +41,7 @@
     </div>
 
     <div class="col-xs-3 background-dark border-right">
-        <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 330px);">
+        <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 250px);">
             <table class="table-rounded control-table">
                 <col style="width: 35%"/>
                 <col style="width: 65%"/>
@@ -75,14 +75,19 @@
                     </tr>
                     <tr>
                         <td><label class="control-label">Contact No*</label></td>
-                        <td><input class="form-control" ng-model="model.appointmentData.contactNo" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td><input class="form-control" type="text" ng-model="model.appointmentData.contactNo" ng-disabled="ui.mode !== 'EDIT'"></td>
+                    </tr>
+
+                    <tr style="height: 80px;">
+                        <td><label class="control-label">IN TIME <span class="label label-warning">{{model.tempdata.inTime}}</span></label></td>
+                        <td><label class="control-label">OUT TIME <br> <span class="label label-warning">{{model.tempdata.outTime}}</span></label></td>
                     </tr>
 
                 </tbody>
             </table>
         </div>
 
-        <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 333px);">
+        <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 413px);">
             <table class="table-rounded">
                 <col style="width: 100%"/>
                 <thead class="background-dark">
