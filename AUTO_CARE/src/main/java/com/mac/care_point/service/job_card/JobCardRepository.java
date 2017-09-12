@@ -30,12 +30,19 @@ public interface JobCardRepository extends JpaRepository<JobCard, Integer> {
 
     public List<JobCard> findJobCardByClient(Integer indexNo);
 
+//<<<<<<< appointment
+    public List<JobCard> findByStatusNotIn(String FINISHED_STATUS);
+    
+    @Query(value = "select t_job_card.price_category from t_job_card where t_job_card.vehicle=:vehicle LIMIT 1" , nativeQuery = true)
+    public  Integer getPriceCategory(@Param("vehicle")Integer vehicle);
+//=======
     public List<JobCard> findByBranchAndStatusNotIn(Integer branch, String FINISHED_STATUS);
 
     public List<JobCard> findByVehicleAndStatus(Integer indexNo, String status);
 
     @Query(value = "select * from t_job_card job where job.vehicle =:vehicleIndexNo order by job.date desc", nativeQuery = true)
     public List<JobCard> findJobHistory(@Param("vehicleIndexNo") Integer vehicleIndexNo);
+//>>>>>>> master
 
     @Query(value = "select\n"
             + "  price_category_details.normal_price,\n"
