@@ -23,10 +23,38 @@
                         "reOrderMax": null,
                         "reOrderMin": null,
                         "discount": null,
+                        "supplierPrice": null,
+                        "qtyWise": null
+                    };
+                    return data;
+                };
+
+                factory.newItemData = function () {
+                    var data = {
+                        "indexNo": null,
+                        "name": null,
+                        "barcode": null,
+                        "printDescription": null,
+                        "unit": 0,
+                        "costPrice": 0,
+                        "type": null,
+                        "department": null,
+                        "brand": null,
+                        "category": null,
+                        "itemCategory": null,
+                        "sub_category": null,
+                        "salePriceNormal": 0,
+                        "salePriceRegister": 0,
+                        "priceCategory": null,
+                        "branch": null,
+                        "reOrderMax": null,
+                        "reOrderMin": null,
+                        "discount": null,
                         "supplierPrice": null
                     };
                     return data;
                 };
+
                 factory.newItemUnitData = function () {
                     var data = {
                         "indexNo": null,
@@ -66,7 +94,7 @@
                     };
                     return itemCheckData;
                 };
-                
+
                 factory.newPriceCategoryDetails = function () {
                     var priceCategoryDetail = {
                         "indexNo": null,

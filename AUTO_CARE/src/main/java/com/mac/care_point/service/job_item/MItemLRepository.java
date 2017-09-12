@@ -39,24 +39,5 @@ public interface MItemLRepository extends JpaRepository<MItemL, Integer> {
             + " price_category_details.price_category = :priceCategory", nativeQuery = true)
     public List<Object[]> getQuickSeacrhItem(@Param("itemKey") String itemKey, @Param("priceCategory") Integer priceCategory);
 
-    @Query(value = "select \n"
-            + " m_item.index_no,\n"
-            + "ifnull((select sum(t_stock_ledger.in_qty) - sum(t_stock_ledger.out_qty) from t_stock_ledger where t_stock_ledger.branch = :branch and t_stock_ledger.item = m_item.index_no), 0.0)\n"
-            + "- ifnull((select sum(t_job_item.stock_remove_qty) from t_job_item where t_job_item.order_status = \"PENDING\" and \n"
-            + "t_job_item.item_type = \"STOCK_ITEM\" \n"
-            + " and\n"
-            + "t_job_item.item = m_item.index_no), 0.0) as stock_qty,\n"
-            + "m_item.name\n"
-            + " from\n"
-            + "m_item\n"
-            + " where\n"
-            + "m_item.type = \"STOCK\" and \n"
-            + "m_item.name\n"
-            + " like\n"
-            + "CONCAT('%',:itemKey,'%') \n"
-            + " group by\n"
-            + "m_item.index_no\n"
-            + " having stock_qty > 0", nativeQuery = true)
-    public List<Object[]> getQuickSeacrhItemStockItem(@Param("itemKey") String itemKey, @Param("branch") Integer branch);
 
 }

@@ -44,9 +44,14 @@
         "stockTransferInternalOutModule",
         "stockTransferInternalInModule",
         "itemSelectionModule",
+//<<<<<<< appointment
         //appointment
         "appointmentModule",
         "appointmentModuleApprove"
+//=======
+        "paymentVoucherModule",
+        "jobCardEditModule"
+//>>>>>>> master
     ]);
 
     //constants
@@ -111,11 +116,20 @@
                             templateUrl: "app/service/customer-satisfaction/customer-satisfaction.html",
                             controller: "customerSatisfactionController"
                         })
+                        
+                        .when("/service/job-card-edit", {
+                            templateUrl: "app/service/job-card-edit/job-card-edit.html",
+                            controller: "jobCardEditController"
+                        })
 
                         //front-office
                         .when("/front-office/invoice", {
                             templateUrl: "app/front-office/invoice/invoice.html",
                             controller: "invoiceController"
+                        })
+                        .when("/front-office/payment-voucher", {
+                            templateUrl: "app/front-office/payment-voucher/payment-voucher.html",
+                            controller: "paymentVoucherController"
                         })
                         .when("/stock/request-item", {
                             templateUrl: "app/stock/request-item/request-item.html",
@@ -183,6 +197,10 @@
                         .when("/master/item", {
                             templateUrl: "app/master/item/item.html",
                             controller: "itemController"
+                        })
+                        .when("/master/employee", {
+                            templateUrl: "app/master/employee/employee.html",
+                            controller: "employeeController"
                         })
                         .when("/master/sub-category", {
                             templateUrl: "app/master/sub-category/sub-category.html",

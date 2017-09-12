@@ -31,6 +31,10 @@
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/item");
         };
 
+        this.findItemByItemType = function (itemType) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/master/item/find-by-item-type/" + itemType);
+        };
+
         this.loadSupplier = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/master/supplier");
         };

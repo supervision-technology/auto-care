@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .controller("LoginController", function ($scope, $location, $timeout, SecurityService) {
+            .controller("LoginController", function ($scope, $cookies, $location, $timeout, SecurityService) {
                 $scope.ui = {};
                 $scope.model = {};
 
@@ -27,11 +27,12 @@
                             SecurityService.login($scope.model.data)
                                     .success(function (data, status, headers) {
                                         $location.path("/");
+
+                                        $cookies.put("nick-name", data.principal.nickName);
+                                        $cookies.put("branch-index-no", data.principal.branch);
+                                        $cookies.put("branch-name", data.principal.branchName);
                                     })
                                     .error(function (data, status) {
-                                        console.log(data);
-                                        console.log(status);
-
                                         var element = angular.element(document.querySelectorAll(".login-form")[0])
                                         element.addClass("login-failed");
                                         $timeout(function () {

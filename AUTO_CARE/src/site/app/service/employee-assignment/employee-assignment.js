@@ -4,10 +4,10 @@
     //http factory
     angular.module("employeeAssignmentModule")
             .factory("employeeAssignmentFactory", function ($http, systemConfig) {
-                var factory = {};
+                var factory = [];
                 //load Jobs
                 factory.loadEmployees = function (callback) {
-                    var url = systemConfig.apiUrl + "/api/care-point/master/employee";
+                    var url = systemConfig.apiUrl + "/api/care-point/master/employee/worker";
                     $http.get(url)
                             .success(function (data, status, headers) {
                                 callback(data);
@@ -21,13 +21,9 @@
                     var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/file-absalute-path";
                     $http.get(url)
                             .success(function (data, status, headers) {
-                                console.log("data");
-                                console.log(data);
                                 callback(data);
                             })
                             .error(function (data, status, headers) {
-                                console.log("error data");
-                                console.log(data);
                                 errorcallback(data);
                             });
                 };
@@ -91,14 +87,27 @@
                                 }
                             });
                 };
+                factory.getImageByNameAndIndexNO = function (name, indexNo, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/master/employee/image-names/" + name + "/" + indexNo;
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
+                            });
+                };
                 return factory;
             });
     //controller
     angular.module("employeeAssignmentModule")
-            .controller("employeeAssignmentController", function ($scope, $timeout, $filter, employeeAssignmentFactory, Notification) {
+            .controller("employeeAssignmentController", function ($scope, $timeout, $filter, employeeAssignmentFactory, Notification, systemConfig) {
                 $scope.ui = {};
                 $scope.model = {};
                 $scope.http = {};
+                $scope.imagemodelX = [];
                 $scope.model.employeeAssignment = {
                     "bay": {
                         timeout: null
@@ -191,7 +200,6 @@
                             var mytimeout = $timeout($scope.onTimeout, 1000);
                             $scope.model.employeeAssignment.bay.timeout--;
 
-                            console.log($scope.model.employeeAssignment.bay.timeout);
                             if ($scope.model.employeeAssignment.bay.timeout === 0) {
                                 $timeout.cancel(mytimeout);
                                 $scope.http.insertDetail();
@@ -206,7 +214,6 @@
                 };
 
                 $scope.http.insertDetail = function () {
-                    console.log('save method');
                     $scope.model.employeeAssignment.inTime = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss');
                     $scope.model.employeeAssignment.outTime = null;
                     $scope.model.employeeAssignment.bay = $scope.model.employeeAssignment.bay.indexNo;
@@ -215,7 +222,6 @@
                     //save detail dirrectly
                     if ($scope.model.employeeAssignment.bay) {
                         if ($scope.model.employeeAssignment.employee) {
-                            console.log($scope.model.employeeAssignment);
                             employeeAssignmentFactory.insertDetail(
                                     detailJSON,
                                     function (data) {
@@ -239,12 +245,23 @@
 
 
                 };
-                $scope.ui.init = function () {
-
-
+                $scope.ui.downloardImage = function () {
+                    for (var i = 0; i < $scope.model.employeeList.length; i++) {
+                        $scope.model.employeeList[i].imageData = systemConfig.apiUrl + "/api/care-point/master/employee/download-image/" + $scope.model.employeeList[i].image;
+                    }
+                };
+                
+                $scope.ui.loadEmployees = function () {
                     employeeAssignmentFactory.loadEmployees(function (data) {
                         $scope.model.employeeList = data;
+                        $scope.ui.downloardImage();
                     });
+                };
+
+                $scope.ui.init = function () {
+
+                    $scope.ui.loadEmployees();
+
                     employeeAssignmentFactory.employeesAttendance(function (data) {
                         $scope.model.employeesAttendanceList = data;
                     });
@@ -258,7 +275,6 @@
                     });
                     employeeAssignmentFactory.employeeImageAbsalutePath(function (data) {
                         $scope.model.imageAbsalutePath = data.imagePath;
-                        console.log("imageAbsalutePath");
                     });
 
                 };

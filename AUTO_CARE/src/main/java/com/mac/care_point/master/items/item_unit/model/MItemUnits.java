@@ -37,7 +37,7 @@ public class MItemUnits implements Serializable {
 
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 25)
+    @Size(min = 1, max = 250)
     @Column(name = "name")
     private String name;
 

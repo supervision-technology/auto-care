@@ -43,4 +43,8 @@ public class SVVehicleController {
     public MVehicle getAllVehiclesByVehicleNo(@PathVariable String vehicleNo){
         return vehicleService.getVehicleByVehicleNo(vehicleNo);
     }
+    @RequestMapping(value = "/search-vehicle-client/{client}", method = RequestMethod.GET) 
+    public String getAllVehiclesByClient(@PathVariable Integer client){
+        return vehicleService.getAllVehiclesByClient(client);
+    }
 }

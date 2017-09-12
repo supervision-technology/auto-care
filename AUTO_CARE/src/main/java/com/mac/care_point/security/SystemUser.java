@@ -16,18 +16,24 @@ import org.springframework.security.core.userdetails.User;
 public class SystemUser extends User {
 
     private Integer indexNo;
+    private String nickName;
     private Integer branch;
+    private String branchName;
 
     public SystemUser(
             Integer indexNo,
+            String nickName,
             String username,
             String password,
             Integer branch,
+            String branchName,
             Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
 
         this.indexNo = indexNo;
+        this.nickName = nickName;
         this.branch = branch;
+        this.branchName = branchName;
     }
 
     public Integer getIndexNo() {
@@ -38,6 +44,14 @@ public class SystemUser extends User {
         this.indexNo = indexNo;
     }
 
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
     public Integer getBranch() {
         return branch;
     }
@@ -45,4 +59,13 @@ public class SystemUser extends User {
     public void setBranch(Integer branch) {
         this.branch = branch;
     }
+
+    public String getBranchName() {
+        return branchName;
+    }
+
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
+    }
+
 }

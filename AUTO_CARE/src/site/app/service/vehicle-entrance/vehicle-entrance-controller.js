@@ -2,18 +2,28 @@
 //module
     angular.module("vehicleEntranceModule", ['ui.bootstrap', 'ui-notification']);
     angular.module("vehicleEntranceModule")
-            .controller("vehicleEntranceController", function ($scope, ConfirmPane, systemConfig, $window, Notification, $filter, $location, vehicleEntranceModel, $timeout) {
+            .controller("vehicleEntranceController", function ($scope, $cookies, optionPane, ConfirmPane, systemConfig, $window, Notification, $filter, $location, vehicleEntranceModel, $timeout) {
                 $scope.model = new vehicleEntranceModel();
 
                 $scope.ui = {};
+                $scope.ui.maxlength = 10;
                 $scope.imagemodel = [];
                 $scope.imagemodelX = [];
-
+                $scope.ui.imageShowMode1 = 'NotAvalable';//or IMAGE VIEW
+                $scope.ui.imageShowMode2 = 'NotAvalable';//or IMAGE VIEW
+                $scope.ui.imageShowMode3 = 'NotAvalable';//or IMAGE VIEW
+                $scope.ui.imageShowMode4 = 'NotAvalable';//or IMAGE VIEW
+                $scope.ui.imageShowMode5 = 'NotAvalable';//or IMAGE VIEW
+                $scope.ui.imageShowMode6 = 'NotAvalable';//or IMAGE VIEW
 
                 $scope.ui.keyEvent = function (e) {
                     var code = e ? e.keyCode || e.which : 13;
                     if (code === 13) {
-                        $scope.ui.secondStep();
+                        if (angular.isUndefined($scope.vehicleNo)) {
+                            Notification.error("Please input vehicle no");
+                        } else {
+                            $scope.ui.secondStep();
+                        }
                     }
                 };
 
@@ -36,24 +46,32 @@
                                     $scope.model.updateClientFromVehicle()
                                             .then(function () {
                                                 Notification.success("Save vehicle and assing client Success !!!");
-
                                                 if ($scope.imagemodel.length) {
                                                     console.log($scope.imagemodel.length);
                                                     console.log("$scope.imagemodel.length");
                                                     $scope.model.jobcard.vehicleImages = true;
                                                 }
-
                                                 $scope.model.saveJobCard()
                                                         .then(function (data) {
+                                                            
                                                             for (var i = 0; i < $scope.imagemodel.length; i++) {
                                                                 var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/upload-image/" + data + "/" + i;
                                                                 var formData = new FormData();
                                                                 formData.append("file", $scope.imagemodel[i]);
-
+                                                                
+                                                                var token = $cookies.get('XSRF-TOKEN');
+                                                                
+                                                                console.log(token);
+                                                                
+                                                                
                                                                 var xhr = new XMLHttpRequest();
                                                                 xhr.open("POST", url);
+                                                                xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+                                                                xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+                                                                xhr.setRequestHeader("X-XSRF-TOKEN", token);
                                                                 xhr.send(formData);
                                                             }
+                                                            
                                                             Notification.success("Save job-card success !!!");
                                                             $scope.model.clearModel();
                                                             $scope.vehicleNo = "";
@@ -78,14 +96,27 @@
                                             $scope.ui.changeUi = 'ui4';
                                         });
                             });
-
                 };
 
                 $scope.ui.changeFunction = function (event) {
+                    if ($scope.ui.imageShowMode1 === 'NotAvalable') {
+                        $scope.ui.imageShowMode1 = 'Avalable';
+                    } else if ($scope.ui.imageShowMode2 === 'NotAvalable') {
+                        $scope.ui.imageShowMode2 = 'Avalable';
+                    } else if ($scope.ui.imageShowMode3 === 'NotAvalable') {
+                        $scope.ui.imageShowMode3 = 'Avalable';
+                    } else if ($scope.ui.imageShowMode4 === 'NotAvalable') {
+                        $scope.ui.imageShowMode4 = 'Avalable';
+                    } else if ($scope.ui.imageShowMode5 === 'NotAvalable') {
+                        $scope.ui.imageShowMode5 = 'Avalable';
+                    } else if ($scope.ui.imageShowMode6 === 'NotAvalable') {
+                        $scope.ui.imageShowMode6 = 'Avalable';
+                    }
                     var files = event.target.files;
                     for (var i = 0; i < files.length; i++) {
                         var file = files[i];
                         $scope.imagemodel.push(file);
+
                         var reader = new FileReader();
                         reader.onload = $scope.imageIsLoaded;
                         reader.readAsDataURL(file);
@@ -102,12 +133,17 @@
                     $scope.model.clientData = {};
                     $scope.ui.clientDisabled = false;
                 };
+
                 $scope.ui.edit = function () {
                     $scope.ui.clientDisabled = false;
                 };
 
                 $scope.ui.backToSelectCustomer = function () {
                     $scope.ui.changeUi = 'ui2';
+                };
+
+                $scope.ui.backToSelectVehicleDetail = function () {
+                    $scope.ui.changeUi = 'ui3';
                 };
 
                 $scope.ui.saveJobCard = function () {
@@ -120,17 +156,34 @@
                 };
 
                 $scope.ui.setParam = function (client) {
+                    client.mobile = parseInt(client.mobile);
                     $scope.model.clientData = client;
                 };
 
+                $scope.ui.setVehicleData = function (vehicle) {
+                    $scope.model.searchSuggestions = [];
+                    $scope.model.showSuggestions = false;
+                    $scope.model.searchKeyword = vehicle.vehicleNo;
+                    console.log(vehicle);
+                    $scope.model.vehicleData = vehicle;
+                    $scope.ui.secondStep();
+                };
+
                 $scope.validateClient = function () {
+
                     if (!$scope.model.clientData.mobile) {
                         Notification.error("please Input Mobile No");
+                        return false;
+                    } else if (($scope.model.clientData.mobile + '').length !== 9) {
+                        Notification.error("please Input Valid Mobile No ");
+                        return false;
+                    } else if (!$scope.model.clientData.resident) {
+                        Notification.error("please Input Resident");
                         return false;
                     } else if (!$scope.model.clientData.name) {
                         Notification.error("please Input Name");
                         return false;
-                    } else if ($scope.model.clientData.mobile && $scope.model.clientData.name) {
+                    } else if ($scope.model.clientData.mobile && $scope.model.clientData.name && $scope.model.clientData.resident && ($scope.model.clientData.mobile + '').length === 9) {
                         return true;
                     }
                 };
@@ -148,28 +201,33 @@
                     } else if (!$scope.model.vehicleData.priceCategory) {
                         Notification.error("Please Input Price Category");
                         return false;
+                    } else if (!$scope.model.vehicleData.lastMilage) {
+                        Notification.error("Please Input Last Milage");
+                        return false;
                     } else if ($scope.model.vehicleData.vehicleNo
                             && $scope.model.vehicleData.vehicleType
                             && $scope.model.vehicleData.chasisNo
-                            && $scope.model.vehicleData.priceCategory) {
+                            && $scope.model.vehicleData.priceCategory
+                            && $scope.model.vehicleData.lastMilage) {
                         return true;
                     }
                 };
-
 
                 $scope.$watch('vehicleNo', function (val) {
                     $scope.vehicleNo = $filter('uppercase')(val);
                 }, true);
 
-
                 $scope.ui.clientAssingNext = function () {
-                    var vehicleStatus = $scope.model.vehicle($scope.vehicleNo);
+                    var vehicleStatus = $scope.model.vehicle($scope.model.searchKeyword);
                     //vehicle nathnam
                     if (angular.isUndefined(vehicleStatus)) {
                         //vehicle 1th nathi rejisted nathi client kenek
-                        var vehicleNo = $scope.vehicleNo;
+                        var vehicleNo = $scope.model.searchKeyword;
                         if (angular.isUndefined($scope.model.clientData.indexNo)) {
+                            console.log(($scope.model.clientData.mobile + '').length);
+                            console.log($scope.model.clientData.mobile);
                             if ($scope.validateClient()) {
+                                console.log($scope.model.clientData.resident);
                                 $scope.model.newClient()
                                         .then(function (data) {
                                             Notification.success("New client added success !!!");
@@ -181,14 +239,12 @@
                                             Notification.error("New client added fail !!!");
                                         });
                             }
-
                             //vehicle 1th nathuwa rejisted client kenek
                         } else {
+                            $scope.model.updateClient();
                             $scope.model.vehicleData = {};
                             $scope.model.vehicleData.vehicleNo = vehicleNo;
                             $scope.ui.changeUi = 'ui3';
-
-//                            $scope.ui.clientEdit();
                         }
                         //vehicle thiyenawanm
                     } else {
@@ -205,6 +261,7 @@
                                         });
                             }
                         } else {
+                            $scope.model.updateClient();
                             $scope.ui.changeUi = 'ui3';
                             $scope.model.vehicleData.lastMilage = null;
                             $scope.model.loadJobCardByClientIndexNo($scope.model.clientData.indexNo);
@@ -212,36 +269,13 @@
                         }
                     }
                 };
+                $scope.ui.clientVehicles = function (indexNo) {
+                    $scope.model.clientVehicles(indexNo);
+                };
 
                 $scope.ui.jobCardNsext = function () {
                     if ($scope.validateVehicleData()) {
-                        ConfirmPane.infoConfirm("Do you want to capture new images")
-                                .confirm(function () {
-                                    $scope.ui.changeUi = 'ui4';
-                                })
-                                .discard(function () {
-                                    if ($scope.validateVehicleData) {
-                                        $scope.model.updateClientFromVehicle()
-                                                .then(function () {
-                                                    Notification.success("Save vehicle and assing client Success !!!");
-                                                    $scope.model.saveJobCard()
-                                                            .then(function (data) {
-                                                                $scope.ui.goToItemSelection(data);
-
-                                                                Notification.success("Save job-card success !!!");
-                                                                $scope.model.clearModel();
-                                                                $scope.vehicleNo = "";
-                                                                $scope.ui.clientDisabled = true;
-                                                                $scope.ui.vehicleDisabled = true;
-
-                                                            }, function () {
-                                                                Notification.error("Save job-card fail !!!");
-                                                            });
-                                                }, function () {
-                                                    Notification.error("Save vehicle and assing client fail !!!");
-                                                });
-                                    }
-                                });
+                        $scope.ui.changeUi = 'ui4';
                     }
                 };
 
@@ -250,16 +284,71 @@
                 };
 
                 $scope.ui.secondStep = function () {
-                    if ($scope.model.vehicle($scope.vehicleNo)) {
-                        $scope.ui.changeUi = 'ui2';
-                        $scope.ui.vehicleDisabled = true;
-
-                        $scope.model.vehicleSerachByVehicleNo($scope.vehicleNo);
+                    if ($scope.model.searchKeyword === null) {
+                        Notification.error("Please input vehicle no");
                     } else {
-                        $scope.ui.changeUi = 'ui2';
-                        $scope.ui.new();
-                        $scope.ui.vehicleDisabled = false;
+                        if ($scope.model.vehicle($scope.model.searchKeyword)) {
+                            console.log("1");
+                            $scope.model.searchPendingJobCard($scope.model.searchKeyword)
+                                    .then(function (data) {
+                                        if (data.length === 0) {
+//                                            $scope.model.vehicleSerachByVehicleNo($scope.model.searchKeyword);
+                                            console.log("2");
+                                            console.log($scope.model.vehicleData);
+                                            $scope.model.clientSearchByClientNo();
+                                            $scope.ui.changeUi = 'ui2';
+                                            $scope.ui.vehicleDisabled = true;
+                                            $scope.ui.getVehicleHistory($scope.model.searchKeyword);
+                                        } else {
+                                            console.log("3");
+                                            optionPane.dangerMessage("Pending JobCard Avalable")
+                                                    .continue(function () {
+
+                                                    });
+                                        }
+                                    }, function () {
+                                        console.log("4");
+//                                        $scope.model.vehicleSerachByVehicleNo($scope.model.searchKeyword);
+                                        $scope.ui.getVehicleHistory($scope.model.searchKeyword);
+                                        $scope.model.clientSearchByClientNo();
+                                        $scope.ui.changeUi = 'ui2';
+                                        $scope.ui.vehicleDisabled = true;
+                                    });
+                        } else {
+                            $scope.ui.changeUi = 'ui2';
+                            $scope.ui.new();
+                            $scope.ui.vehicleDisabled = false;
+
+                        }
                     }
+                };
+                $scope.ui.getVehicleHistory = function (vehicleNo){
+                    $scope.model.getVehicleHistory(vehicleNo);
+                };
+                $scope.ui.saveJobWithoutImage = function (){
+                    // save job card
+                                if ($scope.validateVehicleData) {
+                                    $scope.model.updateClientFromVehicle()
+                                            .then(function () {
+                                                Notification.success("Save vehicle and assing client Success !!!");
+                                                if ($scope.imagemodel.length) {
+                                                    $scope.model.jobcard.vehicleImages = true;
+                                                }
+                                                $scope.model.saveJobCard()
+                                                        .then(function (data) {
+                                                            Notification.success("Save job-card success !!!");
+                                                            $scope.model.clearModel();
+                                                            $scope.vehicleNo = "";
+                                                            $scope.ui.clientDisabled = true;
+                                                            $scope.ui.vehicleDisabled = true;
+                                                            $scope.ui.goToItemSelection(data);
+                                                        }, function () {
+                                                            Notification.error("Save job-card fail !!!");
+                                                        });
+                                            }, function () {
+                                                Notification.error("Save vehicle and assing client fail !!!");
+                                            });
+                                }
                 };
 
                 $scope.ui.init = function () {
@@ -267,8 +356,21 @@
                     $scope.ui.clientDisabled = true;
                     $scope.ui.vehicleDisabled = true;
 
-                };
+                    $scope.$watch('model.searchKeyword', function (newV, oldV) {
+                        $scope.model.showSuggestions = newV && newV.length;
 
+                        if (newV && newV.length >= 2) {
+                            //load from server
+                            $scope.model.findByVehicleNo();
+                        }
+                    });
+
+                    $scope.$watch('model.jobCard', function (newVal) {
+                        if (newVal) {
+                            $scope.model.showSuggestions = !$scope.model.jobCard;
+                        }
+                    });
+                };
                 $scope.ui.init();
             });
 }());

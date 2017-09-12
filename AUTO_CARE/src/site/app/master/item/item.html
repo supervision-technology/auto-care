@@ -5,7 +5,9 @@
     <uib-tabset>
         <uib-tab heading="ITEMS" index="0" select="ui.toggleType('ITEMS');">
             <div class="col-xs-4 background-dark">
-                <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+
+                <div class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 104px);padding-right: 20px;">
+
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -13,10 +15,10 @@
                             <tr>
                                 <td><label class="control-label">Type*</label></td>
                                 <td>
-                                    <select id="type" class="form-control" ng-model="model.itemData.type" ng-change="ui.selectStock(model.itemData.type);">
-                                        <option value="STOCK" selected>STOCK</option>
-                                        <option value="NON-STOCK">NON-STOCK</option>
-                                        <option value="SERVICE">SERVICE</option>
+                                    <select class="form-control" ng-model="model.itemData.type" ng-change="ui.selectStock(model.itemData.type);">
+                                        <option value="STOCK" selected>STOCK ITEM</option>
+                                        <option value="SERVICE">SERVICE ACTIVITY</option>
+                                        <option value="NON STOCK">NON STOCK (CONSUMABLE)</option>
                                         <option value="PACKAGE">PACKAGE</option>
                                     </select>
                                 </td>
@@ -25,31 +27,27 @@
                                 <td><label class="control-label">Name*</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.name" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr ng-show="textViewMode === 'SERVICE' || textViewMode === 'PACKAGE'">
+                            <tr ng-show="textViewMode === 'PACKAGE'">
                                 <td><label class="control-label">Price Category</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.priceCategory" uib-typeahead="priceCategory.indexNo as (priceCategory.indexNo + ' - ' + priceCategory.name) for priceCategory in model.priceCategory |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.priceCategoryLable($model)" ng-disabled="ui.mode !== 'EDIT' || "></td>
                             </tr>
-                            <tr>
-                                <td><label class="control-label">Sale Price(N)*</label></td>
+                            <tr ng-show="textViewMode === 'SERVICE'">
+                                <td><label class="control-label">QTY Wise</label></td>
+                                <td><label class="control-label">YES &nbsp;</label><input type="radio" ng-model="model.itemData.qtyWise" ng-value="true" ng-disabled="ui.mode !== 'EDIT'"><label class="control-label">&nbsp;&nbsp; No  &nbsp;</label><input type="radio" ng-model="model.itemData.qtyWise" ng-value="false" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
+                                <td><label class="label label-primary">Sale Price(N)*</label></td>
                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.salePriceNormal" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr>
-                                <td><label class="control-label">Sale Price(R)*</label></td>
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
+                                <td><label class="label label-success">Sale Price(R)*</label></td>
                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.salePriceRegister" ng-disabled="ui.mode !== 'EDIT'"></td>
-                            </tr>
-                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON-STOCK'">
-                                <td><label class="control-label">Supplier Price</label></td>
-                                <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.supplierPrice" ng-disabled="ui.mode !== 'EDIT'"></td>
-                            </tr>
-                            <tr>
-                                <td><label class="control-label">Discount</label></td>
-                                <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.discount" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Cost Price*</label></td>
                                 <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.costPrice" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON-STOCK'">
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
                                 <td><label class="control-label">BarCode</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.barcode" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
@@ -57,23 +55,57 @@
                                 <td><label class="control-label">Print Description</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.printDescription" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON-STOCK'">
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
                                 <td><label class="control-label">Unit</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.unit" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON-STOCK'">
+                        </tbody>
+                    </table>
+                    <table class="table-rounded control-table" ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" class="text-bold">SUPPLIER DETAILS</td>
+                            </tr>
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
                                 <td><label class="control-label">Supplier</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.supplier" uib-typeahead="supplier.indexNo as (supplier.name+ ' - ' +supplier.contactNo) for supplier in model.suppliers |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.supplierLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
+                                <td><label class="control-label">Supplier Price</label></td>
+                                <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.supplierPrice" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
+                                <td><label class="control-label">Discount</label></td>
+                                <td><input smart-input="decimal" class="form-control text-right" ng-model="model.itemData.discount" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
+                                <td><label class="control-label">Re Order Max</label></td>
+                                <td><input class="form-control" ng-model="model.itemData.reOrderMax" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
+                                <td><label class="control-label">Re Order Min</label></td>
+                                <td><input class="form-control" ng-model="model.itemData.reOrderMin" ng-disabled="ui.mode !== 'EDIT'"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table-rounded control-table">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr>
+                                <td colspan="2" class="text-bold">CATEGORY,SUB CATEGORY,DEPARTMENT,BRAND</td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Department</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.department" uib-typeahead="itemDepartment.indexNo as (itemDepartment.indexNo + ' - ' + itemDepartment.name) for itemDepartment in model.itemDepartments |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemDepartmentLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr>
+                            <tr ng-show="textViewMode === 'SERVICE' || textViewMode === 'PACKAGE'">
                                 <td><label class="control-label">Category</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.category" uib-typeahead="category.indexNo as (category.indexNo + ' - ' + category.name) for category in model.categorys |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.categoryLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr>
+                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON STOCK'">
                                 <td><label class="control-label">Item Category</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.itemCategory" uib-typeahead="itemCategory.indexNo as (itemCategory.indexNo + ' - ' + itemCategory.name) for itemCategory in model.itemCategorys |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemCategoryLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
@@ -85,85 +117,78 @@
                                 <td><label class="control-label">Brand</label></td>
                                 <td><input class="form-control" ng-model="model.itemData.brand" uib-typeahead="brand.indexNo as (brand.indexNo + ' - ' + brand.name) for brand in model.brands |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.brandLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
-                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON-STOCK'">
-                                <td><label class="control-label">Re Order Max</label></td>
-                                <td><input class="form-control" ng-model="model.itemData.reOrderMax" ng-disabled="ui.mode !== 'EDIT'"></td>
-                            </tr>
-                            <tr ng-show="textViewMode === 'STOCK' || textViewMode === 'NON-STOCK'">
-                                <td><label class="control-label">Re Order Min</label></td>
-                                <td><input class="form-control" ng-model="model.itemData.reOrderMin" ng-disabled="ui.mode !== 'EDIT'"></td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="col-xs-8 background-light">
-                <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
-                        <div class="col-md-6">
-                            <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 106px);">
+
+                    <div class="col-xs-12" style="margin-top: 10px;margin-bottom: 10px;">
+                        <div class="col-xs-6">
+                            <select class="form-control" ng-model="searchItemType" ng-change="ui.findItemByItemType(searchItemType)">
+                                <option value="" selected></option>
+                                <option value="STOCK">STOCK ITEM</option>
+                                <option value="SERVICE">SERVICE ACTIVITY</option>
+                                <option value="NON STOCK">NON STOCK (CONSUMABLE)</option>
+                                <option value="PACKAGE">PACKAGE</option>
+                            </select>
                         </div>
+                        <div class="col-xs-6">
+                            <input class="form-control" type="text" placeholder="search" ng-model="searchItem">
+                        </div>
+
+                    </div>
+                    <table class="table-rounded">
+                        <col style="width: 10%">
+                        <col style="width: 60%">
+                        <col style="width: 10%">
+                        <col style="width: 20%">
+                        <thead class="background-dark">
+                            <tr>
+                                <th>
+                                    <label>#</label>
+                                </th>
+                                <th>
+                                    <label>Name</label>
+                                </th>
+                                <th>
+                                    <label>Type</label>
+                                </th>
+                                <th>&nbsp;</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                    <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
+
                         <table class="table-rounded">
                             <col style="width: 10%">
-                            <col style="width: 40%">
-                            <col style="width: 10%">
-                            <col style="width: 10%">
+                            <col style="width: 60%">
                             <col style="width: 10%">
                             <col style="width: 20%">
-                            <thead class="background-dark">
-                                <tr>
-                                    <th>
-                                        <label>#</label>
-                                    </th>
-                                    <th>
-                                        <label>Name</label>
-                                    </th>
-                                    <th class="text-right">
-                                        <label>S.Price(N)</label>
-                                    </th>
-                                    <th class="text-right">
-                                        <label>S.Price(R)</label>
-                                    </th>
-                                    <th>
-                                        <label>Type</label>
-                                    </th>
-                                    <th>&nbsp;</th>
+                            <tbody>
+                                <tr ng-repeat="items in model.itemsTypeWiseItems|filter:{'name' : searchItem}">
+                                    <td><label class="label label-default">{{items.indexNo|fixedLength:5}}</label></td>
+                                    <td>{{items.name}}</td>
+                                    <td ng-show="items.type === 'STOCK'"><label class="label label-default">STOCK</label></td>
+                                    <td ng-show="items.type === 'NON STOCK'"><label class="label label-primary">NON STOCK</label></td>
+                                    <td ng-show="items.type === 'SERVICE'"><label class="label label-success">SERVICE</label></td>
+                                    <td ng-show="items.type === 'PACKAGE'"><label class="label label-warning">PACKAGE</label></td>
+                                    <td class="text-right" ng-disabled="ui.mode !== 'EDIT'">
+                                        <a class="btn btn-primary" ng-click="ui.editeItems(items, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="btn btn-danger" ng-click="ui.deleteItems(items, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                    </td>
                                 </tr>
-                            </thead>
+                            </tbody>
                         </table>
-                        <!--                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
-                                                    <table class="table-rounded">
-                                                        <col style="width: 10%">
-                                                        <col style="width: 30%">
-                                                        <col style="width: 15%">
-                                                        <col style="width: 15%">
-                                                        <col style="width: 10%">
-                                                        <col style="width: 20%">
-                                                        <tbody>
-                                                            <tr ng-repeat="items in model.itemViewList|filter:{'name' : searchItem}">
-                                                                <td><label class="label label-default">{{items.indexNo|fixedLength:5}}</label></td>
-                                                                <td>{{items.name}}</td>
-                                                                <td class="text-right">{{items.salePriceNormal|number:2}}</td>
-                                                                <td class="text-right">{{items.salePriceRegister|number:2}}</td>
-                                                                <td ng-show="items.type === 'STOCK'"><label class="label label-default">STOCK</label></td>
-                                                                <td ng-show="items.type === 'NON-STOCK'"><label class="label label-primary">NON-STOCK</label></td>
-                                                                <td ng-show="items.type === 'SERVICE'"><label class="label label-success">SERVICE</label></td>
-                                                                <td ng-show="items.type === 'PACKAGE'"><label class="label label-warning">PACKAGE</label></td>
-                                                                <td class="text-right" ng-disabled="ui.mode !== 'EDIT'">
-                                                                    <a class="btn btn-primary" ng-click="ui.editeItems(items, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-                                                                    <a class="btn btn-danger" ng-click="ui.deleteItems(items, $index)"><span class="glyphicon glyphicon-trash"></span></a>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>-->
                     </div>
                 </div>
             </div>
         </uib-tab>
         <uib-tab heading="ITEMS PRICE CATEGORY ADD" index="5" select="ui.toggleType('PRICE_CATEGORY_DETAIL');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -181,29 +206,48 @@
                                 <td><label class="control-label">Not Select Next*  &nbsp;</label><input type="radio" ng-model="selectNextPriceCategoryDetails" ng-value="false" ng-disabled="ui.mode !== 'EDIT'" ng-change="ui.selectNextPriceCategoryDetails(selectNextPriceCategoryDetails)"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">S.Price(N)*</label></td>
+                                <td><label class="label label-primary">S.Price(N)*</label></td>
                                 <td><input smart-input="decimal" class="form-control" ng-model="model.priceCategoryDetail.normalPrice" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
-                                <td><label class="control-label">S.Price(R)*</label></td>
+                                <td><label class="label label-success">S.Price(R)*</label></td>
                                 <td><input smart-input="decimal" class="form-control" ng-model="model.priceCategoryDetail.registerPrice" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                         </tbody>
                     </table>
-                    <div class="border-all" ng-show="ui.showDetails()">
-                        <div class="modal-header bg-primary">
-                            <div class="col-lg-12">
-                                <center>
-                                    <label>ITEM DETAILS {{model.itemUnitData.item}}</label>
-                                </center>
-                            </div>
-                        </div>
+                    <div>
+                        <table class="table-rounded control-table">
+                            <col style="width: 100%"/>
+                            <tbody>
+                                <tr class="select-primary-row-table-header">
+                                    <td><label class="control-label">ITEM DETAILS</label></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="control-label">Name</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-control" ng-model="model.tempItemData.name" ng-disabled="true"></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="control-label">Print Description</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-control" ng-model="model.tempItemData.printDescription" ng-disabled="true"></td>
+                                </tr>
+                                <tr>
+                                    <td><label class="control-label">Category</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input class="form-control" ng-model="model.tempItemData.category" uib-typeahead="category.indexNo as (category.indexNo + ' - ' + category.name) for category in model.categorys |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.categoryLable($model)" ng-disabled="true"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItemUnit" >
                         </div>
@@ -218,7 +262,7 @@
                                     <th>
                                         <label>#</label>
                                     </th>
-                                    <th class="text-right">
+                                    <th>
                                         <label>PRICE CATEGORY</label>
                                     </th>
                                     <th class="text-right">
@@ -231,7 +275,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 30%">
@@ -244,7 +288,7 @@
                                         <td>{{model.priceCategoryLable(priceCategoryDetail.priceCategory)}}</td>
                                         <td class="text-right">{{priceCategoryDetail.normalPrice|number:2}}</td>
                                         <td class="text-right">{{priceCategoryDetail.registerPrice|number:2}}</td>
-                                        <td class="text-right" ng-disabled="ui.mode !== 'EDIT'">
+                                        <td class="text-right" ng-disabled="ui.mode === 'EDIT'">
                                             <a class="btn btn-primary" ng-click="ui.editePriceCategoryDetail(priceCategoryDetail, $index)"><span class="glyphicon glyphicon-edit"></span></a>
                                             <a class="btn btn-danger" ng-click="ui.deletePriceCategoryDetail($index, priceCategoryDetail.indexNo)"><span class="glyphicon glyphicon-trash"></span></a>
                                         </td>
@@ -258,7 +302,7 @@
         </uib-tab>
         <uib-tab heading="ITEMS UNITS" index="1" select="ui.toggleType('ITEMS_UNITS');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -290,49 +334,41 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="border-all" ng-show="ui.showDetails()">
-                        <div class="modal-header bg-primary">
-                            <div class="col-lg-12">
-                                <center>
-                                    <label>ITEM DETAILS {{model.itemUnitData.item}}</label>
-                                </center>
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table-rounded control-table">
-                                <col style="width: 35%"/>
-                                <col style="width: 65%"/>
-                                <tbody>
-                                    <tr>
-                                        <td> <label>Item Type :</label></td>
-                                        <td> <label>{{itemType}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Item Unit :</label></td>
-                                        <td> <label>{{itemUnit}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Brand :</label></td>
-                                        <td> <label>{{model.brandLable(itemObject.brand)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Category :</label></td>
-                                        <td> <label>{{model.categoryLable(itemObject.category)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Sub Category :</label></td>
-                                        <td> <label>{{model.subCategoryLable(itemObject.sub_category)}}</label></td>
-                                    </tr>
+                    <table class="table-rounded control-table" ng-show="ui.showDetails()">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr class="select-primary-row-table-header">
+                                <td colspan="2">ITEM DETAILS {{model.itemUnitData.item}}</td>
+                            </tr>
+                            <tr>
+                                <td> <label>Item Type :</label></td>
+                                <td> <label>{{itemType}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Item Unit :</label></td>
+                                <td> <label>{{itemUnit}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Brand :</label></td>
+                                <td> <label>{{model.brandLable(itemObject.brand)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Category :</label></td>
+                                <td> <label>{{model.categoryLable(itemObject.category)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Sub Category :</label></td>
+                                <td> <label>{{model.subCategoryLable(itemObject.sub_category)}}</label></td>
+                            </tr>
 
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItemUnit" >
                         </div>
@@ -364,7 +400,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 30%">
@@ -394,7 +430,7 @@
         </uib-tab>
         <uib-tab heading="PACKAGE ITEMS" index="2" select="ui.toggleType('PACKAGE_ITEMS');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -413,7 +449,7 @@
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem" >
                         </div>
@@ -437,7 +473,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 35%">
@@ -461,20 +497,20 @@
         </uib-tab>
         <uib-tab heading="CONSUMABLE ITEMS" index="3" select="ui.toggleType('CONSUMABLE_ITEMS');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
                         <tbody>
                             <tr class="background-light-dark">
                                 <td><label class="control-label">Service</label></td>
-                                <td><input class="form-control" ng-model="model.consumableData.service" uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items|filter: { type: 'SERVICE' }|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemLable($model)" typeahead-on-select="" ng-disabled="ui.mode !== 'EDIT'"></td>
+                                <td><input class="form-control" ng-model="model.consumableData.service" uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items|filter: { type: 'SERVICE' }|filter:$viewValue|limitTo:10" typeahead-input-formatter="model.itemLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
                             </tr>
                             <tr>
                                 <td><label class="control-label">Consumable Item</label></td>
                                 <td><input class="form-control" 
                                            ng-model="model.consumableData.consumable" 
-                                           uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items|filter: { type: 'NON-STOCK' }|filter:$viewValue|limitTo:10" 
+                                           uib-typeahead="items.indexNo as (items.indexNo + ' - ' + items.name) for items in model.items|filter: { type: 'NON STOCK' }|filter:$viewValue|limitTo:10" 
                                            typeahead-input-formatter="model.itemLable($model)" ng-disabled="ui.mode !== 'EDIT'"
                                            typeahead-on-select="model.selectCunsumableItel(model.consumableData.consumable);"></td>
                             </tr>
@@ -484,65 +520,56 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="border-all" ng-show="model.consumableItemIsView">
-                        <div class="modal-header bg-primary">
-                            <div class="col-lg-12">
-                                <center>
-                                    <label>CONSUMABLE ITEM DETAILS</label>
-                                </center>
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table-rounded control-table">
-                                <col style="width: 35%"/>
-                                <col style="width: 65%"/>
-                                <tbody>
-                                    <tr>
-                                        <td> <label>Full Name :</label></td>
-                                        <td> <label>{{model.selectedConsumableItem.name}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Barcode :</label></td>
-                                        <td> <label>{{model.selectedConsumableItem.barcode}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Unit :</label></td>
-                                        <td> <label>{{model.selectedConsumableItem.unit}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Department :</label></td>
-                                        <td> <label>{{model.itemDepartmentLable(model.selectedConsumableItem.department)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Brand :</label></td>
-                                        <td> <label>{{model.brandLable(model.selectedConsumableItem.brand)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Category :</label></td>
-                                        <td> <label>{{model.categoryLable(model.selectedConsumableItem.category)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Sub Category :</label></td>
-                                        <td> <label>{{model.subCategoryLable(model.selectedConsumableItem.sub_category)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Sale Price &nbsp;<label class="label label-primary">N</label>:</label></td>
-                                        <td> <label>{{model.selectedConsumableItem.salePriceNormal|number:2}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Sale Price &nbsp;<label class="label label-primary">R</label>:</label></td>
-                                        <td> <label>{{model.selectedConsumableItem.salePriceRegister|number:2}}</label></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
+                    <table class="table-rounded control-table" ng-show="model.consumableItemIsView">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr class="select-primary-row-table-header">
+                                <td colspan="2">CONSUMABLE ITEM DETAILS</td>
+                            </tr>
+                            <tr>
+                                <td> <label>Full Name :</label></td>
+                                <td> <label>{{model.selectedConsumableItem.name}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Barcode :</label></td>
+                                <td> <label>{{model.selectedConsumableItem.barcode}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Unit :</label></td>
+                                <td> <label>{{model.selectedConsumableItem.unit}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Department :</label></td>
+                                <td> <label>{{model.itemDepartmentLable(model.selectedConsumableItem.department)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Brand :</label></td>
+                                <td> <label>{{model.brandLable(model.selectedConsumableItem.brand)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Category :</label></td>
+                                <td> <label>{{model.categoryLable(model.selectedConsumableItem.category)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Sub Category :</label></td>
+                                <td> <label>{{model.subCategoryLable(model.selectedConsumableItem.sub_category)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Sale Price &nbsp;<label class="label label-primary">N</label>:</label></td>
+                                <td> <label>{{model.selectedConsumableItem.salePriceNormal|number:2}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Sale Price &nbsp;<label class="label label-primary">R</label>:</label></td>
+                                <td> <label>{{model.selectedConsumableItem.salePriceRegister|number:2}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem" >
                         </div>
@@ -570,7 +597,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 30%">
@@ -596,7 +623,7 @@
         </uib-tab>
         <uib-tab heading="ITEM CHECK DETAIL" index="4" select="ui.toggleType('ITEM_CHECK_DETAIL');">
             <div class="col-xs-4 background-dark">
-                <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                     <table class="table-rounded control-table">
                         <col style="width: 35%"/>
                         <col style="width: 65%"/>
@@ -612,68 +639,61 @@
                             </tr>
                         </tbody>
                     </table>
-                    <div class="border-all" ng-show="model.selectedItemIsView">
-                        <div class="modal-header bg-primary">
-                            <div class="col-lg-12">
-                                <center>
-                                    <label>ITEM DETAILS</label>
-                                </center>
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <table class="table-rounded control-table">
-                                <col style="width: 35%"/>
-                                <col style="width: 65%"/>
-                                <tbody>
-                                    <tr>
-                                        <td> <label>Full Name :</label></td>
-                                        <td> <label>{{model.selectedItem.name}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Barcode :</label></td>
-                                        <td> <label>{{model.selectedItem.barcode}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Unit :</label></td>
-                                        <td> <label>{{model.selectedItem.unit}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Type :</label></td>
-                                        <td> <label >{{model.selectedItem.type}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Department :</label></td>
-                                        <td> <label>{{model.itemDepartmentLable(model.selectedItem.department)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Brand :</label></td>
-                                        <td> <label>{{model.brandLable(model.selectedItem.brand)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Category :</label></td>
-                                        <td> <label>{{model.categoryLable(model.selectedItem.category)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Sub Category :</label></td>
-                                        <td> <label>{{model.subCategoryLable(model.selectedItem.sub_category)}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Sale Price &nbsp;<label class="label label-primary">N</label>:</label></td>
-                                        <td> <label>{{model.selectedItem.salePriceNormal|number:2}}</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td> <label>Sale Price &nbsp;<label class="label label-primary">R</label>:</label></td>
-                                        <td> <label>{{model.selectedItem.salePriceRegister|number:2}}</label></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+
+                    <table class="table-rounded control-table" ng-show="model.selectedItemIsView">
+                        <col style="width: 35%"/>
+                        <col style="width: 65%"/>
+                        <tbody>
+                            <tr class="select-primary-row-table-header">
+                                <td colspan="2">ITEM DETAILS</td>
+                            </tr>
+                            <tr>
+                                <td> <label>Full Name :</label></td>
+                                <td> <label>{{model.selectedItem.name}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Barcode :</label></td>
+                                <td> <label>{{model.selectedItem.barcode}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Unit :</label></td>
+                                <td> <label>{{model.selectedItem.unit}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Type :</label></td>
+                                <td> <label >{{model.selectedItem.type}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Department :</label></td>
+                                <td> <label>{{model.itemDepartmentLable(model.selectedItem.department)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Brand :</label></td>
+                                <td> <label>{{model.brandLable(model.selectedItem.brand)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Category :</label></td>
+                                <td> <label>{{model.categoryLable(model.selectedItem.category)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Sub Category :</label></td>
+                                <td> <label>{{model.subCategoryLable(model.selectedItem.sub_category)}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Sale Price &nbsp;<label class="label label-primary">N</label>:</label></td>
+                                <td> <label>{{model.selectedItem.salePriceNormal|number:2}}</label></td>
+                            </tr>
+                            <tr>
+                                <td> <label>Sale Price &nbsp;<label class="label label-primary">R</label>:</label></td>
+                                <td> <label>{{model.selectedItem.salePriceRegister|number:2}}</label></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-xs-8 background-light">
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
                         <div class="col-md-6">
                             <input id="search" type="text" placeholder="search" class="search-input" ng-model="checkItemSearch">
                         </div>
@@ -697,7 +717,7 @@
                                 </tr>
                             </thead>
                         </table>
-                        <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
+                        <div class="smart-scroll-y" style="height: calc(100vh - 152px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
                                 <col style="width: 40%">
@@ -724,12 +744,13 @@
         </uib-tab>
     </uib-tabset>
     <div class="fab-container">
+        <a class="fab fab-default" fab-show="ui.mode ==='EDIT'" ng-click="ui.clear()"><i class="glyphicon glyphicon-refresh"></i></a>
         <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEMS'" ng-click="ui.saveItems()"><i class="glyphicon glyphicon-floppy-save"></i></a>
         <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEMS_UNITS'" ng-click="ui.saveItemUnits()"><i class="glyphicon glyphicon-floppy-save"></i></a>
-        <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'PACKAGE_ITEMS'" ng-click="ui.addPackageItem()"><i class="glyphicon glyphicon-floppy-save"></i></a>
-        <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'CONSUMABLE_ITEMS'" ng-click="ui.saveConsumable()"><i class="glyphicon glyphicon-floppy-save"></i></a>
-        <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEM_CHECK_DETAIL'" ng-click="ui.saveItemCheckDetail()"><i class="glyphicon glyphicon-floppy-save"></i></a>
-        <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'PRICE_CATEGORY_DETAIL'" ng-click="ui.savePriceCategoryDetail()"><i class="glyphicon glyphicon-floppy-save"></i></a>
+        <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'PACKAGE_ITEMS'" ng-click="ui.addPackageItem()"><i class="glyphicon glyphicon-floppy-save"></i></a>
+        <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'CONSUMABLE_ITEMS'" ng-click="ui.saveConsumable()"><i class="glyphicon glyphicon-floppy-save"></i></a>
+        <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEM_CHECK_DETAIL'" ng-click="ui.saveItemCheckDetail()"><i class="glyphicon glyphicon-floppy-save"></i></a>
+        <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'PRICE_CATEGORY_DETAIL'" ng-click="ui.savePriceCategoryDetail()"><i class="glyphicon glyphicon-floppy-save"></i></a>
         <a class="fab fab-lg fab-primary" fab-show="ui.mode ==='IDEAL'" ng-click="ui.new()"><i class="glyphicon glyphicon-plus"></i></a>
     </div>
 </div>

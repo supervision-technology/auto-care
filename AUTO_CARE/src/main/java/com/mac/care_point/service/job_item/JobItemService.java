@@ -54,7 +54,7 @@ public class JobItemService {
         return mItemLRepository.findAll();
     }
 
-    public List<MItemL> findByItemCategoryAndBranch(Integer itemCategory) {
+    public List<MItemL> findByItemCategory(Integer itemCategory) {
         return mItemLRepository.findByItemCategory(itemCategory);
     }
 
@@ -70,13 +70,13 @@ public class JobItemService {
         return returnItemData;
     }
 
-    public List<Object[]> getQuickSeacrhItemStockItem(String itemKey, Integer priceCategory) {
-        return mItemLRepository.getQuickSeacrhItemStockItem(itemKey, priceCategory);
+    public List<Object[]> getQuickSeacrhItemStockItem(String itemKey) {
+        return jobItemRepository.getQuickSeacrhItemStockItem(itemKey);
     }
 
     @Transactional
     public TJobItem saveJobItem(TJobItem jobItem) {
-
+        jobItem.setIsChange(Boolean.FALSE);
         TJobItem getSaveData = jobItemRepository.save(jobItem);
         List<MItemCheckDetail> getFindJobItemList = itemCheckDetailRepository.findByItem(jobItem.getItem());
 
@@ -159,24 +159,19 @@ public class JobItemService {
         return jobItemRepository.save(jobItem);
     }
 
-    public List<Object[]> getItemQtyByStockLeger(Integer itemCategory, Integer branch) {
-        return jobItemRepository.getItemQtyByStockLeger(itemCategory, branch);
-    }
-
-    public List<Object[]> getNonStockItemQtyByStockLeger(Integer branch) {
-        return jobItemRepository.getNonStockItemQtyByStockLeger(branch);
+    public List<Object[]> getItemStockItemAndNonStockItem(Integer itemCategory) {
+        return jobItemRepository.getItemStockItemAndNonStockItem(itemCategory);
     }
 
     public BigDecimal findByItemStockItem(Integer branch, Integer item) {
-        List<Object[]> getDataList = jobItemRepository.getItemQtyByStock(branch, item);
-        return ((BigDecimal) getDataList.get(0)[1]).subtract((BigDecimal) getDataList.get(0)[2]);
-    }
-
-    public List<Object[]> getAllItemQtyByStockLeger(Integer branch) {
-        return jobItemRepository.getAllItemQtyByStockLeger(branch);
+        return jobItemRepository.getItemQtyByStock(branch, item);
     }
 
     public TJobItem findTJobItemByIndexNo(Integer indexNo) {
         return jobItemRepository.findByIndexNo(indexNo);
+    }
+
+    public List<TJobItem> changeVehiclePriceCategory(Integer jobCard) {
+        return jobItemRepository.findByJobCardOrderByIndexNoDesc(jobCard);
     }
 }

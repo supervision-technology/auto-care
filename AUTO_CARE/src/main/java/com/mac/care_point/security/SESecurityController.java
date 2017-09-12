@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.security;
 
+import com.mac.care_point.zutil.SecurityUtil;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,4 +47,10 @@ public class SESecurityController {
 
         return result;
     }
+
+    @RequestMapping(value = "/user-current-branch", method = RequestMethod.GET)
+    public Integer getCurrentBranch() {
+        return SecurityUtil.getCurrentUser().getBranch();
+    }
+
 }

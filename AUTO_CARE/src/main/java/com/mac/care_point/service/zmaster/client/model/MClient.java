@@ -63,6 +63,9 @@ public class MClient implements Serializable {
     @Size(min = 1, max = 25)
     @Column(name = "nic")
     private String nic;
+    
+    @Column(name = "resident")
+    private String resident;
 
     @Column(name = "customer_type")
     private Integer customerType;
@@ -70,7 +73,7 @@ public class MClient implements Serializable {
     public MClient() {
     }
 
-    public MClient(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic, Integer customerType) {
+    public MClient(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic, String resident, Integer customerType) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -79,6 +82,7 @@ public class MClient implements Serializable {
         this.mobile = mobile;
         this.branch = branch;
         this.nic = nic;
+        this.resident = resident;
         this.customerType = customerType;
     }
 
@@ -153,5 +157,14 @@ public class MClient implements Serializable {
     public void setCustomerType(Integer customerType) {
         this.customerType = customerType;
     }
+
+    public String getResident() {
+        return resident;
+    }
+
+    public void setResident(String resident) {
+        this.resident = resident;
+    }
+    
 
 }

@@ -49,7 +49,7 @@ public class ItemService {
 
         MItem saveItem = itemRepository.save(item);
 
-        if ("STOCK".equals(saveItem.getType()) || "NON-STOCK".equals(saveItem.getType())) {
+        if ("STOCK".equals(saveItem.getType()) || "NON STOCK".equals(saveItem.getType())) {
 
             //set reorder qty
             if (null == number) {
@@ -76,7 +76,7 @@ public class ItemService {
             List<MItemUnits> findItemList = itemUnitRepository.findByItemAndItemUnitType(saveItem.getIndexNo(), "MAIN");
 
             if (findItemList.isEmpty()) {
-
+                
                 MItemUnits itemUnits = new MItemUnits();
                 itemUnits.setItem(saveItem.getIndexNo());
                 itemUnits.setItemUnitType("MAIN");
@@ -94,7 +94,6 @@ public class ItemService {
                 itemUnits.setSalePriceNormal(item.getSalePriceNormal());
                 itemUnits.setSalePriceRegister(item.getSalePriceRegister());
                 itemUnits.setCostPrice(item.getCostPrice());
-
                 itemUnitRepository.save(itemUnits);
 
             }
@@ -131,5 +130,9 @@ public class ItemService {
 
     public List<MItem> getSupplierItem(String stock, String nonStock) {
         return itemRepository.findByTypeOrType(stock, nonStock);
+    }
+
+    public List<MItem> findItemByItemType(String type) {
+        return itemRepository.findItemByType(type);
     }
 }
