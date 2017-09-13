@@ -39,6 +39,50 @@
                             });
                 };
 
+                factory.getBrandList = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/get-brand-list";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
+                factory.getModelList = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/get-model-list";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
+                factory.getFuelTypeList = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/get-fuel-type-list";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
+                factory.getNewVehicleList = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/get-new-vehicles";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
+
                 factory.lordVehicleType = function (callback) {
                     var url = systemConfig.apiUrl + "/api/care-point/master/vehicle-type";
                     $http.get(url)
@@ -87,7 +131,7 @@
 
     //controller
     angular.module("vehicleModule")
-            .controller("vehicleController", function ($scope, $log, vehicleFactory, Notification) {
+            .controller("vehicleController", function ($scope, $filter, $log, $timeout, $routeParams, vehicleFactory, Notification) {
 
                 $scope.model = {};
                 $scope.ui = {};
@@ -96,6 +140,11 @@
                 $scope.ui.mode = null;
                 $scope.model.vehicle = {};
                 $scope.model.vehicleList = [];
+
+                $scope.model.brandList = [];
+                $scope.model.modelList = [];
+                $scope.model.fuelTypeListList = [];
+                $scope.model.newVehicleList = [];
 
                 $scope.model.searchKeyword = null;
                 $scope.model.showSuggestions = false;
@@ -118,7 +167,15 @@
                 //----------validate funtion-------------
 
                 $scope.validateInput = function () {
-                    if ($scope.model.vehicle.client) {
+                    if ($scope.model.vehicle.client
+                            && $scope.model.vehicle.vehicleNo
+                            && $scope.model.vehicle.vehicleType
+                            && $scope.model.vehicle.priceCategory
+                            && $scope.model.vehicle.type
+                            && $scope.model.vehicle.brand
+                            && $scope.model.vehicle.fuelType
+                            && $scope.model.vehicle.lastMilage
+                            && $scope.model.vehicle.model) {
                         return true;
                     } else {
                         return false;
@@ -142,6 +199,10 @@
 
                 //save function 
                 $scope.http.saveVehicle = function () {
+                    $scope.model.vehicle.isNew = false;
+                    if (angular.isUndefined($scope.model.vehicle.date)) {
+                        $scope.model.vehicle.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                    }
                     var detail = $scope.model.vehicle;
                     var detailJSON = JSON.stringify(detail);
                     vehicleFactory.insertVehicle(
@@ -150,6 +211,7 @@
                                 $scope.model.vehicleList.push(data);
                                 Notification.success("Successfully Added");
                                 $scope.model.reset();
+                                $scope.ui.mode = 'IDEAL';
 
                             },
                             function (data) {
@@ -228,6 +290,11 @@
                     $scope.model.vehicle = vehicles;
                     $scope.model.vehicleList.splice(index, 1);
                 };
+                $scope.ui.editNewVehicle = function (vehicle, index) {
+                    $scope.ui.mode = "EDIT";
+                    $scope.model.vehicle = vehicle;
+                    $scope.model.newVehicleList.splice(index, 1);
+                };
                 $scope.model.loadAllVehicles = function () {
                     vehicleFactory.loadVehicle(function (data) {
                         $scope.model.vehicleList = data;
@@ -240,7 +307,6 @@
                 $scope.model.findByVehicleNumber = function () {
                     vehicleFactory.findByVehicleNumber($scope.model.searchKeyword, function (data) {
                         $scope.model.searchSuggestions = data;
-                        console.log(data);
                     }, function () {
                         $scope.mode.searchSuggestions = [];
                     });
@@ -250,12 +316,26 @@
                     $scope.ui.mode = "EDIT";
                     $scope.model.searchKeyword = null;
                 };
+                $scope.model.findVehicle = function (vehicle) {
+                    $scope.ui.mode = "NEW";
+                    for (var i = 0; i < $scope.model.newVehicleList.length; i++) {
+                        if ($scope.model.newVehicleList[i].indexNo === parseInt(vehicle)) {
+                            return $scope.model.newVehicleList[i];
+                        }
+                    }
+                };
                 $scope.ui.init = function () {
                     //set ideal mode
                     $scope.ui.mode = "IDEAL";
                     //rest model data
                     $scope.model.reset();
 
+                    vehicleFactory.getNewVehicleList(function (data) {
+                        $scope.model.newVehicleList = data;
+                    });
+                    vehicleFactory.loadVehicle(function (data) {
+                        $scope.model.vehicleList = data;
+                    });
                     vehicleFactory.lordClient(function (data) {
                         $scope.model.clientList = data;
                     });
@@ -264,6 +344,15 @@
                     });
                     vehicleFactory.lordPriceCategory(function (data) {
                         $scope.model.priceCategoryList = data;
+                    });
+                    vehicleFactory.getBrandList(function (data) {
+                        $scope.model.brandList = data;
+                    });
+                    vehicleFactory.getModelList(function (data) {
+                        $scope.model.modelList = data;
+                    });
+                    vehicleFactory.getFuelTypeList(function (data) {
+                        $scope.model.fuelTypeList = data;
                     });
 
                     $scope.$watch('model.searchKeyword', function (newV, oldV) {
@@ -281,16 +370,16 @@
                         }
                     });
 
-//                    $scope.model.loadAllVehicles();
-//                    vehicleFactory.loadVehicle(function (data) {
-//                        $scope.model.vehicleList = [];
-//                        angular.forEach(data, function (vehicle) {
-//                            vehicle.clientName = $scope.clientData(vehicle.client).name;
-//                            $scope.model.vehicleList.push(vehicle);
-//
-//                        });
-//                    });
+                    var vehicle = parseInt($routeParams.vehicle);
+                    if (vehicle) {
+                        $timeout(function () {
+                            $scope.model.vehicle = $scope.model.findVehicle(vehicle);
+                        }, 2000);
+                        console.log(vehicle);
 
+
+                    }
+                    ;
                 };
                 $scope.ui.init();
 

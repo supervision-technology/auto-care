@@ -2,99 +2,208 @@
 </div>
 
 <div class="index-content-body ">
-    <div class="col-xs-4 background-dark">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 104px);">
-            <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+    <uib-tabset>
+        <uib-tab index="0" heading="New Customer" select="ui.changeTab();">
+            <div class="col-xs-4 background-dark">
+                <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 92px);">
+                    <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+                        <table class="table-rounded control-table">
+                            <col style="width: 35%"/>
+                            <col style="width: 65%"/>
+                            <tbody>
+                                <tr>
+                                    <td><label>Resident:</label></td>
+                                    <td>
+                                        <select style="padding-left: 1px;" class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" ng-model="model.client.resident">
+                                            <option value="Mr">Mr</option>
+                                            <option value="Mrs">Mrs</option>
+                                            <option value="Miss">Miss</option>
+                                            <option value="Rev">Rev</option>
+                                            <option value="Dr">Dr</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Name :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Mobile :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Customer Type :</label></td>
+                                    <td>
+                                        <input class="form-control" ng-model="model.client.customerType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="customerType.indexNo as (customerType.indexNo+ ' - ' +customerType.name) for customerType in model.customerTypeList |filter:$viewValue |limitTo:10" typeahead-input-formatter="ui.customerTypeLable(model.client.customerType);">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>NIC:</label></td>
+                                    <td><input class="form-control" ng-model="model.client.nic" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Address 01 :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.addressLine1" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Address 02 :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.addressLine2" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Address 03 :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8 background-dark" style="height:calc(100vh - 96px)">
                 <table class="table-rounded control-table">
-                    <col style="width: 35%"/>
-                    <col style="width: 65%"/>
+                    <colgroup>
+                        <col style="width: 100%">
+                    </colgroup>
                     <tbody>
-                        <tr>
-                            <td><label>Name :</label></td>
-                            <td><input class="form-control" ng-model="model.client.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
-                        </tr>
-                        <tr>
-                            <td><label>Mobile :</label></td>
-                            <td><input class="form-control" ng-model="model.client.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
-                        </tr>
-                        <tr>
-                            <td><label>Customer Type :</label></td>
+                        <tr class="select-primary-row-table-header">
                             <td>
-                                <input class="form-control" ng-model="model.client.customerType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="customerType.indexNo as (customerType.indexNo+ ' - ' +customerType.name) for customerType in model.customerTypeList |filter:$viewValue |limitTo:10" typeahead-input-formatter="ui.customerTypeLable(model.client.customerType);">
+                                <label class="control-label">NEW CUSTOMER</label>
+                                <label class="control-label pull-right">No of New Customers : {{model.newClientList.length}}</label>
+
                             </td>
-                        </tr>
-                        <tr>
-                            <td><label>NIC:</label></td>
-                            <td><input class="form-control" ng-model="model.client.nic" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
-                        </tr>
-                        <tr>
-                            <td><label>Address 01 :</label></td>
-                            <td><input class="form-control" ng-model="model.client.addressLine1" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
-                        </tr>
-                        <tr>
-                            <td><label>Address 02 :</label></td>
-                            <td><input class="form-control" ng-model="model.client.addressLine2" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
-                        </tr>
-                        <tr>
-                            <td><label>Address 03 :</label></td>
-                            <td><input class="form-control" ng-model="model.client.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-    <div class="col-xs-8 background-light">
-        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 62px);">
-            <div class="col-xs-12">
-                <div class="row col-xs-5">
-                    <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
-                </div>
-                <table class="table-rounded">
-                    <col style="width: 15%">
-                    <col style="width: 20%">
-                    <col style="width: 20%">
-                    <col style="width: 15%">
-                    <col style="width: 20%">
-                    <col style="width: 10%">
-                    <thead class="background-dark">
-                        <tr>
-                            <th> <label>#</label> </th>
-                            <th> <label>Name</label></th>
-                            <th> <label>Mobile</label></th>
-                            <th> <label>Nic</label></th>
-                            <th> <label>Customer Type</label></th>
-                            <th>&nbsp;</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div class="smart-scroll-y" style="height: calc(100vh - 180px);">
-                    <table class="table-rounded">
-                        <col style="width: 15%">
-                        <col style="width: 20%">
-                        <col style="width: 20%">
-                        <col style="width: 15%">
-                        <col style="width: 20%">
-                        <col style="width: 10%">
-                        <tbody>
-                            <tr ng-repeat="client in model.clientList| filter:model.search.name | orderBy:'indexNo'">
-                                <td><label class="label label-default">{{client.indexNo|fixedLength:5}}</label></td>
-                                <td>{{client.name}}</td>
-                                <td>{{client.mobile}}</td>
-                                <td>{{client.nic==null?'- - -':client.nic}}</td>
-                                <td><label class="label label-primary">{{ui.customerTypeLable(client.customerType)}}</label></td>
+                <div class="smart-scroll-y" style="height: calc(100vh - 140px)" ng-show="model.newClientList.length">
+                    <div ng-repeat="client in model.newClientList" >
+                        <!--<div class="tile-lists">-->
+                        <div class="tiles tile-60 col-xs-3" ng-class="{'disabled-tiles': ui.mode !== 'NEW'}" style="background: #28dbbe;" ng-click="ui.editNewClient(client,$index);" >
+                            <div style="margin-top: 5px; color: #000;font-weight: bold;">                   
+                                <div class="col-xs-12 nopadding text-center" style="height: 20px;overflow: hidden">
+                                    {{client.name}}
+                                </div>
+                                <div class="col-xs-12 nopadding text-center" style="height: 20px;overflow: hidden">
+                                    {{client.mobile}}
+                                </div>
+                            </div>
+                        </div>
 
-                                <td class="text-right" style="padding-left: 5px;">
-                                    <a class="btn btn-primary" ng-click="ui.edit(client, $index)"><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a class="btn btn-danger" ng-click="http.deleteClient(client.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <!--</div>-->
+                    </div>
+                </div>
+                <div class="placeholder col-md-12" ng-show="!model.newClientList.length" style="height: calc(100vh - 140px); padding: 0px 10px 0px 10px;">
+                    <h1>EMPTY NEW CUSTOMER TO VIEW :(</h1>
                 </div>
             </div>
-        </div>
-    </div>
+        </uib-tab>
+        <uib-tab index="1" heading="Change Customer" select="ui.changeTab();">
+            <div class="col-xs-4 background-dark">
+                <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 92px);">
+                    <div class="col-xs-12" style="flex: 0 0 auto; height: 95px; padding-right: 22px;">
+                        <table class="table-rounded control-table">
+                            <col style="width: 35%"/>
+                            <col style="width: 65%"/>
+                            <tbody>
+                                <tr>
+                                    <td><label>Resident:</label></td>
+                                    <td>
+                                        <select style="padding-left: 1px;" class="form-control" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" ng-model="model.client.resident">
+                                            <option value="Mr">Mr</option>
+                                            <option value="Mrs">Mrs</option>
+                                            <option value="Miss">Miss</option>
+                                            <option value="Rev">Rev</option>
+                                            <option value="Dr">Dr</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Name :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Mobile :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Customer Type :</label></td>
+                                    <td>
+                                        <input class="form-control" ng-model="model.client.customerType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="customerType.indexNo as (customerType.indexNo+ ' - ' +customerType.name) for customerType in model.customerTypeList |filter:$viewValue |limitTo:10" typeahead-input-formatter="ui.customerTypeLable(model.client.customerType);">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><label>NIC:</label></td>
+                                    <td><input class="form-control" ng-model="model.client.nic" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                                </tr>
+                                <tr>
+                                    <td><label>Address 01 :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.addressLine1" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Address 02 :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.addressLine2" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Address 03 :</label></td>
+                                    <td><input class="form-control" ng-model="model.client.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-8 background-light">
+                <div class="row" style="display: flex; flex-flow: column;">
+                    <div class="col-xs-12">
+                        <div class="row col-xs-5">
+                            <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
+                        </div>
+                        <table class="table-rounded">
+                            <col style="width: 15%">
+                            <col style="width: 20%">
+                            <col style="width: 20%">
+                            <col style="width: 15%">
+                            <col style="width: 20%">
+                            <col style="width: 10%">
+                            <thead class="background-dark">
+                                <tr>
+                                    <th> <label>#</label> </th>
+                                    <th> <label>Name</label></th>
+                                    <th> <label>Mobile</label></th>
+                                    <th> <label>Nic</label></th>
+                                    <th> <label>Customer Type</label></th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <div class="smart-scroll-y" style="height: calc(100vh - 275px);">
+                            <table class="table-rounded">
+                                <col style="width: 15%">
+                                <col style="width: 20%">
+                                <col style="width: 20%">
+                                <col style="width: 15%">
+                                <col style="width: 20%">
+                                <col style="width: 10%">
+                                <tbody>
+                                    <tr ng-repeat="client in model.clientList| filter:model.search.name | orderBy:'indexNo'">
+                                        <td><label class="label label-default">{{client.indexNo|fixedLength:5}}</label></td>
+                                        <td>{{client.name}}</td>
+                                        <td>{{client.mobile}}</td>
+                                        <td>{{client.nic==null?'- - -':client.nic}}</td>
+                                        <td><label class="label label-primary">{{ui.customerTypeLable(client.customerType)}}</label></td>
+
+                                        <td class="text-right" style="padding-left: 5px;">
+                                            <a class="btn btn-primary" ng-click="ui.edit(client, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                                            <a class="btn btn-danger" ng-click="http.deleteClient(client.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+
+    </uib-tabset>
 </div>
 <!--<div>
     <ul ng-if="vm.pager.pages.length" class="pagination">

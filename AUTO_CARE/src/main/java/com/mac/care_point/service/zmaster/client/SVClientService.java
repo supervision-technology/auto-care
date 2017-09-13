@@ -44,6 +44,8 @@ public class SVClientService {
             clientDTO.setMobile(client.getMobile());
             clientDTO.setResident(client.getResident());
             clientDTO.setCustomerType(client.getCustomerType());
+            clientDTO.setIsNew(client.isIsNew());
+            clientDTO.setDate(client.getDate());
             clientDTO.setVehicles(getAllVehiclesByClient(clientDTO.getIndexNo()));
             clientVehicleList.add(clientDTO);
         }

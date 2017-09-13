@@ -87,7 +87,7 @@
                 //------------------ validation functions ------------------------------
 
                 $scope.validateInput = function () {
-                    if ($scope.model.vehicleType.make && $scope.model.vehicleType.priceCategory && $scope.model.vehicleType.model && $scope.model.vehicleType.version && $scope.model.vehicleType.type && $scope.model.vehicleType.fuelType) {
+                    if ($scope.model.vehicleType.model) {
                         return true;
                     } else {
                         return false;
@@ -134,7 +134,7 @@
                 //focus
                 $scope.ui.focus = function () {
                     $timeout(function () {
-                        document.querySelectorAll("#MakeText")[0].focus();
+                        document.querySelectorAll("#model")[0].focus();
                     }, 10);
                 };
 

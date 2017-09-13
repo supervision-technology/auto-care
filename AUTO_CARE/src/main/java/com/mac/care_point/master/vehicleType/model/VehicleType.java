@@ -39,51 +39,21 @@ public class VehicleType implements Serializable {
     @Column(name = "index_no")
     private Integer indexNo;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "make")
-    private String make;
-
+   
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "model")
     private String model;
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "version")
-    private String version;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Column(name = "fuel_type")
-    private String fuelType;
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 25)
-    @Column(name = "type")
-    private String type;
-
-    @NotNull
-    @Column(name = "price_category")
-    private Integer priceCategory;
+    
 
     public VehicleType() {
     }
 
-    public VehicleType(Integer indexNo, String make, String model, String version, String fuelType, String type, Integer priceCategory) {
+    public VehicleType(Integer indexNo, String model) {
         this.indexNo = indexNo;
-        this.make = make;
         this.model = model;
-        this.version = version;
-        this.fuelType = fuelType;
-        this.type = type;
-        this.priceCategory = priceCategory;
     }
 
     public Integer getIndexNo() {
@@ -94,14 +64,6 @@ public class VehicleType implements Serializable {
         this.indexNo = indexNo;
     }
 
-    public String getMake() {
-        return make;
-    }
-
-    public void setMake(String make) {
-        this.make = make;
-    }
-
     public String getModel() {
         return model;
     }
@@ -110,37 +72,6 @@ public class VehicleType implements Serializable {
         this.model = model;
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getFuelType() {
-        return fuelType;
-    }
-
-    public void setFuelType(String fuelType) {
-        this.fuelType = fuelType;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Integer getPriceCategory() {
-        return priceCategory;
-    }
-    
-    public void setPriceCategory(Integer priceCategory) {
-        this.priceCategory = priceCategory;
-    }
-
+   
     
 }

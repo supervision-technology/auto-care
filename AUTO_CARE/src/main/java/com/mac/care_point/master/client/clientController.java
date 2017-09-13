@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/care-point/master/client")
 public class clientController {
-     
+
     @Autowired
     private ClientService clientService;
 
@@ -43,5 +43,10 @@ public class clientController {
     public Integer deleteDetail(@PathVariable Integer indexNo) {
         clientService.deleteDetail(indexNo);
         return indexNo;
+    }
+
+    @RequestMapping(value = "/get-new-client-list", method = RequestMethod.GET)
+    public List<Client> getNewClientList() {
+        return clientService.getNewClientList();
     }
 }

@@ -278,7 +278,6 @@
                         Notification.error("Please input vehicle no");
                     } else {
                         if ($scope.model.vehicle($scope.model.searchKeyword)) {
-                            console.log("1");
                             $scope.model.searchPendingJobCard($scope.model.searchKeyword)
                                     .then(function (data) {
                                         if (data.length === 0) {

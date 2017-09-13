@@ -5,6 +5,8 @@
  */
 package com.mac.care_point.service.zmaster.client.model;
 
+import java.util.Date;
+
 /**
  *
  * @author Kalum
@@ -21,11 +23,13 @@ public class MClientDTO {
     private String resident;
     private Integer customerType;
     private String vehicles;
+    private boolean isNew;
+    private Date date;
 
     public MClientDTO() {
     }
 
-    public MClientDTO(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic, String resident, Integer customerType, String vehicles) {
+    public MClientDTO(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic, String resident, Integer customerType, String vehicles, boolean isNew, Date date) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -37,8 +41,10 @@ public class MClientDTO {
         this.resident = resident;
         this.customerType = customerType;
         this.vehicles = vehicles;
+        this.isNew = isNew;
+        this.date = date;
     }
-    
+
     public Integer getIndexNo() {
         return indexNo;
     }
@@ -126,5 +132,22 @@ public class MClientDTO {
     public void setVehicles(String vehicles) {
         this.vehicles = vehicles;
     }
+
+    public boolean isIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
     
 }

@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .factory("invoiceModel", function (invoiceService, invoiceFactory, $filter, $q) {
+            .factory("invoiceModel", function (invoiceService, invoiceFactory, $filter, $q, Notification) {
                 function invoiceModel() {
                     this.constructor();
                 }
@@ -22,6 +22,9 @@
                     paymentInfomationData: {},
                     paymentInformationList: [],
                     invoicePaymentData: {},
+
+                    vehicleIsNew: false,
+                    clientIsNew: false,
                     //master data lists
 
                     constructor: function () {
@@ -97,6 +100,34 @@
                             }
                         });
                         return data;
+                    },
+                    getClientIsNew: function (indexNo) {
+                        var that = this;
+                        that.clientIsNew = false;
+                        angular.forEach(this.clientList, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                if (values.isNew) {
+                                    console.log(indexNo);
+                                    that.clientIsNew = true;
+                                    return;
+
+                                }
+                            }
+                        });
+                    },
+                    getVehicleIsNew: function (indexNo) {
+                        var that = this;
+                        that.vehicleIsNew = false;
+                        angular.forEach(this.vehicleList, function (values) {
+                            if (values.indexNo === parseInt(indexNo)) {
+                                if (values.isNew) {
+                                    console.log(indexNo);
+                                    that.vehicleIsNew = true;
+                                    return;
+
+                                }
+                            }
+                        });
                     },
                     bankLable: function (indexNo) {
                         var data = "";
@@ -253,8 +284,7 @@
                         this.paymentData.overPaymentAmount = this.paymentData.overSettlementAmount;
                         this.invoicePaymentData.payment = this.paymentData;
                         this.invoicePaymentData.paymentInformationsList = this.paymentInformationList;
-                        console.log(this.invoicePaymentData);
-                        
+
                         invoiceService.saveInvoice(JSON.stringify(this.invoicePaymentData))
                                 .success(function (data) {
                                     that.relordPendingJobCard();

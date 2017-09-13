@@ -6,6 +6,7 @@
 package com.mac.care_point.master.client.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 /**
@@ -69,11 +72,18 @@ public class Client implements Serializable {
 
     @Column(name = "customer_type")
     private Integer customerType;
+    
+    @Column(name = "is_new")
+    private boolean isNew;
+    
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     public Client() {
     }
 
-    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic, String resident, Integer customerType) {
+    public Client(Integer indexNo, String name, String addressLine1, String addressLine2, String addressLine3, String mobile, int branch, String nic, String resident, Integer customerType, boolean isNew, Date date) {
         this.indexNo = indexNo;
         this.name = name;
         this.addressLine1 = addressLine1;
@@ -84,6 +94,8 @@ public class Client implements Serializable {
         this.nic = nic;
         this.resident = resident;
         this.customerType = customerType;
+        this.isNew = isNew;
+        this.date = date;
     }
 
     public Integer getIndexNo() {
@@ -150,6 +162,14 @@ public class Client implements Serializable {
         this.nic = nic;
     }
 
+    public String getResident() {
+        return resident;
+    }
+
+    public void setResident(String resident) {
+        this.resident = resident;
+    }
+
     public Integer getCustomerType() {
         return customerType;
     }
@@ -158,12 +178,21 @@ public class Client implements Serializable {
         this.customerType = customerType;
     }
 
-    public String getResident() {
-        return resident;
+    public boolean isIsNew() {
+        return isNew;
     }
 
-    public void setResident(String resident) {
-        this.resident = resident;
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
     }
-    
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+   
 }

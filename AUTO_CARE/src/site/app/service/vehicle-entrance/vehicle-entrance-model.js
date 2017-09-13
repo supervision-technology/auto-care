@@ -163,6 +163,13 @@
                 var that = this;
                 this.vehicleData.client = that.clientData.indexNo;
                 this.vehicleData.type = "NORMAL";
+
+                if (angular.isUndefined(this.vehicleData.isNew)) {
+                    this.vehicleData.isNew = 1;
+                }
+                if (angular.isUndefined(this.vehicleData.date)) {
+                    this.vehicleData.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                }
                 var defer = $q.defer();
                 vehicleEntranceService.updateVehicle(JSON.stringify(that.vehicleData))
                         .success(function (data) {
@@ -179,7 +186,12 @@
                 var that = this;
                 var defer = $q.defer();
                 that.clientData.type = "NEW";
-                that.clientData.customerType = 2;
+                if (!that.clientData.customerType) {
+                    that.clientData.customerType = 2;
+                }
+                that.clientData.date = $filter('date')(new Date(), 'yyyy-MM-dd');
+                that.clientData.isNew = true;
+                
                 vehicleEntranceService.newClient(JSON.stringify(that.clientData))
                         .success(function (data) {
                             that.clientData = data;
@@ -309,14 +321,14 @@
                         });
                 return defer.promise;
             },
-            getVehicleHistory: function (vehicleNo){
+            getVehicleHistory: function (vehicleNo) {
                 var that = this;
                 vehicleEntranceService.getVehicleHistory(vehicleNo)
-                .success(function (data) {
-                           that.jobCardHistryList = data;
+                        .success(function (data) {
+                            that.jobCardHistryList = data;
                         })
                         .error(function () {
-                           
+
                         });
             }
         };

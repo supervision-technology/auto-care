@@ -35,3 +35,14 @@
     padding: 0 !important;
     margin: 0 !important;
 }
+
+.animate-text {
+    font-size: 15px;
+    transition: 0.6s;
+    margin-top: 15px;
+    cursor: pointer
+}
+.animate-text:hover {
+    text-shadow: 0 0 1px black;
+    transition: 0.6s;
+}

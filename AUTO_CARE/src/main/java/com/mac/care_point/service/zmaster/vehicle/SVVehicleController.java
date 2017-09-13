@@ -47,4 +47,24 @@ public class SVVehicleController {
     public String getAllVehiclesByClient(@PathVariable Integer client){
         return vehicleService.getAllVehiclesByClient(client);
     }
+    
+    @RequestMapping(value = "/get-brand-list", method = RequestMethod.GET) 
+    public List<String> getBrandList(){
+        return vehicleService.getBrandList();
+    }
+    
+    @RequestMapping(value = "/get-model-list", method = RequestMethod.GET) 
+    public List<String> getModelList(){
+        return vehicleService.getModelList();
+    }
+    
+    @RequestMapping(value = "/get-fuel-type-list", method = RequestMethod.GET) 
+    public List<String> getFuelTypeList(){
+        return vehicleService.getFuelTypeList();
+    }
+   
+    @RequestMapping(value = "/get-new-vehicles", method = RequestMethod.GET) 
+    public List<MVehicle> findByIsNewVehicle(){
+        return vehicleService.findByIsNewVehicle();
+    }
 }

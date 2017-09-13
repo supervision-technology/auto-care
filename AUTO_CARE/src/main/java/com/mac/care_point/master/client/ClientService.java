@@ -55,5 +55,8 @@ public class ClientService {
             throw new RuntimeException("Cannot delete this client because there are details in other transaction");
         }
     }
+    public List<Client> getNewClientList(){
+       return clientRepository.findByIsNewOrderByName(true);
+    }
 
 }

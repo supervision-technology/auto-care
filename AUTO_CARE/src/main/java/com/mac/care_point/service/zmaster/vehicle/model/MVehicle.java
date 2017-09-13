@@ -27,6 +27,7 @@ import javax.validation.constraints.Size;
 @Table(name = "m_vehicle")
 public class MVehicle implements Serializable {
 
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -79,14 +80,29 @@ public class MVehicle implements Serializable {
     @Column(name = "price_category")
     private Integer priceCategory;
 
-
     @Column(name = "type")
     private String type;
+   
+    @Column(name = "brand")
+    private String brand;
+    
+    @Column(name = "model")
+    private String model;
+    
+    @Column(name = "fuel_type")
+    private String fuelType;
+    
+    @Column(name = "is_new")
+    private boolean isNew;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
 
     public MVehicle() {
     }
 
-    public MVehicle(Integer indexNo, String vehicleNo, Integer year, String engineNo, String chasisNo, Date insuranceExpiryDate, Date revenueExpiryDate, int lastMilage, Integer nextMilage, String colour, Integer client, Integer vehicleType, Integer priceCategory, String type) {
+    public MVehicle(Integer indexNo, String vehicleNo, Integer year, String engineNo, String chasisNo, Date insuranceExpiryDate, Date revenueExpiryDate, int lastMilage, Integer nextMilage, String colour, Integer client, Integer vehicleType, Integer priceCategory, String type, String brand, String model, String fuelType, boolean isNew, Date date) {
         this.indexNo = indexNo;
         this.vehicleNo = vehicleNo;
         this.year = year;
@@ -101,6 +117,11 @@ public class MVehicle implements Serializable {
         this.vehicleType = vehicleType;
         this.priceCategory = priceCategory;
         this.type = type;
+        this.brand = brand;
+        this.model = model;
+        this.fuelType = fuelType;
+        this.isNew = isNew;
+        this.date = date;
     }
 
     public Integer getIndexNo() {
@@ -214,5 +235,48 @@ public class MVehicle implements Serializable {
     public void setType(String type) {
         this.type = type;
     }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public boolean isIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    
+
 
 }

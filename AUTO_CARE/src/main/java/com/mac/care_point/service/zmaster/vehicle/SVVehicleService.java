@@ -39,8 +39,23 @@ public class SVVehicleService {
         return vehicleRepository.findVehicleByVehicleNo(vehicleNo);
     }
 
-    public String getAllVehiclesByClient(Integer client){
+    public String getAllVehiclesByClient(Integer client) {
         return vehicleRepository.getAllVehiclesByClient(client);
     }
 
+    public List<String> getBrandList() {
+        return vehicleRepository.getBrandList();
+    }
+
+    public List<String> getModelList() {
+        return vehicleRepository.getModelList();
+    }
+
+    public List<String> getFuelTypeList() {
+        return vehicleRepository.getFuelTypeList();
+    }
+   
+    public List<MVehicle> findByIsNewVehicle() {
+        return vehicleRepository.findByIsNewOrderByVehicleNo(true);
+    }
 }

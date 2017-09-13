@@ -17,7 +17,10 @@
                         "client": null,
                         "vehicleType": null,
                         "priceCategory": null,
-                        "type": null
+                        "type": null,
+                        "model": null,
+                        "brand": null,
+                        "fuelType": null
                     };
                     return data;
                 };

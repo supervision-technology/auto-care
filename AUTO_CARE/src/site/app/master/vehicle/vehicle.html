@@ -1,10 +1,8 @@
-
-
 <div class="index-content-header">
 </div>
 
 <div class="index-content-body">
-    <div class="col-xs-4 background-light">
+    <div class="col-xs-3 background-light" style="height:calc(100vh - 52px )">
         <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
             <div class="col-xs-12" style="margin-top: 10px;">
                 <div class="input-group input-group-md">
@@ -30,7 +28,7 @@
                 <input id="clientText" type="text" class="form-control" ng-model="model.vehicle.client" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="client.indexNo as (client.indexNo + ' - ' + client.name) for client in model.clientList |filter:$viewValue|limitTo:10" typeahead-input-formatter="clientLable($model)" />
                 <label>Vehicle No</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.vehicleNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
-                <label>Vehicle Type</label>
+                <label>Vehicle Type (Ex:CAR,VAN,JEEP)</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.vehicleType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="vehicleType.indexNo as (vehicleType.indexNo + ' - ' +vehicleType.model) for vehicleType in model.vehicleTypeList |filter:$viewValue|limitTo:10" typeahead-input-formatter="vehicleTypeLabel($model)"/>
                 <label>Price Category</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.priceCategory" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" uib-typeahead="priceCategory.indexNo as (priceCategory.indexNo + ' - ' + priceCategory.name) for priceCategory in model.priceCategoryList | filter:$viewValue|limitTo:10" typeahead-input-formatter = "priceCategoryLabel($model)"/>        
@@ -41,11 +39,17 @@
                 </select>
                 <label>Year</label>
                 <input type="text" class="form-control" ng-model="model.vehicle.year" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+                <label>Vehicle Brand (Ex:TOYOTA,SUZIKI)</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.brand" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" 
+                       uib-typeahead="brand as brand for brand in model.brandList | filter:$viewValue|limitTo:10" />
+                <label>Fuel Type (Ex:PETROL,DIESEL)</label>
+                <input type="text" class="form-control" ng-model="model.vehicle.fuelType" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"
+                       uib-typeahead="fuelType as fuelType for fuelType in model.fuelTypeList | filter:$viewValue|limitTo:10" />
             </div>
         </div>
     </div>
 
-    <div class="col-xs-4 background-light">
+    <div class="col-xs-3 background-light" style="height:calc(100vh - 52px )">
         <div class="col-xs-12" style="margin-top: 10px;">
             <label>Engine No</label>
             <input type="text" class="form-control" ng-model="model.vehicle.engineNo" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
@@ -59,8 +63,44 @@
             <input type="text" class="form-control" ng-model="model.vehicle.lastMilage" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
             <label>Next Milage</label>
             <input type="text" class="form-control" ng-model="model.vehicle.nextMilage" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
-            <label>Color</label>
+            <label>Color(Ex:#FFFFFF,#337ab7)</label>
             <input type="text" class="form-control" ng-model="model.vehicle.colour" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+            <label>Model (Ex:SHIFT,COROLLA,VEZEL)</label>
+            <input type="text" class="form-control" ng-model="model.vehicle.model" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" 
+                   uib-typeahead="model as model for model in model.modelList | filter:$viewValue|limitTo:10"/>
+        </div>
+    </div>
+    <div class="col-xs-6 background-dark" style="height:calc(100vh - 52px)">
+        <table class="table-rounded control-table">
+            <colgroup>
+                <col style="width: 100%">
+            </colgroup>
+            <tbody>
+                <tr class="select-primary-row-table-header">
+                    <td>
+                        <label class="control-label">NEW VEHICLE</label>
+                        <label class="control-label pull-right">No of New Vehicles : {{model.newVehicleList.length}}</label>
+                    
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 100px)" ng-show="model.newVehicleList.length">
+            <div ng-repeat="vehicle in model.newVehicleList" >
+                <!--<div class="tile-lists">-->
+                <div class="tiles tile-60 col-xs-3" ng-class="{'disabled-tiles': ui.mode !== 'NEW'}" style="background: #28dbbe;" ng-click="ui.editNewVehicle(vehicle,$index);" >
+                    <div style="margin-top: 12px; color: #000;font-weight: bold;">                   
+                        <div class="col-xs-12" style="font-size: 15px;">
+                            {{vehicle.vehicleNo}}
+                        </div>
+                    </div>
+                </div>
+
+                <!--</div>-->
+            </div>
+        </div>
+        <div class="placeholder col-md-12" ng-show="!model.newVehicleList.length" style="height: calc(100vh - 100px); padding: 0px 10px 0px 10px;">
+            <h1>EMPTY NEW VEHICLE TO VIEW :(</h1>
         </div>
     </div>
 </div>

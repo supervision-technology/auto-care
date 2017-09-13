@@ -5,7 +5,6 @@
  */
 package com.mac.care_point.master.vehicle.model;
 
-
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -44,7 +43,7 @@ public class Vehicle implements Serializable {
     @Size(max = 50)
     @Column(name = "engine_no")
     private String engineNo;
-    
+
     @Size(max = 50)
     @Column(name = "chasis_no")
     private String chasisNo;
@@ -75,7 +74,7 @@ public class Vehicle implements Serializable {
 
     @Column(name = "vehicle_type")
     private Integer vehicleType;
-    
+
     @NotNull
     @Column(name = "price_category")
     private Integer priceCategory;
@@ -83,10 +82,26 @@ public class Vehicle implements Serializable {
     @Column(name = "type")
     private String type;
 
+    @Column(name = "brand")
+    private String brand;
+
+    @Column(name = "model")
+    private String model;
+
+    @Column(name = "fuel_type")
+    private String fuelType;
+
+    @Column(name = "is_new")
+    private boolean isNew;
+
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
     public Vehicle() {
     }
 
-    public Vehicle(Integer indexNo, String vehicleNo, Integer year, String engineNo, String chasisNo, Date insuranceExpiryDate, Date revenueExpiryDate, int lastMilage, Integer nextMilage, String colour, Integer client, Integer vehicleType, Integer priceCategory, String type) {
+    public Vehicle(Integer indexNo, String vehicleNo, Integer year, String engineNo, String chasisNo, Date insuranceExpiryDate, Date revenueExpiryDate, int lastMilage, Integer nextMilage, String colour, Integer client, Integer vehicleType, Integer priceCategory, String type, String brand, String model, String fuelType, boolean isNew, Date date) {
         this.indexNo = indexNo;
         this.vehicleNo = vehicleNo;
         this.year = year;
@@ -101,6 +116,11 @@ public class Vehicle implements Serializable {
         this.vehicleType = vehicleType;
         this.priceCategory = priceCategory;
         this.type = type;
+        this.brand = brand;
+        this.model = model;
+        this.fuelType = fuelType;
+        this.isNew = isNew;
+        this.date = date;
     }
 
     public Integer getIndexNo() {
@@ -213,6 +233,46 @@ public class Vehicle implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
+    }
+
+    public boolean isIsNew() {
+        return isNew;
+    }
+
+    public void setIsNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
 }

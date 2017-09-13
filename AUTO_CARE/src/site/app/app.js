@@ -232,7 +232,15 @@
                             templateUrl: "app/master/client/client.html",
                             controller: "clientController"
                         })
+                        .when("/master/client/:client", {
+                            templateUrl: "app/master/client/client.html",
+                            controller: "clientController"
+                        })
                         .when("/master/vehicle", {
+                            templateUrl: "app/master/vehicle/vehicle.html",
+                            controller: "vehicleController"
+                        })
+                        .when("/master/vehicle/:vehicle", {
                             templateUrl: "app/master/vehicle/vehicle.html",
                             controller: "vehicleController"
                         })

@@ -1,7 +1,7 @@
 (function () {
     angular.module("invoiceModule", ['ui.bootstrap']);
     angular.module("invoiceModule")
-            .controller("invoiceController", function ($scope, $sce, invoiceService, $uibModal, $filter, optionPane, invoiceModel, Notification, ConfirmPane) {
+            .controller("invoiceController", function ($scope, $sce, invoiceService, systemConfig, $window, $uibModal, $filter, optionPane, invoiceModel, Notification, ConfirmPane) {
 
                 $scope.invoiceModel = new invoiceModel();
                 $scope.model = {};
@@ -20,8 +20,12 @@
 
                 //variables pass data to methods
                 $scope.selectedJobCardIndexNo = null;
+                $scope.selectedCustomer = null;
+                $scope.selectedVehicle = null;
                 $scope.selectJobCardServiceChagers = null;
                 $scope.employeeResponsibiltySelect = true;
+                $scope.clientLableView = false;
+                $scope.vehicleLableView = false;
 
                 $scope.ui.selectedJobCardRow = function (jobCard) {
 
@@ -36,6 +40,13 @@
                     $scope.invoiceModel.getClientBalance(jobCard.client);
 
                     $scope.selectJobCardServiceChagers = jobCard.serviceChagers;
+
+                    $scope.selectedCustomer = jobCard.client;
+                    $scope.selectedVehicle = jobCard.vehicle;
+
+                    $scope.invoiceModel.getClientIsNew(jobCard.client);
+                    $scope.invoiceModel.getVehicleIsNew(jobCard.vehicle);
+
                 };
 
                 $scope.ui.clear = function () {
@@ -54,6 +65,14 @@
                                     $scope.ui.mode = 'SELECT';
                                 });
                     }
+                };
+                $scope.ui.registerNewCustomerDetail = function () {
+                    console.log('location');
+                    $window.location.href = systemConfig.apiUrl + "#/master/client/" + $scope.selectedCustomer;
+                };
+                $scope.ui.registerNewVehicleDetail = function () {
+                    console.log('location 2');
+                    $window.location.href = systemConfig.apiUrl + "#/master/vehicle/" + $scope.selectedVehicle;
                 };
 
                 $scope.ui.getRepEmployeeData = function (indexNo) {
@@ -149,39 +168,46 @@
 
                 $scope.ui.saveInvoice = function () {
                     if ($scope.selectedJobCardIndexNo) {
-                        if ($scope.invoiceModel.paymentData.chequeAmount > 0 || $scope.invoiceModel.paymentData.balance > 0) {
-                            if (!$scope.invoiceModel.paymentData.respEmployee) {
-                                optionPane.dangerMessage("plase select reponsibilty employee");
-                                $scope.employeeResponsibiltySelect = false;
-                            } else {
-                                ConfirmPane.successConfirm("Do you want to save invoice")
-                                        .confirm(function () {
-                                            $scope.invoiceModel.saveInvoice()
-                                                    .then(function (data) {
-                                                        $scope.ui.mode = "IDEAL";
-                                                        $scope.ui.clear();
-                                                        ConfirmPane.successConfirm("Do You Want To Print Invoice")
-                                                                .confirm(function () {
-                                                                    console.log(data);
-                                                                    $scope.ui.modalOpen(data.indexNo);
-                                                                });
-                                                    });
-                                        });
-                            }
-                        } else {
-                            ConfirmPane.successConfirm("Do you want to save invoice")
-                                    .confirm(function () {
-                                        $scope.invoiceModel.saveInvoice()
-                                                .then(function (data) {
-                                                    $scope.ui.mode = "IDEAL";
-                                                    $scope.ui.clear();
-                                                    ConfirmPane.successConfirm("Do You Want To Print Invoice")
-                                                            .confirm(function () {
-                                                                console.log(data);
-                                                                $scope.ui.modalOpen(data.indexNo);
+                        if (!$scope.invoiceModel.vehicleIsNew) {
+                            if (!$scope.invoiceModel.clientIsNew) {
+                                if ($scope.invoiceModel.paymentData.chequeAmount > 0 || $scope.invoiceModel.paymentData.balance > 0) {
+                                    if (!$scope.invoiceModel.paymentData.respEmployee) {
+                                        optionPane.dangerMessage("plase select reponsibilty employee");
+                                        $scope.employeeResponsibiltySelect = false;
+                                    } else {
+                                        ConfirmPane.successConfirm("Do you want to save invoice")
+                                                .confirm(function () {
+                                                    $scope.invoiceModel.saveInvoice()
+                                                            .then(function (data) {
+                                                                $scope.ui.mode = "IDEAL";
+                                                                $scope.ui.clear();
+                                                                ConfirmPane.successConfirm("Do You Want To Print Invoice")
+                                                                        .confirm(function () {
+                                                                            $scope.ui.modalOpen(data.indexNo);
+                                                                        });
                                                             });
                                                 });
-                                    });
+                                    }
+                                } else {
+                                    ConfirmPane.successConfirm("Do you want to save invoice")
+                                            .confirm(function () {
+                                                $scope.invoiceModel.saveInvoice()
+                                                        .then(function (data) {
+                                                            $scope.ui.mode = "IDEAL";
+                                                            $scope.ui.clear();
+                                                            ConfirmPane.successConfirm("Do You Want To Print Invoice")
+                                                                    .confirm(function () {
+                                                                        console.log(data);
+                                                                        $scope.ui.modalOpen(data.indexNo);
+                                                                    });
+                                                        });
+                                            });
+                                }
+                            } else {
+                                Notification.error('Register New Customer Details to Save Invoice !');
+                            }
+                        } else {
+                            Notification.error('Register New Vehicle Details to Save Invoice !');
                         }
                     } else {
                         Notification.error("select vehicle");
