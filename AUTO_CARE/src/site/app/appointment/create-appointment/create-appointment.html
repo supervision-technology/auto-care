@@ -4,7 +4,7 @@
 <div class="index-content-body">
     <div class="col-xs-3 background-light border-right">
         <div>
-            <div style="display: flex; flex-flow: column; height: calc(100vh - 3px);">
+            <div style="display: flex; flex-flow: column; height: calc(100vh - 53px);">
                 <div class="col-md-6">
                     <!--<input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem">-->
                 </div>
@@ -41,7 +41,7 @@
     </div>
 
     <div class="col-xs-3 background-dark border-right">
-        <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 250px);">
+        <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 270px);">
             <table class="table-rounded control-table">
                 <col style="width: 35%"/>
                 <col style="width: 65%"/>
@@ -78,7 +78,7 @@
                         <td><input class="form-control" type="text" ng-model="model.appointmentData.contactNo" ng-disabled="ui.mode !== 'EDIT'"></td>
                     </tr>
 
-                    <tr style="height: 80px;">
+                    <tr style="height: 65px;">
                         <td><label class="control-label">IN TIME <span class="label label-warning">{{model.tempdata.inTime}}</span></label></td>
                         <td><label class="control-label">OUT TIME <br> <span class="label label-warning">{{model.tempdata.outTime}}</span></label></td>
                     </tr>
@@ -87,7 +87,7 @@
             </table>
         </div>
 
-        <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 413px);">
+        <div  class="smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 445px);">
             <table class="table-rounded">
                 <col style="width: 100%"/>
                 <thead class="background-dark">
@@ -104,7 +104,7 @@
                     <col style="width: 20%"/>
                     <col style="width: 20%"/>
                     <tbody>
-                        <tr ng-repeat="category in model.priceCategoryList" ng-click="ui.selectPriceCategory(category)" ng-class="model.ui.selectedIndex === category.priceCategory ? 'selected' : ''" style="line-height : 30px">
+                        <tr ng-repeat="category in model.priceCategoryList" ng-click="ui.selectPriceCategory(category)" ng-class="model.ui.selectedIndex === category.priceCategory ? 'selected' : ''" style="line-height : 25px">
                             <td>{{model.itemNameLabel(category.priceCategory)}}</td>
                             <td><span class="label label-success">R</span>&nbsp;{{category.registerPrice}} </td>
                             <td><span class="label label-primary">N</span>&nbsp;{{category.normalPrice}}</td>
