@@ -7,7 +7,6 @@ package com.mac.care_point.service.job_card;
 
 import com.mac.care_point.service.job_card.model.JobCard;
 import com.mac.care_point.zutil.SecurityUtil;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -94,9 +93,9 @@ public class JobCardController {
         return jobCardService.setServiceChargers(jobCard, status);
     }
 
-    @RequestMapping(value = "/upload-image/{jobCard}/{imageNo}", method = RequestMethod.POST)//, consumes = "multipart/form-data"
-    public void saveImage(@RequestParam("file") MultipartFile file, @PathVariable("jobCard") Integer jobCard, @PathVariable("imageNo") String imageNo) throws IOException {
-        File uploadFile = new File(IMAGE_LOCATION, String.format(IMAGE_NAME_TEMPLATE, jobCard, imageNo));
+    @RequestMapping(value = "/upload-image/{jobCard}/{imageNumber}", method = RequestMethod.POST)
+    public void saveImage(@RequestParam("file") MultipartFile file, @PathVariable("jobCard") Integer jobCard, @PathVariable("imageNumber") Integer imageNumber,HttpServletResponse response) throws IOException {
+        File uploadFile = new File(IMAGE_LOCATION, String.format(IMAGE_NAME_TEMPLATE, jobCard, imageNumber));
         if (!uploadFile.getParentFile().exists()) {
             uploadFile.getParentFile().mkdirs();
         }

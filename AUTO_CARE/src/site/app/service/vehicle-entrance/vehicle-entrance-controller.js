@@ -53,17 +53,17 @@
                                                 }
                                                 $scope.model.saveJobCard()
                                                         .then(function (data) {
-                                                            
+
                                                             for (var i = 0; i < $scope.imagemodel.length; i++) {
                                                                 var url = systemConfig.apiUrl + "/api/care-point/transaction/job-card/upload-image/" + data + "/" + i;
                                                                 var formData = new FormData();
                                                                 formData.append("file", $scope.imagemodel[i]);
-                                                                
+
                                                                 var token = $cookies.get('XSRF-TOKEN');
-                                                                
+
                                                                 console.log(token);
-                                                                
-                                                                
+
+
                                                                 var xhr = new XMLHttpRequest();
                                                                 xhr.open("POST", url);
                                                                 xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -71,7 +71,7 @@
                                                                 xhr.setRequestHeader("X-XSRF-TOKEN", token);
                                                                 xhr.send(formData);
                                                             }
-                                                            
+
                                                             Notification.success("Save job-card success !!!");
                                                             $scope.model.clearModel();
                                                             $scope.vehicleNo = "";
@@ -322,33 +322,33 @@
                         }
                     }
                 };
-                $scope.ui.getVehicleHistory = function (vehicleNo){
+                $scope.ui.getVehicleHistory = function (vehicleNo) {
                     $scope.model.getVehicleHistory(vehicleNo);
                 };
-                $scope.ui.saveJobWithoutImage = function (){
+                $scope.ui.saveJobWithoutImage = function () {
                     // save job card
-                                if ($scope.validateVehicleData) {
-                                    $scope.model.updateClientFromVehicle()
-                                            .then(function () {
-                                                Notification.success("Save vehicle and assing client Success !!!");
-                                                if ($scope.imagemodel.length) {
-                                                    $scope.model.jobcard.vehicleImages = true;
-                                                }
-                                                $scope.model.saveJobCard()
-                                                        .then(function (data) {
-                                                            Notification.success("Save job-card success !!!");
-                                                            $scope.model.clearModel();
-                                                            $scope.vehicleNo = "";
-                                                            $scope.ui.clientDisabled = true;
-                                                            $scope.ui.vehicleDisabled = true;
-                                                            $scope.ui.goToItemSelection(data);
-                                                        }, function () {
-                                                            Notification.error("Save job-card fail !!!");
-                                                        });
+                    if ($scope.validateVehicleData) {
+                        $scope.model.updateClientFromVehicle()
+                                .then(function () {
+                                    Notification.success("Save vehicle and assing client Success !!!");
+                                    if ($scope.imagemodel.length) {
+                                        $scope.model.jobcard.vehicleImages = true;
+                                    }
+                                    $scope.model.saveJobCard()
+                                            .then(function (data) {
+                                                Notification.success("Save job-card success !!!");
+                                                $scope.model.clearModel();
+                                                $scope.vehicleNo = "";
+                                                $scope.ui.clientDisabled = true;
+                                                $scope.ui.vehicleDisabled = true;
+                                                $scope.ui.goToItemSelection(data);
                                             }, function () {
-                                                Notification.error("Save vehicle and assing client fail !!!");
+                                                Notification.error("Save job-card fail !!!");
                                             });
-                                }
+                                }, function () {
+                                    Notification.error("Save vehicle and assing client fail !!!");
+                                });
+                    }
                 };
 
                 $scope.ui.init = function () {
@@ -358,7 +358,6 @@
 
                     $scope.$watch('model.searchKeyword', function (newV, oldV) {
                         $scope.model.showSuggestions = newV && newV.length;
-
                         if (newV && newV.length >= 2) {
                             //load from server
                             $scope.model.findByVehicleNo();

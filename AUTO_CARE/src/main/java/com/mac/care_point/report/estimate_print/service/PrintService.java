@@ -54,7 +54,7 @@ public class PrintService {
     @Transactional
     public Integer findByBranch(Integer branch, Integer jobCard) {
         MPrintersDetails MPrinterDetails = mPrintersDetailsRepository.findByBranchIndexNo(branch);
-        System.out.println("BRANCH : " + branch + " JOB CARD :" + jobCard);
+        System.out.println("BRANCH : " + branch + " JOB CARD :" + jobCard + "PRINT REQUEST");
 
         if (MPrinterDetails.getEstimateSms().equals(ActivationStatus.ACTIVE)) {
             sndEstimateSms(jobCard, MPrinterDetails.getBranchContactNo());
@@ -67,7 +67,7 @@ public class PrintService {
         } else {
             System.out.println("THIS BRANCH PRINTER STATUS INACTIVE");
         }
-        return 0;
+        return 1;
     }
 
     public Connection getConnection() throws SQLException {
@@ -111,6 +111,7 @@ public class PrintService {
             //--- Print the document
             try {
                 exporter.exportReport();
+                System.out.println("JOB CARD :" + jobCard + "ESTIMATE PRINT!");
             } catch (JRException e) {
                 e.printStackTrace();
             }
@@ -145,8 +146,14 @@ public class PrintService {
 
         final String uri = "http://smsserver.svisiontec.com/send_sms.php?api_key=6560957308&number=" + clientContactNo + "&message=" + message;
         RestTemplate restTemplate = new RestTemplate();
-        String result = restTemplate.getForObject(uri, String.class);
+        String result = "";
+        if (clientContactNo == null) {
+            System.out.println("JOB CARD :" + jobCard + "CLIENT CONTACT NUMBER NOT FOUND!");
+        } else {
+            result = restTemplate.getForObject(uri, String.class);
+        }
         if ("0".equals(result)) {
+            System.out.println("JOB CARD :" + jobCard + "ESTIMATE SMS SEND!");
             return "SENT ESTIMATE SMS";
         } else {
             return "SMS NOTE SENT";

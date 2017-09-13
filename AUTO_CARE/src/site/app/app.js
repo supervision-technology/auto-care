@@ -44,14 +44,11 @@
         "stockTransferInternalOutModule",
         "stockTransferInternalInModule",
         "itemSelectionModule",
-//<<<<<<< appointment
-        //appointment
+        "paymentVoucherModule",
+        "jobCardEditModule",
+        "vehicleImageManage",
         "appointmentModule",
         "appointmentModuleApprove"
-//=======
-        "paymentVoucherModule",
-        "jobCardEditModule"
-//>>>>>>> master
     ]);
 
     //constants
@@ -69,11 +66,22 @@
                 $routeProvider
                         //system
                         .when("/", {
-                            redirectTo: "/appointment/create-appointment"
+                            redirectTo: "/service/vehicle-entrance"
                         })
                         .when("/login", {
                             templateUrl: "app/system/login/login.html",
                             controller: "LoginController"
+                        })
+
+                        //appointment
+                        .when("/appointment/create-appointment", {
+                            templateUrl: "app/appointment/create-appointment/create-appointment.html",
+                            controller: "appointmentCreateController"
+                        })
+                        
+                        .when("/appointment/approve-appointment", {
+                            templateUrl: "app/appointment/approve-appointment/approve-appointment.html",
+                            controller: "appointmentApproveController"
                         })
 
                         .when("/reports/general/report-viewer", {
@@ -84,6 +92,11 @@
                         .when("/front-office/invoice/invoice_view/:invoiceIndexNo", {
                             templateUrl: "app/front-office/invoice/invoice_view/invoice_view.html",
                             controller: "InvoiceViewController"
+                        })
+
+                        .when("/service/vehicle-image-manage", {
+                            templateUrl: "app/service/vehicle-image-manage/vehicle-image-manage.html",
+                            controller: "vehicleImageController"
                         })
 
                         //service
@@ -116,7 +129,7 @@
                             templateUrl: "app/service/customer-satisfaction/customer-satisfaction.html",
                             controller: "customerSatisfactionController"
                         })
-                        
+
                         .when("/service/job-card-edit", {
                             templateUrl: "app/service/job-card-edit/job-card-edit.html",
                             controller: "jobCardEditController"
@@ -286,17 +299,6 @@
                             templateUrl: "app/front-office/supplier-payment/supplier-payment.html"
 //                            controller: "stockTransferInternalInController"
                         })
-                        
-                        //appointment
-                        .when("/appointment/create-appointment", {
-                            templateUrl: "app/appointment/create-appointment/create-appointment.html",
-                            controller: "appointmentCreateController"
-                        })
-                        .when("/appointment/approve-appointment", {
-                            templateUrl: "app/appointment/approve-appointment/approve-appointment.html",
-                            controller: "appointmentApproveController"
-                        })
-                        
                         .otherwise({
                             redirectTo: "/"
                         });

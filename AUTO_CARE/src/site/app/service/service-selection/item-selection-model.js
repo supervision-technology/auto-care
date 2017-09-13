@@ -157,7 +157,7 @@
                         return defer.promise;
                     },
                     printEstimate: function (jobCard) {
-                        var defer = $q;
+                        var defer = $q.defer();
                         ItemSelectionService.printEstimate(jobCard)
                                 .success(function (data) {
                                     defer.resolve(data);

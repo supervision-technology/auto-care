@@ -266,8 +266,12 @@
                     ConfirmPane.successConfirm("Print Estimate")
                             .confirm(function () {
                                 $scope.model.printEstimate($scope.selectedJobCardIndexNo)
-                                        .then(function () {
-                                            optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
+                                        .then(function (data) {
+                                            if (data === "1") {
+                                                optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
+                                            } else {
+                                                optionPane.dangerMessage("ERROR");
+                                            }
                                         });
                             });
                 };
