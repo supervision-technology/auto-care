@@ -45,7 +45,10 @@
         "stockTransferInternalInModule",
         "itemSelectionModule",
         "paymentVoucherModule",
-        "jobCardEditModule"
+        "jobCardEditModule",
+        //appointment
+        "appointmentModule",
+        "appointmentModuleApprove"
     ]);
 
     //constants
@@ -287,6 +290,15 @@
                         .when("/supplier-payment/supplier-payment", {
                             templateUrl: "app/front-office/supplier-payment/supplier-payment.html"
 //                            controller: "stockTransferInternalInController"
+                        })
+                         //appointment
+                        .when("/appointment/create-appointment", {
+                            templateUrl: "app/appointment/create-appointment/create-appointment.html",
+                            controller: "appointmentCreateController"
+                        })
+                        .when("/appointment/approve-appointment", {
+                            templateUrl: "app/appointment/approve-appointment/approve-appointment.html",
+                            controller: "appointmentApproveController"
                         })
                         .otherwise({
                             redirectTo: "/"
