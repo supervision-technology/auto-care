@@ -122,5 +122,4 @@ public class AppointmentService {
         return jobCardRepository.getPriceCategory(vehicle);
     }
 
-
 }
