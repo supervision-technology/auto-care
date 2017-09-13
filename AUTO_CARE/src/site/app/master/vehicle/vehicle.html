@@ -80,7 +80,7 @@
                     <td>
                         <label class="control-label">NEW VEHICLE</label>
                         <label class="control-label pull-right">No of New Vehicles : {{model.newVehicleList.length}}</label>
-                    
+
                     </td>
                 </tr>
             </tbody>
@@ -103,9 +103,9 @@
             <h1>EMPTY NEW VEHICLE TO VIEW :(</h1>
         </div>
     </div>
-</div>
 
-<div class="fab-container">
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
-    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+    <div class="fab-container">
+        <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+        <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+    </div>
 </div>

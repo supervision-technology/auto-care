@@ -114,6 +114,7 @@
                         this.clientBalance(client.indexNo);
                         this.clientOverPayment(client.indexNo);
                         this.getBalanceInvoiceCount(client.indexNo);
+                        this.getBalanceInvoiceList(client.indexNo);
 
                     },
 

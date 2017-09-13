@@ -148,6 +148,4 @@ public class MClientDTO {
     public void setDate(Date date) {
         this.date = date;
     }
-
-    
 }

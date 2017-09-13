@@ -44,9 +44,9 @@ public class JobItemController {
         return jobItemService.getQuickSeacrhItem(itemKey, priceCategory);
     }
     
-    @RequestMapping(value = "/quick-stock-item/{itemKey}", method = RequestMethod.GET)
+    @RequestMapping(value = "/quick-stock-item-non-stock-item/{itemKey}", method = RequestMethod.GET)
     public List<Object[]> getQuickSeacrhItemStockItem(@PathVariable String itemKey) {
-        return jobItemService.getQuickSeacrhItemStockItem(itemKey, SecurityUtil.getCurrentUser().getBranch());
+        return jobItemService.getQuickSeacrhItemStockItem(itemKey);
     }
 
     @RequestMapping(value = "/save-job-items", method = RequestMethod.POST)
@@ -75,25 +75,14 @@ public class JobItemController {
     }
 
     //get stock leger get item qty for item selection stock item qty
-    @RequestMapping(value = "/get-item-qty-by-stock/{indexNo}", method = RequestMethod.GET)
-    public List<Object[]> getItemQtyByStockLeger(@PathVariable Integer indexNo) {
-        return jobItemService.getItemQtyByStockLeger(indexNo, SecurityUtil.getCurrentUser().getBranch());
+    @RequestMapping(value = "/all-non-stock-and-stock-item/{itemCategory}", method = RequestMethod.GET)
+    public List<Object[]> getItemStockItemAndNonStockItem(@PathVariable Integer itemCategory) {
+        return jobItemService.getItemStockItemAndNonStockItem(itemCategory);
     }
 
     @RequestMapping(value = "/get-item-by-item-category/{indexNo}", method = RequestMethod.GET)
     public List<MItemL> findByItemCategory(@PathVariable Integer indexNo) {
         return jobItemService.findByItemCategory(indexNo);
-    }
-
-    //get stock leger get item qty for item selection non item qty
-    @RequestMapping(value = "/get-non-stock-item-qty-by-stock", method = RequestMethod.GET)
-    public List<Object[]> getNonStockItemQtyByStockLeger() {
-        return jobItemService.getNonStockItemQtyByStockLeger(SecurityUtil.getCurrentUser().getBranch());
-    }
-
-    @RequestMapping(value = "/get-stock-item-qty-by-stock", method = RequestMethod.GET)
-    public List<Object[]> getAllItemQtyByStockLeger() {
-        return jobItemService.getAllItemQtyByStockLeger(SecurityUtil.getCurrentUser().getBranch());
     }
 
     //find by stock item qty from item

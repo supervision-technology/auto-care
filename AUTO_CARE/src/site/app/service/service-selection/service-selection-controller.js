@@ -3,7 +3,7 @@
     angular.module("serviceSelectionModule", ['ui.bootstrap']);
     //controller
     angular.module("serviceSelectionModule")
-            .controller("serviceSelectionController", function ($scope, $http, $cookies, optionPane, $uibModalStack, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
+            .controller("serviceSelectionController", function ($scope, optionPane, $uibModalStack, $routeParams, $uibModal, optionPane, ItemSelectionModel, Notification, ConfirmPane) {
                 $scope.model = new ItemSelectionModel();
 
                 $scope.ui = {};
@@ -263,21 +263,15 @@
 
 //---------------------------------- estimate ----------------------------------
                 $scope.ui.printJobItemRequestAstimate = function () {
-                    var currentBranch = $cookies.get("branch-index-no");
-                    if (!currentBranch) {
-                        optionPane.dangerMessage("PLEASE LOGOUT AND LOGIN USER!");
-                    }
-
-
                     ConfirmPane.successConfirm("Print Estimate")
                             .confirm(function () {
-                                var url = "http://localhost:8094/api/care-point/print-service/print-estimate/" + currentBranch + "/" + $scope.selectedJobCardIndexNo;
-                                $http.get(url)
-                                        .success(function (data) {
-                                            optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
-                                        })
-                                        .error(function (data) {
-                                            optionPane.dangerMessage("ERROR!");
+                                $scope.model.printEstimate($scope.selectedJobCardIndexNo)
+                                        .then(function (data) {
+                                            if (data === "1") {
+                                                optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
+                                            } else {
+                                                optionPane.dangerMessage("ERROR");
+                                            }
                                         });
                             });
                 };

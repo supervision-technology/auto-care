@@ -274,5 +274,4 @@ public class Vehicle implements Serializable {
     public void setDate(Date date) {
         this.date = date;
     }
-
 }

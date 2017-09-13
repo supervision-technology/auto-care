@@ -41,7 +41,8 @@
                                 <li><a href="#/service/bay-assignment" ng-click="toggleHamburger('Bay Assignment');">Bay Assignment</a></li>           
                                 <li><a href="#/service/employee-assignment" ng-click="toggleHamburger('Employee Assignment');">Employee Assignment</a></li>           
                                 <li><a href="#/service/customer-satisfaction" ng-click="toggleHamburger('Customer Satisfaction');">Customer Satisfaction</a></li>           
-                                <li><a href="#/service/job-card-edit" ng-click="toggleHamburger('JOB CARD EDIT');">JobCard Edit</a></li>           
+                                <li><a href="#/service/job-card-edit" ng-click="toggleHamburger('job card edit');">JobCard Edit</a></li>           
+                                <li><a href="#/service/vehicle-image-manage" ng-click="toggleHamburger('vehicle images');">vehicle images</a></li>           
                             </ul>
                         </li>
                         <li> 
@@ -51,6 +52,13 @@
                                 <li><a href="#/front-office/invoice" ng-click="toggleHamburger('Invoice');">Invoice</a></li>           
                                 <li><a href="#/front-office/payment-voucher" ng-click="toggleHamburger('Payment Voucher');">Payment Voucher</a></li>           
                                 <!--                                <li><a href="#/front-office/bay-item-issue" ng-click="toggleHamburger('Bay Item Issue');">Bay Item Issue</a></li>    -->
+                            </ul>
+                        </li>
+                        <li> 
+                            <a class="menu-header">APPOINTMENT</a>
+                            <ul>
+                                <li><a href="#/appointment/create-appointment" ng-click="toggleHamburger('Create Appointment');">Create Appointment</a></li>    
+                                <li><a href="#/appointment/approve-appointment" ng-click="toggleHamburger('Approve Appointment');">Approve Appointment</a></li>    
                             </ul>
                         </li>
                         <li>
@@ -149,15 +157,15 @@
 
                 <div class="col-xs-2">
                     <td><span class="text-primary text-capitalize text-bold">{{loginUser}}</span>
-                    <table  style="width: auto; float: right;">
-                        <tbody>
-                            <tr>
-                                <td><a class="btn btn-primary"><span class="glyphicon glyphicon-bell"></span></a></td>
-                                <td><a class="btn btn-primary"><span class="glyphicon glyphicon-envelope"></span></a></td>
-                                <td><a class="btn btn-primary" ng-click="logout();"><span class="glyphicon glyphicon-user"></span></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <table  style="width: auto; float: right;">
+                            <tbody>
+                                <tr>
+                                    <td><a class="btn btn-primary"><span class="glyphicon glyphicon-bell"></span></a></td>
+                                    <td><a class="btn btn-primary"><span class="glyphicon glyphicon-envelope"></span></a></td>
+                                    <td><a class="btn btn-primary" ng-click="logout();"><span class="glyphicon glyphicon-user"></span></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
                 </div>
             </div>
 

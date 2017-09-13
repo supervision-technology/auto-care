@@ -192,7 +192,5 @@ public class MClient implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    
+    }   
 }

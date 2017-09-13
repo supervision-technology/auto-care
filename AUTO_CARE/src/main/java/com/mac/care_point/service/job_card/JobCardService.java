@@ -72,65 +72,71 @@ public class JobCardService {
     }
 
     public JobCard saveJobCard(JobCard jobCard) {
-        if (jobCard.getIndexNo() == null) {
-            Integer maxNo = jobCardRepository.getMaximumNumberByBranch(jobCard.getBranch());
-            if (maxNo == null) {
-                maxNo = 0;
+        JobCard getSaveData = new JobCard();
+        List<JobCard> findByVehicleAndStatus = jobCardRepository.findByVehicleAndStatus(jobCard.getVehicle(), Constant.PENDING_STATUS);
+        if (findByVehicleAndStatus.isEmpty()) {
+            if (jobCard.getIndexNo() == null) {
+                Integer maxNo = jobCardRepository.getMaximumNumberByBranch(jobCard.getBranch());
+                if (maxNo == null) {
+                    maxNo = 0;
+                }
+                jobCard.setNumber(maxNo + 1);
             }
-            jobCard.setNumber(maxNo + 1);
-        }
-        String inTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        jobCard.setInTime(inTime);
-        jobCard.setDate(new Date());
-        jobCard.setBay(2);//branch default bay
+            String inTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            jobCard.setInTime(inTime);
+            jobCard.setDate(new Date());
+            jobCard.setBay(2);//branch default bay
 
-        JobCard getSaveData = jobCardRepository.save(jobCard);
+            getSaveData = jobCardRepository.save(jobCard);
 
-        //check allrady exsist data
-        List<TJobVehicleAttenctions> getJobCardData = jobVehicleAttenctionsRepository.findByJobCard(getSaveData.getIndexNo());
-        if (getJobCardData.isEmpty()) {
-            List< MVehicleAttenctions> vehicleAttenctionsList = attenctionRepository.findAll();
-            for (MVehicleAttenctions mVehicleAttenctions : vehicleAttenctionsList) {
+            //check allrady exsist data
+            List<TJobVehicleAttenctions> getJobCardData = jobVehicleAttenctionsRepository.findByJobCard(getSaveData.getIndexNo());
+            if (getJobCardData.isEmpty()) {
+                List< MVehicleAttenctions> vehicleAttenctionsList = attenctionRepository.findAll();
+                for (MVehicleAttenctions mVehicleAttenctions : vehicleAttenctionsList) {
 
-                TJobVehicleAttenctions jobVehicleAttenctions = new TJobVehicleAttenctions();
-                jobVehicleAttenctions.setJobCard(getSaveData.getIndexNo());
-                jobVehicleAttenctions.setVehicleAttenctions(mVehicleAttenctions.getIndexNo());
-                jobVehicleAttenctions.setVehicleAttenctionsCategory(mVehicleAttenctions.getCategory());
-                jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
+                    TJobVehicleAttenctions jobVehicleAttenctions = new TJobVehicleAttenctions();
+                    jobVehicleAttenctions.setJobCard(getSaveData.getIndexNo());
+                    jobVehicleAttenctions.setVehicleAttenctions(mVehicleAttenctions.getIndexNo());
+                    jobVehicleAttenctions.setVehicleAttenctionsCategory(mVehicleAttenctions.getCategory());
+                    jobVehicleAttenctionsRepository.save(jobVehicleAttenctions);
+                }
+            } else {
+                throw new DuplicateEntityException("Duplicate Data");
             }
+
+            //save final check list data
+            List<TJobFinalCheckList> getVehicleFinalCheckListData = tJobFinalCheckListRepository.findByJobCard(getSaveData.getIndexNo());
+            if (getVehicleFinalCheckListData.isEmpty()) {
+                List<MFinalCheckListItem> vehicleAttenctionsList = finalCheckListItemRepostory.findAll();
+                for (MFinalCheckListItem mFinalCheckListItem : vehicleAttenctionsList) {
+
+                    TJobFinalCheckList jobFinalCheckList = new TJobFinalCheckList();
+                    jobFinalCheckList.setFinalCheckListItem(mFinalCheckListItem.getIndexNo());
+                    jobFinalCheckList.setVehicle(getSaveData.getVehicle());
+                    jobFinalCheckList.setJobCard(getSaveData.getIndexNo());
+                    jobFinalCheckList.setCheck(Constant.PENDING_STATUS);
+                    tJobFinalCheckListRepository.save(jobFinalCheckList);
+
+                }
+            } else {
+                throw new DuplicateEntityException("Duplicate Data");
+            }
+
+            //save vehicle assignment wating bay -  set default washing bay
+            String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            TVehicleAssignment tVehicleAssignment = new TVehicleAssignment();
+            tVehicleAssignment.setBay(2); //branch default bay
+            tVehicleAssignment.setOutTime(null);//no out time yet 
+            tVehicleAssignment.setBranch(jobCard.getBranch());
+            tVehicleAssignment.setDate(new Date());
+            tVehicleAssignment.setInTime(currentTime);
+            tVehicleAssignment.setJobCard(getSaveData.getIndexNo());
+            vehicleAssignmentRepository.save(tVehicleAssignment);
+
         } else {
-            throw new DuplicateEntityException("Duplicate Data");
+            throw new DuplicateEntityException("This vehicle pending jobCard is exsist!");
         }
-
-        //save final check list data
-        List<TJobFinalCheckList> getVehicleFinalCheckListData = tJobFinalCheckListRepository.findByJobCard(getSaveData.getIndexNo());
-        if (getVehicleFinalCheckListData.isEmpty()) {
-            List<MFinalCheckListItem> vehicleAttenctionsList = finalCheckListItemRepostory.findAll();
-            for (MFinalCheckListItem mFinalCheckListItem : vehicleAttenctionsList) {
-
-                TJobFinalCheckList jobFinalCheckList = new TJobFinalCheckList();
-                jobFinalCheckList.setFinalCheckListItem(mFinalCheckListItem.getIndexNo());
-                jobFinalCheckList.setVehicle(getSaveData.getVehicle());
-                jobFinalCheckList.setJobCard(getSaveData.getIndexNo());
-                jobFinalCheckList.setCheck(Constant.PENDING_STATUS);
-                tJobFinalCheckListRepository.save(jobFinalCheckList);
-
-            }
-        } else {
-            throw new DuplicateEntityException("Duplicate Data");
-        }
-
-        //save vehicle assignment wating bay -  set default washing bay
-        String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        TVehicleAssignment tVehicleAssignment = new TVehicleAssignment();
-        tVehicleAssignment.setBay(2); //branch default bay
-//        tVehicleAssignment.setIndexNo(0);//auto incerment
-        tVehicleAssignment.setOutTime(null);//no out time yet 
-        tVehicleAssignment.setBranch(jobCard.getBranch());
-        tVehicleAssignment.setDate(new Date());
-        tVehicleAssignment.setInTime(currentTime);
-        tVehicleAssignment.setJobCard(getSaveData.getIndexNo());
-        vehicleAssignmentRepository.save(tVehicleAssignment);
 
         return getSaveData;
     }
