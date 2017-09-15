@@ -46,6 +46,7 @@
         "itemSelectionModule",
         "paymentVoucherModule",
         "jobCardEditModule",
+        "vehicleImageManage",
         //appointment
         "appointmentModule",
         "appointmentModuleApprove"
@@ -77,43 +78,47 @@
                             templateUrl: "app/reports/report-viewer/report-viewer.html",
                             controller: "ReportViewerController"
                         })
-               
+
                         .when("/front-office/invoice/invoice_view/:invoiceIndexNo", {
                             templateUrl: "app/front-office/invoice/invoice_view/invoice_view.html",
                             controller: "InvoiceViewController"
                         })
 
                         //service
+                        .when("/service/vehicle-image-manage", {
+                            templateUrl: "app/service/vehicle-image-manage/vehicle-image-manage.html",
+                            controller: "vehicleImageController"
+                        })
                         .when("/service/vehicle-entrance", {
                             templateUrl: "app/service/vehicle-entrance/vehicle-entrance.html",
                             controller: "vehicleEntranceController"
                         })
-                        
+
                         .when("/service/service-selection", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
-                        
+
                         .when("/service/item-selection", {
                             templateUrl: "app/service/service-selection/item-selection.html",
                             controller: "itemSelectionController"
                         })
-                        
+
                         .when("/service/service-selection/:jobCardIndexNo", {
                             templateUrl: "app/service/service-selection/service-selection.html",
                             controller: "serviceSelectionController"
                         })
-                        
+
                         .when("/service/final-check-list", {
                             templateUrl: "app/service/final-check-list/final-check-list.html",
                             controller: "finalCheckListController"
                         })
-                       
+
                         .when("/service/customer-satisfaction", {
                             templateUrl: "app/service/customer-satisfaction/customer-satisfaction.html",
                             controller: "customerSatisfactionController"
                         })
-                        
+
                         .when("/service/job-card-edit", {
                             templateUrl: "app/service/job-card-edit/job-card-edit.html",
                             controller: "jobCardEditController"
@@ -291,7 +296,7 @@
                             templateUrl: "app/front-office/supplier-payment/supplier-payment.html"
 //                            controller: "stockTransferInternalInController"
                         })
-                         //appointment
+                        //appointment
                         .when("/appointment/create-appointment", {
                             templateUrl: "app/appointment/create-appointment/create-appointment.html",
                             controller: "appointmentCreateController"
@@ -299,6 +304,31 @@
                         .when("/appointment/approve-appointment", {
                             templateUrl: "app/appointment/approve-appointment/approve-appointment.html",
                             controller: "appointmentApproveController"
+                        })
+                        //accounts
+                        .when("/accounts/write-cheque", {
+                            templateUrl: "app/accounts/cheque/write-cheque.html"
+//                            controller: "chequeController"
+                        })
+                        .when("/accounts/petty-cash", {
+                            templateUrl: "app/accounts/petty-cash/petty-cash.html"
+//                            controller: "chequeController"
+                        })
+                        .when("/accounts/fund-transfer", {
+                            templateUrl: "app/accounts/fund-transfer/fund-transfer.html"
+//                            controller: "chequeController"
+                        })
+                        .when("/accounts/deposit", {
+                            templateUrl: "app/accounts/deposit/deposit.html"
+//                            controller: "chequeController"
+                        })
+                        .when("/accounts/return-cheque", {
+                            templateUrl: "app/accounts/return-cheque/return-cheque.html"
+//                            controller: "chequeController"
+                        })
+                        .when("/accounts/payment-to-diposit", {
+                            templateUrl: "app/accounts/payment-to-deposit/payment-to-deposit.html"
+//                            controller: "chequeController"
                         })
                         .otherwise({
                             redirectTo: "/"

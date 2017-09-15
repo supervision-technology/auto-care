@@ -3,7 +3,7 @@
     angular.module("vehicleImageManage", ['ui.bootstrap', 'ngCookies']);
     //controller
     angular.module("vehicleImageManage")
-            .controller("vehicleImageController", function ($scope, ConfirmPane, ProgressPane, optionPane, vehicleImageModel, systemConfig, $cookies) {
+            .controller("vehicleImageController", function ($scope, ConfirmPane, optionPane, vehicleImageModel, systemConfig, $cookies) {
                 $scope.model = new vehicleImageModel();
                 $scope.ui = {};
                 $scope.imagemodelX = [];

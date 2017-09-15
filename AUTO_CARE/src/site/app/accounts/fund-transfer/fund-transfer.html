@@ -1,0 +1,67 @@
+<div class="index-content-header"></div>
+<div class="index-content-body ">
+    <div class="col-xs-4 background-dark">
+        
+    </div>
+    <div class="col-xs-4 background-dark">
+        <div class="row smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 51px);">
+            <div class="col-xs-12" style="flex: 0 0 auto;padding-right: 8px;">
+                <table class="table-rounded control-table">
+                    <col style="width: 50%"/>
+                    <col style="width: 70%"/>
+                    <tbody>
+                        <tr style="height: 80px">
+                            <td><label>Transfer Founds From :</label></td>
+                            <td><input class="form-control" id="name" ng-model="model.employeeData.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"> </td>
+                        </tr>
+                        <tr style="height: 80px">
+                            <td><label>Transfer Founds To :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.mobile" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr style="height: 80px">
+                            <td><label>Transfer Amount :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.addressLine1" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr style="height: 80px">
+                            <td><label>Date :</label></td>
+                            <td><input class="form-control" smart-input="date" ng-model="model.employeeData.addressLine2" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr style="height: 80px">
+                            <td><label>Serial No :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.addressLine3" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                        <tr style="height: 80px">
+                            <td><label>Remark :</label></td>
+                            <td><input class="form-control" ng-model="model.employeeData.type" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4 background-light">
+        <div class="row smart-scroll-y" style="display: flex; flex-flow: column; height: calc(100vh - 51px);">
+            <div class="col-xs-12" style="flex: 0 0 auto;padding-right: 1px;">
+                <table class="table-rounded control-table background-light">
+                    <col style="width: 50%"/>
+                    <col style="width: 70%"/>
+                    <tbody>
+                        <tr style="height: 80px; background-color: white">
+                            <td><span class="label label-success">BALANCE : 0.00</span></td>
+                        </tr>
+                        <tr style="height: 80px; background-color: white" >
+                            <td><span class="label label-success">BALANCE : 0.00</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+<!--    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
+    <a class="fab fab-lg fab-primary" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>
+
+
