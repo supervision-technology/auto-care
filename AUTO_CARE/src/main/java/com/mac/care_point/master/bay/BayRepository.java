@@ -6,6 +6,7 @@
 package com.mac.care_point.master.bay;
 
 import com.mac.care_point.master.bay.model.Bay;
+import com.mac.care_point.master.branch.model.MBranch;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -20,5 +21,7 @@ public interface BayRepository extends JpaRepository<Bay, Integer>{
     public List<Bay> findByBranchAndBayIsView(Integer branch, Integer view);
 
     public List<Bay> findByBranchAndEmployeeIsView(Integer branch, Integer view);
+
+    public List<Bay> findByBranchAndType(Integer branch, String employee_waiting_bay);
        
 }

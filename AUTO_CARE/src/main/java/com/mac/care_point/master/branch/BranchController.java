@@ -6,6 +6,7 @@
 package com.mac.care_point.master.branch;
 
 import com.mac.care_point.master.branch.model.MBranch;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -28,5 +29,10 @@ public class BranchController {
     @RequestMapping(method = RequestMethod.GET)
     public List<MBranch> findAllBrand() {
         return branchService.findAllBrand();
+    }
+    @RequestMapping(value = "/current-branch",method = RequestMethod.GET)
+    public MBranch getCurrentBranch() {
+        Integer branchIndex = SecurityUtil.getCurrentUser().getBranch();
+       return branchService.findOne(branchIndex);
     }
 }

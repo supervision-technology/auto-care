@@ -4,7 +4,7 @@
 <div class="index-content-body">
     <div>
         <div class="background-light grid " style="height: calc(100vh - 52px)">
-            <div class="grid-tile" grid="{{bay}}" ng-repeat="bay in model.bayList" ng-drop="true" ng-drop-success="dragLeave(bay,$data)">
+            <div class="grid-tile" ng-show="model.bayList.length" grid="{{bay}}" ng-repeat="bay in model.bayList" ng-drop="true" ng-drop-success="dragLeave(bay,$data)">
                 <div class="col-lg-12 nopadding" style="height: 100% ;display:grid;">
 
                     <div class="grid-tile-title">
@@ -33,6 +33,9 @@
                     </div>
                 </div>
             </div>
+            <div class="placeholder col-md-12" ng-hide="model.bayList.length" style="height: calc(100vh - 72px); padding: 0px 10px 0px 10px;">
+                    <h1>EMPTY BAY FOR THIS BRANCH :(</h1>
+                </div>
         </div>
     </div>
 </div>

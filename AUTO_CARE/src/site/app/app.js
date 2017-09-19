@@ -49,7 +49,8 @@
         "vehicleImageManage",
         //appointment
         "appointmentModule",
-        "appointmentModuleApprove"
+        "appointmentModuleApprove",
+        "fingerPrintModule"
     ]);
 
     //constants
@@ -140,6 +141,12 @@
                         .when("/front-office/bay-item-issue", {
                             templateUrl: "app/front-office/bay-item-issue/bay-item-issue.html",
                             controller: "bayItemIssueController"
+                        })
+                        
+                        //finger-print-manual
+                        .when("/front-office/finger-print-manual", {
+                            templateUrl: "app/front-office/finger-print-manual/finger-print-manual.html",
+                            controller: "fingerPrintController"
                         })
 
                         //daily-check-list

@@ -47,12 +47,15 @@ public class TEmployeeAssingment implements Serializable {
     private Integer bay;
 
     @Column(name = "date")
-    private Date date;
+    private String date;
+   
+    @Column(name = "is_out")
+    private boolean isOut;
 
     public TEmployeeAssingment() {
     }
 
-    public TEmployeeAssingment(Integer indexNo, String inTime, String outTime, String status, Integer employee, Integer bay, Date date) {
+    public TEmployeeAssingment(Integer indexNo, String inTime, String outTime, String status, Integer employee, Integer bay, String date, boolean isOut) {
         this.indexNo = indexNo;
         this.inTime = inTime;
         this.outTime = outTime;
@@ -60,6 +63,7 @@ public class TEmployeeAssingment implements Serializable {
         this.employee = employee;
         this.bay = bay;
         this.date = date;
+        this.isOut = isOut;
     }
 
     public Integer getIndexNo() {
@@ -110,13 +114,22 @@ public class TEmployeeAssingment implements Serializable {
         this.bay = bay;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
+    public boolean isIsOut() {
+        return isOut;
+    }
+
+    public void setIsOut(boolean isOut) {
+        this.isOut = isOut;
+    }
+
+   
     
 }

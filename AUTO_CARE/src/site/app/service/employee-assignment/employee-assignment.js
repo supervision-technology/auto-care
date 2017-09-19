@@ -16,6 +16,16 @@
 
                             });
                 };
+                factory.getAssignEmployees = function (callback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/get-assign-employees";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+
+                            });
+                };
 
                 factory.employeeImageAbsalutePath = function (callback, errorcallback) {
                     var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/file-absalute-path";
@@ -99,11 +109,23 @@
                                 }
                             });
                 };
+                factory.reset = function (callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/reset-employees";
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
+                            });
+                };
                 return factory;
             });
     //controller
     angular.module("employeeAssignmentModule")
-            .controller("employeeAssignmentController", function ($scope, $timeout, $filter, employeeAssignmentFactory, Notification, systemConfig) {
+            .controller("employeeAssignmentController", function ($scope, $timeout, ConfirmPane, $filter, employeeAssignmentFactory, Notification, systemConfig) {
                 $scope.ui = {};
                 $scope.model = {};
                 $scope.http = {};
@@ -120,7 +142,8 @@
                 $scope.model.employeesAttendanceList = [];
                 $scope.model.vehicles = [];
                 $scope.dragableMode = true;
-                $scope.model.imageAbsalutePath;
+                $scope.model.imageAbsalutePath = null;
+                $scope.model.assignEmployeeList = [];
                 $scope.model.bayList = [
                     {
                         timeout: null
@@ -135,32 +158,22 @@
                 $scope.dragStart = function (element, model) {
                 };
 
-                $scope.dragLeave = function (bay, emp) {
-
-//                    if ($scope.dragableMode) {
-//
-//                        $scope.dragableMode = false;
+                $scope.dragLeave = function (bay, empAssingnment) {
                     var vehicleCount = 0;
                     employeeAssignmentFactory.getBayAssignEmployeeCount(bay.indexNo,
                             function (data) {
                                 vehicleCount = data;
-                                console.log(vehicleCount);
-//
                                 $scope.isSameBay = false;
-                                for (var i = 0; i < $scope.model.employeeList.length; i++) {
-                                    if ($scope.model.employeeList[i].bay === bay.indexNo) {
-                                        if ($scope.model.employeeList[i].indexNo === emp.indexNo) {
-                                            $scope.isSameBay = true;
-                                            break;
-                                        }
-                                    }
+                                if (bay.indexNo === empAssingnment.bay) {
+                                    $scope.isSameBay = true;
                                 }
                                 if ($scope.isSameBay) {
                                     $scope.model.jobAssignment.bay.timeout = '';
+                                    Notification.error('Same Bay Assing ...');
                                 } else {
-//
+
                                     if (vehicleCount < bay.maxEmployee) {
-                                        $scope.model.employeeAssignment.employee = emp.indexNo;
+                                        $scope.model.employeeAssignment.employee = empAssingnment.employee;
                                         $scope.model.employeeAssignment.bay = bay;
                                         $scope.model.employeeAssignment.bay.timeout = 1;
 
@@ -170,11 +183,6 @@
                                     }
                                 }
                             });
-
-//
-
-//                    }
-//                    $scope.dragableMode = true;
 //                    
                 };
                 $scope.getEmployee = function (employee) {
@@ -210,7 +218,19 @@
                     } else {
                         Notification.error('Some Error. Please Refresh this Window.. !');
                     }
+                };
 
+                //all employee assign waiting bay
+                $scope.ui.reset = function () {
+                    ConfirmPane.warningConfirm("Do you want to finish all employees work ?  ")
+                            .confirm(function () {
+                                employeeAssignmentFactory.reset(function (data) {
+                                    if (data) {
+                                        Notification.success("all employees assigned waiting bay successfully ");
+                                        $scope.http.getAssignEmployees();
+                                    }
+                                });
+                            });
                 };
 
                 $scope.http.insertDetail = function () {
@@ -226,11 +246,9 @@
                                     detailJSON,
                                     function (data) {
 
-                                        var employee = $scope.getEmployee(data.employee);
-                                        employee.bay = data.bay;
                                         var bay = $scope.getBay(data.bay);
-
-                                        Notification.success("Employee " + " " + employee.name + " " + "Assign" + "  " + bay.name + "  " + "Success !");
+                                        $scope.http.getAssignEmployees();
+                                        Notification.success("Employee " + " " + $scope.getEmployee(data.employee).name + " " + "Assign" + "  " + bay.name + "  " + "Success !");
                                     }
                             , function (data) {
                                 Notification.error(data);
@@ -250,17 +268,29 @@
                         $scope.model.employeeList[i].imageData = systemConfig.apiUrl + "/api/care-point/master/employee/download-image/" + $scope.model.employeeList[i].image;
                     }
                 };
-                
-                $scope.ui.loadEmployees = function () {
+
+                $scope.http.loadEmployees = function () {
                     employeeAssignmentFactory.loadEmployees(function (data) {
                         $scope.model.employeeList = data;
                         $scope.ui.downloardImage();
                     });
                 };
+                $scope.http.getAssignEmployees = function () {
+                    employeeAssignmentFactory.getAssignEmployees(function (data) {
+                        $scope.model.assignEmployeeList = data;
+                        console.log(data);
+                    });
+                };
+                $scope.ui.refresh = function () {
+                    console.log("refresh");
+                    $scope.ui.init();
+                };
 
                 $scope.ui.init = function () {
 
-                    $scope.ui.loadEmployees();
+                    $scope.http.loadEmployees();
+
+                    $scope.http.getAssignEmployees();
 
                     employeeAssignmentFactory.employeesAttendance(function (data) {
                         $scope.model.employeesAttendanceList = data;

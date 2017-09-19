@@ -9,9 +9,6 @@ import com.mac.care_point.master.employee.EmployeeRepository;
 import com.mac.care_point.master.employee.model.Employee;
 import com.mac.care_point.service.common.Constant;
 import com.mac.care_point.service.employee_assignment.model.TEmployeeAssingment;
-import com.mac.care_point.service.employee_attendance.TEmployeeAttendanceRepository;
-import com.mac.care_point.service.employee_attendance.model.TEmployeeAttendance;
-import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,8 +50,24 @@ public class EmployeeAssignmentService {
         employeeRepository.save(findOne);
         return employeeAssignmentRepository.save(employeeAssingment);
     }
-     public Integer getBayAssignEmployeeCount(Integer bay, Integer branch) {
+
+    public Integer getBayAssignEmployeeCount(Integer bay, Integer branch) {
         return employeeAssignmentRepository.getBayAssignEmployeeCount(branch, bay);
+    }
+
+    public List<TEmployeeAssingment> getAssignEmployees(String date, Integer branch) {
+        return employeeAssignmentRepository.findAssignEmployees(branch, date);
+    }
+
+    @Transactional
+    public Integer resetEmployees(Integer branch, String time) {
+        Integer waitingBayIndex = findBranchWaitingBay(branch);
+        employeeAssignmentRepository.resetEmployees(branch, time, waitingBayIndex);
+        return 1;
+    }
+
+    public Integer findBranchWaitingBay(Integer branch) {
+        return employeeAssignmentRepository.findBranchWaitingBay(branch, Constant.VEHICLE_WAITING_BAY);
     }
 
 }
