@@ -79,4 +79,9 @@ public interface Constant {
     public static final String INVOICE_MESSAGE = "INVOICE_MESSAGE";
     public static final String ESTIMATE_MESSAGE = "ESTIMATE_MESSAGE";
     public static final String CUSTOMER_SATISFACTION_MESSAGE = "CUSTOMER_SATISFACTION_MESSAGE";
+    
+    //bay type
+    public static final String VEHICLE_WAITING_BAY = "VEHICLE_WAITING_BAY";
+    public static final String NORMAL_BAY = "NORMAL_BAY";
+    public static final String EMPLOYEE_WAITING_BAY = "EMPLOYEE_WAITING_BAY";
 }

@@ -1,0 +1,78 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <div class="col-xs-4 background-dark">
+        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+            
+            <div class="col-xs-12" style="margin-top: 25px;">
+                <label>DATE : </label>
+                <input id="brandText" type="date" class="form-control" ng-model="model.fingerPrint.date" 
+                       ng-change='ui.changeDate()'
+                       ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+            </div>
+            <div class="col-xs-12" style="margin-top: 25px;">
+                <label>TIME : </label>
+                <input id="brandText" type="time" class="form-control" ng-model="model.fingerPrint.time" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+            </div>
+            <div class="col-xs-12" style="margin-top: 25px;">
+                <label>EMPLOYEE : </label>
+                <input class="form-control " ng-model="model.fingerPrint.din" 
+                       uib-typeahead="employee.indexNo as (employee.indexNo+' - '+employee.name) for employee in model.employeeList|filter:$viewValue|limitTo:10" 
+                       typeahead-input-formatter="model.employeeLable($model)" typeahead-editable="false" 
+                       ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'"
+                       >
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-8 background-light">
+<!--        <div class="row col-xs-5">
+            <input type="text" class="search-input" ng-model="search" placeholder="search">
+        </div>
+        <table class="table-rounded">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 20%">
+            <col style="width: 10%">
+            <thead class="background-dark"> 
+                <tr>
+                    <th>BRANCH</th>
+                    <th>DATE</th>
+                    <th>TIME</th>
+                    <th>FINGER PRINT</th>
+                    <th>EMPLOYEE</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
+            <table class="table-rounded">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 20%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="data in model.fingerPrintList |filter :search">
+                        <td>{{data.branch}}</td>
+                        <td>{{data.date}}</td>
+                        <td>{{data.time}}</td>
+                        <td>{{data.fingerPrint}}</td>
+                        <td>{{data.employee}}</td>
+                        <td class="text-right" style="padding-left: 5px;">
+                            <a class="btn btn-primary" ng-click="ui.edit(brand, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deleteBrand(brand.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+    </div>
+</div>
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-08-01T12:46:50 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Invoice" pageWidth="360" pageHeight="576" columnWidth="350" leftMargin="5" rightMargin="5" topMargin="5" bottomMargin="5" uuid="aebb3b7f-0281-4b2f-a9dd-354073fdd684">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="mm"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="INVOICE_NO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[29]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+	t_job_item.item_type,
+	t_job_item.item,
+	t_job_item.quantity,
+	t_job_item.price,
+	t_job_item.value,
+	t_job_card.number as job_number,
+	t_job_card.in_time ,
+	t_job_card.in_mileage,
+	t_invoice.number as invoice_number,
+	t_invoice.amount,
+	t_invoice.discount_rate,
+	t_invoice.discount_amount,
+	t_invoice.net_amount,
+	m_vehicle.vehicle_no,
+	m_client.name as client_name,
+	m_client.mobile,
+	m_item.name as item_name
+	
+FROM t_job_item
+	LEFT JOIN t_job_card on t_job_card.index_no=t_job_item.job_card
+	LEFT JOIN t_invoice on t_invoice.job_card=t_job_card.index_no
+	LEFT JOIN m_vehicle on m_vehicle.index_no=t_job_card.vehicle
+	LEFT JOIN m_client on m_client.index_no=t_job_card.`client`
+	LEFT JOIN m_item ON m_item.index_no=t_job_item.item
+	
+WHERE
+	t_invoice.index_no=$P{INVOICE_NO}]]>
+	</queryString>
+	<field name="item_type" class="java.lang.String"/>
+	<field name="item" class="java.lang.Integer"/>
+	<field name="quantity" class="java.math.BigDecimal"/>
+	<field name="price" class="java.math.BigDecimal"/>
+	<field name="value" class="java.math.BigDecimal"/>
+	<field name="job_number" class="java.lang.Integer"/>
+	<field name="in_time" class="java.sql.Timestamp"/>
+	<field name="in_mileage" class="java.lang.Integer"/>
+	<field name="invoice_number" class="java.lang.Integer"/>
+	<field name="amount" class="java.math.BigDecimal"/>
+	<field name="discount_rate" class="java.math.BigDecimal"/>
+	<field name="discount_amount" class="java.math.BigDecimal"/>
+	<field name="net_amount" class="java.math.BigDecimal"/>
+	<field name="vehicle_no" class="java.lang.String"/>
+	<field name="client_name" class="java.lang.String"/>
+	<field name="mobile" class="java.lang.String"/>
+	<field name="item_name" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="130" splitType="Stretch">
+			<textField>
+				<reportElement x="70" y="38" width="114" height="19" uuid="13763481-975a-4190-bcf9-c35d258708e6">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{invoice_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="52" width="115" height="17" uuid="f514d081-e3b5-45c1-8754-3170b4aeebbe">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{job_number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="67" width="114" height="14" uuid="4c2bf947-8f13-411e-86fd-d4b343ecb6fc">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{vehicle_no}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="93" width="114" height="14" uuid="710cdb48-6720-42b0-8fa6-b08fa1159c06">
+					<property name="com.jaspersoft.studio.unit.x" value="mm"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{mobile}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMM-d-yyyy h:mm:ss a">
+				<reportElement x="240" y="38" width="110" height="17" uuid="4b77c7a3-6607-4dd8-ba5e-66637906e0c3">
+					<property name="com.jaspersoft.studio.unit.y" value="mm"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="240" y="52" width="110" height="17" uuid="93e2b7be-4241-432c-982f-4eb4b9e9e8cf">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{in_mileage}+" KM"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="190" y="52" width="56" height="17" uuid="be3a764d-7528-470f-a448-5b5c10df85ef">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<text><![CDATA[Mileage :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="67" width="56" height="17" uuid="d6033489-5483-491d-8c80-8ee1b61c1ff9">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="mm"/>
+				</reportElement>
+				<text><![CDATA[Pay Mode :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="81" width="210" height="17" uuid="05d83a12-5509-41ee-9de9-8bf98efb2e8f">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{client_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="17" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="0" width="140" height="14" uuid="dddddddd-b8de-4464-9cea-e3c93fb845b8">
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{item_type}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="145" y="0" width="108" height="14" uuid="34799b4c-63fe-4c9a-8dc5-c1ae6f4b58fc">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="253" y="0" width="87" height="14" uuid="f4f09617-123d-42d6-9cea-1c6c59767fce"/>
+				<box>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{value}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="16" width="248" height="27" uuid="6d53b32e-9052-46f2-931a-ac79d683553a"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Save you time, make an appointment please contact : 0114388155]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="5" y="43" width="248" height="27" uuid="4ef7509f-3f78-4cfb-a689-fc60109b817b">
+					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				</reportElement>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[For any complaints or suggestions please do not hesitate to contact  0777255594]]></text>
+			</staticText>
+			<textField pattern="#,##0.00">
+				<reportElement x="253" y="45" width="87" height="20" uuid="d4f53132-f37f-4164-80ed-72a3d6d423fd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{amount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

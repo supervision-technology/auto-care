@@ -23,8 +23,12 @@ public class BranchService {
     @Autowired
     private BranchRepository branchRepository;
 
-    List<MBranch> findAllBrand() {
+    public List<MBranch> findAllBrand() {
          return branchRepository.findAll();
+    }
+
+    public MBranch findOne(Integer branchIndex) {
+        return branchRepository.findOne(branchIndex);
     }
 
 }

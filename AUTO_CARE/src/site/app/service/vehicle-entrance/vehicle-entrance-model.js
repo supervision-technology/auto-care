@@ -34,7 +34,6 @@
                 this.vehicleTypeData = vehicleEntranceFactory.newVehicleTypeData();
                 this.priceCategoryData = vehicleEntranceFactory.newPriceCategoryData();
 
-                this.loadClient();
                 this.loadVehicle();
                 vehicleEntranceService.loadVehicleType()
                         .success(function (data) {
@@ -150,8 +149,8 @@
                 console.log(that.jobcard);
                 vehicleEntranceService.saveJob(JSON.stringify(that.jobcard))
                         .success(function (data) {
-                            that.loadClient();
-                            that.loadVehicle();
+//                            that.loadClient();
+//                            that.loadVehicle();
                             defer.resolve(data);
                         })
                         .error(function () {

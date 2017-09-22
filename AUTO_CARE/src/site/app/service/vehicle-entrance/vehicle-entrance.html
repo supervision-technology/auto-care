@@ -20,7 +20,7 @@
                         <i class="glyphicon glyphicon-cd"></i>&nbsp; 
                         <b ng-bind="vehicle.vehicleNo">[VEHICLE NUMBER]</b>&nbsp;<small ng-bind="'(' + vehicle.indexNo + ')'"></small>&nbsp;<small ng-bind="'(' + vehicle.client + ')'"></small>
                     </a>
-                    <a class="list-group-item active" ng-click="ui.secondStep();">
+                    <a class="list-group-item active" ng-hide="(model.searchSuggestions|filter:model.searchKeyword).length" ng-click="ui.secondStep();">
                         <b><i>(ADD NEW VEHICLE)</i></b>
                     </a>
                 </div>
