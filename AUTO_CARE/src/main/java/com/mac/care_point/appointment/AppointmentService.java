@@ -55,6 +55,7 @@ public class AppointmentService {
         tAppointment.setBranch(appointmentDetails.getBranch());
         tAppointment.setInTime(appointmentDetails.getInTime());
         tAppointment.setStatus(0);
+        tAppointment.setPriceFree(appointmentDetails.getPriceFree());
         tAppointment.setVehicle(appointmentDetails.getVehicle());
         tAppointment.setVehicleNo(appointmentDetails.getVehicleNo());
         tAppointment.setVehicleModel(appointmentDetails.getVehicleModel());

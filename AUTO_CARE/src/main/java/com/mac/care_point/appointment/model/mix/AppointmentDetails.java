@@ -29,12 +29,13 @@ public class AppointmentDetails implements Serializable{
     private String vehicleNo;
     private String vehicleModel;
     private int status;
+    private Boolean priceFree;
     private List<TBayDetails> bayDetails;
 
     public AppointmentDetails() {
     }
 
-    public AppointmentDetails(Integer indexNo, Integer item, Integer priceCategory, Integer vehicle, int branch, Date receivedDate, Date appointmentDate, String inTime, String clientName, String contactNo, String vehicleNo, String vehicleModel, int status, List<TBayDetails> bayDetails) {
+    public AppointmentDetails(Integer indexNo, Integer item, Integer priceCategory, Integer vehicle, int branch, Date receivedDate, Date appointmentDate, String inTime, String clientName, String contactNo, String vehicleNo, String vehicleModel, int status, Boolean priceFree, List<TBayDetails> bayDetails) {
         this.indexNo = indexNo;
         this.item = item;
         this.priceCategory = priceCategory;
@@ -48,6 +49,7 @@ public class AppointmentDetails implements Serializable{
         this.vehicleNo = vehicleNo;
         this.vehicleModel = vehicleModel;
         this.status = status;
+        this.priceFree = priceFree;
         this.bayDetails = bayDetails;
     }
 
@@ -155,6 +157,14 @@ public class AppointmentDetails implements Serializable{
         this.status = status;
     }
 
+    public Boolean getPriceFree() {
+        return priceFree;
+    }
+
+    public void setPriceFree(Boolean priceFree) {
+        this.priceFree = priceFree;
+    }
+
     public List<TBayDetails> getBayDetails() {
         return bayDetails;
     }
@@ -165,8 +175,9 @@ public class AppointmentDetails implements Serializable{
 
     @Override
     public String toString() {
-        return "AppointmentDetails{" + "indexNo=" + indexNo + ", item=" + item + ", priceCategory=" + priceCategory + ", vehicle=" + vehicle + ", branch=" + branch + ", receivedDate=" + receivedDate + ", appointmentDate=" + appointmentDate + ", inTime=" + inTime + ", clientName=" + clientName + ", contactNo=" + contactNo + ", vehicleNo=" + vehicleNo + ", vehicleModel=" + vehicleModel + ", status=" + status + ", bayDetails=" + bayDetails + '}';
+        return "AppointmentDetails{" + "indexNo=" + indexNo + ", item=" + item + ", priceCategory=" + priceCategory + ", vehicle=" + vehicle + ", branch=" + branch + ", receivedDate=" + receivedDate + ", appointmentDate=" + appointmentDate + ", inTime=" + inTime + ", clientName=" + clientName + ", contactNo=" + contactNo + ", vehicleNo=" + vehicleNo + ", vehicleModel=" + vehicleModel + ", status=" + status + ", priceFree=" + priceFree + ", bayDetails=" + bayDetails + '}';
     }
+    
     
     
     

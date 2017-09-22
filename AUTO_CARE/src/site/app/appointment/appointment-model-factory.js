@@ -5,7 +5,7 @@
 
                 factory.newAppointmentData = function () {
                     var data = {
-//                        "indexNo": null,
+//                      "indexNo": null,
                         "item": null,
                         "vehicle": null,
                         "branch": null,
@@ -17,6 +17,7 @@
                         "vehicleNo": null,
                         "vehicleModel": null,
                         "status": null,
+                        "priceFree": false,
                         bayDetails: [
 //                            {
 //                                indexNo: null,

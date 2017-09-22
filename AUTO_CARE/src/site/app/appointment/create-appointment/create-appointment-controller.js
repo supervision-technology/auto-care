@@ -45,6 +45,8 @@
                                     $scope.model.ui.selectedBayUwIndex = {};
                                     $scope.model.ui.selectedBayBwIndex = {};
                                     $scope.model.ui.selectedBayQdIndex = {};
+                                    $scope.model.appointmentData.priceFree = false;
+                                    $scope.model.priceCategoryList = [];
                                     Notification.success("Appointment save Success");
                                 }, function () {
                                     Notification.error("Appointment save Fail");
@@ -60,7 +62,6 @@
 
                 // select job item 
                 $scope.ui.selectItem = function (item) {
-                    console.log(item)
                     $scope.itemType = item.type;
                     $scope.model.tempdata.appointmentItem = item.indexNo;
                     $scope.ui.selectedDataIndex = item.indexNo;
@@ -81,9 +82,21 @@
 
                 //select price category
                 $scope.ui.selectPriceCategory = function (category) {
-                    //set value save obejct
-                    $scope.model.appointmentData.priceCategory = category.priceCategory;
-                    $scope.model.ui.selectedIndex = category.priceCategory;
+                    if ($scope.model.appointmentData.priceFree === false) {
+                        //set value save obejct
+                        $scope.model.appointmentData.priceCategory = category.priceCategory;
+                        $scope.model.ui.selectedIndex = category.priceCategory;
+                    } else {
+                        Notification.error("can't select price");
+                    }
+
+                };
+
+                $scope.ui.selectCheckFree = function (value) {
+                    if (value === true) {
+                        $scope.model.ui.selectedIndex = null;
+                        $scope.model.appointmentData.priceCategory = null;
+                    }
                 };
 
                 //bay select lube
@@ -91,7 +104,7 @@
                     if ($scope.ui.validation()) {
                         if (!bay.vehicle && $scope.itemType === 'full_service') {
                             $scope.model.appointmentData.bayDetails = [];
-                            $scope.model.tempdata.inTime = bay.time;
+                            $scope.model.appointmentData.inTime = bay.time;
                             $scope.model.ui.selectedBayLubeIndex = bay.time;
                             //set value save obejct
                             $scope.model.tempdata.appointmentBay = bay.indexNo;
@@ -110,7 +123,7 @@
                     if ($scope.ui.validation()) {
                         if (!bay.vehicle && bay.time > '08:00:00' && $scope.itemType === 'full_detailing') {
                             $scope.model.appointmentData.bayDetails = [];
-                            $scope.model.tempdata.inTime = bay.time;
+                            $scope.model.appointmentData.inTime = bay.time;
                             $scope.model.ui.selectedBayUwIndex = bay.time;
                             //set value save obejct
                             $scope.model.tempdata.appointmentBay = bay.indexNo;
@@ -131,7 +144,7 @@
                                     || $scope.itemType === 'quick_detailing' || $scope.itemType === 'express_detailing'
                                     || $scope.itemType === 'interior' || $scope.itemType === 'exterior') {
                                 $scope.model.appointmentData.bayDetails = [];
-                                $scope.model.tempdata.inTime = bay.time;
+                                $scope.model.appointmentData.inTime = bay.time;
                                 var time2 = "00:15:00";
                                 var time = $scope.model.formatTime($scope.model.timestrToSec(bay.time) + $scope.model.timestrToSec(time2));
                                 $scope.model.tempdata.outTime = time;
@@ -171,13 +184,17 @@
                 };
 
                 $scope.ui.selectBayQd = function (bay, index) {
-                    if (bay.vehicle) {
-                        $scope.model.ui.selectedBayQdIndex = bay.time;
-                        //set value save obejct
-                        $scope.model.tempdata.appointmentBay = bay.indexNo;
-                        $scope.model.getBay(bay);
-                    } else {
+                    if (index) {
                         Notification.error("not available");
+                    } else {
+                        if (bay.vehicle) {
+                            $scope.model.ui.selectedBayQdIndex = bay.time;
+                            //set value save obejct
+                            $scope.model.tempdata.appointmentBay = bay.indexNo;
+                            $scope.model.getBay(bay);
+                        } else {
+                            Notification.error("not available");
+                        }
                     }
                 };
 
@@ -404,11 +421,13 @@
 
                 //init
                 $scope.ui.init = function () {
+//                    $scope.model.appointmentData.priceFree = false;
+
                     //bay list
-                    $scope.model.lube =[];
-                    $scope.model.uw= [];
-                    $scope.model.bw= [];
-                    $scope.model.qd=[];
+                    $scope.model.lube = [];
+                    $scope.model.uw = [];
+                    $scope.model.bw = [];
+                    $scope.model.qd = [];
 
                     $scope.ui.bayTime();
                     $scope.ui.mode = "IDEAL";

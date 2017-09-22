@@ -1,7 +1,7 @@
 (function () {
     angular.module("appointmentModuleApprove", ['ui.bootstrap', 'ui-notification']);
     angular.module("appointmentModuleApprove")
-            .controller("appointmentApproveController", function ($scope, appointmentModel, Notification, ConfirmPane) {
+            .controller("appointmentApproveController", function ($scope, appointmentModel, Notification, ConfirmPane, $filter) {
                 $scope.model = new appointmentModel();
                 $scope.ui = {};
 
@@ -37,6 +37,14 @@
                             .discard(function () {
                                 console.log('discard fail');
                             });
+                };
+
+                $scope.ui.filterDate = function (date) {
+                    $scope.filterByDate = $filter('date')(date, 'yyyy/MM/dd');
+                };
+                
+                $scope.ui.filterDateReject = function (date) {
+                    $scope.filterByRejectDate = $filter('date')(date, 'yyyy/MM/dd');
                 };
 
 

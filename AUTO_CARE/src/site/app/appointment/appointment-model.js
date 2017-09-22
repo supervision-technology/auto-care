@@ -41,44 +41,48 @@
 
 
                 appointmentService.loadItem()
-                    .success(function (data) {
-                        that.itemList = data;
-                    });
+                        .success(function (data) {
+                            that.itemList = data;
+                        });
 
                 appointmentService.loadBranch()
-                    .success(function (data) {
-                        that.branchList = data;
-                    });
+                        .success(function (data) {
+                            that.branchList = data;
+                        });
 
                 appointmentService.loadPriceCategory()
-                    .success(function (data) {
-                        that.tempPriceCategoryList = data;
-                    });
+                        .success(function (data) {
+                            that.tempPriceCategoryList = data;
+                        });
+
 
                 appointmentService.loadAppointment()
-                    .success(function (data) {
-                        that.appointmentList = data;
-                    });
+                        .success(function (data) {
+                            angular.forEach(data, function (values) {
+                                values.appointmentDate = $filter('date')(values.appointmentDate, 'yyyy/MM/dd');
+                            });
+                            that.appointmentList = data;
+                        });
 
                 appointmentService.loadAppointmentItem()
-                    .success(function (data) {
-                        that.AppointmentItemList = data;
-                    });
+                        .success(function (data) {
+                            that.AppointmentItemList = data;
+                        });
 
                 appointmentService.loadVehicle()
-                    .success(function (data) {
-                        that.vehicleList = data;
-                    });
+                        .success(function (data) {
+                            that.vehicleList = data;
+                        });
 
                 appointmentService.loadClient()
-                    .success(function (data) {
-                        that.clientList = data;
-                    });
+                        .success(function (data) {
+                            that.clientList = data;
+                        });
 
                 appointmentService.loadVehicleType()
-                    .success(function (data) {
-                        that.vehicleTypeList = data;
-                    });
+                        .success(function (data) {
+                            that.vehicleTypeList = data;
+                        });
 
             },
 
@@ -86,18 +90,24 @@
                 var defer = $q.defer();
                 var that = this;
 
+                //check null vehicle
+                angular.forEach(that.appointmentData.bayDetails, function (values) {
+                    if (values.vehicleNo === null || angular.isUndefined(values.vehicleNo)) {
+                        values.vehicleNo = that.appointmentData.vehicleNo;
+                    }
+                });
 
                 //TODO set values to json object
                 console.log(this.appointmentData)
                 appointmentService.saveAppointment(JSON.stringify(this.appointmentData))
-                    .success(function (data) {
-                        that.appointmentData = {};
-                        that.tempdata = {};
-                        defer.resolve();
-                    })
-                    .error(function (data) {
-                        defer.reject();
-                    });
+                        .success(function (data) {
+                            that.appointmentData = {};
+                            that.tempdata = {};
+                            defer.resolve();
+                        })
+                        .error(function (data) {
+                            defer.reject();
+                        });
                 return defer.promise;
             },
 
@@ -110,16 +120,16 @@
                 var defer = $q.defer();
                 var that = this;
                 appointmentService.deleteAppointment(appointment.indexNo)
-                    .success(function (data) {
-                        appointmentService.loadAppointment()
-                            .success(function (data) {
-                                that.appointmentList = data;
-                            });
-                        defer.resolve();
-                    })
-                    .error(function (data) {
-                        defer.reject();
-                    });
+                        .success(function (data) {
+                            appointmentService.loadAppointment()
+                                    .success(function (data) {
+                                        that.appointmentList = data;
+                                    });
+                            defer.resolve();
+                        })
+                        .error(function (data) {
+                            defer.reject();
+                        });
                 return defer.promise;
             },
 
@@ -159,9 +169,9 @@
             categoryDetailLabel: function (index) {
                 var that = this;
                 appointmentService.loadPriceCategoryDetails(index)
-                    .success(function (data) {
-                        that.priceCategoryList = data;
-                    });
+                        .success(function (data) {
+                            that.priceCategoryList = data;
+                        });
             },
 
             itemNameLabel: function (index) {
@@ -179,10 +189,10 @@
                 var that = this;
 
                 appointmentService.getPriceCategoryByVehicle(model.indexNo)
-                    .success(function (data) {
-                        that.appointmentData.priceCategory = data;
-                        that.ui.selectedIndex = data;
-                    });
+                        .success(function (data) {
+                            that.appointmentData.priceCategory = data;
+                            that.ui.selectedIndex = data;
+                        });
 
                 that.appointmentData.vehicle = model.indexNo;
                 angular.forEach(that.vehicleTypeList, function (value) {
@@ -203,10 +213,10 @@
             getBay: function (bay) {
                 var that = this;
                 appointmentService.loadBay(this.tempdata.appointmentBay)
-                    .success(function (data) {
-                        $rootScope.bay = data;
-                        that.setTempData(bay);
-                    });
+                        .success(function (data) {
+                            $rootScope.bay = data;
+                            that.setTempData(bay);
+                        });
             },
 
             setTempData: function (bay) {
@@ -224,45 +234,46 @@
             },
 
             getBayVehicle: function (branch, date, type) {
+                console.log(date + "selected date")
                 var that = this;
                 appointmentService.loadBayDetails(branch, date)
-                    .success(function (data) {
+                        .success(function (data) {
 //                            that.bayDetailList = data;
-                        angular.forEach(data, function (value) {
+                            angular.forEach(data, function (value) {
 //                                var inTime = $filter('date')(new Date(value.inTime), 'HH:mm');
 
-                            //add lube details
-                            angular.forEach(that.lube, function (lube) {
-                                if (lube.time === value.inTime && value.appointmentBay.name === lube.name) {
-                                    lube.vehicle = value.vehicleNo;
-                                }
-                            });
+                                //add lube details
+                                angular.forEach(that.lube, function (lube) {
+                                    if (lube.time === value.inTime && value.appointmentBay.name === lube.name) {
+                                        lube.vehicle = value.vehicleNo;
+                                    }
+                                });
 
-                            //add uw details
-                            angular.forEach(that.uw, function (uw) {
-                                if (uw.time === value.inTime && value.appointmentBay.name === uw.name) {
-                                    uw.vehicle = value.vehicleNo;
-                                }
-                            });
+                                //add uw details
+                                angular.forEach(that.uw, function (uw) {
+                                    if (uw.time === value.inTime && value.appointmentBay.name === uw.name) {
+                                        uw.vehicle = value.vehicleNo;
+                                    }
+                                });
 
-                            //add bw details
-                            angular.forEach(that.bw, function (bw) {
-                                if (bw.time === value.inTime && value.appointmentBay.name === bw.name) {
-                                    bw.vehicle = value.vehicleNo;
-                                }
-                            });
+                                //add bw details
+                                angular.forEach(that.bw, function (bw) {
+                                    if (bw.time === value.inTime && value.appointmentBay.name === bw.name) {
+                                        bw.vehicle = value.vehicleNo;
+                                    }
+                                });
 
-                            //add qd details
-                            angular.forEach(that.qd, function (qd) {
-                                if (qd.time === value.inTime && value.appointmentBay.name === qd.name) {
-                                    qd.vehicle = value.vehicleNo;
-                                }
+                                //add qd details
+                                angular.forEach(that.qd, function (qd) {
+                                    if (qd.time === value.inTime && value.appointmentBay.name === qd.name) {
+                                        qd.vehicle = value.vehicleNo;
+                                    }
+                                });
+
                             });
+                            that.setAutoAssing(type);
 
                         });
-                        that.setAutoAssing(type);
-
-                    });
 
             },
 
@@ -270,8 +281,8 @@
             timestrToSec: function (timestr) {
                 var parts = timestr.split(":");
                 return (parts[0] * 3600) +
-                    (parts[1] * 60) +
-                    (+parts[2]);
+                        (parts[1] * 60) +
+                        (+parts[2]);
             },
 
             pad: function (num) {
@@ -349,7 +360,7 @@
                                 data4 = value;
                                 //set out time
                                 var time2 = "00:15:00";
-                                var time = that.formatTime(that.timestrToSec( value.time) + that.timestrToSec(time2));
+                                var time = that.formatTime(that.timestrToSec(value.time) + that.timestrToSec(time2));
                                 that.tempdata.outTime = time;
                                 that.ui.selectedBayQdIndex = value.time;
                                 //set value save obejct
@@ -382,7 +393,7 @@
                                 data4 = value;
                                 //set out time
                                 var time2 = "00:15:00";
-                                var time = that.formatTime(that.timestrToSec( value.time) + that.timestrToSec(time2));
+                                var time = that.formatTime(that.timestrToSec(value.time) + that.timestrToSec(time2));
                                 that.tempdata.outTime = time;
                                 that.ui.selectedBayQdIndex = value.time;
                                 //set value save obejct
@@ -417,7 +428,7 @@
                                 data = value;
                                 //set out time
                                 var time2 = "00:15:00";
-                                var time = that.formatTime(that.timestrToSec( value.time) + that.timestrToSec(time2));
+                                var time = that.formatTime(that.timestrToSec(value.time) + that.timestrToSec(time2));
                                 that.tempdata.outTime = time;
                                 that.ui.selectedBayBwIndex = value.time;
                                 //set value save obejct
@@ -490,7 +501,7 @@
                                 data3 = value;
                                 //set out time
                                 var time2 = "00:15:00";
-                                var time = that.formatTime(that.timestrToSec( value.time) + that.timestrToSec(time2));
+                                var time = that.formatTime(that.timestrToSec(value.time) + that.timestrToSec(time2));
                                 that.tempdata.outTime = time;
                                 that.ui.selectedBayQdIndex = value.time;
                                 //set value save obejct
@@ -508,7 +519,7 @@
                                 data2 = value;
                                 //set out time
                                 var time2 = "00:15:00";
-                                var time = that.formatTime(that.timestrToSec( value.time) + that.timestrToSec(time2));
+                                var time = that.formatTime(that.timestrToSec(value.time) + that.timestrToSec(time2));
                                 that.tempdata.outTime = time;
                                 that.ui.selectedBayQdIndex = value.time;
                                 //set value save obejct
@@ -527,7 +538,7 @@
                                 data = value;
                                 //set out time
                                 var time2 = "00:15:00";
-                                var time = that.formatTime(that.timestrToSec( value.time) + that.timestrToSec(time2));
+                                var time = that.formatTime(that.timestrToSec(value.time) + that.timestrToSec(time2));
                                 that.tempdata.outTime = time;
                                 that.ui.selectedBayBwIndex = value.time;
                                 //set value save obejct
@@ -544,7 +555,7 @@
         return itemModel;
     };
     angular.module("appModule")
-        .factory("appointmentModel", factory);
+            .factory("appointmentModel", factory);
 }());
 
 

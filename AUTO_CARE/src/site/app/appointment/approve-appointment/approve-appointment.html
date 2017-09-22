@@ -4,12 +4,15 @@
 <div class="index-content-body">
     <uib-tabset>
         <uib-tab heading="Approved Appointment" index="0" select="ui.toggleType('PENDING');">
-            <div class="col-xs-12 background-light">
+            <div class="col-xs-12 background-light"  style="margin-top: 13px">
+                <div class="col-md-3">
+                    <input class="form-control" id="search" type="date" placeholder="search by date" ng-model="searchDate" ng-change="ui.filterDate(searchDate)">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" id="search" type="text" placeholder="search by vehicle" ng-model="searchVehicle">
+                </div>
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 100px);">
-                        <div class="col-md-6">
-                            <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem">
-                        </div>
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 150px);">
                         <table class="table-rounded">
                             <col style="width: 10%">
                             <col style="width: 10%">
@@ -52,19 +55,19 @@
                                 <col style="width: 30%">
                                 <col style="width: 10%">
                                 <tbody>
-                                    <tr ng-repeat="appointment in model.appointmentList | filter:{'status':'0'} |filter:{'vehicleNo' : searchItem}">
+                                    <tr ng-repeat="appointment in model.appointmentList| filter:{'status':'0'} | filter:{'vehicleNo' : searchVehicle} | filter:{'appointmentDate' : filterByDate}">
                                         <!--<td><label class="label label-default">{{$index +1}}</label></td>-->
                                         <td><label class="label label-default">{{appointment.vehicleNo}}</label></td>
                                         <td>{{appointment.clientName}}</td>
                                         <td>{{appointment.contactNo}}</td>
-                                        <td>{{appointment.appointmentDate| date:"yyyy/MM/dd"}}</td>
+                                        <td>{{appointment.appointmentDate}}</td>
                                         <td>{{appointment.inTime}}</td>
                                         <td>{{model.jobLable(appointment.item)}}</td>
                                         <td>
                                             <!--<button class="btn btn-success" ng-click="ui.approve(appointment)">-->
-                                                <!--<span class="glyphicon glyphicon-ok"></span>-->
+                                            <!--<span class="glyphicon glyphicon-ok"></span>-->
                                             <!--</button>-->
-                                            <button class="btn btn-danger" ng-click="ui.deleteAppointment(appointment,$index)">
+                                            <button class="btn btn-danger" ng-click="ui.deleteAppointment(appointment, $index)">
                                                 <span class="glyphicon glyphicon-remove"></span>
                                             </button>
                                             <!--<a class="btn btn-primary" ng-click="ui.approve(appointment)"><span class="glyphicon glyphicon-edit"></span>Approve</a>-->
@@ -78,12 +81,15 @@
             </div>
         </uib-tab>
         <uib-tab heading="Reject Appointment" index="1" select="ui.toggleType('APPROVED');">
-            <div class="col-xs-12 background-light">
+            <div class="col-xs-12 background-light" style="margin-top: 13px">
+                <div class="col-md-3">
+                    <input class="form-control" id="search" type="date" placeholder="search by date" ng-model="searchRejectDate" ng-change="ui.filterDateReject(searchRejectDate)">
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control" id="search" type="text" placeholder="search by vehicle" ng-model="searchRejectVehicle">
+                </div>
                 <div class="row col-xs-12">
-                    <div style="display: flex; flex-flow: column; height: calc(100vh - 100px);">
-                        <div class="col-md-6">
-                            <input id="search" type="text" placeholder="search" class="search-input" ng-model="searchItem">
-                        </div>
+                    <div style="display: flex; flex-flow: column; height: calc(100vh - 150px);">
                         <table class="table-rounded">
                             <col style="width: 10%">
                             <col style="width: 10%">
@@ -126,7 +132,7 @@
                                 <col style="width: 30%">
                                 <col style="width: 10%">
                                 <tbody>
-                                    <tr ng-repeat="appointment in model.appointmentList | filter:{'status':'1'} |filter:{'vehicleNo' : searchItem}">
+                                    <tr ng-repeat="appointment in model.appointmentList| filter:{'status':'1'} | filter:{'vehicleNo' : searchRejectVehicle} | filter:{'appointmentDate' : filterByRejectDate}">
                                         <!--<td><label class="label label-default">{{$index +1}}</label></td>-->
                                         <td><label class="label label-default">{{appointment.vehicleNo}}</label></td>
                                         <td>{{appointment.clientName}}</td>

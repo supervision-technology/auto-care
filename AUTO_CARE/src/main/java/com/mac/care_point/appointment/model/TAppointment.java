@@ -43,6 +43,10 @@ public class TAppointment implements Serializable {
     @Basic(optional = false)
     @Column(name = "price_category")
     private Integer priceCategory;
+    
+    @Basic(optional = false)
+    @Column(name = "price_free")
+    private Boolean priceFree;
 
     @Basic(optional = false)
     @Column(name = "vehicle")
@@ -194,6 +198,18 @@ public class TAppointment implements Serializable {
 
     public void setStatus(int status) {
         this.status = status;
-    }  
+    } 
+
+    public Boolean getPriceFree() {
+        return priceFree;
+    }
+
+    public void setPriceFree(Boolean priceFree) {
+        this.priceFree = priceFree;
+    }
+
+
+    
+    
 
 }
