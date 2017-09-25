@@ -67,8 +67,11 @@
                                         </td>
                                     </tr>
                                     <tr ng-show="ui.isParameterAvailable('ITEM')">
-                                        <td><label class="control-label">Item</label></td>
-                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.ITEM" ></td>
+                                        <td><label class="control-label">ITEM</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.ITEM"
+                                                   uib-typeahead="item.indexNo as (item.indexNo+ ' - ' +item.name) for item in newModel.itemList |filter:$viewValue |limitTo:10" 
+                                                   typeahead-input-formatter="newModel.itemLable(model.currentReport.parameterValues.ITEM)"
+                                                   ></td>
                                     </tr>
                                     <tr ng-show="ui.isParameterAvailable('SUPPLIER')">
                                         <td><label class="control-label">SUPPLIER</label></td>
@@ -100,6 +103,12 @@
                                         <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.ITEM_CATEGORY" 
                                                    uib-typeahead="itemCateory.indexNo as (itemCateory.indexNo+ ' - ' +itemCateory.name) for itemCateory in newModel.itemCateoryList |filter:$viewValue |limitTo:10" 
                                                    typeahead-input-formatter="newModel.itemCateoryLable(model.currentReport.parameterValues.ITEM_CATEGORY)"
+                                                   ></td>
+                                    <tr ng-show="ui.isParameterAvailable('CATEGORY')">
+                                        <td><label class="control-label">Category</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.CATEGORY" 
+                                                   uib-typeahead="cateory.indexNo as (cateory.indexNo+ ' - ' +cateory.name) for cateory in newModel.categoryList |filter:$viewValue |limitTo:10" 
+                                                   typeahead-input-formatter="newModel.categoryLable(model.currentReport.parameterValues.CATEGORY)"
                                                    ></td>
                                     <tr ng-show="ui.isParameterAvailable('NET_STOCK')">
                                         <td><label class="control-label">Net Stock ></label></td>

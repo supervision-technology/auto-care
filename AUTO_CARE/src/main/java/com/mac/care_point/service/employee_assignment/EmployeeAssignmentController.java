@@ -58,7 +58,8 @@ public class EmployeeAssignmentController {
 
     @RequestMapping(value = "/bay-employee-count/{bay}", method = RequestMethod.GET)
     public Integer getBayAssignEmployeeCount(@PathVariable Integer bay) {
-        return employeeAssignmentService.getBayAssignEmployeeCount(bay, SecurityUtil.getCurrentUser().getBranch());
+        String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        return employeeAssignmentService.getBayAssignEmployeeCount(bay, SecurityUtil.getCurrentUser().getBranch(),date);
     }
     @RequestMapping(value = "/get-assign-employees", method = RequestMethod.GET)
     public List<TEmployeeAssingment> getAssignEmployees() {

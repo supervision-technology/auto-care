@@ -64,6 +64,12 @@
                 this.getItemCateoryList = function () {
                     return $http.get(systemConfig.apiUrl + "/api/care-point/master/item-category");
                 };
+                this.getCategoryList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/category");
+                };
+                this.getItemList = function () {
+                    return $http.get(systemConfig.apiUrl + "/api/care-point/master/item");
+                };
                 this.getEmployeeList = function () {
                     return $http.get(systemConfig.apiUrl + "/api/care-point/master/employee");
                 };

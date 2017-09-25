@@ -16,6 +16,8 @@
                     itemTypeList: [],
                     itemCateoryList: [],
                     employeeList: [],
+                    categoryList: [],
+                    itemList: [],
 
                     constructor: function () {
                         var that = this;
@@ -52,6 +54,14 @@
                                 .success(function (data) {
                                     that.employeeList = data;
                                 });
+                        ReportViewerService.getCategoryList()
+                                .success(function (data) {
+                                    that.categoryList = data;
+                                });
+                        ReportViewerService.getItemList()
+                                .success(function (data) {
+                                    that.itemList = data;
+                                });
                         this.itemTypeList = [
                             {indexNo: 1, name: 'STOCK'},
                             {indexNo: 2, name: 'NON STOCK'}
@@ -82,6 +92,26 @@
                         angular.forEach(this.vehicleCategoryList, function (vehCategory) {
                             if (vehCategory.indexNo === parseInt(id)) {
                                 lable = vehCategory.indexNo + " - " + vehCategory.name;
+                                return;
+                            }
+                        });
+                        return lable;
+                    }
+                    , categoryLable: function (id) {
+                        var lable = '';
+                        angular.forEach(this.categoryList, function (value) {
+                            if (value.indexNo === parseInt(id)) {
+                                lable = value.indexNo + " - " + value.name;
+                                return;
+                            }
+                        });
+                        return lable;
+                    }
+                    , itemLable: function (id) {
+                        var lable = '';
+                        angular.forEach(this.itemList, function (value) {
+                            if (value.indexNo === parseInt(id)) {
+                                lable = value.indexNo + " - " + value.name;
                                 return;
                             }
                         });
