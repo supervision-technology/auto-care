@@ -12,9 +12,9 @@
                     </div>
                     <div ng-repeat="employeeData in model.assignEmployeeList " ng-if="employeeData.bay==bay.indexNo" 
                          ng-drag="{{dragableMode}}" ng-drag-data="employeeData" 
-                         class="tile tile-100 col-lg-6 nopadding" style="border-style: groove;">
+                         class="tile tile-80-90 col-lg-6 nopadding" style="border-style: groove;">
                         <div style="display: block;text-align: center;" class="nopadding">
-                            <img src="{{getEmployee(employeeData.employee).imageData}}" class="img-rounded" alt="non" width="70" height="70"/>
+                            <img src="{{getEmployee(employeeData.employee).imageData}}" class="img-rounded" alt="non" width="50" height="50"/>
                             <h6 class="nopadding"><p style="overflow: hidden ;height: 15px;color: white">{{getEmployee(employeeData.employee).name}}</p></h6>
                         </div>
                     </div>

@@ -51,8 +51,8 @@ public class EmployeeAssignmentService {
         return employeeAssignmentRepository.save(employeeAssingment);
     }
 
-    public Integer getBayAssignEmployeeCount(Integer bay, Integer branch) {
-        return employeeAssignmentRepository.getBayAssignEmployeeCount(branch, bay);
+    public Integer getBayAssignEmployeeCount(Integer bay, Integer branch,String date) {
+        return employeeAssignmentRepository.getBayAssignEmployeeCount(branch, bay,date);
     }
 
     public List<TEmployeeAssingment> getAssignEmployees(String date, Integer branch) {

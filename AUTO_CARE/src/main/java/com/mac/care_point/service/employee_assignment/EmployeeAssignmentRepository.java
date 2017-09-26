@@ -27,8 +27,9 @@ public interface EmployeeAssignmentRepository extends JpaRepository<TEmployeeAss
             + "   where m_bay.index_no=t_employee_assingment.bay\n"
             + "	and m_bay.branch=:branch\n"
             + "   and t_employee_assingment.bay=:bay\n"
+            + "and t_employee_assingment.date=:date\n"
             + "   and t_employee_assingment.out_time is null", nativeQuery = true)
-    public Integer getBayAssignEmployeeCount(@Param("branch") Integer branch, @Param("bay") Integer bay);
+    public Integer getBayAssignEmployeeCount(@Param("branch") Integer branch, @Param("bay") Integer bay,@Param("date")String date);
 
     @Query(value = "SELECT\n"
             + "*\n"
