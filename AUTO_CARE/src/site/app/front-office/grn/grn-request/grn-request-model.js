@@ -225,11 +225,11 @@
                                     .success(function (data) {
                                         Notification.success('GRN Receive Save Success !');
                                         that.clear();
-                                        defer.resolve();
+                                        defer.resolve(data);
                                     })
                                     .error(function (data) {
                                         Notification.error('GRN Receive Save Fail !');
-                                        defer.reject();
+                                        defer.reject(data);
                                     });
 //                        console.log(this.data);
                             return defer.promise;

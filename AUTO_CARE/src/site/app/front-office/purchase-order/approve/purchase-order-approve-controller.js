@@ -1,10 +1,19 @@
 (function () {
     angular.module("purchaseOrderApproveModule", ['ui.bootstrap']);
     angular.module("purchaseOrderApproveModule")
-            .controller("purchaseOrderApproveController", function ($scope, $filter, $timeout, purchaseOrderApproveModel, Notification, ConfirmPane) {
+            .controller("purchaseOrderApproveController", function ($scope, $filter, $uibModal, $sce, $timeout, purchaseOrderApproveModel, PurchaseOrderRequestService, Notification, ConfirmPane) {
                 $scope.model = new purchaseOrderApproveModel();
                 $scope.ui = {};
                 $scope.ui.selectedDetailIndex = -1;
+
+                $scope.printModel = {};
+
+                $scope.printModel.currentReportGroup = {};
+                $scope.printModel.currentReport = {
+                    "report": null,
+                    "parameters": null,
+                    "parameterValues": {}
+                };
 
                 $scope.ui.selectPurchaseOrder = function (purchaseOrder) {
                     $scope.model.selectPurchaseOrder(purchaseOrder);
@@ -41,16 +50,16 @@
                 };
                 $scope.ui.discard = function () {
                     if ($scope.model.data.indexNo) {
-                    ConfirmPane.dangerConfirm("Delete Selected Purchase Order !")
-                            .confirm(function () {
-                                $scope.model.discard();
-                                $scope.chxNBT = false;
-                                $scope.chxVAT = false;
-                            })
-                            .discard(function () {
-                                console.log('discard fail');
-                            });
-                    }else{
+                        ConfirmPane.dangerConfirm("Delete Selected Purchase Order !")
+                                .confirm(function () {
+                                    $scope.model.discard();
+                                    $scope.chxNBT = false;
+                                    $scope.chxVAT = false;
+                                })
+                                .discard(function () {
+                                    console.log('discard fail');
+                                });
+                    } else {
                         Notification.error('Please Select Porchase Order to Delete !')
                     }
 
@@ -88,10 +97,10 @@
                     $scope.ui.calculateVAT($scope.model.data.vat);
                 };
                 $scope.ui.calculateNBT = function () {
-                    $scope.model.data.nbtValue = ($scope.model.data.itemValue * $scope.model.data.nbt) / 100;
-                    $scope.model.data.grandTotal = $scope.model.data.itemValue + $scope.model.data.nbtValue;
-                    $scope.model.data.vatValue = null;
-                    $scope.model.data.vat = null;
+                    $scope.model.data.nbtValue = (($scope.model.data.itemValue * $scope.model.data.nbt) / 100).toFixed(2);
+                    $scope.model.data.grandTotal = parseFloat($scope.model.data.itemValue) + parseFloat($scope.model.data.nbtValue);
+                    $scope.model.data.vatValue = 0;
+                    $scope.model.data.vat = 0;
                 };
                 $scope.ui.calculateVAT = function (vatRate) {
                     var nbtValue = $scope.model.data.nbtValue;
@@ -99,26 +108,26 @@
                     if (!$scope.model.data.nbtValue) {
                         nbtValue = 0.00;
                     }
-                    $scope.model.data.vatValue = (($scope.model.data.itemValue + nbtValue) * vatRate) / 100;
-                    $scope.model.data.grandTotal = $scope.model.data.itemValue + nbtValue + $scope.model.data.vatValue;
+                    $scope.model.data.vatValue = (((parseFloat($scope.model.data.itemValue) + parseFloat(nbtValue)) * parseFloat(vatRate)) / 100).toFixed(2);
+                    $scope.model.data.grandTotal = parseFloat($scope.model.data.itemValue) + parseFloat(nbtValue) + parseFloat($scope.model.data.vatValue);
                 };
                 $scope.ui.calculatedValue = function () {
-                    $scope.model.tempData.value = $scope.model.tempData.qty * $scope.model.tempData.price;
+                    $scope.model.tempData.value = ($scope.model.tempData.qty * $scope.model.tempData.price).toFixed(2);
                     $scope.model.tempData.discountValue = 0;
                     $scope.model.tempData.discount = 0;
                     $scope.model.tempData.netValue = $scope.model.tempData.value;
                 };
                 $scope.ui.calculateDiscountWithRate = function () {
-                    $scope.model.tempData.discountValue = ($scope.model.tempData.value * $scope.model.tempData.discount) / 100;
-                    $scope.model.tempData.netValue = $scope.model.tempData.value - $scope.model.tempData.discountValue;
+                    $scope.model.tempData.discountValue = (($scope.model.tempData.value * $scope.model.tempData.discount) / 100).toFixed(2);
+                    $scope.model.tempData.netValue = parseFloat($scope.model.tempData.value) - parseFloat($scope.model.tempData.discountValue);
                 };
                 $scope.ui.calculateDiscountWithValue = function () {
-                    $scope.model.tempData.discount = ($scope.model.tempData.discountValue * 100) / $scope.model.tempData.value;
-                    $scope.model.tempData.netValue = $scope.model.tempData.value - $scope.model.tempData.discountValue;
+                    $scope.model.tempData.discount = (($scope.model.tempData.discountValue * 100) / $scope.model.tempData.value).toFixed(2);
+                    $scope.model.tempData.netValue = parseFloat($scope.model.tempData.value) - parseFloat($scope.model.tempData.discountValue);
                 };
                 $scope.ui.priceChange = function () {
                     if ($scope.model.tempData.qty) {
-                        $scope.model.tempData.value = $scope.model.tempData.qty * $scope.model.tempData.price;
+                        $scope.model.tempData.value = ($scope.model.tempData.qty * $scope.model.tempData.price).toFixed(2);
                         $scope.model.tempData.netValue = $scope.model.tempData.value;
                     } else {
                         $scope.model.tempData.value = 0.00;
@@ -136,17 +145,66 @@
                     ConfirmPane.primaryConfirm("Save Purchase Order Request !")
                             .confirm(function () {
                                 $scope.model.save()
-                                        .then(function () {
+                                        .then(function (data) {
                                             $scope.ui.mode = "NEW";
-                                            Notification.success("Purchase Order Approved !");
+                                            Notification.success(data.number +" Purchase Order Approved !");
                                             $scope.chxNBT = false;
                                             $scope.chxVAT = false;
+                                            ConfirmPane.successConfirm("Do You Want To Print Purchase Order !")
+                                                    .confirm(function () {
+                                                        $scope.ui.modalOpen(data.indexNo);
+                                                    });
                                         });
                             })
                             .discard(function () {
                                 Notification.error("Purchase Order Approved Fail !");
                                 console.log('fail');
+                                
                             });
+                };
+
+                $scope.ui.modalOpen = function (indexNo) {
+
+//---------------------------------- invoice ----------------------------------
+                    var reportName = "Purchase_Order";
+                    //get report details
+                    PurchaseOrderRequestService.reportData(reportName)
+                            .success(function (data) {
+                                $scope.printModel.currentReport.report = data;
+
+                                //get report paramiters
+                                PurchaseOrderRequestService.listParameters(data)
+                                        .success(function (data) {
+                                            $scope.printModel.currentReport.parameters = data;
+                                        });
+
+                                //set paramiters values
+                                $scope.printModel.currentReport.parameterValues.PO_NO = indexNo;
+
+                                //view reports
+                                PurchaseOrderRequestService.viewReport(
+                                        $scope.printModel.currentReport.report,
+                                        $scope.printModel.currentReport.parameters,
+                                        $scope.printModel.currentReport.parameterValues
+                                        )
+                                        .success(function (response) {
+                                            var file = new Blob([response], {type: 'application/pdf'});
+                                            var fileURL = URL.createObjectURL(file);
+
+                                            $scope.content = $sce.trustAsResourceUrl(fileURL);
+
+                                            $uibModal.open({
+                                                animation: true,
+                                                ariaLabelledBy: 'modal-title',
+                                                ariaDescribedBy: 'modal-body',
+                                                templateUrl: 'purchase_order_popup.html',
+                                                scope: $scope,
+                                                size: 'lg'
+                                            });
+
+                                        });
+                            });
+//---------------------------------- end invoice ----------------------------------
                 };
 
                 $scope.init = function () {

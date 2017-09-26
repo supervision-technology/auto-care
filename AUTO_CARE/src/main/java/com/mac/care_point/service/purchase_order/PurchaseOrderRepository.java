@@ -176,7 +176,8 @@ public interface PurchaseOrderRepository extends JpaRepository<TPurchaseOrder, I
 "       m_re_order_level\n" +
 "       left JOIN m_branch on m_branch.index_no =m_re_order_level.branch\n" +
 "       left JOIN m_item on m_item.index_no=m_re_order_level.item\n" +
-"       left JOIN m_supplier on m_supplier.index_no=m_item.supplier", nativeQuery = true)
+"       left JOIN m_supplier on m_supplier.index_no=m_item.supplier\n"+
+  "          HAVING item_name is not null ", nativeQuery = true)
     public List<Object[]> getOrderRequestItems();
     
     

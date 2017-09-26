@@ -36,7 +36,7 @@
                                 .success(function (data) {
                                     that.allItems = data;
                                 });
-                        that.loadReOrderItem();
+//                        that.loadReOrderItem();
                     },
                     supplierLable: function (model) {
                         var label;
@@ -157,6 +157,11 @@
                         this.tempData = this.data.purchaseOrderItemList[indexNo];
                         this.data.purchaseOrderItemList.splice(indexNo, 1);
                         this.summaryCalculator();
+                    },
+                    removeAll: function () {
+                        this.data = PurchaseOrderRequestModelFactory.newData();
+                        this.tempData = PurchaseOrderRequestModelFactory.tempData();
+                        this.summaryData = PurchaseOrderRequestModelFactory.summaryData();
                     },
 
                     delete: function (indexNo) {
@@ -321,10 +326,10 @@
                                     "barcode": item.barcode,
                                     "price": item.supplierPrice,
                                     "qty": value.netRequiredQty,
-                                    "value": parseFloat(item.supplierPrice) * parseFloat(value.netRequiredQty),
+                                    "value": (parseFloat(item.supplierPrice) * parseFloat(value.netRequiredQty)).toFixed(2),
                                     "discount": item.discount,
-                                    "discountValue": (parseFloat(value.netRequiredQty) * parseFloat(item.supplierPrice)) * parseFloat(item.discount) / 100,
-                                    "netValue": parseFloat(item.supplierPrice) * parseFloat(value.netRequiredQty) - (parseFloat(value.netRequiredQty) * parseFloat(item.supplierPrice)) * parseFloat(item.discount) / 100,
+                                    "discountValue": ((parseFloat(value.netRequiredQty) * parseFloat(item.supplierPrice)) * parseFloat(item.discount) / 100).toFixed(2),
+                                    "netValue":(parseFloat(item.supplierPrice) * parseFloat(value.netRequiredQty) - (parseFloat(value.netRequiredQty) * parseFloat(item.supplierPrice)) * parseFloat(item.discount) / 100).toFixed(2),
                                     "stockQty": value.stockQty,
                                     "orderQty": value.netRequiredQty,
                                     "recieveQty": 0,
@@ -393,6 +398,11 @@
                             this.reOrderTempData = PurchaseOrderRequestModelFactory.reOrderTempData();
                             this.summaryCalculator();
                         }
+                    },
+                    selectRequiredItems: function () {
+//                        if (!this.reOrderData) {
+//                            this.reOrderData = PurchaseOrderRequestModelFactory.reOrderData();
+//                        }
                     }
 
                 };

@@ -49,7 +49,7 @@
                 </table>
             </div>
             
-            <div class="smart-scroll-y" style="height: calc(100vh - 158px);" ng-show="model.pendingPurchaseOrderList.length" >
+            <div class="smart-scroll-y" style="height: calc(100vh - 158px);" ng-show="model.pendingPurchaseOrderList.length" ng-class="{'disabled-tiles': ui.mode !== 'NEW'}">
                 <table class="table-rounded control-table table-hover">
                     <col style="width: 100%"/>
                     <tbody>
@@ -172,7 +172,7 @@
                                                   ng-disabled="true"></td>
                             <td>QTY<input class="form-control" id="qty" placeholder="receive qty" ng-model="model.tempData.receiveQty" ng-disabled="ui.mode !== 'NEW'"></td>
                             <td>
-                                <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.addData()">
+                                <a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.addData()" ng-disabled="ui.mode !== 'NEW'">
                                     <span class="glyphicon glyphicon-plus">
                                     </span>
                                 </a> 
@@ -184,10 +184,10 @@
             <div class="col-sm-12 nopadding" ng-show="model.purchaseOrderItemList.length">
 
                 <table class="table-rounded">
-                    <col style="width: 20%"/>
-                    <col style="width: 30%"/>
-                    <col style="width: 15%"/>
-                    <col style="width: 20%"/>
+                    <col style="width: 10%"/>
+                    <col style="width: 45%"/>
+                    <col style="width: 10%"/>
+                    <col style="width: 10%"/>
 
                     <thead class="background-dark">
                         <tr>
@@ -200,10 +200,10 @@
                 </table>
                 <div class="smart-scroll-y" style="height: calc(100vh - 285px);">
                     <table class="table-rounded table-hover">
-                        <col style="width: 20%"/>
-                        <col style="width: 30%"/>
-                        <col style="width: 15%"/>
-                        <col style="width: 20%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 45%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 10%"/>
                         <tbody>
                             <tr ng-repeat="approvedItem in model.purchaseOrderItemList | filter:{status:'APPROVED'}" ng-if="approvedItem.balanceQty > 0">
                                 <td><span class="label label-default">{{model.getItemObject(approvedItem.item).barcode}}</span></td>
@@ -246,17 +246,17 @@
             <div class="col-sm-12 nopadding" ng-show="model.data.grnItemList.length">
 
                 <table class="table-rounded">
-                    <col style="width: 30%"/>
-                    <col style="width: 30%"/>
                     <col style="width: 15%"/>
-                    <col style="width: 15%"/>
+                    <col style="width: 50%"/>
+                    <col style="width: 10%"/>
+                    <col style="width: 10%"/>
                     <col style="width: 10%"/>
 
                     <thead class="background-dark">
                         <tr>
                             <th>Barcode</th>
                             <th>Description</th>
-                            <th>PO No</th>
+                            <th class="text-right">P.O</th>
                             <th class="text-right">Qty</th>
                             <th>&nbsp;</th>
                         </tr>
@@ -264,10 +264,10 @@
                 </table>
                 <div class="smart-scroll-y" style="height: calc(100vh - 200px);">
                     <table class="table-rounded table-hover">
-                        <col style="width: 30%"/>
-                        <col style="width: 30%"/>
                         <col style="width: 15%"/>
-                        <col style="width: 15%"/>
+                        <col style="width: 50%"/>
+                        <col style="width: 10%"/>
+                        <col style="width: 10%"/>
                         <col style="width: 10%"/>
                         <tbody>
                             <tr ng-repeat="grnItem in model.data.grnItemList">
@@ -314,3 +314,10 @@
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
+<script type="text/ng-template" id="grn_recieve_popup.html"> 
+    {{content}}
+    <div class="col-lg-12">
+    <object data="{{content}}" class="smart-scroll-y" type="application/pdf" style="width:100%;height: calc(100vh - 69px);">
+    </object>
+    </div>
+</script>
