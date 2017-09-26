@@ -15,11 +15,11 @@
                     <div style="display: flex; flex-flow: column; height: calc(100vh - 150px);">
                         <table class="table-rounded">
                             <col style="width: 10%">
-                            <col style="width: 10%">
+                            <col style="width: 20%">
                             <col style="width: 10%">
                             <col style="width: 15%">
                             <col style="width: 15%">
-                            <col style="width: 30%">
+                            <col style="width: 20%">
                             <col style="width: 10%">
                             <thead class="background-dark">
                                 <tr>
@@ -48,11 +48,11 @@
                         <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
-                                <col style="width: 10%">
+                                <col style="width: 20%">
                                 <col style="width: 10%">
                                 <col style="width: 15%">
                                 <col style="width: 15%">
-                                <col style="width: 30%">
+                                <col style="width: 20%">
                                 <col style="width: 10%">
                                 <tbody>
                                     <tr ng-repeat="appointment in model.appointmentList| filter:{'status':'0'} | filter:{'vehicleNo' : searchVehicle} | filter:{'appointmentDate' : filterByDate}">
@@ -92,11 +92,11 @@
                     <div style="display: flex; flex-flow: column; height: calc(100vh - 150px);">
                         <table class="table-rounded">
                             <col style="width: 10%">
-                            <col style="width: 10%">
+                            <col style="width: 20%">
                             <col style="width: 10%">
                             <col style="width: 15%">
                             <col style="width: 15%">
-                            <col style="width: 30%">
+                            <col style="width: 20%">
                             <col style="width: 10%">
                             <thead class="background-dark">
                                 <tr>
@@ -125,11 +125,11 @@
                         <div class="smart-scroll-y" style="height: calc(100vh - 100px);">
                             <table class="table-rounded">
                                 <col style="width: 10%">
-                                <col style="width: 10%">
+                                <col style="width: 20%">
                                 <col style="width: 10%">
                                 <col style="width: 15%">
                                 <col style="width: 15%">
-                                <col style="width: 30%">
+                                <col style="width: 20%">
                                 <col style="width: 10%">
                                 <tbody>
                                     <tr ng-repeat="appointment in model.appointmentList| filter:{'status':'1'} | filter:{'vehicleNo' : searchRejectVehicle} | filter:{'appointmentDate' : filterByRejectDate}">
@@ -152,9 +152,9 @@
             </div>
         </uib-tab>
     </uib-tabset>
-    <!--    <div class="fab-container">
-            <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEMS'" ng-click="ui.saveItems()"><i class="glyphicon glyphicon-floppy-save"></i></a>
-            <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'PRICE_CATEGORY_DETAIL'" ng-click="ui.savePriceCategoryDetail()"><i class="glyphicon glyphicon-floppy-save"></i></a>
-            <a class="fab fab-lg fab-primary" fab-show="ui.mode ==='IDEAL'" ng-click="ui.new()"><i class="glyphicon glyphicon-plus"></i></a>
-        </div>-->
+    <div class="fab-container">
+        <a class="fab fab-lg fab-success" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'ITEMS'"><i class="glyphicon glyphicon-floppy-save"></i></a>
+        <a class="fab fab-lg fab-default" fab-show="ui.mode ==='EDIT' && ui.saveMode === 'PRICE_CATEGORY_DETAIL'"><i class="glyphicon glyphicon-floppy-save"></i></a>
+        <a class="fab fab-lg fab-primary" fab-show="ui.mode ==='IDEAL'"><i class="glyphicon glyphicon-plus"></i></a>
+    </div>
 </div>

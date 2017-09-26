@@ -91,6 +91,10 @@ public class TAppointment implements Serializable {
     @Basic(optional = false)
     @Column(name = "status")
     private int status;
+    
+    @Basic(optional = false)
+    @Column(name = "day_complete")
+    private int dayComplete;
  
 
     public TAppointment() {
@@ -208,7 +212,15 @@ public class TAppointment implements Serializable {
         this.priceFree = priceFree;
     }
 
+    public int getDayComplete() {
+        return dayComplete;
+    }
 
+    public void setDayComplete(int dayComplete) {
+        this.dayComplete = dayComplete;
+    }
+
+    
     
     
 

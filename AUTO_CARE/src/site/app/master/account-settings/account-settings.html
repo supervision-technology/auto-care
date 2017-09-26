@@ -1,0 +1,60 @@
+<div class="index-content-header">
+</div>
+
+<div class="index-content-body">
+    <div class="col-xs-4 background-dark">
+        <div style="display: flex; flex-flow: column; height: calc(100vh - 52px);">
+
+            <div class="col-xs-12" style="margin-top: 25px;">
+                <label>Account: </label>
+                <input id="brandText" type="text" class="form-control" ng-model="model.brand.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+            </div>
+            <div class="col-xs-12" style="margin-top: 25px;">
+                <label>name: </label>
+                <input id="brandText" type="text" class="form-control" ng-model="model.brand.name" ng-disabled="ui.mode !== 'NEW' && ui.mode !== 'EDIT'" />
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xs-8 background-light">
+        <div class="row col-xs-5">
+            <input type="text" class="search-input" ng-model="model.search.name" placeholder="search">
+        </div>
+        <table class="table-rounded">
+            <col style="width: 30%">
+            <col style="width: 30%">
+            <col style="width: 30%">
+            <thead class="background-dark"> 
+                <tr>
+                    <th>#</th>
+                    <th>Account</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 220px);">
+            <table class="table-rounded">
+                <col style="width: 30%">
+                <col style="width: 30%">
+                <col style="width: 30%">
+                <col style="width: 10%">
+                <tbody>
+                    <tr ng-repeat="brand in model.brandList|filter :{name:model.search.name}">
+                        <td>{{brand.indexNo}}</td>
+                        <td>{{brand.name}}</td>
+                        <td class="text-right" style="padding-left: 5px;">
+                            <a class="btn btn-primary" ng-click="ui.edit(brand, $index)"><span class="glyphicon glyphicon-edit"></span></a>
+                            <a class="btn btn-danger" ng-click="http.deleteBrand(brand.indexNo, $index)"><span class="glyphicon glyphicon-trash"></span></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="fab-container">
+    <!--<a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>-->
+    <a class="fab fab-lg fab-primary" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

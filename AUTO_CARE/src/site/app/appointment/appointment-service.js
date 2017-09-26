@@ -7,6 +7,16 @@
         this.loadAppointment = function () {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment");
         };
+        
+        //load rejected appointment by branch
+        this.loadAppointmentByBranch = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment/all-appointment");
+        };
+
+        //load approved appointment by branch
+//        this.loadApprovedAppointment = function () {
+//            return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/appointment/approved-appointment/" + "0");
+//        };
 
         //save appointment
         this.saveAppointment = function (data) {
