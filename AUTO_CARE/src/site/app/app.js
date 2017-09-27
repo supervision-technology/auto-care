@@ -9,6 +9,7 @@
         "serviceSelectionModule",
         "requestItemModule",
         "invoiceModule",
+        "itemSalesModule",
         "bayItemIssueModule",
         "finalCheckListModule",
         "customerSatisfactionModule",
@@ -129,6 +130,10 @@
                         .when("/front-office/invoice", {
                             templateUrl: "app/front-office/invoice/invoice.html",
                             controller: "invoiceController"
+                        })
+                        .when("/front-office/item-sales", {
+                            templateUrl: "app/front-office/item-sales/item-sales.html",
+                            controller: "itemSalesController"
                         })
                         .when("/front-office/payment-voucher", {
                             templateUrl: "app/front-office/payment-voucher/payment-voucher.html",

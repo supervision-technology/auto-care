@@ -195,10 +195,10 @@
                         var discount = 0;
                         var itemValue = 0;
                         angular.forEach(this.data.purchaseOrderItemList, function (value) {
-                            qty = parseFloat(qty) + parseFloat(value.qty);
-                            val = parseFloat(val) + parseFloat(value.value);
-                            discount = parseFloat(discount) + parseFloat(value.discountValue);
-                            itemValue = parseFloat(itemValue) + parseFloat(value.netValue);
+                            qty = (parseFloat(qty) + parseFloat(value.qty)).toFixed(2);
+                            val = (parseFloat(val) + parseFloat(value.value)).toFixed(2);
+                            discount = (parseFloat(discount) + parseFloat(value.discountValue)).toFixed(2);
+                            itemValue = (parseFloat(itemValue) + parseFloat(value.netValue)).toFixed(2);
                         });
                         this.summaryData.qty = qty;
                         this.summaryData.value = val;
@@ -212,10 +212,10 @@
                         var discount = 0;
                         var itemValue = 0;
                         angular.forEach(this.data.purchaseOrderItemList, function (value) {
-                            qty = parseFloat(qty) + parseFloat(value.qty);
-                            val = parseFloat(val) + parseFloat(value.value);
-                            discount = parseFloat(discount) + parseFloat(value.discountValue);
-                            itemValue = parseFloat(itemValue) + parseFloat(value.netValue);
+                            qty = (parseFloat(qty) + parseFloat(value.qty)).toFixed(2);
+                            val = (parseFloat(val) + parseFloat(value.value)).toFixed(2);
+                            discount = (parseFloat(discount) + parseFloat(value.discountValue)).toFixed(2);
+                            itemValue = (parseFloat(itemValue) + parseFloat(value.netValue)).toFixed(2);
                         });
                         this.summaryData.qty = qty;
                         this.summaryData.value = val;
@@ -297,19 +297,14 @@
                         return that.data.number;
                     },
                     loadReOrderItem: function () {
-//                        var defer = $q.defer();
                         var that = this;
                         PurchaseOrderRequestService.loadReOrderItem()
                                 .success(function (data) {
                                     that.reOrderItems = data;
                                     console.log(data);
                                     console.log("data");
-//                                    defer.resolve();
                                 });
-//                                .error(function (data) {
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
+//                                
                     },
                     selectAllReOrderItem: function (reOrderIndexNo) {
                         var that = this;
