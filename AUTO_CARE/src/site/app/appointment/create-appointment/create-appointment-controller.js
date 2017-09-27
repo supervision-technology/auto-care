@@ -199,9 +199,9 @@
                     }
                 };
 
-                $scope.ui.selectBranch = function (branch) {
+                $scope.ui.selectBranch = function ($item, $model, $label) {
                     $scope.model.appointmentData.appointmentDate = null;
-                    $rootScope.branch = branch;
+                    $rootScope.branch = $model;
                 };
 
                 $scope.ui.selectDate = function (date) {
