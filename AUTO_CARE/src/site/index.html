@@ -72,6 +72,7 @@
                                 <li><a href="#/accounts/deposit" ng-click="toggleHamburger('Deposit');">Deposit</a></li>    
                                 <li><a href="#/accounts/payment-to-diposit" ng-click="toggleHamburger('Payment To Diposit');">Payment To Diposit</a></li>    
                                 <li><a href="#/accounts/return-cheque" ng-click="toggleHamburger('Return Cheque');">Return Cheque</a></li>    
+                                <li><a href="#/accounts/journal" ng-click="toggleHamburger('Journal');">Journal</a></li> 
                             </ul>
                         </li>
                         <li>
@@ -218,15 +219,15 @@
         <!-- inject:js -->
         <!-- endinject -->
         <script type="text/javascript">
-            document.addEventListener("DOMContentLoaded", function (event) {
-                setTimeout(function () {
-                    var element = document.getElementById("page-loading");
-                    element.className += " exit";
-                    setTimeout(function () {
-                        element.parentNode.removeChild(element);
-                    }, 250);
-                }, 1000);
-            });
+                    document.addEventListener("DOMContentLoaded", function (event) {
+                        setTimeout(function () {
+                            var element = document.getElementById("page-loading");
+                            element.className += " exit";
+                            setTimeout(function () {
+                                element.parentNode.removeChild(element);
+                            }, 250);
+                        }, 1000);
+                    });
         </script>
     </body>
 </html>

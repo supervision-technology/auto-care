@@ -147,7 +147,7 @@
                             templateUrl: "app/front-office/bay-item-issue/bay-item-issue.html",
                             controller: "bayItemIssueController"
                         })
-                        
+
                         //finger-print-manual
                         .when("/front-office/finger-print-manual", {
                             templateUrl: "app/front-office/finger-print-manual/finger-print-manual.html",
@@ -276,6 +276,14 @@
                             templateUrl: "app/master/re-order-level/re-order-level.html",
                             controller: "reOrderLevelController"
                         })
+                        .when("/master/account", {
+                            templateUrl: "app/master/account/account.html"
+//                            controller: "reOrderLevelController"
+                        })
+                        .when("/master/account-settings", {
+                            templateUrl: "app/master/account-settings/account-settings.html"
+//                            controller: "reOrderLevelController"
+                        })
 
                         //stock transfer
                         //branch-transfer-out
@@ -340,6 +348,10 @@
                         })
                         .when("/accounts/payment-to-diposit", {
                             templateUrl: "app/accounts/payment-to-deposit/payment-to-deposit.html"
+//                            controller: "chequeController"
+                        })
+                        .when("/accounts/journal", {
+                            templateUrl: "app/accounts/journal/journal.html"
 //                            controller: "chequeController"
                         })
                         .otherwise({
