@@ -20,6 +20,16 @@
                 $scope.ui.edit = function (indexNo) {
                     $scope.model.edit(indexNo);
                 };
+                $scope.ui.removeAll = function () {
+                    ConfirmPane.primaryConfirm("Do you want to remove all !")
+                            .confirm(function () {
+                                $scope.model.removeAll();
+                                $scope.ui.mode="IDEAL";
+                            });
+                };
+                $scope.ui.selectRequiredItems=function (){
+                  $scope.model.selectRequiredItems();  
+                };
 
                 $scope.ui.delete = function (indexNo) {
                     $scope.model.delete(indexNo);
@@ -117,7 +127,7 @@
                     }
                 };
                 $scope.ui.calculatedValue = function () {
-                    $scope.model.tempData.value = $scope.model.tempData.qty * $scope.model.tempData.price;
+                    $scope.model.tempData.value = ($scope.model.tempData.qty * $scope.model.tempData.price).toFixed(2);
 //                    $scope.model.tempData.discountValue = 0;
 //                    $scope.model.tempData.discount = 0;
                     $scope.model.tempData.netValue = $scope.model.tempData.value;
@@ -171,7 +181,7 @@
                     $scope.model.data.vatValue = (($scope.model.data.itemValue + nbtValue) * vatRate) / 100;
                     $scope.model.data.grandTotal = $scope.model.data.itemValue + nbtValue + $scope.model.data.vatValue;
                 };
-                
+
                 $scope.modalOpen = function () {
                     if ($scope.model.tempData.item) {
                         $scope.model.getBranchesStock();

@@ -40,18 +40,18 @@
 //                    $scope.model.discard();
                 };
                 $scope.ui.valueCalculater = function (price) {
-                    $scope.model.tempData.value = price * $scope.model.tempData.qty;
-                    $scope.model.tempData.netValue = $scope.model.tempData.value;
+                    $scope.model.tempData.value = parseFloat((price * $scope.model.tempData.qty).toFixed(2));
+                    $scope.model.tempData.netValue = $scope.model.tempData.value.toFixed(2);
                     $scope.model.tempData.discount = 0;
                     $scope.model.tempData.discountValue = 0;
                 };
                 $scope.ui.discountCalculator = function () {
-                    $scope.model.tempData.discountValue = ($scope.model.tempData.value * $scope.model.tempData.discount) / 100;
-                    $scope.model.tempData.netValue = $scope.model.tempData.value - $scope.model.tempData.discountValue;
+                    $scope.model.tempData.discountValue = (parseFloat($scope.model.tempData.value) * parseFloat($scope.model.tempData.discount) / 100).toFixed(2);
+                    $scope.model.tempData.netValue = (parseFloat($scope.model.tempData.value) - parseFloat($scope.model.tempData.discountValue));
                 };
                 $scope.ui.discountValueCalculator = function () {
-                    $scope.model.tempData.discount = ($scope.model.tempData.discountValue * 100) / $scope.model.tempData.value;
-                    $scope.model.tempData.netValue = $scope.model.tempData.value - $scope.model.tempData.discountValue;
+                    $scope.model.tempData.discount = parseFloat((($scope.model.tempData.discountValue * 100) / $scope.model.tempData.value).toFixed(2));
+                    $scope.model.tempData.netValue = parseFloat($scope.model.tempData.value) - parseFloat($scope.model.tempData.discountValue);
                 };
                 $scope.ui.checkBoxNBTFunction = function () {
                     if ($scope.chxNBT) {
@@ -71,8 +71,8 @@
                     $scope.ui.calculateVAT();
                 };
                 $scope.ui.calculateNBT = function () {
-                    $scope.model.data.nbtValue = ($scope.model.data.amount * $scope.model.data.nbt) / 100;
-                    $scope.model.data.grandAmount = $scope.model.data.amount + $scope.model.data.nbtValue;
+                    $scope.model.data.nbtValue = parseFloat((($scope.model.data.amount * $scope.model.data.nbt) / 100).toFixed(2));
+                    $scope.model.data.grandAmount = parseFloat($scope.model.data.amount) + parseFloat($scope.model.data.nbtValue);
                     $scope.model.data.vatValue = null;
                     $scope.model.data.vat = null;
                     $scope.chxVAT = false;
@@ -83,8 +83,8 @@
                     if (!$scope.model.data.nbtValue) {
                         nbtValue = 0.00;
                     }
-                    $scope.model.data.vatValue = (($scope.model.data.amount + nbtValue) * $scope.model.data.vat) / 100;
-                    $scope.model.data.grandAmount = $scope.model.data.amount + nbtValue + $scope.model.data.vatValue;
+                    $scope.model.data.vatValue = parseFloat(((($scope.model.data.amount + nbtValue) * $scope.model.data.vat) / 100).toFixed(2));
+                    $scope.model.data.grandAmount = (parseFloat($scope.model.data.amount) + parseFloat(nbtValue) + parseFloat($scope.model.data.vatValue)).toFixed(2);
                 };
 
 

@@ -60,8 +60,8 @@
                 <div class="background-light">
                     <div class="row col-xs-12 nopadding">
                         <table class="table-rounded control-table square-table">
-                            <col style="width: 20%"/>
-                            <col style="width: 20%"/>
+                            <col style="width: 10%"/>
+                            <col style="width: 30%"/>
                             <col style="width: 10%"/>
                             <col style="width: 10%"/>
                             <col style="width: 10%"/>
@@ -85,9 +85,10 @@
                                     <td>NET<input class="form-control" id="net" placeholder="net value" ng-model="model.tempData.netValue" ng-disabled="ui.mode !== 'EDIT'"></td>
                                     <td>STOCK<input class="form-control" id="stockQty" placeholder="stock qty" ng-model="model.tempData.stockQty" ng-disabled="ui.mode !== 'EDIT'"></td>
                                     <td class="text-center" style="vertical-align: bottom; padding-bottom: 5px; padding-left: 5px;">
-                                        <button type="button" class="btn btn-primary" ng-click="ui.insertNormalDetail();" ng-disabled="ui.mode !== 'EDIT'">
+                                        <button type="button" class="btn btn-primary" ng-click="ui.addData()" ng-disabled="ui.mode === 'IDEAL'">
                                             <span class="glyphicon glyphicon-plus"></span>
                                         </button>
+                                        
                                     </td>
                                 </tr>
                             </tbody>
@@ -97,8 +98,8 @@
             </div>
 
             <table class="table-rounded" ng-show="model.data.purchaseOrderItemList.length">
-                <col style="width: 10%"/>
-                <col style="width: 20%"/>
+                <col style="width: 7%"/>
+                <col style="width: 33%"/>
                 <col style="width: 10%"/>
                 <col style="width: 10%"/>
                 <col style="width: 10%"/>
@@ -123,8 +124,8 @@
             </table>
             <div class="smart-scroll-y" style="height: calc(100vh - 296px);" ng-show="model.data.purchaseOrderItemList.length">
                 <table class="table-rounded">
-                    <col style="width: 10%"/>
-                    <col style="width: 20%"/>
+                    <col style="width: 7%"/>
+                    <col style="width: 33%"/>
                     <col style="width: 10%"/>
                     <col style="width: 10%"/>
                     <col style="width: 10%"/>
@@ -213,7 +214,7 @@
                 </table>
             </div>
         </uib-tab>
-        <uib-tab index="1" heading="Required Items" >
+        <uib-tab index="1" heading="Required Items" select="ui.selectRequiredItems()" >
             <div class="modal-header">
                 <div class="col-xs-4">
                 </div>
@@ -362,6 +363,7 @@
         </uib-tab>
 </div>
 <div class="fab-container">
+    <a class="fab fab-danger" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.removeAll();"><i class="glyphicon glyphicon-remove"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'IDEAL' || ui.mode === 'SELECTED'" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>

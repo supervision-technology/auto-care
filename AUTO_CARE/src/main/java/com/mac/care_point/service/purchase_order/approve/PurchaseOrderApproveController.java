@@ -37,14 +37,14 @@ public class PurchaseOrderApproveController {
         return purchaseOrderApproveService.getPendingPurchaseOrders(branch, status_pending);
     }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public Integer savePurchaseOrderApprove(@RequestBody TPurchaseOrder purchaseOrder) {
+    public TPurchaseOrder savePurchaseOrderApprove(@RequestBody TPurchaseOrder purchaseOrder) {
          
         purchaseOrder.setStatus(status_approved);
         purchaseOrder.setIsView(true);
         purchaseOrder.setFormName("Purchase Order Approve");
         purchaseOrder.setReturnStatus("NON");
-        TPurchaseOrder savedPurchaseOrder= purchaseOrderApproveService.savePurchaseOrderApprove(purchaseOrder,status_approved);
-        return savedPurchaseOrder.getIndexNo();
+        return purchaseOrderApproveService.savePurchaseOrderApprove(purchaseOrder,status_approved);
+        
     }
     @RequestMapping(value = "/delete/{indexNo}", method = RequestMethod.GET)
     public Integer deletePurchaseOrder(@PathVariable Integer indexNo) {

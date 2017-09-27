@@ -66,6 +66,11 @@ public class EmployeeAssignmentController {
         String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
         return employeeAssignmentService.getAssignEmployees(date, SecurityUtil.getCurrentUser().getBranch());
     }
+    @RequestMapping(value = "/out-employee/{index}", method = RequestMethod.GET)
+    public TEmployeeAssingment outEmployee(@PathVariable Integer index) {
+        String outTime = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss").format(new Date());
+        return employeeAssignmentService.outEmployee(index,outTime);
+    }
 
     @RequestMapping(value = "/file-absalute-path", method = RequestMethod.GET)
     public ImageModel fileAbsalutePath() {

@@ -121,6 +121,18 @@
                                 }
                             });
                 };
+                factory.outEmployee = function (employeeIndex, callback, errorcallback) {
+                    var url = systemConfig.apiUrl + "/api/care-point/transaction/employee-assignment/out-employee/" + employeeIndex;
+                    $http.get(url)
+                            .success(function (data, status, headers) {
+                                callback(data);
+                            })
+                            .error(function (data, status, headers) {
+                                if (errorcallback) {
+                                    errorcallback(data);
+                                }
+                            });
+                };
                 return factory;
             });
     //controller
@@ -144,6 +156,7 @@
                 $scope.dragableMode = true;
                 $scope.model.imageAbsalutePath = null;
                 $scope.model.assignEmployeeList = [];
+                $scope.selectedEmployee = -1;
                 $scope.model.bayList = [
                     {
                         timeout: null
@@ -278,12 +291,32 @@
                 $scope.http.getAssignEmployees = function () {
                     employeeAssignmentFactory.getAssignEmployees(function (data) {
                         $scope.model.assignEmployeeList = data;
+                        console.log("assign employee list");
                         console.log(data);
                     });
                 };
                 $scope.ui.refresh = function () {
                     console.log("refresh");
                     $scope.ui.init();
+                };
+                $scope.ui.outEmployee = function () {
+                    if ($scope.selectedEmployee !== -1) {
+                        ConfirmPane.warningConfirm("Do you want to out selected employee ?")
+                                .confirm(function () {
+                                    employeeAssignmentFactory.outEmployee($scope.selectedEmployee, function (data) {
+                                        Notification.success('selected employee out successfully !');
+                                        $scope.http.getAssignEmployees();
+                                        $scope.selectedEmployee === -1;
+                                    });
+
+                                });
+                    } else {
+                        Notification.error('select a employee to out !');
+                    }
+                };
+                $scope.ui.selectedEmployee = function (employeeIndex) {
+                    $scope.selectedEmployee = employeeIndex;
+                    console.log($scope.selectedEmployee);
                 };
 
                 $scope.ui.init = function () {
