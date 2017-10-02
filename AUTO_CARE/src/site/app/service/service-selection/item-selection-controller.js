@@ -147,7 +147,7 @@
                                                 $scope.ui.dismissAllModel();
                                             });
                                 } else {
-                                    ConfirmPane.successConfirm("This Item Is Allrday Esxist")
+                                    ConfirmPane.successConfirm("This Item Is Allrday Exsist")
                                             .confirm(function () {
                                                 $scope.model.addItemUnit(itemUnit, qty, $scope.selectedJobCardIndexNo, $scope.selectVehicleType);
                                                 $scope.ui.dismissAllModel();
@@ -214,11 +214,7 @@
                             .confirm(function () {
                                 $scope.model.printEstimate($scope.selectedJobCardIndexNo)
                                         .then(function (data) {
-                                            if (data === "1") {
-                                                optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
-                                            } else {
-                                                optionPane.dangerMessage("ERROR");
-                                            }
+                                            optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
                                         });
                             });
                 };
