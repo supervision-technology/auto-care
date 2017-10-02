@@ -5,6 +5,7 @@
  */
 package com.mac.care_point.service.zmaster.vehicle;
 
+import com.mac.care_point.master.vehicle.model.Vehicle;
 import com.mac.care_point.service.zmaster.vehicle.model.MVehicle;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,14 @@ public class SVVehicleService {
     }
 
     public MVehicle saveVehicle(MVehicle vehicle) {
+        String toUpperCaseVehicleNo = vehicle.getVehicleNo().toUpperCase();
+        String toUpperCaseModel = vehicle.getModel().toUpperCase();
+        String toUpperCaseBrand = vehicle.getBrand().toUpperCase();
+        
+        vehicle.setVehicleNo(toUpperCaseVehicleNo);
+        vehicle.setModel(toUpperCaseModel);
+        vehicle.setBrand(toUpperCaseBrand);
+
         return vehicleRepository.save(vehicle);
     }
 
@@ -54,7 +63,7 @@ public class SVVehicleService {
     public List<String> getFuelTypeList() {
         return vehicleRepository.getFuelTypeList();
     }
-   
+
     public List<MVehicle> findByIsNewVehicle() {
         return vehicleRepository.findByIsNewOrderByVehicleNo(true);
     }

@@ -245,6 +245,14 @@
                                             Notification.success("New client added success !!!");
                                             $scope.ui.changeUi = 'ui3';
                                             $scope.model.vehicleData.lastMilage = null;
+
+                                            if ($scope.model.vehicleData.brand === null) {
+                                                $scope.ui.vehicleBrandDisabled = false;
+                                            }
+                                            if ($scope.model.vehicleData.model === null) {
+                                                $scope.ui.vehicleModelDisabled = false;
+                                            }
+
                                         }, function () {
                                             Notification.error("New client added fail !!!");
                                             $scope.model.vehicleData.lastMilage = null;
@@ -253,6 +261,12 @@
                         } else {
                             $scope.model.updateClient();
                             $scope.ui.changeUi = 'ui3';
+                            if ($scope.model.vehicleData.brand !== null) {
+                                $scope.ui.vehicleBrandDisabled = true;
+                            }
+                            if ($scope.model.vehicleData.model !== null) {
+                                $scope.ui.vehicleModelDisabled = true;
+                            }
                             $scope.model.vehicleData.lastMilage = null;
                             $scope.model.loadJobCardByClientIndexNo($scope.model.clientData.indexNo);
                             $scope.model.getLastJobCardVehicleAttenctions($scope.model.vehicleData.indexNo);
@@ -274,7 +288,7 @@
                 };
 
                 $scope.ui.secondStep = function () {
-                    $scope.model.loadClient();
+//                    $scope.model.loadClient();
                     if ($scope.model.searchKeyword === null) {
                         Notification.error("Please input vehicle no");
                     } else {
@@ -283,26 +297,23 @@
                                     .then(function (data) {
                                         if (data.length === 0) {
 //                                            $scope.model.vehicleSerachByVehicleNo($scope.model.searchKeyword);
-                                            console.log("2");
-                                            console.log($scope.model.vehicleData);
                                             $scope.model.clientSearchByClientNo();
                                             $scope.ui.changeUi = 'ui2';
                                             $scope.ui.vehicleDisabled = true;
                                             $scope.ui.getVehicleHistory($scope.model.searchKeyword);
                                         } else {
-                                            console.log("3");
                                             optionPane.dangerMessage("Pending JobCard Avalable")
                                                     .continue(function () {
 
                                                     });
                                         }
                                     }, function () {
-                                        console.log("4");
 //                                        $scope.model.vehicleSerachByVehicleNo($scope.model.searchKeyword);
                                         $scope.ui.getVehicleHistory($scope.model.searchKeyword);
                                         $scope.model.clientSearchByClientNo();
                                         $scope.ui.changeUi = 'ui2';
                                         $scope.ui.vehicleDisabled = true;
+
                                     });
                         } else {
                             $scope.ui.changeUi = 'ui2';
@@ -339,6 +350,27 @@
                                     Notification.error("Save vehicle and assing client fail !!!");
                                 });
                     }
+                };
+                $scope.ui.searchClientByNameMobile = function (name, mobile) {
+                    var nameLength = false;
+                    var mobileLength = false;
+
+                    if (!angular.isUndefined(name) && name.length >= 5) {
+                        nameLength = true;
+                    } else {
+                        nameLength = false;
+                    }
+
+                    if (!angular.isUndefined(mobile) && ('' + mobile).length >= 5) {
+                        mobileLength = true;
+                    } else {
+                        mobileLength = false;
+                    }
+
+                    if (nameLength || mobileLength) {
+                        $scope.model.searchClientByNameMobile(name, mobile);
+                    }
+
                 };
 
                 $scope.ui.init = function () {

@@ -61,7 +61,7 @@
                         <div class="form-inline">
                             <h3>Mobile No</h3>
                             <div class="form-group"> 
-                                <input ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="MOBILE NO." name="somename" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" type = "number" maxlength = "9"/>
+                                <input ng-model="model.clientData.mobile" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="MOBILE NO." name="somename" type = "number" maxlength = "9" ng-change="ui.searchClientByNameMobile(model.clientData.name , model.clientData.mobile);"/>
                             </div>
                         </div>
                     </div>
@@ -77,12 +77,12 @@
                     </div>
                     <div class="col-xs-4">
                         <h3>Client Name</h3>
-                        <input type="text" ng-model="model.clientData.name" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="NAME">
+                        <input type="text" ng-model="model.clientData.name" ng-disabled="ui.clientDisabled" class="form-control input-lg" placeholder="NAME" ng-change="ui.searchClientByNameMobile(model.clientData.name , model.clientData.mobile);">
                     </div>
                     <div class="col-xs-4 text-bold" style="padding-top: 50px">
-                        <button class="btn btn-primary" style="width: 50px; height: 50px;"  ng-click="ui.edit()">EDIT</button>
-                        <button class="btn btn-primary" style="width: 50px; height: 50px"  ng-click="ui.new()">NEW</button>
-                        <button class="btn btn-success" style="width: 80px; height: 50px" ng-click="ui.clientAssingNext()">NEXT</button>
+                        <button class="btn btn-warning btn-lg col-lg-4 col-md-4 col-sm-4" ng-click="ui.edit()">EDIT</button>
+                        <button class="btn btn-primary btn-lg col-lg-4 col-md-4 col-sm-4" ng-click="ui.new()">NEW</button>
+                        <button class="btn btn-success btn-lg col-lg-4 col-md-4 col-sm-4" ng-click="ui.clientAssingNext()">NEXT</button>
                     </div>
                 </div>
             </div>
@@ -107,15 +107,15 @@
                         </table>
                     </div>
 
-                    <div class="smart-scroll-y" style="height: calc(100vh - 410px);">
-                        <table class="square-table table-hover background-light-dark">
+                    <div class="smart-scroll-y" style="height: calc(100vh - 462px);">
+                        <table class="square-table table-hover background-light410px-dark">
                             <col style="width: 15%">
                             <col style="width: 10%">
                             <col style="width: 25%">
                             <col style="width: 45%">
                             <col style="width: 5%">
                             <tbody>
-                                <tr ng-repeat="client in model.clientList| filter:{mobile:model.clientData.mobile === null?'':model.clientData.mobile} | filter:{name:model.clientData.name === null?'':model.clientData.name} | orderBy:'indexNo'">
+                                <tr ng-repeat="client in model.clientList | orderBy:'indexNo'">
                                     <td style="font-size: 20px">{{client.mobile}}</td>
                                     <td style="font-size: 20px">{{client.resident}}</td>
                                     <td style="font-size: 20px">{{client.name}}</td>
@@ -156,13 +156,15 @@
                         <div class="row">
                             <div class="col-xs-6">
                                 <label style="font-size: 20px">Vehicle No :</label>
-                                <input type="text" class="form-control input-lg"  ng-model="model.vehicleData.vehicleNo" ng-disabled="ui.vehicleDisabled"  ><br>
+                                <input type="text" class="form-control input-lg" style="text-transform: uppercase;"  ng-model="model.vehicleData.vehicleNo" ng-disabled="ui.vehicleDisabled" ><br>
 
-                                <label style="font-size: 20px">Chassis No :</label>
-                                <input type="text" class="form-control input-lg"  ng-model="model.vehicleData.chasisNo" ng-disabled="ui.vehicleDisabled" ><br>
+                                <label style="font-size: 20px">Brand :</label>
+                                <input type="text" class="form-control input-lg" style="text-transform: uppercase;" ng-model="model.vehicleData.brand" ng-disabled="ui.vehicleBrandDisabled" uib-typeahead="brand as brand for brand in model.brandList | filter:$viewValue|limitTo:10" ><br>
 
-                                <label style="font-size: 20px">Current Milage :</label>
-                                <input type="number" class="form-control input-lg" ng-model="model.vehicleData.lastMilage" ><br>
+                                <label style="font-size: 20px">Model :</label>
+                                <input type="text" class="form-control input-lg" style="text-transform: uppercase;" ng-model="model.vehicleData.model" ng-disabled="ui.vehicleModelDisabled" uib-typeahead="model as model for model in model.modelList | filter:$viewValue|limitTo:10" ><br>
+
+
                                 <table class="square-table">
                                     <col style="width: 50%;"/>
                                     <col style="width: 50%;"/>
@@ -233,10 +235,14 @@
                                     <select class="form-control input-lg" ng-options="priceCategory.indexNo as priceCategory.name for priceCategory in model.priceCategoryList" ng-model="model.vehicleData.priceCategory" ng-disabled="ui.vehicleDisabled">
                                     </select>
                                 </div>
+                                <div style="margin-top: 20px">
+                                    <label style="font-size: 20px">Current Milage :</label>
+                                    <input type="number" class="form-control input-lg" ng-model="model.vehicleData.lastMilage" ><br>
+                                </div>
                                 <div style="padding-top: 50px;">
-                                    <button  class="btn btn-success btn-lg" ng-click="ui.backToSelectCustomer();" >BACK</button>
+                                    <button  class="btn btn-success btn-lg col-lg-6 col-sm-6 col-md-6"  ng-click="ui.backToSelectCustomer();" >Back</button>
                                     <!--                                    <button class="btn btn-primary btn-lg" style="width: 250px; height: 50px" ng-click="ui.jobCardNsext()">GET VEHICLE IMAGE</button>-->
-                                    <button class="btn btn-primary btn-lg" style="width: 250px; height: 50px" ng-click="ui.saveJobWithoutImage()">Save JobCard</button>
+                                    <button class="btn btn-primary btn-lg col-lg-6 col-sm-6 col-md-6"  ng-click="ui.saveJobWithoutImage()">Save JobCard</button>
                                 </div>
                             </div>
                         </div>

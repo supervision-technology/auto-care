@@ -342,9 +342,4 @@
                         });
             });
 
-    //constants
-    angular.module("appModule")
-            .constant("systemConfig", {
-                apiUrl: "http://localhost:8080"
-            });
 }());

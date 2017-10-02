@@ -80,6 +80,15 @@
         this.getVehicleHistory = function (vehicleNo) {
             return $http.get(systemConfig.apiUrl + "/api/care-point/transaction/job-card/find-job-history/" + vehicleNo);
         };
+        this.getBrandList = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/get-brand-list");
+        };
+        this.getModelList = function () {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/vehicle/get-model-list");
+        };
+        this.getClientByNameMobile = function (name, mobile) {
+            return $http.get(systemConfig.apiUrl + "/api/care-point/service/zmaster/client/search-client-by-name-and-mobile/"+ name + "/" +mobile);
+        };
     };
     angular.module("appModule")
             .service("vehicleEntranceService", service);
