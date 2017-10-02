@@ -1,6 +1,6 @@
 (function () {
     angular.module("appModule")
-            .factory("paymentVoucherModel", function (paymentVoucherService, paymentVoucherFactory, $filter, $q,Notification) {
+            .factory("paymentVoucherModel", function (paymentVoucherService, paymentVoucherFactory, $filter, $q, Notification) {
                 function paymentVoucherModel() {
                     this.constructor();
                 }
@@ -43,16 +43,6 @@
                         this.paymentInformation = paymentVoucherFactory.paymentInformation();
                         this.saveData = paymentVoucherFactory.saveData();
 
-//                        this.employeeData = paymentVoucherFactory.newEmployeeData();
-//                        this.invoiceData = paymentVoucherFactory.newInvoiceData();
-//                        this.paymentData = paymentVoucherFactory.newPaymentData();
-//                        this.paymentInfomationData = paymentVoucherFactory.newPaymentInformation();
-//                        //payment invoice model (mix model)
-//                        this.invoicePaymentData = paymentVoucherFactory.newInvoicePayment();
-//                        this.relordPendingJobCard();
-
-
-//                        new
                         paymentVoucherService.loadClient()
                                 .success(function (data) {
                                     that.clientList = data;
@@ -71,15 +61,6 @@
                                     that.branchList = data;
                                 });
 
-
-
-//                        paymentVoucherService.loadEmployee()
-//                                .success(function (data) {
-//                                    that.employeeList = data;
-//                                });
-//
-//
-//
                         paymentVoucherService.loadCardType()
                                 .success(function (data) {
                                     that.cardTypeList = data;
@@ -220,9 +201,9 @@
                             if (value.invoice === parseInt(indexNo)) {
                                 console.log(value.balance);
                                 console.log(value.pay);
-                                if (value.balance<value.pay) {
+                                if (value.balance < value.pay) {
                                     value.pay = value.balance;
-                                    Notification.error(value.balance+' is maximum pay amount for this invoice ! ');
+                                    Notification.error(value.balance + ' is maximum pay amount for this invoice ! ');
                                 }
                             }
                         });
@@ -433,171 +414,6 @@
                                 });
                         return defer.promise;
                     },
-
-//                    clientVehicles: function (indexNo) {
-//                        var defer = $q;
-//                        paymentVoucherService.getClientVehicles(indexNo)
-//                                .success(function ( data) {
-//                                    console.log(data);
-//                                    defer.resolve(data);
-//                                })
-//                                .error(function () {
-//                                    console.log(data);
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
-//                    },
-//                   
-//                    employeeLable: function (indexNo) {
-//                        var data = "";
-//                        angular.forEach(this.employeeList, function (values) {
-//                            if (values.indexNo === parseInt(indexNo)) {
-//                                data = values.indexNo + " - " + values.name;
-//                                return;
-//                            }
-//                        });
-//                        return data;
-//                    },
-//                    employee: function (indexNo) {
-//                        var data = "";
-//                        angular.forEach(this.employeeList, function (values) {
-//                            if (values.indexNo === parseInt(indexNo)) {
-//                                data = values;
-//                                return;
-//                            }
-//                        });
-//                        return data;
-//                    },
-//                    
-//                    
-//                    getJobItemHistory: function (jobCard) {
-//                        var defer = $q.defer();
-//                        var that = this;
-//                        this.invoiceData.amount = 0.0;
-//                        paymentVoucherService.getJobItemHistory(jobCard)
-//                                .success(function (data) {
-//                                    angular.forEach(data, function (values) {
-//                                        that.invoiceData.amount += values.value;
-//                                        that.getPaymentDetails();
-//                                        return;
-//                                    });
-//                                    defer.resolve();
-//                                })
-//                                .error(function () {
-//                                    that.invoiceData.amount = 0.0;
-//                                    defer.reject();
-//                                });
-//                        return  defer.promise;
-//                    },
-//                    getClientOverPayment: function (client) {
-//                        var defer = $q.defer();
-//                        var that = this;
-//                        paymentVoucherService.getClientOverPayment(client)
-//                                .success(function (data) {
-//                                    if (data > 0) {
-//                                        that.paymentData.overAmount = parseFloat(data);
-//                                    } else {
-//                                        that.paymentData.creditAmount = parseFloat(data * -1);
-//                                    }
-//                                    defer.resolve();
-//                                })
-//                                .error(function () {
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
-//                    },
-//                    loadInvoiceData: function () {
-//                        var defer = $q.defer();
-//                        var that = this;
-//                        paymentVoucherService.loadInvoiceData(this.invoicePaymentData.invoiceData.number)
-//                                .success(function (data) {
-//                                    that.clear();
-//                                    that.invoicePaymentData = data;
-//                                    that.invoiceData = that.invoicePaymentData.invoice;
-//                                    that.paymentData = that.invoicePaymentData.payment;
-//                                    that.paymentInformationList = that.invoicePaymentData.paymentInformationsList;
-//
-//                                    that.cashPayment = parseFloat(that.getTotalPaymentTypeWise('CASH'));
-//                                    that.paymentData.overSettlementAmount = parseFloat(that.getTotalPaymentTypeWise('OVER_PAYMENT_SETTLMENT'));
-//                                    that.getPaymentDetails();
-//                                })
-//                                .error(function () {
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
-//                    },
-//                    relordPendingJobCard: function () {
-//                        var that = this;
-//                        paymentVoucherService.pendingJobCards()
-//                                .success(function (data) {
-//                                    that.pendingJobCards = [];
-//                                    angular.forEach(data, function (job) {
-//                                        job.vehicleNo = that.vehicle(job.vehicle).vehicleNo;
-//                                        that.pendingJobCards.push(job);
-//                                    });
-//                                    console.log(that.pendingJobCards);
-//                                });
-//                    },
-//                    saveInvoice: function () {
-//                        var that = this;
-//                        var defer = $q.defer();
-//                        this.invoiceData.date = $filter('date')(new Date(), 'yyyy-MM-dd');
-//                        this.invoicePaymentData.invoice = this.invoiceData;
-//                        this.invoicePaymentData.payment = this.paymentData;
-//                        this.invoicePaymentData.paymentInformationsList = this.paymentInformationList;
-//                        paymentVoucherService.saveInvoice(JSON.stringify(this.invoicePaymentData))
-//                                .success(function (data) {
-//                                    that.relordPendingJobCard();
-//                                    that.invoicePaymentData.invoice.jobCard;
-//                                    defer.resolve(data);
-//                                })
-//                                .error(function () {
-//                                    defer.reject();
-//                                });
-//                        return defer.promise;
-//                    },
-//                   
-//                    
-//                    //insert cash payment
-//                    getInsertCashPayment: function (amount, type) {
-//                        this.paymentInfomationData.amount = parseFloat(amount);
-//                        this.paymentInfomationData.type = type;
-//                        this.paymentInformationList.push(this.paymentInfomationData);
-//                        this.paymentInfomationData = {};
-//                    },
-//                    
-//                    //insert client over payment settle
-//                    insertClientOverPaymentSettlment: function (amount, type) {
-//                        this.paymentInfomationData = paymentVoucherFactory.newPaymentInformation();
-//                        this.paymentInfomationData.type = type;
-//                        this.paymentInfomationData.amount = amount;
-//                        this.paymentInformationList.push(this.paymentInfomationData);
-//                        this.paymentInfomationData = {};
-//                    },
-//                    deleteOverPayment: function () {
-//                        var that = this;
-//                        angular.forEach(this.paymentInformationList, function (values) {
-//                            if (values.type === "OVER_PAYMENT_SETTLMENT") {
-//                                that.paymentInformationList.splice(that.paymentInformationList.indexOf(values), 1);
-//                                that.getPaymentDetails();
-//                                ;
-//                            }
-//                        });
-//                    },
-//                    //delete card payment and cheque payment
-//                    getCardAndChequePaymentDelete: function (number) {
-//                        var that = this;
-//                        var id = -1;
-//                        for (var i = 0; i < that.paymentInformationList.length; i++) {
-//                            if (that.paymentInformationList[i].number === number) {
-//                                id = i;
-//                            }
-//                        }
-//                        this.paymentInformationList.splice(id, 1);
-//                        this.getPaymentDetails();
-//                    },
-//                    //cash payment delete
-//                    
 
                 };
                 return paymentVoucherModel;

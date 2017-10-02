@@ -107,7 +107,8 @@
                     }
                     , selectGrn: function ($index, indexNo) {
                         this.data = this.mainList[$index];
-                        this.data.grandAmount = this.data.amount;
+                        console.log(this.data.grnItemList);
+                        this.data.grandAmount = this.data.amount.toFixed(2);
                         this.selectedGrnIndex = indexNo;
 
                     }
@@ -152,10 +153,10 @@
                             totalDiscountValue += value.discountValue;
                             totalNetValue += value.netValue;
                         });
-                        this.summaryData.qty = totalQty;
-                        this.summaryData.value = totalValue;
-                        this.summaryData.discount = totalDiscountValue;
-                        this.data.amount = totalNetValue;
+                        this.summaryData.qty = parseFloat(totalQty.toFixed(2));
+                        this.summaryData.value = parseFloat(totalValue.toFixed(2));
+                        this.summaryData.discount = parseFloat(totalDiscountValue.toFixed(2));
+                        this.data.amount = parseFloat(totalNetValue.toFixed(2));
                     }
                     , save: function () {
                         var that = this;

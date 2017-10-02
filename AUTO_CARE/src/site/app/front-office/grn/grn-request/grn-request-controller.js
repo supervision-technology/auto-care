@@ -1,10 +1,18 @@
 (function () {
     angular.module("grnModule", ['ui.bootstrap']);
     angular.module("grnModule")
-            .controller("grnController", function ($scope, $timeout, $filter, GrnModel, Notification, ConfirmPane) {
+            .controller("grnController", function ($scope, $timeout, $uibModal,$sce,$filter, GrnModel, Notification, GrnService, ConfirmPane) {
                 $scope.model = new GrnModel();
                 $scope.ui = {};
                 $scope.filterList = [];
+
+                $scope.printModel = {};
+                $scope.printModel.currentReportGroup = {};
+                $scope.printModel.currentReport = {
+                    "report": null,
+                    "parameters": null,
+                    "parameterValues": {}
+                };
 
                 $scope.ui.new = function () {
                     $scope.ui.mode = 'NEW';
@@ -27,10 +35,19 @@
                 $scope.ui.save = function () {
                     ConfirmPane.primaryConfirm("Do you want to save GRN Receive !")
                             .confirm(function () {
-                                $scope.model.save();
+                                $scope.model.save()
+                                        .then(function (data) {
+                                            ConfirmPane.successConfirm("Do You Want To Print grn request note !")
+                                                    .confirm(function () {
+                                                        $scope.ui.modalOpen(data);
+                                                    });
+                                        });
                             })
                             .discard(function () {
-                                console.log('fail');
+                                ConfirmPane.successConfirm("Do You Want To Print grn request note !")
+                                        .confirm(function () {
+                                            $scope.ui.modalOpen(3);
+                                        });
                             });
                 };
                 $scope.ui.deleteItem = function (index) {
@@ -51,23 +68,51 @@
 
                     $scope.$watch("model.purchaseOrderItemList", function () {
                         $scope.model.itemTotal();
-//                        console.log("$scope.model.pendingPurchaseOrderList");
-//                        console.log($scope.model.pendingPurchaseOrderList);
                     });
 
 
                 };
-//                $scope.ui.filterMainList = function () {
-//                    $scope.filterList = $scope.model.pendingPurchaseOrderList.filter(function (data) {
-//                        return (true);
-//                    });
-//                    console.log("$scope.filterList");
-//                    console.log($scope.filterList);
+                $scope.ui.modalOpen = function (indexNo) {
+                    var reportName = "GRN_NOTE";
+                    //get report details
+                    GrnService.reportData(reportName)
+                            .success(function (data) {
+                                $scope.printModel.currentReport.report = data;
 
-//                };
+                                //get report paramiters
+                                GrnService.listParameters(data)
+                                        .success(function (data) {
+                                            $scope.printModel.currentReport.parameters = data;
+                                        });
 
+                                //set paramiters values
+                                $scope.printModel.currentReport.parameterValues.GRN_NO = indexNo;
+
+                                //view reports
+                                GrnService.viewReport(
+                                        $scope.printModel.currentReport.report,
+                                        $scope.printModel.currentReport.parameters,
+                                        $scope.printModel.currentReport.parameterValues
+                                        )
+                                        .success(function (response) {
+                                            var file = new Blob([response], {type: 'application/pdf'});
+                                            var fileURL = URL.createObjectURL(file);
+
+                                            $scope.content = $sce.trustAsResourceUrl(fileURL);
+
+                                            $uibModal.open({
+                                                animation: true,
+                                                ariaLabelledBy: 'modal-title',
+                                                ariaDescribedBy: 'modal-body',
+                                                templateUrl: 'grn_recieve_popup.html',
+                                                scope: $scope,
+                                                size: 'lg'
+                                            });
+
+                                        });
+                            });
+                };
                 $scope.init();
-//                $scope.ui.filterMainList();
 
             });
 }());

@@ -1,0 +1,149 @@
+<div class="index-content-header"></div>
+
+<div class="index-content-body ">
+
+    <div class="col-xs-3 background-dark">
+        <div class="row" style="display: flex; flex-flow: column; height: calc(100vh - 53px);padding: 5px">
+<!--            <div class="col-xs-12 nopadding" style="flex: 0 0 auto;padding-right: 22px;" ng-show="true">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>
+                    <center>
+                        <label class="h4">
+                            <b>BANK ACCOUNT DETAILS</b>
+                        </label>
+                    </center>
+                    </td>
+                    </tr>
+                    </tbody>
+                </table> 
+            </div>-->
+            <div class="row col-xs-12 nopadding" style="flex: 0 0 auto;">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>Serial No :<input class="form-control" id="toBranch" placeholder="" ng-model="model.data"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-12 nopadding" style="flex: 0 0 auto;">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>Date  :<input smart-input="date" class="form-control" placeholder="" ng-model="model.data"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row col-xs-12 nopadding" style="flex: 0 0 auto;">
+                <table class="table-rounded control-table">
+                    <col style="width: 100%"/>
+                    <tbody>
+                        <tr>
+                            <td>Remark  :<input class="form-control" placeholder="" ng-model="model.data"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-9 background-light">
+        <div class="row col-xs-12 nopadding">
+            <table class="table-rounded control-table square-table">
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+                <col style="width: 20%"/>
+                <col style="width: 30%"/>
+                <tbody>
+                    <tr>
+                        <td>Account :<input class="form-control" ng-model="model.data" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td>Debit :<input class="form-control" ng-model="model.data" ng-disabled="ui.mode !== 'NEW'"></td>
+                        <td>Credit :<input class="form-control" ng-model="model.data" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td>Vat% :<input class="form-control" ng-model="model.data" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td>Remark :<input class="form-control" ng-model="model.data" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td><a class="btn btn-primary" style="margin-top: 28px" id="btnAddData" ng-click="ui.addData()"><span class="glyphicon glyphicon-plus"></span></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-xs-9" ng-show="model.data.transferItemList.length">
+        <table class="table-rounded " >
+            <col style="width: 15%"/>
+            <col style="width: 15%"/>
+            <col style="width: 15%"/>
+            <col style="width: 20%"/>
+            <col style="width: 30%"/>
+
+            <thead class="background-dark">
+                <tr>
+                    <th>Barcode</th>
+                    <th>Description</th>
+                    <th class="text-right">Qty</th>
+                    <th></th>
+                    <th>Check</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="smart-scroll-y" style="height: calc(100vh - 245px);">
+            <table class="table-rounded">
+                <col style="width: 15%"/>
+                <col style="width: 45%"/>
+                <col style="width: 15%"/>
+                <col style="width: 15%"/>
+                <tbody>
+                    <tr class="background-dark" ng-repeat="unit in model.data.transferItemList">
+                        <td><span class="label label-default">{{model.getItemBarcode(unit.item)}}</span></td>
+                        <td class="over-flow-hidden">{{model.getItemDescription(unit.item)}}</td>
+                        <td class="text-right">{{unit.qty| number:2}}</td>
+                        <td></td>
+                        <td>
+                            <a class="btn btn-warning" ng-hide="unit.status" ng-click="ui.unitCheck($index)"><span class="glyphicon glyphicon-question-sign"></span></a>
+                            <a class="btn btn-success" ng-show="unit.status" ng-click="ui.unitUncheck($index)"><span class="glyphicon glyphicon-ok"></span></a>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="placeholder col-md-9" ng-hide="model.data.transferItemList.length" style="height: calc(100vh - 245px); padding: 0px 10px 10px 10px;">
+        <h1>JOURNAL DETAILS EMPTY :(</h1>
+    </div>
+    <div class="col-xs-12" style="position: fixed;bottom: 1px;margin-left:-15px;">
+        <table class="table-rounded background-dark col-lg-12">
+            <col style="width: 20%"/>
+            <col style="width: 30%"/>
+            <col style="width: 11%"/>
+            <col style="width: 11%"/>
+            <col style="width: 11%"/>
+            <col style="width: 11%"/>
+            <col style="width: 6%"/>
+            <tbody>
+                <tr class="background-dark">
+                    <td></td>
+                    <td></td>
+                    <td class="text-right"><b>TOTAL DEBIT:</b></td>
+                    <td><input class="form-control text-right" placeholder="total" ng-model="model.data.totalQty" ng-disabled="ui.mode != 'EDIT'"></td>
+                    <td class="text-right"><b>TOTAL CREDIT:</b></td>
+                    <td><input class="form-control text-right" placeholder="total" ng-model="model.data.totalQty" ng-disabled="ui.mode != 'EDIT'"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="fab-container">
+    <a class="fab fab-lg fab-primary" ng-click="ui.new();"><i class="glyphicon glyphicon-plus"></i></a>
+    <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
+</div>

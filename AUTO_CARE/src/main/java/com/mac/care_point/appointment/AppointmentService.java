@@ -55,6 +55,7 @@ public class AppointmentService {
         tAppointment.setBranch(appointmentDetails.getBranch());
         tAppointment.setInTime(appointmentDetails.getInTime());
         tAppointment.setStatus(0);
+        tAppointment.setDayComplete(0);
         tAppointment.setPriceFree(appointmentDetails.getPriceFree());
         tAppointment.setVehicle(appointmentDetails.getVehicle());
         tAppointment.setVehicleNo(appointmentDetails.getVehicleNo());
@@ -93,16 +94,8 @@ public class AppointmentService {
        return appointmentRepository.save(appointment);
     }
 
-    public List<TAppointment> pendingAppointment(int status) {
-        return appointmentRepository.findByStatus(status);
-    }
-
-    public List<TAppointment> pendingAppointmentByBranch(int status, int branch) {
-        return appointmentRepository.findByStatusAndBranch(status, branch);
-    }
-
-    public List<TAppointment> ApprovedAppointmentByBranch(int status, Integer branch) {
-        return appointmentRepository.findByStatusAndBranch(status, branch);
+    public List<TAppointment> allAppointmentByBranch(int branch) {
+        return appointmentRepository.findByBranch(branch);
     }
 
     //appointment item 

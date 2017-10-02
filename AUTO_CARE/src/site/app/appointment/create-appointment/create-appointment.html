@@ -53,7 +53,7 @@
 
                     <tr>
                         <td><label class="control-label">Branch*</label></td>
-                        <td><input class="form-control" ng-model="model.appointmentData.branch" ng-change="ui.selectBranch(model.appointmentData.branch)" uib-typeahead="branch.indexNo as (branch.indexNo + ' - ' + branch.name) for branch in model.branchList |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.branchLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td><input class="form-control" ng-model="model.appointmentData.branch" typeahead-on-select="ui.selectBranch($item, $model, $label)" uib-typeahead="branch.indexNo as (branch.indexNo + ' - ' + branch.name) for branch in model.branchList |filter:$viewValue|limitTo:10" typeahead-input-formatter="model.branchLable($model)" ng-disabled="ui.mode !== 'EDIT'"></td>
                     </tr>
 
                     <tr>
@@ -75,7 +75,9 @@
                     </tr>
                     <tr>
                         <td><label class="control-label">Contact No*</label></td>
-                        <td><input class="form-control" type="text" ng-model="model.appointmentData.contactNo" ng-disabled="ui.mode !== 'EDIT'"></td>
+                        <td><input placeholder="77-123-4567" maxlength="9" class="form-control" ng-change="ui.validateMobile(model.appointmentData.contactNo)" ng-model="model.appointmentData.contactNo" ng-disabled="ui.mode !== 'EDIT'">
+                        </td>
+                   
                     </tr>
 
                     <tr style="height: 65px;">
@@ -218,6 +220,7 @@
                             <tbody>
                                 <tr class="text-center" style="background-color : burlywood" ng-repeat="bay in model.lube" ng-click="ui.selectBayLube(bay, $index)" ng-class="model.ui.selectedBayLubeIndex === bay.time ? 'selected' : ''">
                                     <td ng-if="bay.vehicle === null"><div style="height: 68px"></div></td>
+                                    <!--<td ng-if="bay.vehicle === null"><div style="height: 68px">{{bay.time}}</div></td>-->
                                     <td ng-if="bay.vehicle !== null" style="background-color : #cacaca"><div style="height: 68px">{{bay.vehicle}}</div></td>
                                 </tr>
                             </tbody>
@@ -233,6 +236,7 @@
                             <tbody>
                                 <tr class="text-center" style="background-color : darksalmon" ng-repeat="bay in model.uw" ng-click="ui.selectBayUw(bay, $index)" ng-class="model.ui.selectedBayUwIndex === bay.time ? 'selected' : ''">
                                     <td ng-if="bay.vehicle === null"><div style="height: 68px"></div></td>
+                                     <!--<td ng-if="bay.vehicle === null"><div style="height: 68px">{{bay.time}}</div></td>-->
                                     <td ng-if="bay.vehicle !== null" style="background-color : #cacaca"><div style="height: 68px">{{bay.vehicle}}</div></td>
                                 </tr>
                             </tbody>
@@ -248,6 +252,7 @@
                             <tbody>
                                 <tr class="text-center" style="background-color : #fde355" ng-repeat="bay in model.bw" ng-click="ui.selectBayBw(bay, $index)" ng-class="model.ui.selectedBayBwIndex === bay.time ? 'selected' : ''">
                                     <td ng-if="bay.vehicle === null"><div style="height: 33.4px"></div></td>
+                                     <!--<td ng-if="bay.vehicle === null"><div style="height: 33.4px">{{bay.time}}</div></td>-->
                                     <td ng-if="bay.vehicle !== null" style="background-color : #cacaca"><div style="height: 33.4px">{{bay.vehicle}}</div></td>
                                 </tr>
                             </tbody>
@@ -263,6 +268,7 @@
                             <tbody>
                                 <tr class="text-center" style="background-color : #e2ea47" ng-repeat="bay in model.qd" ng-click="ui.selectBayQd(bay, $index)" ng-class="model.ui.selectedBayQdIndex === bay.time ? 'selected' : ''">
                                     <td ng-if="bay.vehicle === null"><div style="height: 33.4px"></div></td>
+                                    <!--<td ng-if="bay.vehicle === null"><div style="height: 33.4px">{{bay.time}}</div></td>-->
                                     <td ng-if="bay.vehicle !== null" style="background-color : #cacaca"><div style="height: 33.4px">{{bay.vehicle}}</div></td>
                                 </tr>
                             </tbody>

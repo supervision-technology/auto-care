@@ -20,6 +20,16 @@
                 $scope.ui.edit = function (indexNo) {
                     $scope.model.edit(indexNo);
                 };
+                $scope.ui.removeAll = function () {
+                    ConfirmPane.primaryConfirm("Do you want to remove all !")
+                            .confirm(function () {
+                                $scope.model.removeAll();
+                                $scope.ui.mode="IDEAL";
+                            });
+                };
+                $scope.ui.selectRequiredItems=function (){
+                  $scope.model.selectRequiredItems();  
+                };
 
                 $scope.ui.delete = function (indexNo) {
                     $scope.model.delete(indexNo);
@@ -117,7 +127,7 @@
                     }
                 };
                 $scope.ui.calculatedValue = function () {
-                    $scope.model.tempData.value = $scope.model.tempData.qty * $scope.model.tempData.price;
+                    $scope.model.tempData.value = (parseFloat($scope.model.tempData.qty) * parseFloat($scope.model.tempData.price)).toFixed(2);
 //                    $scope.model.tempData.discountValue = 0;
 //                    $scope.model.tempData.discount = 0;
                     $scope.model.tempData.netValue = $scope.model.tempData.value;
@@ -125,12 +135,12 @@
                     $scope.ui.calculateDiscountWithRate();
                 };
                 $scope.ui.calculateDiscountWithRate = function () {
-                    $scope.model.tempData.discountValue = ($scope.model.tempData.value * $scope.model.tempData.discount) / 100;
-                    $scope.model.tempData.netValue = $scope.model.tempData.value - $scope.model.tempData.discountValue;
+                    $scope.model.tempData.discountValue = ((parseFloat($scope.model.tempData.value) * parseFloat($scope.model.tempData.discount)) / 100).toFixed(2);
+                    $scope.model.tempData.netValue = (parseFloat($scope.model.tempData.value) - parseFloat($scope.model.tempData.discountValue)).toFixed(2);
                 };
                 $scope.ui.calculateDiscountWithValue = function () {
-                    $scope.model.tempData.discount = ($scope.model.tempData.discountValue * 100) / $scope.model.tempData.value;
-                    $scope.model.tempData.netValue = $scope.model.tempData.value - $scope.model.tempData.discountValue;
+                    $scope.model.tempData.discount = ((parseFloat($scope.model.tempData.discountValue) * 100) / parseFloat($scope.model.tempData.value)).toFixed(2);
+                    $scope.model.tempData.netValue = (parseFloat($scope.model.tempData.value) - parseFloat($scope.model.tempData.discountValue)).toFixed(2);
                 };
                 $scope.ui.callAddData = function () {
                     var key = event ? event.keyCode || event.which : 13;
@@ -156,8 +166,8 @@
                 };
 
                 $scope.ui.calculateNBT = function () {
-                    $scope.model.data.nbtValue = ($scope.model.data.itemValue * $scope.model.data.nbt) / 100;
-                    $scope.model.data.grandTotal = $scope.model.data.itemValue + $scope.model.data.nbtValue;
+                    $scope.model.data.nbtValue = ((parseFloat($scope.model.data.itemValue) * parseFloat($scope.model.data.nbt)) / 100).toFixed(2);
+                    $scope.model.data.grandTotal = (parseFloat($scope.model.data.itemValue) + parseFloat($scope.model.data.nbtValue)).toFixed(2);
                     $scope.model.data.vatValue = null;
                     $scope.model.data.vat = null;
                     $scope.chxVat = false;
@@ -168,10 +178,10 @@
                     if (!$scope.model.data.nbtValue) {
                         nbtValue = 0.00;
                     }
-                    $scope.model.data.vatValue = (($scope.model.data.itemValue + nbtValue) * vatRate) / 100;
-                    $scope.model.data.grandTotal = $scope.model.data.itemValue + nbtValue + $scope.model.data.vatValue;
+                    $scope.model.data.vatValue = (((parseFloat($scope.model.data.itemValue) + parseFloat(nbtValue)) * parseFloat(vatRate)) / 100).toFixed(2);
+                    $scope.model.data.grandTotal = (parseFloat($scope.model.data.itemValue) + parseFloat(nbtValue) + parseFloat($scope.model.data.vatValue)).toFixed(2);
                 };
-                
+
                 $scope.modalOpen = function () {
                     if ($scope.model.tempData.item) {
                         $scope.model.getBranchesStock();

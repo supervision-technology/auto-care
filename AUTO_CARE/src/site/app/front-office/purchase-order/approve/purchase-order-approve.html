@@ -150,8 +150,8 @@
         </div>
 
         <table class="table-rounded" ng-show="model.data.purchaseOrderItemList.length">
-            <col style="width: 20%"/>
-            <col style="width: 20%"/>
+            <col style="width: 10%"/>
+            <col style="width: 30%"/>
             <col style="width: 10%"/>
             <col style="width: 10%"/>
             <col style="width: 10%"/>
@@ -174,10 +174,10 @@
                 </tr>
             </thead>
         </table>
-        <div class="smart-scroll-y" style="height: calc(100vh - 317px);" ng-show="model.data.purchaseOrderItemList.length">
+        <div class="smart-scroll-y" style="height: calc(100vh - 450px);" ng-show="model.data.purchaseOrderItemList.length">
             <table class="table-rounded table-hover">
-                <col style="width: 20%"/>
-                <col style="width: 20%"/>
+                <col style="width: 10%"/>
+                <col style="width: 30%"/>
                 <col style="width: 10%"/>
                 <col style="width: 10%"/>
                 <col style="width: 10%"/>
@@ -208,7 +208,7 @@
             <h1>SELECT PENDING PURCHASE ORDER OR ADD ITEM TO DISPLAY :(</h1>
         </div>
         <div class="col-xs-9" style="position: fixed;bottom: 1px;margin-left:-15px">
-            <table class="table-rounded background-dark">
+            <table class="table-rounded">
                 <col style="width: 23%;">
                 <col style="width: 20%">
                 <col style="width: 10%;">
@@ -218,7 +218,7 @@
                 <col style="width: 12%;">
                 <col style="width: 10%">
                 <tbody>
-                    <tr class="background-dark">
+                    <tr>
                         <td></td>
                         <td class="text-right"><b>TOTAL :</b></td>
                         <td><input class="form-control text-right" smart-input="decimal" placeholder="qty" ng-model="model.summaryData.qty" ng-disabled="true"></td>
@@ -228,7 +228,7 @@
                         <td><input class="form-control text-right" smart-input="decimal" placeholder="item value" ng-model="model.data.itemValue" ng-disabled="true"></td>
                         <td>&nbsp;</td>
                     </tr>
-                    <tr class="background-dark">
+                    <tr>
                         <td></td>
                         <td class="text-right"><b>NBT DETAIL :</b></td>
                         <td></td>
@@ -238,7 +238,7 @@
                         <td><input class="form-control text-right" placeholder="nbt value" ng-model="model.data.nbtValue" ng-disabled="true"></td>
                         <td>&nbsp;</td>
                     </tr>
-                    <tr class="background-dark">
+                    <tr>
                         <td></td>
                         <td class="text-right"><b>VAT DETAIL :</b></td>
                         <td></td>
@@ -248,7 +248,7 @@
                         <td><input class="form-control text-right" placeholder="vat value" ng-model="model.data.vatValue" ng-disabled="true"></td>
                         <td>&nbsp;</td>
                     </tr>
-                    <tr class="background-dark">
+                    <tr>
                         <td></td>
                         <td class="text-right"><b>SUMMARY :</b></td>
                         <td></td>
@@ -267,3 +267,11 @@
     <a class="fab fab-danger" fab-show="true" ng-click="ui.discard();"><i class="glyphicon glyphicon-remove"></i></a>
     <a class="fab fab-lg fab-primary" ng-show="ui.mode === 'NEW' || ui.mode === 'EDIT'" ng-click="ui.save();"><i class="glyphicon glyphicon-ok"></i></a>
 </div>
+
+<script type="text/ng-template" id="purchase_order_popup.html"> 
+    {{content}}
+    <div class="col-lg-12">
+    <object data="{{content}}" class="smart-scroll-y" type="application/pdf" style="width:100%;height: calc(100vh - 69px);">
+    </object>
+    </div>
+</script>

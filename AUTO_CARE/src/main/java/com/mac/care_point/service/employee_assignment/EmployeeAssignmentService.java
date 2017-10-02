@@ -70,4 +70,13 @@ public class EmployeeAssignmentService {
         return employeeAssignmentRepository.findBranchWaitingBay(branch, Constant.VEHICLE_WAITING_BAY);
     }
 
+    TEmployeeAssingment outEmployee(Integer index,String outTime) {
+        
+        TEmployeeAssingment employeeAssingment = employeeAssignmentRepository.getOne(index);
+        employeeAssingment.setOutTime(outTime);
+        employeeAssingment.setStatus("FINISHED");
+        employeeAssingment.setIsOut(true);
+        return employeeAssignmentRepository.save(employeeAssingment);
+    }
+
 }

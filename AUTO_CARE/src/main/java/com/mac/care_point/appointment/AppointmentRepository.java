@@ -17,7 +17,7 @@ public interface AppointmentRepository extends JpaRepository<TAppointment, Integ
 
     public List<TAppointment> findByStatus(int status);
 
-    public List<TAppointment> findByStatusAndBranch(int status, int branch);
+    public List<TAppointment> findByBranch(int branch);
 
     public List<TAppointment> findAllByOrderByInTimeDesc();
     

@@ -10,10 +10,10 @@
                         <label class="h4" >{{bay.name}}</label> 
                         <a class="btn btn-danger pull-right" ng-click="stop(bay)" ng-show="bay.timeout" ><span class="glyphicon glyphicon-remove"> {{bay.timeout}}</span></a>
                     </div>
-                    <div ng-repeat="employeeData in model.assignEmployeeList " ng-if="employeeData.bay==bay.indexNo" 
+                    <div ng-repeat="employeeData in model.assignEmployeeList" ng-if="employeeData.bay==bay.indexNo" 
                          ng-drag="{{dragableMode}}" ng-drag-data="employeeData" 
-                         class="tile tile-80-90 col-lg-6 nopadding" style="border-style: groove;">
-                        <div style="display: block;text-align: center;" class="nopadding">
+                         class="tile tile-80-90 col-lg-6 nopadding" style="border-style: groove;" ng-class="{'selected':employeeData.indexNo == selectedEmployee}">
+                        <div style="display: block;text-align: center;" class="nopadding" ng-click="ui.selectedEmployee(employeeData.indexNo)">
                             <img src="{{getEmployee(employeeData.employee).imageData}}" class="img-rounded" alt="non" width="50" height="50"/>
                             <h6 class="nopadding"><p style="overflow: hidden ;height: 15px;color: white">{{getEmployee(employeeData.employee).name}}</p></h6>
                         </div>
@@ -24,7 +24,8 @@
     </div>
 </div>
 <div class="fab-container pull-left" style="z-index: 2">
-    <a class="fab fab-lg fab-warning" ng-click="ui.reset();"><i class="glyphicon glyphicon-log-out"></i></a>
+    <a class="fab fab-danger" ng-click="ui.outEmployee();"><i class="glyphicon glyphicon-remove"></i></a>
+    <a class="fab fab-warning" ng-click="ui.reset();"><i class="glyphicon glyphicon-log-out"></i></a>
     <a class="fab fab-lg fab-primary" ng-click="ui.refresh();"><i class="glyphicon glyphicon-refresh"></i></a>
 </div>
 

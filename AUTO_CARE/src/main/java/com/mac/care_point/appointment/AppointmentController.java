@@ -10,6 +10,7 @@ import com.mac.care_point.appointment.model.MAppointmentItem;
 import com.mac.care_point.appointment.model.TAppointment;
 import com.mac.care_point.appointment.model.TBayDetails;
 import com.mac.care_point.appointment.model.mix.AppointmentDetails;
+import com.mac.care_point.zutil.SecurityUtil;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/care-point/transaction/appointment")
 public class AppointmentController {
 
-    private final Integer branch = 1;
+//    private final Integer branch = 1;
 
     @Autowired
     private AppointmentService appointmentService;
@@ -39,29 +40,11 @@ public class AppointmentController {
         return appointmentService.findAll();
     }
 
-    @RequestMapping(value = "/pending/{status}", method = RequestMethod.GET)
-    public List<TAppointment> pendingAppointment(@PathVariable int status) {
-        return appointmentService.pendingAppointment(status);
+    @RequestMapping(value = "/all-appointment", method = RequestMethod.GET)
+    public List<TAppointment> allAppointmentByBranch() {
+        return appointmentService.allAppointmentByBranch(SecurityUtil.getCurrentUser().getBranch());
     }
 
-    @RequestMapping(value = "/pending-appointment/{status}", method = RequestMethod.GET)
-    public List<TAppointment> pendingAppointmentByBranch(@PathVariable int status) {
-        return appointmentService.pendingAppointmentByBranch(status, branch);
-    }
-
-    @RequestMapping(value = "/approved-appointment/{status}", method = RequestMethod.GET)
-    public List<TAppointment> ApprovedAppointmentByBranch(@PathVariable int status) {
-        return appointmentService.ApprovedAppointmentByBranch(status, branch);
-    }
-
-//    @RequestMapping(value = "/save", method = RequestMethod.POST)
-//    public TAppointment save(@RequestBody TAppointment appointment) {
-//        appointment.setBranch(branch);
-//        appointment.setStatus(0);
-//        System.out.println(appointment.toString());
-////        return appointmentService.save(appointment);
-//        return null;
-//    }
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public TBayDetails save(@RequestBody AppointmentDetails appointmentDetails) {
         System.out.println(appointmentDetails.toString());

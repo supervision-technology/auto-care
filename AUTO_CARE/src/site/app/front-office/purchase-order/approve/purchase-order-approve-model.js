@@ -102,14 +102,14 @@
                         this.summaryData.qty = qty;
                         this.summaryData.value = val;
                         this.summaryData.discountValue = discount;
-                        this.data.itemValue = itemValue;
+                        this.data.itemValue = (itemValue).toFixed(2);
                         if (this.data.nbt) {
-                            this.data.nbtValue = (this.data.itemValue * this.data.nbt) / 100;
+                            this.data.nbtValue = ((this.data.itemValue * this.data.nbt) / 100).toFixed(2);
                         }
                         if (this.data.vat) {
-                            this.data.vatValue = ((this.data.itemValue + this.data.nbtValue) * this.data.vat) / 100;
+                            this.data.vatValue = (((this.data.itemValue + this.data.nbtValue) * this.data.vat) / 100).toFixed(2);
                         }
-                        that.data.grandTotal = itemValue + this.data.nbtValue + this.data.vatValue;
+                        that.data.grandTotal = (itemValue + this.data.nbtValue + this.data.vatValue).toFixed(2);
                     },
                     save: function () {
                         var defer = $q.defer();
@@ -144,10 +144,10 @@
                             PurchaseOrderRequestService.savePurchaseOrderApprove(JSON.stringify(this.data))
                                     .success(function (data) {
                                         that.clear();
-                                        defer.resolve();
+                                        defer.resolve(data);
                                     })
                                     .error(function (data) {
-                                        defer.reject();
+                                        defer.reject(data);
                                     });
                             return defer.promise;
                         }
@@ -163,7 +163,7 @@
                         this.summaryCalculator();
                     },
                     discard: function () {
-                        var that=this;
+                        var that = this;
                         PurchaseOrderRequestService.deletePurchaseOrder(this.data.indexNo)
                                 .success(function (data) {
                                     Notification.success('Selected Pending Purchase Order Deleted Success !');
