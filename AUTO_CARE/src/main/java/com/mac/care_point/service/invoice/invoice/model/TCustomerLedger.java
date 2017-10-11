@@ -159,6 +159,11 @@ public class TCustomerLedger implements Serializable {
     public void setFormName(String formName) {
         this.formName = formName;
     }
+
+    @Override
+    public String toString() {
+        return "TCustomerLedger{" + "indexNo=" + indexNo + ", date=" + date + ", debitAmount=" + debitAmount + ", creditAmount=" + creditAmount + ", type=" + type + ", client=" + client + ", invoice=" + invoice + ", payment=" + payment + ", refNumber=" + refNumber + ", formName=" + formName + '}';
+    }
     
     
 

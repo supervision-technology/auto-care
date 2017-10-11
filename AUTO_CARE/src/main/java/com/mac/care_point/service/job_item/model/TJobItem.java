@@ -181,5 +181,11 @@ public class TJobItem {
         this.isChange = isChange;
     }
 
+    @Override
+    public String toString() {
+        return "TJobItem{" + "indexNo=" + indexNo + ", item=" + item + ", itemUnit=" + itemUnit + ", itemType=" + itemType + ", quantity=" + quantity + ", stockRemoveQty=" + stockRemoveQty + ", price=" + price + ", value=" + value + ", orderStatus=" + orderStatus + ", jobStatus=" + jobStatus + ", jobCard=" + jobCard + ", isChange=" + isChange + '}';
+    }
+    
+    
     
 }

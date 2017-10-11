@@ -53,6 +53,7 @@ public interface Constant {
     public static final String PAYMENT_VOUCHER_FORM = "PAYMENT_VOUCHER_FORM";
     public static final String PAYMENT_FORM = "PAYMENT_FORM";
     public static final String ADVANCE_FORM = "ADVANCE_FORM";
+    public static final String ITEMSALE_FORM = "ITEMSALE_FORM";
 
 //  store name
     public static final String MAIN_STOCK = "MAIN_STOCK";
