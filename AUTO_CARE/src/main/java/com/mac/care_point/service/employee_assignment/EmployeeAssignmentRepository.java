@@ -28,7 +28,7 @@ public interface EmployeeAssignmentRepository extends JpaRepository<TEmployeeAss
             + "	and m_bay.branch=:branch\n"
             + "   and t_employee_assingment.bay=:bay\n"
             + "and t_employee_assingment.date=:date\n"
-            + "   and t_employee_assingment.out_time is null", nativeQuery = true)
+            + "and t_employee_assingment.`status`='PENDING'", nativeQuery = true)
     public Integer getBayAssignEmployeeCount(@Param("branch") Integer branch, @Param("bay") Integer bay,@Param("date")String date);
 
     @Query(value = "SELECT\n"

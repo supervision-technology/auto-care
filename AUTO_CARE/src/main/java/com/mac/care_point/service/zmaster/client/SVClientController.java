@@ -44,4 +44,11 @@ public class SVClientController {
         return clientService.getClientByIndexNo(indexNo);
     }
     
+    @RequestMapping(value = "/search-client-by-name-and-mobile/{name}/{mobile}",method = RequestMethod.GET)
+    public List<MClientDTO> getClientByMobileNoAndName(@PathVariable String name, @PathVariable String mobile ){
+        System.out.println("Mobile" + mobile);
+        System.out.println("name" + name);
+        return clientService.getClientByMobileNoAndName(name , mobile);
+    }
+    
 }

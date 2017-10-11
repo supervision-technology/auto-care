@@ -267,11 +267,7 @@
                             .confirm(function () {
                                 $scope.model.printEstimate($scope.selectedJobCardIndexNo)
                                         .then(function (data) {
-                                            if (data === "1") {
-                                                optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
-                                            } else {
-                                                optionPane.dangerMessage("ERROR");
-                                            }
+                                            optionPane.successMessage("ESTIMATE PRINT AND CLIENT SMS SEND!");
                                         });
                             });
                 };

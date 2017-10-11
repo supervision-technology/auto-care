@@ -26,6 +26,8 @@
             jobCardList: [],
             jobCardHistryList: [],
             lastJobCardVehicleAttenctionList: [],
+            brandList: [],
+            modelList: [],
             constructor: function () {
                 var that = this;
                 this.vehicleData = vehicleEntranceFactory.newVehicleData();
@@ -55,12 +57,13 @@
                         .success(function (data) {
                             that.vehicleAttenctionsList = data;
                         });
-            },
-            loadClient: function () {
-                var that = this;
-                vehicleEntranceService.loadClient()
+                vehicleEntranceService.getBrandList()
                         .success(function (data) {
-                            that.clientList = data;
+                            that.brandList = data;
+                        });
+                vehicleEntranceService.getModelList()
+                        .success(function (data) {
+                            that.modelList = data;
                         });
             },
             loadJobCardByClientIndexNo: function (indexNo) {
@@ -190,7 +193,7 @@
                 }
                 that.clientData.date = $filter('date')(new Date(), 'yyyy-MM-dd');
                 that.clientData.isNew = true;
-                
+
                 vehicleEntranceService.newClient(JSON.stringify(that.clientData))
                         .success(function (data) {
                             that.clientData = data;
@@ -325,6 +328,16 @@
                 vehicleEntranceService.getVehicleHistory(vehicleNo)
                         .success(function (data) {
                             that.jobCardHistryList = data;
+                        })
+                        .error(function () {
+
+                        });
+            },
+            searchClientByNameMobile: function (name, mobile) {
+                var that = this;
+                vehicleEntranceService.getClientByNameMobile(name, mobile)
+                        .success(function (data) {
+                            that.clientList = data;
                         })
                         .error(function () {
 

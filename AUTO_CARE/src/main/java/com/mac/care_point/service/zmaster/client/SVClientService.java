@@ -30,7 +30,7 @@ public class SVClientService {
     private SVVehicleRepository vehicleRepository;
 
     public List<MClientDTO> getAllClient() {
-        List<MClientDTO> clientVehicleList =new ArrayList<>();
+        List<MClientDTO> clientVehicleList = new ArrayList<>();
         List<MClient> clientList1 = clientRepository.findAll();
         for (MClient client : clientList1) {
             MClientDTO clientDTO = new MClientDTO();
@@ -75,7 +75,40 @@ public class SVClientService {
 
     public MClient saveClient(MClient client) {
         client.setBranch(1);
-        client.setMobile("94" + client.getMobile());
+        String mobileNo = client.getMobile();
+        if (mobileNo.length() >= 10){
+            Integer end = mobileNo.length();
+            Integer start = mobileNo.length() - 9;
+            String no = mobileNo.substring(start, end);
+            System.out.println(no);
+            client.setMobile("94" + no);
+        } else if(mobileNo.length() == 9) {
+            client.setMobile("94" + client.getMobile());
+        }
         return clientRepository.save(client);
+    }
+
+    public List<MClientDTO> getClientByMobileNoAndName(String name, String mobile) {
+        List<MClientDTO> dtoList=new ArrayList<>();
+        List<MClient> clientList = clientRepository.getClientByMobileNoAndName(name, mobile);
+        for (MClient client : clientList) {
+            String vehicles = vehicleRepository.getAllVehiclesByClient(client.getIndexNo());
+            MClientDTO clientDTO = new MClientDTO();
+            clientDTO.setIndexNo(client.getIndexNo());
+            clientDTO.setName(client.getName());
+            clientDTO.setNic(client.getNic());
+            clientDTO.setAddressLine1(client.getAddressLine1());
+            clientDTO.setAddressLine2(client.getAddressLine2());
+            clientDTO.setAddressLine3(client.getAddressLine3());
+            clientDTO.setBranch(client.getBranch());
+            clientDTO.setMobile(client.getMobile());
+            clientDTO.setResident(client.getResident());
+            clientDTO.setCustomerType(client.getCustomerType());
+            clientDTO.setIsNew(client.isIsNew());
+            clientDTO.setDate(client.getDate());
+            clientDTO.setVehicles(vehicles);
+            dtoList.add(clientDTO);
+        }
+        return dtoList;
     }
 }
