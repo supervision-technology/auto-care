@@ -27,11 +27,11 @@
                 factory.newClientData = function () {
                     var data = {
                         "indexNo": null,
-                        "name": null,
+                        "name": "",
                         "addressLine1": null,
                         "addressLine2": null,
                         "addressLine3": null,
-                        "mobile": null,
+                        "mobile": "",
                         "branch": null,
                         "type": null,
                         "nic": null,

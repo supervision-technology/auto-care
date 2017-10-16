@@ -57,7 +57,8 @@
                 };
 
                 $scope.ui.dismissAllModel = function () {
-                    $scope.ui.backToCategory();
+//                    $scope.ui.backToCategory();
+                    $scope.ui.quickSeacrh();
                     $uibModalStack.dismissAll();
                 };
 

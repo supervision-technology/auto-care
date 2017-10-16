@@ -111,7 +111,7 @@
                 };
 
                 $scope.ui.dismissAllModel = function () {
-                    $scope.ui.backToCategory();
+//                    $scope.ui.backToCategory();
                     $scope.ui.resetStockItems();
                     $uibModalStack.dismissAll();
                 };
@@ -153,6 +153,7 @@
                                                 $scope.ui.dismissAllModel();
                                             });
                                 }
+                                $scope.ui.quickSeacrh();
                             }
                         } else {
                             Notification.error("select item");

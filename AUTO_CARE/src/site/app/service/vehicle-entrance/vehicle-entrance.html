@@ -38,7 +38,7 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <h1 class="text-center">Vehicle No : {{model.searchKeyword}}</h1>
+                                    <h1 class="text-center" style="text-transform: uppercase">Vehicle No : {{model.searchKeyword}}</h1>
                                 </td>
                                 <td rowspan="2" >
                         <center>
@@ -158,7 +158,7 @@
                                 <label style="font-size: 20px">Vehicle No :</label>
                                 <input type="text" class="form-control input-lg" style="text-transform: uppercase;"  ng-model="model.vehicleData.vehicleNo" ng-disabled="ui.vehicleDisabled" ><br>
 
-                                <label style="font-size: 20px">Brand :</label>
+                                <label style="font-size: 20px">Make :</label>
                                 <input type="text" class="form-control input-lg" style="text-transform: uppercase;" ng-model="model.vehicleData.brand" ng-disabled="ui.vehicleBrandDisabled" uib-typeahead="brand as brand for brand in model.brandList | filter:$viewValue|limitTo:10" ><br>
 
                                 <label style="font-size: 20px">Model :</label>

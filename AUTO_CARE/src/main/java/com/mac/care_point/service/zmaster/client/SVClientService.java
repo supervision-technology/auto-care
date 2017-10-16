@@ -88,27 +88,17 @@ public class SVClientService {
         return clientRepository.save(client);
     }
 
-    public List<MClientDTO> getClientByMobileNoAndName(String name, String mobile) {
-        List<MClientDTO> dtoList=new ArrayList<>();
-        List<MClient> clientList = clientRepository.getClientByMobileNoAndName(name, mobile);
-        for (MClient client : clientList) {
-            String vehicles = vehicleRepository.getAllVehiclesByClient(client.getIndexNo());
-            MClientDTO clientDTO = new MClientDTO();
-            clientDTO.setIndexNo(client.getIndexNo());
-            clientDTO.setName(client.getName());
-            clientDTO.setNic(client.getNic());
-            clientDTO.setAddressLine1(client.getAddressLine1());
-            clientDTO.setAddressLine2(client.getAddressLine2());
-            clientDTO.setAddressLine3(client.getAddressLine3());
-            clientDTO.setBranch(client.getBranch());
-            clientDTO.setMobile(client.getMobile());
-            clientDTO.setResident(client.getResident());
-            clientDTO.setCustomerType(client.getCustomerType());
-            clientDTO.setIsNew(client.isIsNew());
-            clientDTO.setDate(client.getDate());
-            clientDTO.setVehicles(vehicles);
-            dtoList.add(clientDTO);
-        }
-        return dtoList;
+    public List<MClient> getClientByNameAndMobile(String name, String mobile) {
+        return clientRepository.getClientByNameAndMobile(name, mobile);
+        
+    }
+
+    List<MClient> getClientByMobile(String mobile) {
+        return clientRepository.getClientByMobile(mobile);
+        
+    }
+
+    List<MClient> getClientByName(String name) {
+        return clientRepository.getClientByName(name);
     }
 }

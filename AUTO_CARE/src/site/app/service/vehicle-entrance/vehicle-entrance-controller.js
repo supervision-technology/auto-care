@@ -368,9 +368,14 @@
                     }
 
                     if (nameLength || mobileLength) {
+                        if (!angular.isUndefined(name)) {
+                            name = name === '' ? "null" : name;
+                        }
+                        if (!angular.isUndefined(mobile)) {
+                            mobile = mobile === '' ? "null" : mobile;
+                        }
                         $scope.model.searchClientByNameMobile(name, mobile);
                     }
-
                 };
 
                 $scope.ui.init = function () {

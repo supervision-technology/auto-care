@@ -45,10 +45,16 @@ public class SVClientController {
     }
     
     @RequestMapping(value = "/search-client-by-name-and-mobile/{name}/{mobile}",method = RequestMethod.GET)
-    public List<MClientDTO> getClientByMobileNoAndName(@PathVariable String name, @PathVariable String mobile ){
-        System.out.println("Mobile" + mobile);
-        System.out.println("name" + name);
-        return clientService.getClientByMobileNoAndName(name , mobile);
+    public List<MClient> getClientByNameAndMobile(@PathVariable String name, @PathVariable String mobile ){
+        if ("null".equals(name) || null==name || "undefined".equals(name)|| "".equals(name)) {
+            //mobile only
+           return clientService.getClientByMobile(mobile);
+        }
+        if ("null".equals(mobile) || null==mobile || "undefined".equals(mobile)|| "".equals(mobile)) {
+//            name only
+           return clientService.getClientByName(name);
+        }
+        return clientService.getClientByNameAndMobile(name , mobile);
     }
     
 }

@@ -66,6 +66,50 @@
                             {indexNo: 1, name: 'STOCK'},
                             {indexNo: 2, name: 'NON STOCK'}
                         ];
+                        this.timeList = [
+                            "00:00:30",
+                            "00:01:00",
+                            "00:10:00",
+                            "00:15:00",
+                            "00:20:00",
+                            "00:30:00",
+                            "00:40:00",
+                            "00:45:00",
+                            "00:50:00",
+                            "01:10:00",
+                            "01:20:00",
+                            "01:30:00",
+                            "01:40:00",
+                            "01:45:00",
+                            "01:50:00",
+                            "02:00:00",
+                            "02:10:00",
+                            "02:20:00",
+                            "02:30:00",
+                            "02:40:00",
+                            "02:45:00",
+                            "02:50:00",
+                            "03:00:00",
+                            "03:10:00",
+                            "03:20:00",
+                            "03:30:00",
+                            "03:40:00",
+                            "03:45:00",
+                            "03:50:00",
+                            "04:00:00",
+                            "04:10:00",
+                            "04:20:00",
+                            "04:30:00",
+                            "04:40:00",
+                            "04:45:00",
+                            "04:50:00",
+                            "05:00:00",
+                            "06:00:00",
+                            "07:00:00",
+                            "10:00:00",
+                            "20:00:00",
+                            "30:00:00"
+                        ];
                     }
                     , bayLable: function (id) {
                         var lable = '';
@@ -172,6 +216,16 @@
                         angular.forEach(this.employeeList, function (employee) {
                             if (employee.indexNo === parseInt(id)) {
                                 lable = employee.indexNo + " - " + employee.name;
+                                return;
+                            }
+                        });
+                        return lable;
+                    }
+                    , timeLable: function (timePara) {
+                        var lable = null;
+                        angular.forEach(this.timeList, function (time) {
+                            if (time === timePara) {
+                                lable = time;
                                 return;
                             }
                         });

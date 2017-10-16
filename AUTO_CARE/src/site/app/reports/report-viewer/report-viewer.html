@@ -73,6 +73,13 @@
                                                    typeahead-input-formatter="newModel.itemLable(model.currentReport.parameterValues.ITEM)"
                                                    ></td>
                                     </tr>
+                                    <tr ng-show="ui.isParameterAvailable('ITEM2')">
+                                        <td><label class="control-label">ITEM 2</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.ITEM2"
+                                                   uib-typeahead="item.indexNo as (item.indexNo+ ' - ' +item.name) for item in newModel.itemList |filter:$viewValue |limitTo:10" 
+                                                   typeahead-input-formatter="newModel.itemLable(model.currentReport.parameterValues.ITEM2)"
+                                                   ></td>
+                                    </tr>
                                     <tr ng-show="ui.isParameterAvailable('SUPPLIER')">
                                         <td><label class="control-label">SUPPLIER</label></td>
                                         <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.SUPPLIER" 
@@ -180,6 +187,13 @@
                                         <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.VEHICLE_NO" 
                                                    uib-typeahead="vehicle.indexNo as (vehicle.indexNo+ ' - ' +vehicle.vehicleNo) for vehicle in newModel.vehicleList |filter:$viewValue |limitTo:10" 
                                                    typeahead-input-formatter="newModel.vehicleLable(model.currentReport.parameterValues.VEHICLE_NO)"
+                                                   ></td>
+                                    </tr>
+                                    <tr ng-show="ui.isParameterAvailable('TIME')">
+                                        <td><label class="control-label">TIME PEROID</label></td>
+                                        <td><input class="form-control" id="status" ng-model="model.currentReport.parameterValues.TIME" 
+                                                   uib-typeahead="time as time for time in newModel.timeList |filter:$viewValue |limitTo:10" 
+                                                   typeahead-input-formatter="newModel.timeLable(model.currentReport.parameterValues.TIME)"
                                                    ></td>
                                     </tr>
                                 </tbody>                 
